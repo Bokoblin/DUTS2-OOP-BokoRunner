@@ -1,0 +1,9 @@
+*.depend
+*.layout
+*.o
+*.cbp
+stderr.txt
+stdout.txt
+*.pro
+*.pri
+*.pro.user

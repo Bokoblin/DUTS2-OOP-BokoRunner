@@ -1,0 +1,10 @@
+Runner Project - state of progress
+Auteurs : Arthur JOLIVET et Florian LARONZE
+
+
+Arthur - v0.1.0-0 (22/02/15) :
+
+- Project Creation:
+	- images added in "Images" folder
+	- font added in "Fonts" folder
+	- README added

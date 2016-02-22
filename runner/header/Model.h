@@ -1,5 +1,4 @@
-/*
-Copyright (C) 2015 Jolivet Arthur & Laronze Florian
+/* Copyright (C) 2015 Jolivet Arthur & Laronze Florian
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,8 +22,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 class Model
 {
 private:
-    int m_width;
-    int m_height;
+    int m_modelWidth;
+    int m_modelHeight;
 
     Ball *m_player;
 
@@ -34,8 +33,8 @@ public:
     Model(int width, int height);
     ~Model();
 
+    Ball getBall();
     void nextStep();
     void moveBall(bool left);
-    void getBallPosition(int &x, int &y);
 };
 #endif

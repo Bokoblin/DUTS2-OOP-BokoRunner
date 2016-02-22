@@ -1,5 +1,4 @@
-/*
-Copyright (C) 2015 Jolivet Arthur & Laronze Florian
+/* Copyright (C) 2015 Jolivet Arthur & Laronze Florian
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,6 +34,8 @@ class Ball
         int getMoveY();
         int getPositionX();
         int getPositionY();
+        int getWidth();
+        int getHeight();
 
         void setPositionX(int x);
         void setPositionY(int y);

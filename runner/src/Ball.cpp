@@ -1,5 +1,4 @@
-/*
-Copyright (C) 2015 Jolivet Arthur & Laronze Florian
+/* Copyright (C) 2015 Jolivet Arthur & Laronze Florian
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,7 +26,7 @@ using namespace std;
 Ball::Ball()
 {
     m_posX = 50, m_posY = 450;
-    m_width = 50, m_height = 50;
+    m_width = 25, m_height = 25;
     m_moveX = 10, m_moveY = 10;
 }
 
@@ -48,10 +47,12 @@ int Ball::getMoveX() { return m_moveX; }
 int Ball::getMoveY() { return m_moveY; }
 int Ball::getPositionX() { return m_posX; }
 int Ball::getPositionY() { return m_posY; }
+int Ball::getWidth() { return m_width; }
+int Ball::getHeight() { return m_height; }
 
 
 //=======================================
-// Accesseurs en Ã©criture
+// Accesseurs en écriture
 //=======================================
 void Ball::setPositionX(int x) { m_posX = x; }
 void Ball::setPositionY(int y) { m_posX = y; }

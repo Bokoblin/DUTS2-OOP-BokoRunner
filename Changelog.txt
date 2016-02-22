@@ -8,3 +8,10 @@ Arthur - v0.1.0-0 (22/02/15) :
 	- images added in "Images" folder
 	- font added in "Fonts" folder
 	- README added
+
+Arthur & Florian - v0.1.0-1 (22/02/15) :
+
+- sources files from "Atelier 1" and "Atelier 2" added
+- header  files from "Atelier 1" and "Atelier 2" added
+
+=> Background with movable ball on X-axis.

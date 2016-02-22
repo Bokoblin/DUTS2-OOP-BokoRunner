@@ -7,3 +7,4 @@ stdout.txt
 *.pro
 *.pri
 *.pro.user
+*.cscope_file_list

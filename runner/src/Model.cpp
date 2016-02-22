@@ -1,5 +1,4 @@
-/*
-Copyright (C) 2015 Jolivet Arthur & Laronze Florian
+/* Copyright (C) 2015 Jolivet Arthur & Laronze Florian
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,7 +25,7 @@ using namespace std;
 // Constructeurs
 //=======================================
 Model::Model(int width, int height)
-    :  m_width(width), m_height(height)
+    :  m_modelWidth(width), m_modelHeight(height)
 {
     m_player = new Ball();
 }
@@ -41,7 +40,7 @@ Model::~Model()
 }
 
 //=======================================
-// Calcul la prochaine Ã©tape
+// Calcul la prochaine étape
 //=======================================
 void Model::nextStep()
 {
@@ -51,10 +50,15 @@ void Model::nextStep()
 //=======================================
 // Accesseurs en lecture
 //=======================================
-void Model::getBallPosition(int &x, int &y)
+//void Model::getBallPosition(int &x, int &y)
+//{
+//    x = m_player->getPositionX();
+//    y = m_player->getPositionY();
+//}
+
+Ball Model::getBall()
 {
-    x = m_player->getPositionX();
-    y = m_player->getPositionY();
+    return *m_player;
 }
 
 //=======================================

@@ -1,5 +1,4 @@
-/*
-Copyright (C) 2015 Jolivet Arthur & Laronze Florian
+/* Copyright (C) 2015 Jolivet Arthur & Laronze Florian
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,6 +16,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 #include "../header/View.h"
+#include "../header/Model.h"
+#include "../header/GraphicElement.h"
 
 #include <sstream>
 #include <iostream>
@@ -28,7 +29,7 @@ using namespace std;
 //=======================================
 // Constructeur
 //=======================================
-View::View(int w, int h): m_width(w), m_height(h)
+View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 {
     m_window = new sf::RenderWindow(sf::VideoMode(w, h, 32), "Runner", sf::Style::Close);
 
@@ -36,18 +37,18 @@ View::View(int w, int h): m_width(w), m_height(h)
         cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE << endl;
     else
     {
-        m_backgroundSprite.setTexture(m_background);
-        m_backgroundSprite.setPosition(sf::Vector2f(0.f,0.f));
-        //GraphicElement graphicBackground(m_background, 0, 0, m_width, m_height);
+        //m_backgroundSprite.setTexture(m_background);
+        //m_backgroundSprite.setPosition(sf::Vector2f(0.f,0.f));
+        GraphicElement graphicBackground();//(m_background, 0, 0, m_viewWidth, m_viewHeight);
     }
 
     if (!m_ball.loadFromFile(BALL_IMAGE))
         cerr << "ERROR when loading image file: " << BALL_IMAGE << endl;
     else
     {
-        m_ballSprite.setTexture(m_ball);
-        m_ballSprite.setPosition(sf::Vector2f(50.f,450.f));
-        //GraphicElement graphicBall(m_ball, m_x_ball, m_y_ball, 50, 50);
+        //m_ballSprite.setTexture(m_ball);
+        //m_ballSprite.setPosition(sf::Vector2f(50.f,450.f));
+        GraphicElement graphicBall();//(m_ball, POSITION_X_BALL, POSITION_Y_BALL, WIDTH_BALL, 25);
     }
 }
 
@@ -65,7 +66,7 @@ View::~View()
 
 
 //=======================================
-// Accesseurs en Ã©criture
+// Accesseurs en écriture
 //=======================================
 void View::setModel(Model * model)
 {
@@ -79,8 +80,8 @@ void View::setModel(Model * model)
 //=======================================
 void View::synchronize()
 {
-    m_model->getBallPosition(m_x_ball,m_y_ball);
-    m_ballSprite.setPosition(sf::Vector2f( (float)m_x_ball, (float)m_y_ball ));
+    m_ballSprite.setPosition(sf::Vector2f(POSITION_X_BALL, POSITION_Y_BALL));
+    graphicBall.setPosition(sf::Vector2f(POSITION_X_BALL, POSITION_Y_BALL));
 }
 
 //=======================================
@@ -123,14 +124,16 @@ bool View::treatEvents()
                     m_window->close();
                     result = false;
                 }
-                //Deplacements balle
-                if(event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q)
+                //Déplacements balle
+                if((event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q) && POSITION_X_BALL > 0)
                 {
                     m_model->moveBall(true);
+                    cout << POSITION_X_BALL << endl;
                 }
-                if(event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
+                if((event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D) && (POSITION_X_BALL) < (m_viewWidth - 2*WIDTH_BALL ))
                 {
                     m_model->moveBall(false);
+                    cout << POSITION_X_BALL << endl;
                 }
             }
         }

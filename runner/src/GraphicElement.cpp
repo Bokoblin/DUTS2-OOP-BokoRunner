@@ -1,5 +1,4 @@
-/*
-Copyright (C) 2015 Jolivet Arthur & Laronze Florian
+/* Copyright (C) 2015 Jolivet Arthur & Laronze Florian
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,7 +26,7 @@ GraphicElement::GraphicElement()
 GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) : m_w(w), m_h(h)
 {
     this->setTexture(image);
-    this->setPosition( (float)x, (float)y);
+    //this->setPosition( (float)x, (float)y);
 }
 
 GraphicElement::~GraphicElement()
@@ -44,7 +43,7 @@ void GraphicElement::draw(sf::RenderWindow * current_window)
 void GraphicElement::resize(int width, int height)
 {
     sf::FloatRect bb = this->getLocalBounds();
-    int width_factor = width / bb.width;     // facteur de mise Ã  l'Ã©chelle pour la largeur
-    int height_factor = height / bb.height;  // facteur de mise Ã  l'Ã©chelle pour la largeur
+    int width_factor = width / bb.width;     // facteur de mise à l'échelle pour la largeur
+    int height_factor = height / bb.height;  // facteur de mise à l'échelle pour la largeur
     this->setScale(width_factor, height_factor);
 }

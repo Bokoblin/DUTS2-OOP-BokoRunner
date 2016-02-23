@@ -15,48 +15,39 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include "../header/GraphicElement.h"
+#include "MovableElement.h"
 
 //=======================================
 // Constructeur
 //=======================================
-GraphicElement::GraphicElement()
+MovableElement::MovableElement()
 {
     //ctor
-}
-
-GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) : m_w(w), m_h(h)
-{
-    this->setTexture(image);
-    this->setPosition( (float)x, (float)y);
 }
 
 //=======================================
 // Destructeur
 //=======================================
-GraphicElement::~GraphicElement()
+MovableElement::~MovableElement()
 {
     //dtor
 }
 
 
+
 //=======================================
-// Fonction de dessin
+// Accesseurs en lecture
 //=======================================
-void GraphicElement::draw(sf::RenderWindow * current_window)
-{
-   // current_window->draw(?????);
-    current_window->display();
-}
+int MovableElement::getMoveX() const { return m_moveX; }
+int MovableElement::getMoveY() const { return m_moveY; }
+int MovableElement::getPosX()   const { return m_posX;    }
+int MovableElement::getPosY()   const { return m_posY;    }
+int MovableElement::getWidth()  const { return m_width;   }
+int MovableElement::getHeight()const { return m_height;  }
 
 
 //=======================================
-// Fonction de redimentionnement
+// Accesseurs en Ã©criture
 //=======================================
-void GraphicElement::resize(int width, int height)
-{
-    sf::FloatRect bb = this->getLocalBounds();
-    int width_factor = width / bb.width;     // facteur de mise à l'échelle pour la largeur
-    int height_factor = height / bb.height;  // facteur de mise à l'échelle pour la largeur
-    this->setScale(width_factor, height_factor);
-}
+void MovableElement::setPositionX(int x) { m_posX = x; }
+void MovableElement::setPositionY(int y) { m_posX = y; }

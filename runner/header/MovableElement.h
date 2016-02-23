@@ -15,19 +15,44 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifndef BALL_H
-#define BALL_H
+#ifndef MOVABLEELEMENT_H
+#define MOVABLEELEMENT_H
 
-//#include <SFML/Graphics.hpp>
-#include "MovableElement.h"
+#include <SFML/Graphics.hpp>
 
-class Ball : public MovableElement
+class MovableElement
 {
     public:
-        Ball();
-        ~Ball();
+        //CONSTRUCTEURS
+        MovableElement();
+        ~MovableElement();
+
+        //METHODES
+        move();
+
+        //ACCESSEURS
+        int getMoveX() const;
+        int getMoveY() const;
+        int getPosX() const;
+        int getPosY() const;
+        int getWidth() const;
+        int getHeight() const;
+
+        void setPositionX(int x);
+        void setPositionY(int y);
+
+
+    protected:
+        //ATTRIBUTS
+        int m_posX;
+        int m_posY;
+        int m_width;
+        int m_height;
+        int m_moveX;
+        int m_moveY;
 
     private:
+
 };
 
-#endif // BALL_H
+#endif // MOVABLEELEMENT_H

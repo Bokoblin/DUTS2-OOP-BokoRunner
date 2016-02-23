@@ -1,4 +1,4 @@
-/* Copyright (C) 2015 Jolivet Arthur & Laronze Florian
+/* Copyright (C) 2016 Jolivet Arthur & Laronze Florian
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -38,21 +38,3 @@ Ball::~Ball()
 {
     //dtor
 }
-
-
-//=======================================
-// Accesseurs en lecture
-//=======================================
-int Ball::getMoveX() { return m_moveX; }
-int Ball::getMoveY() { return m_moveY; }
-int Ball::getPositionX() { return m_posX; }
-int Ball::getPositionY() { return m_posY; }
-int Ball::getWidth() { return m_width; }
-int Ball::getHeight() { return m_height; }
-
-
-//=======================================
-// Accesseurs en écriture
-//=======================================
-void Ball::setPositionX(int x) { m_posX = x; }
-void Ball::setPositionY(int y) { m_posX = y; }

@@ -1,4 +1,4 @@
-/* Copyright (C) 2015 Jolivet Arthur & Laronze Florian
+/* Copyright (C) 2016 Jolivet Arthur & Laronze Florian
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -44,17 +44,15 @@ Model::~Model()
 //=======================================
 void Model::nextStep()
 {
+//    for_each(m_listElements.begin(), m_listElements.end(),)
 
+//Modifier la méthode nextStep() du modèle afin qu'elle déplace
+// de manière aléatoire les objets mobiles.
 }
 
 //=======================================
 // Accesseurs en lecture
 //=======================================
-//void Model::getBallPosition(int &x, int &y)
-//{
-//    x = m_player->getPositionX();
-//    y = m_player->getPositionY();
-//}
 
 Ball Model::getBall()
 {
@@ -62,13 +60,13 @@ Ball Model::getBall()
 }
 
 //=======================================
-// METHODES
+// Deplacement Ball
 //=======================================
 void Model::moveBall(bool left)
 {
     if (left)
-        m_player->setPositionX( m_player->getPositionX() - m_player->getMoveX() );
+        m_player->setPositionX( m_player->getPosX() - m_player->getMoveX() );
     if (!left)
-        m_player->setPositionX( m_player->getPositionX() + m_player->getMoveX() );
+        m_player->setPositionX( m_player->getPosX() + m_player->getMoveX() );
 }
 

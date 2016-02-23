@@ -1,4 +1,4 @@
-/* Copyright (C) 2015 Jolivet Arthur & Laronze Florian
+/* Copyright (C) 2016 Jolivet Arthur & Laronze Florian
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,14 +16,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 #include "../header/View.h"
-#include "../header/Model.h"
-#include "../header/GraphicElement.h"
 
 #include <sstream>
 #include <iostream>
 
 using namespace std;
-//using namespace sf;
 
 
 //=======================================
@@ -31,26 +28,27 @@ using namespace std;
 //=======================================
 View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 {
-    m_window = new sf::RenderWindow(sf::VideoMode(w, h, 32), "Runner", sf::Style::Close);
+    m_window = new sf::RenderWindow( sf::VideoMode(w, h, 32), "Runner", sf::Style::Close );
 
     if (!m_background.loadFromFile(BACKGROUND_IMAGE))
         cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE << endl;
     else
     {
-        //m_backgroundSprite.setTexture(m_background);
+        m_backgroundSprite.setTexture(m_background);
         //m_backgroundSprite.setPosition(sf::Vector2f(0.f,0.f));
-        GraphicElement graphicBackground();//(m_background, 0, 0, m_viewWidth, m_viewHeight);
+        GraphicElement graphicBackground();
     }
 
     if (!m_ball.loadFromFile(BALL_IMAGE))
         cerr << "ERROR when loading image file: " << BALL_IMAGE << endl;
     else
     {
-        //m_ballSprite.setTexture(m_ball);
+        m_ballSprite.setTexture(m_ball);
         //m_ballSprite.setPosition(sf::Vector2f(50.f,450.f));
-        GraphicElement graphicBall();//(m_ball, POSITION_X_BALL, POSITION_Y_BALL, WIDTH_BALL, 25);
+        GraphicElement graphicBall();
     }
 }
+
 
 //=======================================
 // Destructeur
@@ -59,8 +57,6 @@ View::~View()
 {
     if(m_window!= NULL)
         delete m_window;
-    if(m_model!= NULL)
-        delete m_model;
 }
 
 
@@ -68,10 +64,7 @@ View::~View()
 //=======================================
 // Accesseurs en écriture
 //=======================================
-void View::setModel(Model * model)
-{
-    m_model = model;
-}
+void View::setModel(Model *model) { m_model = model; }
 
 
 
@@ -81,7 +74,7 @@ void View::setModel(Model * model)
 void View::synchronize()
 {
     m_ballSprite.setPosition(sf::Vector2f(POSITION_X_BALL, POSITION_Y_BALL));
-    graphicBall.setPosition(sf::Vector2f(POSITION_X_BALL, POSITION_Y_BALL));
+//    graphicBall.setPosition(sf::Vector2f(POSITION_X_BALL, POSITION_Y_BALL));
 }
 
 //=======================================
@@ -112,29 +105,31 @@ bool View::treatEvents()
         sf::Event event;
         while (m_window->pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            switch (event.type)
             {
+            case sf::Event::Closed:             // fenêtre fermée
                 m_window->close();
-                result = false;
-            }
-            if (event.type == sf::Event::KeyPressed)
-            {
+                break;
+
+            case sf::Event::KeyPressed:     // touche pressée
                 if (event.key.code == sf::Keyboard::Escape)
                 {
                     m_window->close();
                     result = false;
                 }
-                //Déplacements balle
-                if((event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q) && POSITION_X_BALL > 0)
+                if ( (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q) && POSITION_X_BALL > 0 )
                 {
                     m_model->moveBall(true);
                     cout << POSITION_X_BALL << endl;
                 }
-                if((event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D) && (POSITION_X_BALL) < (m_viewWidth - 2*WIDTH_BALL ))
+                if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D) && (POSITION_X_BALL + WIDTH_BALL) < m_viewWidth )
                 {
                     m_model->moveBall(false);
                     cout << POSITION_X_BALL << endl;
                 }
+                break;
+            default:
+                break;
             }
         }
     }

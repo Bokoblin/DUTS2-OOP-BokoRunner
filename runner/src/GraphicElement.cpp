@@ -56,7 +56,10 @@ void GraphicElement::draw(sf::RenderWindow * current_window)
 void GraphicElement::resize(int width, int height)
 {
     sf::FloatRect bb = this->getLocalBounds();
-    int width_factor = width / bb.width;     // facteur de mise à l'échelle pour la largeur
-    int height_factor = height / bb.height;  // facteur de mise à l'échelle pour la hauteur
+    float width_factor = width / bb.width;     // facteur de mise à l'échelle
+    float height_factor = height / bb.height;
     this->setScale(width_factor, height_factor);
+    //modification largeur et hauteur
+    this->m_w = width;
+    this->m_h = height;
 }

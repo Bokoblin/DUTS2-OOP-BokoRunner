@@ -20,20 +20,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include <SFML/Graphics.hpp>
 
-
 class GraphicElement : public sf::Sprite
 {
     public:
+        //CTORs / DTORs
         GraphicElement();
         GraphicElement(sf::Texture &image, int x, int y, int w, int h);
         ~GraphicElement();
 
+        //METHODES
         void draw(sf::RenderWindow * window);
         void resize (int w, int h);
 
     protected:
 
     private:
+        //ATTRIBUTS
         int m_w;
         int m_h;
 

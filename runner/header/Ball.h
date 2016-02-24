@@ -18,7 +18,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #ifndef BALL_H
 #define BALL_H
 
-//#include <SFML/Graphics.hpp>
 #include "MovableElement.h"
 
 class Ball : public MovableElement

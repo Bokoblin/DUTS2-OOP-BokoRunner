@@ -15,3 +15,9 @@ Arthur & Florian - v0.1.0-1 (22/02/15) :
 - header  files from "Atelier 1" and "Atelier 2" added
 
 => Background with movable ball on X-axis.
+
+Arthur - v0.1.0-2 (24/02/15) :
+
+- code relative to "Atelier 2" and "Atelier 3" added
+
+=> Background with movable ball on X-axis (only background modification)

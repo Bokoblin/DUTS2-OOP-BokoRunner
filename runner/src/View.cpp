@@ -38,8 +38,19 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
     else
     {
         m_playerGraphic = new GraphicElement(m_playerTexture, 50, 50,25,25);
+        m_playerGraphic->resize(20,20);
+
         m_elementToGraphicElement[m_model->getBallAdr()] = m_playerGraphic; //association de la balle et de la balle graphique
     }
+
+
+    m_font = new sf::Font();
+    m_font->loadFromFile(FONT);
+    m_textPositionBall = new sf::Text;
+    m_textPositionBall->setFont(*m_font);
+    m_textPositionBall->setPosition(10,10);
+    m_textPositionBall->setCharacterSize(15);
+    m_textPositionBall->setColor(sf::Color::Black);
 }
 
 
@@ -50,6 +61,8 @@ View::~View()
 {
     if(m_window!= NULL)
         delete m_window;
+//    if(m_font!= NULL)
+    //     delete m_font;
 }
 
 
@@ -76,6 +89,12 @@ void View::synchronize()
     //atelier 3 2.3 :
     //modifier la méthode synchronize afin d'instancier un nouvel objet graphique pour
     // chaque nouvel élément du modèle et mettre à jour le tableau associatif.
+
+
+    //Mise à jour du texte
+
+    m_textPositionBall->setString(m_model->getBall().to_string());
+    //m_textePosBallY.setString(std::to_string(POSITION_Y_BALL));
 }
 
 
@@ -93,6 +112,8 @@ void View::draw()
     {
         m_window->draw(*(it->second));
     }
+
+    m_window->draw(*m_textPositionBall);
 
     m_window->display();
 }
@@ -126,12 +147,10 @@ bool View::treatEvents()
                 if ( (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q ) && POSITION_X_BALL > 0 )
                 {
                     m_model->moveBall(true);
-                    cout << POSITION_X_BALL << endl;
                 }
                 if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D ) && (POSITION_X_BALL + WIDTH_BALL) < m_viewWidth )
                 {
                     m_model->moveBall(false);
-                    cout << POSITION_X_BALL << endl;
                 }
                 if (event.key.code == sf::Keyboard::Add)
                 {
@@ -158,20 +177,17 @@ bool View::treatEvents()
                 else if (sf::Joystick::isButtonPressed(0, 4) && POSITION_X_BALL > 0 )
                 {
                     m_model->moveBall(true);
-                    cout << POSITION_X_BALL << endl;
                     cout << "L" << endl;
                 }
                 else if (sf::Joystick::isButtonPressed(0, 5)  && (POSITION_X_BALL + WIDTH_BALL) < m_viewWidth )
                 {
                     m_model->moveBall(false);
-                    cout << POSITION_X_BALL << endl;
                     cout << "R" << endl;
                 }
                 else if (sf::Joystick::isButtonPressed(0, 8))
                     cout << "Select" << endl;
                 else if (sf::Joystick::isButtonPressed(0, 9))
                 {
-
                     cout << "Start" << endl;
                     m_window->close();
                     result = false;

@@ -1,23 +1,31 @@
 Runner Project - state of progress
 Auteurs : Arthur JOLIVET et Florian LARONZE
 
+Current stable   version : v0.1.0-r3 
+Current advanced version : v0.1.2-dev
 
-Arthur - v0.1.0-0 (22/02/15) :
+Arthur - v0.1.0-r1 (22/02/15) :
 
 - Project Creation:
 	- images added in "Images" folder
 	- font added in "Fonts" folder
 	- README added
 
-Arthur & Florian - v0.1.0-1 (22/02/15) :
+Arthur & Florian - v0.1.0-r2 (22/02/15) :
 
 - sources files from "Atelier 1" and "Atelier 2" added
 - header  files from "Atelier 1" and "Atelier 2" added
 
 => Background with movable ball on X-axis.
 
-Arthur - v0.1.0-2 (24/02/15) :
+Arthur - v0.1.0-r3 (24/02/15) :
 
 - code relative to "Atelier 2" and "Atelier 3" added
 
 => Background with movable ball on X-axis (only background modification)
+
+
+Arthur - v0.1.2-dev (24/02/15) :
+
+- Atelier 4 : adding font for ball position
+- Atelier 2 : GraphicElement::resize() is now working

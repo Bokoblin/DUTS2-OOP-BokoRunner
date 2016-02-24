@@ -16,7 +16,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 #include "../header/Ball.h"
-#include <iostream>
 
 using namespace std;
 
@@ -26,7 +25,7 @@ using namespace std;
 Ball::Ball()
 {
     m_posX = 50, m_posY = 450;
-    m_width = 25, m_height = 25;
+    m_width = 50, m_height = 50;
     m_moveX = 10, m_moveY = 10;
 }
 

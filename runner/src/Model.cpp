@@ -17,8 +17,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "../header/Model.h"
 #include "../header/Ball.h"
-#include <iostream>
-#include <fstream>
+
 using namespace std;
 
 //=======================================
@@ -37,6 +36,9 @@ Model::~Model()
 {
     if(m_player!= NULL)
         delete m_player;
+
+    for(int i=0; i<m_elements.size(); i++)
+        delete m_elements[i];
 }
 
 //=======================================
@@ -44,19 +46,27 @@ Model::~Model()
 //=======================================
 void Model::nextStep()
 {
-//    for_each(m_listElements.begin(), m_listElements.end(),)
+//Modifier la méthode afin qu'elle déplace de manière aléatoire les objets mobiles.
 
-//Modifier la méthode nextStep() du modèle afin qu'elle déplace
-// de manière aléatoire les objets mobiles.
+    for(int i=0; i<m_elements.size(); i++)
+    {
+        srand(time(NULL));
+        m_elements[i]->setPositionX(rand()%m_modelWidth);
+    }
 }
 
 //=======================================
 // Accesseurs en lecture
 //=======================================
 
-Ball Model::getBall()
+Ball Model::getBall() const
 {
     return *m_player;
+}
+
+Ball* Model::getBallAdr() const
+{
+    return m_player;
 }
 
 //=======================================
@@ -70,3 +80,15 @@ void Model::moveBall(bool left)
         m_player->setPositionX( m_player->getPosX() + m_player->getMoveX() );
 }
 
+//=======================================
+// Ajout de nouvels éléments
+//=======================================
+void Model::addElement()
+{
+   //A3 2.2 : permet d'ajouter d'un nouvelle élément mobile au modèle (et mettre à jour _elements et _new_elements)
+
+}
+
+
+// A3 2.4.     Afin de ne pas ajouter en boucle des objets graphiques, l'attribut _new_elements du modèle doit être vidé.
+// Dans quelle méthode, l'appel à clear() de la classe vector doit il être réalisé?

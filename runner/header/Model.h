@@ -17,25 +17,38 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #ifndef _MODEL_H
 #define _MODEL_H
+
 #include "Ball.h"
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
 
 class Model
 {
 public:
+    //CTORs / DTORs
     Model(int width, int height);
     ~Model();
 
-    Ball getBall();
+    //ACCESSEURS
+    Ball getBall() const;
+    Ball* getBallAdr() const ;
+    std::vector<const MovableElement *> getNewMovableElements() const;
+
+    //METHODES
     void nextStep();
     void moveBall(bool left);
-
+    void addElement(); //ajout de nouveaux MovableElements
 
 private:
+    //ATTRIBUTS
     int m_modelWidth;
     int m_modelHeight;
-
     Ball *m_player;
-    std::vector<MovableElement*> m_listElements;   //tableau dynamique de MovableElements
+    std::vector<MovableElement*> m_elements;   //tableau dynamique de MovableElements
 
+    //Ajouter dans le modèle l'attribut  std::vector<const MovableElement *> _new_elements qui
+    //contient les éléments qui viennent d'être ajouté au modèle :
+    //std::vector<const MovableElement*> m_newElements; //SEG FAULT By adding that
 };
 #endif

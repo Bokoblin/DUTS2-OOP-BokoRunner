@@ -21,41 +21,48 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "Model.h"
 #include "GraphicElement.h"
 #include <SFML/Graphics.hpp>
+#include <sstream>
+#include <iostream>
 
 #define POSITION_X_BALL m_model->getBall().getPosX()
 #define POSITION_Y_BALL m_model->getBall().getPosY()
 #define WIDTH_BALL m_model->getBall().getWidth()
 
 const std::string BACKGROUND_IMAGE = "Images/city.png";
-const std::string BALL_IMAGE = "Images/ball_25.png";
+const std::string BALL_IMAGE = "Images/balls.png";
 
 class Model;
 
 class View
 {
 public:
+    //CTORs / DTORs
     View(int w, int h);
     ~View();
 
+    //ACCESSEURS
     void setModel(Model * model);
 
+    //METHODES
     void synchronize();
     void draw();
     bool treatEvents();
 
 private:
+    //ATTRIBUTS
     int m_viewWidth, m_viewHeight;
 
     sf::RenderWindow *m_window;
     Model *m_model;
 
-    sf::Texture m_background;
-    sf::Sprite m_backgroundSprite; //a suppr quand graphicElement marchera
+    sf::Texture m_backgroundTexture;
+    GraphicElement *m_backgroundGraphic;
 
-    sf::Texture m_ball;
-    sf::Sprite m_ballSprite;//a suppr quand graphicElement marchera
+    sf::Texture m_playerTexture;
+    GraphicElement *m_playerGraphic;
 
+    //Tableau associatif et son itérateur
     std::map<const MovableElement *, GraphicElement *> m_elementToGraphicElement;
-
+    std::map<const MovableElement *, GraphicElement *>::iterator it;
 };
 #endif

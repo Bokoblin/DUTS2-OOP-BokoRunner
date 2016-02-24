@@ -22,7 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 //=======================================
 GraphicElement::GraphicElement()
 {
-    //ctor
+
 }
 
 GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) : m_w(w), m_h(h)
@@ -45,7 +45,7 @@ GraphicElement::~GraphicElement()
 //=======================================
 void GraphicElement::draw(sf::RenderWindow * current_window)
 {
-   // current_window->draw(?????);
+    current_window->draw(*this);
     current_window->display();
 }
 
@@ -57,6 +57,6 @@ void GraphicElement::resize(int width, int height)
 {
     sf::FloatRect bb = this->getLocalBounds();
     int width_factor = width / bb.width;     // facteur de mise à l'échelle pour la largeur
-    int height_factor = height / bb.height;  // facteur de mise à l'échelle pour la largeur
+    int height_factor = height / bb.height;  // facteur de mise à l'échelle pour la hauteur
     this->setScale(width_factor, height_factor);
 }

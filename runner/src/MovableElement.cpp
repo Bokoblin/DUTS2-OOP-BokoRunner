@@ -22,7 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 //=======================================
 MovableElement::MovableElement()
 {
-    //ctor
+
 }
 
 //=======================================
@@ -30,7 +30,7 @@ MovableElement::MovableElement()
 //=======================================
 MovableElement::~MovableElement()
 {
-    //dtor
+
 }
 
 

@@ -17,11 +17,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "../header/View.h"
 
-#include <sstream>
-#include <iostream>
-
 using namespace std;
-
 
 //=======================================
 // Constructeur
@@ -30,22 +26,19 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 {
     m_window = new sf::RenderWindow( sf::VideoMode(w, h, 32), "Runner", sf::Style::Close );
 
-    if (!m_background.loadFromFile(BACKGROUND_IMAGE))
+    if (!m_backgroundTexture.loadFromFile(BACKGROUND_IMAGE))
         cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE << endl;
     else
     {
-        m_backgroundSprite.setTexture(m_background);
-        //m_backgroundSprite.setPosition(sf::Vector2f(0.f,0.f));
-        GraphicElement graphicBackground();
+        m_backgroundGraphic = new GraphicElement(m_backgroundTexture, 0, 0, m_viewWidth, m_viewHeight);
     }
 
-    if (!m_ball.loadFromFile(BALL_IMAGE))
+    if (!m_playerTexture.loadFromFile(BALL_IMAGE, sf::IntRect(0,0,50,50)) )     //chargement d'une partie de l'image des balles
         cerr << "ERROR when loading image file: " << BALL_IMAGE << endl;
     else
     {
-        m_ballSprite.setTexture(m_ball);
-        //m_ballSprite.setPosition(sf::Vector2f(50.f,450.f));
-        GraphicElement graphicBall();
+        m_playerGraphic = new GraphicElement(m_playerTexture, 50, 50,25,25);
+        m_elementToGraphicElement[m_model->getBallAdr()] = m_playerGraphic; //association de la balle et de la balle graphique
     }
 }
 
@@ -60,12 +53,13 @@ View::~View()
 }
 
 
-
 //=======================================
 // Accesseurs en écriture
 //=======================================
-void View::setModel(Model *model) { m_model = model; }
-
+void View::setModel(Model *model)
+{
+    m_model = model;
+}
 
 
 //=======================================
@@ -73,9 +67,17 @@ void View::setModel(Model *model) { m_model = model; }
 //=======================================
 void View::synchronize()
 {
-    m_ballSprite.setPosition(sf::Vector2f(POSITION_X_BALL, POSITION_Y_BALL));
-//    graphicBall.setPosition(sf::Vector2f(POSITION_X_BALL, POSITION_Y_BALL));
+    //!!!!!! A CHANGER : seul les movable sont autorisés (atelier 3 II. 1.2 bis )
+
+    //Mise à jour des instances de MovableElement
+    m_backgroundGraphic->setPosition(sf::Vector2f(0,0));
+    m_playerGraphic->setPosition(sf::Vector2f(POSITION_X_BALL, POSITION_Y_BALL));
+
+    //atelier 3 2.3 :
+    //modifier la méthode synchronize afin d'instancier un nouvel objet graphique pour
+    // chaque nouvel élément du modèle et mettre à jour le tableau associatif.
 }
+
 
 //=======================================
 // Fonction de dessin
@@ -84,12 +86,16 @@ void View::draw()
 {
     m_window->clear();
 
-    m_window->draw(m_backgroundSprite);
-    m_window->draw(m_ballSprite);
+    //Dessin des instances de GraphicElement
+    m_window->draw(*m_backgroundGraphic);
+
+    for(it = m_elementToGraphicElement.begin() ; it != m_elementToGraphicElement.end() ; ++it)
+    {
+        m_window->draw(*(it->second));
+    }
 
     m_window->display();
 }
-
 
 
 //=======================================
@@ -117,17 +123,61 @@ bool View::treatEvents()
                     m_window->close();
                     result = false;
                 }
-                if ( (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q) && POSITION_X_BALL > 0 )
+                if ( (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q ) && POSITION_X_BALL > 0 )
                 {
                     m_model->moveBall(true);
                     cout << POSITION_X_BALL << endl;
                 }
-                if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D) && (POSITION_X_BALL + WIDTH_BALL) < m_viewWidth )
+                if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D ) && (POSITION_X_BALL + WIDTH_BALL) < m_viewWidth )
                 {
                     m_model->moveBall(false);
                     cout << POSITION_X_BALL << endl;
                 }
+                if (event.key.code == sf::Keyboard::Add)
+                {
+                    m_model->addElement();
+                }
                 break;
+
+            //{  Joystick
+            case sf::Event::JoystickConnected :
+                cout << "connected" << endl;
+                break;
+            case sf::Event::JoystickDisconnected :
+                cout << "Disconnected" << endl;
+                break;
+            case sf::Event::JoystickButtonPressed :
+                if (sf::Joystick::isButtonPressed(0, 0) )
+                    cout << "X" << endl;
+                else if (sf::Joystick::isButtonPressed(0, 1))
+                    cout << "A" << endl;
+                else if (sf::Joystick::isButtonPressed(0, 2))
+                    cout << "B" << endl;
+                else if (sf::Joystick::isButtonPressed(0, 3))
+                    cout << "Y" << endl;
+                else if (sf::Joystick::isButtonPressed(0, 4) && POSITION_X_BALL > 0 )
+                {
+                    m_model->moveBall(true);
+                    cout << POSITION_X_BALL << endl;
+                    cout << "L" << endl;
+                }
+                else if (sf::Joystick::isButtonPressed(0, 5)  && (POSITION_X_BALL + WIDTH_BALL) < m_viewWidth )
+                {
+                    m_model->moveBall(false);
+                    cout << POSITION_X_BALL << endl;
+                    cout << "R" << endl;
+                }
+                else if (sf::Joystick::isButtonPressed(0, 8))
+                    cout << "Select" << endl;
+                else if (sf::Joystick::isButtonPressed(0, 9))
+                {
+
+                    cout << "Start" << endl;
+                    m_window->close();
+                    result = false;
+                }
+                break;
+            //}
             default:
                 break;
             }

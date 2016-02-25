@@ -23,6 +23,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include <iostream>
+#include <string>
 
 #define POSITION_X_BALL m_model->getBall().getPosX()
 #define POSITION_Y_BALL m_model->getBall().getPosY()
@@ -31,6 +32,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 const std::string BACKGROUND_IMAGE = "Images/city.png";
 const std::string BALL_IMAGE = "Images/balls.png";
 const std::string ENNEMIES_IMAGE = "Images/ennemies.png";
+const std::string FONT = "Fonts/Antique_Olive.ttf";
 
 class Model;
 
@@ -56,13 +58,16 @@ private:
     sf::RenderWindow *m_window;
     Model *m_model;
 
+    sf::Font *m_font;
+    sf::Text *m_textPositionBall;
+
+    //Gestion des éléments graphiques
     sf::Texture m_backgroundTexture;
-    GraphicElement *m_backgroundGraphic;
-
     sf::Texture m_playerTexture;
-    GraphicElement *m_playerGraphic;
-
     sf::Texture m_ennemiesTexture;
+
+    GraphicElement *m_backgroundGraphic;
+    GraphicElement *m_playerGraphic;
     GraphicElement *m_ennemiesGraphic;
 
     //Tableau associatif et son itérateur

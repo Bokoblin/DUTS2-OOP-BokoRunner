@@ -40,6 +40,7 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
     else
     {
         m_playerGraphic = new GraphicElement(m_playerTexture, 50, 50,25,25);
+        m_playerGraphic->resize(20,20);
     }
 
     if (!m_ennemiesTexture.loadFromFile(ENNEMIES_IMAGE, sf::IntRect(0,0,50,50)) )     //chargement d'une partie de l'image des balles
@@ -47,7 +48,17 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
     else
     {
         m_ennemiesGraphic = new GraphicElement(m_ennemiesTexture, 400, 450,50,50);
+        m_ennemiesGraphic->resize(20,20);
     }
+
+    //Initialisation font et texte
+    m_font = new sf::Font();
+    m_font->loadFromFile(FONT);
+    m_textPositionBall = new sf::Text;
+    m_textPositionBall->setFont(*m_font);
+    //m_textPositionBall->setPosition(10,10);
+    m_textPositionBall->setCharacterSize(15);
+    m_textPositionBall->setColor(sf::Color::Black);
 }
 
 
@@ -58,6 +69,8 @@ View::~View()
 {
     if(m_window!= NULL)
         delete m_window;
+//    if(m_font!= NULL)
+    //     delete m_font;
 }
 
 
@@ -94,6 +107,10 @@ void View::synchronize()
     m_backgroundGraphic->setPosition(sf::Vector2f(0,0));
     m_playerGraphic->setPosition(sf::Vector2f( m_model->getMovBall()->getPosX(), POSITION_Y_BALL));
 
+    //=== Mise à jour du texte
+
+    m_textPositionBall->setString(m_model->getBall().to_string());
+
 /* //DEBUG
     cout << "==Contenu tableau APRES EFFACEMENT==" << endl;
 
@@ -112,7 +129,8 @@ void View::draw()
 {
     m_window->clear();
 
-    //Dessin des instances de GraphicElement
+    //=== Dessin des instances de GraphicElement
+
     m_window->draw(*m_backgroundGraphic);
 
     for(it = m_elementToGraphicElement.begin() ; it != m_elementToGraphicElement.end() ; ++it)
@@ -123,6 +141,9 @@ void View::draw()
         cout << "element at adress " << (it->second) << " has been drawn" <<endl;
         */
     }
+
+    //=== Dessin du texte
+    m_window->draw(*m_textPositionBall);
 
     m_window->display();
 }
@@ -156,12 +177,10 @@ bool View::treatEvents()
                 if ( (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q ) && POSITION_X_BALL > 0 )
                 {
                     m_model->moveBall(true);
-                    cout << POSITION_X_BALL << endl;
                 }
                 if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D ) && (POSITION_X_BALL + WIDTH_BALL) < m_viewWidth )
                 {
                     m_model->moveBall(false);
-                    cout << POSITION_X_BALL << endl;
                 }
                 if (event.key.code == sf::Keyboard::Add)
                 {
@@ -188,20 +207,17 @@ bool View::treatEvents()
                 else if (sf::Joystick::isButtonPressed(0, 4) && POSITION_X_BALL > 0 )
                 {
                     m_model->moveBall(true);
-                    cout << POSITION_X_BALL << endl;
                     cout << "L" << endl;
                 }
                 else if (sf::Joystick::isButtonPressed(0, 5)  && (POSITION_X_BALL + WIDTH_BALL) < m_viewWidth )
                 {
                     m_model->moveBall(false);
-                    cout << POSITION_X_BALL << endl;
                     cout << "R" << endl;
                 }
                 else if (sf::Joystick::isButtonPressed(0, 8))
                     cout << "Select" << endl;
                 else if (sf::Joystick::isButtonPressed(0, 9))
                 {
-
                     cout << "Start" << endl;
                     m_window->close();
                     result = false;

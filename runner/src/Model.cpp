@@ -38,7 +38,7 @@ Model::~Model()
     if(m_player!= NULL)
         delete m_player;
 
-    for(int i=0; i<m_movableElementsList.size(); i++)
+    for(unsigned int i=0; i<m_movableElementsList.size(); i++)
         delete m_movableElementsList[i];
 }
 
@@ -49,7 +49,7 @@ void Model::nextStep()
 {
     int alea = rand()%m_modelWidth;
 
-    for(int i=0; i<m_movableElementsList.size(); i++)
+    for(unsigned int i=0; i<m_movableElementsList.size(); i++)
     {
         m_movableElementsList[i]->setPositionX(alea);
     }
@@ -101,7 +101,7 @@ void Model::addNewElement()
 
 
     cout << "=== Contenu m_element===" << endl;
-    for(int i=0; i<m_movableElementsList.size(); i++)
+    for(unsigned int i=0; i<m_movableElementsList.size(); i++)
     {
         cout << m_movableElementsList[i] << endl;
     }

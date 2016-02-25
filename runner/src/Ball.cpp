@@ -25,7 +25,7 @@ using namespace std;
 Ball::Ball()
 {
     m_posX = 50, m_posY = 450;
-    m_width = 50, m_height = 50;
+    m_width = 20, m_height = 20;
     m_moveX = 10, m_moveY = 10;
 }
 
@@ -37,3 +37,11 @@ Ball::~Ball()
 {
     //dtor
 }
+
+string Ball::to_string() const
+{
+    string texte = "POS_X : " + std::to_string(m_posX);
+    texte  +=    "  ,  POS_Y : " +  std::to_string(m_posY);
+    return texte;
+}
+

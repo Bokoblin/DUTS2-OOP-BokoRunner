@@ -2,22 +2,28 @@ Runner Project - state of progress
 Auteurs : Arthur JOLIVET et Florian LARONZE
 
 
-Arthur - v0.1.0-0 (22/02/15) :
+Arthur - v0.1.0-0 (22/02/16) :
 
 - Project Creation:
 	- images added in "Images" folder
 	- font added in "Fonts" folder
 	- README added
 
-Arthur & Florian - v0.1.0-1 (22/02/15) :
+Arthur & Florian - v0.1.0-1 (22/02/16) :
 
 - sources files from "Atelier 1" and "Atelier 2" added
 - header  files from "Atelier 1" and "Atelier 2" added
 
 => Background with movable ball on X-axis.
 
-Arthur - v0.1.0-2 (24/02/15) :
+Arthur - v0.1.0-2 (24/02/16) :
 
 - code relative to "Atelier 2" and "Atelier 3" added
 
 => Background with movable ball on X-axis (only background modification)
+
+Arthur - v0.1.1-0 (25/01/16) :
+
+- Atelier 2 and 3 are finished until fixing issues in "TD Projet" next week
+
+=> A static ennemy can be added with "ADD" key

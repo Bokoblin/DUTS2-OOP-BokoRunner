@@ -25,6 +25,8 @@ using namespace std;
 View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 {
     m_window = new sf::RenderWindow( sf::VideoMode(w, h, 32), "Runner", sf::Style::Close );
+    m_window->setFramerateLimit(5);
+
 
     if (!m_backgroundTexture.loadFromFile(BACKGROUND_IMAGE))
         cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE << endl;
@@ -38,7 +40,13 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
     else
     {
         m_playerGraphic = new GraphicElement(m_playerTexture, 50, 50,25,25);
-        m_elementToGraphicElement[m_model->getBallAdr()] = m_playerGraphic; //association de la balle et de la balle graphique
+    }
+
+    if (!m_ennemiesTexture.loadFromFile(ENNEMIES_IMAGE, sf::IntRect(0,0,50,50)) )     //chargement d'une partie de l'image des balles
+        cerr << "ERROR when loading image file: " << ENNEMIES_IMAGE << endl;
+    else
+    {
+        m_ennemiesGraphic = new GraphicElement(m_ennemiesTexture, 400, 450,50,50);
     }
 }
 
@@ -59,6 +67,7 @@ View::~View()
 void View::setModel(Model *model)
 {
     m_model = model;
+    m_elementToGraphicElement[m_model->getMovBall()] = m_playerGraphic;//association de la balle et de la balle graphique
 }
 
 
@@ -67,15 +76,32 @@ void View::setModel(Model *model)
 //=======================================
 void View::synchronize()
 {
-    //!!!!!! A CHANGER : seul les movable sont autorisés (atelier 3 II. 1.2 bis )
+    //=== Association des nouveaux elements de "m_movableElementList" avec des instances de GraphicElement
 
-    //Mise à jour des instances de MovableElement
+    for (unsigned int i=1; i<m_model->getMovableElementsList().size(); i++)
+    {
+        GraphicElement *m_newEnnemy = new GraphicElement(*m_ennemiesGraphic);
+        m_elementToGraphicElement[m_model->getMovableElementsList()[i] ] = m_ennemiesGraphic;//m_newEnnemy;
+    }
+
+    //=== Vidage de "m_newMovableElementList"
+
+    m_model->getNewMovableElementsList().clear(); //marche pas
+
+
+    //=== Mise à jour de la position graphique à parir de celle des instances de "MovableElement"
+
     m_backgroundGraphic->setPosition(sf::Vector2f(0,0));
-    m_playerGraphic->setPosition(sf::Vector2f(POSITION_X_BALL, POSITION_Y_BALL));
+    m_playerGraphic->setPosition(sf::Vector2f( m_model->getMovBall()->getPosX(), POSITION_Y_BALL));
 
-    //atelier 3 2.3 :
-    //modifier la méthode synchronize afin d'instancier un nouvel objet graphique pour
-    // chaque nouvel élément du modèle et mettre à jour le tableau associatif.
+/* //DEBUG
+    cout << "==Contenu tableau APRES EFFACEMENT==" << endl;
+
+    for (unsigned int i=0; i<m_model->getNewMovableElementsList().size(); i++)
+    {
+        cout << m_model->getNewMovableElementsList()[i] <<  " at adress :  " << &(m_model->getNewMovableElementsList()[i]) << endl;
+    }
+*/
 }
 
 
@@ -92,6 +118,10 @@ void View::draw()
     for(it = m_elementToGraphicElement.begin() ; it != m_elementToGraphicElement.end() ; ++it)
     {
         m_window->draw(*(it->second));
+        /* //DEBUG
+        cout << "===== DRAW =====" << endl << endl;
+        cout << "element at adress " << (it->second) << " has been drawn" <<endl;
+        */
     }
 
     m_window->display();
@@ -113,11 +143,11 @@ bool View::treatEvents()
         {
             switch (event.type)
             {
-            case sf::Event::Closed:             // fenêtre fermée
+            case sf::Event::Closed:      // fenêtre fermée
                 m_window->close();
                 break;
 
-            case sf::Event::KeyPressed:     // touche pressée
+            case sf::Event::KeyPressed:  // touche pressée
                 if (event.key.code == sf::Keyboard::Escape)
                 {
                     m_window->close();
@@ -135,7 +165,7 @@ bool View::treatEvents()
                 }
                 if (event.key.code == sf::Keyboard::Add)
                 {
-                    m_model->addElement();
+                    m_model->addNewElement();
                 }
                 break;
 

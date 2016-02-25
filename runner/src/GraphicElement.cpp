@@ -25,11 +25,19 @@ GraphicElement::GraphicElement()
 
 }
 
+GraphicElement::GraphicElement(GraphicElement const& elementACopier) :
+    m_w(elementACopier.m_w), m_h(elementACopier.m_h)
+{
+//    this->setTexture = elementACopier.getTexture() );     //error
+//    this->setPosition = elementACopier->getPosition() ); //error
+}
+
 GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) : m_w(w), m_h(h)
 {
     this->setTexture(image);
     this->setPosition( (float)x, (float)y);
 }
+
 
 //=======================================
 // Destructeur
@@ -39,7 +47,6 @@ GraphicElement::~GraphicElement()
     //dtor
 }
 
-
 //=======================================
 // Fonction de dessin
 //=======================================
@@ -48,7 +55,6 @@ void GraphicElement::draw(sf::RenderWindow * current_window)
     current_window->draw(*this);
     current_window->display();
 }
-
 
 //=======================================
 // Fonction de redimentionnement

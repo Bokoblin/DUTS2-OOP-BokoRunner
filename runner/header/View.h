@@ -30,6 +30,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 const std::string BACKGROUND_IMAGE = "Images/city.png";
 const std::string BALL_IMAGE = "Images/balls.png";
+const std::string ENNEMIES_IMAGE = "Images/ennemies.png";
 
 class Model;
 
@@ -60,6 +61,9 @@ private:
 
     sf::Texture m_playerTexture;
     GraphicElement *m_playerGraphic;
+
+    sf::Texture m_ennemiesTexture;
+    GraphicElement *m_ennemiesGraphic;
 
     //Tableau associatif et son itérateur
     std::map<const MovableElement *, GraphicElement *> m_elementToGraphicElement;

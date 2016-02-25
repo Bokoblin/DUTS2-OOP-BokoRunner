@@ -19,12 +19,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define BALL_H
 
 #include "MovableElement.h"
+#include <string>
 
 class Ball : public MovableElement
 {
     public:
         Ball();
         ~Ball();
+
+        std::string to_string()const ;
 
     private:
 };

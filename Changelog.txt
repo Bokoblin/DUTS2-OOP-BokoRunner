@@ -1,29 +1,41 @@
 Runner Project - state of progress
 Auteurs : Arthur JOLIVET et Florian LARONZE
 
+Current stable   version : v0.1.2-r1 
 
-Arthur - v0.1.0-0 (22/02/16) :
+
+Arthur - v0.1.0-r1 (22/02/16) :
 
 - Project Creation:
 	- images added in "Images" folder
 	- font added in "Fonts" folder
 	- README added
 
-Arthur & Florian - v0.1.0-1 (22/02/16) :
+Arthur & Florian - v0.1.0-r2 (22/02/16) :
 
 - sources files from "Atelier 1" and "Atelier 2" added
 - header  files from "Atelier 1" and "Atelier 2" added
 
-=> Background with movable ball on X-axis.
 
-Arthur - v0.1.0-2 (24/02/16) :
+Arthur - v0.1.0-r3 (24/02/16) :
 
 - code relative to "Atelier 2" and "Atelier 3" added
 
-=> Background with movable ball on X-axis (only background modification)
 
-Arthur - v0.1.1-0 (25/01/16) :
+Arthur - v0.1.1-r1 (25/01/16) :
 
 - Atelier 2 and 3 are finished until fixing issues in "TD Projet" next week
 
+
+Arthur - v0.1.2-r1 (25/02/16) :
+
+-Merge with v0.1.2-dev from dev-arthur branch containing:
+	- Atelier 4 : adding font for ball position
+	- Atelier 2 : GraphicElement::resize() is now working
+
+
+
+Current features:
+=> There is a background with a X-axis movable ball
 => A static ennemy can be added with "ADD" key
+=> A text displays the current ball position

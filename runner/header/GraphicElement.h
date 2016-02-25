@@ -25,6 +25,7 @@ class GraphicElement : public sf::Sprite
     public:
         //CTORs / DTORs
         GraphicElement();
+        GraphicElement(GraphicElement const& elementACopier); //Ctor par copie
         GraphicElement(sf::Texture &image, int x, int y, int w, int h);
         ~GraphicElement();
 

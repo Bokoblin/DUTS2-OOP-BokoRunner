@@ -32,23 +32,20 @@ public:
 
     //ACCESSEURS
     Ball getBall() const;
-    Ball* getBallAdr() const ;
-    std::vector<const MovableElement *> getNewMovableElements() const;
+    const MovableElement *getMovBall() const ;
+    std::vector<MovableElement*> getNewMovableElementsList();
+    std::vector<MovableElement*> getMovableElementsList();
 
     //METHODES
     void nextStep();
     void moveBall(bool left);
-    void addElement(); //ajout de nouveaux MovableElements
+    void addNewElement(); //ajout de nouveaux MovableElements
 
 private:
     //ATTRIBUTS
-    int m_modelWidth;
-    int m_modelHeight;
+    int m_modelWidth, m_modelHeight;
     Ball *m_player;
-    std::vector<MovableElement*> m_elements;   //tableau dynamique de MovableElements
-
-    //Ajouter dans le modèle l'attribut  std::vector<const MovableElement *> _new_elements qui
-    //contient les éléments qui viennent d'être ajouté au modèle :
-    //std::vector<const MovableElement*> m_newElements; //SEG FAULT By adding that
+    std::vector<MovableElement*> m_movableElementsList;        //tableau dynamique de tous les MovableElements
+    std::vector<MovableElement*> m_newMovableElementsList;
 };
 #endif

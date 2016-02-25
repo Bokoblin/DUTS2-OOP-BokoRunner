@@ -32,7 +32,7 @@ int main()
 
     while(view.treatEvents())
     {
-        model.nextStep();
+        //model.nextStep();
         view.synchronize();
         view.draw();
     }

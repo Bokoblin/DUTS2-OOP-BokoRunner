@@ -41,7 +41,6 @@ class MovableElement
         void setPositionX(int x);
         void setPositionY(int y);
 
-
     protected:
         //ATTRIBUTS
         int m_posX;

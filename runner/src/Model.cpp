@@ -27,6 +27,7 @@ Model::Model(int width, int height)
     :  m_modelWidth(width), m_modelHeight(height)
 {
     m_player = new Ball();
+    m_movableElementsList.push_back(m_player);
 }
 
 //=======================================
@@ -37,8 +38,8 @@ Model::~Model()
     if(m_player!= NULL)
         delete m_player;
 
-    for(int i=0; i<m_elements.size(); i++)
-        delete m_elements[i];
+    for(int i=0; i<m_movableElementsList.size(); i++)
+        delete m_movableElementsList[i];
 }
 
 //=======================================
@@ -46,12 +47,11 @@ Model::~Model()
 //=======================================
 void Model::nextStep()
 {
-//Modifier la méthode afin qu'elle déplace de manière aléatoire les objets mobiles.
+    int alea = rand()%m_modelWidth;
 
-    for(int i=0; i<m_elements.size(); i++)
+    for(int i=0; i<m_movableElementsList.size(); i++)
     {
-        srand(time(NULL));
-        m_elements[i]->setPositionX(rand()%m_modelWidth);
+        m_movableElementsList[i]->setPositionX(alea);
     }
 }
 
@@ -64,9 +64,19 @@ Ball Model::getBall() const
     return *m_player;
 }
 
-Ball* Model::getBallAdr() const
+const MovableElement* Model::getMovBall() const
 {
     return m_player;
+}
+
+std::vector< MovableElement*> Model::getMovableElementsList()
+{
+    return m_movableElementsList;
+}
+
+std::vector< MovableElement*> Model::getNewMovableElementsList()
+{
+    return m_newMovableElementsList;
 }
 
 //=======================================
@@ -81,14 +91,18 @@ void Model::moveBall(bool left)
 }
 
 //=======================================
-// Ajout de nouvels éléments
+// Ajout de nouveaux éléments
 //=======================================
-void Model::addElement()
+void Model::addNewElement()
 {
-   //A3 2.2 : permet d'ajouter d'un nouvelle élément mobile au modèle (et mettre à jour _elements et _new_elements)
+    MovableElement *me = new MovableElement();
+    m_newMovableElementsList.push_back( me );
+    m_movableElementsList.push_back( me );
 
+
+    cout << "=== Contenu m_element===" << endl;
+    for(int i=0; i<m_movableElementsList.size(); i++)
+    {
+        cout << m_movableElementsList[i] << endl;
+    }
 }
-
-
-// A3 2.4.     Afin de ne pas ajouter en boucle des objets graphiques, l'attribut _new_elements du modèle doit être vidé.
-// Dans quelle méthode, l'appel à clear() de la classe vector doit il être réalisé?

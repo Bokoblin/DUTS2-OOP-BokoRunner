@@ -20,7 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 //=======================================
 // Constructeur
 //=======================================
-MovableElement::MovableElement()
+MovableElement::MovableElement() : m_posX(rand()%800), m_posY(450), m_width(20), m_height(20)
 {
 
 }
@@ -33,8 +33,6 @@ MovableElement::~MovableElement()
 
 }
 
-
-
 //=======================================
 // Accesseurs en lecture
 //=======================================
@@ -44,7 +42,6 @@ int MovableElement::getPosX()   const { return m_posX;    }
 int MovableElement::getPosY()   const { return m_posY;    }
 int MovableElement::getWidth()  const { return m_width;   }
 int MovableElement::getHeight()const { return m_height;  }
-
 
 //=======================================
 // Accesseurs en écriture

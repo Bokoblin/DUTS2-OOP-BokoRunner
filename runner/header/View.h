@@ -25,9 +25,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <iostream>
 #include <string>
 
-#define POSITION_X_BALL m_model->getBall().getPosX()
-#define POSITION_Y_BALL m_model->getBall().getPosY()
-#define WIDTH_BALL m_model->getBall().getWidth()
+#define POS_X_BALL m_model->getBallElement()->getPosX()
+#define POS_Y_BALL m_model->getBallElement()->getPosY()
+#define WIDTH_BALL m_model->getBallElement()->getWidth()
 
 const std::string BACKGROUND_IMAGE = "Images/city.png";
 const std::string BALL_IMAGE = "Images/balls.png";
@@ -36,6 +36,12 @@ const std::string FONT = "Fonts/Antique_Olive.ttf";
 
 class Model;
 
+/********************************************
+    View Class
+*********************************************
+    Arthur : 21/02 - 2/03
+    Florian: 21/02 - 2/03
+*********************************************/
 class View
 {
 public:
@@ -43,16 +49,16 @@ public:
     View(int w, int h);
     ~View();
 
-    //ACCESSEURS
-    void setModel(Model * model);
+    //SETTERS
+    void setModel(Model *model);
 
-    //METHODES
+    //METHODS
     void synchronize();
     void draw();
     bool treatEvents();
 
 private:
-    //ATTRIBUTS
+    //ATTRIBUTES
     int m_viewWidth, m_viewHeight;
 
     sf::RenderWindow *m_window;
@@ -61,7 +67,7 @@ private:
     sf::Font *m_font;
     sf::Text *m_textPositionBall;
 
-    //Gestion des éléments graphiques
+    //GraphicElements Textures
     sf::Texture m_backgroundTexture;
     sf::Texture m_playerTexture;
     sf::Texture m_ennemiesTexture;
@@ -70,8 +76,7 @@ private:
     GraphicElement *m_playerGraphic;
     GraphicElement *m_ennemiesGraphic;
 
-    //Tableau associatif et son itérateur
+    //Associative arrays
     std::map<const MovableElement *, GraphicElement *> m_elementToGraphicElement;
-    std::map<const MovableElement *, GraphicElement *>::iterator it;
 };
 #endif

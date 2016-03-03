@@ -17,20 +17,26 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #ifndef MOVABLEELEMENT_H
 #define MOVABLEELEMENT_H
+#include <string>
 
-#include <SFML/Graphics.hpp>
-
+/********************************************
+    MovableElement Class
+*********************************************
+    Arthur : 23/02 - 02/03
+    Florian: 02/03 - 02/03
+*********************************************/
 class MovableElement
 {
     public:
         //CTORs / DTORs
-        MovableElement();
+        MovableElement(int posX, int posY, int w, int h, int mvX, int mvY);
         ~MovableElement();
 
-        //METHODES
-        move();
+        //METHODS
+        void move();
+        std::string to_string()const ;
 
-        //ACCESSEURS
+        //GETTERS
         int getMoveX() const;
         int getMoveY() const;
         int getPosX() const;
@@ -38,11 +44,13 @@ class MovableElement
         int getWidth() const;
         int getHeight() const;
 
+        //SETTERS
         void setPositionX(int x);
         void setPositionY(int y);
 
+
     protected:
-        //ATTRIBUTS
+        //ATTRIBUTES
         int m_posX;
         int m_posY;
         int m_width;

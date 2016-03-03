@@ -19,29 +19,25 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 using namespace std;
 
-//=======================================
-// Constructeur
-//=======================================
-Ball::Ball()
+/********************************************
+    Parameterized Constructor
+*********************************************
+    Arthur : 22/02 - 02/03
+    Florian: 22/02 - 02/03
+*********************************************/
+Ball::Ball(int posX, int posY, int w, int h, int mvX, int mvY) :
+    MovableElement(posX, posY, w, h, mvX, mvY)
 {
-    m_posX = 50, m_posY = 450;
-    m_width = 20, m_height = 20;
-    m_moveX = 10, m_moveY = 10;
+
 }
 
-
-//=======================================
-// Destructeur
-//=======================================
+/********************************************
+    Destructor
+*********************************************
+    Arthur : 23/02 - 22/02
+    Florian: 22/02 - 22/02
+*********************************************/
 Ball::~Ball()
 {
-    //dtor
-}
 
-string Ball::to_string() const
-{
-    string texte = "POS_X : " + std::to_string(m_posX);
-    texte  +=    "  ,  POS_Y : " +  std::to_string(m_posY);
-    return texte;
 }
-

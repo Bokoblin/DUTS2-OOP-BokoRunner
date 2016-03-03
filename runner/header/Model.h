@@ -20,9 +20,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "Ball.h"
 #include <iostream>
-#include <fstream>
 #include <cstdlib>
+#include <vector>
 
+/********************************************
+    Model Class
+*********************************************
+    Arthur : 21/02 - 2/03
+    Florian: 21/02 - 2/03
+*********************************************/
 class Model
 {
 public:
@@ -30,22 +36,24 @@ public:
     Model(int width, int height);
     ~Model();
 
-    //ACCESSEURS
-    Ball getBall() const;
-    const MovableElement *getMovBall() const ;
-    std::vector<MovableElement*> getNewMovableElementsList();
+    //GETTERS
+    const MovableElement *getBallElement() const ;
+    std::vector<MovableElement *> getNewMovableElementsList();
     std::vector<MovableElement*> getMovableElementsList();
 
-    //METHODES
+    //METHODS
     void nextStep();
     void moveBall(bool left);
-    void addNewElement(); //ajout de nouveaux MovableElements
+    void addNewMovableElement();
+    void clearNewMovableElementVector();
 
 private:
-    //ATTRIBUTS
+    //ATTRIBUTES
     int m_modelWidth, m_modelHeight;
     Ball *m_player;
-    std::vector<MovableElement*> m_movableElementsList;        //tableau dynamique de tous les MovableElements
+
+    //Dynamic arrays
+    std::vector<MovableElement*> m_movableElementsList;
     std::vector<MovableElement*> m_newMovableElementsList;
 };
 #endif

@@ -20,31 +20,47 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 using namespace std;
 
-//=======================================
-// Constructeurs
-//=======================================
+
+/********************************************
+    Parameterized Constructor
+*********************************************
+    Arthur : 21/02 - 2/03
+    Florian: 21/02 - 2/03
+*********************************************/
 Model::Model(int width, int height)
     :  m_modelWidth(width), m_modelHeight(height)
 {
-    m_player = new Ball();
+    m_player = new Ball(50, 450, 25, 25, 10, 10); //temp location
     m_movableElementsList.push_back(m_player);
 }
 
-//=======================================
-// Destructeurs
-//=======================================
+/********************************************
+    Destructor
+*********************************************
+    Arthur : 21/02 - 2/03
+    Florian: 21/02 - 2/03
+*********************************************/
 Model::~Model()
 {
     if(m_player!= NULL)
         delete m_player;
 
-    for(unsigned int i=0; i<m_movableElementsList.size(); i++)
-        delete m_movableElementsList[i];
+//    for(auto it=m_movableElementsList.begin(); it!=m_movableElementsList.end(); ++it)
+//    {
+//        if (*it!=NULL)
+//            delete *it; //causes a sigaborted
+//    }
+    m_movableElementsList.clear();
 }
 
-//=======================================
-// Calcul la prochaine étape
-//=======================================
+//demander Ã  bourqui si on doit utiliser explicitement des delete
+//le destructeur pour les vecteurs du model
+
+/********************************************
+    Next Step Calcul
+*********************************************
+    Arthur : 21/02 - 25/02
+*********************************************/
 void Model::nextStep()
 {
     int alea = rand()%m_modelWidth;
@@ -55,16 +71,25 @@ void Model::nextStep()
     }
 }
 
-//=======================================
-// Accesseurs en lecture
-//=======================================
-
-Ball Model::getBall() const
+/********************************************
+    New MovableElement vector cleaning
+*********************************************
+    Arthur : 2/03- 2/03
+    Florian: 2/03 - 2/03
+*********************************************/
+void Model::clearNewMovableElementVector()
 {
-    return *m_player;
+        m_newMovableElementsList.clear();
 }
 
-const MovableElement* Model::getMovBall() const
+
+/********************************************
+    Getters
+*********************************************
+    Arthur : 21/02 - 25/02
+    Florian: 21/02 - 25/02
+*********************************************/
+const MovableElement* Model::getBallElement() const
 {
     return m_player;
 }
@@ -79,9 +104,12 @@ std::vector< MovableElement*> Model::getNewMovableElementsList()
     return m_newMovableElementsList;
 }
 
-//=======================================
-// Deplacement Ball
-//=======================================
+/********************************************
+    Ball Moving
+*********************************************
+    Arthur : 21/02 - 2/03
+    Florian: 21/02 - 2/03
+*********************************************/
 void Model::moveBall(bool left)
 {
     if (left)
@@ -90,19 +118,15 @@ void Model::moveBall(bool left)
         m_player->setPositionX( m_player->getPosX() + m_player->getMoveX() );
 }
 
-//=======================================
-// Ajout de nouveaux éléments
-//=======================================
-void Model::addNewElement()
+/********************************************
+    New MovableElement instance adding
+*********************************************
+    Arthur : 25/02 - 2/03
+    Florian: 2/03 - 2/03
+*********************************************/
+void Model::addNewMovableElement()
 {
-    MovableElement *me = new MovableElement();
-    m_newMovableElementsList.push_back( me );
-    m_movableElementsList.push_back( me );
-
-
-    cout << "=== Contenu m_element===" << endl;
-    for(unsigned int i=0; i<m_movableElementsList.size(); i++)
-    {
-        cout << m_movableElementsList[i] << endl;
-    }
+    MovableElement *newMovElem = new MovableElement(rand()%800, 450, 20, 20,-10, 0);
+    m_newMovableElementsList.push_back( newMovElem );
+    m_movableElementsList.push_back( newMovElem );
 }

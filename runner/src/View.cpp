@@ -19,15 +19,18 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 using namespace std;
 
-//=======================================
-// Constructeur
-//=======================================
+/********************************************
+    Default Constructor
+*********************************************
+    Arthur : 21/02 - 2/03
+    Florian: 21/02 - 2/03
+*********************************************/
 View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 {
     m_window = new sf::RenderWindow( sf::VideoMode(w, h, 32), "Runner", sf::Style::Close );
-    m_window->setFramerateLimit(5);
+    m_window->setFramerateLimit(30);
 
-
+//{      IMAGES LOADING
     if (!m_backgroundTexture.loadFromFile(BACKGROUND_IMAGE))
         cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE << endl;
     else
@@ -35,7 +38,7 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
         m_backgroundGraphic = new GraphicElement(m_backgroundTexture, 0, 0, m_viewWidth, m_viewHeight);
     }
 
-    if (!m_playerTexture.loadFromFile(BALL_IMAGE, sf::IntRect(0,0,50,50)) )     //chargement d'une partie de l'image des balles
+    if (!m_playerTexture.loadFromFile(BALL_IMAGE, sf::IntRect(0,0,50,50)) )
         cerr << "ERROR when loading image file: " << BALL_IMAGE << endl;
     else
     {
@@ -43,115 +46,123 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
         m_playerGraphic->resize(20,20);
     }
 
-    if (!m_ennemiesTexture.loadFromFile(ENNEMIES_IMAGE, sf::IntRect(0,0,50,50)) )     //chargement d'une partie de l'image des balles
+    if (!m_ennemiesTexture.loadFromFile(ENNEMIES_IMAGE, sf::IntRect(0,0,50,50)) )
         cerr << "ERROR when loading image file: " << ENNEMIES_IMAGE << endl;
     else
     {
         m_ennemiesGraphic = new GraphicElement(m_ennemiesTexture, 400, 450,50,50);
         m_ennemiesGraphic->resize(20,20);
     }
+//}
 
-    //Initialisation font et texte
+    //font & text initialization
     m_font = new sf::Font();
     m_font->loadFromFile(FONT);
     m_textPositionBall = new sf::Text;
     m_textPositionBall->setFont(*m_font);
-    //m_textPositionBall->setPosition(10,10);
+    m_textPositionBall->setPosition(10,10);
     m_textPositionBall->setCharacterSize(15);
     m_textPositionBall->setColor(sf::Color::Black);
 }
 
 
-//=======================================
-// Destructeur
-//=======================================
+/********************************************
+    Destructor
+*********************************************
+    Arthur : 21/02 - 2/03
+    Florian: 21/02 - 2/03
+*********************************************/
 View::~View()
 {
     if(m_window!= NULL)
         delete m_window;
-//    if(m_font!= NULL)
-    //     delete m_font;
+    if(m_font!= NULL)
+        delete m_font;
 }
 
 
-//=======================================
-// Accesseurs en écriture
-//=======================================
+/********************************************
+   Setters
+*********************************************
+    Arthur : 21/02 - 25/02
+    Florian: 21/02 - 21/02
+*********************************************/
 void View::setModel(Model *model)
 {
     m_model = model;
-    m_elementToGraphicElement[m_model->getMovBall()] = m_playerGraphic;//association de la balle et de la balle graphique
+    m_elementToGraphicElement[m_model->getBallElement()] = m_playerGraphic; //temp location
 }
 
 
-//=======================================
-// Fonction de synchronisation
-//=======================================
+/********************************************
+    Synchronization function
+*********************************************
+    Arthur : 21/02 - 2/03
+    Florian: 21/02 - 2/03
+*********************************************/
 void View::synchronize()
 {
-    //=== Association des nouveaux elements de "m_movableElementList" avec des instances de GraphicElement
+    //=== Pairing of new movable elements and corresponding graphic elements
 
-    for (unsigned int i=1; i<m_model->getMovableElementsList().size(); i++)
+    for (unsigned int i=0; i<( m_model->getNewMovableElementsList().size() ); i++)
     {
         GraphicElement *m_newEnnemy = new GraphicElement(*m_ennemiesGraphic);
-        m_elementToGraphicElement[m_model->getMovableElementsList()[i] ] = m_ennemiesGraphic;//m_newEnnemy;
+        m_newEnnemy->resize(20,20);
+
+        if (m_elementToGraphicElement.find(m_model->getNewMovableElementsList()[i] ) == m_elementToGraphicElement.end() )
+            m_elementToGraphicElement[m_model->getNewMovableElementsList()[i] ] = m_newEnnemy;
     }
 
-    //=== Vidage de "m_newMovableElementList"
+    //=== New movable elements vector emptying
 
-    m_model->getNewMovableElementsList().clear(); //marche pas
+    m_model->clearNewMovableElementVector(); //marche pas
 
 
-    //=== Mise à jour de la position graphique à parir de celle des instances de "MovableElement"
+    //=== Graphic position update of instances of "MovableElement"
 
     m_backgroundGraphic->setPosition(sf::Vector2f(0,0));
-    m_playerGraphic->setPosition(sf::Vector2f( m_model->getMovBall()->getPosX(), POSITION_Y_BALL));
+    m_playerGraphic->setPosition(sf::Vector2f( POS_X_BALL, POS_Y_BALL));
 
-    //=== Mise à jour du texte
+    //=== Text update
 
-    m_textPositionBall->setString(m_model->getBall().to_string());
+    m_textPositionBall->setString( m_model->getBallElement()->to_string() );
 
-/* //DEBUG
-    cout << "==Contenu tableau APRES EFFACEMENT==" << endl;
-
-    for (unsigned int i=0; i<m_model->getNewMovableElementsList().size(); i++)
-    {
-        cout << m_model->getNewMovableElementsList()[i] <<  " at adress :  " << &(m_model->getNewMovableElementsList()[i]) << endl;
-    }
-*/
 }
 
 
-//=======================================
-// Fonction de dessin
-//=======================================
+/********************************************
+    Fonction de dessin
+*********************************************
+    Arthur : 21/02 - 2/03
+    Florian: 21/02 - 2/03
+*********************************************/
 void View::draw()
 {
     m_window->clear();
 
-    //=== Dessin des instances de GraphicElement
+    //=== GraphicElement instances drawing
 
     m_window->draw(*m_backgroundGraphic);
 
-    for(it = m_elementToGraphicElement.begin() ; it != m_elementToGraphicElement.end() ; ++it)
+    for(auto it = m_elementToGraphicElement.begin() ; it != m_elementToGraphicElement.end() ; ++it)
     {
         m_window->draw(*(it->second));
-        /* //DEBUG
-        cout << "===== DRAW =====" << endl << endl;
-        cout << "element at adress " << (it->second) << " has been drawn" <<endl;
-        */
     }
 
-    //=== Dessin du texte
+    //=== Text drawing
+
     m_window->draw(*m_textPositionBall);
 
     m_window->display();
 }
 
 
-//=======================================
-// Traitement des evenements
-//=======================================
+/********************************************
+    Events treating
+*********************************************
+    Arthur : 21/02 - 2/03
+    Florian: 21/02 - 2/03
+*********************************************/
 bool View::treatEvents()
 {
     bool result = false;
@@ -161,74 +172,33 @@ bool View::treatEvents()
 
         sf::Event event;
         while (m_window->pollEvent(event))
-        {
             switch (event.type)
             {
-            case sf::Event::Closed:      // fenêtre fermée
+            case sf::Event::Closed:
                 m_window->close();
                 break;
-
-            case sf::Event::KeyPressed:  // touche pressée
+            case sf::Event::KeyPressed:
                 if (event.key.code == sf::Keyboard::Escape)
                 {
                     m_window->close();
                     result = false;
                 }
-                if ( (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q ) && POSITION_X_BALL > 0 )
+                if ( (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q ) && POS_X_BALL > 0 )
                 {
                     m_model->moveBall(true);
                 }
-                if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D ) && (POSITION_X_BALL + WIDTH_BALL) < m_viewWidth )
+                if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D ) && (POS_X_BALL + WIDTH_BALL) < m_viewWidth )
                 {
                     m_model->moveBall(false);
                 }
                 if (event.key.code == sf::Keyboard::Add)
                 {
-                    m_model->addNewElement();
+                    m_model->addNewMovableElement();
                 }
                 break;
-
-            //{  Joystick
-            case sf::Event::JoystickConnected :
-                cout << "connected" << endl;
-                break;
-            case sf::Event::JoystickDisconnected :
-                cout << "Disconnected" << endl;
-                break;
-            case sf::Event::JoystickButtonPressed :
-                if (sf::Joystick::isButtonPressed(0, 0) )
-                    cout << "X" << endl;
-                else if (sf::Joystick::isButtonPressed(0, 1))
-                    cout << "A" << endl;
-                else if (sf::Joystick::isButtonPressed(0, 2))
-                    cout << "B" << endl;
-                else if (sf::Joystick::isButtonPressed(0, 3))
-                    cout << "Y" << endl;
-                else if (sf::Joystick::isButtonPressed(0, 4) && POSITION_X_BALL > 0 )
-                {
-                    m_model->moveBall(true);
-                    cout << "L" << endl;
-                }
-                else if (sf::Joystick::isButtonPressed(0, 5)  && (POSITION_X_BALL + WIDTH_BALL) < m_viewWidth )
-                {
-                    m_model->moveBall(false);
-                    cout << "R" << endl;
-                }
-                else if (sf::Joystick::isButtonPressed(0, 8))
-                    cout << "Select" << endl;
-                else if (sf::Joystick::isButtonPressed(0, 9))
-                {
-                    cout << "Start" << endl;
-                    m_window->close();
-                    result = false;
-                }
-                break;
-            //}
             default:
                 break;
             }
-        }
     }
     return result;
 }
-

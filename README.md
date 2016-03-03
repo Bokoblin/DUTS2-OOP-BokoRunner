@@ -9,13 +9,19 @@ This project consists in creating a "runner" game ( an auto-scrolling platform g
 and collect bonuses to increase its score. The game ends when the player's life bar is empty.
 The project allows us to put into practice the Object Oriented Programming notions that we are learning in S2.
 
+
 ### Which tools have been used ? ###
 
 * Code::Blocks & QT Creator IDE
 * STL & SFML Library
 * C++ Language
 
+
 ### Who do I talk to? ###
 
 * Arthur Jolivet
 * Florian Laronze
+
+### Licence ###
+
+This project is licensed under the GNU GPL 2 license.

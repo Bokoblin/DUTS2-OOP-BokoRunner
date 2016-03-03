@@ -22,6 +22,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
+/********************************************
+    Main function
+*********************************************
+    Arthur : 21/02 - 25/02
+    Florian: 21/02 - 21/02
+*********************************************/
 int main()
 {
     srand(time(NULL));

@@ -22,20 +22,26 @@ using namespace std;
 /********************************************
     Default Constructor
 *********************************************
-    Arthur : 21/02 - 2/03
-    Florian: 21/02 - 2/03
+    Arthur : 21/02 - 3/03
+    Florian: 21/02 - 3/03
 *********************************************/
 View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 {
     m_window = new sf::RenderWindow( sf::VideoMode(w, h, 32), "Runner", sf::Style::Close );
     m_window->setFramerateLimit(30);
 
-//{      IMAGES LOADING
-    if (!m_backgroundTexture.loadFromFile(BACKGROUND_IMAGE))
-        cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE << endl;
+    if (!m_farBackgroundTexture.loadFromFile(BACKGROUND_IMAGE_2))
+        cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE_2 << endl;
     else
     {
-        m_backgroundGraphic = new GraphicElement(m_backgroundTexture, 0, 0, m_viewWidth, m_viewHeight);
+        m_farBackground = new SlidingBackground(m_farBackgroundTexture, m_viewWidth, m_viewHeight, 1);
+    }
+
+    if (!m_nearBackgroundTexture.loadFromFile(BACKGROUND_IMAGE_1))
+        cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE_1 << endl;
+    else
+    {
+        m_nearBackground = new SlidingBackground(m_nearBackgroundTexture, m_viewWidth, m_viewHeight, 4);
     }
 
     if (!m_playerTexture.loadFromFile(BALL_IMAGE, sf::IntRect(0,0,50,50)) )
@@ -50,10 +56,8 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
         cerr << "ERROR when loading image file: " << ENNEMIES_IMAGE << endl;
     else
     {
-        m_ennemiesGraphic = new GraphicElement(m_ennemiesTexture, 400, 450,50,50);
-        m_ennemiesGraphic->resize(20,20);
+        m_ennemiesGraphic = new GraphicElement(m_ennemiesTexture, 400, 450,20,20);
     }
-//}
 
     //font & text initialization
     m_font = new sf::Font();
@@ -97,8 +101,8 @@ void View::setModel(Model *model)
 /********************************************
     Synchronization function
 *********************************************
-    Arthur : 21/02 - 2/03
-    Florian: 21/02 - 2/03
+    Arthur : 21/02 - 3/03
+    Florian: 21/02 - 3/03
 *********************************************/
 void View::synchronize()
 {
@@ -118,9 +122,9 @@ void View::synchronize()
     m_model->clearNewMovableElementVector(); //marche pas
 
 
-    //=== Graphic position update of instances of "MovableElement"
+    //=== Update positions
 
-    m_backgroundGraphic->setPosition(sf::Vector2f(0,0));
+
     m_playerGraphic->setPosition(sf::Vector2f( POS_X_BALL, POS_Y_BALL));
 
     //=== Text update
@@ -131,18 +135,19 @@ void View::synchronize()
 
 
 /********************************************
-    Fonction de dessin
+    Drawing function
 *********************************************
-    Arthur : 21/02 - 2/03
-    Florian: 21/02 - 2/03
+    Arthur : 21/02 - 3/03
+    Florian: 21/02 - 3/03
 *********************************************/
 void View::draw()
 {
     m_window->clear();
 
-    //=== GraphicElement instances drawing
+    //=== Graphical Elements drawing
 
-    m_window->draw(*m_backgroundGraphic);
+    m_farBackground->syncAndDraw(*m_window);
+    m_nearBackground->syncAndDraw(*m_window);
 
     for(auto it = m_elementToGraphicElement.begin() ; it != m_elementToGraphicElement.end() ; ++it)
     {

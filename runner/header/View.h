@@ -19,7 +19,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define _VIEW_H
 
 #include "Model.h"
-#include "GraphicElement.h"
+#include "../header/GraphicElement.h"
+#include "../header/SlidingBackground.h"
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include <iostream>
@@ -29,7 +30,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define POS_Y_BALL m_model->getBallElement()->getPosY()
 #define WIDTH_BALL m_model->getBallElement()->getWidth()
 
-const std::string BACKGROUND_IMAGE = "Images/city.png";
+const std::string BACKGROUND_IMAGE_1 = "Images/city_1.png";
+const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
 const std::string BALL_IMAGE = "Images/balls.png";
 const std::string ENNEMIES_IMAGE = "Images/ennemies.png";
 const std::string FONT = "Fonts/Antique_Olive.ttf";
@@ -39,8 +41,8 @@ class Model;
 /********************************************
     View Class
 *********************************************
-    Arthur : 21/02 - 2/03
-    Florian: 21/02 - 2/03
+    Arthur : 21/02 - 3/03
+    Florian: 21/02 - 3/03
 *********************************************/
 class View
 {
@@ -68,11 +70,13 @@ private:
     sf::Text *m_textPositionBall;
 
     //GraphicElements Textures
-    sf::Texture m_backgroundTexture;
+    sf::Texture m_farBackgroundTexture;
+    sf::Texture m_nearBackgroundTexture;
     sf::Texture m_playerTexture;
     sf::Texture m_ennemiesTexture;
 
-    GraphicElement *m_backgroundGraphic;
+    SlidingBackground *m_farBackground;
+    SlidingBackground *m_nearBackground;
     GraphicElement *m_playerGraphic;
     GraphicElement *m_ennemiesGraphic;
 

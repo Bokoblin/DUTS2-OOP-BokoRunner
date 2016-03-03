@@ -34,8 +34,8 @@ GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) :
 /********************************************
     Copy Constructor
 *********************************************
-    Arthur : 25/02 - 2/03
-    Florian: 2/03 - 2/03
+    Arthur : 25/02 - 3/03
+    Florian:  2/03 - 2/03
 *********************************************/
 GraphicElement::GraphicElement(GraphicElement const& elementACopier) :
     m_w(elementACopier.m_w), m_h(elementACopier.m_h)

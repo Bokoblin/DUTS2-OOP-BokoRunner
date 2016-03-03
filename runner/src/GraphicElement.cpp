@@ -17,21 +17,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "../header/GraphicElement.h"
 
-//=======================================
-// Constructeur
-//=======================================
-GraphicElement::GraphicElement()
-{
 
-}
-
-GraphicElement::GraphicElement(GraphicElement const& elementACopier) :
-    m_w(elementACopier.m_w), m_h(elementACopier.m_h)
-{
-//    this->setTexture = elementACopier.getTexture() );     //error
-//    this->setPosition = elementACopier->getPosition() ); //error
-}
-
+/********************************************
+    Parameterized Constructor
+*********************************************
+    Arthur : 21/02 - 2/03
+    Florian: 21/02 - 2/03
+*********************************************/
 GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) : m_w(w), m_h(h)
 {
     this->setTexture(image);
@@ -39,30 +31,55 @@ GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) :
 }
 
 
-//=======================================
-// Destructeur
-//=======================================
-GraphicElement::~GraphicElement()
+/********************************************
+    Copy Constructor
+*********************************************
+    Arthur : 25/02 - 2/03
+    Florian: 2/03 - 2/03
+*********************************************/
+GraphicElement::GraphicElement(GraphicElement const& elementACopier) :
+    m_w(elementACopier.m_w), m_h(elementACopier.m_h)
 {
-    //dtor
+       this->setPosition( 1.0*(rand()%800),450.f);
+       this->setTexture( *elementACopier.getTexture(), true );
 }
 
-//=======================================
-// Fonction de dessin
-//=======================================
+
+/********************************************
+    Destructor
+*********************************************
+    Arthur : 21/02 - 21/02
+    Florian: 21/02 - 21/02
+*********************************************/
+GraphicElement::~GraphicElement()
+{
+    //Dtor
+}
+
+
+/********************************************
+    Drawing function
+*********************************************
+    Arthur : 22/02 - 22/02
+    Florian: 22/02 - 22/02
+*********************************************/
 void GraphicElement::draw(sf::RenderWindow * current_window)
 {
     current_window->draw(*this);
     current_window->display();
 }
 
-//=======================================
-// Fonction de redimentionnement
-//=======================================
+
+/********************************************
+    Resizing function
+*********************************************
+    Arthur : 22/02 - 25/02
+    Florian: 22/02 - 22/02
+*********************************************/
 void GraphicElement::resize(int width, int height)
 {
     sf::FloatRect bb = this->getLocalBounds();
-    float width_factor = width / bb.width;     // facteur de mise à l'échelle
+    float width_factor = width / bb.width;     // facteur de mise Ã  l'Ã©chelle
     float height_factor = height / bb.height;
     this->setScale(width_factor, height_factor);
     //modification largeur et hauteur

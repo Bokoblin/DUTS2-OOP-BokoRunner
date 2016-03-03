@@ -1,7 +1,7 @@
 Runner Project - state of progress
 Auteurs : Arthur JOLIVET et Florian LARONZE
 
-Current stable   version : v0.1.2-r1 
+Current stable   version : v0.1.2-r2 
 
 
 Arthur - v0.1.0-r1 (22/02/16) :
@@ -34,8 +34,14 @@ Arthur - v0.1.2-r1 (25/02/16) :
 	- Atelier 2 : GraphicElement::resize() is now working
 
 
+Arthur & Florian - v0.1.2-r2 (02/03/16) :
+
+- Bug fixes related to the creation of new ennemies
+- Documentation comments added
+
+
 
 Current features:
 => There is a background with a X-axis movable ball
-=> A static ennemy can be added with "ADD" key
+=> random-positioned ennemies can be added with "ADD" key
 => A text displays the current ball position

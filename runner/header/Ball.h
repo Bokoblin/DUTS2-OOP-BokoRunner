@@ -21,13 +21,18 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "MovableElement.h"
 #include <string>
 
+
+/********************************************
+    Ball Class
+*********************************************
+    Arthur : 22/02 - 02/03
+    Florian: 22/02 - 02/03
+*********************************************/
 class Ball : public MovableElement
 {
     public:
-        Ball();
+        Ball(int posX, int posY, int w, int h, int mvX, int mvY);
         ~Ball();
-
-        std::string to_string()const ;
 
     private:
 };

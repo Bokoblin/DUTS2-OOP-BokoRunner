@@ -8,3 +8,5 @@ stdout.txt
 *.pri
 *.pro.user
 *.cscope_file_list
+Makefile
+runner

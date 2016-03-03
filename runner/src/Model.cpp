@@ -44,17 +44,15 @@ Model::~Model()
 {
     if(m_player!= NULL)
         delete m_player;
-
-//    for(auto it=m_movableElementsList.begin(); it!=m_movableElementsList.end(); ++it)
-//    {
-//        if (*it!=NULL)
-//            delete *it; //causes a sigaborted
-//    }
+/*
+    for(auto it=m_movableElementsList.begin(); it!=m_movableElementsList.end(); ++it)
+    {
+        if (*it!=NULL)
+            delete *it; //causes a sigaborted
+    }
+*/
     m_movableElementsList.clear();
 }
-
-//demander à bourqui si on doit utiliser explicitement des delete
-//le destructeur pour les vecteurs du model
 
 /********************************************
     Next Step Calcul

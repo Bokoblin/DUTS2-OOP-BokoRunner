@@ -18,9 +18,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "../header/Model.h"
 #include "../header/Ball.h"
 
-using namespace std;
-
-
 /********************************************
     Parameterized Constructor
 *********************************************
@@ -30,29 +27,30 @@ using namespace std;
 Model::Model(int width, int height)
     :  m_modelWidth(width), m_modelHeight(height)
 {
-    m_player = new Ball(50, 450, 25, 25, 10, 10); //temp location
-    m_movableElementsList.push_back(m_player);
+
 }
+
 
 /********************************************
     Destructor
 *********************************************
-    Arthur : 21/02 - 2/03
+    Arthur : 21/02 - 5/03
     Florian: 21/02 - 2/03
 *********************************************/
 Model::~Model()
 {
     if(m_player!= NULL)
         delete m_player;
-/*
+
     for(auto it=m_movableElementsList.begin(); it!=m_movableElementsList.end(); ++it)
     {
         if (*it!=NULL)
-            delete *it; //causes a sigaborted
+            delete *it;
     }
-*/
+
     m_movableElementsList.clear();
 }
+
 
 /********************************************
     Next Step Calcul
@@ -69,15 +67,16 @@ void Model::nextStep()
     }
 }
 
+
 /********************************************
-    New MovableElement vector cleaning
+    NewMovableElement vector cleaning
 *********************************************
     Arthur : 2/03- 2/03
     Florian: 2/03 - 2/03
 *********************************************/
 void Model::clearNewMovableElementVector()
 {
-        m_newMovableElementsList.clear();
+    m_newMovableElementsList.clear();
 }
 
 
@@ -102,6 +101,7 @@ std::vector< MovableElement*> Model::getNewMovableElementsList()
     return m_newMovableElementsList;
 }
 
+
 /********************************************
     Ball Moving
 *********************************************
@@ -116,15 +116,29 @@ void Model::moveBall(bool left)
         m_player->setPositionX( m_player->getPosX() + m_player->getMoveX() );
 }
 
+
+
 /********************************************
-    New MovableElement instance adding
+    Ball Adding
+*********************************************
+    Arthur : 5/03 - 5/03
+*********************************************/
+void Model::addBallMovableElement()
+{
+    m_player = new Ball(50, 450, 30, 30, 10, 10);
+    m_movableElementsList.push_back(m_player);
+}
+
+
+/********************************************
+    NewMovableElement instance adding - Action
 *********************************************
     Arthur : 25/02 - 2/03
     Florian: 2/03 - 2/03
 *********************************************/
 void Model::addNewMovableElement()
 {
-    MovableElement *newMovElem = new MovableElement(rand()%800, 450, 20, 20,-10, 0);
+    MovableElement *newMovElem = new MovableElement(rand()%800, 450, 30, 30,-10, 0);
     m_newMovableElementsList.push_back( newMovElem );
     m_movableElementsList.push_back( newMovElem );
 }

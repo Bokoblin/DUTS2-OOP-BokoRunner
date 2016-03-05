@@ -28,17 +28,20 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 *********************************************/
 class GraphicElement : public sf::Sprite
 {
-    public:
-        GraphicElement(GraphicElement const& elementACopier);
-        GraphicElement(sf::Texture &image, int x, int y, int w, int h);
-        ~GraphicElement();
+public:
+    //=== CTORs / DTORs
+    GraphicElement(GraphicElement const& elementACopier);
+    GraphicElement(sf::Texture &image, int x, int y, int w, int h);
+    ~GraphicElement();
 
-        void draw(sf::RenderWindow *window);
-        void resize (int w, int h);
+    //=== METHODS
+    void draw(sf::RenderWindow *window);
+    void resize (int w, int h);
 
-    private:
-        int m_w;
-        int m_h;
+private:
+    //=== ATTRIBUTES
+    int m_w;
+    int m_h;
 
 };
 

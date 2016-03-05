@@ -30,11 +30,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 *********************************************/
 class Ball : public MovableElement
 {
-    public:
-        Ball(int posX, int posY, int w, int h, int mvX, int mvY);
-        ~Ball();
+public:
+    //=== CTORs / DTORs
+    Ball(int posX, int posY, int w, int h, int mvX, int mvY);
+    ~Ball();
 
-    private:
+private:
 };
 
 #endif // BALL_H

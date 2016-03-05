@@ -39,12 +39,19 @@ Arthur & Florian - v0.1.2-r2 (02/03/16) :
 - Bug fixes related to the creation of new ennemies
 - Documentation comments added
 
+
 Arthur & Florian - v0.1.3-r1 (3/03/16):
 
-- Sliding Background added
+- Paralax-Sliding Background added
 
+
+Arthur & Florian - v0.1.4-r1 (5/03/16):
+
+- Animated ball added
+- ball creation independent from model creation
+- corrections
 
 Current features:
-=> There is a paralax-sliding background with a X-axis movable ball
+=> There is a paralax-sliding background with a X-axis animated movable ball
 => random-positioned ennemies can be added with "ADD" key
 => A text displays the current ball position

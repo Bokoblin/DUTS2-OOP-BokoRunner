@@ -65,7 +65,7 @@ View::~View()
     if(m_ennemiesGraphic!= NULL)
         delete m_ennemiesGraphic;
     if(m_model!= NULL)
-        delete m_window;
+        delete m_model;
     if(m_window!= NULL)
         delete m_window;
 }

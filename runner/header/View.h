@@ -21,7 +21,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "Model.h"
 #include "../header/GraphicElement.h"
 #include "../header/SlidingBackground.h"
+#include "../header/AnimatedGraphicElement.h"
 #include <SFML/Graphics.hpp>
+
 #include <sstream>
 #include <iostream>
 #include <string>
@@ -41,35 +43,36 @@ class Model;
 /********************************************
     View Class
 *********************************************
-    Arthur : 21/02 - 3/03
+    Arthur : 21/02 - 5/03
     Florian: 21/02 - 3/03
 *********************************************/
 class View
 {
 public:
-    //CTORs / DTORs
+    //=== CTORs / DTORs
     View(int w, int h);
     ~View();
 
-    //SETTERS
+    //=== SETTERS
     void setModel(Model *model);
 
-    //METHODS
+    //=== METHODS
+    void loadImages();
     void synchronize();
     void draw();
     bool treatEvents();
 
 private:
-    //ATTRIBUTES
+    //=== ATTRIBUTES
     int m_viewWidth, m_viewHeight;
 
     sf::RenderWindow *m_window;
     Model *m_model;
 
     sf::Font *m_font;
-    sf::Text *m_textPositionBall;
+    sf::Text m_textPositionBall;
 
-    //GraphicElements Textures
+    //=== GraphicElements Textures
     sf::Texture m_farBackgroundTexture;
     sf::Texture m_nearBackgroundTexture;
     sf::Texture m_playerTexture;
@@ -77,10 +80,10 @@ private:
 
     SlidingBackground *m_farBackground;
     SlidingBackground *m_nearBackground;
-    GraphicElement *m_playerGraphic;
+    AnimatedGraphicElement *m_playerGraphic;
     GraphicElement *m_ennemiesGraphic;
 
-    //Associative arrays
+    //=== Associative arrays
     std::map<const MovableElement *, GraphicElement *> m_elementToGraphicElement;
 };
 #endif

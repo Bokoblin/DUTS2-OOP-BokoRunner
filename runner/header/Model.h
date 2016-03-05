@@ -19,36 +19,36 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define _MODEL_H
 
 #include "Ball.h"
-#include <iostream>
 #include <cstdlib>
 #include <vector>
 
 /********************************************
     Model Class
 *********************************************
-    Arthur : 21/02 - 2/03
+    Arthur : 21/02 - 5/03
     Florian: 21/02 - 2/03
 *********************************************/
 class Model
 {
 public:
-    //CTORs / DTORs
+    //=== CTORs / DTORs
     Model(int width, int height);
     ~Model();
 
-    //GETTERS
+    //=== GETTERS
     const MovableElement *getBallElement() const ;
     std::vector<MovableElement *> getNewMovableElementsList();
     std::vector<MovableElement*> getMovableElementsList();
 
-    //METHODS
+    //=== METHODS
     void nextStep();
     void moveBall(bool left);
+    void addBallMovableElement();
     void addNewMovableElement();
     void clearNewMovableElementVector();
 
 private:
-    //ATTRIBUTES
+    //=== ATTRIBUTES
     int m_modelWidth, m_modelHeight;
     Ball *m_player;
 

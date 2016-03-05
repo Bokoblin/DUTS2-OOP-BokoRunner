@@ -17,6 +17,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #ifndef MOVABLEELEMENT_H
 #define MOVABLEELEMENT_H
+
 #include <string>
 
 /********************************************
@@ -27,38 +28,38 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 *********************************************/
 class MovableElement
 {
-    public:
-        //CTORs / DTORs
-        MovableElement(int posX, int posY, int w, int h, int mvX, int mvY);
-        ~MovableElement();
+public:
+    //=== CTORs / DTORs
+    MovableElement(int posX, int posY, int w, int h, int mvX, int mvY);
+    ~MovableElement();
 
-        //METHODS
-        void move();
-        std::string to_string()const ;
+    //=== METHODS
+    void move();
+    std::string to_string()const ;
 
-        //GETTERS
-        int getMoveX() const;
-        int getMoveY() const;
-        int getPosX() const;
-        int getPosY() const;
-        int getWidth() const;
-        int getHeight() const;
+    //=== GETTERS
+    int getMoveX() const;
+    int getMoveY() const;
+    int getPosX() const;
+    int getPosY() const;
+    int getWidth() const;
+    int getHeight() const;
 
-        //SETTERS
-        void setPositionX(int x);
-        void setPositionY(int y);
+    //=== SETTERS
+    void setPositionX(int x);
+    void setPositionY(int y);
 
 
-    protected:
-        //ATTRIBUTES
-        int m_posX;
-        int m_posY;
-        int m_width;
-        int m_height;
-        int m_moveX;
-        int m_moveY;
+protected:
+    //=== ATTRIBUTES
+    int m_posX;
+    int m_posY;
+    int m_width;
+    int m_height;
+    int m_moveX;
+    int m_moveY;
 
-    private:
+private:
 
 };
 

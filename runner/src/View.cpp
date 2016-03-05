@@ -30,43 +30,19 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
     m_window = new sf::RenderWindow( sf::VideoMode(w, h, 32), "Runner", sf::Style::Close );
     m_window->setFramerateLimit(30);
 
-    if (!m_farBackgroundTexture.loadFromFile(BACKGROUND_IMAGE_2))
-        cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE_2 << endl;
-    else
-    {
-        m_farBackground = new SlidingBackground(m_farBackgroundTexture, m_viewWidth, m_viewHeight, 1);
-    }
+    //=== Images Loading
 
-    if (!m_nearBackgroundTexture.loadFromFile(BACKGROUND_IMAGE_1))
-        cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE_1 << endl;
-    else
-    {
-        m_nearBackground = new SlidingBackground(m_nearBackgroundTexture, m_viewWidth, m_viewHeight, 4);
-    }
+    loadImages();
 
-    if (!m_playerTexture.loadFromFile(BALL_IMAGE, sf::IntRect(0,0,50,50)) )
-        cerr << "ERROR when loading image file: " << BALL_IMAGE << endl;
-    else
-    {
-        m_playerGraphic = new GraphicElement(m_playerTexture, 50, 50,25,25);
-        m_playerGraphic->resize(20,20);
-    }
+    //=== font & text initialization
 
-    if (!m_ennemiesTexture.loadFromFile(ENNEMIES_IMAGE, sf::IntRect(0,0,50,50)) )
-        cerr << "ERROR when loading image file: " << ENNEMIES_IMAGE << endl;
-    else
-    {
-        m_ennemiesGraphic = new GraphicElement(m_ennemiesTexture, 400, 450,20,20);
-    }
-
-    //font & text initialization
     m_font = new sf::Font();
     m_font->loadFromFile(FONT);
-    m_textPositionBall = new sf::Text;
-    m_textPositionBall->setFont(*m_font);
-    m_textPositionBall->setPosition(10,10);
-    m_textPositionBall->setCharacterSize(15);
-    m_textPositionBall->setColor(sf::Color::Black);
+
+    m_textPositionBall.setFont(*m_font);
+    m_textPositionBall.setPosition(10,10);
+    m_textPositionBall.setCharacterSize(15);
+    m_textPositionBall.setColor(sf::Color::Black);
 }
 
 
@@ -78,30 +54,85 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 *********************************************/
 View::~View()
 {
-    if(m_window!= NULL)
-        delete m_window;
     if(m_font!= NULL)
         delete m_font;
+    if(m_farBackground!= NULL)
+        delete m_farBackground;
+    if(m_nearBackground!= NULL)
+        delete m_nearBackground;
+    if(m_playerGraphic!= NULL)
+        delete m_playerGraphic;
+    if(m_ennemiesGraphic!= NULL)
+        delete m_ennemiesGraphic;
+    if(m_model!= NULL)
+        delete m_window;
+    if(m_window!= NULL)
+        delete m_window;
 }
 
 
 /********************************************
    Setters
 *********************************************
-    Arthur : 21/02 - 25/02
+    Arthur : 21/02 - 5/03
     Florian: 21/02 - 21/02
 *********************************************/
 void View::setModel(Model *model)
 {
     m_model = model;
-    m_elementToGraphicElement[m_model->getBallElement()] = m_playerGraphic; //temp location
+}
+
+
+/********************************************
+    Image Loading function
+*********************************************
+    Arthur : 5/03 - 5/03
+*********************************************/
+void View::loadImages()
+{
+    if (!m_farBackgroundTexture.loadFromFile(BACKGROUND_IMAGE_2))
+        cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE_2 << endl;
+    else
+    {
+        m_farBackgroundTexture.setSmooth(true);
+        m_farBackground = new SlidingBackground(m_farBackgroundTexture, 1200, m_viewHeight, 1);
+    }
+
+    if (!m_nearBackgroundTexture.loadFromFile(BACKGROUND_IMAGE_1))
+        cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE_1 << endl;
+    else
+    {
+        m_nearBackgroundTexture.setSmooth(true);
+        m_nearBackground = new SlidingBackground(m_nearBackgroundTexture, 1200, m_viewHeight, 4);
+    }
+
+    if (!m_playerTexture.loadFromFile(BALL_IMAGE) )
+        cerr << "ERROR when loading image file: " << BALL_IMAGE << endl;
+    else
+    {
+        m_playerTexture.setSmooth(true);
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<8; i++)
+        {
+            clip_rects.push_back(sf::IntRect(50*i,0,50,50));
+        }
+        m_playerGraphic = new AnimatedGraphicElement(clip_rects, m_playerTexture, 50, 450,50,50);
+    }
+
+    if (!m_ennemiesTexture.loadFromFile(ENNEMIES_IMAGE, sf::IntRect(0,0,50,50)) )
+        cerr << "ERROR when loading image file: " << ENNEMIES_IMAGE << endl;
+    else
+    {
+        m_ennemiesTexture.setSmooth(true);
+        m_ennemiesGraphic = new GraphicElement(m_ennemiesTexture, 400, 450,20,20);
+    }
 }
 
 
 /********************************************
     Synchronization function
 *********************************************
-    Arthur : 21/02 - 3/03
+    Arthur : 21/02 - 5/03
     Florian: 21/02 - 3/03
 *********************************************/
 void View::synchronize()
@@ -111,7 +142,7 @@ void View::synchronize()
     for (unsigned int i=0; i<( m_model->getNewMovableElementsList().size() ); i++)
     {
         GraphicElement *m_newEnnemy = new GraphicElement(*m_ennemiesGraphic);
-        m_newEnnemy->resize(20,20);
+        m_newEnnemy->resize(30,30);
 
         if (m_elementToGraphicElement.find(m_model->getNewMovableElementsList()[i] ) == m_elementToGraphicElement.end() )
             m_elementToGraphicElement[m_model->getNewMovableElementsList()[i] ] = m_newEnnemy;
@@ -119,25 +150,24 @@ void View::synchronize()
 
     //=== New movable elements vector emptying
 
-    m_model->clearNewMovableElementVector(); //marche pas
+    m_model->clearNewMovableElementVector();
 
-
-    //=== Update positions
-
+    //=== Update ball
 
     m_playerGraphic->setPosition(sf::Vector2f( POS_X_BALL, POS_Y_BALL));
+    m_playerGraphic->resize(30,30);
 
     //=== Text update
 
-    m_textPositionBall->setString( m_model->getBallElement()->to_string() );
+    m_textPositionBall.setString( m_model->getBallElement()->to_string() );
 
 }
 
 
 /********************************************
-    Drawing function
+    View Drawing
 *********************************************
-    Arthur : 21/02 - 3/03
+    Arthur : 21/02 - 5/03
     Florian: 21/02 - 3/03
 *********************************************/
 void View::draw()
@@ -148,6 +178,7 @@ void View::draw()
 
     m_farBackground->syncAndDraw(*m_window);
     m_nearBackground->syncAndDraw(*m_window);
+    m_playerGraphic->syncAndDraw(m_window);
 
     for(auto it = m_elementToGraphicElement.begin() ; it != m_elementToGraphicElement.end() ; ++it)
     {
@@ -156,7 +187,7 @@ void View::draw()
 
     //=== Text drawing
 
-    m_window->draw(*m_textPositionBall);
+    m_window->draw(m_textPositionBall);
 
     m_window->display();
 }

@@ -56,10 +56,10 @@ protected:
     int m_posY;
     int m_width;
     int m_height;
-    int m_moveX;
-    int m_moveY;
 
 private:
+    int m_moveX;
+    int m_moveY;
 
 };
 

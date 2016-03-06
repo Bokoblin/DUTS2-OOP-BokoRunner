@@ -16,7 +16,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 #include "../header/Model.h"
-#include "../header/Ball.h"
 
 /********************************************
     Parameterized Constructor
@@ -55,16 +54,11 @@ Model::~Model()
 /********************************************
     Next Step Calcul
 *********************************************
-    Arthur : 21/02 - 25/02
+    Arthur : 21/02 - 6/03
 *********************************************/
 void Model::nextStep()
 {
-    int alea = rand()%m_modelWidth;
-
-    for(unsigned int i=0; i<m_movableElementsList.size(); i++)
-    {
-        m_movableElementsList[i]->setPositionX(alea);
-    }
+    //no usage for the moment
 }
 
 
@@ -74,7 +68,7 @@ void Model::nextStep()
     Arthur : 2/03- 2/03
     Florian: 2/03 - 2/03
 *********************************************/
-void Model::clearNewMovableElementVector()
+void Model::clearNewMovableElementList()
 {
     m_newMovableElementsList.clear();
 }
@@ -86,59 +80,67 @@ void Model::clearNewMovableElementVector()
     Arthur : 21/02 - 25/02
     Florian: 21/02 - 25/02
 *********************************************/
-const MovableElement* Model::getBallElement() const
-{
-    return m_player;
-}
+const MovableElement* Model::getBallElement() const { return m_player; }
 
-std::vector< MovableElement*> Model::getMovableElementsList()
-{
-    return m_movableElementsList;
-}
+std::vector< MovableElement*> Model::getMEList() { return m_movableElementsList; }
 
-std::vector< MovableElement*> Model::getNewMovableElementsList()
-{
-    return m_newMovableElementsList;
-}
+std::vector< MovableElement*> Model::getNewMEList() { return m_newMovableElementsList; }
 
 
 /********************************************
     Ball Moving
 *********************************************
-    Arthur : 21/02 - 2/03
+    Arthur : 21/02 - 6/03
     Florian: 21/02 - 2/03
 *********************************************/
-void Model::moveBall(bool left)
+void Model::moveBallAccordingEvent(bool left)
 {
     if (left)
-        m_player->setPositionX( m_player->getPosX() - m_player->getMoveX() );
+        m_player->setPositionX( m_player->getPosX() - 10 );
     if (!left)
-        m_player->setPositionX( m_player->getPosX() + m_player->getMoveX() );
+        m_player->setPositionX( m_player->getPosX() + 10 );
 }
 
+
+/********************************************
+    Elements Moving (ennemies, bonus, points)
+*********************************************
+    Arthur : 6/03 - 6/03
+*********************************************/
+void Model::moveElements()
+{
+    for (unsigned int i=0; i < m_movableElementsList.size(); i++  )
+    {
+        if ( m_movableElementsList[i] != m_player)
+            m_movableElementsList[i]->move();
+        else
+            m_player->move();
+    }
+}
 
 
 /********************************************
     Ball Adding
 *********************************************
-    Arthur : 5/03 - 5/03
+    Arthur : 5/03 - 6/03
 *********************************************/
 void Model::addBallMovableElement()
 {
-    m_player = new Ball(50, 450, 30, 30, 10, 10);
+    m_player = new Ball(50, 480, 30, 30);
     m_movableElementsList.push_back(m_player);
+    m_newMovableElementsList.push_back(m_player);
 }
 
 
 /********************************************
-    NewMovableElement instance adding - Action
+    NewMovableElement  Adding
 *********************************************
     Arthur : 25/02 - 2/03
     Florian: 2/03 - 2/03
 *********************************************/
 void Model::addNewMovableElement()
 {
-    MovableElement *newMovElem = new MovableElement(rand()%800, 450, 30, 30,-10, 0);
+    MovableElement *newMovElem = new MovableElement(m_modelWidth, 480, 30, 30,-4, 0);
     m_newMovableElementsList.push_back( newMovElem );
     m_movableElementsList.push_back( newMovElem );
 }

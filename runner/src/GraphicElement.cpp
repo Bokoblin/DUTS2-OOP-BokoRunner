@@ -40,7 +40,7 @@ GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) :
 GraphicElement::GraphicElement(GraphicElement const& elementACopier) :
     m_w(elementACopier.m_w), m_h(elementACopier.m_h)
 {
-       this->setPosition( 1.0*(rand()%800),450.f);
+       this->setPosition( elementACopier.getPosition());
        this->setTexture( *elementACopier.getTexture(), true );
 }
 

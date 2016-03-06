@@ -34,7 +34,7 @@ public:
     ~AnimatedGraphicElement();
 
     //=== METHODS
-    void syncAndDraw(  sf::RenderWindow *window);
+    void draw( sf::RenderWindow *window);
 
 private:
     //=== ATTRIBUTES

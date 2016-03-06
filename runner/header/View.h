@@ -28,9 +28,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <iostream>
 #include <string>
 
-#define POS_X_BALL m_model->getBallElement()->getPosX()
-#define POS_Y_BALL m_model->getBallElement()->getPosY()
-#define WIDTH_BALL m_model->getBallElement()->getWidth()
+#define PLAYER m_model->getBallElement()
 
 const std::string BACKGROUND_IMAGE_1 = "Images/city_1.png";
 const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
@@ -43,7 +41,7 @@ class Model;
 /********************************************
     View Class
 *********************************************
-    Arthur : 21/02 - 5/03
+    Arthur : 21/02 - 6/03
     Florian: 21/02 - 3/03
 *********************************************/
 class View
@@ -58,6 +56,8 @@ public:
 
     //=== METHODS
     void loadImages();
+    void loadText();
+    void updateElement(GraphicElement *element);
     void synchronize();
     void draw();
     bool treatEvents();

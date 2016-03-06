@@ -32,8 +32,11 @@ class Ball : public MovableElement
 {
 public:
     //=== CTORs / DTORs
-    Ball(int posX, int posY, int w, int h, int mvX, int mvY);
+    Ball(int posX, int posY, int w, int h);
     ~Ball();
+
+    //=== METHODS
+    void move();
 
 private:
 };

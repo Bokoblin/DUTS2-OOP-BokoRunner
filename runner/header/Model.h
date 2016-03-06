@@ -25,7 +25,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Model Class
 *********************************************
-    Arthur : 21/02 - 5/03
+    Arthur : 21/02 - 6/03
     Florian: 21/02 - 2/03
 *********************************************/
 class Model
@@ -37,15 +37,16 @@ public:
 
     //=== GETTERS
     const MovableElement *getBallElement() const ;
-    std::vector<MovableElement *> getNewMovableElementsList();
-    std::vector<MovableElement*> getMovableElementsList();
+    std::vector<MovableElement *> getNewMEList();
+    std::vector<MovableElement*> getMEList();
 
     //=== METHODS
     void nextStep();
-    void moveBall(bool left);
+    void moveBallAccordingEvent(bool left);
+    void moveElements();
     void addBallMovableElement();
     void addNewMovableElement();
-    void clearNewMovableElementVector();
+    void clearNewMovableElementList();
 
 private:
     //=== ATTRIBUTES

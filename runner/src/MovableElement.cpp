@@ -35,9 +35,6 @@ MovableElement::MovableElement(int posX, int posY, int w, int h, int mvX, int mv
 *********************************************
     Arthur : 23/02 - 02/03
 *********************************************/
-//=======================================
-// Destructor
-//=======================================
 MovableElement::~MovableElement()
 {
 
@@ -62,6 +59,18 @@ int MovableElement::getHeight()const { return m_height;}
 *********************************************/
 void MovableElement::setPositionX(int x) { m_posX = x; }
 void MovableElement::setPositionY(int y) { m_posX = y; }
+
+
+/********************************************
+   MovableElement moving
+*********************************************
+    Arthur : 6/03 - 6/03
+*********************************************/
+void MovableElement::move()
+{
+    m_posX += m_moveX;
+    m_posY += m_moveY;
+}
 
 
 /********************************************

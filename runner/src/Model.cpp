@@ -17,6 +17,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "../header/Model.h"
 
+using namespace std;
+
 /********************************************
     Parameterized Constructor
 *********************************************
@@ -26,7 +28,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 Model::Model(int width, int height)
     :  m_modelWidth(width), m_modelHeight(height)
 {
-
+    m_travelledDistance = 0;
+    m_lastEnnemyPosition = m_modelWidth;
+    m_gameSpeed = 4;
 }
 
 
@@ -52,13 +56,70 @@ Model::~Model()
 
 
 /********************************************
-    Next Step Calcul
+    Getters
 *********************************************
-    Arthur : 21/02 - 6/03
+    Arthur : 21/02 - 25/02
+    Florian: 21/02 - 25/02
+*********************************************/
+const MovableElement* Model::getBallElement() const { return m_player; }
+
+int Model::getGameSpeed() const { return m_gameSpeed; }
+
+unsigned long Model::getDistance() const { return m_travelledDistance; }
+
+std::vector< MovableElement*> Model::getMEList() { return m_movableElementsList; }
+
+std::vector< MovableElement*> Model::getNewMEList() { return m_newMovableElementsList; }
+
+
+/********************************************
+    Setters
+*********************************************
+    Arthur : 8/03 - 8/03
+*********************************************/
+void Model::setGameSpeed(int speed) { m_gameSpeed = speed; }
+
+
+
+/********************************************
+    Next Step
+*********************************************
+    Arthur : 21/02 - 8/03
 *********************************************/
 void Model::nextStep()
 {
-    //no usage for the moment
+    //m_travelledDistance ++;
+
+    //=== Add new ennemies
+
+    m_newEnnemyPosition = m_lastEnnemyPosition + rand()%300;
+
+    if (checkPositionFree(m_newEnnemyPosition) == true)
+    {
+        addNewMovableElement(m_newEnnemyPosition, 480);
+        m_lastEnnemyPosition = m_newEnnemyPosition;
+
+// TODO (ARTHUR#1#): delete ennemies that are outside left limit, ...
+//create different ennemies in add newMovableElement (add a sub class ennemies ???)
+    }
+}
+
+/********************************************
+    check if a position is free to add an element
+*********************************************
+    Arthur :  8/03 - 8/03
+*********************************************/
+bool Model::checkPositionFree(const int position) const
+{
+    bool posFree=true;
+    int i = 0;
+    while (posFree && i < m_movableElementsList.size() )
+    {
+        if (m_movableElementsList[i]->contains(position) )
+            posFree = false;
+            i++;
+    }
+    return posFree;
 }
 
 
@@ -72,19 +133,6 @@ void Model::clearNewMovableElementList()
 {
     m_newMovableElementsList.clear();
 }
-
-
-/********************************************
-    Getters
-*********************************************
-    Arthur : 21/02 - 25/02
-    Florian: 21/02 - 25/02
-*********************************************/
-const MovableElement* Model::getBallElement() const { return m_player; }
-
-std::vector< MovableElement*> Model::getMEList() { return m_movableElementsList; }
-
-std::vector< MovableElement*> Model::getNewMEList() { return m_newMovableElementsList; }
 
 
 /********************************************
@@ -135,12 +183,15 @@ void Model::addBallMovableElement()
 /********************************************
     NewMovableElement  Adding
 *********************************************
-    Arthur : 25/02 - 2/03
+    Arthur : 25/02 - 8/03
     Florian: 2/03 - 2/03
 *********************************************/
-void Model::addNewMovableElement()
+void Model::addNewMovableElement(int posX, int posY)
 {
-    MovableElement *newMovElem = new MovableElement(m_modelWidth, 480, 30, 30,-4, 0);
-    m_newMovableElementsList.push_back( newMovElem );
-    m_movableElementsList.push_back( newMovElem );
+    if (checkPositionFree(m_modelWidth) == true)
+    {
+        MovableElement *newMovElem = new MovableElement(posX, posY, 30, 30,-4, 0);
+        m_newMovableElementsList.push_back( newMovElem );
+        m_movableElementsList.push_back( newMovElem );
+    }
 }

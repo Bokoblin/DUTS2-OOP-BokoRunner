@@ -72,6 +72,19 @@ void MovableElement::move()
     m_posY += m_moveY;
 }
 
+/********************************************
+   check if a position belongs to the current
+   ennemy position
+*********************************************
+    Arthur : 8/03 - 8/03
+*********************************************/
+bool MovableElement::contains( const int position) const
+{
+    if ( position>= m_posX && position <= (m_posX + m_width) )
+        return true;
+    else
+        return false;
+}
 
 /********************************************
     String transforming function

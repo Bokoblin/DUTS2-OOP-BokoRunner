@@ -59,6 +59,10 @@ Arthur - v0.2.0-dev1 (6/03/16):
 - Code Rewriting concerning drawing and synchronization functions
 - ennemies moving toward left
 
+Arthur - v0.2.0-dev2 (8/03/16):
+
+- ennemies appears randomly after screenwidth only if their position is greater than precedent ones
+
 
 
 Current features in stable:

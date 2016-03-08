@@ -59,12 +59,7 @@ Model::~Model()
 *********************************************/
 void Model::nextStep()
 {
-    int alea = rand()%m_modelWidth;
-
-    for(unsigned int i=0; i<m_movableElementsList.size(); i++)
-    {
-        m_movableElementsList[i]->setPositionX(alea);
-    }
+    //to implement in v0.2.0
 }
 
 

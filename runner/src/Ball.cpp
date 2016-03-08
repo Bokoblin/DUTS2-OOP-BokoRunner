@@ -41,3 +41,8 @@ Ball::~Ball()
 {
 
 }
+
+
+void Ball::move()
+{
+    //to implement in v0.2.0

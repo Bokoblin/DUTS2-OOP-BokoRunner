@@ -35,6 +35,7 @@ public:
 
     //=== METHODS
     void move();
+    bool contains( const int position) const ;
     std::string to_string()const ;
 
     //=== GETTERS

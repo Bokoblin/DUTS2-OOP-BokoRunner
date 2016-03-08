@@ -184,12 +184,15 @@ void View::synchronize()
             m_elementToGraphicElement[m_model->getNewMEList()[i] ] = m_newEnnemy;
     }
 
+    //=== Elements deleting if outside left limit
+
     //=== NewMovableElementList vector emptying after pairing
 
     m_model->clearNewMovableElementList();
 
     //=== Element attributes update
 
+    m_nearBackground->setSpeed(m_model->getGameSpeed() );
     m_model->moveElements();
     for(auto it = m_elementToGraphicElement.begin() ; it != m_elementToGraphicElement.end() ; ++it)
     {
@@ -274,7 +277,7 @@ bool View::treatEvents()
                 }
                 if (event.key.code == sf::Keyboard::Add)
                 {
-                    m_model->addNewMovableElement();
+                    m_model->addNewMovableElement(m_viewWidth+rand()%50, 480);
                 }
                 break;
             default:

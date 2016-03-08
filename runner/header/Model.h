@@ -20,6 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "Ball.h"
 #include <cstdlib>
+#include <iostream>
 #include <vector>
 
 /********************************************
@@ -37,20 +38,31 @@ public:
 
     //=== GETTERS
     const MovableElement *getBallElement() const ;
+    int getGameSpeed() const;
+    unsigned long getDistance() const;
     std::vector<MovableElement *> getNewMEList();
     std::vector<MovableElement*> getMEList();
 
+    //=== SETTERS
+    void setGameSpeed(int speed);
+
     //=== METHODS
     void nextStep();
+    bool checkPositionFree(const int position) const;
     void moveBallAccordingEvent(bool left);
     void moveElements();
     void addBallMovableElement();
-    void addNewMovableElement();
+    void addNewMovableElement(int posX, int posY);
     void clearNewMovableElementList();
 
 private:
     //=== ATTRIBUTES
     int m_modelWidth, m_modelHeight;
+    unsigned long m_travelledDistance;
+    int  m_lastEnnemyPosition;
+    int  m_gameSpeed;
+    int m_newEnnemyPosition;
+
     Ball *m_player;
 
     //Dynamic arrays

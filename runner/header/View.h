@@ -24,11 +24,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "../header/AnimatedGraphicElement.h"
 #include <SFML/Graphics.hpp>
 
+#include <cstdlib>
 #include <sstream>
 #include <iostream>
 #include <string>
 
-#define PLAYER m_model->getBallElement()
+#define PLAYER m_model ->getBallElement()
+#define LIST_ME m_model ->getMEList()
 
 const std::string BACKGROUND_IMAGE_1 = "Images/city_1.png";
 const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
@@ -41,7 +43,7 @@ class Model;
 /********************************************
     View Class
 *********************************************
-    Arthur : 21/02 - 6/03
+    Arthur : 21/02 - 12/03
     Florian: 21/02 - 3/03
 *********************************************/
 class View
@@ -55,14 +57,16 @@ public:
     void setModel(Model *model);
 
     //=== METHODS
-    void loadImages();
-    void loadText();
-    void updateElement(GraphicElement *element);
+    void updateElement(MovableElement *mElement, GraphicElement *gElement);
+    void deleteElements();
     void synchronize();
     void draw();
     bool treatEvents();
 
 private:
+    void loadImages();
+    void loadText();
+
     //=== ATTRIBUTES
     int m_viewWidth, m_viewHeight;
 
@@ -71,8 +75,12 @@ private:
 
     sf::Font *m_font;
     sf::Text m_textPositionBall;
+    sf::Text m_textDistance;
+    sf::Text m_textchosenInterDistance;  //DEBUG ONLY
+    sf::Text m_textcurrentInterDistance;  //DEBUG ONLY
 
-    //=== GraphicElements Textures
+
+    //GraphicElements Textures
     sf::Texture m_farBackgroundTexture;
     sf::Texture m_nearBackgroundTexture;
     sf::Texture m_playerTexture;
@@ -83,7 +91,7 @@ private:
     AnimatedGraphicElement *m_playerGraphic;
     GraphicElement *m_ennemiesGraphic;
 
-    //=== Associative arrays
+    //== Associative arrays
     std::map<const MovableElement *, GraphicElement *> m_elementToGraphicElement;
 };
 #endif

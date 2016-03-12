@@ -22,15 +22,16 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 21/02 - 2/03
+    Arthur : 21/02 - 12/03
     Florian: 21/02 - 2/03
 *********************************************/
 Model::Model(int width, int height)
     :  m_modelWidth(width), m_modelHeight(height)
 {
-    m_travelledDistance = 0;
-    m_lastEnnemyPosition = m_modelWidth;
+    m_totalDistance = 0;
     m_gameSpeed = 4;
+    m_currentInterdistance = 0;
+    m_chosenInterdistanceBetweenEnnemies = 100;
 }
 
 
@@ -65,7 +66,7 @@ const MovableElement* Model::getBallElement() const { return m_player; }
 
 int Model::getGameSpeed() const { return m_gameSpeed; }
 
-unsigned long Model::getDistance() const { return m_travelledDistance; }
+unsigned long Model::getDistance() const { return m_totalDistance; }
 
 std::vector< MovableElement*> Model::getMEList() { return m_movableElementsList; }
 
@@ -88,35 +89,65 @@ void Model::setGameSpeed(int speed) { m_gameSpeed = speed; }
 *********************************************/
 void Model::nextStep()
 {
-    //m_travelledDistance ++;
+    m_totalDistance ++;
 
     //=== Add new ennemies
 
-    m_newEnnemyPosition = m_lastEnnemyPosition + rand()%300;
-
-    if (checkPositionFree(m_newEnnemyPosition) == true)
+    if (m_currentInterdistance == m_chosenInterdistanceBetweenEnnemies)
     {
-        addNewMovableElement(m_newEnnemyPosition, 480);
-        m_lastEnnemyPosition = m_newEnnemyPosition;
-
-// TODO (ARTHUR#1#): delete ennemies that are outside left limit, ...
-//create different ennemies in add newMovableElement (add a sub class ennemies ???)
+        if (checkPositionFree(m_modelWidth, 480) == true)
+        {
+            addNewMovableElement(m_modelWidth, 480);
+            m_currentInterdistance = 0;
+            chooseInterdistance();
+        }
     }
+    else
+    {
+        m_currentInterdistance++;
+    }
+
+
+// TODO (ARTHUR#1#): create different ennemies in add newMovableElement (add a sub class ennemies ???)
+
 }
+
+
+/********************************************
+    choose the interdistance between element
+*********************************************
+    Arthur :  12/03
+*********************************************/
+void Model::chooseInterdistance()
+{
+    //allows to calculate interdistance in different situations
+    if (m_chosenInterdistanceBetweenEnnemies > 100)
+        m_chosenInterdistanceBetweenEnnemies = abs(rand()%150 - 50);
+    else if  ( m_chosenInterdistanceBetweenEnnemies < 25)
+    {
+        m_chosenInterdistanceBetweenEnnemies = abs(30 + rand()%100);
+    }
+    else
+        m_chosenInterdistanceBetweenEnnemies = abs(rand()%150);
+}
+
+
+
 
 /********************************************
     check if a position is free to add an element
 *********************************************
-    Arthur :  8/03 - 8/03
+    Arthur :  8/03 - 12/03
 *********************************************/
-bool Model::checkPositionFree(const int position) const
+bool Model::checkPositionFree(const int posX, const int posY) const
 {
     bool posFree=true;
-    int i = 0;
+    unsigned int i = 0;
     while (posFree && i < m_movableElementsList.size() )
     {
-        if (m_movableElementsList[i]->contains(position) )
+        if (m_movableElementsList[i]->contains(posX, posY) )
             posFree = false;
+        else
             i++;
     }
     return posFree;
@@ -159,7 +190,7 @@ void Model::moveElements()
 {
     for (unsigned int i=0; i < m_movableElementsList.size(); i++  )
     {
-        if ( m_movableElementsList[i] != m_player)
+        if ( m_movableElementsList[i]->getType() != 0)
             m_movableElementsList[i]->move();
         else
             m_player->move();
@@ -183,15 +214,34 @@ void Model::addBallMovableElement()
 /********************************************
     NewMovableElement  Adding
 *********************************************
-    Arthur : 25/02 - 8/03
+    Arthur : 25/02 - 12/03
     Florian: 2/03 - 2/03
 *********************************************/
 void Model::addNewMovableElement(int posX, int posY)
 {
-    if (checkPositionFree(m_modelWidth) == true)
+    MovableElement *newMovElem = new MovableElement(posX, posY, 30, 30,-4, 0, 1);
+    m_newMovableElementsList.push_back( newMovElem );
+    m_movableElementsList.push_back( newMovElem );
+}
+
+
+/********************************************
+    Delete MovableElements
+    *********************************************
+    Arthur : 12/03
+    *********************************************/
+void Model::deleteMovableElement(MovableElement *element)
+{
+    std::vector<MovableElement*>::iterator it = m_movableElementsList.begin();
+    bool trouve = false;
+    while (!trouve && it != m_movableElementsList.end() )
     {
-        MovableElement *newMovElem = new MovableElement(posX, posY, 30, 30,-4, 0);
-        m_newMovableElementsList.push_back( newMovElem );
-        m_movableElementsList.push_back( newMovElem );
+        if (*it == element)
+        {
+            m_movableElementsList.erase(it);
+            trouve=true;
+        }
+        else
+            it++;
     }
 }

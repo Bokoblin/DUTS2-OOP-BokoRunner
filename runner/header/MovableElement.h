@@ -23,19 +23,19 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     MovableElement Class
 *********************************************
-    Arthur : 23/02 - 02/03
+    Arthur : 23/02 - 10/03
     Florian: 02/03 - 02/03
 *********************************************/
 class MovableElement
 {
 public:
     //=== CTORs / DTORs
-    MovableElement(int posX, int posY, int w, int h, int mvX, int mvY);
+    MovableElement(int posX, int posY, int w, int h, int mvX, int mvY, int type);
     ~MovableElement();
 
     //=== METHODS
     void move();
-    bool contains( const int position) const ;
+    bool contains( const int posX, const int posY) const ;
     std::string to_string()const ;
 
     //=== GETTERS
@@ -45,6 +45,7 @@ public:
     int getPosY() const;
     int getWidth() const;
     int getHeight() const;
+    int getType() const;
 
     //=== SETTERS
     void setPositionX(int x);
@@ -57,11 +58,9 @@ protected:
     int m_posY;
     int m_width;
     int m_height;
-
-private:
     int m_moveX;
     int m_moveY;
-
+    int m_typeElement; //0 for Ball, 1 for obstacles, 2 for bonuses
 };
 
 #endif // MOVABLEELEMENT_H

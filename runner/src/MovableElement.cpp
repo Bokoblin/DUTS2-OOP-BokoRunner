@@ -20,11 +20,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 23/02 - 02/03
+    Arthur : 23/02 - 10/03
     Florian: 02/03 - 02/03
 *********************************************/
-MovableElement::MovableElement(int posX, int posY, int w, int h, int mvX, int mvY) :
-    m_posX{posX}, m_posY{posY}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY}
+MovableElement::MovableElement(int posX, int posY, int w, int h, int mvX, int mvY, int type) :
+    m_posX{posX}, m_posY{posY}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY}, m_typeElement{type}
 {
 
 }
@@ -51,6 +51,7 @@ int MovableElement::getPosX()  const { return m_posX;  }
 int MovableElement::getPosY()  const { return m_posY;  }
 int MovableElement::getWidth() const { return m_width; }
 int MovableElement::getHeight()const { return m_height;}
+int MovableElement::getType()const { return m_typeElement;}
 
 /********************************************
     Setters
@@ -76,14 +77,14 @@ void MovableElement::move()
    check if a position belongs to the current
    ennemy position
 *********************************************
-    Arthur : 8/03 - 8/03
+    Arthur : 8/03 - 12/03
 *********************************************/
-bool MovableElement::contains( const int position) const
+bool MovableElement::contains( const int posX, const int posY) const
 {
-    if ( position>= m_posX && position <= (m_posX + m_width) )
-        return true;
-    else
-        return false;
+    int  maxX = m_posX + m_width;
+    int  maxY = m_posY + m_height;
+
+    return (posX >= m_posX) && (posX < maxX) && (posY >= m_posY) && (posY < maxY);
 }
 
 /********************************************
@@ -93,6 +94,6 @@ bool MovableElement::contains( const int position) const
 *********************************************/
 std::string MovableElement::to_string() const
 {
-    std::string texte = "POS_X : " + std::to_string(m_posX) +"  ,  POS_Y : " +  std::to_string(m_posY);
+    std::string texte = "X : " + std::to_string(m_posX) +"  ,  Y : " +  std::to_string(m_posY);
     return texte;
 }

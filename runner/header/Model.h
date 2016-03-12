@@ -26,7 +26,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Model Class
 *********************************************
-    Arthur : 21/02 - 6/03
+    Arthur : 21/02 - 12/03
     Florian: 21/02 - 2/03
 *********************************************/
 class Model
@@ -48,25 +48,34 @@ public:
 
     //=== METHODS
     void nextStep();
-    bool checkPositionFree(const int position) const;
+    void chooseInterdistance();
+    bool checkPositionFree(const int posX, const int posY) const;
     void moveBallAccordingEvent(bool left);
     void moveElements();
+    void deleteMovableElement(MovableElement *element);
     void addBallMovableElement();
     void addNewMovableElement(int posX, int posY);
+    // TODO (ARTHUR#1#): Merge addElements functions ?
+
     void clearNewMovableElementList();
 
 private:
     //=== ATTRIBUTES
     int m_modelWidth, m_modelHeight;
-    unsigned long m_travelledDistance;
-    int  m_lastEnnemyPosition;
+    unsigned long m_totalDistance;
+    //int m_currentInterdistance;
     int  m_gameSpeed;
-    int m_newEnnemyPosition;
+    //int  m_chosenInterdistanceBetweenEnnemies;
 
     Ball *m_player;
 
     //Dynamic arrays
     std::vector<MovableElement*> m_movableElementsList;
     std::vector<MovableElement*> m_newMovableElementsList;
+
+public: //DEBUG ONLY
+    int m_currentInterdistance;
+    int  m_chosenInterdistanceBetweenEnnemies;
+
 };
 #endif

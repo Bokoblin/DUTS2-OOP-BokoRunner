@@ -5,48 +5,49 @@ Current stable version : v0.1.4-r1
 Current dev version : v0.2.0-r1
 
 
-Arthur - v0.1.0-r1 (22/02/16) :
+v0.1.0-r1 (22/02/16) :
 
 - Project Creation:
 	- images added in "Images" folder
 	- font added in "Fonts" folder
 	- README added
 
-Arthur & Florian - v0.1.0-r2 (22/02/16) :
+
+v0.1.0-r2 (22/02/16) :
 
 - sources files from "Atelier 1" and "Atelier 2" added
 - header  files from "Atelier 1" and "Atelier 2" added
 
 
-Arthur - v0.1.0-r3 (24/02/16) :
+v0.1.0-r3 (24/02/16) :
 
 - code relative to "Atelier 2" and "Atelier 3" added
 
 
-Arthur - v0.1.1-r1 (25/01/16) :
+v0.1.1-r1 (25/01/16) :
 
 - Atelier 2 and 3 are finished until fixing issues in "TD Projet" next week
 
 
-Arthur - v0.1.2-r1 (25/02/16) :
+v0.1.2-r1 (25/02/16) :
 
 -Merge with v0.1.2-dev from dev-arthur branch containing:
 	- Atelier 4 : adding font for ball position
 	- Atelier 2 : GraphicElement::resize() is now working
 
 
-Arthur & Florian - v0.1.2-r2 (02/03/16) :
+v0.1.2-r2 (02/03/16) :
 
 - Bug fixes related to the creation of new ennemies
 - Documentation comments added
 
 
-Arthur & Florian - v0.1.3-r1 (3/03/16):
+v0.1.3-r1 (3/03/16):
 
 - Paralax-Sliding Background added
 
 
-Arthur & Florian - v0.1.4-r1 (5/03/16):
+v0.1.4-r1 (5/03/16):
 
 - Animated ball added
 - ball creation independent from model creation
@@ -54,14 +55,25 @@ Arthur & Florian - v0.1.4-r1 (5/03/16):
 
 
 
-Arthur - v0.2.0-dev1 (6/03/16):
+Arthur - v0.2.0-devA1 (6/03/16):
 
 - Code Rewriting concerning drawing and synchronization functions
 - ennemies moving toward left
 
-Arthur - v0.2.0-dev2 (8/03/16):
+
+Arthur - v0.2.0-devA2 (8/03/16):
 
 - ennemies appears randomly after screenwidth only if their position is greater than precedent ones
+
+
+Arthur - v0.2.0-devA3 (12/03/16):
+
+- type differenciation between movableElements added
+- ennemy generation enhanced
+- ennemy deleting
+- segfault and other fixes
+
+
 
 
 

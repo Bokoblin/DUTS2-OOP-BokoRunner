@@ -19,9 +19,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define _MODEL_H
 
 #include "Ball.h"
+#include "Enemy.h"
 #include <cstdlib>
 #include <iostream>
 #include <vector>
+
+const int GAME_FLOOR = 480;
+const int PLAYER_DEFAULT_POS_X = 50 ;
 
 /********************************************
     Model Class
@@ -37,7 +41,7 @@ public:
     ~Model();
 
     //=== GETTERS
-    const MovableElement *getBallElement() const ;
+    const MovableElement *getPlayer() const ;
     int getGameSpeed() const;
     unsigned long getDistance() const;
     std::vector<MovableElement *> getNewMEList();
@@ -49,22 +53,19 @@ public:
     //=== METHODS
     void nextStep();
     void chooseInterdistance();
-    bool checkPositionFree(const int posX, const int posY) const;
+    bool checkIfPositionFree(const int posX, const int posY) const;
     void moveBallAccordingEvent(bool left);
-    void moveElements();
+    void moveMovableElement(MovableElement *element);
     void deleteMovableElement(MovableElement *element);
-    void addBallMovableElement();
-    void addNewMovableElement(int posX, int posY);
-    // TODO (ARTHUR#1#): Merge addElements functions ?
-
+    void addNewMovableElement(int posX, int posY, int type);
     void clearNewMovableElementList();
 
 private:
     //=== ATTRIBUTES
     int m_modelWidth, m_modelHeight;
     unsigned long m_totalDistance;
-    //int m_currentInterdistance;
     int  m_gameSpeed;
+    //int m_currentInterdistance;
     //int  m_chosenInterdistanceBetweenEnnemies;
 
     Ball *m_player;
@@ -75,7 +76,7 @@ private:
 
 public: //DEBUG ONLY
     int m_currentInterdistance;
-    int  m_chosenInterdistanceBetweenEnnemies;
+    int  m_chosenInterdistance; //interdistance between elementss
 
 };
 #endif

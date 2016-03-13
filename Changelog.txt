@@ -2,7 +2,7 @@ Runner Project - state of progress
 Auteurs : Arthur JOLIVET et Florian LARONZE
 
 Current stable version : v0.1.4-r1
-Current dev version : v0.2.0-r1
+Current dev version : v0.2.0-devA3
 
 
 v0.1.0-r1 (22/02/16) :
@@ -66,13 +66,13 @@ Arthur - v0.2.0-devA2 (8/03/16):
 - ennemies appears randomly after screenwidth only if their position is greater than precedent ones
 
 
-Arthur - v0.2.0-devA3 (12/03/16):
+Arthur - v0.2.0-devA3 (12/03/16 - 13/03/16):
 
 - type differenciation between movableElements added
 - ennemy generation enhanced
 - ennemy deleting
+- enemy animation added
 - segfault and other fixes
-
 
 
 

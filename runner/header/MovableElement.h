@@ -23,7 +23,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     MovableElement Class
 *********************************************
-    Arthur : 23/02 - 10/03
+    Arthur : 23/02 - 13/03
     Florian: 02/03 - 02/03
 *********************************************/
 class MovableElement
@@ -31,10 +31,11 @@ class MovableElement
 public:
     //=== CTORs / DTORs
     MovableElement(int posX, int posY, int w, int h, int mvX, int mvY, int type);
-    ~MovableElement();
+    //~MovableElement();
+    virtual ~MovableElement() {}
 
     //=== METHODS
-    void move();
+    virtual void move() {} //defining it as virtual allows to override it
     bool contains( const int posX, const int posY) const ;
     std::string to_string()const ;
 

@@ -29,13 +29,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <iostream>
 #include <string>
 
-#define PLAYER m_model ->getBallElement()
+#define PLAYER m_model ->getPlayer()
 #define LIST_ME m_model ->getMEList()
 
 const std::string BACKGROUND_IMAGE_1 = "Images/city_1.png";
 const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
 const std::string BALL_IMAGE = "Images/balls.png";
-const std::string ENNEMIES_IMAGE = "Images/ennemies.png";
+const std::string ENEMIES_IMAGE = "Images/enemies.png";
 const std::string FONT = "Fonts/Antique_Olive.ttf";
 
 class Model;
@@ -43,7 +43,7 @@ class Model;
 /********************************************
     View Class
 *********************************************
-    Arthur : 21/02 - 12/03
+    Arthur : 21/02 - 13/03
     Florian: 21/02 - 3/03
 *********************************************/
 class View
@@ -57,7 +57,7 @@ public:
     void setModel(Model *model);
 
     //=== METHODS
-    void updateElement(MovableElement *mElement, GraphicElement *gElement);
+    void updateElements();
     void deleteElements();
     void synchronize();
     void draw();
@@ -75,7 +75,7 @@ private:
 
     sf::Font *m_font;
     sf::Text m_textPositionBall;
-    sf::Text m_textDistance;
+    sf::Text m_textTotalDistance;
     sf::Text m_textchosenInterDistance;  //DEBUG ONLY
     sf::Text m_textcurrentInterDistance;  //DEBUG ONLY
 
@@ -84,14 +84,14 @@ private:
     sf::Texture m_farBackgroundTexture;
     sf::Texture m_nearBackgroundTexture;
     sf::Texture m_playerTexture;
-    sf::Texture m_ennemiesTexture;
+    sf::Texture m_enemiesTexture;
 
     SlidingBackground *m_farBackground;
     SlidingBackground *m_nearBackground;
     AnimatedGraphicElement *m_playerGraphic;
-    GraphicElement *m_ennemiesGraphic;
+    AnimatedGraphicElement *m_enemiesGraphic;
 
     //== Associative arrays
-    std::map<const MovableElement *, GraphicElement *> m_elementToGraphicElement;
+    std::map<const MovableElement *, GraphicElement *> m_MovableToGraphicElement;
 };
 #endif

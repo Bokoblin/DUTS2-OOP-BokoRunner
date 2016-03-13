@@ -31,6 +31,7 @@ public:
     //=== CTORs / DTORs
     AnimatedGraphicElement(const std::vector<sf::IntRect> & clipRects,
                            sf::Texture &image, int x, int y, int w, int h);
+    AnimatedGraphicElement(AnimatedGraphicElement const& elementACopier);
     ~AnimatedGraphicElement();
 
     //=== METHODS
@@ -39,7 +40,7 @@ public:
 private:
     //=== ATTRIBUTES
     std::vector<sf::IntRect> m_clip_rects;
-    int m_current_clip_rect;
+    unsigned int m_current_clip_rect;
     int m_nb_steps;
 
 };

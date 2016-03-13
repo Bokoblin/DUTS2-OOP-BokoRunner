@@ -31,16 +31,6 @@ MovableElement::MovableElement(int posX, int posY, int w, int h, int mvX, int mv
 
 
 /********************************************
-    Destructor
-*********************************************
-    Arthur : 23/02 - 02/03
-*********************************************/
-MovableElement::~MovableElement()
-{
-
-}
-
-/********************************************
     Getters
 *********************************************
     Arthur : 23/02 - 23/02
@@ -61,17 +51,6 @@ int MovableElement::getType()const { return m_typeElement;}
 void MovableElement::setPositionX(int x) { m_posX = x; }
 void MovableElement::setPositionY(int y) { m_posX = y; }
 
-
-/********************************************
-   MovableElement moving
-*********************************************
-    Arthur : 6/03 - 6/03
-*********************************************/
-void MovableElement::move()
-{
-    m_posX += m_moveX;
-    m_posY += m_moveY;
-}
 
 /********************************************
    check if a position belongs to the current

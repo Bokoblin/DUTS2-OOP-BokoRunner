@@ -59,8 +59,8 @@ View::~View()
         delete m_nearBackground;
     if(m_playerGraphic!= NULL)
         delete m_playerGraphic;
-    if(m_ennemiesGraphic!= NULL)
-        delete m_ennemiesGraphic;
+    if(m_enemiesGraphic!= NULL)
+        delete m_enemiesGraphic;
     if(m_model!= NULL)
         delete m_model;
     if(m_window!= NULL)
@@ -83,7 +83,7 @@ void View::setModel(Model *model)
 /********************************************
     Image Loading
 *********************************************
-    Arthur : 5/03 - 6/03
+    Arthur : 5/03 - 13/03
 *********************************************/
 void View::loadImages()
 {
@@ -113,15 +113,20 @@ void View::loadImages()
         {
             clip_rects.push_back(sf::IntRect(50*i,0,50,50));
         }
-        m_playerGraphic = new AnimatedGraphicElement(clip_rects, m_playerTexture, 50, 480,50,50);
+        m_playerGraphic = new AnimatedGraphicElement(clip_rects, m_playerTexture, PLAYER_DEFAULT_POS_X, GAME_FLOOR,50,50);
     }
 
-    if (!m_ennemiesTexture.loadFromFile(ENNEMIES_IMAGE, sf::IntRect(0,0,50,50)) )
-        cerr << "ERROR when loading image file: " << ENNEMIES_IMAGE << endl;
+    if (!m_enemiesTexture.loadFromFile(ENEMIES_IMAGE))
+        cerr << "ERROR when loading image file: " << ENEMIES_IMAGE << endl;
     else
     {
-        m_ennemiesTexture.setSmooth(true);
-        m_ennemiesGraphic = new GraphicElement(m_ennemiesTexture, 400, 450,20,20);
+        m_enemiesTexture.setSmooth(true);
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<2; i++)
+        {
+            clip_rects.push_back(sf::IntRect(50*i,0,50,50));
+        }
+        m_enemiesGraphic = new AnimatedGraphicElement(clip_rects, m_enemiesTexture, m_viewWidth, GAME_FLOOR,50,50);
     }
 }
 
@@ -138,10 +143,10 @@ void View::loadText()
     m_textPositionBall.setCharacterSize(15);
     m_textPositionBall.setColor(sf::Color::Black);
 
-    m_textDistance.setFont(*m_font);
-    m_textDistance.setPosition(250,10);
-    m_textDistance.setCharacterSize(15);
-    m_textDistance.setColor(sf::Color::Black);
+    m_textTotalDistance.setFont(*m_font);
+    m_textTotalDistance.setPosition(250,10);
+    m_textTotalDistance.setCharacterSize(15);
+    m_textTotalDistance.setColor(sf::Color::Black);
 
     m_textchosenInterDistance.setFont(*m_font);
     m_textchosenInterDistance.setPosition(450,10);
@@ -158,16 +163,23 @@ void View::loadText()
 /********************************************
     Update gElements
 *********************************************
-    Arthur : 6/03 - 12/03
+    Arthur : 6/03 - 13/03
 *********************************************/
-void View::updateElement(MovableElement *mElement, GraphicElement *gElement)
+void View::updateElements()
 {
-    int position_x = mElement->getPosX();
-    int position_y = mElement->getPosY();
-    int move_x = mElement->getMoveX();
-    int move_y = mElement->getMoveY();
+    std::map<const MovableElement *, GraphicElement *>::iterator it;
+    for(it = m_MovableToGraphicElement.begin() ; it != m_MovableToGraphicElement.end() ; ++it)
+    {
+        m_model->moveMovableElement(const_cast<MovableElement*>(it->first));
 
-    gElement->setPosition(sf::Vector2f( position_x+move_x, position_y+move_y ));
+        int position_x = (it->first)->getPosX();
+        int position_y = (it->first)->getPosY();
+        int move_x = (it->first)->getMoveX();
+        int move_y = (it->first)->getMoveY();
+
+        it->second->setPosition(sf::Vector2f( position_x+move_x, position_y+move_y ));
+        it->second->resize(30,30);
+    }
 }
 
 
@@ -178,13 +190,13 @@ void View::updateElement(MovableElement *mElement, GraphicElement *gElement)
 *********************************************/
 void View::deleteElements()
 {
-    std::map<const MovableElement *, GraphicElement *>::iterator it2 = m_elementToGraphicElement.begin();
+    std::map<const MovableElement *, GraphicElement *>::iterator it2 = m_MovableToGraphicElement.begin();
     bool trouve = false;
-    while (!trouve && it2!=m_elementToGraphicElement.end() )
+    while (!trouve && it2!=m_MovableToGraphicElement.end() )
     {
-        if (it2->first->getType() == 1 && it2->second->getPosition().x < 0 ) //if the element is ouside the window
+        if (it2->first->getType() == 1 && ( it2->second->getPosition().x + it2->second->getLocalBounds().width ) < 0 )
         {
-            m_elementToGraphicElement.erase(it2);
+            m_MovableToGraphicElement.erase(it2);
             m_model->deleteMovableElement(const_cast<MovableElement*>(it2->first));
             trouve = true;
         }
@@ -206,41 +218,34 @@ void View::synchronize()
 
     for (unsigned int i=0; i<( m_model->getNewMEList().size() ); i++)
     {
-        if (m_elementToGraphicElement.find(m_model->getNewMEList()[i] ) == m_elementToGraphicElement.end() )
+        if (m_MovableToGraphicElement.find(m_model->getNewMEList()[i] ) == m_MovableToGraphicElement.end() )
         {
             if (  (m_model->getNewMEList()[i])->getType() == 0  )
-                m_elementToGraphicElement[m_model->getNewMEList()[i] ] = m_playerGraphic;
+                m_MovableToGraphicElement[m_model->getNewMEList()[i] ] = m_playerGraphic;
             if (  (m_model->getNewMEList()[i])->getType() == 1  )
             {
-                GraphicElement *m_newEnnemy = new GraphicElement(*m_ennemiesGraphic);
-                m_newEnnemy->resize(30,30);
-                m_elementToGraphicElement[m_model->getNewMEList()[i] ] = m_newEnnemy;
+                AnimatedGraphicElement *m_newEnemy = new AnimatedGraphicElement(*m_enemiesGraphic);
+                m_MovableToGraphicElement[m_model->getNewMEList()[i] ] = m_newEnemy;
             }
         }
     }
     m_model->clearNewMovableElementList();
 
-    //=== gElements update
+    //=== Elements update
 
     m_nearBackground->setSpeed(m_model->getGameSpeed() );
-    m_model->moveElements();
 
-    std::map<const MovableElement *, GraphicElement *>::iterator it;
-    for(it = m_elementToGraphicElement.begin() ; it != m_elementToGraphicElement.end() ; ++it)
-    {
-        updateElement(const_cast<MovableElement*>(it->first), it->second);
-    }
-    m_playerGraphic->resize(30,30);
+    updateElements();
 
-    //=== gElements & mElement deleting
+    //=== Elements deleting
 
-    deleteElements();
+    deleteElements(); //gElements & mElements deleting if not used anymore
 
     //=== Text update
 
     m_textPositionBall.setString( PLAYER->to_string() );
-    m_textDistance.setString( "total distance : " + to_string(m_model->getDistance() ) );
-    m_textchosenInterDistance.setString( "chosen inter : " + to_string(m_model->m_chosenInterdistanceBetweenEnnemies ) );
+    m_textTotalDistance.setString( "total distance : " + to_string(m_model->getDistance() ) );
+    m_textchosenInterDistance.setString( "chosen inter : " + to_string(m_model->m_chosenInterdistance ) );
     m_textcurrentInterDistance.setString( " current inter : " + to_string(m_model->m_currentInterdistance) );
 
 }
@@ -249,17 +254,16 @@ void View::synchronize()
 /********************************************
     View Drawing
 *********************************************
-    Arthur : 21/02 - 12/03
+    Arthur : 21/02 - 13/03
     Florian: 21/02 - 3/03
 *********************************************/
 void View::draw()
 {
-/* // DEBUG ONLY
-    if (system("CLS")) system("clear");
-    std::vector<MovableElement*>::iterator it;
-    for (int i=0; i < m_model->getMEList().size(); i++ )
-            cout << m_model->getMEList()[i] << endl;
-*/
+    /* // DEBUG ONLY
+        if (system("CLS")) system("clear");
+        for (int i=0; i < m_model->getMEList().size(); i++ )
+                cout << m_model->getMEList()[i] << endl;
+    */
 
     m_window->clear();
 
@@ -270,18 +274,15 @@ void View::draw()
 
     //=== Graphical Elements drawing
 
-    for(auto it = m_elementToGraphicElement.begin() ; it != m_elementToGraphicElement.end() ; ++it)
+    for(auto it = m_MovableToGraphicElement.begin() ; it != m_MovableToGraphicElement.end() ; ++it)
     {
-        if (it->second == m_playerGraphic )
-            m_playerGraphic->draw(m_window);
-        else
-            m_window->draw(*(it->second));
+        it->second->draw(m_window);
     }
 
     //=== Text drawing
 
     m_window->draw(m_textPositionBall);
-    m_window->draw(m_textDistance);
+    m_window->draw(m_textTotalDistance);
     m_window->draw(m_textchosenInterDistance);
     m_window->draw(m_textcurrentInterDistance);
 
@@ -292,7 +293,7 @@ void View::draw()
 /********************************************
     Events treating
 *********************************************
-    Arthur : 21/02 - 2/03
+    Arthur : 21/02 - 13/03
     Florian: 21/02 - 2/03
 *********************************************/
 bool View::treatEvents()
@@ -322,10 +323,6 @@ bool View::treatEvents()
                 if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D ) && (PLAYER->getPosX() + PLAYER->getWidth()) < m_viewWidth )
                 {
                     m_model->moveBallAccordingEvent(false);
-                }
-                if (event.key.code == sf::Keyboard::Add)
-                {
-                    m_model->addNewMovableElement(m_viewWidth+rand()%50, 480);
                 }
                 break;
             default:

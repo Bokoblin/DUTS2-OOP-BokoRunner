@@ -16,7 +16,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 #include "../header/GraphicElement.h"
-
+#include <iostream>
 
 /********************************************
     Parameterized Constructor
@@ -54,19 +54,6 @@ GraphicElement::GraphicElement(GraphicElement const& elementACopier) :
 GraphicElement::~GraphicElement()
 {
     //Dtor
-}
-
-
-/********************************************
-    Drawing function
-*********************************************
-    Arthur : 22/02 - 22/02
-    Florian: 22/02 - 22/02
-*********************************************/
-void GraphicElement::draw(sf::RenderWindow * current_window)
-{
-    current_window->draw(*this);
-    current_window->display();
 }
 
 

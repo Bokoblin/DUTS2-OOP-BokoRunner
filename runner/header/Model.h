@@ -24,7 +24,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <iostream>
 #include <vector>
 
-const int GAME_FLOOR = 480;
+const int GAME_FLOOR = 500;
 const int PLAYER_DEFAULT_POS_X = 50 ;
 
 /********************************************
@@ -70,7 +70,7 @@ private:
 
     Ball *m_player;
 
-    //Dynamic arrays
+    //Containers
     std::vector<MovableElement*> m_movableElementsList;
     std::vector<MovableElement*> m_newMovableElementsList;
 

@@ -38,10 +38,19 @@ Enemy::~Enemy()
 
 }
 
+
+/********************************************
+    Getters
+*********************************************
+    Arthur : 15/03
+*********************************************/
+int Enemy::getEnemyType() const {return m_enemyType;}
+
+
 /********************************************
     Enemy Moving
 *********************************************
-    Arthur : 13/02
+    Arthur : 13/03
 *********************************************/
 void Enemy::move()
 {
@@ -52,15 +61,15 @@ void Enemy::move()
 /********************************************
     Next Enemy Type Choosing
 *********************************************
-    Arthur : 13/02
+    Arthur : 13/03 - 15/03
 *********************************************/
 void Enemy::chooseEnemyType()
 {
     int result = 1+ rand()%100;
 
-    if (result <= 60)
+    if (result <= 50)
         m_enemyType = 0;
-    else if (result <= 90)
+    else if (result <= 80)
         m_enemyType = 1;
     else
         m_enemyType = 2;

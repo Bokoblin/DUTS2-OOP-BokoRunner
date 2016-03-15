@@ -23,7 +23,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     MovableElement Class
 *********************************************
-    Arthur : 23/02 - 13/03
+    Arthur : 23/02 - 15/03
     Florian: 02/03 - 02/03
 *********************************************/
 class MovableElement
@@ -47,6 +47,7 @@ public:
     int getWidth() const;
     int getHeight() const;
     int getType() const;
+    virtual int getEnemyType() const {return -1;}
 
     //=== SETTERS
     void setPositionX(int x);

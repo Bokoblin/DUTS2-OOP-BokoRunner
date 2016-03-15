@@ -36,6 +36,7 @@ const std::string BACKGROUND_IMAGE_1 = "Images/city_1.png";
 const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
 const std::string BALL_IMAGE = "Images/balls.png";
 const std::string ENEMIES_IMAGE = "Images/enemies.png";
+const std::string BLOCK_ENEMIES_IMAGE = "Images/enemy_block.png";
 const std::string EXPLOSION_IMAGE = "Images/explosion.png";
 const std::string FONT = "Fonts/Antique_Olive.ttf";
 
@@ -44,7 +45,7 @@ class Model;
 /********************************************
     View Class
 *********************************************
-    Arthur : 21/02 - 14/03
+    Arthur : 21/02 - 15/03
     Florian: 21/02 - 3/03
 *********************************************/
 class View
@@ -81,17 +82,22 @@ private:
     sf::Text m_textcurrentInterDistance;  //DEBUG ONLY
 
 
-    //GraphicElements Textures
+    //Textures for the Graphic Elements
     sf::Texture m_farBackgroundTexture;
     sf::Texture m_nearBackgroundTexture;
     sf::Texture m_playerTexture;
-    sf::Texture m_enemiesTexture;
+    sf::Texture m_standardEnemyTexture;
+    sf::Texture m_totemEnemyTexture;
+    sf::Texture m_blockEnemyTexture;
     sf::Texture m_explosionTexture;
 
+    //Graphic Elements
     SlidingBackground *m_farBackground;
     SlidingBackground *m_nearBackground;
     AnimatedGraphicElement *m_playerGraphic;
-    AnimatedGraphicElement *m_enemiesGraphic;
+    AnimatedGraphicElement *m_standardEnemyGraphic;
+    AnimatedGraphicElement *m_totemEnemyGraphic;
+    AnimatedGraphicElement *m_blockEnemyGraphic;
     AnimatedGraphicElement *m_explosionGraphic;
 
     //Containers

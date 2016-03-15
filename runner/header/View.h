@@ -36,6 +36,7 @@ const std::string BACKGROUND_IMAGE_1 = "Images/city_1.png";
 const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
 const std::string BALL_IMAGE = "Images/balls.png";
 const std::string ENEMIES_IMAGE = "Images/enemies.png";
+const std::string EXPLOSION_IMAGE = "Images/explosion.png";
 const std::string FONT = "Fonts/Antique_Olive.ttf";
 
 class Model;
@@ -43,7 +44,7 @@ class Model;
 /********************************************
     View Class
 *********************************************
-    Arthur : 21/02 - 13/03
+    Arthur : 21/02 - 14/03
     Florian: 21/02 - 3/03
 *********************************************/
 class View
@@ -85,13 +86,15 @@ private:
     sf::Texture m_nearBackgroundTexture;
     sf::Texture m_playerTexture;
     sf::Texture m_enemiesTexture;
+    sf::Texture m_explosionTexture;
 
     SlidingBackground *m_farBackground;
     SlidingBackground *m_nearBackground;
     AnimatedGraphicElement *m_playerGraphic;
     AnimatedGraphicElement *m_enemiesGraphic;
+    AnimatedGraphicElement *m_explosionGraphic;
 
-    //== Associative arrays
+    //Containers
     std::map<const MovableElement *, GraphicElement *> m_MovableToGraphicElement;
 };
 #endif

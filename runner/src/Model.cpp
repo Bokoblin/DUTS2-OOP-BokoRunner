@@ -74,10 +74,9 @@ std::vector< MovableElement*> Model::getNewMEList() { return m_newMovableElement
 /********************************************
     Setters
 *********************************************
-    Arthur : 8/03 - 8/03
+    Arthur : 8/03 - 13/03
 *********************************************/
 void Model::setGameSpeed(int speed) { m_gameSpeed = speed; }
-
 
 
 /********************************************
@@ -215,13 +214,13 @@ void Model::addNewMovableElement(int posX, int posY, int type)
 void Model::deleteMovableElement(MovableElement *element)
 {
     std::vector<MovableElement*>::iterator it = m_movableElementsList.begin();
-    bool trouve = false;
-    while (!trouve && it != m_movableElementsList.end() )
+    bool found = false;
+    while (!found && it != m_movableElementsList.end() )
     {
         if (*it == element)
         {
             m_movableElementsList.erase(it);
-            trouve=true;
+            found=true;
         }
         else
             it++;

@@ -34,6 +34,14 @@ public:
     GraphicElement(sf::Texture &image, int x, int y, int w, int h);
     ~GraphicElement();
 
+    //=== GETTERS
+    bool getCollisionState();
+    int getRemainingLifeSpan();
+
+    //=== SETTERS
+    void setCollisionState(bool collisionState);
+    void setRemainingLifeSpan(int remainingLifeSpan);
+
     //=== METHODS
     virtual  void draw(sf::RenderWindow *window) {}
     void resize (int w, int h);
@@ -42,6 +50,8 @@ private:
     //=== ATTRIBUTES
     int m_w;
     int m_h;
+    bool m_collisionState;
+    int  m_remainingLifeSpan;
 
 };
 

@@ -83,7 +83,7 @@ void View::setModel(Model *model)
 /********************************************
     Image Loading
 *********************************************
-    Arthur : 5/03 - 13/03
+    Arthur : 5/03 - 14/03
 *********************************************/
 void View::loadImages()
 {
@@ -128,6 +128,19 @@ void View::loadImages()
         }
         m_enemiesGraphic = new AnimatedGraphicElement(clip_rects, m_enemiesTexture, m_viewWidth, GAME_FLOOR,50,50);
     }
+
+    if (!m_explosionTexture.loadFromFile(EXPLOSION_IMAGE))
+        cerr << "ERROR when loading image file: " << EXPLOSION_IMAGE << endl;
+    else
+    {
+        m_explosionTexture.setSmooth(true);
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<3; i++)
+        {
+            clip_rects.push_back(sf::IntRect(200*i,0,200,200));
+        }
+        m_explosionGraphic = new AnimatedGraphicElement(clip_rects, m_explosionTexture, 200, GAME_FLOOR,200,200);
+    }
 }
 
 
@@ -163,13 +176,15 @@ void View::loadText()
 /********************************************
     Update gElements
 *********************************************
-    Arthur : 6/03 - 13/03
+    Arthur : 6/03 - 14/03
 *********************************************/
 void View::updateElements()
 {
     std::map<const MovableElement *, GraphicElement *>::iterator it;
     for(it = m_MovableToGraphicElement.begin() ; it != m_MovableToGraphicElement.end() ; ++it)
     {
+        //=== Update Position
+
         m_model->moveMovableElement(const_cast<MovableElement*>(it->first));
 
         int position_x = (it->first)->getPosX();
@@ -178,6 +193,18 @@ void View::updateElements()
         int move_y = (it->first)->getMoveY();
 
         it->second->setPosition(sf::Vector2f( position_x+move_x, position_y+move_y ));
+
+        //=== Update Graphics
+
+        if (it->first->getType() == 1)
+        {
+            if ( it->second->getCollisionState() == false && m_playerGraphic->getGlobalBounds().intersects(it->second->getGlobalBounds() ) )
+            {
+                it->second->setCollisionState(true);
+                it->second->setRemainingLifeSpan(40);
+                it->second->setTexture(m_explosionTexture);
+            }
+        }
         it->second->resize(30,30);
     }
 }
@@ -186,22 +213,22 @@ void View::updateElements()
 /********************************************
     Delete gElement and call mElement delete
 *********************************************
-    Arthur : 12/03
+    Arthur : 14/03
 *********************************************/
 void View::deleteElements()
 {
-    std::map<const MovableElement *, GraphicElement *>::iterator it2 = m_MovableToGraphicElement.begin();
-    bool trouve = false;
-    while (!trouve && it2!=m_MovableToGraphicElement.end() )
+    std::map<const MovableElement *, GraphicElement *>::iterator it = m_MovableToGraphicElement.begin();
+    bool found = false;
+    while (!found && it!=m_MovableToGraphicElement.end() )
     {
-        if (it2->first->getType() == 1 && ( it2->second->getPosition().x + it2->second->getLocalBounds().width ) < 0 )
+        if (it->first->getType() == 1 &&  ( it->second->getPosition().x + it->second->getLocalBounds().width ) < 0)
         {
-            m_MovableToGraphicElement.erase(it2);
-            m_model->deleteMovableElement(const_cast<MovableElement*>(it2->first));
-            trouve = true;
+            m_MovableToGraphicElement.erase(it);
+            m_model->deleteMovableElement(const_cast<MovableElement*>(it->first));
+            found = true;
         }
         else
-            ++it2;
+            ++it;
     }
 }
 

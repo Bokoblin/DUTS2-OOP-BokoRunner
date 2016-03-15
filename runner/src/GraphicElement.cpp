@@ -21,10 +21,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 21/02 - 2/03
+    Arthur : 21/02 - 14/03
     Florian: 21/02 - 2/03
 *********************************************/
-GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) : m_w(w), m_h(h)
+GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) : m_w{w}, m_h{h}, m_collisionState{false}, m_remainingLifeSpan{-1}
 {
     this->setTexture(image);
     this->setPosition( (float)x, (float)y);
@@ -55,6 +55,24 @@ GraphicElement::~GraphicElement()
 {
     //Dtor
 }
+
+
+/********************************************
+    Getters
+*********************************************
+    Arthur : 14/03
+*********************************************/
+bool GraphicElement::getCollisionState() { return m_collisionState; }
+int GraphicElement::getRemainingLifeSpan() {return m_remainingLifeSpan; }
+
+
+/********************************************
+    Setters
+*********************************************
+    Arthur : 14/03
+*********************************************/
+void GraphicElement::setCollisionState(bool collisionState) { m_collisionState = collisionState;}
+void GraphicElement::setRemainingLifeSpan(int remainingLifeSpan) { m_remainingLifeSpan = remainingLifeSpan;}
 
 
 /********************************************

@@ -22,7 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Enemy Class
 *********************************************
-    Arthur : 13/03
+    Arthur : 13/03 - 15/03
 *********************************************/
 class Enemy : public MovableElement
 {
@@ -30,6 +30,9 @@ public:
     //=== CTORs / DTORs
     Enemy(int posX, int posY, int w, int h, int movX, int movY);
     ~Enemy();
+
+    //=== GETTERS
+    int getEnemyType() const;
 
     //=== METHODS
     void move();

@@ -51,6 +51,8 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 *********************************************/
 View::~View()
 {
+    if(m_window!= NULL)
+        delete m_window;
     if(m_font!= NULL)
         delete m_font;
     if(m_farBackground!= NULL)
@@ -59,12 +61,8 @@ View::~View()
         delete m_nearBackground;
     if(m_playerGraphic!= NULL)
         delete m_playerGraphic;
-    if(m_enemiesGraphic!= NULL)
-        delete m_enemiesGraphic;
-    if(m_model!= NULL)
-        delete m_model;
-    if(m_window!= NULL)
-        delete m_window;
+    if(m_standardEnemyGraphic!= NULL)
+        delete m_standardEnemyGraphic;
 }
 
 
@@ -83,7 +81,7 @@ void View::setModel(Model *model)
 /********************************************
     Image Loading
 *********************************************
-    Arthur : 5/03 - 14/03
+    Arthur : 5/03 - 15/03
 *********************************************/
 void View::loadImages()
 {
@@ -116,17 +114,43 @@ void View::loadImages()
         m_playerGraphic = new AnimatedGraphicElement(clip_rects, m_playerTexture, PLAYER_DEFAULT_POS_X, GAME_FLOOR,50,50);
     }
 
-    if (!m_enemiesTexture.loadFromFile(ENEMIES_IMAGE))
+    if (!m_standardEnemyTexture.loadFromFile(ENEMIES_IMAGE))
         cerr << "ERROR when loading image file: " << ENEMIES_IMAGE << endl;
     else
     {
-        m_enemiesTexture.setSmooth(true);
+        m_standardEnemyTexture.setSmooth(true);
         std::vector<sf::IntRect> clip_rects;
         for (int i=0; i<2; i++)
         {
             clip_rects.push_back(sf::IntRect(50*i,0,50,50));
         }
-        m_enemiesGraphic = new AnimatedGraphicElement(clip_rects, m_enemiesTexture, m_viewWidth, GAME_FLOOR,50,50);
+        m_standardEnemyGraphic = new AnimatedGraphicElement(clip_rects, m_standardEnemyTexture, m_viewWidth, GAME_FLOOR,50,50);
+    }
+
+    if (!m_totemEnemyTexture.loadFromFile(ENEMIES_IMAGE))
+        cerr << "ERROR when loading image file: " << ENEMIES_IMAGE << endl;
+    else
+    {
+        m_totemEnemyTexture.setSmooth(true);
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<2; i++)
+        {
+            clip_rects.push_back(sf::IntRect(50*i,0,50,150));
+        }
+        m_totemEnemyGraphic = new AnimatedGraphicElement(clip_rects, m_totemEnemyTexture, m_viewWidth, GAME_FLOOR,50,150);
+    }
+
+    if (!m_blockEnemyTexture.loadFromFile(BLOCK_ENEMIES_IMAGE))
+        cerr << "ERROR when loading image file: " << BLOCK_ENEMIES_IMAGE << endl;
+    else
+    {
+        m_blockEnemyTexture.setSmooth(true);
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<2; i++)
+        {
+            clip_rects.push_back(sf::IntRect(50*i,0,50,50));
+        }
+        m_blockEnemyGraphic = new AnimatedGraphicElement(clip_rects, m_blockEnemyTexture, m_viewWidth, GAME_FLOOR,50,50);
     }
 
     if (!m_explosionTexture.loadFromFile(EXPLOSION_IMAGE))
@@ -176,7 +200,7 @@ void View::loadText()
 /********************************************
     Update gElements
 *********************************************
-    Arthur : 6/03 - 14/03
+    Arthur : 6/03 - 15/03
 *********************************************/
 void View::updateElements()
 {
@@ -205,7 +229,22 @@ void View::updateElements()
                 it->second->setTexture(m_explosionTexture);
             }
         }
-        it->second->resize(30,30);
+
+        if (it->first->getEnemyType() == 1)
+        {
+            it->second->setOrigin(0,150);
+            it->second->resize(30,90);
+        }
+        else if (it->first->getEnemyType() == 2)
+        {
+            it->second->setOrigin(0,50);
+            it->second->resize(50,50);
+        }
+        else
+        {
+            it->second->setOrigin(0,50);
+            it->second->resize(30,30);
+        }
     }
 }
 
@@ -213,7 +252,7 @@ void View::updateElements()
 /********************************************
     Delete gElement and call mElement delete
 *********************************************
-    Arthur : 14/03
+    Arthur : 12/03 - 14/03
 *********************************************/
 void View::deleteElements()
 {
@@ -236,7 +275,7 @@ void View::deleteElements()
 /********************************************
     Synchronization function
 *********************************************
-    Arthur : 21/02 - 12/03
+    Arthur : 21/02 - 15/03
     Florian: 21/02 - 3/03
 *********************************************/
 void View::synchronize()
@@ -251,7 +290,13 @@ void View::synchronize()
                 m_MovableToGraphicElement[m_model->getNewMEList()[i] ] = m_playerGraphic;
             if (  (m_model->getNewMEList()[i])->getType() == 1  )
             {
-                AnimatedGraphicElement *m_newEnemy = new AnimatedGraphicElement(*m_enemiesGraphic);
+                AnimatedGraphicElement *m_newEnemy;
+                if ((m_model->getNewMEList()[i])->getEnemyType() == 0)
+                    m_newEnemy = new AnimatedGraphicElement(*m_standardEnemyGraphic);
+                else if ((m_model->getNewMEList()[i])->getEnemyType() == 1)
+                    m_newEnemy = new AnimatedGraphicElement(*m_totemEnemyGraphic);
+                else
+                    m_newEnemy = new AnimatedGraphicElement(*m_blockEnemyGraphic);
                 m_MovableToGraphicElement[m_model->getNewMEList()[i] ] = m_newEnemy;
             }
         }

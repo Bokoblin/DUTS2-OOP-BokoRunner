@@ -22,7 +22,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "Enemy.h"
 #include <cstdlib>
 #include <iostream>
+#include <set>
 #include <vector>
+#include <cassert>
+#include <ctime>
 
 const int GAME_FLOOR = 500;
 const int PLAYER_DEFAULT_POS_X = 50 ;
@@ -44,8 +47,12 @@ public:
     const MovableElement *getPlayer() const ;
     int getGameSpeed() const;
     unsigned long getDistance() const;
-    std::vector<MovableElement *> getNewMEList();
+    std::vector<MovableElement*> getNewMEList();
     std::vector<MovableElement*> getMEList();
+    /*
+    std::set<MovableElement*> getNewMEList();
+    std::set<MovableElement*> getMEList();
+    */
 
     //=== SETTERS
     void setGameSpeed(int speed);
@@ -67,13 +74,17 @@ private:
     int  m_gameSpeed;
     //int m_currentInterdistance;
     //int  m_chosenInterdistanceBetweenEnnemies;
+    time_t m_lastTime;
 
     Ball *m_player;
 
     //Containers
     std::vector<MovableElement*> m_movableElementsList;
     std::vector<MovableElement*> m_newMovableElementsList;
-
+    /*
+    std::set<MovableElement*> m_movableElementsList;
+    std::set<MovableElement*> m_newMovableElementsList;
+*/
 public: //DEBUG ONLY
     int m_currentInterdistance;
     int  m_chosenInterdistance; //interdistance between elementss

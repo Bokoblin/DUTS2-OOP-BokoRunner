@@ -197,6 +197,56 @@ void View::loadText()
 }
 
 
+
+/********************************************
+    Link mElements with gElements
+*********************************************
+    Arthur : 18/03
+*********************************************/
+void View::linkElements()
+{
+    for (unsigned int i=0; i<( m_model->getNewMEList().size() ); i++)
+    {
+        if (m_MovableToGraphicElement.find(m_model->getNewMEList()[i] ) == m_MovableToGraphicElement.end() )
+        {
+            if (  (m_model->getNewMEList()[i])->getType() == 0  )
+                m_MovableToGraphicElement[m_model->getNewMEList()[i] ] = m_playerGraphic;
+            if (  (m_model->getNewMEList()[i])->getType() == 1  )
+            {
+                AnimatedGraphicElement *m_newEnemy;
+                if ((m_model->getNewMEList()[i])->getEnemyType() == 0)
+                    m_newEnemy = new AnimatedGraphicElement(*m_standardEnemyGraphic);
+                else if ((m_model->getNewMEList()[i])->getEnemyType() == 1)
+                    m_newEnemy = new AnimatedGraphicElement(*m_totemEnemyGraphic);
+                else
+                    m_newEnemy = new AnimatedGraphicElement(*m_blockEnemyGraphic);
+                m_MovableToGraphicElement[m_model->getNewMEList()[i] ] = m_newEnemy;
+            }
+        }
+    }
+
+/*
+    for (auto it = m_model->getNewMEList().begin(); it != m_model->getNewMEList().end(); ++it)
+    {
+        if (  (*it)->getType() == 0  )
+            m_MovableToGraphicElement[*it] = m_playerGraphic;
+        if (  (*it)->getType() == 1  )
+        {
+            AnimatedGraphicElement *m_newEnemy;
+            if ((*it)->getEnemyType() == 0)
+                m_newEnemy = new AnimatedGraphicElement(*m_standardEnemyGraphic);
+            else if ((*it)->getEnemyType() == 1)
+                m_newEnemy = new AnimatedGraphicElement(*m_totemEnemyGraphic);
+            else
+                m_newEnemy = new AnimatedGraphicElement(*m_blockEnemyGraphic);
+            m_MovableToGraphicElement[*it] = m_newEnemy;
+        }
+
+    }
+*/
+    m_model->clearNewMovableElementList();
+}
+
 /********************************************
     Update gElements
 *********************************************
@@ -280,38 +330,18 @@ void View::deleteElements()
 *********************************************/
 void View::synchronize()
 {
-    //=== Pairing of new mElements with gElements
+    //=== Link new mElements with gElements
 
-    for (unsigned int i=0; i<( m_model->getNewMEList().size() ); i++)
-    {
-        if (m_MovableToGraphicElement.find(m_model->getNewMEList()[i] ) == m_MovableToGraphicElement.end() )
-        {
-            if (  (m_model->getNewMEList()[i])->getType() == 0  )
-                m_MovableToGraphicElement[m_model->getNewMEList()[i] ] = m_playerGraphic;
-            if (  (m_model->getNewMEList()[i])->getType() == 1  )
-            {
-                AnimatedGraphicElement *m_newEnemy;
-                if ((m_model->getNewMEList()[i])->getEnemyType() == 0)
-                    m_newEnemy = new AnimatedGraphicElement(*m_standardEnemyGraphic);
-                else if ((m_model->getNewMEList()[i])->getEnemyType() == 1)
-                    m_newEnemy = new AnimatedGraphicElement(*m_totemEnemyGraphic);
-                else
-                    m_newEnemy = new AnimatedGraphicElement(*m_blockEnemyGraphic);
-                m_MovableToGraphicElement[m_model->getNewMEList()[i] ] = m_newEnemy;
-            }
-        }
-    }
-    m_model->clearNewMovableElementList();
+    linkElements();
 
     //=== Elements update
 
     m_nearBackground->setSpeed(m_model->getGameSpeed() );
-
     updateElements();
 
-    //=== Elements deleting
+    //=== Elements deleting if not used anymore
 
-    deleteElements(); //gElements & mElements deleting if not used anymore
+    deleteElements();
 
     //=== Text update
 
@@ -331,12 +361,6 @@ void View::synchronize()
 *********************************************/
 void View::draw()
 {
-    /* // DEBUG ONLY
-        if (system("CLS")) system("clear");
-        for (int i=0; i < m_model->getMEList().size(); i++ )
-                cout << m_model->getMEList()[i] << endl;
-    */
-
     m_window->clear();
 
     //=== Background drawing

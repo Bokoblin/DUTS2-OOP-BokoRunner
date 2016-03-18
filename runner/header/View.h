@@ -45,7 +45,7 @@ class Model;
 /********************************************
     View Class
 *********************************************
-    Arthur : 21/02 - 15/03
+    Arthur : 21/02 - 18/03
     Florian: 21/02 - 3/03
 *********************************************/
 class View
@@ -59,8 +59,6 @@ public:
     void setModel(Model *model);
 
     //=== METHODS
-    void updateElements();
-    void deleteElements();
     void synchronize();
     void draw();
     bool treatEvents();
@@ -68,6 +66,9 @@ public:
 private:
     void loadImages();
     void loadText();
+    void linkElements();
+    void updateElements();
+    void deleteElements();
 
     //=== ATTRIBUTES
     int m_viewWidth, m_viewHeight;

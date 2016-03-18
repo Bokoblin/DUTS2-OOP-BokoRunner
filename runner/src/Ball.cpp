@@ -26,7 +26,7 @@ using namespace std;
     Florian: 22/02 - 02/03
 *********************************************/
 Ball::Ball(int posX, int posY, int w, int h, int mvX, int mvY) :
-    MovableElement(posX, posY, w, h, mvX, mvY, 0)
+    MovableElement(posX, posY, w, h, mvX, mvY)
 {
 
 }

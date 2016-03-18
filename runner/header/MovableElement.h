@@ -30,7 +30,7 @@ class MovableElement
 {
 public:
     //=== CTORs / DTORs
-    MovableElement(int posX, int posY, int w, int h, int mvX, int mvY, int type);
+    MovableElement(int posX, int posY, int w, int h, int mvX, int mvY);
     //~MovableElement();
     virtual ~MovableElement() {}
 
@@ -46,7 +46,7 @@ public:
     int getPosY() const;
     int getWidth() const;
     int getHeight() const;
-    int getType() const;
+    virtual int getType() const {return -1;}
     virtual int getEnemyType() const {return -1;}
 
     //=== SETTERS

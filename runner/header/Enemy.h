@@ -32,6 +32,7 @@ public:
     ~Enemy();
 
     //=== GETTERS
+    int getType() const { return 1;}
     int getEnemyType() const;
 
     //=== METHODS

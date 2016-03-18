@@ -23,10 +23,11 @@ using namespace std;
     Arthur : 13/03
 *********************************************/
 Enemy::Enemy(int posX, int posY, int w, int h, int mvX, int mvY) :
-    MovableElement(posX, posY, w, h, mvX, mvY, 1)
+    MovableElement(posX, posY, w, h, mvX, mvY)
 {
     chooseEnemyType();
 }
+
 
 /********************************************
     Destructor

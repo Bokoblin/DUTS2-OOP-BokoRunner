@@ -31,7 +31,8 @@ Model::Model(int width, int height)
     m_totalDistance = 0;
     m_gameSpeed = 4;
     m_currentInterdistance = 0;
-    m_chosenInterdistance = 100;
+    m_chosenInterdistance = 15;
+    m_lastTime = clock();
 }
 
 
@@ -69,6 +70,11 @@ unsigned long Model::getDistance() const { return m_totalDistance; }
 std::vector< MovableElement*> Model::getMEList() { return m_movableElementsList; }
 
 std::vector< MovableElement*> Model::getNewMEList() { return m_newMovableElementsList; }
+/*
+std::set< MovableElement*> Model::getMEList() { return m_movableElementsList; }
+
+std::set< MovableElement*> Model::getNewMEList() { return m_newMovableElementsList; }
+*/
 
 
 /********************************************
@@ -86,22 +92,28 @@ void Model::setGameSpeed(int speed) { m_gameSpeed = speed; }
 *********************************************/
 void Model::nextStep()
 {
-    m_totalDistance ++;
-
-    //=== Add new enemies
-
-    if (m_currentInterdistance == m_chosenInterdistance)
+    float duration = 100*( (clock() - m_lastTime) / (double)CLOCKS_PER_SEC);
+    if ( duration >= 0.100) // 100ms
     {
-        if (checkIfPositionFree(m_modelWidth, GAME_FLOOR) == true)
+        m_totalDistance ++;
+
+        //=== Add new enemies
+
+        if (m_currentInterdistance == m_chosenInterdistance)
         {
-            addNewMovableElement(m_modelWidth, GAME_FLOOR, 1);
-            m_currentInterdistance = 0;
-            chooseInterdistance();
+            if (checkIfPositionFree(m_modelWidth, GAME_FLOOR) == true)
+            {
+                addNewMovableElement(m_modelWidth, GAME_FLOOR, 1);
+                m_currentInterdistance = 0;
+                chooseInterdistance();
+            }
         }
-    }
-    else
-    {
-        m_currentInterdistance++;
+        else
+        {
+
+            m_currentInterdistance++;
+        }
+        m_lastTime = clock();
     }
 }
 
@@ -114,14 +126,14 @@ void Model::nextStep()
 void Model::chooseInterdistance()
 {
     //allows to calculate interdistance in different situations
-    if (m_chosenInterdistance > 100)
-        m_chosenInterdistance = abs(rand()%150 - 50);
-    else if  ( m_chosenInterdistance < 25)
+    if (m_chosenInterdistance > 40)
+        m_chosenInterdistance = abs(rand()%30);
+    else if  ( m_chosenInterdistance < 10)
     {
-        m_chosenInterdistance = abs(30 + rand()%100);
+        m_chosenInterdistance = abs(10 + rand()%40);
     }
     else
-        m_chosenInterdistance = abs(rand()%150);
+        m_chosenInterdistance = abs(rand()%50);
 }
 
 
@@ -141,6 +153,16 @@ bool Model::checkIfPositionFree(const int posX, const int posY) const
         else
             i++;
     }
+    /*
+    set<MovableElement*>::iterator it=m_movableElementsList.begin();
+    while (posFree &&  it != m_movableElementsList.end() )
+    {
+        if ( (*it)->contains(posX, posY) )
+            posFree = false;
+        else
+            ++it;
+    }
+    */
     return posFree;
 }
 
@@ -179,6 +201,7 @@ void Model::moveBallAccordingEvent(bool left)
 *********************************************/
 void Model::moveMovableElement(MovableElement *currentElement)
 {
+    //assert(m_movableElementsList.find(currentElement) != m_movableElementsList.end() );
     currentElement->move();
 }
 
@@ -203,6 +226,20 @@ void Model::addNewMovableElement(int posX, int posY, int type)
         m_newMovableElementsList.push_back( m_newEnemy );
         m_movableElementsList.push_back( m_newEnemy );
     }
+    /*
+    if (type == 0)
+    {
+        m_player = new Ball(posX, posY, 30, 30, 0, 0);
+        m_movableElementsList.insert(m_player);
+        m_newMovableElementsList.insert(m_player);
+    }
+    else if (type == 1)
+    {
+        Enemy *m_newEnemy = new Enemy(posX, posY, 30, 30,getGameSpeed()*(-1), 0);
+        m_newMovableElementsList.insert( m_newEnemy );
+        m_movableElementsList.insert( m_newEnemy );
+    }
+    */
 }
 
 
@@ -213,6 +250,8 @@ void Model::addNewMovableElement(int posX, int posY, int type)
     *********************************************/
 void Model::deleteMovableElement(MovableElement *element)
 {
+    //m_movableElementsList.erase(m_movableElementsList.find(element));
+
     std::vector<MovableElement*>::iterator it = m_movableElementsList.begin();
     bool found = false;
     while (!found && it != m_movableElementsList.end() )
@@ -225,4 +264,5 @@ void Model::deleteMovableElement(MovableElement *element)
         else
             it++;
     }
+
 }

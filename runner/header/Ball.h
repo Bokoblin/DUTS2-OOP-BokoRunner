@@ -35,6 +35,9 @@ public:
     Ball(int posX, int posY, int w, int h, int movX, int movY);
     ~Ball();
 
+    //=== GETTERS
+    int getType() const { return 0;}
+
     //=== METHODS
     void move();
 

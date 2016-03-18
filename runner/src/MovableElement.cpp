@@ -23,8 +23,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     Arthur : 23/02 - 10/03
     Florian: 02/03 - 02/03
 *********************************************/
-MovableElement::MovableElement(int posX, int posY, int w, int h, int mvX, int mvY, int type) :
-    m_posX{posX}, m_posY{posY}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY}, m_typeElement{type}
+MovableElement::MovableElement(int posX, int posY, int w, int h, int mvX, int mvY) :
+    m_posX{posX}, m_posY{posY}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY}
 {
 
 }
@@ -41,7 +41,6 @@ int MovableElement::getPosX()  const { return m_posX;  }
 int MovableElement::getPosY()  const { return m_posY;  }
 int MovableElement::getWidth() const { return m_width; }
 int MovableElement::getHeight()const { return m_height;}
-int MovableElement::getType()const { return m_typeElement;}
 
 /********************************************
     Setters

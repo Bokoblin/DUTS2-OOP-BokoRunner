@@ -38,7 +38,7 @@ GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) :
     Florian:  2/03 - 2/03
 *********************************************/
 GraphicElement::GraphicElement(GraphicElement const& elementACopier) :
-    m_w(elementACopier.m_w), m_h(elementACopier.m_h)
+    Sprite(), m_w(elementACopier.m_w), m_h(elementACopier.m_h)
 {
        this->setPosition( elementACopier.getPosition());
        this->setTexture( *elementACopier.getTexture(), true );

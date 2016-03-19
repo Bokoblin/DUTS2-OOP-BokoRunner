@@ -25,7 +25,7 @@ const int SCREEN_HEIGHT = 600;
 /********************************************
     Main function
 *********************************************
-    Arthur : 21/02 - 25/02
+    Arthur : 21/02 - 13/03
     Florian: 21/02 - 21/02
 *********************************************/
 int main()
@@ -35,10 +35,10 @@ int main()
     Model model(SCREEN_WIDTH, SCREEN_HEIGHT);
     View view(SCREEN_WIDTH, SCREEN_HEIGHT);
     view.setModel(&model);
-    model.addBallMovableElement();
+    model.addNewMovableElement(PLAYER_DEFAULT_POS_X, GAME_FLOOR, 0); //0 = Player
     while(view.treatEvents())
     {
-        //model.nextStep();
+        model.nextStep();
         view.synchronize();
         view.draw();
     }

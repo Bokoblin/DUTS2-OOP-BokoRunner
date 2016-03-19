@@ -25,3 +25,7 @@ The project allows us to put into practice the Object Oriented Programming notio
 ### Licence ###
 
 This project is licensed under the GNU GPL 2 license.
+
+### Repository ###
+
+The main repository is at github.com/Bokoblin/S2POO-Runner

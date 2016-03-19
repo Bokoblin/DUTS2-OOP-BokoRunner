@@ -19,13 +19,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define _MODEL_H
 
 #include "Ball.h"
+#include "Enemy.h"
+#include "Coin.h"
 #include <cstdlib>
+#include <iostream>
+#include <set>
 #include <vector>
+#include <cassert>
+#include <ctime>
+
+const int GAME_FLOOR = 500;
+const int PLAYER_DEFAULT_POS_X = 50 ;
 
 /********************************************
     Model Class
 *********************************************
-    Arthur : 21/02 - 5/03
+    Arthur : 21/02 - 19/03
     Florian: 21/02 - 2/03
 *********************************************/
 class Model
@@ -36,24 +45,44 @@ public:
     ~Model();
 
     //=== GETTERS
-    const MovableElement *getBallElement() const ;
-    std::vector<MovableElement *> getNewMovableElementsList();
-    std::vector<MovableElement*> getMovableElementsList();
+    const MovableElement *getPlayer() const ;
+    int getGameSpeed() const;
+    long getDistance() const;
+    std::vector<MovableElement*> getNewMElementsArray();
+    std::set<MovableElement*> getMElementsArray();
+
+    //=== SETTERS
+    void setGameSpeed(int speed);
+    void setCoinPickedUp() ;
 
     //=== METHODS
     void nextStep();
-    void moveBall(bool left);
-    void addBallMovableElement();
-    void addNewMovableElement();
-    void clearNewMovableElementVector();
+    void chooseInterdistance(int elementType);
+    bool checkIfPositionFree(const int posX, const int posY) const;
+    void moveBallAccordingEvent(bool left);
+    void moveMovableElement(MovableElement *element);
+    void deleteMovableElement(MovableElement *element);
+    void addNewMovableElement(int posX, int posY, int type);
+    void clearNewMovableElementList();
 
 private:
     //=== ATTRIBUTES
     int m_modelWidth, m_modelHeight;
+    unsigned long m_totalDistance;
+    int  m_gameSpeed;
+    time_t m_lastTime;
+    int m_nbCoinsPickedUp;
+    int m_currentEnemyInterdistance;
+    int m_currentCoinInterdistance;
+    int  m_chosenEnemyInterdistance; //interdistance between enemies
+    int  m_chosenCoinInterdistance; //interdistance between coins
+
     Ball *m_player;
 
-    //Dynamic arrays
-    std::vector<MovableElement*> m_movableElementsList;
-    std::vector<MovableElement*> m_newMovableElementsList;
+    //Containers
+    std::set<MovableElement*> m_movableElementsArray;
+    std::vector<MovableElement*> m_newMovableElementsArray;
+
 };
+
 #endif

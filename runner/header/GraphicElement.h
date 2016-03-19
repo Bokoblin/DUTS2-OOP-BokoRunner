@@ -23,7 +23,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     GraphicElement Class
 *********************************************
-    Arthur : 21/02 - 2/03
+    Arthur : 21/02 - 19/03
     Florian: 21/02 - 2/03
 *********************************************/
 class GraphicElement : public sf::Sprite
@@ -34,15 +34,22 @@ public:
     GraphicElement(sf::Texture &image, int x, int y, int w, int h);
     ~GraphicElement();
 
+    //=== GETTERS
+    bool getCollisionState();
+
+    //=== SETTERS
+    void setCollisionState(bool collisionState);
+    void setRemainingLifeSpan(int remainingLifeSpan);
+
     //=== METHODS
-    void draw(sf::RenderWindow *window);
+    virtual void draw(sf::RenderWindow *window) {}
     void resize (int w, int h);
 
 private:
     //=== ATTRIBUTES
     int m_w;
     int m_h;
-
+    bool m_collisionState;
 };
 
 #endif // GRAPHICELEMENT_H

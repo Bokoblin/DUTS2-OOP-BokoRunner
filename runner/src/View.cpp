@@ -22,7 +22,7 @@ using namespace std;
 /********************************************
     Default Constructor
 *********************************************
-    Arthur : 21/02 - 3/03
+    Arthur : 21/02 - 6/03
     Florian: 21/02 - 3/03
 *********************************************/
 View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
@@ -39,10 +39,7 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
     m_font = new sf::Font();
     m_font->loadFromFile(FONT);
 
-    m_textPositionBall.setFont(*m_font);
-    m_textPositionBall.setPosition(10,10);
-    m_textPositionBall.setCharacterSize(15);
-    m_textPositionBall.setColor(sf::Color::Black);
+    loadText();
 }
 
 
@@ -54,6 +51,8 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 *********************************************/
 View::~View()
 {
+    if(m_window!= NULL)
+        delete m_window;
     if(m_font!= NULL)
         delete m_font;
     if(m_farBackground!= NULL)
@@ -62,12 +61,8 @@ View::~View()
         delete m_nearBackground;
     if(m_playerGraphic!= NULL)
         delete m_playerGraphic;
-    if(m_ennemiesGraphic!= NULL)
-        delete m_ennemiesGraphic;
-    if(m_model!= NULL)
-        delete m_window;
-    if(m_window!= NULL)
-        delete m_window;
+    if(m_standardEnemyGraphic!= NULL)
+        delete m_standardEnemyGraphic;
 }
 
 
@@ -84,9 +79,9 @@ void View::setModel(Model *model)
 
 
 /********************************************
-    Image Loading function
+    Image Loading
 *********************************************
-    Arthur : 5/03 - 5/03
+    Arthur : 5/03 - 15/03
 *********************************************/
 void View::loadImages()
 {
@@ -116,15 +111,220 @@ void View::loadImages()
         {
             clip_rects.push_back(sf::IntRect(50*i,0,50,50));
         }
-        m_playerGraphic = new AnimatedGraphicElement(clip_rects, m_playerTexture, 50, 450,50,50);
+        m_playerGraphic = new AnimatedGraphicElement(clip_rects, m_playerTexture, PLAYER_DEFAULT_POS_X, GAME_FLOOR,50,50);
     }
 
-    if (!m_ennemiesTexture.loadFromFile(ENNEMIES_IMAGE, sf::IntRect(0,0,50,50)) )
-        cerr << "ERROR when loading image file: " << ENNEMIES_IMAGE << endl;
+    if (!m_standardEnemyTexture.loadFromFile(ENEMIES_IMAGE))
+        cerr << "ERROR when loading image file: " << ENEMIES_IMAGE << endl;
     else
     {
-        m_ennemiesTexture.setSmooth(true);
-        m_ennemiesGraphic = new GraphicElement(m_ennemiesTexture, 400, 450,20,20);
+        m_standardEnemyTexture.setSmooth(true);
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<2; i++)
+        {
+            clip_rects.push_back(sf::IntRect(50*i,0,50,50));
+        }
+        m_standardEnemyGraphic = new AnimatedGraphicElement(clip_rects, m_standardEnemyTexture, m_viewWidth, GAME_FLOOR,50,50);
+    }
+
+    if (!m_totemEnemyTexture.loadFromFile(ENEMIES_IMAGE))
+        cerr << "ERROR when loading image file: " << ENEMIES_IMAGE << endl;
+    else
+    {
+        m_totemEnemyTexture.setSmooth(true);
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<2; i++)
+        {
+            clip_rects.push_back(sf::IntRect(50*i,0,50,150));
+        }
+        m_totemEnemyGraphic = new AnimatedGraphicElement(clip_rects, m_totemEnemyTexture, m_viewWidth, GAME_FLOOR,50,150);
+    }
+
+    if (!m_blockEnemyTexture.loadFromFile(BLOCK_ENEMIES_IMAGE))
+        cerr << "ERROR when loading image file: " << BLOCK_ENEMIES_IMAGE << endl;
+    else
+    {
+        m_blockEnemyTexture.setSmooth(true);
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<2; i++)
+        {
+            clip_rects.push_back(sf::IntRect(50*i,0,50,50));
+        }
+        m_blockEnemyGraphic = new AnimatedGraphicElement(clip_rects, m_blockEnemyTexture, m_viewWidth, GAME_FLOOR,50,50);
+    }
+
+    if (!m_explosionTexture.loadFromFile(EXPLOSION_IMAGE))
+        cerr << "ERROR when loading image file: " << EXPLOSION_IMAGE << endl;
+    else
+    {
+        m_explosionTexture.setSmooth(true);
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<3; i++)
+        {
+            clip_rects.push_back(sf::IntRect(200*i,0,200,200));
+        }
+        m_explosionGraphic = new AnimatedGraphicElement(clip_rects, m_explosionTexture, 200, GAME_FLOOR,50,50);
+    }
+
+    if (!m_coinTexture.loadFromFile(BONUS_IMAGE))
+        cerr << "ERROR when loading image file: " << BONUS_IMAGE << endl;
+    else
+    {
+        m_coinTexture.setSmooth(true);
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<5; i++)
+        {
+            clip_rects.push_back(sf::IntRect(50*i,0,50,50));
+        }
+        m_coinGraphic = new AnimatedGraphicElement(clip_rects, m_coinTexture, 200, GAME_FLOOR,50,50);
+    }
+}
+
+
+/********************************************
+    Text Loading
+*********************************************
+    Arthur : 6/03 - 12/03
+*********************************************/
+void View::loadText()
+{
+    m_textPositionBall.setFont(*m_font);
+    m_textPositionBall.setPosition(10,10);
+    m_textPositionBall.setCharacterSize(15);
+    m_textPositionBall.setColor(sf::Color::Black);
+
+    m_textTotalDistance.setFont(*m_font);
+    m_textTotalDistance.setPosition(740,10);
+    m_textTotalDistance.setCharacterSize(15);
+    m_textTotalDistance.setColor(sf::Color::Black);
+}
+
+
+/********************************************
+    Link mElements with gElements
+*********************************************
+    Arthur : 18/03
+*********************************************/
+void View::linkElements()
+{
+    for (unsigned int i=0; i<( m_model->getNewMElementsArray().size() ); i++)
+    {
+        if (m_MovableToGraphicElement.find(m_model->getNewMElementsArray()[i] ) == m_MovableToGraphicElement.end() )
+        {
+            if (  (m_model->getNewMElementsArray()[i])->getType() == 0  )
+                m_MovableToGraphicElement[m_model->getNewMElementsArray()[i] ] = m_playerGraphic;
+            else if (  (m_model->getNewMElementsArray()[i])->getType() == 1  )
+            {
+                AnimatedGraphicElement *m_newEnemy;
+                if ((m_model->getNewMElementsArray()[i])->getEnemyType() == 0)
+                    m_newEnemy = new AnimatedGraphicElement(*m_standardEnemyGraphic);
+                else if ((m_model->getNewMElementsArray()[i])->getEnemyType() == 1)
+                    m_newEnemy = new AnimatedGraphicElement(*m_totemEnemyGraphic);
+                else
+                    m_newEnemy = new AnimatedGraphicElement(*m_blockEnemyGraphic);
+                m_MovableToGraphicElement[m_model->getNewMElementsArray()[i] ] = m_newEnemy;
+            }
+            else if (  (m_model->getNewMElementsArray()[i])->getType() == 2  )
+            {
+                AnimatedGraphicElement *m_newcoin = new AnimatedGraphicElement(*m_coinGraphic);
+                m_MovableToGraphicElement[m_model->getNewMElementsArray()[i] ] = m_newcoin;
+            }
+        }
+    }
+    m_model->clearNewMovableElementList();
+}
+
+
+/********************************************
+    Update gElements
+*********************************************
+    Arthur : 6/03 - 19/03
+*********************************************/
+void View::updateElements()
+{
+    std::map<const MovableElement *, GraphicElement *>::iterator it;
+    for(it = m_MovableToGraphicElement.begin() ; it != m_MovableToGraphicElement.end() ; ++it)
+    {
+        //=== Update Position
+
+        m_model->moveMovableElement(const_cast<MovableElement*>(it->first));
+
+        int position_x = (it->first)->getPosX();
+        int position_y = (it->first)->getPosY();
+        int move_x = (it->first)->getMoveX();
+        int move_y = (it->first)->getMoveY();
+
+        it->second->setPosition(sf::Vector2f( position_x+move_x, position_y+move_y ));
+
+        //=== Update Graphics
+
+        if (it->first->getType() == 0) //player
+        {
+            it->second->setOrigin(0,50);
+            it->second->resize(30,30);
+        }
+        else if (it->first->getType() == 1) //enemy
+        {
+            if ( it->second->getCollisionState() == false && m_playerGraphic->getGlobalBounds().intersects(it->second->getGlobalBounds() ) )
+            {
+                it->second->setTexture(m_explosionTexture);
+            }
+
+            if (it->first->getEnemyType() == 1)
+            {
+                it->second->setOrigin(0,150);
+                it->second->resize(30,90);
+            }
+            else if (it->first->getEnemyType() == 2)
+            {
+                it->second->setOrigin(0,50);
+                it->second->resize(50,50);
+            }
+            else
+            {
+                it->second->setOrigin(0,50);
+                it->second->resize(30,30);
+            }
+        }
+        else if (it->first->getType() == 2) //coins
+        {
+            it->second->setOrigin(0,50);
+            it->second->resize(25,25);
+            if (m_playerGraphic->getGlobalBounds().intersects(it->second->getGlobalBounds() ) )
+            {
+                it->second->setCollisionState(true);
+                m_model->setCoinPickedUp();
+            }
+        }
+    }
+}
+
+
+/********************************************
+    Delete gElement and call mElement delete
+*********************************************
+    Arthur : 12/03 - 14/03
+*********************************************/
+void View::deleteElements()
+{
+    std::map<const MovableElement *, GraphicElement *>::iterator it = m_MovableToGraphicElement.begin();
+    bool found = false;
+    while (!found && it!=m_MovableToGraphicElement.end() )
+    {
+        if (it->first->getType() == 1 &&  (( it->second->getPosition().x + it->second->getLocalBounds().width ) < 0 || it->second->getCollisionState() == true ) )
+        {
+            m_MovableToGraphicElement.erase(it);
+            m_model->deleteMovableElement(const_cast<MovableElement*>(it->first));
+            found = true;
+        }
+        if (it->first->getType() == 2 &&  it->second->getCollisionState() == true)
+        {
+            m_MovableToGraphicElement.erase(it);
+            m_model->deleteMovableElement(const_cast<MovableElement*>(it->first));
+            found = true;
+        }
+        else
+            ++it;
     }
 }
 
@@ -132,62 +332,57 @@ void View::loadImages()
 /********************************************
     Synchronization function
 *********************************************
-    Arthur : 21/02 - 5/03
+    Arthur : 21/02 - 15/03
     Florian: 21/02 - 3/03
 *********************************************/
 void View::synchronize()
 {
-    //=== Pairing of new movable elements and corresponding graphic elements
+    //=== Link new mElements with gElements
 
-    for (unsigned int i=0; i<( m_model->getNewMovableElementsList().size() ); i++)
-    {
-        GraphicElement *m_newEnnemy = new GraphicElement(*m_ennemiesGraphic);
-        m_newEnnemy->resize(30,30);
+    linkElements();
 
-        if (m_elementToGraphicElement.find(m_model->getNewMovableElementsList()[i] ) == m_elementToGraphicElement.end() )
-            m_elementToGraphicElement[m_model->getNewMovableElementsList()[i] ] = m_newEnnemy;
-    }
+    //=== Elements update
 
-    //=== New movable elements vector emptying
+    m_nearBackground->setSpeed(m_model->getGameSpeed() );
+    updateElements();
 
-    m_model->clearNewMovableElementVector();
+    //=== Elements deleting if not used anymore
 
-    //=== Update ball
-
-    m_playerGraphic->setPosition(sf::Vector2f( POS_X_BALL, POS_Y_BALL));
-    m_playerGraphic->resize(30,30);
+    deleteElements();
 
     //=== Text update
 
-    m_textPositionBall.setString( m_model->getBallElement()->to_string() );
-
+    m_textPositionBall.setString( PLAYER->to_string() );
+    m_textTotalDistance.setString( "DISTANCE : " + to_string(m_model->getDistance() ) + " m" );
 }
 
 
 /********************************************
     View Drawing
 *********************************************
-    Arthur : 21/02 - 5/03
+    Arthur : 21/02 - 13/03
     Florian: 21/02 - 3/03
 *********************************************/
 void View::draw()
 {
     m_window->clear();
 
-    //=== Graphical Elements drawing
+    //=== Background drawing
 
     m_farBackground->syncAndDraw(*m_window);
     m_nearBackground->syncAndDraw(*m_window);
-    m_playerGraphic->syncAndDraw(m_window);
 
-    for(auto it = m_elementToGraphicElement.begin() ; it != m_elementToGraphicElement.end() ; ++it)
+    //=== Graphical Elements drawing
+
+    for(auto it = m_MovableToGraphicElement.begin() ; it != m_MovableToGraphicElement.end() ; ++it)
     {
-        m_window->draw(*(it->second));
+        it->second->draw(m_window);
     }
 
     //=== Text drawing
 
     m_window->draw(m_textPositionBall);
+    m_window->draw(m_textTotalDistance);
 
     m_window->display();
 }
@@ -196,7 +391,7 @@ void View::draw()
 /********************************************
     Events treating
 *********************************************
-    Arthur : 21/02 - 2/03
+    Arthur : 21/02 - 19/03
     Florian: 21/02 - 2/03
 *********************************************/
 bool View::treatEvents()
@@ -208,33 +403,28 @@ bool View::treatEvents()
 
         sf::Event event;
         while (m_window->pollEvent(event))
-            switch (event.type)
+        {
+            if  (event.type == sf::Event::Closed)
             {
-            case sf::Event::Closed:
                 m_window->close();
-                break;
-            case sf::Event::KeyPressed:
-                if (event.key.code == sf::Keyboard::Escape)
-                {
-                    m_window->close();
-                    result = false;
-                }
-                if ( (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q ) && POS_X_BALL > 0 )
-                {
-                    m_model->moveBall(true);
-                }
-                if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D ) && (POS_X_BALL + WIDTH_BALL) < m_viewWidth )
-                {
-                    m_model->moveBall(false);
-                }
-                if (event.key.code == sf::Keyboard::Add)
-                {
-                    m_model->addNewMovableElement();
-                }
-                break;
-            default:
-                break;
+                result = false;
             }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
+                m_window->close();
+                result = false;
+            }
+        }
+        if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
+            && PLAYER->getPosX()  > 0 )
+        {
+            m_model->moveBallAccordingEvent(true);
+        }
+        if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) )
+            && (PLAYER->getPosX() + PLAYER->getWidth()) < m_viewWidth )
+        {
+            m_model->moveBallAccordingEvent(false);
+        }
     }
     return result;
 }

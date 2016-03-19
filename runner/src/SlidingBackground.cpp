@@ -28,9 +28,7 @@ SlidingBackground::SlidingBackground(sf::Texture &image, int w, int h, unsigned 
     m_width{w}, m_height{h}, m_speed{speed}
 {
     m_left = new GraphicElement(image, 0, 0, w, h);
-    //m_left->resize(900,600);
     m_right = new GraphicElement(image, w, 0, w, h);
-    //m_right->resize(900,600);
 }
 
 

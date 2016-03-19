@@ -16,50 +16,161 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 #include "../header/Model.h"
-#include "../header/Ball.h"
+
+using namespace std;
 
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 21/02 - 2/03
+    Arthur : 21/02 - 12/03
     Florian: 21/02 - 2/03
 *********************************************/
 Model::Model(int width, int height)
     :  m_modelWidth(width), m_modelHeight(height)
 {
-
+    m_totalDistance = 0;
+    m_gameSpeed = 4;
+    m_currentEnemyInterdistance = 0;
+    m_currentCoinInterdistance = 0;
+    m_chosenEnemyInterdistance = 10 +rand()%10;
+    m_chosenCoinInterdistance = rand()%10;
+    m_lastTime = 0;
+    m_nbCoinsPickedUp = 0;
 }
 
 
 /********************************************
     Destructor
 *********************************************
-    Arthur : 21/02 - 5/03
+    Arthur : 21/02 - 19/03
     Florian: 21/02 - 2/03
 *********************************************/
 Model::~Model()
 {
-    if(m_player!= NULL)
-        delete m_player;
+    for (set<MovableElement*>::iterator it = m_movableElementsArray.begin(); it!=m_movableElementsArray.end(); ++it)
+        delete *it;
 
-    for(auto it=m_movableElementsList.begin(); it!=m_movableElementsList.end(); ++it)
-    {
-        if (*it!=NULL)
-            delete *it;
-    }
-
-    m_movableElementsList.clear();
+    m_movableElementsArray.clear();
 }
 
 
 /********************************************
-    Next Step Calcul
+    Getters
 *********************************************
-    Arthur : 21/02 - 25/02
+    Arthur : 21/02 - 19/02
+    Florian: 21/02 - 25/02
+*********************************************/
+const MovableElement* Model::getPlayer() const { return m_player; }
+int Model::getGameSpeed() const { return m_gameSpeed; }
+long Model::getDistance() const { return m_totalDistance; }
+set< MovableElement*> Model::getMElementsArray() { return m_movableElementsArray; }
+vector< MovableElement*> Model::getNewMElementsArray() { return m_newMovableElementsArray; }
+
+
+/********************************************
+    Setters
+*********************************************
+    Arthur : 8/03 - 13/03
+*********************************************/
+void Model::setGameSpeed(int speed) { m_gameSpeed = speed; }
+void Model::setCoinPickedUp() { m_nbCoinsPickedUp++;}
+
+
+/********************************************
+    Next Step
+*********************************************
+    Arthur : 21/02 - 8/03
 *********************************************/
 void Model::nextStep()
 {
-    //to implement in v0.2.0
+    float duration = (clock() - m_lastTime) / (double)CLOCKS_PER_SEC;
+    if ( duration >= 0.400/m_gameSpeed) // 100ms
+    {
+        m_totalDistance ++;
+
+        //=== Add new enemies
+
+        if (m_currentEnemyInterdistance == m_chosenEnemyInterdistance)
+        {
+            if (checkIfPositionFree(m_modelWidth, GAME_FLOOR) == true)
+            {
+                addNewMovableElement(m_modelWidth, GAME_FLOOR, 1);
+                m_currentEnemyInterdistance = 0;
+                chooseInterdistance(1);
+            }
+        }
+        else
+            m_currentEnemyInterdistance++;
+
+        //=== Add new Coins
+
+        if (m_currentCoinInterdistance == m_chosenCoinInterdistance)
+        {
+            if (checkIfPositionFree(m_modelWidth, GAME_FLOOR) == true)
+            {
+                addNewMovableElement(m_modelWidth, GAME_FLOOR-100, 2);
+                m_currentCoinInterdistance = 0;
+                chooseInterdistance(2);
+            }
+        }
+        else
+            m_currentCoinInterdistance++;
+
+
+        m_lastTime = clock();
+    }
+}
+
+
+/********************************************
+    choose the interdistance between elements
+*********************************************
+    Arthur :  12/03 - 19/03
+*********************************************/
+void Model::chooseInterdistance(int elementType)
+{
+    //allows to calculate interdistance in different situations
+    if  ( elementType  == 1 ) //enemy
+    {
+        if (m_chosenEnemyInterdistance > 40)
+            m_chosenEnemyInterdistance = abs(rand()%30);
+        else if  ( m_chosenEnemyInterdistance < 10)
+            m_chosenEnemyInterdistance = abs(10 + rand()%40);
+        else
+            m_chosenEnemyInterdistance = abs(rand()%50);
+    }
+
+    else if ( elementType == 2 ) //coin
+    {
+        if (m_chosenCoinInterdistance > 20)
+            m_chosenCoinInterdistance = abs(rand()%20);
+        else if  ( m_chosenCoinInterdistance < 10)
+            m_chosenCoinInterdistance = abs(15 + rand()%20);
+        else
+            m_chosenCoinInterdistance = abs(rand()%40);
+    }
+}
+
+
+/********************************************
+    check if a position is free to use
+*********************************************
+    Arthur :  8/03 - 19/03
+*********************************************/
+bool Model::checkIfPositionFree(const int posX, const int posY) const
+{
+    bool posFree=true;
+    set<MovableElement*>::iterator it=m_movableElementsArray.begin();
+
+    while (posFree &&  it != m_movableElementsArray.end() )
+    {
+        if ( (*it)->contains(posX, posY) )
+            posFree = false;
+        else
+            ++it;
+    }
+
+    return posFree;
 }
 
 
@@ -69,71 +180,74 @@ void Model::nextStep()
     Arthur : 2/03- 2/03
     Florian: 2/03 - 2/03
 *********************************************/
-void Model::clearNewMovableElementVector()
+void Model::clearNewMovableElementList()
 {
-    m_newMovableElementsList.clear();
-}
-
-
-/********************************************
-    Getters
-*********************************************
-    Arthur : 21/02 - 25/02
-    Florian: 21/02 - 25/02
-*********************************************/
-const MovableElement* Model::getBallElement() const
-{
-    return m_player;
-}
-
-std::vector< MovableElement*> Model::getMovableElementsList()
-{
-    return m_movableElementsList;
-}
-
-std::vector< MovableElement*> Model::getNewMovableElementsList()
-{
-    return m_newMovableElementsList;
+    m_newMovableElementsArray.clear();
 }
 
 
 /********************************************
     Ball Moving
 *********************************************
-    Arthur : 21/02 - 2/03
+    Arthur : 21/02 - 6/03
     Florian: 21/02 - 2/03
 *********************************************/
-void Model::moveBall(bool left)
+void Model::moveBallAccordingEvent(bool left)
 {
     if (left)
-        m_player->setPositionX( m_player->getPosX() - m_player->getMoveX() );
+        m_player->setPositionX( m_player->getPosX() - 10 );
     if (!left)
-        m_player->setPositionX( m_player->getPosX() + m_player->getMoveX() );
+        m_player->setPositionX( m_player->getPosX() + 10 );
 }
 
 
-
 /********************************************
-    Ball Adding
+    Elements Moving (enemies, bonus, ...)
 *********************************************
-    Arthur : 5/03 - 5/03
+    Arthur : 6/03 - 19/03
 *********************************************/
-void Model::addBallMovableElement()
+void Model::moveMovableElement(MovableElement *currentElement)
 {
-    m_player = new Ball(50, 450, 30, 30, 10, 10);
-    m_movableElementsList.push_back(m_player);
+    assert(m_movableElementsArray.find(currentElement) != m_movableElementsArray.end() );
+    currentElement->move();
 }
 
 
 /********************************************
-    NewMovableElement instance adding - Action
+    New MovableElement  Adding
 *********************************************
-    Arthur : 25/02 - 2/03
+    Arthur : 25/02 - 19/03
     Florian: 2/03 - 2/03
 *********************************************/
-void Model::addNewMovableElement()
+void Model::addNewMovableElement(int posX, int posY, int type)
 {
-    MovableElement *newMovElem = new MovableElement(rand()%800, 450, 30, 30,-10, 0);
-    m_newMovableElementsList.push_back( newMovElem );
-    m_movableElementsList.push_back( newMovElem );
+    if (type == 0) //Ball
+    {
+        m_player = new Ball(posX, posY, 30, 30, 0, 0);
+        m_newMovableElementsArray.push_back(m_player);
+        m_movableElementsArray.insert(m_player);
+    }
+    else if (type == 1) //Enemy
+    {
+        Enemy *m_newEnemy = new Enemy(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
+        m_newMovableElementsArray.push_back( m_newEnemy );
+        m_movableElementsArray.insert( m_newEnemy );
+    }
+    else if (type == 2) //Coin
+    {
+        Coin *m_newCoin = new Coin(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
+        m_newMovableElementsArray.push_back( m_newCoin );
+        m_movableElementsArray.insert( m_newCoin );
+    }
+}
+
+
+/********************************************
+    Delete Movable Elements
+    *********************************************
+    Arthur : 12/03 - 19/03
+    *********************************************/
+void Model::deleteMovableElement(MovableElement *currentElement)
+{
+    m_movableElementsArray.erase(m_movableElementsArray.find(currentElement));
 }

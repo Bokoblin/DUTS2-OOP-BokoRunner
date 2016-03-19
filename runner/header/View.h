@@ -19,23 +19,24 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define _VIEW_H
 
 #include "Model.h"
-#include "../header/GraphicElement.h"
 #include "../header/SlidingBackground.h"
 #include "../header/AnimatedGraphicElement.h"
 #include <SFML/Graphics.hpp>
 
+#include <cstdlib>
 #include <sstream>
 #include <iostream>
 #include <string>
 
-#define POS_X_BALL m_model->getBallElement()->getPosX()
-#define POS_Y_BALL m_model->getBallElement()->getPosY()
-#define WIDTH_BALL m_model->getBallElement()->getWidth()
+#define PLAYER m_model ->getPlayer()
 
 const std::string BACKGROUND_IMAGE_1 = "Images/city_1.png";
 const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
 const std::string BALL_IMAGE = "Images/balls.png";
-const std::string ENNEMIES_IMAGE = "Images/ennemies.png";
+const std::string ENEMIES_IMAGE = "Images/enemies.png";
+const std::string BONUS_IMAGE = "Images/bonus.png";
+const std::string BLOCK_ENEMIES_IMAGE = "Images/enemy_block.png";
+const std::string EXPLOSION_IMAGE = "Images/explosion.png";
 const std::string FONT = "Fonts/Antique_Olive.ttf";
 
 class Model;
@@ -43,7 +44,7 @@ class Model;
 /********************************************
     View Class
 *********************************************
-    Arthur : 21/02 - 5/03
+    Arthur : 21/02 - 19/03
     Florian: 21/02 - 3/03
 *********************************************/
 class View
@@ -57,33 +58,50 @@ public:
     void setModel(Model *model);
 
     //=== METHODS
-    void loadImages();
     void synchronize();
     void draw();
     bool treatEvents();
 
 private:
+    void loadImages();
+    void loadText();
+    void linkElements();
+    void updateElements();
+    void deleteElements();
+
     //=== ATTRIBUTES
     int m_viewWidth, m_viewHeight;
 
     sf::RenderWindow *m_window;
     Model *m_model;
 
+    //Text
     sf::Font *m_font;
     sf::Text m_textPositionBall;
+    sf::Text m_textTotalDistance;
 
-    //=== GraphicElements Textures
+    //Textures for Graphic Elements
     sf::Texture m_farBackgroundTexture;
     sf::Texture m_nearBackgroundTexture;
     sf::Texture m_playerTexture;
-    sf::Texture m_ennemiesTexture;
+    sf::Texture m_standardEnemyTexture;
+    sf::Texture m_totemEnemyTexture;
+    sf::Texture m_blockEnemyTexture;
+    sf::Texture m_coinTexture;
+    sf::Texture m_explosionTexture;
 
+    //Graphic Elements
     SlidingBackground *m_farBackground;
     SlidingBackground *m_nearBackground;
     AnimatedGraphicElement *m_playerGraphic;
-    GraphicElement *m_ennemiesGraphic;
+    AnimatedGraphicElement *m_standardEnemyGraphic;
+    AnimatedGraphicElement *m_totemEnemyGraphic;
+    AnimatedGraphicElement *m_blockEnemyGraphic;
+    AnimatedGraphicElement *m_coinGraphic;
+    AnimatedGraphicElement *m_explosionGraphic;
 
-    //=== Associative arrays
-    std::map<const MovableElement *, GraphicElement *> m_elementToGraphicElement;
+    //Containers
+    std::map<const MovableElement *, GraphicElement *> m_MovableToGraphicElement;
 };
+
 #endif

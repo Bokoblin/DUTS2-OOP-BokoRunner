@@ -23,7 +23,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     MovableElement Class
 *********************************************
-    Arthur : 23/02 - 02/03
+    Arthur : 23/02 - 15/03
     Florian: 02/03 - 02/03
 *********************************************/
 class MovableElement
@@ -31,10 +31,12 @@ class MovableElement
 public:
     //=== CTORs / DTORs
     MovableElement(int posX, int posY, int w, int h, int mvX, int mvY);
-    ~MovableElement();
+    //~MovableElement();
+    virtual ~MovableElement() {}
 
     //=== METHODS
-    void move();
+    virtual void move() {} //defining it as virtual allows to override it
+    bool contains( const int posX, const int posY) const ;
     std::string to_string()const ;
 
     //=== GETTERS
@@ -44,6 +46,8 @@ public:
     int getPosY() const;
     int getWidth() const;
     int getHeight() const;
+    virtual int getType() const {return -1;}
+    virtual int getEnemyType() const {return -1;}
 
     //=== SETTERS
     void setPositionX(int x);
@@ -58,9 +62,7 @@ protected:
     int m_height;
     int m_moveX;
     int m_moveY;
-
-private:
-
+    int m_typeElement; //0 for Ball, 1 for obstacles, 2 for bonuses
 };
 
 #endif // MOVABLEELEMENT_H

@@ -16,15 +16,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 #include "../header/GraphicElement.h"
-
+#include <iostream>
 
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 21/02 - 2/03
+    Arthur : 21/02 - 14/03
     Florian: 21/02 - 2/03
 *********************************************/
-GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) : m_w(w), m_h(h)
+GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) : m_w{w}, m_h{h}, m_collisionState{false}
 {
     this->setTexture(image);
     this->setPosition( (float)x, (float)y);
@@ -38,9 +38,9 @@ GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) :
     Florian:  2/03 - 2/03
 *********************************************/
 GraphicElement::GraphicElement(GraphicElement const& elementACopier) :
-    m_w(elementACopier.m_w), m_h(elementACopier.m_h)
+    Sprite(), m_w(elementACopier.m_w), m_h(elementACopier.m_h)
 {
-       this->setPosition( 1.0*(rand()%800),450.f);
+       this->setPosition( elementACopier.getPosition());
        this->setTexture( *elementACopier.getTexture(), true );
 }
 
@@ -58,16 +58,19 @@ GraphicElement::~GraphicElement()
 
 
 /********************************************
-    Drawing function
+    Getters
 *********************************************
-    Arthur : 22/02 - 22/02
-    Florian: 22/02 - 22/02
+    Arthur : 14/03
 *********************************************/
-void GraphicElement::draw(sf::RenderWindow * current_window)
-{
-    current_window->draw(*this);
-    current_window->display();
-}
+bool GraphicElement::getCollisionState() { return m_collisionState; }
+
+
+/********************************************
+    Setters
+*********************************************
+    Arthur : 14/03
+*********************************************/
+void GraphicElement::setCollisionState(bool collisionState) { m_collisionState = collisionState;}
 
 
 /********************************************

@@ -22,11 +22,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 3/03 - 6/03
+    Arthur : 3/03 - 19/03
 *********************************************/
 AnimatedGraphicElement::AnimatedGraphicElement(const std::vector<sf::IntRect> & clipRects,
                                                sf::Texture &image, int x, int y, int w, int h):
-    GraphicElement(image, x, y, w, h), m_clip_rects{clipRects}, m_current_clip_rect{0}, m_nb_steps{0}
+    GraphicElement(image, x, y, w, h), m_clip_rects{clipRects}, m_current_clip_rect{0}, m_lastAnimationTime{0}
 {
 
 }
@@ -35,10 +35,10 @@ AnimatedGraphicElement::AnimatedGraphicElement(const std::vector<sf::IntRect> & 
 /********************************************
     Copy Constructor
 *********************************************
-    Arthur : 13/03
+    Arthur : 19/03
 *********************************************/
 AnimatedGraphicElement::AnimatedGraphicElement(AnimatedGraphicElement const& elementACopier) :
-    GraphicElement(elementACopier), m_clip_rects{elementACopier.m_clip_rects}, m_current_clip_rect{0}, m_nb_steps{0}
+    GraphicElement(elementACopier), m_clip_rects{elementACopier.m_clip_rects}, m_current_clip_rect{0}, m_lastAnimationTime{0}
 {
 
 }
@@ -58,22 +58,22 @@ AnimatedGraphicElement::~AnimatedGraphicElement()
 /********************************************
     Drawing Function
 *********************************************
-    Arthur : 3/03 - 6/03
+    Arthur : 3/03 - 19/03
 *********************************************/
 void AnimatedGraphicElement::draw(sf::RenderWindow *window)
 {
-    //=== Sync
-
-    if (m_nb_steps%5 == 0) // each 5 function calls
+    //=== Change Animation
+    float duration = (clock() - m_lastAnimationTime) / (double)CLOCKS_PER_SEC;
+    if ( duration >= 0.150) // 150ms
     {
         this->setTextureRect(m_clip_rects[m_current_clip_rect]);
         if (m_current_clip_rect == m_clip_rects.size()-1)
             m_current_clip_rect = 0;
         else
             m_current_clip_rect++;
-        m_nb_steps = 0;
+
+        m_lastAnimationTime = clock();
     }
-    m_nb_steps++;
 
     //=== Draw
     window->draw(*this);

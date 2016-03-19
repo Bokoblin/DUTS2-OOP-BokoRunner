@@ -79,6 +79,13 @@ Arthur - v0.2.0-devA4 (14/03/16 - 15/03/16):
 - destroyed enemy animation
 - 3 sort of enemies (standard, totem, block)
 
+Arthur - v0.2.0-devA5 (19/03/16):
+
+- time added to control animation and distance incrementation
+- events reworked for a fluidier ball move
+- MovableElements array changed from std::vector to std::set
+- coins added
+
 
 Current features in stable:
 => There is a paralax-sliding background with a X-axis animated movable ball

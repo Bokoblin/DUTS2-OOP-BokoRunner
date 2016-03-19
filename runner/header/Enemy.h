@@ -12,8 +12,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifndef ENNEMY_H
-#define ENNEMY_H
+#ifndef ENEMY_H
+#define ENEMY_H
 
 #include "MovableElement.h"
 #include <string>
@@ -43,4 +43,4 @@ private:
     int m_enemyType; // 0: simple ennemy, 1: 3-ennemy-totem, 3: 4-ennemy-block
 };
 
-#endif // ENNEMY_H
+#endif // ENEMY_H

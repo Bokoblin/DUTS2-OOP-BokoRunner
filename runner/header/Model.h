@@ -20,6 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "Ball.h"
 #include "Enemy.h"
+#include "Coin.h"
 #include <cstdlib>
 #include <iostream>
 #include <set>
@@ -33,7 +34,7 @@ const int PLAYER_DEFAULT_POS_X = 50 ;
 /********************************************
     Model Class
 *********************************************
-    Arthur : 21/02 - 12/03
+    Arthur : 21/02 - 19/03
     Florian: 21/02 - 2/03
 *********************************************/
 class Model
@@ -48,18 +49,15 @@ public:
     int getGameSpeed() const;
     unsigned long getDistance() const;
     std::vector<MovableElement*> getNewMEList();
-    std::vector<MovableElement*> getMEList();
-    /*
-    std::set<MovableElement*> getNewMEList();
     std::set<MovableElement*> getMEList();
-    */
 
     //=== SETTERS
     void setGameSpeed(int speed);
+    void setCoinPickedUp() ;
 
     //=== METHODS
     void nextStep();
-    void chooseInterdistance();
+    void chooseInterdistance(int elementType);
     bool checkIfPositionFree(const int posX, const int posY) const;
     void moveBallAccordingEvent(bool left);
     void moveMovableElement(MovableElement *element);
@@ -75,19 +73,20 @@ private:
     //int m_currentInterdistance;
     //int  m_chosenInterdistanceBetweenEnnemies;
     time_t m_lastTime;
+    int m_nbCoinsPickedUp;
 
     Ball *m_player;
 
     //Containers
-    std::vector<MovableElement*> m_movableElementsList;
-    std::vector<MovableElement*> m_newMovableElementsList;
-    /*
     std::set<MovableElement*> m_movableElementsList;
-    std::set<MovableElement*> m_newMovableElementsList;
-*/
+    std::vector<MovableElement*> m_newMovableElementsList;
+
 public: //DEBUG ONLY
-    int m_currentInterdistance;
-    int  m_chosenInterdistance; //interdistance between elementss
+
+    int m_currentEnemyInterdistance;
+    int m_currentCoinInterdistance;
+    int  m_chosenEnemyInterdistance; //interdistance between enemies
+    int  m_chosenCoinInterdistance; //interdistance between coins
 
 };
 #endif

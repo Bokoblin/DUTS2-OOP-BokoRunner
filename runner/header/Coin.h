@@ -1,48 +1,44 @@
 /* Copyright (C) 2016 Jolivet Arthur & Laronze Florian
-
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
-
 You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifndef ANIMATEDGRAPHICELEMENT_H
-#define ANIMATEDGRAPHICELEMENT_H
+#ifndef COIN_H
+#define COIN_H
 
-#include "GraphicElement.h"
+#include "MovableElement.h"
+#include <string>
+
 
 /********************************************
-    AnimatedGraphicElement - Class
+    Coin Class
 *********************************************
-    Arthur : 3/03 - 19/03
+    Arthur : 19/03
 *********************************************/
-class AnimatedGraphicElement : public GraphicElement
+class Coin : public MovableElement
 {
 public:
     //=== CTORs / DTORs
-    AnimatedGraphicElement(const std::vector<sf::IntRect> & clipRects,
-                           sf::Texture &image, int x, int y, int w, int h);
-    AnimatedGraphicElement(AnimatedGraphicElement const& elementACopier);
-    ~AnimatedGraphicElement();
+    Coin(int posX, int posY, int w, int h, int movX, int movY);
+    ~Coin();
+
+    //=== GETTERS
+    int getType() const { return 2;}
+
 
     //=== METHODS
-    void draw( sf::RenderWindow *window);
+    void move();
 
 private:
-    //=== ATTRIBUTES
-    std::vector<sf::IntRect> m_clip_rects;
-    unsigned int m_current_clip_rect;
-    int m_lastAnimationTime;
-
 };
 
-#endif // ANIMATEDGRAPHICELEMENT_H
+#endif // COIN_H

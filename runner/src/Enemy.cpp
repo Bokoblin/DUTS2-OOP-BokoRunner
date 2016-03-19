@@ -68,7 +68,7 @@ void Enemy::chooseEnemyType()
 {
     int result = 1+ rand()%100;
 
-    if (result <= 50)
+    if (result <= 55)
         m_enemyType = 0;
     else if (result <= 80)
         m_enemyType = 1;

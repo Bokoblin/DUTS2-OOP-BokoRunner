@@ -163,7 +163,20 @@ void View::loadImages()
         {
             clip_rects.push_back(sf::IntRect(200*i,0,200,200));
         }
-        m_explosionGraphic = new AnimatedGraphicElement(clip_rects, m_explosionTexture, 200, GAME_FLOOR,200,200);
+        m_explosionGraphic = new AnimatedGraphicElement(clip_rects, m_explosionTexture, 200, GAME_FLOOR,50,50);
+    }
+
+    if (!m_coinTexture.loadFromFile(BONUS_IMAGE))
+        cerr << "ERROR when loading image file: " << BONUS_IMAGE << endl;
+    else
+    {
+        m_coinTexture.setSmooth(true);
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<5; i++)
+        {
+            clip_rects.push_back(sf::IntRect(50*i,0,50,50));
+        }
+        m_coinGraphic = new AnimatedGraphicElement(clip_rects, m_coinTexture, 200, GAME_FLOOR,50,50);
     }
 }
 
@@ -211,7 +224,7 @@ void View::linkElements()
         {
             if (  (m_model->getNewMEList()[i])->getType() == 0  )
                 m_MovableToGraphicElement[m_model->getNewMEList()[i] ] = m_playerGraphic;
-            if (  (m_model->getNewMEList()[i])->getType() == 1  )
+            else if (  (m_model->getNewMEList()[i])->getType() == 1  )
             {
                 AnimatedGraphicElement *m_newEnemy;
                 if ((m_model->getNewMEList()[i])->getEnemyType() == 0)
@@ -222,6 +235,12 @@ void View::linkElements()
                     m_newEnemy = new AnimatedGraphicElement(*m_blockEnemyGraphic);
                 m_MovableToGraphicElement[m_model->getNewMEList()[i] ] = m_newEnemy;
             }
+            else if (  (m_model->getNewMEList()[i])->getType() == 2  )
+            {
+                AnimatedGraphicElement *m_newcoin = new AnimatedGraphicElement(*m_coinGraphic);
+                m_MovableToGraphicElement[m_model->getNewMEList()[i] ] = m_newcoin;
+            }
+
         }
     }
 
@@ -270,30 +289,45 @@ void View::updateElements()
 
         //=== Update Graphics
 
-        if (it->first->getType() == 1)
-        {
-            if ( it->second->getCollisionState() == false && m_playerGraphic->getGlobalBounds().intersects(it->second->getGlobalBounds() ) )
-            {
-                it->second->setCollisionState(true);
-                it->second->setRemainingLifeSpan(40);
-                it->second->setTexture(m_explosionTexture);
-            }
-        }
-
-        if (it->first->getEnemyType() == 1)
-        {
-            it->second->setOrigin(0,150);
-            it->second->resize(30,90);
-        }
-        else if (it->first->getEnemyType() == 2)
-        {
-            it->second->setOrigin(0,50);
-            it->second->resize(50,50);
-        }
-        else
+        if (it->first->getType() == 0) //player
         {
             it->second->setOrigin(0,50);
             it->second->resize(30,30);
+        }
+        else if (it->first->getType() == 1)//enemies
+        {
+            if ( it->second->getCollisionState() == false && m_playerGraphic->getGlobalBounds().intersects(it->second->getGlobalBounds() ) )
+            {
+               // it->second->setCollisionState(true);
+                // it->second->setRemainingLifeSpan(40);
+                it->second->setTexture(m_explosionTexture);
+            }
+
+            if (it->first->getEnemyType() == 1)
+            {
+                it->second->setOrigin(0,150);
+                it->second->resize(30,90);
+            }
+            else if (it->first->getEnemyType() == 2)
+            {
+                it->second->setOrigin(0,50);
+                it->second->resize(50,50);
+            }
+            else
+            {
+                it->second->setOrigin(0,50);
+                it->second->resize(30,30);
+            }
+        }
+        else if (it->first->getType() == 2) //coins
+        {
+            it->second->setOrigin(0,50);
+            it->second->resize(25,25);
+            if (m_playerGraphic->getGlobalBounds().intersects(it->second->getGlobalBounds() ) )
+            {
+                it->second->setCollisionState(true);
+                m_model->setCoinPickedUp();
+            }
         }
     }
 }
@@ -310,7 +344,13 @@ void View::deleteElements()
     bool found = false;
     while (!found && it!=m_MovableToGraphicElement.end() )
     {
-        if (it->first->getType() == 1 &&  ( it->second->getPosition().x + it->second->getLocalBounds().width ) < 0)
+        if (it->first->getType() == 1 &&  (( it->second->getPosition().x + it->second->getLocalBounds().width ) < 0 || it->second->getCollisionState() == true ) )
+        {
+            m_MovableToGraphicElement.erase(it);
+            m_model->deleteMovableElement(const_cast<MovableElement*>(it->first));
+            found = true;
+        }
+        if (it->first->getType() == 2 &&  it->second->getCollisionState() == true)
         {
             m_MovableToGraphicElement.erase(it);
             m_model->deleteMovableElement(const_cast<MovableElement*>(it->first));
@@ -347,8 +387,8 @@ void View::synchronize()
 
     m_textPositionBall.setString( PLAYER->to_string() );
     m_textTotalDistance.setString( "total distance : " + to_string(m_model->getDistance() ) );
-    m_textchosenInterDistance.setString( "chosen inter : " + to_string(m_model->m_chosenInterdistance ) );
-    m_textcurrentInterDistance.setString( " current inter : " + to_string(m_model->m_currentInterdistance) );
+    m_textchosenInterDistance.setString( "chosen inter : " + to_string(m_model->m_chosenCoinInterdistance ) );
+    m_textcurrentInterDistance.setString( " current inter : " + to_string(m_model->m_currentCoinInterdistance) );
 
 }
 
@@ -389,7 +429,7 @@ void View::draw()
 /********************************************
     Events treating
 *********************************************
-    Arthur : 21/02 - 13/03
+    Arthur : 21/02 - 19/03
     Florian: 21/02 - 2/03
 *********************************************/
 bool View::treatEvents()
@@ -401,29 +441,27 @@ bool View::treatEvents()
 
         sf::Event event;
         while (m_window->pollEvent(event))
-            switch (event.type)
+        {
+            if  (sf::Event::Closed)
             {
-            case sf::Event::Closed:
                 m_window->close();
-                break;
-            case sf::Event::KeyPressed:
-                if (event.key.code == sf::Keyboard::Escape)
-                {
-                    m_window->close();
-                    result = false;
-                }
-                if ( (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q ) && PLAYER->getPosX()  > 0 )
-                {
-                    m_model->moveBallAccordingEvent(true);
-                }
-                if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D ) && (PLAYER->getPosX() + PLAYER->getWidth()) < m_viewWidth )
-                {
-                    m_model->moveBallAccordingEvent(false);
-                }
-                break;
-            default:
-                break;
             }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
+                m_window->close();
+                result = false;
+            }
+        }
+        if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
+            && PLAYER->getPosX()  > 0 )
+        {
+            m_model->moveBallAccordingEvent(true);
+        }
+        if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) )
+            && (PLAYER->getPosX() + PLAYER->getWidth()) < m_viewWidth )
+        {
+            m_model->moveBallAccordingEvent(false);
+        }
     }
     return result;
 }

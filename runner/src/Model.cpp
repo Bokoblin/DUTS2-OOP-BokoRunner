@@ -30,9 +30,12 @@ Model::Model(int width, int height)
 {
     m_totalDistance = 0;
     m_gameSpeed = 4;
-    m_currentInterdistance = 0;
-    m_chosenInterdistance = 15;
+    m_currentEnemyInterdistance = 0;
+    m_currentCoinInterdistance = 0;
+    m_chosenEnemyInterdistance = 10 +rand()%10;
+    m_chosenCoinInterdistance = 5;
     m_lastTime = clock();
+    m_nbCoinsPickedUp = 0;
 }
 
 
@@ -67,7 +70,7 @@ int Model::getGameSpeed() const { return m_gameSpeed; }
 
 unsigned long Model::getDistance() const { return m_totalDistance; }
 
-std::vector< MovableElement*> Model::getMEList() { return m_movableElementsList; }
+std::set< MovableElement*> Model::getMEList() { return m_movableElementsList; }
 
 std::vector< MovableElement*> Model::getNewMEList() { return m_newMovableElementsList; }
 /*
@@ -83,6 +86,7 @@ std::set< MovableElement*> Model::getNewMEList() { return m_newMovableElementsLi
     Arthur : 8/03 - 13/03
 *********************************************/
 void Model::setGameSpeed(int speed) { m_gameSpeed = speed; }
+void Model::setCoinPickedUp() { m_nbCoinsPickedUp++;}
 
 
 /********************************************
@@ -92,69 +96,85 @@ void Model::setGameSpeed(int speed) { m_gameSpeed = speed; }
 *********************************************/
 void Model::nextStep()
 {
-    float duration = 100*( (clock() - m_lastTime) / (double)CLOCKS_PER_SEC);
+    float duration = (clock() - m_lastTime) / (double)CLOCKS_PER_SEC;
     if ( duration >= 0.100) // 100ms
     {
         m_totalDistance ++;
 
         //=== Add new enemies
 
-        if (m_currentInterdistance == m_chosenInterdistance)
+        if (m_currentEnemyInterdistance == m_chosenEnemyInterdistance)
         {
             if (checkIfPositionFree(m_modelWidth, GAME_FLOOR) == true)
             {
                 addNewMovableElement(m_modelWidth, GAME_FLOOR, 1);
-                m_currentInterdistance = 0;
-                chooseInterdistance();
+                m_currentEnemyInterdistance = 0;
+                chooseInterdistance(1);
             }
         }
         else
-        {
+            m_currentEnemyInterdistance++;
 
-            m_currentInterdistance++;
+        //=== Add new Coins
+
+        if (m_currentCoinInterdistance == m_chosenCoinInterdistance)
+        {
+            if (checkIfPositionFree(m_modelWidth, GAME_FLOOR) == true)
+            {
+                addNewMovableElement(m_modelWidth, GAME_FLOOR-100, 2);
+                m_currentCoinInterdistance = 0;
+                chooseInterdistance(2);
+            }
         }
+        else
+            m_currentCoinInterdistance++;
+
+
         m_lastTime = clock();
     }
 }
 
 
 /********************************************
-    choose the interdistance between element
+    choose the interdistance between elements
 *********************************************
-    Arthur :  12/03
+    Arthur :  12/03 - 19/03
 *********************************************/
-void Model::chooseInterdistance()
+void Model::chooseInterdistance(int elementType)
 {
     //allows to calculate interdistance in different situations
-    if (m_chosenInterdistance > 40)
-        m_chosenInterdistance = abs(rand()%30);
-    else if  ( m_chosenInterdistance < 10)
+    if  ( elementType  == 1 ) //enemy
     {
-        m_chosenInterdistance = abs(10 + rand()%40);
+        if (m_chosenEnemyInterdistance > 40)
+            m_chosenEnemyInterdistance = abs(rand()%30);
+        else if  ( m_chosenEnemyInterdistance < 10)
+            m_chosenEnemyInterdistance = abs(10 + rand()%40);
+        else
+            m_chosenEnemyInterdistance = abs(rand()%50);
     }
-    else
-        m_chosenInterdistance = abs(rand()%50);
+
+    else if ( elementType == 2 ) //coin
+    {
+        if (m_chosenCoinInterdistance > 20)
+            m_chosenCoinInterdistance = abs(rand()%20);
+        else if  ( m_chosenCoinInterdistance < 10)
+            m_chosenCoinInterdistance = abs(15 + rand()%20);
+        else
+            m_chosenCoinInterdistance = abs(rand()%40);
+    }
 }
 
 
 /********************************************
     check if a position is free to use
 *********************************************
-    Arthur :  8/03 - 12/03
+    Arthur :  8/03 - 19/03
 *********************************************/
 bool Model::checkIfPositionFree(const int posX, const int posY) const
 {
     bool posFree=true;
-    unsigned int i = 0;
-    while (posFree && i < m_movableElementsList.size() )
-    {
-        if (m_movableElementsList[i]->contains(posX, posY) )
-            posFree = false;
-        else
-            i++;
-    }
-    /*
     set<MovableElement*>::iterator it=m_movableElementsList.begin();
+
     while (posFree &&  it != m_movableElementsList.end() )
     {
         if ( (*it)->contains(posX, posY) )
@@ -162,7 +182,7 @@ bool Model::checkIfPositionFree(const int posX, const int posY) const
         else
             ++it;
     }
-    */
+
     return posFree;
 }
 
@@ -197,11 +217,11 @@ void Model::moveBallAccordingEvent(bool left)
 /********************************************
     Elements Moving (enemies, bonus, ...)
 *********************************************
-    Arthur : 6/03 - 13/03
+    Arthur : 6/03 - 19/03
 *********************************************/
 void Model::moveMovableElement(MovableElement *currentElement)
 {
-    //assert(m_movableElementsList.find(currentElement) != m_movableElementsList.end() );
+    assert(m_movableElementsList.find(currentElement) != m_movableElementsList.end() );
     currentElement->move();
 }
 
@@ -209,7 +229,7 @@ void Model::moveMovableElement(MovableElement *currentElement)
 /********************************************
     New MovableElement  Adding
 *********************************************
-    Arthur : 25/02 - 13/03
+    Arthur : 25/02 - 19/03
     Florian: 2/03 - 2/03
 *********************************************/
 void Model::addNewMovableElement(int posX, int posY, int type)
@@ -217,52 +237,32 @@ void Model::addNewMovableElement(int posX, int posY, int type)
     if (type == 0)
     {
         m_player = new Ball(posX, posY, 30, 30, 0, 0);
-        m_movableElementsList.push_back(m_player);
         m_newMovableElementsList.push_back(m_player);
-    }
-    else if (type == 1)
-    {
-        Enemy *m_newEnemy = new Enemy(posX, posY, 30, 30,getGameSpeed()*(-1), 0);
-        m_newMovableElementsList.push_back( m_newEnemy );
-        m_movableElementsList.push_back( m_newEnemy );
-    }
-    /*
-    if (type == 0)
-    {
-        m_player = new Ball(posX, posY, 30, 30, 0, 0);
         m_movableElementsList.insert(m_player);
-        m_newMovableElementsList.insert(m_player);
     }
     else if (type == 1)
     {
-        Enemy *m_newEnemy = new Enemy(posX, posY, 30, 30,getGameSpeed()*(-1), 0);
-        m_newMovableElementsList.insert( m_newEnemy );
+        Enemy *m_newEnemy = new Enemy(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
+        m_newMovableElementsList.push_back( m_newEnemy );
         m_movableElementsList.insert( m_newEnemy );
     }
-    */
+    else if (type == 2)
+    {
+        Coin *m_newCoin = new Coin(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
+        m_newMovableElementsList.push_back( m_newCoin );
+        m_movableElementsList.insert( m_newCoin );
+    }
+
 }
 
 
 /********************************************
     Delete Movable Elements
     *********************************************
-    Arthur : 12/03
+    Arthur : 12/03 - 19/03
     *********************************************/
-void Model::deleteMovableElement(MovableElement *element)
+void Model::deleteMovableElement(MovableElement *currentElement)
 {
-    //m_movableElementsList.erase(m_movableElementsList.find(element));
-
-    std::vector<MovableElement*>::iterator it = m_movableElementsList.begin();
-    bool found = false;
-    while (!found && it != m_movableElementsList.end() )
-    {
-        if (*it == element)
-        {
-            m_movableElementsList.erase(it);
-            found=true;
-        }
-        else
-            it++;
-    }
-
+    assert(m_movableElementsList.find(currentElement) != m_movableElementsList.end() );
+    m_movableElementsList.erase(m_movableElementsList.find(currentElement));
 }

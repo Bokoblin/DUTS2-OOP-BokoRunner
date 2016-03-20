@@ -35,7 +35,7 @@ int main()
     Model model(SCREEN_WIDTH, SCREEN_HEIGHT);
     View view(SCREEN_WIDTH, SCREEN_HEIGHT);
     view.setModel(&model);
-    model.addNewMovableElement(PLAYER_DEFAULT_POS_X, GAME_FLOOR, 0); //0 = Player
+    model.addANewMovableElement(PLAYER_DEFAULT_POS_X, GAME_FLOOR, 0); //0 = Player
     while(view.treatEvents())
     {
         model.nextStep();

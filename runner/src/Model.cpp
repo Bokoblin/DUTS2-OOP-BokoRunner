@@ -22,20 +22,18 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 21/02 - 12/03
+    Arthur : 21/02 - 20/03
     Florian: 21/02 - 2/03
 *********************************************/
-Model::Model(int width, int height)
-    :  m_modelWidth(width), m_modelHeight(height)
+Model::Model(int width, int height)  :
+    m_modelWidth(width), m_modelHeight(height), m_score{0},
+    m_totalDistance{0}, m_gameSpeed{4}, m_lastTime{0},
+    m_nbCoinsPickedUp{0}, m_currentEnemyInterdistance{0},
+    m_currentCoinInterdistance{0}
 {
-    m_totalDistance = 0;
-    m_gameSpeed = 4;
-    m_currentEnemyInterdistance = 0;
-    m_currentCoinInterdistance = 0;
+    srand(time(NULL));
     m_chosenEnemyInterdistance = 10 +rand()%10;
     m_chosenCoinInterdistance = rand()%10;
-    m_lastTime = 0;
-    m_nbCoinsPickedUp = 0;
 }
 
 
@@ -57,14 +55,15 @@ Model::~Model()
 /********************************************
     Getters
 *********************************************
-    Arthur : 21/02 - 19/02
+    Arthur : 21/02 - 20/02
     Florian: 21/02 - 25/02
 *********************************************/
 const MovableElement* Model::getPlayer() const { return m_player; }
-int Model::getGameSpeed() const { return m_gameSpeed; }
+long Model::getScore() const { return m_score; }
 long Model::getDistance() const { return m_totalDistance; }
-set< MovableElement*> Model::getMElementsArray() { return m_movableElementsArray; }
-vector< MovableElement*> Model::getNewMElementsArray() { return m_newMovableElementsArray; }
+int Model::getGameSpeed() const { return m_gameSpeed; }
+set<MovableElement*> Model::getMElementsArray() { return m_movableElementsArray; }
+vector<MovableElement*> Model::getNewMElementsArray() { return m_newMovableElementsArray; }
 
 
 /********************************************
@@ -79,45 +78,50 @@ void Model::setCoinPickedUp() { m_nbCoinsPickedUp++;}
 /********************************************
     Next Step
 *********************************************
-    Arthur : 21/02 - 8/03
+    Arthur : 21/02 - 20/03
 *********************************************/
 void Model::nextStep()
 {
-    float duration = (clock() - m_lastTime) / (double)CLOCKS_PER_SEC;
-    if ( duration >= 0.400/m_gameSpeed) // 100ms
+    float nextStepDelay = (clock() - m_lastTime) / (double)CLOCKS_PER_SEC;
+
+    if ( nextStepDelay >= 0.400/m_gameSpeed) // 100ms
     {
         m_totalDistance ++;
 
         //=== Add new enemies
 
-        if (m_currentEnemyInterdistance == m_chosenEnemyInterdistance)
+        if (m_currentEnemyInterdistance >= m_chosenEnemyInterdistance)
         {
             if (checkIfPositionFree(m_modelWidth, GAME_FLOOR) == true)
             {
-                addNewMovableElement(m_modelWidth, GAME_FLOOR, 1);
+                addANewMovableElement(m_modelWidth, GAME_FLOOR, 1);
                 m_currentEnemyInterdistance = 0;
                 chooseInterdistance(1);
+                //cout << "enemy " << m_chosenCoinInterdistance << endl;
             }
         }
-        else
-            m_currentEnemyInterdistance++;
+        else m_currentEnemyInterdistance++;
 
         //=== Add new Coins
 
-        if (m_currentCoinInterdistance == m_chosenCoinInterdistance)
+        if (m_currentCoinInterdistance >= m_chosenCoinInterdistance)
         {
             if (checkIfPositionFree(m_modelWidth, GAME_FLOOR) == true)
             {
-                addNewMovableElement(m_modelWidth, GAME_FLOOR-100, 2);
+                addANewMovableElement(m_modelWidth, GAME_FLOOR, 2);
                 m_currentCoinInterdistance = 0;
                 chooseInterdistance(2);
+                //cout << "coin " << m_chosenCoinInterdistance << endl;
             }
         }
-        else
-            m_currentCoinInterdistance++;
+        else m_currentCoinInterdistance++;
 
+        //=== Delete Movable Elements
+
+        deleteMovableElement();
 
         m_lastTime = clock();
+        m_score = 2*m_totalDistance + 20*m_nbCoinsPickedUp;
     }
 }
 
@@ -208,8 +212,8 @@ void Model::moveBallAccordingEvent(bool left)
 *********************************************/
 void Model::moveMovableElement(MovableElement *currentElement)
 {
-    assert(m_movableElementsArray.find(currentElement) != m_movableElementsArray.end() );
-    currentElement->move();
+    if( currentElement  != NULL );
+        currentElement->move();
 }
 
 
@@ -219,35 +223,51 @@ void Model::moveMovableElement(MovableElement *currentElement)
     Arthur : 25/02 - 19/03
     Florian: 2/03 - 2/03
 *********************************************/
-void Model::addNewMovableElement(int posX, int posY, int type)
+void Model::addANewMovableElement(int posX, int posY, int type)
 {
     if (type == 0) //Ball
     {
         m_player = new Ball(posX, posY, 30, 30, 0, 0);
         m_newMovableElementsArray.push_back(m_player);
-        m_movableElementsArray.insert(m_player);
+        if (m_movableElementsArray.find(m_player) == m_movableElementsArray.end())
+            m_movableElementsArray.insert(m_player);
     }
     else if (type == 1) //Enemy
     {
         Enemy *m_newEnemy = new Enemy(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
         m_newMovableElementsArray.push_back( m_newEnemy );
-        m_movableElementsArray.insert( m_newEnemy );
+        if (m_movableElementsArray.find(m_newEnemy) == m_movableElementsArray.end())
+            m_movableElementsArray.insert( m_newEnemy );
     }
     else if (type == 2) //Coin
     {
         Coin *m_newCoin = new Coin(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
         m_newMovableElementsArray.push_back( m_newCoin );
-        m_movableElementsArray.insert( m_newCoin );
+        if (m_movableElementsArray.find(m_newCoin) == m_movableElementsArray.end())
+            m_movableElementsArray.insert( m_newCoin );
     }
 }
 
 
 /********************************************
     Delete Movable Elements
-    *********************************************
-    Arthur : 12/03 - 19/03
-    *********************************************/
-void Model::deleteMovableElement(MovableElement *currentElement)
+*********************************************
+    Arthur : 12/03 - 20/03
+*********************************************/
+void Model::deleteMovableElement()
 {
-    m_movableElementsArray.erase(m_movableElementsArray.find(currentElement));
+    set<MovableElement*>::iterator it = m_movableElementsArray.begin();
+    bool found=false;
+    while( it!=m_movableElementsArray.end() && !found )
+    {
+        if ( ( (*it)->getPosX() + (*it)->getWidth() ) < 0 || (*it)->getCollisionState() == true )
+        {
+            if (  (*it)->getType() == 2  )
+                m_nbCoinsPickedUp++;
+            m_movableElementsArray.erase(it);
+            found = true;
+        }
+        else
+            ++it;
+    }
 }

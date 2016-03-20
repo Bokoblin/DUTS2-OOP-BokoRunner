@@ -90,7 +90,7 @@ void View::loadImages()
     else
     {
         m_farBackgroundTexture.setSmooth(true);
-        m_farBackground = new SlidingBackground(m_farBackgroundTexture, 1200, m_viewHeight, 1);
+        m_farBackground = new SlidingBackground(m_farBackgroundTexture, 1200, m_viewHeight, 2);
     }
 
     if (!m_nearBackgroundTexture.loadFromFile(BACKGROUND_IMAGE_1))
@@ -101,82 +101,98 @@ void View::loadImages()
         m_nearBackground = new SlidingBackground(m_nearBackgroundTexture, 1200, m_viewHeight, 4);
     }
 
+    if (!m_bottomBarTexture.loadFromFile(BOTTOM_BAR))
+        cerr << "ERROR when loading image file: " << BOTTOM_BAR << endl;
+    else
+    {
+        m_bottomBarTexture.setSmooth(true);
+        m_bottomBarGraphic = new GraphicElement(m_bottomBarTexture, 0, 520, 1200, m_viewHeight);
+    }
+
+    if (!m_lifeBoxTexture.loadFromFile(LIFE_BOX))
+        cerr << "ERROR when loading image file: " << LIFE_BOX << endl;
+    else
+    {
+        m_lifeBoxTexture.setSmooth(true);
+        m_lifeBoxGraphic = new GraphicElement(m_lifeBoxTexture, 105, 535, 200, 100);
+    }
+
     if (!m_playerTexture.loadFromFile(BALL_IMAGE) )
         cerr << "ERROR when loading image file: " << BALL_IMAGE << endl;
     else
     {
-        m_playerTexture.setSmooth(true);
         std::vector<sf::IntRect> clip_rects;
         for (int i=0; i<8; i++)
-        {
             clip_rects.push_back(sf::IntRect(50*i,0,50,50));
-        }
+
+        m_playerTexture.setSmooth(true);
         m_playerGraphic = new AnimatedGraphicElement(clip_rects, m_playerTexture, PLAYER_DEFAULT_POS_X, GAME_FLOOR,50,50);
+        m_playerGraphic->setOrigin(0,50);
     }
 
     if (!m_standardEnemyTexture.loadFromFile(ENEMIES_IMAGE))
         cerr << "ERROR when loading image file: " << ENEMIES_IMAGE << endl;
     else
     {
-        m_standardEnemyTexture.setSmooth(true);
         std::vector<sf::IntRect> clip_rects;
         for (int i=0; i<2; i++)
-        {
             clip_rects.push_back(sf::IntRect(50*i,0,50,50));
-        }
+
+        m_standardEnemyTexture.setSmooth(true);
         m_standardEnemyGraphic = new AnimatedGraphicElement(clip_rects, m_standardEnemyTexture, m_viewWidth, GAME_FLOOR,50,50);
+        m_standardEnemyGraphic->setOrigin(0,50);
     }
 
     if (!m_totemEnemyTexture.loadFromFile(ENEMIES_IMAGE))
         cerr << "ERROR when loading image file: " << ENEMIES_IMAGE << endl;
     else
     {
-        m_totemEnemyTexture.setSmooth(true);
         std::vector<sf::IntRect> clip_rects;
         for (int i=0; i<2; i++)
-        {
             clip_rects.push_back(sf::IntRect(50*i,0,50,150));
-        }
+
+        m_totemEnemyTexture.setSmooth(true);
         m_totemEnemyGraphic = new AnimatedGraphicElement(clip_rects, m_totemEnemyTexture, m_viewWidth, GAME_FLOOR,50,150);
+        m_totemEnemyGraphic->setOrigin(0,150);
     }
 
     if (!m_blockEnemyTexture.loadFromFile(BLOCK_ENEMIES_IMAGE))
         cerr << "ERROR when loading image file: " << BLOCK_ENEMIES_IMAGE << endl;
     else
     {
-        m_blockEnemyTexture.setSmooth(true);
         std::vector<sf::IntRect> clip_rects;
         for (int i=0; i<2; i++)
-        {
             clip_rects.push_back(sf::IntRect(50*i,0,50,50));
-        }
+
+        m_blockEnemyTexture.setSmooth(true);
         m_blockEnemyGraphic = new AnimatedGraphicElement(clip_rects, m_blockEnemyTexture, m_viewWidth, GAME_FLOOR,50,50);
+        m_blockEnemyGraphic->setOrigin(0,50);
     }
 
     if (!m_explosionTexture.loadFromFile(EXPLOSION_IMAGE))
         cerr << "ERROR when loading image file: " << EXPLOSION_IMAGE << endl;
     else
     {
-        m_explosionTexture.setSmooth(true);
         std::vector<sf::IntRect> clip_rects;
         for (int i=0; i<3; i++)
-        {
             clip_rects.push_back(sf::IntRect(200*i,0,200,200));
-        }
-        m_explosionGraphic = new AnimatedGraphicElement(clip_rects, m_explosionTexture, 200, GAME_FLOOR,50,50);
+
+        m_explosionTexture.setSmooth(true);
+        m_explosionGraphic = new AnimatedGraphicElement(clip_rects, m_explosionTexture, m_viewWidth, GAME_FLOOR,50,50);
+        m_explosionGraphic->setOrigin(0,50);
     }
 
     if (!m_coinTexture.loadFromFile(BONUS_IMAGE))
         cerr << "ERROR when loading image file: " << BONUS_IMAGE << endl;
     else
     {
-        m_coinTexture.setSmooth(true);
         std::vector<sf::IntRect> clip_rects;
         for (int i=0; i<5; i++)
-        {
             clip_rects.push_back(sf::IntRect(50*i,0,50,50));
-        }
+
+        m_coinTexture.setSmooth(true);
         m_coinGraphic = new AnimatedGraphicElement(clip_rects, m_coinTexture, 200, GAME_FLOOR,50,50);
+        m_coinGraphic->setOrigin(0,50);
     }
 }
 
@@ -192,11 +208,25 @@ void View::loadText()
     m_textPositionBall.setPosition(10,10);
     m_textPositionBall.setCharacterSize(15);
     m_textPositionBall.setColor(sf::Color::Black);
+    m_textPositionBall.setString( "" );
+
+    m_textScore.setFont(*m_font);
+    m_textScore.setPosition(720,545);
+    m_textScore.setCharacterSize(24);
+    m_textScore.setColor(sf::Color::White);
+    m_textScore.setString( "" );
 
     m_textTotalDistance.setFont(*m_font);
-    m_textTotalDistance.setPosition(740,10);
-    m_textTotalDistance.setCharacterSize(15);
-    m_textTotalDistance.setColor(sf::Color::Black);
+    m_textTotalDistance.setPosition(480,545);
+    m_textTotalDistance.setCharacterSize(24);
+    m_textTotalDistance.setColor(sf::Color::White);
+    m_textTotalDistance.setString( "" );
+
+    m_textPlayerLife.setFont(*m_font);
+    m_textPlayerLife.setPosition(30,545);
+    m_textPlayerLife.setCharacterSize(24);
+    m_textPlayerLife.setColor(sf::Color::White);
+    m_textPlayerLife.setString( "Life " );
 }
 
 
@@ -242,12 +272,12 @@ void View::linkElements()
 *********************************************/
 void View::updateElements()
 {
-    std::map<const MovableElement *, GraphicElement *>::iterator it;
+    std::map<MovableElement *, GraphicElement *>::iterator it;
     for(it = m_MovableToGraphicElement.begin() ; it != m_MovableToGraphicElement.end() ; ++it)
     {
         //=== Update Position
 
-        m_model->moveMovableElement(const_cast<MovableElement*>(it->first));
+        m_model->moveMovableElement(it->first);
 
         int position_x = (it->first)->getPosX();
         int position_y = (it->first)->getPosY();
@@ -260,67 +290,62 @@ void View::updateElements()
 
         if (it->first->getType() == 0) //player
         {
-            it->second->setOrigin(0,50);
             it->second->resize(30,30);
         }
         else if (it->first->getType() == 1) //enemy
         {
-            if ( it->second->getCollisionState() == false && m_playerGraphic->getGlobalBounds().intersects(it->second->getGlobalBounds() ) )
+            if ( m_playerGraphic->getGlobalBounds().intersects(it->second->getGlobalBounds() ) )
             {
                 it->second->setTexture(m_explosionTexture);
+                (it->first)->setCollisionState(true);
+                if (it->first->getEnemyType() == 0)
+                    const_cast<MovableElement*>(PLAYER)->setLife(PLAYER->getLife() -10);
+                if (it->first->getEnemyType() == 1)
+                    const_cast<MovableElement*>(PLAYER)->setLife(PLAYER->getLife() -15);
+                if (it->first->getEnemyType() == 2)
+                    const_cast<MovableElement*>(PLAYER)->setLife(PLAYER->getLife() -20);
+                cout << "Life = " << PLAYER->getLife() << endl;
             }
 
             if (it->first->getEnemyType() == 1)
             {
-                it->second->setOrigin(0,150);
                 it->second->resize(30,90);
             }
-            else if (it->first->getEnemyType() == 2)
-            {
-                it->second->setOrigin(0,50);
+
+            else if (it->first->getEnemyType() )
                 it->second->resize(50,50);
-            }
             else
-            {
-                it->second->setOrigin(0,50);
                 it->second->resize(30,30);
-            }
         }
         else if (it->first->getType() == 2) //coins
         {
-            it->second->setOrigin(0,50);
             it->second->resize(25,25);
             if (m_playerGraphic->getGlobalBounds().intersects(it->second->getGlobalBounds() ) )
             {
-                it->second->setCollisionState(true);
+                (it->first)->setCollisionState(true);
                 m_model->setCoinPickedUp();
             }
         }
+
     }
 }
 
 
 /********************************************
-    Delete gElement and call mElement delete
+    Delete gElement
 *********************************************
-    Arthur : 12/03 - 14/03
+    Arthur : 12/03 - 20/03
 *********************************************/
 void View::deleteElements()
 {
-    std::map<const MovableElement *, GraphicElement *>::iterator it = m_MovableToGraphicElement.begin();
+    std::map<MovableElement *, GraphicElement *>::iterator it = m_MovableToGraphicElement.begin();
     bool found = false;
     while (!found && it!=m_MovableToGraphicElement.end() )
     {
-        if (it->first->getType() == 1 &&  (( it->second->getPosition().x + it->second->getLocalBounds().width ) < 0 || it->second->getCollisionState() == true ) )
+        if ( (it->first)->getCollisionState() == true )
         {
+            delete it->second;
             m_MovableToGraphicElement.erase(it);
-            m_model->deleteMovableElement(const_cast<MovableElement*>(it->first));
-            found = true;
-        }
-        if (it->first->getType() == 2 &&  it->second->getCollisionState() == true)
-        {
-            m_MovableToGraphicElement.erase(it);
-            m_model->deleteMovableElement(const_cast<MovableElement*>(it->first));
             found = true;
         }
         else
@@ -341,19 +366,20 @@ void View::synchronize()
 
     linkElements();
 
+    //=== Elements deleting if not used anymore
+
+    deleteElements();
+
     //=== Elements update
 
     m_nearBackground->setSpeed(m_model->getGameSpeed() );
     updateElements();
 
-    //=== Elements deleting if not used anymore
-
-    deleteElements();
-
     //=== Text update
 
-    m_textPositionBall.setString( PLAYER->to_string() );
-    m_textTotalDistance.setString( "DISTANCE : " + to_string(m_model->getDistance() ) + " m" );
+    //m_textPositionBall.setString( PLAYER->to_string() );
+    m_textScore.setString( "Score : " + to_string(m_model->getScore() ) );
+    m_textTotalDistance.setString( "Distance : " + to_string(m_model->getDistance() ) + " m" );
 }
 
 
@@ -371,6 +397,8 @@ void View::draw()
 
     m_farBackground->syncAndDraw(*m_window);
     m_nearBackground->syncAndDraw(*m_window);
+    m_window->draw(*m_bottomBarGraphic);
+    m_window->draw(*m_lifeBoxGraphic);
 
     //=== Graphical Elements drawing
 
@@ -381,8 +409,10 @@ void View::draw()
 
     //=== Text drawing
 
-    m_window->draw(m_textPositionBall);
+    //m_window->draw(m_textPositionBall);
+    m_window->draw(m_textScore);
     m_window->draw(m_textTotalDistance);
+    m_window->draw(m_textPlayerLife);
 
     m_window->display();
 }

@@ -1,7 +1,8 @@
-Runner Project - state of progress
-Auteurs : Arthur JOLIVET et Florian LARONZE
+Project Name (TEMP) : Runner Beta
+Developers          : Arthur JOLIVET et Florian LARONZE
 
-Current stable version : v0.2.0
+Current version : v0.2.1-r1 (20/03/16)
+======================================================================================
 
 
 v0.1.0-r1 (22/02/16) :
@@ -53,7 +54,7 @@ v0.1.4-r1 (5/03/16):
 - corrections
 
 
-v0.2.0 (19/03/16):
+v0.2.0-r1 (19/03/16):
 
 - random animated appearing enemies and coins added
 - rewritten code concerning synchronisation, events, drawing
@@ -62,11 +63,20 @@ v0.2.0 (19/03/16):
 - lots of bug fixes
 
 
+v0.2.1-r1 (20/03/16):
 
+- bottom bar added with score, distance and player bar
+- far background blurred a bit for focalization
+- element collision and destruction handling rewritten
+- player life handling added but not showing on bottom bar so far
+- bug fixes
+
+
+======================================================================================
 
 Current features in stable:
 => A paralax background is scrolling 
 => An animated player can move on X-axis
 => Animated Enemies and coins appears randomly and move toward left
 => The player can destroy enemies and collect coins
-=> Texts display current ball position and total distance
+=> A bottom bar displays player life, score and distance

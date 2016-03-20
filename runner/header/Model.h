@@ -28,13 +28,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <cassert>
 #include <ctime>
 
-const int GAME_FLOOR = 500;
+const int GAME_FLOOR = 470;
 const int PLAYER_DEFAULT_POS_X = 50 ;
 
 /********************************************
     Model Class
 *********************************************
-    Arthur : 21/02 - 19/03
+    Arthur : 21/02 - 20/03
     Florian: 21/02 - 2/03
 *********************************************/
 class Model
@@ -45,9 +45,10 @@ public:
     ~Model();
 
     //=== GETTERS
-    const MovableElement *getPlayer() const ;
+    const MovableElement *getPlayer() const;
+    int getScore() const;
+    int getDistance() const;
     int getGameSpeed() const;
-    long getDistance() const;
     std::vector<MovableElement*> getNewMElementsArray();
     std::set<MovableElement*> getMElementsArray();
 
@@ -61,21 +62,22 @@ public:
     bool checkIfPositionFree(const int posX, const int posY) const;
     void moveBallAccordingEvent(bool left);
     void moveMovableElement(MovableElement *element);
-    void deleteMovableElement(MovableElement *element);
-    void addNewMovableElement(int posX, int posY, int type);
+    void deleteMovableElement();
+    void addANewMovableElement(int posX, int posY, int type);
     void clearNewMovableElementList();
 
 private:
     //=== ATTRIBUTES
     int m_modelWidth, m_modelHeight;
-    unsigned long m_totalDistance;
-    int  m_gameSpeed;
+    int m_score;
+    int m_totalDistance;
+    int m_gameSpeed;
     time_t m_lastTime;
     int m_nbCoinsPickedUp;
     int m_currentEnemyInterdistance;
     int m_currentCoinInterdistance;
-    int  m_chosenEnemyInterdistance; //interdistance between enemies
-    int  m_chosenCoinInterdistance; //interdistance between coins
+    int m_chosenEnemyInterdistance; //interdistance between enemies
+    int m_chosenCoinInterdistance; //interdistance between coins
 
     Ball *m_player;
 

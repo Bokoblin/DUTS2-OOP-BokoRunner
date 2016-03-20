@@ -69,9 +69,23 @@ void Enemy::chooseEnemyType()
     int result = 1+ rand()%100;
 
     if (result <= 55)
+    {
         m_enemyType = 0;
+        m_width = 30;
+        m_height = 30;
+    }
+
     else if (result <= 80)
+    {
         m_enemyType = 1;
+        m_width = 30;
+        m_height = 90;
+    }
+
     else
+    {
         m_enemyType = 2;
+        m_width = 50;
+        m_height = 50;
+    }
 }

@@ -24,7 +24,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     Arthur : 21/02 - 14/03
     Florian: 21/02 - 2/03
 *********************************************/
-GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) : m_w{w}, m_h{h}, m_collisionState{false}
+GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) : m_w{w}, m_h{h}
 {
     this->setTexture(image);
     this->setPosition( (float)x, (float)y);
@@ -34,14 +34,15 @@ GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) :
 /********************************************
     Copy Constructor
 *********************************************
-    Arthur : 25/02 - 3/03
+    Arthur : 25/02 - 20/03
     Florian:  2/03 - 2/03
 *********************************************/
 GraphicElement::GraphicElement(GraphicElement const& elementACopier) :
     Sprite(), m_w(elementACopier.m_w), m_h(elementACopier.m_h)
 {
-       this->setPosition( elementACopier.getPosition());
-       this->setTexture( *elementACopier.getTexture(), true );
+    this->setPosition( elementACopier.getPosition() );
+    this->setTexture( *elementACopier.getTexture(), true );
+    this->setOrigin( elementACopier.getOrigin() );
 }
 
 
@@ -55,22 +56,6 @@ GraphicElement::~GraphicElement()
 {
     //Dtor
 }
-
-
-/********************************************
-    Getters
-*********************************************
-    Arthur : 14/03
-*********************************************/
-bool GraphicElement::getCollisionState() { return m_collisionState; }
-
-
-/********************************************
-    Setters
-*********************************************
-    Arthur : 14/03
-*********************************************/
-void GraphicElement::setCollisionState(bool collisionState) { m_collisionState = collisionState;}
 
 
 /********************************************

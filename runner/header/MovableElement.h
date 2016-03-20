@@ -46,13 +46,17 @@ public:
     int getPosY() const;
     int getWidth() const;
     int getHeight() const;
+    bool getCollisionState() const;
     virtual int getType() const {return -1;}
     virtual int getEnemyType() const {return -1;}
+    virtual int getLife() const {return -1;}
+
 
     //=== SETTERS
     void setPositionX(int x);
     void setPositionY(int y);
-
+    void setCollisionState(bool collisionState);
+    virtual void setLife(int new_life) {}
 
 protected:
     //=== ATTRIBUTES
@@ -63,6 +67,7 @@ protected:
     int m_moveX;
     int m_moveY;
     int m_typeElement; //0 for Ball, 1 for obstacles, 2 for bonuses
+    bool m_collisionState;
 };
 
 #endif // MOVABLEELEMENT_H

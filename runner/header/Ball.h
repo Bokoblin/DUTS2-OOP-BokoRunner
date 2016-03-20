@@ -25,7 +25,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Ball Class
 *********************************************
-    Arthur : 22/02 - 13/03
+    Arthur : 22/02 - 20/03
     Florian: 22/02 - 02/03
 *********************************************/
 class Ball : public MovableElement
@@ -37,11 +37,16 @@ public:
 
     //=== GETTERS
     int getType() const { return 0;}
+    int getLife() const {return m_life;}
+
+    //=== SETTERS
+    void setLife(int new_life) ;
 
     //=== METHODS
     void move();
 
 private:
+    int m_life;
 };
 
 #endif // BALL_H

@@ -26,7 +26,7 @@ using namespace std;
     Florian: 22/02 - 02/03
 *********************************************/
 Ball::Ball(int posX, int posY, int w, int h, int mvX, int mvY) :
-    MovableElement(posX, posY, w, h, mvX, mvY)
+    MovableElement(posX, posY, w, h, mvX, mvY), m_life{100}
 {
 
 }
@@ -40,6 +40,19 @@ Ball::Ball(int posX, int posY, int w, int h, int mvX, int mvY) :
 Ball::~Ball()
 {
 
+}
+
+
+/********************************************
+    Setter
+*********************************************
+    Arthur : 20/03
+*********************************************/
+void Ball::setLife(int new_life)
+{
+    m_life = new_life;
+    if (m_life < 0)
+        m_life = 0;
 }
 
 

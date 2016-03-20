@@ -32,6 +32,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 const std::string BACKGROUND_IMAGE_1 = "Images/city_1.png";
 const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
+const std::string BOTTOM_BAR = "Images/bottom_bar.png";
+const std::string LIFE_BOX = "Images/life.png";
 const std::string BALL_IMAGE = "Images/balls.png";
 const std::string ENEMIES_IMAGE = "Images/enemies.png";
 const std::string BONUS_IMAGE = "Images/bonus.png";
@@ -78,11 +80,15 @@ private:
     //Text
     sf::Font *m_font;
     sf::Text m_textPositionBall;
+    sf::Text m_textScore;
     sf::Text m_textTotalDistance;
+    sf::Text m_textPlayerLife;
 
     //Textures for Graphic Elements
     sf::Texture m_farBackgroundTexture;
     sf::Texture m_nearBackgroundTexture;
+    sf::Texture m_bottomBarTexture;
+    sf::Texture m_lifeBoxTexture;
     sf::Texture m_playerTexture;
     sf::Texture m_standardEnemyTexture;
     sf::Texture m_totemEnemyTexture;
@@ -93,6 +99,8 @@ private:
     //Graphic Elements
     SlidingBackground *m_farBackground;
     SlidingBackground *m_nearBackground;
+    GraphicElement *m_bottomBarGraphic;
+    GraphicElement *m_lifeBoxGraphic;
     AnimatedGraphicElement *m_playerGraphic;
     AnimatedGraphicElement *m_standardEnemyGraphic;
     AnimatedGraphicElement *m_totemEnemyGraphic;
@@ -101,7 +109,7 @@ private:
     AnimatedGraphicElement *m_explosionGraphic;
 
     //Containers
-    std::map<const MovableElement *, GraphicElement *> m_MovableToGraphicElement;
+    std::map<MovableElement *, GraphicElement *> m_MovableToGraphicElement;
 };
 
 #endif

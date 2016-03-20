@@ -51,6 +51,8 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 *********************************************/
 View::~View()
 {
+    if(m_window!= NULL)
+        delete m_window;
     if(m_font!= NULL)
         delete m_font;
     if(m_farBackground!= NULL)
@@ -61,10 +63,6 @@ View::~View()
         delete m_playerGraphic;
     if(m_enemiesGraphic!= NULL)
         delete m_enemiesGraphic;
-    if(m_model!= NULL)
-        delete m_model;
-    if(m_window!= NULL)
-        delete m_window;
 }
 
 
@@ -170,7 +168,7 @@ void View::updateElements()
     std::map<const MovableElement *, GraphicElement *>::iterator it;
     for(it = m_MovableToGraphicElement.begin() ; it != m_MovableToGraphicElement.end() ; ++it)
     {
-        m_model->moveMovableElement(const_cast<MovableElement*>(it->first));
+        m_model->moveMovableElement(const_cast<MovableElement*>(it->first),m_tempsDebutSaut);
 
         int position_x = (it->first)->getPosX();
         int position_y = (it->first)->getPosY();
@@ -263,7 +261,7 @@ void View::draw()
         if (system("CLS")) system("clear");
         for (int i=0; i < m_model->getMEList().size(); i++ )
                 cout << m_model->getMEList()[i] << endl;
-    */
+    */ //adresses statut
 
     m_window->clear();
 
@@ -323,6 +321,12 @@ bool View::treatEvents()
                 if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D ) && (PLAYER->getPosX() + PLAYER->getWidth()) < m_viewWidth )
                 {
                     m_model->moveBallAccordingEvent(false);
+                }
+                if ( (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::Space))
+                {
+                    m_model->getPlayer()->setEtatSaut(true);
+                    m_tempsDebutSaut = clock();
+                    m_model->moveMovableElement(const_cast<MovableElement*>(m_model->getPlayer()), m_tempsDebutSaut);
                 }
                 break;
             default:

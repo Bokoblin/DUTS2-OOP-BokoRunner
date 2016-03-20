@@ -23,9 +23,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <cstdlib>
 #include <iostream>
 #include <vector>
+#include <ctime>
 
 const int GAME_FLOOR = 480;
-const int PLAYER_DEFAULT_POS_X = 50 ;
+const int PLAYER_DEFAULT_POS_X = 50;
+
 
 /********************************************
     Model Class
@@ -55,7 +57,7 @@ public:
     void chooseInterdistance();
     bool checkIfPositionFree(const int posX, const int posY) const;
     void moveBallAccordingEvent(bool left);
-    void moveMovableElement(MovableElement *element);
+    void moveMovableElement(MovableElement *currentElement,clock_t temps_DebutSaut);
     void deleteMovableElement(MovableElement *element);
     void addNewMovableElement(int posX, int posY, int type);
     void clearNewMovableElementList();

@@ -20,6 +20,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "MovableElement.h"
 #include <string>
+#include <math.h>
+#include <ctime>
+
+const double m_pi = 3.14159265358979;
+const double m_gravitation = 9.81;
+const double m_angle=m_pi/3;;
 
 
 /********************************************
@@ -32,13 +38,31 @@ class Ball : public MovableElement
 {
 public:
     //=== CTORs / DTORs
-    Ball(int posX, int posY, int w, int h, int movX, int movY);
+   Ball(int posX, int posY, int w, int h, int mvX, int mvY);
     ~Ball();
 
+    //=== GETTERS
+    bool getEtatVol() const;
+    bool getEtatSaut() const;
+
+    //===SETTERS
+    void setEtatVol(bool etat);
+    void setEtatSaut(bool etat);
+
     //=== METHODS
-    void move();
+    void move(clock_t temps_DebutSaut);
+    void calculVector();
+    void RealPosition(clock_t temps_DebutSaut);
+    void Trajectory();
+
 
 private:
+    bool m_enSaut;
+    bool m_enVol;
+    double m_Vx;
+    double m_Vy;
+    int m_realposX;
+    int m_realposY;
 };
 
 #endif // BALL_H

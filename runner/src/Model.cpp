@@ -178,9 +178,9 @@ void Model::moveBallAccordingEvent(bool left)
 *********************************************
     Arthur : 6/03 - 13/03
 *********************************************/
-void Model::moveMovableElement(MovableElement *currentElement)
+void Model::moveMovableElement(MovableElement *currentElement,clock_t temps_DebutSaut)
 {
-    currentElement->move();
+    currentElement->move(temps_DebutSaut);
 }
 
 

@@ -74,6 +74,11 @@ Arthur - v0.2.0-devA3 (12/03/16 - 13/03/16):
 - enemy animation added
 - segfault and other fixes
 
+Florian -v0.3.0-devF1(12/03/16 - 17/03/16)
+-begining jump increment
+-vectors functions
+-time increment
+-adding proprieties in class Ball
 
 
 

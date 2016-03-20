@@ -28,7 +28,12 @@ using namespace std;
 Ball::Ball(int posX, int posY, int w, int h, int mvX, int mvY) :
     MovableElement(posX, posY, w, h, mvX, mvY, 0)
 {
-
+    m_enSaut = false;
+    m_enVol = false;
+    m_Vx = 0;
+    m_Vy =0;
+    m_realposX=0;
+    m_realposY=0;
 }
 
 /********************************************
@@ -44,11 +49,56 @@ Ball::~Ball()
 
 
 /********************************************
+    Getters
+*********************************************
+    Florian : 17/03
+*********************************************/
+    bool Ball::getEtatVol() const {return m_enVol;}
+    bool Ball::getEtatSaut() const {return m_enSaut;}
+
+/********************************************
+    Setters
+*********************************************
+    Florian : 17/03
+*********************************************/
+    void Ball::setEtatVol(bool etat) {m_enVol = etat;}
+    void Ball::setEtatSaut(bool etat) {m_enSaut = etat;}
+
+
+
+/********************************************
     Ball Moving
 *********************************************
     Arthur : 10/02
 *********************************************/
-void Ball::move()
+void Ball::move(clock_t temps_DebutSaut)
 {
-    //don't move for the moment
+    if (m_enSaut || m_enVol)
+    {
+    calculVector();
+    RealPosition(temps_DebutSaut);
+    Trajectory();
+    }
 }
+
+void Ball::calculVector()
+{
+    m_Vx = cos(1.0*m_angle)*m_moveX;
+    m_Vy = sin(1.0*m_angle)*m_moveY;
+}
+
+void Ball::RealPosition(clock_t temps_DebutSaut)
+{
+   double tempsCourant = (clock() - temps_DebutSaut)-(double)CLOCKS_PER_SEC;
+   m_realposX=(double)(m_Vx*tempsCourant);
+   m_realposY=(double)((m_Vy*tempsCourant)-((m_gravitation*tempsCourant*tempsCourant)/2000));
+}
+
+void Ball::Trajectory()
+{
+    m_posX += m_realposX;
+    m_posY += m_realposY;
+}
+
+
+

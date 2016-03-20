@@ -28,6 +28,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <sstream>
 #include <iostream>
 #include <string>
+#include <ctime>
 
 #define PLAYER m_model ->getPlayer()
 #define LIST_ME m_model ->getMEList()
@@ -72,6 +73,7 @@ private:
 
     sf::RenderWindow *m_window;
     Model *m_model;
+    clock_t m_tempsDebutSaut;
 
     sf::Font *m_font;
     sf::Text m_textPositionBall;

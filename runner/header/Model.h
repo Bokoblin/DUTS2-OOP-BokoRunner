@@ -80,7 +80,6 @@ private:
     int m_chosenCoinInterdistance; //interdistance between coins
 
     Ball *m_player;
-
     //Containers
     std::set<MovableElement*> m_movableElementsArray;
     std::vector<MovableElement*> m_newMovableElementsArray;

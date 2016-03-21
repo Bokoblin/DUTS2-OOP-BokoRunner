@@ -9,4 +9,4 @@ stdout.txt
 *.pro.user
 *.cscope_file_list
 Makefile
-runner/runner
+

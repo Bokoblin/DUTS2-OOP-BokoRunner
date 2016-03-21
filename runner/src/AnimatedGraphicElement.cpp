@@ -63,7 +63,11 @@ AnimatedGraphicElement::~AnimatedGraphicElement()
 void AnimatedGraphicElement::draw(sf::RenderWindow *window)
 {
     //=== Change Animation
+    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
     float duration = (clock() - m_lastAnimationTime) / (double)CLOCKS_PER_SEC;
+    #else
+    float duration = 100*(clock() - m_lastAnimationTime) / (double)CLOCKS_PER_SEC;
+    #endif
     if ( duration >= 0.150) // 150ms
     {
         this->setTextureRect(m_clip_rects[m_current_clip_rect]);

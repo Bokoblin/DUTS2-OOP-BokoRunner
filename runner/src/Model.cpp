@@ -59,8 +59,8 @@ Model::~Model()
     Florian: 21/02 - 25/02
 *********************************************/
 const MovableElement* Model::getPlayer() const { return m_player; }
-long Model::getScore() const { return m_score; }
-long Model::getDistance() const { return m_totalDistance; }
+int Model::getScore() const { return m_score; }
+int Model::getDistance() const { return m_totalDistance; }
 int Model::getGameSpeed() const { return m_gameSpeed; }
 set<MovableElement*> Model::getMElementsArray() { return m_movableElementsArray; }
 vector<MovableElement*> Model::getNewMElementsArray() { return m_newMovableElementsArray; }
@@ -82,7 +82,11 @@ void Model::setCoinPickedUp() { m_nbCoinsPickedUp++;}
 *********************************************/
 void Model::nextStep()
 {
+    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
     float nextStepDelay = (clock() - m_lastTime) / (double)CLOCKS_PER_SEC;
+    #else
+    float nextStepDelay = 100*(clock() - m_lastTime) / (double)CLOCKS_PER_SEC;
+    #endif
 
     if ( nextStepDelay >= 0.400/m_gameSpeed) // 100ms
     {
@@ -212,7 +216,7 @@ void Model::moveBallAccordingEvent(bool left)
 *********************************************/
 void Model::moveMovableElement(MovableElement *currentElement)
 {
-    if( currentElement  != NULL );
+    if( currentElement != NULL )
         currentElement->move();
 }
 

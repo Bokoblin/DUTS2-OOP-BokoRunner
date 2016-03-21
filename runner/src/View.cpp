@@ -59,10 +59,22 @@ View::~View()
         delete m_farBackground;
     if(m_nearBackground!= NULL)
         delete m_nearBackground;
+    if(m_bottomBarGraphic!= NULL)
+        delete m_bottomBarGraphic;
+    if(m_lifeBoxGraphic!= NULL)
+        delete m_lifeBoxGraphic;
     if(m_playerGraphic!= NULL)
         delete m_playerGraphic;
     if(m_standardEnemyGraphic!= NULL)
         delete m_standardEnemyGraphic;
+    if(m_totemEnemyGraphic!= NULL)
+        delete m_totemEnemyGraphic;
+    if(m_blockEnemyGraphic!= NULL)
+        delete m_blockEnemyGraphic;
+    if(m_explosionGraphic!= NULL)
+        delete m_explosionGraphic;
+    if(m_coinGraphic!= NULL)
+        delete m_coinGraphic;
 }
 
 

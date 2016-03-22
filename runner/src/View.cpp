@@ -46,7 +46,7 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 /********************************************
     Destructor
 *********************************************
-    Arthur : 21/02 - 2/03
+    Arthur : 21/02 - 21/03
     Florian: 21/02 - 2/03
 *********************************************/
 View::~View()
@@ -93,7 +93,7 @@ void View::setModel(Model *model)
 /********************************************
     Image Loading
 *********************************************
-    Arthur : 5/03 - 15/03
+    Arthur : 5/03 - 22/03
 *********************************************/
 void View::loadImages()
 
@@ -129,6 +129,14 @@ void View::loadImages()
     {
         m_lifeBoxTexture.setSmooth(true);
         m_lifeBoxGraphic = new GraphicElement(m_lifeBoxTexture, 105, 535, 200, 100);
+    }
+
+    if (!m_remainingLifeTexture.loadFromFile(LIFE_BOX))
+        cerr << "ERROR when loading image file: " << LIFE_BOX << endl;
+    else
+    {
+        m_remainingLifeTexture.setSmooth(true);
+        m_remainingLifeGraphic = new GraphicElement(m_remainingLifeTexture, 105, 535, 200, 100);
     }
 
     if (!m_playerTexture.loadFromFile(BALL_IMAGE) )
@@ -282,7 +290,7 @@ void View::linkElements()
 /********************************************
     Update gElements
 *********************************************
-    Arthur : 6/03 - 19/03
+    Arthur : 6/03 - 22/03
 *********************************************/
 void View::updateElements()
 {
@@ -318,7 +326,6 @@ void View::updateElements()
                     const_cast<MovableElement*>(PLAYER)->setLife(PLAYER->getLife() -15);
                 if (it->first->getEnemyType() == 2)
                     const_cast<MovableElement*>(PLAYER)->setLife(PLAYER->getLife() -20);
-                cout << "Life = " << PLAYER->getLife() << endl;
             }
 
             if (it->first->getEnemyType() == 1)
@@ -371,7 +378,7 @@ void View::deleteElements()
 /********************************************
     Synchronization function
 *********************************************
-    Arthur : 21/02 - 15/03
+    Arthur : 21/02 - 22/03
     Florian: 21/02 - 3/03
 *********************************************/
 void View::synchronize()
@@ -387,6 +394,7 @@ void View::synchronize()
     //=== Elements update
 
     m_nearBackground->setSpeed(m_model->getGameSpeed() );
+    m_remainingLifeTexture.loadFromFile(REMAINING_LIFE, sf::IntRect(3*(100-m_model->getPlayer()->getLife()),0,300,50));
     updateElements();
 
     //=== Text update
@@ -400,7 +408,7 @@ void View::synchronize()
 /********************************************
     View Drawing
 *********************************************
-    Arthur : 21/02 - 13/03
+    Arthur : 21/02 - 22/03
     Florian: 21/02 - 3/03
 *********************************************/
 void View::draw()
@@ -412,6 +420,7 @@ void View::draw()
     m_farBackground->syncAndDraw(*m_window);
     m_nearBackground->syncAndDraw(*m_window);
     m_window->draw(*m_bottomBarGraphic);
+    m_window->draw(*m_remainingLifeGraphic);
     m_window->draw(*m_lifeBoxGraphic);
 
     //=== Graphical Elements drawing
@@ -435,12 +444,18 @@ void View::draw()
 /********************************************
     Events treating
 *********************************************
-    Arthur : 21/02 - 19/03
+    Arthur : 21/02 - 22/03
     Florian: 21/02 - 2/03
 *********************************************/
 bool View::treatEvents()
 {
     bool result = false;
+    if  ( m_model->getPlayer()->getLife() == 0) //tmp
+    {
+        m_window->close();
+        result = false;
+    }
+
     if(m_window->isOpen())
     {
         result = true;

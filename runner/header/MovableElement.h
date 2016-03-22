@@ -53,10 +53,10 @@ public:
 
 
     //=== SETTERS
-    void setPositionX(int x);
-    void setPositionY(int y);
+    void setPosX(int x);
+    void setPosY(int y);
     void setCollisionState(bool collisionState);
-    virtual void setLife(int new_life) {}
+    virtual void setLife(int newLife);
 
 protected:
     //=== ATTRIBUTES

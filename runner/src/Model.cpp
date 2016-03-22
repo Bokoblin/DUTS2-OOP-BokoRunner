@@ -58,7 +58,7 @@ Model::~Model()
     Arthur : 21/02 - 20/02
     Florian: 21/02 - 25/02
 *********************************************/
-const MovableElement* Model::getPlayer() const { return m_player; }
+MovableElement* Model::getPlayer() const { return m_player; }
 int Model::getScore() const { return m_score; }
 int Model::getDistance() const { return m_totalDistance; }
 int Model::getGameSpeed() const { return m_gameSpeed; }
@@ -203,9 +203,9 @@ void Model::clearNewMovableElementList()
 void Model::moveBallAccordingEvent(bool left)
 {
     if (left)
-        m_player->setPositionX( m_player->getPosX() - 10 );
+        m_player->setPosX( m_player->getPosX() - 10 );
     if (!left)
-        m_player->setPositionX( m_player->getPosX() + 10 );
+        m_player->setPosX( m_player->getPosX() + 10 );
 }
 
 
@@ -224,32 +224,27 @@ void Model::moveMovableElement(MovableElement *currentElement)
 /********************************************
     New MovableElement  Adding
 *********************************************
-    Arthur : 25/02 - 19/03
+    Arthur : 25/02 - 22/03
     Florian: 2/03 - 2/03
 *********************************************/
 void Model::addANewMovableElement(int posX, int posY, int type)
 {
     if (type == 0) //Ball
     {
-        m_player = new Ball(posX, posY, 30, 30, 0, 0);
-        m_newMovableElementsArray.push_back(m_player);
-        if (m_movableElementsArray.find(m_player) == m_movableElementsArray.end())
-            m_movableElementsArray.insert(m_player);
+        m_newMElement = new Ball(posX, posY, 30, 30, 0, 0);
+        m_player = m_newMElement;
     }
     else if (type == 1) //Enemy
     {
-        Enemy *m_newEnemy = new Enemy(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
-        m_newMovableElementsArray.push_back( m_newEnemy );
-        if (m_movableElementsArray.find(m_newEnemy) == m_movableElementsArray.end())
-            m_movableElementsArray.insert( m_newEnemy );
+        m_newMElement = new Enemy(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
     }
     else if (type == 2) //Coin
     {
-        Coin *m_newCoin = new Coin(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
-        m_newMovableElementsArray.push_back( m_newCoin );
-        if (m_movableElementsArray.find(m_newCoin) == m_movableElementsArray.end())
-            m_movableElementsArray.insert( m_newCoin );
+        m_newMElement = new Coin(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
     }
+    m_newMovableElementsArray.push_back( m_newMElement );
+    if (m_movableElementsArray.find(m_newMElement) == m_movableElementsArray.end())
+        m_movableElementsArray.insert( m_newMElement );
 }
 
 

@@ -96,6 +96,8 @@ void View::setModel(Model *model)
     Arthur : 5/03 - 15/03
 *********************************************/
 void View::loadImages()
+
+
 {
     if (!m_farBackgroundTexture.loadFromFile(BACKGROUND_IMAGE_2))
         cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE_2 << endl;
@@ -257,14 +259,14 @@ void View::linkElements()
                 m_MovableToGraphicElement[m_model->getNewMElementsArray()[i] ] = m_playerGraphic;
             else if (  (m_model->getNewMElementsArray()[i])->getType() == 1  )
             {
-                AnimatedGraphicElement *m_newEnemy;
+                AnimatedGraphicElement *m_newGEnemy;
                 if ((m_model->getNewMElementsArray()[i])->getEnemyType() == 0)
-                    m_newEnemy = new AnimatedGraphicElement(*m_standardEnemyGraphic);
+                    m_newGEnemy = new AnimatedGraphicElement(*m_standardEnemyGraphic);
                 else if ((m_model->getNewMElementsArray()[i])->getEnemyType() == 1)
-                    m_newEnemy = new AnimatedGraphicElement(*m_totemEnemyGraphic);
+                    m_newGEnemy = new AnimatedGraphicElement(*m_totemEnemyGraphic);
                 else
-                    m_newEnemy = new AnimatedGraphicElement(*m_blockEnemyGraphic);
-                m_MovableToGraphicElement[m_model->getNewMElementsArray()[i] ] = m_newEnemy;
+                    m_newGEnemy = new AnimatedGraphicElement(*m_blockEnemyGraphic);
+                m_MovableToGraphicElement[m_model->getNewMElementsArray()[i] ] = m_newGEnemy;
             }
             else if (  (m_model->getNewMElementsArray()[i])->getType() == 2  )
             {

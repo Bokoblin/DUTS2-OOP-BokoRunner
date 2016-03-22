@@ -32,7 +32,7 @@ class SlidingBackground
 public:
     //=== CTORs / DTORs
     SlidingBackground(sf::Texture &image, int w, int h, unsigned int speed);
-    ~SlidingBackground();
+    virtual ~SlidingBackground();
 
     //=== METHODS
     void syncAndDraw(sf::RenderWindow &window);

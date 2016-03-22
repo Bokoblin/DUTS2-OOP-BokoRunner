@@ -33,17 +33,17 @@ class Ball : public MovableElement
 public:
     //=== CTORs / DTORs
     Ball(int posX, int posY, int w, int h, int mvX, int mvY);
-    ~Ball();
+    virtual ~Ball();
 
     //=== GETTERS
-    int getType() const { return 0;}
-    int getLife() const {return m_life;}
+    virtual int getType() const override { return 0;}
+    virtual int getLife() const override {return m_life;}
 
     //=== SETTERS
-    void setLife(int new_life) ;
+    virtual void setLife(int new_life) override ;
 
     //=== METHODS
-    void move();
+    virtual void move() override;
 
 private:
     int m_life;

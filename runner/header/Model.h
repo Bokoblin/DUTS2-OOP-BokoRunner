@@ -45,7 +45,7 @@ public:
     ~Model();
 
     //=== GETTERS
-    const MovableElement *getPlayer() const;
+    MovableElement* getPlayer() const;
     int getScore() const;
     int getDistance() const;
     int getGameSpeed() const;
@@ -79,7 +79,8 @@ private:
     int m_chosenEnemyInterdistance; //interdistance between enemies
     int m_chosenCoinInterdistance; //interdistance between coins
 
-    Ball *m_player;
+    MovableElement *m_player;
+    MovableElement *m_newMElement;
     //Containers
     std::set<MovableElement*> m_movableElementsArray;
     std::vector<MovableElement*> m_newMovableElementsArray;

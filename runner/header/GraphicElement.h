@@ -35,7 +35,7 @@ public:
     ~GraphicElement();
 
     //=== METHODS
-    virtual void draw(sf::RenderWindow *window) {}
+    virtual void draw(sf::RenderWindow *window);
     void resize (int w, int h);
 
 private:

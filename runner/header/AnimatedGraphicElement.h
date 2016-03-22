@@ -32,10 +32,10 @@ public:
     AnimatedGraphicElement(const std::vector<sf::IntRect> & clipRects,
                            sf::Texture &image, int x, int y, int w, int h);
     AnimatedGraphicElement(AnimatedGraphicElement const& elementACopier);
-    ~AnimatedGraphicElement();
+    virtual ~AnimatedGraphicElement();
 
     //=== METHODS
-    void draw( sf::RenderWindow *window);
+    virtual void draw( sf::RenderWindow *window) override;
 
 private:
     //=== ATTRIBUTES

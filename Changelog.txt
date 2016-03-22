@@ -1,7 +1,7 @@
 Project Name (TEMP) : Runner Beta
 Developers          : Arthur JOLIVET et Florian LARONZE
 
-Current version : v0.2.1-r1 (20/03/16)
+Current version : v0.2.2-r1 (22/03/16)
 ======================================================================================
 
 
@@ -63,14 +63,18 @@ v0.2.0-r1 (19/03/16):
 - lots of bug fixes
 
 
-v0.2.1-r1 (20/03/16):
+v0.2.1-rx (20/03/16 - 22/03/16):
 
 - bottom bar added with score, distance and player bar
 - far background blurred a bit for focalization
 - element collision and destruction handling rewritten
 - player life handling added but not showing on bottom bar so far
-- bug fixes
+- bug and memory leaks fixes
 
+v0.2.2-r1 (22/03/16):
+
+- Graphic evolution of player's life throught an "animated" life bar
+- TEMP: when player's life is at zero, the game quits
 
 ======================================================================================
 
@@ -79,4 +83,4 @@ Current features in stable:
 => An animated player can move on X-axis
 => Animated Enemies and coins appears randomly and move toward left
 => The player can destroy enemies and collect coins
-=> A bottom bar displays player life, score and distance
+=> A bottom bar displays player remaining life, score and distance

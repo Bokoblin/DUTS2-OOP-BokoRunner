@@ -34,6 +34,7 @@ const std::string BACKGROUND_IMAGE_1 = "Images/city_1.png";
 const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
 const std::string BOTTOM_BAR = "Images/bottom_bar.png";
 const std::string LIFE_BOX = "Images/life.png";
+const std::string REMAINING_LIFE = "Images/remaining_life.png";
 const std::string BALL_IMAGE = "Images/balls.png";
 const std::string ENEMIES_IMAGE = "Images/enemies.png";
 const std::string BONUS_IMAGE = "Images/bonus.png";
@@ -46,7 +47,7 @@ class Model;
 /********************************************
     View Class
 *********************************************
-    Arthur : 21/02 - 19/03
+    Arthur : 21/02 - 22/03
     Florian: 21/02 - 3/03
 *********************************************/
 class View
@@ -89,6 +90,7 @@ private:
     sf::Texture m_nearBackgroundTexture;
     sf::Texture m_bottomBarTexture;
     sf::Texture m_lifeBoxTexture;
+    sf::Texture m_remainingLifeTexture;
     sf::Texture m_playerTexture;
     sf::Texture m_standardEnemyTexture;
     sf::Texture m_totemEnemyTexture;
@@ -101,6 +103,7 @@ private:
     SlidingBackground *m_nearBackground;
     GraphicElement *m_bottomBarGraphic;
     GraphicElement *m_lifeBoxGraphic;
+    GraphicElement *m_remainingLifeGraphic;
     AnimatedGraphicElement *m_playerGraphic;
     AnimatedGraphicElement *m_standardEnemyGraphic;
     AnimatedGraphicElement *m_totemEnemyGraphic;

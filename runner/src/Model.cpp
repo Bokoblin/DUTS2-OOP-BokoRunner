@@ -14,6 +14,7 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+#include <assert.h>
 
 #include "../header/Model.h"
 
@@ -55,15 +56,15 @@ Model::~Model()
 /********************************************
     Getters
 *********************************************
-    Arthur : 21/02 - 20/02
+    Arthur : 21/02 - 23/03
     Florian: 21/02 - 25/02
 *********************************************/
 MovableElement* Model::getPlayer() const { return m_player; }
 int Model::getScore() const { return m_score; }
 int Model::getDistance() const { return m_totalDistance; }
 int Model::getGameSpeed() const { return m_gameSpeed; }
-set<MovableElement*> Model::getMElementsArray() { return m_movableElementsArray; }
-vector<MovableElement*> Model::getNewMElementsArray() { return m_newMovableElementsArray; }
+const set<MovableElement*>& Model::getMElementsArray() { return m_movableElementsArray; }
+const set<MovableElement*>& Model::getNewMElementsArray() { return m_newMovableElementsArray; }
 
 
 /********************************************
@@ -229,6 +230,7 @@ void Model::moveMovableElement(MovableElement *currentElement)
 *********************************************/
 void Model::addANewMovableElement(int posX, int posY, int type)
 {
+    m_newMElement = nullptr;
     if (type == 0) //Ball
     {
         m_newMElement = new Ball(posX, posY, 30, 30, 0, 0);
@@ -242,7 +244,10 @@ void Model::addANewMovableElement(int posX, int posY, int type)
     {
         m_newMElement = new Coin(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
     }
-    m_newMovableElementsArray.push_back( m_newMElement );
+    else
+        cout << "sortie";
+    assert(m_newMElement != nullptr);
+    m_newMovableElementsArray.insert( m_newMElement );
     if (m_movableElementsArray.find(m_newMElement) == m_movableElementsArray.end())
         m_movableElementsArray.insert( m_newMElement );
 }

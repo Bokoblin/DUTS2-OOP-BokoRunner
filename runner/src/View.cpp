@@ -84,20 +84,15 @@ View::~View()
     Arthur : 21/02 - 5/03
     Florian: 21/02 - 21/02
 *********************************************/
-void View::setModel(Model *model)
-{
-    m_model = model;
-}
+void View::setModel(Model *model) { m_model = model; }
 
 
 /********************************************
     Image Loading
 *********************************************
-    Arthur : 5/03 - 15/03
+    Arthur : 5/03 - 23/03
 *********************************************/
 void View::loadImages()
-
-
 {
     if (!m_farBackgroundTexture.loadFromFile(BACKGROUND_IMAGE_2))
         cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE_2 << endl;
@@ -214,16 +209,10 @@ void View::loadImages()
 /********************************************
     Text Loading
 *********************************************
-    Arthur : 6/03 - 12/03
+    Arthur : 6/03 - 23/03
 *********************************************/
 void View::loadText()
 {
-    m_textPositionBall.setFont(*m_font);
-    m_textPositionBall.setPosition(10,10);
-    m_textPositionBall.setCharacterSize(15);
-    m_textPositionBall.setColor(sf::Color::Black);
-    m_textPositionBall.setString( "" );
-
     m_textScore.setFont(*m_font);
     m_textScore.setPosition(720,545);
     m_textScore.setCharacterSize(24);
@@ -247,32 +236,31 @@ void View::loadText()
 /********************************************
     Link mElements with gElements
 *********************************************
-    Arthur : 18/03
+    Arthur : 18/03 - 23/03
 *********************************************/
 void View::linkElements()
 {
-    for (unsigned int i=0; i<( m_model->getNewMElementsArray().size() ); i++)
+    set<MovableElement*>::const_iterator it;
+    for ( it = m_model->getNewMElementsArray().begin(); it!=  m_model->getNewMElementsArray().end(); ++it)
     {
-        if (m_MovableToGraphicElement.find(m_model->getNewMElementsArray()[i] ) == m_MovableToGraphicElement.end() )
+        assert((*it) != nullptr);
+        if ( (*it)->getType() == 0 ) //player
+            m_MovableToGraphicElement[*it] = m_playerGraphic;
+        else if ( (*it)->getType() == 1 ) //enemy
         {
-            if (  (m_model->getNewMElementsArray()[i])->getType() == 0  )
-                m_MovableToGraphicElement[m_model->getNewMElementsArray()[i] ] = m_playerGraphic;
-            else if (  (m_model->getNewMElementsArray()[i])->getType() == 1  )
-            {
-                AnimatedGraphicElement *m_newGEnemy;
-                if ((m_model->getNewMElementsArray()[i])->getEnemyType() == 0)
-                    m_newGEnemy = new AnimatedGraphicElement(*m_standardEnemyGraphic);
-                else if ((m_model->getNewMElementsArray()[i])->getEnemyType() == 1)
-                    m_newGEnemy = new AnimatedGraphicElement(*m_totemEnemyGraphic);
-                else
-                    m_newGEnemy = new AnimatedGraphicElement(*m_blockEnemyGraphic);
-                m_MovableToGraphicElement[m_model->getNewMElementsArray()[i] ] = m_newGEnemy;
-            }
-            else if (  (m_model->getNewMElementsArray()[i])->getType() == 2  )
-            {
-                AnimatedGraphicElement *m_newcoin = new AnimatedGraphicElement(*m_coinGraphic);
-                m_MovableToGraphicElement[m_model->getNewMElementsArray()[i] ] = m_newcoin;
-            }
+            AnimatedGraphicElement *m_newGEnemy;
+            if ( (*it)->getEnemyType() == 0 )
+                m_newGEnemy = new AnimatedGraphicElement(*m_standardEnemyGraphic);
+            else if ( (*it)->getEnemyType() == 1 )
+                m_newGEnemy = new AnimatedGraphicElement(*m_totemEnemyGraphic);
+            else
+                m_newGEnemy = new AnimatedGraphicElement(*m_blockEnemyGraphic);
+            m_MovableToGraphicElement[*it] = m_newGEnemy;
+        }
+        else if ( (*it)->getType() == 2 ) //coin
+        {
+            AnimatedGraphicElement *m_newcoin = new AnimatedGraphicElement(*m_coinGraphic);
+            m_MovableToGraphicElement[*it] = m_newcoin;
         }
     }
     m_model->clearNewMovableElementList();
@@ -286,7 +274,7 @@ void View::linkElements()
 *********************************************/
 void View::updateElements()
 {
-    std::map<MovableElement *, GraphicElement *>::iterator it;
+    std::map<MovableElement*, GraphicElement*>::iterator it;
     for(it = m_MovableToGraphicElement.begin() ; it != m_MovableToGraphicElement.end() ; ++it)
     {
         //=== Update Position
@@ -302,7 +290,7 @@ void View::updateElements()
 
         //=== Update Graphics
 
-        if (it->first->getType() == 0) //player
+        if      (it->first->getType() == 0) //player
         {
             it->second->resize(30,30);
         }
@@ -313,19 +301,17 @@ void View::updateElements()
                 it->second->setTexture(m_explosionTexture);
                 (it->first)->setCollisionState(true);
                 if (it->first->getEnemyType() == 0)
-                    const_cast<MovableElement*>(PLAYER)->setLife(PLAYER->getLife() -10);
+                    PLAYER->setLife(PLAYER->getLife()-10);
                 if (it->first->getEnemyType() == 1)
-                    const_cast<MovableElement*>(PLAYER)->setLife(PLAYER->getLife() -15);
+                    PLAYER->setLife(PLAYER->getLife()-15);
                 if (it->first->getEnemyType() == 2)
-                    const_cast<MovableElement*>(PLAYER)->setLife(PLAYER->getLife() -20);
-                cout << "Life = " << PLAYER->getLife() << endl;
+                    PLAYER->setLife(PLAYER->getLife()-20);
             }
 
             if (it->first->getEnemyType() == 1)
             {
                 it->second->resize(30,90);
             }
-
             else if (it->first->getEnemyType() )
                 it->second->resize(50,50);
             else
@@ -340,7 +326,6 @@ void View::updateElements()
                 m_model->setCoinPickedUp();
             }
         }
-
     }
 }
 
@@ -391,7 +376,6 @@ void View::synchronize()
 
     //=== Text update
 
-    //m_textPositionBall.setString( PLAYER->to_string() );
     m_textScore.setString( "Score : " + to_string(m_model->getScore() ) );
     m_textTotalDistance.setString( "Distance : " + to_string(m_model->getDistance() ) + " m" );
 }
@@ -423,7 +407,6 @@ void View::draw()
 
     //=== Text drawing
 
-    //m_window->draw(m_textPositionBall);
     m_window->draw(m_textScore);
     m_window->draw(m_textTotalDistance);
     m_window->draw(m_textPlayerLife);
@@ -460,12 +443,12 @@ bool View::treatEvents()
             }
         }
         if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
-            && PLAYER->getPosX()  > 0 )
+             && PLAYER->getPosX()  > 0 )
         {
             m_model->moveBallAccordingEvent(true);
         }
         if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) )
-            && (PLAYER->getPosX() + PLAYER->getWidth()) < m_viewWidth )
+             && (PLAYER->getPosX() + PLAYER->getWidth()) < m_viewWidth )
         {
             m_model->moveBallAccordingEvent(false);
         }

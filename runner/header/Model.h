@@ -34,7 +34,7 @@ const int PLAYER_DEFAULT_POS_X = 50 ;
 /********************************************
     Model Class
 *********************************************
-    Arthur : 21/02 - 20/03
+    Arthur : 21/02 - 23/03
     Florian: 21/02 - 2/03
 *********************************************/
 class Model
@@ -45,6 +45,9 @@ public:
     ~Model();
 
     //=== GETTERS
+    bool getIntroState() const;
+    bool getMenuState() const;
+    bool getGameState() const;
     MovableElement* getPlayer() const;
     int getScore() const;
     int getDistance() const;
@@ -53,6 +56,9 @@ public:
     const std::set<MovableElement*>& getMElementsArray();
 
     //=== SETTERS
+    void setIntroState(bool state);
+    void setMenuState(bool state);
+    void setGameState(bool state);
     void setGameSpeed(int speed);
     void setCoinPickedUp() ;
 
@@ -69,6 +75,9 @@ public:
 private:
     //=== ATTRIBUTES
     int m_modelWidth, m_modelHeight;
+    int m_introState;
+    int m_menuState;
+    int m_gameState;
     int m_score;
     int m_totalDistance;
     int m_gameSpeed;
@@ -76,11 +85,12 @@ private:
     int m_nbCoinsPickedUp;
     int m_currentEnemyInterdistance;
     int m_currentCoinInterdistance;
-    int m_chosenEnemyInterdistance; //interdistance between enemies
-    int m_chosenCoinInterdistance; //interdistance between coins
+    int m_chosenEnemyInterdistance;
+    int m_chosenCoinInterdistance;
 
     MovableElement *m_player;
     MovableElement *m_newMElement;
+
     //Containers
     std::set<MovableElement*> m_movableElementsArray;
     std::set<MovableElement*> m_newMovableElementsArray;

@@ -1,7 +1,7 @@
 Project Name (TEMP) : Runner Beta
 Developers          : Arthur JOLIVET et Florian LARONZE
 
-Current version : v0.2.3-r1 (23/03/16)
+Current dev version : v0.4.0-devA1 (23/03/16)
 ======================================================================================
 
 
@@ -80,6 +80,10 @@ v0.2.3-r1 (22/03/16):
 
 - NewMovableElement vector replaced by a set
 - Fixed Seg Fault related due to a getter returning a copy and not the object itself
+
+
+v0.4.0-devA1 (23/03/16):
+- Initial chosen Menu-Game structure adding (may or may not change until release)
 
 ======================================================================================
 

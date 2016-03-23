@@ -99,7 +99,7 @@ void View::loadImages()
     else
     {
         m_farBackgroundTexture.setSmooth(true);
-        m_farBackground = new SlidingBackground(m_farBackgroundTexture, 1200, m_viewHeight, 2);
+        m_farBackground = new SlidingBackground(m_farBackgroundTexture, 1200, m_viewHeight, 1);
     }
 
     if (!m_nearBackgroundTexture.loadFromFile(BACKGROUND_IMAGE_1))
@@ -107,7 +107,7 @@ void View::loadImages()
     else
     {
         m_nearBackgroundTexture.setSmooth(true);
-        m_nearBackground = new SlidingBackground(m_nearBackgroundTexture, 1200, m_viewHeight, 4);
+        m_nearBackground = new SlidingBackground(m_nearBackgroundTexture, 1200, m_viewHeight, 2);
     }
 
     if (!m_bottomBarTexture.loadFromFile(BOTTOM_BAR))
@@ -369,24 +369,31 @@ void View::deleteElements()
 *********************************************/
 void View::synchronize()
 {
-    //=== Link new mElements with gElements
+    if (m_model->getMenuState() ==true)
+    {
+        //menu sync if useful
+    }
+    else if (m_model->getGameState() == true)
+    {
+        //=== Link new mElements with gElements
 
-    linkElements();
+        linkElements();
 
-    //=== Elements deleting if not used anymore
+        //=== Elements deleting if not used anymore
 
-    deleteElements();
+        deleteElements();
 
-    //=== Elements update
+        //=== Elements update
 
-    m_nearBackground->setSpeed(m_model->getGameSpeed() );
-    m_remainingLifeTexture.loadFromFile(REMAINING_LIFE, sf::IntRect(3*(100-m_model->getPlayer()->getLife()),0,300,50));
-    updateElements();
+        m_nearBackground->setSpeed(m_model->getGameSpeed() );
+        m_remainingLifeTexture.loadFromFile(REMAINING_LIFE, sf::IntRect(3*(100-m_model->getPlayer()->getLife()),0,300,50));
+        updateElements();
 
-    //=== Text update
+        //=== Text update
 
-    m_textScore.setString( "Score : " + to_string(m_model->getScore() ) );
-    m_textTotalDistance.setString( "Distance : " + to_string(m_model->getDistance() ) + " m" );
+        m_textScore.setString( "Score : " + to_string(m_model->getScore() ) );
+        m_textTotalDistance.setString( "Distance : " + to_string(m_model->getDistance() ) + " m" );
+    }
 }
 
 
@@ -400,26 +407,34 @@ void View::draw()
 {
     m_window->clear();
 
-    //=== Background drawing
-
-    m_farBackground->syncAndDraw(*m_window);
-    m_nearBackground->syncAndDraw(*m_window);
-    m_window->draw(*m_bottomBarGraphic);
-    m_window->draw(*m_remainingLifeGraphic);
-    m_window->draw(*m_lifeBoxGraphic);
-
-    //=== Graphical Elements drawing
-
-    for(auto it = m_MovableToGraphicElement.begin() ; it != m_MovableToGraphicElement.end() ; ++it)
+    if (m_model->getMenuState() ==true)
     {
-        it->second->draw(m_window);
+        m_farBackground->syncAndDraw(*m_window);
+        m_nearBackground->syncAndDraw(*m_window);
     }
+    else if (m_model->getGameState() == true)
+    {
+        //=== Background drawing
 
-    //=== Text drawing
+        m_farBackground->syncAndDraw(*m_window);
+        m_nearBackground->syncAndDraw(*m_window);
+        m_window->draw(*m_bottomBarGraphic);
+        m_window->draw(*m_remainingLifeGraphic);
+        m_window->draw(*m_lifeBoxGraphic);
 
-    m_window->draw(m_textScore);
-    m_window->draw(m_textTotalDistance);
-    m_window->draw(m_textPlayerLife);
+        //=== Graphical Elements drawing
+
+        for(auto it = m_MovableToGraphicElement.begin() ; it != m_MovableToGraphicElement.end() ; ++it)
+        {
+            it->second->draw(m_window);
+        }
+
+        //=== Text drawing
+
+        m_window->draw(m_textScore);
+        m_window->draw(m_textTotalDistance);
+        m_window->draw(m_textPlayerLife);
+    }
 
     m_window->display();
 }
@@ -457,16 +472,25 @@ bool View::treatEvents()
                 m_window->close();
                 result = false;
             }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+            {
+                m_model->setMenuState(false);
+                m_model->setGameState(true);
+            }
         }
-        if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
-             && PLAYER->getPosX()  > 0 )
+
+        if (m_model->getGameState() == true)
         {
-            m_model->moveBallAccordingEvent(true);
-        }
-        if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) )
-             && (PLAYER->getPosX() + PLAYER->getWidth()) < m_viewWidth )
-        {
-            m_model->moveBallAccordingEvent(false);
+            if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
+            && PLAYER->getPosX()  > 0 )
+            {
+                m_model->moveBallAccordingEvent(true);
+            }
+            if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) )
+                    && (PLAYER->getPosX() + PLAYER->getWidth()) < m_viewWidth )
+            {
+                m_model->moveBallAccordingEvent(false);
+            }
         }
     }
     return result;

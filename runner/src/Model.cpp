@@ -22,7 +22,7 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 21/02 - 20/03
+    Arthur : 21/02 - 23/03
     Florian: 21/02 - 2/03
 *********************************************/
 Model::Model(int width, int height)  :
@@ -31,6 +31,10 @@ Model::Model(int width, int height)  :
     m_nbCoinsPickedUp{0}, m_currentEnemyInterdistance{0},
     m_currentCoinInterdistance{0}
 {
+    m_introState = true;
+    m_menuState = true;
+    m_gameState = false;
+
     srand(time(NULL));
     m_chosenEnemyInterdistance = 10 +rand()%10;
     m_chosenCoinInterdistance = rand()%10;
@@ -58,6 +62,9 @@ Model::~Model()
     Arthur : 21/02 - 23/03
     Florian: 21/02 - 25/02
 *********************************************/
+bool Model::getIntroState() const {return m_introState;}
+bool Model::getMenuState() const {return m_menuState;}
+bool Model::getGameState() const {return m_gameState;}
 MovableElement* Model::getPlayer() const { return m_player; }
 int Model::getScore() const { return m_score; }
 int Model::getDistance() const { return m_totalDistance; }
@@ -71,6 +78,9 @@ const set<MovableElement*>& Model::getNewMElementsArray() { return m_newMovableE
 *********************************************
     Arthur : 8/03 - 13/03
 *********************************************/
+void Model::setIntroState(bool state) {m_introState = state;}
+void Model::setMenuState(bool state) {m_menuState = state;}
+void Model::setGameState(bool state) {m_gameState = state;}
 void Model::setGameSpeed(int speed) { m_gameSpeed = speed; }
 void Model::setCoinPickedUp() { m_nbCoinsPickedUp++;}
 
@@ -78,54 +88,59 @@ void Model::setCoinPickedUp() { m_nbCoinsPickedUp++;}
 /********************************************
     Next Step
 *********************************************
-    Arthur : 21/02 - 20/03
+    Arthur : 21/02 - 23/03
 *********************************************/
 void Model::nextStep()
 {
-    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-    float nextStepDelay = (clock() - m_lastTime) / (double)CLOCKS_PER_SEC;
-    #else
-    float nextStepDelay = 100*(clock() - m_lastTime) / (double)CLOCKS_PER_SEC;
-    #endif
-
-    if ( nextStepDelay >= 0.400/m_gameSpeed) // 100ms
+    if (m_menuState ==true)
     {
-        m_totalDistance ++;
+        //menu nextstep if useful
+    }
+    else if (m_gameState == true)
+    {
+        #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+        float nextStepDelay = (clock() - m_lastTime) / (double)CLOCKS_PER_SEC;
+        #else
+        float nextStepDelay = 100*(clock() - m_lastTime) / (double)CLOCKS_PER_SEC;
+        #endif
 
-        //=== Add new enemies
-
-        if (m_currentEnemyInterdistance >= m_chosenEnemyInterdistance)
+        if ( nextStepDelay >= 0.400/m_gameSpeed) // 100ms
         {
-            if (checkIfPositionFree(m_modelWidth, GAME_FLOOR) == true)
+            m_totalDistance ++;
+
+            //=== Add new enemies
+
+            if (m_currentEnemyInterdistance >= m_chosenEnemyInterdistance)
             {
-                addANewMovableElement(m_modelWidth, GAME_FLOOR, 1);
-                m_currentEnemyInterdistance = 0;
-                chooseInterdistance(1);
-                //cout << "enemy " << m_chosenCoinInterdistance << endl;
+                if (checkIfPositionFree(m_modelWidth, GAME_FLOOR) == true)
+                {
+                    addANewMovableElement(m_modelWidth, GAME_FLOOR, 1);
+                    m_currentEnemyInterdistance = 0;
+                    chooseInterdistance(1);
+                }
             }
-        }
-        else m_currentEnemyInterdistance++;
+            else m_currentEnemyInterdistance++;
 
-        //=== Add new Coins
+            //=== Add new Coins
 
-        if (m_currentCoinInterdistance >= m_chosenCoinInterdistance)
-        {
-            if (checkIfPositionFree(m_modelWidth, GAME_FLOOR) == true)
+            if (m_currentCoinInterdistance >= m_chosenCoinInterdistance)
             {
-                addANewMovableElement(m_modelWidth, GAME_FLOOR, 2);
-                m_currentCoinInterdistance = 0;
-                chooseInterdistance(2);
-                //cout << "coin " << m_chosenCoinInterdistance << endl;
+                if (checkIfPositionFree(m_modelWidth, GAME_FLOOR) == true)
+                {
+                    addANewMovableElement(m_modelWidth, GAME_FLOOR-100, 2);
+                    m_currentCoinInterdistance = 0;
+                    chooseInterdistance(2);
+                }
             }
+            else m_currentCoinInterdistance++;
+
+            //=== Delete Movable Elements
+
+            deleteMovableElement();
+
+            m_lastTime = clock();
+            m_score = 2*m_totalDistance + 20*m_nbCoinsPickedUp;
         }
-        else m_currentCoinInterdistance++;
-
-        //=== Delete Movable Elements
-
-        deleteMovableElement();
-
-        m_lastTime = clock();
-        m_score = 2*m_totalDistance + 20*m_nbCoinsPickedUp;
     }
 }
 

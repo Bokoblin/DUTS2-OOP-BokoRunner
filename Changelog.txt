@@ -1,7 +1,7 @@
 Project Name (TEMP) : Runner Beta
 Developers          : Arthur JOLIVET et Florian LARONZE
 
-Current version : v0.2.2-r1 (22/03/16)
+Current version : v0.2.3-r1 (23/03/16)
 ======================================================================================
 
 
@@ -19,12 +19,12 @@ v0.1.0-r2 (22/02/16) :
 - header  files from "Atelier 1" and "Atelier 2" added
 
 
-v0.1.0-r3 (24/02/16) :
+v0.1.0-r3/4/5 (24/02/16) :
 
 - code relative to "Atelier 2" and "Atelier 3" added
 
 
-v0.1.1-r1 (25/01/16) :
+v0.1.1-r1 (25/02/16) :
 
 - Atelier 2 and 3 are finished until fixing issues in "TD Projet" next week
 
@@ -75,6 +75,11 @@ v0.2.2-r1 (22/03/16):
 
 - Graphic evolution of player's life throught an "animated" life bar
 - TEMP: when player's life is at zero, the game quits
+
+v0.2.3-r1 (22/03/16):
+
+- NewMovableElement vector replaced by a set
+- Fixed Seg Fault related due to a getter returning a copy and not the object itself
 
 ======================================================================================
 

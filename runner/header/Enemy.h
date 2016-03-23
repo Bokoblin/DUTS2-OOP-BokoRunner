@@ -29,7 +29,7 @@ class Enemy : public MovableElement
 public:
     //=== CTORs / DTORs
     Enemy(int posX, int posY, int w, int h, int movX, int movY);
-    ~Enemy();
+    virtual~Enemy();
 
     //=== GETTERS
     int getType() const { return 1;}

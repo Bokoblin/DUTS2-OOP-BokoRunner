@@ -49,8 +49,8 @@ public:
     int getScore() const;
     int getDistance() const;
     int getGameSpeed() const;
-    std::vector<MovableElement*> getNewMElementsArray();
-    std::set<MovableElement*> getMElementsArray();
+    const std::set<MovableElement*>& getNewMElementsArray();
+    const std::set<MovableElement*>& getMElementsArray();
 
     //=== SETTERS
     void setGameSpeed(int speed);
@@ -83,7 +83,7 @@ private:
     MovableElement *m_newMElement;
     //Containers
     std::set<MovableElement*> m_movableElementsArray;
-    std::vector<MovableElement*> m_newMovableElementsArray;
+    std::set<MovableElement*> m_newMovableElementsArray;
 
 };
 

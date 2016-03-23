@@ -29,7 +29,7 @@ class Coin : public MovableElement
 public:
     //=== CTORs / DTORs
     Coin(int posX, int posY, int w, int h, int movX, int movY);
-    ~Coin();
+    virtual ~Coin();
 
     //=== GETTERS
     int getType() const { return 2;}

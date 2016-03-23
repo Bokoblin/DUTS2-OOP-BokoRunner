@@ -79,7 +79,6 @@ private:
 
     //Text
     sf::Font *m_font;
-    sf::Text m_textPositionBall;
     sf::Text m_textScore;
     sf::Text m_textTotalDistance;
     sf::Text m_textPlayerLife;
@@ -109,7 +108,7 @@ private:
     AnimatedGraphicElement *m_explosionGraphic;
 
     //Containers
-    std::map<MovableElement *, GraphicElement *> m_MovableToGraphicElement;
+    std::map<MovableElement*, GraphicElement*> m_MovableToGraphicElement;
 };
 
 #endif

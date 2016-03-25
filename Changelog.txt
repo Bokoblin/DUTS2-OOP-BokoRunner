@@ -1,8 +1,8 @@
 Runner Project - state of progress
 Auteurs : Arthur JOLIVET et Florian LARONZE
 
-Current stable version : v0.1.4-r1
-Current dev version : v0.2.0-devA3
+
+Current dev version : v0.3.0-devF2
 
 
 v0.1.0-r1 (22/02/16) :
@@ -74,11 +74,17 @@ Arthur - v0.2.0-devA3 (12/03/16 - 13/03/16):
 - enemy animation added
 - segfault and other fixes
 
-Florian -v0.3.0-devF1(12/03/16 - 17/03/16)
+Florian -v0.3.0-devF1 (12/03/16 - 17/03/16)
 -begining jump increment
 -vectors functions
 -time increment
 -adding proprieties in class Ball
+
+
+Florian -v0.3.0-devF2 (18/03/16 - 25/03/16)
+- posibility to make a parable with the ball
+- issue between window referencial and effective referencial
+- issue with gravity
 
 
 

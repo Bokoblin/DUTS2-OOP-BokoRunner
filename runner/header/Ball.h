@@ -22,6 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <string>
 #include <math.h>
 #include <ctime>
+#include <iostream>
 
 const double m_pi = 3.14159265358979;
 const double m_gravitation = 9.81;
@@ -38,31 +39,34 @@ class Ball : public MovableElement
 {
 public:
     //=== CTORs / DTORs
-   Ball(int posX, int posY, int w, int h, int mvX, int mvY);
+   Ball(float posX,float posY, int w, int h, int mvX, int mvY);
     ~Ball();
 
     //=== GETTERS
-    bool getEtatVol() const;
-    bool getEtatSaut() const;
+    virtual bool getFlyingState() const override;
+    virtual bool getJumpState() const override;
+    virtual clock_t getStartTimeJump() const override;
 
     //===SETTERS
-    void setEtatVol(bool etat);
-    void setEtatSaut(bool etat);
+    virtual void setFlyingState(bool etat) override;
+    virtual void setJumpState(bool etat) override;
+    virtual void setStartTimeJump(clock_t time) override;
 
     //=== METHODS
-    void move(clock_t temps_DebutSaut);
+    virtual void move() override;
     void calculVector();
-    void RealPosition(clock_t temps_DebutSaut);
+    void RealPosition();
     void Trajectory();
 
 
 private:
-    bool m_enSaut;
-    bool m_enVol;
+    bool m_jumping;
+    bool m_flying;
     double m_Vx;
     double m_Vy;
-    int m_realposX;
-    int m_realposY;
+    float m_realposX;
+    float m_realposY;
+    clock_t m_time_start_jump;
 };
 
 #endif // BALL_H

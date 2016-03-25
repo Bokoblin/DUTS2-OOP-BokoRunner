@@ -36,7 +36,7 @@ public:
     virtual ~MovableElement() {}
 
     //=== METHODS
-    virtual void move(clock_t temps_DebutSaut) {} //defining it as virtual allows to override it
+    virtual void move() {} //defining it as virtual allows to override it
     bool contains( const int posX, const int posY) const ;
     std::string to_string()const ;
 
@@ -48,13 +48,17 @@ public:
     int getWidth() const;
     int getHeight() const;
     int getType() const;
-    virtual bool getEtatSaut() const{return false;}
-    virtual void setEtatSaut(bool etat){}
+    virtual bool getJumpState() const{return false;}
+    virtual bool getFlyingState() const{return false;}
+    virtual clock_t getStartTimeJump() const{return -1;}
+
 
     //=== SETTERS
     void setPositionX(int x);
     void setPositionY(int y);
-
+    virtual void setJumpState(bool newState){}
+    virtual void setFlyingState(bool newState){}
+    virtual void setStartTimeJump (clock_t time) {}
 
 protected:
     //=== ATTRIBUTES

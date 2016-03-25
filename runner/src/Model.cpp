@@ -89,6 +89,10 @@ void Model::nextStep()
 {
     m_totalDistance ++;
 
+
+    //if( m_player->getPosY() == GAME_FLOOR)
+      //  m_player->setJumpState(false);
+
     //=== Add new enemies
 
     if (m_currentInterdistance == m_chosenInterdistance)
@@ -178,9 +182,9 @@ void Model::moveBallAccordingEvent(bool left)
 *********************************************
     Arthur : 6/03 - 13/03
 *********************************************/
-void Model::moveMovableElement(MovableElement *currentElement,clock_t temps_DebutSaut)
+void Model::moveMovableElement(MovableElement *currentElement)
 {
-    currentElement->move(temps_DebutSaut);
+    currentElement->move();
 }
 
 
@@ -194,7 +198,7 @@ void Model::addNewMovableElement(int posX, int posY, int type)
 {
     if (type == 0)
     {
-        m_player = new Ball(posX, posY, 30, 30, 0, 0);
+        m_player = new Ball(posX, posY, 30, 30, 1, 1);
         m_movableElementsList.push_back(m_player);
         m_newMovableElementsList.push_back(m_player);
     }
@@ -227,3 +231,5 @@ void Model::deleteMovableElement(MovableElement *element)
             it++;
     }
 }
+
+

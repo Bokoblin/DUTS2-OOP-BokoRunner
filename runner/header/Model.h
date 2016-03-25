@@ -57,11 +57,13 @@ public:
     void chooseInterdistance();
     bool checkIfPositionFree(const int posX, const int posY) const;
     void moveBallAccordingEvent(bool left);
-    void moveMovableElement(MovableElement *currentElement,clock_t temps_DebutSaut);
+    void moveMovableElement(MovableElement *currentElement);
     void deleteMovableElement(MovableElement *element);
     void addNewMovableElement(int posX, int posY, int type);
     void clearNewMovableElementList();
 
+
+    void setJumpBall(bool etat){ m_player->setJumpState(etat);}
 private:
     //=== ATTRIBUTES
     int m_modelWidth, m_modelHeight;

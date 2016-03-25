@@ -1,7 +1,7 @@
-Project Name (TEMP) : Runner Beta
-Developers          : Arthur JOLIVET et Florian LARONZE
+Project Name : Boko Runner
+Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current dev version : v0.4.0-devA1 (23/03/16)
+Current dev version : v0.4.0-devA2 (25/03/16)
 ======================================================================================
 
 
@@ -84,6 +84,10 @@ v0.2.3-r1 (22/03/16):
 
 v0.4.0-devA1 (23/03/16):
 - Initial chosen Menu-Game structure adding (may or may not change until release)
+
+v0.4.0-devA2 (25/03/16):
+- Added title image, play and pause buttons
+- Added mouse button support to launch game or quit from Home menu
 
 ======================================================================================
 

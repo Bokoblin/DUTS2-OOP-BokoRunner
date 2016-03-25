@@ -58,7 +58,7 @@ AnimatedGraphicElement::~AnimatedGraphicElement()
 /********************************************
     Drawing Function
 *********************************************
-    Arthur : 3/03 - 19/03
+    Arthur : 3/03 - 24/03
 *********************************************/
 void AnimatedGraphicElement::draw(sf::RenderWindow *window)
 {
@@ -68,7 +68,7 @@ void AnimatedGraphicElement::draw(sf::RenderWindow *window)
     #else
     float duration = 100*(clock() - m_lastAnimationTime) / (double)CLOCKS_PER_SEC;
     #endif
-    if ( duration >= 0.150) // 150ms
+    if ( duration >= 0.200) // 200ms
     {
         this->setTextureRect(m_clip_rects[m_current_clip_rect]);
         if (m_current_clip_rect == m_clip_rects.size()-1)

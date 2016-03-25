@@ -73,7 +73,6 @@ private:
 
     sf::RenderWindow *m_window;
     Model *m_model;
-    clock_t m_tempsDebutSaut;
 
     sf::Font *m_font;
     sf::Text m_textPositionBall;
@@ -94,6 +93,6 @@ private:
     AnimatedGraphicElement *m_enemiesGraphic;
 
     //== Associative arrays
-    std::map<const MovableElement *, GraphicElement *> m_MovableToGraphicElement;
+    std::map<MovableElement *, GraphicElement *> m_MovableToGraphicElement;
 };
 #endif

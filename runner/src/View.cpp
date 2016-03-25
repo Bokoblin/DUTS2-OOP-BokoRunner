@@ -165,10 +165,10 @@ void View::loadText()
 *********************************************/
 void View::updateElements()
 {
-    std::map<const MovableElement *, GraphicElement *>::iterator it;
+    std::map<MovableElement *, GraphicElement *>::iterator it;
     for(it = m_MovableToGraphicElement.begin() ; it != m_MovableToGraphicElement.end() ; ++it)
     {
-        m_model->moveMovableElement(const_cast<MovableElement*>(it->first),m_tempsDebutSaut);
+        m_model->moveMovableElement((it->first));
 
         int position_x = (it->first)->getPosX();
         int position_y = (it->first)->getPosY();
@@ -188,7 +188,7 @@ void View::updateElements()
 *********************************************/
 void View::deleteElements()
 {
-    std::map<const MovableElement *, GraphicElement *>::iterator it2 = m_MovableToGraphicElement.begin();
+    std::map<MovableElement *, GraphicElement *>::iterator it2 = m_MovableToGraphicElement.begin();
     bool trouve = false;
     while (!trouve && it2!=m_MovableToGraphicElement.end() )
     {
@@ -324,9 +324,11 @@ bool View::treatEvents()
                 }
                 if ( (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::Space))
                 {
-                    m_model->getPlayer()->setEtatSaut(true);
-                    m_tempsDebutSaut = clock();
-                    m_model->moveMovableElement(const_cast<MovableElement*>(m_model->getPlayer()), m_tempsDebutSaut);
+
+                   m_model->setJumpBall(true);
+                    const_cast<MovableElement*>( m_model->getPlayer() )->setStartTimeJump( clock() );
+
+
                 }
                 break;
             default:

@@ -1,8 +1,10 @@
-Project Name : Boko Runner
+Project Name : [DEV] Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current dev version : v0.4.0-devA2 (25/03/16)
+Current dev version : v0.4.0-devA3 (26/03/16)
+
 ======================================================================================
+BETA CHANNEL Changelog
 
 
 v0.1.0-r1 (22/02/16) :
@@ -81,13 +83,20 @@ v0.2.3-r1 (22/03/16):
 - NewMovableElement vector replaced by a set
 - Fixed Seg Fault related due to a getter returning a copy and not the object itself
 
+=====================================================================================
+DEV CHANNEL Changelog
 
 v0.4.0-devA1 (23/03/16):
-- Initial chosen Menu-Game structure adding (may or may not change until release)
+- Initial chosen Menu-Game structure adding (may change until release)
 
 v0.4.0-devA2 (25/03/16):
 - Added title image, play and pause buttons
 - Added mouse button support to launch game or quit from Home menu
+
+v0.4.0-devA3 (26/03/16):
+- Added intro screen displaying a little window with an intro image
+- Menu completely rewritten using a menu class
+- Game part is not not working in this dev build
 
 ======================================================================================
 

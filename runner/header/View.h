@@ -19,6 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define _VIEW_H
 
 #include "Model.h"
+#include "Menu.h"
 #include "../header/SlidingBackground.h"
 #include "../header/AnimatedGraphicElement.h"
 #include <SFML/Graphics.hpp>
@@ -34,12 +35,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Constant Variables
 ********************************************/
-const std::string FONT = "Fonts/Antique_Olive.ttf";
+const std::string FONT2 = "Fonts/Roboto_Condensed.ttf";
+const std::string INTRO_IMAGE = "Images/intro.png";
+/*
 const std::string BACKGROUND_IMAGE_1 = "Images/city_1.png";
-const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
-const std::string TITLE_IMAGE = "Images/title.png";
-const std::string BUTTONS_IMAGE = "Images/buttons.png";
+const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";*/
 //Game Only
+/*
 const std::string BOTTOM_BAR = "Images/bottom_bar.png";
 const std::string LIFE_BOX = "Images/life.png";
 const std::string REMAINING_LIFE = "Images/remaining_life.png";
@@ -48,14 +50,14 @@ const std::string ENEMIES_IMAGE = "Images/enemies.png";
 const std::string BONUS_IMAGE = "Images/bonus.png";
 const std::string BLOCK_ENEMIES_IMAGE = "Images/enemy_block.png";
 const std::string EXPLOSION_IMAGE = "Images/explosion.png";
-
+*/
 
 class Model;
 
 /********************************************
     View Class
 *********************************************
-    Arthur : 21/02 - 25/03
+    Arthur : 21/02 - 26/03
     Florian: 21/02 - 3/03
 *********************************************/
 class View
@@ -85,6 +87,8 @@ private:
 
     sf::RenderWindow *m_window;
     Model *m_model;
+    Menu *m_menu;
+
 
     //Text
     sf::Font *m_font;
@@ -96,12 +100,9 @@ private:
 
 
     //Overall Textures
+    sf::Texture m_introTexture;
     sf::Texture m_farBackgroundTexture;
     sf::Texture m_nearBackgroundTexture;
-    //Menu Textures
-    sf::Texture m_titleTexture;
-    sf::Texture m_playButtonTexture;
-    sf::Texture m_quitButtonTexture;
     //Game Textures
     sf::Texture m_bottomBarTexture;
     sf::Texture m_lifeBoxTexture;
@@ -121,11 +122,9 @@ private:
     //Overall Graphic Elements
     SlidingBackground *m_farBackground;
     SlidingBackground *m_nearBackground;
-    //Menu Graphic Elements
-    GraphicElement *m_titleGraphic;
-    GraphicElement *m_playButtonGraphic;
-    GraphicElement *m_quitButtonGraphic;
+    GraphicElement *m_introGraphic;
     //Game Graphic Elements
+/*
     GraphicElement *m_bottomBarGraphic;
     GraphicElement *m_lifeBoxGraphic;
     GraphicElement *m_remainingLifeGraphic;
@@ -140,7 +139,7 @@ private:
     GraphicElement *m_resumeButtonGraphic;
     GraphicElement *m_restartButtonGraphic;
     GraphicElement *m_homeButtonGraphic;
-
+*/
     //Containers
     std::map<MovableElement*, GraphicElement*> m_MovableToGraphicElement;
 };

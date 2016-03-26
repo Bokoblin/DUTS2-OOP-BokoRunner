@@ -35,7 +35,8 @@ public:
     virtual ~SlidingBackground();
 
     //=== METHODS
-    void syncAndDraw(sf::RenderWindow &window);
+    void sync();
+    void draw(sf::RenderWindow &window);
 
     //=== SETTERS
     void setSpeed(unsigned int speed);

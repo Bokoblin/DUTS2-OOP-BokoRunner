@@ -32,7 +32,7 @@ Model::Model(int width, int height)  :
     m_currentCoinInterdistance{0}
 {
     m_introState = true;
-    m_menuState = true;
+    m_menuState = false;
     m_gameState = false;
 
     srand(time(NULL));

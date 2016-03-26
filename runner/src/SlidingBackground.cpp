@@ -47,27 +47,30 @@ SlidingBackground::~SlidingBackground()
 
 
 /********************************************
-    Synchronization and drawing Function
+    Synchronization Function
 *********************************************
-    Arthur : 3/03 - 3/03
-    Florian: 3/03 - 3/03
+    Arthur : 3/03 - 26/03
 *********************************************/
-void SlidingBackground::syncAndDraw(sf::RenderWindow &window)
+void SlidingBackground::sync()
 {
-    //=== Sync
-
     m_left->setPosition(m_left->getPosition().x - m_speed, m_left->getPosition().y);
     m_right->setPosition(m_right->getPosition().x - m_speed, m_right->getPosition().y);
-
 
     if ( m_left->getPosition().x + m_width < 0 )
     {
         m_left->setPosition(0, 0);
         m_right->setPosition(m_width, 0);
     }
+}
 
-    //=== Draw
 
+/********************************************
+    Drawing Function
+*********************************************
+    Arthur : 3/03 - 26/03
+*********************************************/
+void SlidingBackground::draw(sf::RenderWindow &window)
+{
     window.draw(*m_left);
     window.draw(*m_right);
 }

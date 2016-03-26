@@ -22,12 +22,12 @@ using namespace std;
 /********************************************
     Default Constructor
 *********************************************
-    Arthur : 21/02 - 6/03
+    Arthur : 21/02 - 26/03
     Florian: 21/02 - 3/03
 *********************************************/
 View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 {
-    m_window = new sf::RenderWindow( sf::VideoMode(w, h, 32), "Runner", sf::Style::Close );
+    m_window = new sf::RenderWindow( sf::VideoMode(w, h, 32), "Boko Runner", sf::Style::None );
     m_window->setFramerateLimit(30);
 
     //=== Images Loading
@@ -46,7 +46,7 @@ View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 /********************************************
     Destructor
 *********************************************
-    Arthur : 21/02 - 21/03
+    Arthur : 21/02 - 26/03
     Florian: 21/02 - 2/03
 *********************************************/
 View::~View()
@@ -55,10 +55,9 @@ View::~View()
         delete m_window;
     if(m_font!= NULL)
         delete m_font;
-    if(m_farBackground!= NULL)
-        delete m_farBackground;
-    if(m_nearBackground!= NULL)
-        delete m_nearBackground;
+    if(m_introGraphic!= NULL)
+        delete m_introGraphic;
+/*
     if(m_bottomBarGraphic!= NULL)
         delete m_bottomBarGraphic;
     if(m_lifeBoxGraphic!= NULL)
@@ -75,6 +74,7 @@ View::~View()
         delete m_explosionGraphic;
     if(m_coinGraphic!= NULL)
         delete m_coinGraphic;
+*/
 }
 
 
@@ -90,10 +90,11 @@ void View::setModel(Model *model) { m_model = model; }
 /********************************************
     Image Loading
 *********************************************
-    Arthur : 5/03 - 23/03
+    Arthur : 5/03 - 26/03
 *********************************************/
 void View::loadImages()
 {
+/*
     if (!m_farBackgroundTexture.loadFromFile(BACKGROUND_IMAGE_2))
         cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE_2 << endl;
     else
@@ -109,31 +110,16 @@ void View::loadImages()
         m_nearBackgroundTexture.setSmooth(true);
         m_nearBackground = new SlidingBackground(m_nearBackgroundTexture, 1200, m_viewHeight, 2);
     }
+*/
 
-    if (!m_titleTexture.loadFromFile(TITLE_IMAGE))
-    cerr << "ERROR when loading image file: " << TITLE_IMAGE << endl;
+    if (!m_introTexture.loadFromFile(INTRO_IMAGE))
+    cerr << "ERROR when loading image file: " << INTRO_IMAGE << endl;
     else
     {
-        m_titleTexture.setSmooth(true);
-        m_titleGraphic = new GraphicElement(m_titleTexture, m_viewWidth/2-200, m_viewHeight/6, 400, 200);
+        m_introTexture.setSmooth(true);
+        m_introGraphic = new GraphicElement(m_introTexture, 0,0, 400, 200);
     }
-
-    if (!m_playButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(151,0,150,80)))
-    cerr << "ERROR when loading image file: " << BUTTONS_IMAGE << endl;
-    else
-    {
-        m_playButtonTexture.setSmooth(true);
-        m_playButtonGraphic = new GraphicElement(m_playButtonTexture, m_viewWidth/2-75, m_viewHeight/1.5, 150, 80);
-    }
-
-        if (!m_quitButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(151,0,150,80)))
-    cerr << "ERROR when loading image file: " << BUTTONS_IMAGE << endl;
-    else
-    {
-        m_quitButtonTexture.setSmooth(true);
-        m_quitButtonGraphic = new GraphicElement(m_quitButtonTexture, m_viewWidth/2-75, m_viewHeight/1.2, 150, 80);
-    }
-
+/*
     if (!m_bottomBarTexture.loadFromFile(BOTTOM_BAR))
         cerr << "ERROR when loading image file: " << BOTTOM_BAR << endl;
     else
@@ -235,13 +221,14 @@ void View::loadImages()
         m_coinGraphic = new AnimatedGraphicElement(clip_rects, m_coinTexture, 200, GAME_FLOOR,50,50);
         m_coinGraphic->setOrigin(0,50);
     }
+*/
 }
 
 
 /********************************************
     Text Loading
 *********************************************
-    Arthur : 6/03 - 23/03
+    Arthur : 6/03 - 26/03
 *********************************************/
 void View::loadText()
 {
@@ -262,28 +249,17 @@ void View::loadText()
     m_playerLifeText.setCharacterSize(24);
     m_playerLifeText.setColor(sf::Color::White);
     m_playerLifeText.setString( "Life " );
-
-    m_playButtonText.setFont(*m_font);
-    m_playButtonText.setPosition(m_viewWidth/2-30, m_viewHeight/1.42);
-    m_playButtonText.setCharacterSize(24);
-    m_playButtonText.setColor(sf::Color::White);
-    m_playButtonText.setString( "PLAY" );
-
-    m_quitButtonText.setFont(*m_font);
-    m_quitButtonText.setPosition(m_viewWidth/2-30, m_viewHeight/1.15);
-    m_quitButtonText.setCharacterSize(24);
-    m_quitButtonText.setColor(sf::Color::White);
-    m_quitButtonText.setString( "QUIT" );
 }
 
 
 /********************************************
     Link mElements with gElements
 *********************************************
-    Arthur : 18/03 - 23/03
+    Arthur : 18/03 - 26/03
 *********************************************/
 void View::linkElements()
 {
+/*
     set<MovableElement*>::const_iterator it;
     for ( it = m_model->getNewMElementsArray().begin(); it!=  m_model->getNewMElementsArray().end(); ++it)
     {
@@ -308,16 +284,18 @@ void View::linkElements()
         }
     }
     m_model->clearNewMovableElementList();
+*/
 }
 
 
 /********************************************
     Update gElements
 *********************************************
-    Arthur : 6/03 - 22/03
+    Arthur : 6/03 - 26/03
 *********************************************/
 void View::updateElements()
 {
+/*
     std::map<MovableElement*, GraphicElement*>::iterator it;
     for(it = m_MovableToGraphicElement.begin() ; it != m_MovableToGraphicElement.end() ; ++it)
     {
@@ -371,6 +349,7 @@ void View::updateElements()
             }
         }
     }
+*/
 }
 
 
@@ -400,15 +379,16 @@ void View::deleteElements()
 /********************************************
     Synchronization function
 *********************************************
-    Arthur : 21/02 - 25/03
+    Arthur : 21/02 - 26/03
     Florian: 21/02 - 3/03
 *********************************************/
 void View::synchronize()
 {
     if (m_model->getMenuState() ==true)
     {
-        m_titleGraphic->resize(400,200);
+        m_menu->sync();
     }
+/*
     else if (m_model->getGameState() == true)
     {
         //=== Link new mElements with gElements
@@ -421,6 +401,8 @@ void View::synchronize()
 
         //=== Elements update
 
+        m_farBackground->sync();
+        m_nearBackground->sync();
         m_nearBackground->setSpeed(m_model->getGameSpeed() );
         m_remainingLifeTexture.loadFromFile(REMAINING_LIFE, sf::IntRect(3*(100-m_model->getPlayer()->getLife()),0,300,50));
         updateElements();
@@ -430,35 +412,35 @@ void View::synchronize()
         m_scoreText.setString( "Score : " + to_string(m_model->getScore() ) );
         m_distanceText.setString( "Distance : " + to_string(m_model->getDistance() ) + " m" );
     }
+*/
 }
 
 
 /********************************************
     View Drawing
 *********************************************
-    Arthur : 21/02 - 25/03
+    Arthur : 21/02 - 26/03
     Florian: 21/02 - 3/03
 *********************************************/
 void View::draw()
 {
     m_window->clear();
 
-    if (m_model->getMenuState() ==true)
+    if (m_model->getIntroState() ==true)
     {
-        m_farBackground->syncAndDraw(*m_window);
-        m_nearBackground->syncAndDraw(*m_window);
-        m_window->draw(*m_titleGraphic);
-        m_window->draw(*m_playButtonGraphic);
-        m_window->draw(*m_quitButtonGraphic);
-        m_window->draw(m_playButtonText);
-        m_window->draw(m_quitButtonText);
+        m_window->draw(*m_introGraphic);
     }
+    else if (m_model->getMenuState() ==true)
+    {
+        m_menu->draw();
+    }
+/*
     else if (m_model->getGameState() == true)
     {
         //=== Background drawing
 
-        m_farBackground->syncAndDraw(*m_window);
-        m_nearBackground->syncAndDraw(*m_window);
+        m_farBackground->draw(*m_window);
+        m_nearBackground->draw(*m_window);
         m_window->draw(*m_bottomBarGraphic);
         m_window->draw(*m_remainingLifeGraphic);
         m_window->draw(*m_lifeBoxGraphic);
@@ -476,7 +458,7 @@ void View::draw()
         m_window->draw(m_distanceText);
         m_window->draw(m_playerLifeText);
     }
-
+*/
     m_window->display();
 }
 
@@ -490,12 +472,13 @@ void View::draw()
 bool View::treatEvents()
 {
     bool result = false;
+    /*
     if  ( m_model->getPlayer()->getLife() == 0) //tmp
     {
         m_window->close();
         result = false;
     }
-
+*/
     if(m_window->isOpen())
     {
         result = true;
@@ -513,47 +496,23 @@ bool View::treatEvents()
                 m_window->close();
                 result = false;
             }
-            if (event.type == sf::Event::MouseButtonPressed)
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
             {
-                //Inside menu
-                if (event.mouseButton.button == sf::Mouse::Left)
-                {
-                    if ( m_playButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
-                    {
-                        m_playButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(0,0,150,80));
-                    }
-                    if ( m_quitButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
-                    {
-                        m_quitButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(0,0,150,80));
-                    }
-                }
+                m_model->setIntroState(false);
+                m_model->setMenuState(true);
+                m_menu = new Menu(900,600, m_model, m_window);
             }
-            if (event.type == sf::Event::MouseButtonReleased)
+
+            if (m_model->getMenuState() == true)
             {
-                //Inside menu
-                if (event.mouseButton.button == sf::Mouse::Left)
-                {
-                    m_playButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(151,0,150,80));
-                    m_quitButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(151,0,150,80));
-                    if ( m_playButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
-                    {
-                        m_model->setMenuState(false);
-                        m_model->setGameState(true);
-                        //+ initialize game
-                    }
-                    if ( m_quitButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
-                    {
-                        m_window->close();
-                        result = false;
-                    }
-                }
+                result = m_menu->treatEvents(event);
             }
         }
-
+/*
         if (m_model->getGameState() == true)
         {
             if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
-            && PLAYER->getPosX()  > 0 )
+                    && PLAYER->getPosX()  > 0 )
             {
                 m_model->moveBallAccordingEvent(true);
             }
@@ -563,6 +522,7 @@ bool View::treatEvents()
                 m_model->moveBallAccordingEvent(false);
             }
         }
+*/
     }
     return result;
 }

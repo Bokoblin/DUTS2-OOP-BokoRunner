@@ -15,49 +15,38 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifndef _MODEL_H
-#define _MODEL_H
+#ifndef BALL_H
+#define BALL_H
 
-#include <cstdlib>
-#include <iostream>
-#include <cassert>
-#include <ctime>
+#include "MovableElement.h"
+#include <string>
+
 
 /********************************************
-    Model Class
+    Player Class
 *********************************************
-    Arthur : 21/02 - 26/03
-    Florian: 21/02 - 2/03
+    Arthur : 22/02 - 20/03
+    Florian: 22/02 - 02/03
 *********************************************/
-class Model
+class Player : public MovableElement
 {
 public:
     //=== CTORs / DTORs
-    Model(int width, int height);
-    ~Model();
+    Player(int posX, int posY, int w, int h, int mvX, int mvY);
+    virtual ~Player();
 
     //=== GETTERS
-    bool getIntroState() const;
-    bool getMenuState() const;
-    bool getGameState() const;
-    bool getPauseState() const;
+    virtual int getType() const override { return 0;}
+    virtual int getLife() const override {return m_life;}
 
     //=== SETTERS
-    void setIntroState(bool state);
-    void setMenuState(bool state);
-    void setGameState(bool state);
-    void setPauseState(bool state);
+    virtual void setLife(int new_life) override ;
 
     //=== METHODS
-    virtual void nextStep();
+    virtual void move() override;
 
-protected:
-    //=== ATTRIBUTES
-    int m_width, m_height;
-    bool m_introState;
-    bool m_menuState;
-    bool m_gameState;
-    bool m_pauseState;
+private:
+    int m_life;
 };
 
-#endif
+#endif // BALL_H

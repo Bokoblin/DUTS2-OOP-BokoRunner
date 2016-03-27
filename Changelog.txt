@@ -1,7 +1,7 @@
 Project Name : [DEV] Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current dev version : v0.4.0-devA3 (26/03/16)
+Current dev version : v0.4.0-devA4 (27/03/16)
 
 ======================================================================================
 BETA CHANNEL Changelog
@@ -97,6 +97,10 @@ v0.4.0-devA3 (26/03/16):
 - Added intro screen displaying a little window with an intro image
 - Menu completely rewritten using a menu class
 - Game part is not not working in this dev build
+
+v0.4.0-devA4 (26/03/16 - 27/03/16):
+- lots of file completely rewritten
+- intro-menu-game switching fully working
 
 ======================================================================================
 

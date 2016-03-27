@@ -15,38 +15,46 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifndef BALL_H
-#define BALL_H
+#ifndef INTRO_H
+#define INTRO_H
 
-#include "MovableElement.h"
+#include "View.h"
+#include <cstdlib>
+#include <sstream>
+#include <iostream>
 #include <string>
+#include <cassert>
+#include <ctime>
+#include "SFML/Graphics.hpp"
+
+/********************************************
+    Constant Variables
+********************************************/
+const std::string INTRO_IMAGE = "Images/intro.png";
 
 
 /********************************************
-    Ball Class
+    Menu Class
 *********************************************
-    Arthur : 22/02 - 20/03
-    Florian: 22/02 - 02/03
+    Arthur : 27/03
 *********************************************/
-class Ball : public MovableElement
+class Intro : public View
 {
-public:
+    public:
     //=== CTORs / DTORs
-    Ball(int posX, int posY, int w, int h, int mvX, int mvY);
-    virtual ~Ball();
-
-    //=== GETTERS
-    virtual int getType() const override { return 0;}
-    virtual int getLife() const override {return m_life;}
-
-    //=== SETTERS
-    virtual void setLife(int new_life) override ;
+    Intro(int width, int height, sf::RenderWindow *window);
+    virtual ~Intro();
 
     //=== METHODS
-    virtual void move() override;
+    virtual void synchronize() override;
+    virtual void draw() override;
+    virtual void loadImages() override;
+    virtual bool treatEvents() override;
 
 private:
-    int m_life;
+    //=== ATTRIBUTES
+    sf::Texture m_introTexture;
+    GraphicElement *m_introGraphic;
 };
 
-#endif // BALL_H
+#endif // INTRO_H

@@ -19,10 +19,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 using namespace std;
 
-Menu::Menu(int w, int h, Model *model, sf::RenderWindow *mywindow):
-    m_menuWidth{w},m_menuHeight{h}, m_model{model}, m_window{mywindow}
+/********************************************
+    Parameterized Constructor
+*********************************************
+    Arthur : 25/02 - 27/03
+*********************************************/
+Menu::Menu(int w, int h, sf::RenderWindow *window): View(w, h, window)
 {
-    mywindow->create( sf::VideoMode(w, h, 32), "Boko Runner", sf::Style::Close );
+    m_window->create( sf::VideoMode(w, h, 32), "Boko Runner", sf::Style::Close );
     m_window->setFramerateLimit(30);
 
     //=== Images Loading
@@ -37,6 +41,12 @@ Menu::Menu(int w, int h, Model *model, sf::RenderWindow *mywindow):
     loadText();
 }
 
+
+/********************************************
+    Destructor
+*********************************************
+    Arthur : 26/02 - 27/03
+*********************************************/
 Menu::~Menu()
 {
     if(m_font!= NULL)
@@ -57,7 +67,7 @@ Menu::~Menu()
 /********************************************
     Image Loading
 *********************************************
-    Arthur : 26/03
+    Arthur : 26/03 - 27/03
 *********************************************/
 void Menu::loadImages()
 {
@@ -66,7 +76,7 @@ void Menu::loadImages()
     else
     {
         m_farBackgroundTexture.setSmooth(true);
-        m_farBackground = new SlidingBackground(m_farBackgroundTexture, 1200, m_menuHeight, 1);
+        m_farBackground = new SlidingBackground(m_farBackgroundTexture, 1200, m_height, 1);
     }
 
     if (!m_nearBackgroundTexture.loadFromFile(BACKGROUND_IMAGE_1))
@@ -74,7 +84,7 @@ void Menu::loadImages()
     else
     {
         m_nearBackgroundTexture.setSmooth(true);
-        m_nearBackground = new SlidingBackground(m_nearBackgroundTexture, 1200, m_menuHeight, 2);
+        m_nearBackground = new SlidingBackground(m_nearBackgroundTexture, 1200, m_height, 2);
     }
 
     if (!m_titleTexture.loadFromFile(TITLE_IMAGE))
@@ -82,7 +92,7 @@ void Menu::loadImages()
     else
     {
         m_titleTexture.setSmooth(true);
-        m_titleGraphic = new GraphicElement(m_titleTexture, m_menuWidth/2-200, m_menuHeight/6, 400, 200);
+        m_titleGraphic = new GraphicElement(m_titleTexture, m_width/2-200, m_height/6, 400, 200);
     }
 
     if (!m_playButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(151,0,150,80)))
@@ -90,7 +100,7 @@ void Menu::loadImages()
     else
     {
         m_playButtonTexture.setSmooth(true);
-        m_playButtonGraphic = new GraphicElement(m_playButtonTexture, m_menuWidth/2-75, m_menuHeight/1.5, 150, 80);
+        m_playButtonGraphic = new GraphicElement(m_playButtonTexture, m_width/2-75, m_height/1.5, 150, 80);
     }
 
         if (!m_quitButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(151,0,150,80)))
@@ -98,7 +108,7 @@ void Menu::loadImages()
     else
     {
         m_quitButtonTexture.setSmooth(true);
-        m_quitButtonGraphic = new GraphicElement(m_quitButtonTexture, m_menuWidth/2-75, m_menuHeight/1.2, 150, 80);
+        m_quitButtonGraphic = new GraphicElement(m_quitButtonTexture, m_width/2-75, m_height/1.2, 150, 80);
     }
 }
 
@@ -106,18 +116,18 @@ void Menu::loadImages()
 /********************************************
     Text Loading
 *********************************************
-    Arthur : 26/03
+    Arthur : 25/03 - 27/03
 *********************************************/
 void Menu::loadText()
 {
     m_playButtonText.setFont(*m_font);
-    m_playButtonText.setPosition(m_menuWidth/2-30, m_menuHeight/1.42);
+    m_playButtonText.setPosition(m_width/2-30, m_height/1.42);
     m_playButtonText.setCharacterSize(24);
     m_playButtonText.setColor(sf::Color::White);
     m_playButtonText.setString( "PLAY" );
 
     m_quitButtonText.setFont(*m_font);
-    m_quitButtonText.setPosition(m_menuWidth/2-30, m_menuHeight/1.15);
+    m_quitButtonText.setPosition(m_width/2-30, m_height/1.15);
     m_quitButtonText.setCharacterSize(24);
     m_quitButtonText.setColor(sf::Color::White);
     m_quitButtonText.setString( "QUIT" );
@@ -129,7 +139,7 @@ void Menu::loadText()
 *********************************************
     Arthur : 26/03
 *********************************************/
-void Menu::sync()
+void Menu::synchronize()
 {
     m_titleGraphic->resize(400,200);
     m_farBackground->sync();
@@ -140,61 +150,84 @@ void Menu::sync()
 /********************************************
     View Drawing
 *********************************************
-    Arthur : 26/03
+    Arthur : 26/03 - 27/03
 *********************************************/
 void Menu::draw()
 {
+    m_window->clear();
+
+    //=== Graphic Elements drawing
     m_farBackground->draw(*m_window);
     m_nearBackground->draw(*m_window);
     m_window->draw(*m_titleGraphic);
     m_window->draw(*m_playButtonGraphic);
     m_window->draw(*m_quitButtonGraphic);
+
+    //=== Text Drawing
     m_window->draw(m_playButtonText);
     m_window->draw(m_quitButtonText);
+
+    m_window->display();
 }
 
 
-
-bool Menu::treatEvents(sf::Event event)
+/********************************************
+    Events treating
+*********************************************
+    Arthur : 25/03 - 27/03
+*********************************************/
+bool Menu::treatEvents()
 {
-    bool result = true;
+    bool result = false;
 
-    if (event.type == sf::Event::MouseButtonPressed)
+    if(m_window->isOpen())
     {
-        //Inside menu
-        if (event.mouseButton.button == sf::Mouse::Left)
-        {
-            if ( m_playButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
-            {
-                m_playButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(0,0,150,80));
-            }
-            else if ( m_quitButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
-            {
-                m_quitButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(0,0,150,80));
-            }
-        }
-    }
-    if (event.type == sf::Event::MouseButtonReleased)
-    {
-        //Inside menu
-        if (event.mouseButton.button == sf::Mouse::Left)
-        {
-            m_playButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(151,0,150,80));
-            m_quitButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(151,0,150,80));
+        result = true;
 
-            if ( m_playButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
+        sf::Event event;
+        while (m_window->pollEvent(event))
+        {
+            if  (event.type == sf::Event::Closed)
             {
                 m_model->setMenuState(false);
-                m_model->setGameState(true);
-                //+ initialize game
-            }
-            else if ( m_quitButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
-            {
                 m_window->close();
                 result = false;
             }
-        }
-    }
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                if (event.mouseButton.button == sf::Mouse::Left)
+                {
+                    if ( m_playButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
+                    {
+                        m_playButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(0,0,150,80));
+                    }
+                    else if ( m_quitButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
+                    {
+                        m_quitButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(0,0,150,80));
+                    }
+                }
+            }
+            if (event.type == sf::Event::MouseButtonReleased)
+            {
+                if (event.mouseButton.button == sf::Mouse::Left)
+                {
+                    m_playButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(151,0,150,80));
+                    m_quitButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(151,0,150,80));
 
+                    if ( m_playButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
+                    {
+                        m_model->setMenuState(false);
+                        m_model->setGameState(true);
+                    }
+                    else if ( m_quitButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
+                    {
+                        m_window->close();
+                        result = false;
+                    }
+                }
+            }
+        }
+
+    }
     return result;
 }

@@ -15,7 +15,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include "../header/Ball.h"
+#include "../header/Player.h"
 
 using namespace std;
 
@@ -25,7 +25,7 @@ using namespace std;
     Arthur : 22/02 - 02/03
     Florian: 22/02 - 02/03
 *********************************************/
-Ball::Ball(int posX, int posY, int w, int h, int mvX, int mvY) :
+Player::Player(int posX, int posY, int w, int h, int mvX, int mvY) :
     MovableElement(posX, posY, w, h, mvX, mvY), m_life{100}
 {
 
@@ -37,7 +37,7 @@ Ball::Ball(int posX, int posY, int w, int h, int mvX, int mvY) :
     Arthur : 23/02 - 22/02
     Florian: 22/02 - 22/02
 *********************************************/
-Ball::~Ball()
+Player::~Player()
 {
 
 }
@@ -48,11 +48,10 @@ Ball::~Ball()
 *********************************************
     Arthur : 20/03
 *********************************************/
-void Ball::setLife(int new_life)
+void Player::setLife(int new_life)
 {
     m_life = new_life;
-    if (m_life < 0)
-        m_life = 0;
+    if ( m_life < 0) m_life = 0;
 }
 
 
@@ -61,7 +60,7 @@ void Ball::setLife(int new_life)
 *********************************************
     Arthur : 10/02
 *********************************************/
-void Ball::move()
+void Player::move()
 {
     //to implement in v0.3.0
 }

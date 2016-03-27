@@ -18,13 +18,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #ifndef MENU_H
 #define MENU_H
 
-#include "Model.h"
+#include "View.h"
 #include <cstdlib>
 #include <sstream>
 #include <iostream>
 #include <string>
-#include <set>
-#include <vector>
 #include <cassert>
 #include <ctime>
 #include "SFML/Graphics.hpp"
@@ -33,9 +31,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Constant Variables
 ********************************************/
-const std::string FONT = "Fonts/Antique_Olive.ttf";
-const std::string BACKGROUND_IMAGE_1 = "Images/city_1.png";
-const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
 const std::string TITLE_IMAGE = "Images/title.png";
 const std::string BUTTONS_IMAGE = "Images/buttons.png";
 
@@ -43,35 +38,27 @@ const std::string BUTTONS_IMAGE = "Images/buttons.png";
 /********************************************
     Menu Class
 *********************************************
-    Arthur : 26/03
+    Arthur : 26/03 - 27/03
 *********************************************/
-class Menu
+class Menu : public View
 {
 public:
     //=== CTORs / DTORs
-    Menu(int width, int height, Model *model, sf::RenderWindow *mywindow);
+    Menu(int width, int height, sf::RenderWindow *window);
     virtual ~Menu();
 
-
-    //=== GETTERS
-    //=== SETTERS
-
     //=== METHODS
-    void sync();
-    void draw();
-    void loadImages();
-    void loadText();
-    bool treatEvents(sf::Event event);
+    virtual void synchronize() override;
+    virtual void draw() override;
+    virtual void loadImages() override;
+    virtual void loadText() override;
+    virtual bool treatEvents() override;
 
 private:
     //=== ATTRIBUTES
-    int m_menuWidth;
-    int m_menuHeight;
 
     //Text
     sf::Font *m_font;
-    Model *m_model;
-    sf::RenderWindow *m_window;
     sf::Text m_playButtonText;
     sf::Text m_quitButtonText;
 
@@ -82,10 +69,9 @@ private:
     sf::Texture m_playButtonTexture;
     sf::Texture m_quitButtonTexture;
 
-    //Overall Graphic Elements
+    //Graphic Elements
     SlidingBackground *m_farBackground;
     SlidingBackground *m_nearBackground;
-    //Menu Graphic Elements
     GraphicElement *m_titleGraphic;
     GraphicElement *m_playButtonGraphic;
     GraphicElement *m_quitButtonGraphic;

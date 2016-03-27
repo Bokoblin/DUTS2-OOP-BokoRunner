@@ -15,88 +15,99 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include "../header/View.h"
+#include "../header/Intro.h"
 
 using namespace std;
 
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 21/02 - 27/03
-    Florian: 21/02 - 3/03
+    Arthur : 27/03
 *********************************************/
-View::View(int w, int h, sf::RenderWindow *window): m_width(w), m_height(h), m_window{window}
-{ }
+Intro::Intro(int w, int h, sf::RenderWindow *window): View(w, h, window)
+{
+    m_window->create( sf::VideoMode(w, h, 32), "Boko Runner", sf::Style::None );
+    m_window->setFramerateLimit(30);
+
+    loadImages();
+}
 
 
 /********************************************
     Destructor
 *********************************************
-    Arthur : 21/02 - 27/03
-    Florian: 21/02 - 2/03
-*********************************************/
-View::~View()
-{ }
-
-
-/********************************************
-   Getters
-*********************************************
     Arthur : 27/03
 *********************************************/
-sf::RenderWindow* View::getWindow() { return m_window; }
-
-
-/********************************************
-   Setters
-*********************************************
-    Arthur : 21/02 - 5/03
-    Florian: 21/02 - 21/02
-*********************************************/
-void View::setModel(Model *model) { m_model = model; }
+Intro::~Intro()
+{
+    if(m_introGraphic!= NULL)
+        delete m_introGraphic;
+}
 
 
 /********************************************
     Image Loading
 *********************************************
-    Arthur : 5/03 - 27/03
-*********************************************/
-void View::loadImages()
-{ }
-
-/********************************************
-    Text Loading
-*********************************************
     Arthur : 27/03
 *********************************************/
-void View::loadText()
-{ }
+void Intro::loadImages()
+{
+    if (!m_introTexture.loadFromFile(INTRO_IMAGE))
+        cerr << "ERROR when loading image file: " << INTRO_IMAGE << endl;
+    else
+    {
+        m_introTexture.setSmooth(true);
+        m_introGraphic = new GraphicElement(m_introTexture, 0,0, 400, 200);
+    }
+}
+
 
 /********************************************
     Synchronization function
 *********************************************
-    Arthur : 21/02 - 27/03
-    Florian: 21/02 - 3/03
+    Arthur : 27/03
 *********************************************/
-void View::synchronize()
+void Intro::synchronize()
 { }
 
 
 /********************************************
     View Drawing
 *********************************************
-    Arthur : 21/02 - 27/03
-    Florian: 21/02 - 3/03
+    Arthur : 27/03
 *********************************************/
-void View::draw()
-{ }
+void Intro::draw()
+{
+    m_window->clear();
+
+    m_window->draw(*m_introGraphic);
+
+    m_window->display();
+}
 
 
 /********************************************
     Events treating
 *********************************************
-    Arthur : 21/02 - 27/03
-    Florian: 21/02 - 2/03
+    Arthur : 27/03
 *********************************************/
-bool View::treatEvents()
-{ return false;}
+bool Intro::treatEvents()
+{
+    bool result = false;
+
+    if(m_window->isOpen())
+    {
+        result = true;
+
+        sf::Event event;
+        while (m_window->pollEvent(event))
+        {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_model->getIntroState() == true)
+            {
+                m_model->setIntroState(false);
+                m_model->setMenuState(true);
+            }
+        }
+    }
+    return result;
+}

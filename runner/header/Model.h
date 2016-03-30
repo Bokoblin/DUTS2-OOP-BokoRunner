@@ -21,7 +21,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <cstdlib>
 #include <iostream>
 #include <cassert>
-#include <ctime>
+#include <chrono>
 
 /********************************************
     Model Class
@@ -33,7 +33,7 @@ class Model
 {
 public:
     //=== CTORs / DTORs
-    Model(int width, int height);
+    Model(int width, int height, const std::chrono::system_clock::time_point beginTime);
     ~Model();
 
     //=== GETTERS
@@ -41,6 +41,7 @@ public:
     bool getMenuState() const;
     bool getGameState() const;
     bool getPauseState() const;
+    std::chrono::system_clock::time_point getProgramBeginningTime() const ;
 
     //=== SETTERS
     void setIntroState(bool state);
@@ -58,6 +59,7 @@ protected:
     bool m_menuState;
     bool m_gameState;
     bool m_pauseState;
+    const std::chrono::system_clock::time_point m_programBeginningTime;
 };
 
 #endif

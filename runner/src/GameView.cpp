@@ -290,6 +290,8 @@ void GameView::updateElements()
 
         //=== Update Graphics
 
+        it->second->sync();
+
         if (it->first->getType() == 0) //player
         {
             it->second->resize(30,30);
@@ -370,9 +372,9 @@ void GameView::synchronize()
 
     //=== Elements update
 
-    m_farBackground->sync();
-    m_nearBackground->sync();
     m_nearBackground->setSpeed(m_gameModel->getGameSpeed() );
+    m_farBackground->sync();
+    m_nearBackground->sync();    
     m_remainingLifeTexture.loadFromFile(REMAINING_LIFE, sf::IntRect(3*(100-m_gameModel->getPlayer()->getLife()),0,300,50));
     updateElements();
 

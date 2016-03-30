@@ -18,14 +18,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "../header/GameModel.h"
 
 using namespace std;
+using namespace std::chrono;
 
 /********************************************
     Parameterized Constructor
 *********************************************
     Arthur : 26/03 - 27/03
 *********************************************/
-GameModel::GameModel(int width, int height)  : Model(width, height), m_score{0},
-    m_distance{0}, m_gameSpeed{4}, m_lastTime{0}, m_nbCoinsPickedUp{0},
+GameModel::GameModel(int width, int height, std::chrono::system_clock::time_point programBeginningTime)  : Model(width, height, programBeginningTime), m_score{0},
+    m_distance{0}, m_gameSpeed{4}, m_lastTime{system_clock::now()}, m_nbCoinsPickedUp{0},
     m_currentEnemyInterdistance{0}, m_currentCoinInterdistance{0}
 {
     srand(time(NULL));
@@ -79,13 +80,9 @@ void GameModel::setCoinPickedUp() { m_nbCoinsPickedUp++;}
 *********************************************/
 void GameModel::nextStep()
 {
-    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-        float nextStepDelay = (clock() - m_lastTime) / (double)CLOCKS_PER_SEC;
-    #else
-        float nextStepDelay = 100*(clock() - m_lastTime) / (double)CLOCKS_PER_SEC;
-    #endif
+    system_clock::duration nextStepDelay = system_clock::now() - m_lastTime;
 
-    if ( nextStepDelay >= 0.400/m_gameSpeed) // 100ms
+    if ( nextStepDelay > milliseconds(400/m_gameSpeed) )
     {
         m_distance ++;
 
@@ -119,7 +116,7 @@ void GameModel::nextStep()
 
         deleteMovableElement();
 
-        m_lastTime = clock();
+        m_lastTime = system_clock::now();
         m_score = 2*m_distance + 20*m_nbCoinsPickedUp;
     }
 }

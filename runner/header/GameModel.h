@@ -26,7 +26,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <iostream>
 #include <set>
 #include <cassert>
-#include <ctime>
 
 const int GAME_FLOOR = 470;
 const int PLAYER_DEFAULT_POS_X = 50 ;
@@ -40,7 +39,7 @@ class GameModel : public Model
 {
 public:
     //=== CTORs / DTORs
-    GameModel(int width, int height);
+    GameModel(int width, int height, std::chrono::system_clock::time_point programBegginingTime);
     ~GameModel();
 
     //=== GETTERS
@@ -70,7 +69,7 @@ private:
     int m_score;
     int m_distance;
     int m_gameSpeed;
-    time_t m_lastTime;
+    std::chrono::system_clock::time_point m_lastTime;
     int m_nbCoinsPickedUp;
     int m_currentEnemyInterdistance;
     int m_currentCoinInterdistance;

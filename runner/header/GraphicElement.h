@@ -19,6 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define GRAPHICELEMENT_H
 
 #include <SFML/Graphics.hpp>
+#include <chrono>
 
 /********************************************
     GraphicElement Class
@@ -35,6 +36,7 @@ public:
     ~GraphicElement();
 
     //=== METHODS
+    virtual void sync() {}
     virtual void draw(sf::RenderWindow *window);
     void resize(int w, int h);
     bool contains(sf::Vector2f point);

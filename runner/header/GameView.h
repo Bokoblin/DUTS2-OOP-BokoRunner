@@ -35,6 +35,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Constant Variables
 ********************************************/
+//GAME
 const std::string BOTTOM_BAR = "Images/bottom_bar.png";
 const std::string LIFE_BOX = "Images/life.png";
 const std::string REMAINING_LIFE = "Images/remaining_life.png";
@@ -43,6 +44,11 @@ const std::string ENEMIES_IMAGE = "Images/enemies.png";
 const std::string BONUS_IMAGE = "Images/bonus.png";
 const std::string BLOCK_ENEMIES_IMAGE = "Images/enemy_block.png";
 const std::string EXPLOSION_IMAGE = "Images/explosion.png";
+//PAUSE
+const std::string PAUSE_BACKGROUND_IMAGE = "Images/city.png";
+const std::string PAUSE_RESUME_IMAGE = "Images/temp_image.png";
+const std::string PAUSE_RESTART_IMAGE = "Images/temp_image.png";
+const std::string PAUSE_HOME_IMAGE = "Images/temp_image.png";
 
 class GameModel;
 class Model;
@@ -81,6 +87,11 @@ private:
     sf::Text m_scoreText;
     sf::Text m_distanceText;
     sf::Text m_playerLifeText;
+    sf::Text m_nombrePiecesText;
+    sf::Text m_pauseResumeText;
+    sf::Text m_pauseRestartText;
+    sf::Text m_pauseHomeText;
+
 
     //Game Textures
     sf::Texture m_farBackgroundTexture;

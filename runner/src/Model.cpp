@@ -54,7 +54,6 @@ Model::~Model()
 bool Model::getIntroState() const {return m_introState;}
 bool Model::getMenuState() const {return m_menuState;}
 bool Model::getGameState() const {return m_gameState;}
-bool Model::getPauseState() const {return m_pauseState;}
 std::chrono::system_clock::time_point Model::getProgramBeginningTime() const { return m_programBeginningTime; }
 
 
@@ -67,7 +66,6 @@ std::chrono::system_clock::time_point Model::getProgramBeginningTime() const { r
 void Model::setIntroState(bool state) {m_introState = state;}
 void Model::setMenuState(bool state) {m_menuState = state;}
 void Model::setGameState(bool state) {m_gameState = state;}
-void Model::setPauseState(bool state) {m_pauseState = state;}
 
 
 

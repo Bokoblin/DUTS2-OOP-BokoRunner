@@ -102,6 +102,10 @@ v0.4.0-devA4 (26/03/16 - 27/03/16):
 - lots of file completely rewritten
 - intro-menu-game switching fully working
 
+v0.4.0-devA5 (29/03/16 - 30/03/16):
+- clock() usage replaced by std::chrono which do not rely on processor clock
+- graphic element animations fixed
+
 ======================================================================================
 
 Current features in stable:

@@ -28,6 +28,7 @@ Intro::Intro(int w, int h, sf::RenderWindow *window): View(w, h, window)
 {
     m_window->create( sf::VideoMode(w, h, 32), "Boko Runner", sf::Style::None );
     m_window->setFramerateLimit(30);
+    m_window->setPosition(sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2, (sf::VideoMode::getDesktopMode().height - m_height)/2 ));
 
     loadImages();
 }

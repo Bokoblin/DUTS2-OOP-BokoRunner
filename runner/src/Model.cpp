@@ -25,8 +25,8 @@ using namespace std;
     Arthur : 21/02 - 26/03
     Florian: 21/02 - 2/03
 *********************************************/
-Model::Model(int width, int height)  :
-    m_width(width), m_height(height)
+Model::Model(int width, int height, const chrono::_V2::system_clock::time_point beginTime)  :
+    m_width(width), m_height(height), m_programBeginningTime{beginTime}
 {
     m_introState = true;
     m_menuState = false;
@@ -55,6 +55,8 @@ bool Model::getIntroState() const {return m_introState;}
 bool Model::getMenuState() const {return m_menuState;}
 bool Model::getGameState() const {return m_gameState;}
 bool Model::getPauseState() const {return m_pauseState;}
+std::chrono::system_clock::time_point Model::getProgramBeginningTime() const { return m_programBeginningTime; }
+
 
 
 /********************************************

@@ -17,30 +17,32 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "../header/AnimatedGraphicElement.h"
 
-#include <iostream>
+using namespace std::chrono;
 
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 3/03 - 19/03
+    Arthur : 3/03 - 30/03
 *********************************************/
 AnimatedGraphicElement::AnimatedGraphicElement(const std::vector<sf::IntRect> & clipRects,
                                                sf::Texture &image, int x, int y, int w, int h):
-    GraphicElement(image, x, y, w, h), m_clip_rects{clipRects}, m_current_clip_rect{0}, m_lastAnimationTime{0}
+    GraphicElement(image, x, y, w, h), m_clip_rects{clipRects},
+    m_current_clip_rect{0}, m_lastAnimationTime{system_clock::now() }
 {
-
+    this->setTextureRect(m_clip_rects[m_current_clip_rect]);
 }
 
 
 /********************************************
     Copy Constructor
 *********************************************
-    Arthur : 19/03
+    Arthur : 19/03 - 30/03
 *********************************************/
 AnimatedGraphicElement::AnimatedGraphicElement(AnimatedGraphicElement const& elementACopier) :
-    GraphicElement(elementACopier), m_clip_rects{elementACopier.m_clip_rects}, m_current_clip_rect{0}, m_lastAnimationTime{0}
+    GraphicElement(elementACopier), m_clip_rects{elementACopier.m_clip_rects},
+    m_current_clip_rect{0}, m_lastAnimationTime{system_clock::now() }
 {
-
+    this->setTextureRect(m_clip_rects[m_current_clip_rect]);
 }
 
 
@@ -56,29 +58,26 @@ AnimatedGraphicElement::~AnimatedGraphicElement()
 
 
 /********************************************
-    Drawing Function
+ Synchronization Function : change animation
 *********************************************
-    Arthur : 3/03 - 24/03
+    Arthur : 3/03 - 30/03
 *********************************************/
-void AnimatedGraphicElement::draw(sf::RenderWindow *window)
+void AnimatedGraphicElement::sync()
 {
     //=== Change Animation
-    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-    float duration = (clock() - m_lastAnimationTime) / (double)CLOCKS_PER_SEC;
-    #else
-    float duration = 100*(clock() - m_lastAnimationTime) / (double)CLOCKS_PER_SEC;
-    #endif
-    if ( duration >= 0.200) // 200ms
+
+    system_clock::duration duration = system_clock::now() - m_lastAnimationTime;
+
+    if ( duration > milliseconds(200) )
     {
-        this->setTextureRect(m_clip_rects[m_current_clip_rect]);
+
         if (m_current_clip_rect == m_clip_rects.size()-1)
             m_current_clip_rect = 0;
         else
             m_current_clip_rect++;
 
-        m_lastAnimationTime = clock();
-    }
+        this->setTextureRect(m_clip_rects[m_current_clip_rect]);
 
-    //=== Draw
-    window->draw(*this);
+        m_lastAnimationTime = system_clock::now();
+    }
 }

@@ -22,9 +22,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "header/GameView.h"
 #include "header/GameModel.h"
 #include <iostream>
+#include <chrono>
 
 const int SCREEN_WIDTH = 900;
 const int SCREEN_HEIGHT = 600;
+const std::chrono::system_clock::time_point programBeginningTime = std::chrono::system_clock::now();
 
 using namespace std;
 
@@ -39,8 +41,9 @@ int main()
     srand(time(NULL));
     sf::RenderWindow *window = new sf::RenderWindow( sf::VideoMode(SCREEN_WIDTH,
                                                                     SCREEN_HEIGHT, 32), "Boko Runner", sf::Style::None );
+
     window->setFramerateLimit(30);
-    Model model(SCREEN_WIDTH, SCREEN_HEIGHT);
+    Model model(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
     View view(SCREEN_WIDTH, SCREEN_HEIGHT, window);
     view.setModel(&model);
 
@@ -70,7 +73,7 @@ int main()
 
         if  (model.getGameState() == true)
         {
-            GameModel gModel(SCREEN_WIDTH, SCREEN_HEIGHT);
+            GameModel gModel(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
             GameView gView(SCREEN_WIDTH, SCREEN_HEIGHT, window);
             gView.setGameModel(&gModel);
             while( model.getGameState() && gView.treatEvents() )

@@ -19,6 +19,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define ANIMATEDGRAPHICELEMENT_H
 
 #include "GraphicElement.h"
+#include <iostream>
+#include <chrono>
 
 /********************************************
     AnimatedGraphicElement - Class
@@ -35,13 +37,13 @@ public:
     virtual ~AnimatedGraphicElement();
 
     //=== METHODS
-    virtual void draw( sf::RenderWindow *window) override;
+    virtual void sync() override;
 
 private:
     //=== ATTRIBUTES
     std::vector<sf::IntRect> m_clip_rects;
     unsigned int m_current_clip_rect;
-    int m_lastAnimationTime;
+    std::chrono::system_clock::time_point m_lastAnimationTime;
 
 };
 

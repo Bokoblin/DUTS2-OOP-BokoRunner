@@ -58,12 +58,16 @@ GraphicElement::~GraphicElement()
 }
 
 
+
 /********************************************
     Drawing function
 *********************************************
-    Arthur : 22/03
+    Arthur : 30/03
 *********************************************/
-void GraphicElement::draw(sf::RenderWindow *window) {}
+void GraphicElement::draw(sf::RenderWindow *window)
+{
+    window->draw(*this);
+}
 
 
 /********************************************

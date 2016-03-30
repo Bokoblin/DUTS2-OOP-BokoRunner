@@ -33,7 +33,7 @@ const int PLAYER_DEFAULT_POS_X = 50 ;
 /********************************************
     GameModel Class
 *********************************************
-    Arthur : 26/03 - 27/03
+    Arthur : 26/03 - 30/03
 *********************************************/
 class GameModel : public Model
 {
@@ -43,16 +43,19 @@ public:
     ~GameModel();
 
     //=== GETTERS
+    bool getPauseState() const;
     MovableElement* getPlayer() const;
     int getScore() const;
     int getDistance() const;
     int getGameSpeed() const;
+    int getNbCoinsCollected() const;
     const std::set<MovableElement*>& getNewMElementsArray();
     const std::set<MovableElement*>& getMElementsArray();
 
     //=== SETTERS
+    void setPauseState(bool state);
     void setGameSpeed(int speed);
-    void setCoinPickedUp() ;
+    void setNbCoinsCollected() ;
 
     //=== METHODS
     virtual void nextStep() override;
@@ -66,11 +69,13 @@ public:
 
 private:
     //=== ATTRIBUTES
+
+    bool m_pauseState;
     int m_score;
     int m_distance;
     int m_gameSpeed;
     std::chrono::system_clock::time_point m_lastTime;
-    int m_nbCoinsPickedUp;
+    int m_nbCoinsCollected;
     int m_currentEnemyInterdistance;
     int m_currentCoinInterdistance;
     int m_chosenEnemyInterdistance;

@@ -25,9 +25,10 @@ using namespace std::chrono;
 *********************************************
     Arthur : 26/03 - 27/03
 *********************************************/
-GameModel::GameModel(int width, int height, std::chrono::system_clock::time_point programBeginningTime)  : Model(width, height, programBeginningTime), m_score{0},
-    m_distance{0}, m_gameSpeed{4}, m_lastTime{system_clock::now()}, m_nbCoinsPickedUp{0},
-    m_currentEnemyInterdistance{0}, m_currentCoinInterdistance{0}
+GameModel::GameModel(int width, int height, std::chrono::system_clock::time_point programBeginningTime) :
+    Model(width, height, programBeginningTime), m_pauseState{false}, m_score{0},
+    m_distance{0}, m_gameSpeed{4}, m_lastTime{system_clock::now()},
+    m_nbCoinsCollected{0}, m_currentEnemyInterdistance{0}, m_currentCoinInterdistance{0}
 {
     srand(time(NULL));
     m_chosenEnemyInterdistance = 10 +rand()%10;
@@ -53,13 +54,15 @@ GameModel::~GameModel()
 /********************************************
     Getters
 *********************************************
-    Arthur : 21/02 - 26/03
+    Arthur : 21/02 - 30/03
     Florian: 21/02 - 25/02
 *********************************************/
+bool GameModel::getPauseState() const {return m_pauseState;}
 MovableElement* GameModel::getPlayer() const { return m_player; }
 int GameModel::getScore() const { return m_score; }
 int GameModel::getDistance() const { return m_distance; }
 int GameModel::getGameSpeed() const { return m_gameSpeed; }
+int GameModel::getNbCoinsCollected() const { return m_nbCoinsCollected; }
 const set<MovableElement*>& GameModel::getMElementsArray() { return m_movableElementsArray; }
 const set<MovableElement*>& GameModel::getNewMElementsArray() { return m_newMovableElementsArray; }
 
@@ -67,10 +70,11 @@ const set<MovableElement*>& GameModel::getNewMElementsArray() { return m_newMova
 /********************************************
     Setters
 *********************************************
-    Arthur : 8/03 - 26/03
+    Arthur : 8/03 - 30/03
 *********************************************/
+void GameModel::setPauseState(bool state) {m_pauseState = state;}
 void GameModel::setGameSpeed(int speed) { m_gameSpeed = speed; }
-void GameModel::setCoinPickedUp() { m_nbCoinsPickedUp++;}
+void GameModel::setNbCoinsCollected() { m_nbCoinsCollected++;}
 
 
 /********************************************
@@ -82,42 +86,49 @@ void GameModel::nextStep()
 {
     system_clock::duration nextStepDelay = system_clock::now() - m_lastTime;
 
-    if ( nextStepDelay > milliseconds(400/m_gameSpeed) )
+    if (m_pauseState == false)
     {
-        m_distance ++;
-
-        //=== Add new enemies
-
-        if (m_currentEnemyInterdistance >= m_chosenEnemyInterdistance)
+        if ( nextStepDelay > milliseconds(400/m_gameSpeed) )
         {
-            if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
+            m_distance ++;
+
+            //=== Add new enemies
+
+            if (m_currentEnemyInterdistance >= m_chosenEnemyInterdistance)
             {
-                addANewMovableElement(m_width, GAME_FLOOR, 1);
-                m_currentEnemyInterdistance = 0;
-                chooseInterdistance(1);
+                if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
+                {
+                    addANewMovableElement(m_width, GAME_FLOOR, 1);
+                    m_currentEnemyInterdistance = 0;
+                    chooseInterdistance(1);
+                }
             }
-        }
-        else m_currentEnemyInterdistance++;
+            else m_currentEnemyInterdistance++;
 
-        //=== Add new Coins
+            //=== Add new Coins
 
-        if (m_currentCoinInterdistance >= m_chosenCoinInterdistance)
-        {
-            if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
+            if (m_currentCoinInterdistance >= m_chosenCoinInterdistance)
             {
-                addANewMovableElement(m_width, GAME_FLOOR-100, 2);
-                m_currentCoinInterdistance = 0;
-                chooseInterdistance(2);
+                if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
+                {
+                    addANewMovableElement(m_width, GAME_FLOOR-100, 2);
+                    m_currentCoinInterdistance = 0;
+                    chooseInterdistance(2);
+                }
             }
+            else m_currentCoinInterdistance++;
+
+            //=== Delete Movable Elements
+
+            deleteMovableElement();
+
+            m_lastTime = system_clock::now();
+            m_score = 2*m_distance + 20*m_nbCoinsCollected;
         }
-        else m_currentCoinInterdistance++;
-
-        //=== Delete Movable Elements
-
-        deleteMovableElement();
-
-        m_lastTime = system_clock::now();
-        m_score = 2*m_distance + 20*m_nbCoinsPickedUp;
+    }
+    else
+    {
+        //do nothing for now
     }
 }
 
@@ -256,7 +267,7 @@ void GameModel::deleteMovableElement()
         if ( ( (*it)->getPosX() + (*it)->getWidth() ) < 0 || (*it)->getCollisionState() == true )
         {
             if (  (*it)->getType() == 2  )
-                m_nbCoinsPickedUp++;
+                m_nbCoinsCollected++;
             m_movableElementsArray.erase(it);
             found = true;
         }

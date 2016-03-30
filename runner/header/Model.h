@@ -40,14 +40,12 @@ public:
     bool getIntroState() const;
     bool getMenuState() const;
     bool getGameState() const;
-    bool getPauseState() const;
     std::chrono::system_clock::time_point getProgramBeginningTime() const ;
 
     //=== SETTERS
     void setIntroState(bool state);
     void setMenuState(bool state);
     void setGameState(bool state);
-    void setPauseState(bool state);
 
     //=== METHODS
     virtual void nextStep();
@@ -58,7 +56,6 @@ protected:
     bool m_introState;
     bool m_menuState;
     bool m_gameState;
-    bool m_pauseState;
     const std::chrono::system_clock::time_point m_programBeginningTime;
 };
 

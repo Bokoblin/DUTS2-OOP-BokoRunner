@@ -56,7 +56,7 @@ public:
     void setPosX(int x);
     void setPosY(int y);
     void setCollisionState(bool collisionState);
-    virtual void setLife(int newLife);
+    virtual void setLife(int newLife) {}
 
 protected:
     //=== ATTRIBUTES

@@ -51,7 +51,6 @@ bool MovableElement::getCollisionState() const { return m_collisionState; }
 void MovableElement::setPosX(int x) { m_posX = x; }
 void MovableElement::setPosY(int y) { m_posX = y; }
 void MovableElement::setCollisionState(bool collisionState) { m_collisionState = collisionState;}
-void MovableElement::setLife(int newLife) {}
 
 
 /********************************************

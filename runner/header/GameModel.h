@@ -33,7 +33,7 @@ const int PLAYER_DEFAULT_POS_X = 50 ;
 /********************************************
     GameModel Class
 *********************************************
-    Arthur : 26/03 - 30/03
+    Arthur : 26/03 - 31/03
 *********************************************/
 class GameModel : public Model
 {
@@ -55,7 +55,7 @@ public:
     //=== SETTERS
     void setPauseState(bool state);
     void setGameSpeed(int speed);
-    void setNbCoinsCollected() ;
+    void setNbCoinsCollected(int number) ;
 
     //=== METHODS
     virtual void nextStep() override;

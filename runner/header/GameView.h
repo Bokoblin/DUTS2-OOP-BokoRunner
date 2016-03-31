@@ -45,10 +45,8 @@ const std::string BONUS_IMAGE = "Images/bonus.png";
 const std::string BLOCK_ENEMIES_IMAGE = "Images/enemy_block.png";
 const std::string EXPLOSION_IMAGE = "Images/explosion.png";
 //PAUSE
-const std::string PAUSE_BACKGROUND_IMAGE = "Images/city.png";
-const std::string PAUSE_RESUME_IMAGE = "Images/temp_image.png";
-const std::string PAUSE_RESTART_IMAGE = "Images/temp_image.png";
-const std::string PAUSE_HOME_IMAGE = "Images/temp_image.png";
+const std::string PAUSE_BACKGROUND_IMAGE = "Images/pause_background.png";
+const std::string PAUSE_BUTTONS_IMAGE = "Images/pause_elements.png";
 
 class GameModel;
 class Model;
@@ -56,7 +54,7 @@ class Model;
 /********************************************
     GameView Class
 *********************************************
-    Arthur : 21/02 - 27/03
+    Arthur : 21/02 - 31/03
     Florian: 21/02 - 3/03
 *********************************************/
 class GameView : public View
@@ -105,11 +103,12 @@ private:
     sf::Texture m_blockEnemyTexture;
     sf::Texture m_coinTexture;
     sf::Texture m_explosionTexture;
-    //Pause Menu Textures
+    //Pause menu Textures
     sf::Texture m_pauseBackgroundTexture;
     sf::Texture m_resumeButtonTexture;
     sf::Texture m_restartButtonTexture;
     sf::Texture m_homeButtonTexture;
+    sf::Texture m_pauseDistanceTexture;
 
     //Game Graphic Elements
     SlidingBackground *m_farBackground;
@@ -123,11 +122,12 @@ private:
     AnimatedGraphicElement *m_blockEnemyGraphic;
     AnimatedGraphicElement *m_coinGraphic;
     AnimatedGraphicElement *m_explosionGraphic;
-    //Pause Menu Graphic Elements
+    //Pause menu Graphic Elements
     GraphicElement *m_pauseBackgroundGraphic;
     GraphicElement *m_resumeButtonGraphic;
     GraphicElement *m_restartButtonGraphic;
     GraphicElement *m_homeButtonGraphic;
+    GraphicElement *m_pauseDistanceGraphic;
 
     //Containers
     std::map<MovableElement*, GraphicElement*> m_MovableToGraphicElement;

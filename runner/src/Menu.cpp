@@ -198,11 +198,11 @@ bool Menu::treatEvents()
             {
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
-                    if ( m_playButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
+                    if ( m_playButtonGraphic->getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
                     {
                         m_playButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(0,0,150,80));
                     }
-                    else if ( m_quitButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
+                    else if ( m_quitButtonGraphic->getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
                     {
                         m_quitButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(0,0,150,80));
                     }
@@ -215,12 +215,12 @@ bool Menu::treatEvents()
                     m_playButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(151,0,150,80));
                     m_quitButtonTexture.loadFromFile(BUTTONS_IMAGE, sf::IntRect(151,0,150,80));
 
-                    if ( m_playButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
+                    if ( m_playButtonGraphic->getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
                     {
                         m_model->setMenuState(false);
                         m_model->setGameState(true);
                     }
-                    else if ( m_quitButtonGraphic->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
+                    else if ( m_quitButtonGraphic->getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
                     {
                         m_window->close();
                         result = false;

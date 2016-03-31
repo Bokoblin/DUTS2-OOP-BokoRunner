@@ -87,15 +87,3 @@ void GraphicElement::resize(int width, int height)
     this->m_h = height;
 }
 
-/********************************************
-    Containing point function
-*********************************************
-    Arthur : 25/03
-*********************************************/
-bool GraphicElement::contains(sf::Vector2f point)
-{
-    int  maxX = this->getPosition().x + this->getLocalBounds().width;
-    int  maxY = this->getPosition().y + this->getLocalBounds().height;
-
-    return (point.x >= this->getPosition().x) && (point.x < maxX) && (point.y >= this->getPosition().y) && (point.y < maxY);
-}

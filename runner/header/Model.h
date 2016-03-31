@@ -26,7 +26,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Model Class
 *********************************************
-    Arthur : 21/02 - 26/03
+    Arthur : 21/02 - 31/03
     Florian: 21/02 - 2/03
 *********************************************/
 class Model
@@ -40,12 +40,14 @@ public:
     bool getIntroState() const;
     bool getMenuState() const;
     bool getGameState() const;
+    bool getResetGameState() const;
     std::chrono::system_clock::time_point getProgramBeginningTime() const ;
 
     //=== SETTERS
     void setIntroState(bool state);
     void setMenuState(bool state);
     void setGameState(bool state);
+    void setResetGameState(bool state);
 
     //=== METHODS
     virtual void nextStep();
@@ -56,6 +58,7 @@ protected:
     bool m_introState;
     bool m_menuState;
     bool m_gameState;
+    bool m_resetGameState;
     const std::chrono::system_clock::time_point m_programBeginningTime;
 };
 

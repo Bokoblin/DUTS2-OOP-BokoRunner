@@ -33,7 +33,7 @@ using namespace std;
 /********************************************
     Main function
 *********************************************
-    Arthur : 21/02 - 26/03
+    Arthur : 21/02 - 31/03
     Florian: 21/02 - 21/02
 *********************************************/
 int main()
@@ -82,6 +82,12 @@ int main()
                 gView.synchronize();
                 gView.draw();
             }
+            if (model.getResetGameState() == true)
+            {
+                model.setGameState(true);
+                model.setResetGameState(false);
+            }
+
         }
     }
 

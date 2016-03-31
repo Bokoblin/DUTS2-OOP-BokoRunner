@@ -74,7 +74,7 @@ const set<MovableElement*>& GameModel::getNewMElementsArray() { return m_newMova
 *********************************************/
 void GameModel::setPauseState(bool state) {m_pauseState = state;}
 void GameModel::setGameSpeed(int speed) { m_gameSpeed = speed; }
-void GameModel::setNbCoinsCollected() { m_nbCoinsCollected++;}
+void GameModel::setNbCoinsCollected(int number) { m_nbCoinsCollected = number;}
 
 
 /********************************************
@@ -256,7 +256,7 @@ void GameModel::addANewMovableElement(int posX, int posY, int type)
 /********************************************
     Delete Movable Elements
 *********************************************
-    Arthur : 12/03 - 26/03
+    Arthur : 12/03 - 31/03
 *********************************************/
 void GameModel::deleteMovableElement()
 {
@@ -266,8 +266,6 @@ void GameModel::deleteMovableElement()
     {
         if ( ( (*it)->getPosX() + (*it)->getWidth() ) < 0 || (*it)->getCollisionState() == true )
         {
-            if (  (*it)->getType() == 2  )
-                m_nbCoinsCollected++;
             m_movableElementsArray.erase(it);
             found = true;
         }

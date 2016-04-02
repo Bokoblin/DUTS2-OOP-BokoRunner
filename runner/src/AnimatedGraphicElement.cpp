@@ -25,7 +25,7 @@ using namespace std::chrono;
     Arthur : 3/03 - 30/03
 *********************************************/
 AnimatedGraphicElement::AnimatedGraphicElement(const std::vector<sf::IntRect> & clipRects,
-                                               sf::Texture &image, int x, int y, int w, int h):
+        sf::Texture &image, unsigned int x, unsigned int y, unsigned int w, unsigned int h):
     GraphicElement(image, x, y, w, h), m_clip_rects{clipRects},
     m_current_clip_rect{0}, m_lastAnimationTime{system_clock::now() }
 {

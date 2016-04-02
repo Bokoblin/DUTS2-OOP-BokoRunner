@@ -31,7 +31,7 @@ class SlidingBackground
 {
 public:
     //=== CTORs / DTORs
-    SlidingBackground(sf::Texture &image, int w, int h, unsigned int speed);
+    SlidingBackground(sf::Texture &image, unsigned int w, unsigned int h, unsigned int speed);
     virtual ~SlidingBackground();
 
     //=== METHODS
@@ -45,7 +45,7 @@ public:
 private:
     //=== ATTRIBUTES
     GraphicElement *m_left, *m_right;
-    int m_width, m_height;
+    unsigned int m_width, m_height;
     unsigned int m_speed;
 
 };

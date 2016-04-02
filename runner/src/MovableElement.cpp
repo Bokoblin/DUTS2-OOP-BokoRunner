@@ -23,8 +23,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     Arthur : 23/02 - 10/03
     Florian: 02/03 - 02/03
 *********************************************/
-MovableElement::MovableElement(int posX, int posY, int w, int h, int mvX, int mvY) :
-    m_posX{posX}, m_posY{posY}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY}, m_collisionState{false}
+MovableElement::MovableElement(unsigned int posX, unsigned int posY,
+        unsigned int w, unsigned int h, int mvX, int mvY) :
+        m_posX{posX}, m_posY{posY}, m_width{w}, m_height{h},
+        m_moveX{mvX}, m_moveY{mvY}, m_collisionState{false}
 {
 
 }
@@ -35,12 +37,12 @@ MovableElement::MovableElement(int posX, int posY, int w, int h, int mvX, int mv
 *********************************************
     Arthur : 23/02 - 20/03
 *********************************************/
+unsigned int MovableElement::getPosX()  const { return m_posX;  }
+unsigned int MovableElement::getPosY()  const { return m_posY;  }
+unsigned int MovableElement::getWidth() const { return m_width; }
+unsigned int MovableElement::getHeight()const { return m_height;}
 int MovableElement::getMoveX() const { return m_moveX; }
 int MovableElement::getMoveY() const { return m_moveY; }
-int MovableElement::getPosX()  const { return m_posX;  }
-int MovableElement::getPosY()  const { return m_posY;  }
-int MovableElement::getWidth() const { return m_width; }
-int MovableElement::getHeight()const { return m_height;}
 bool MovableElement::getCollisionState() const { return m_collisionState; }
 
 /********************************************
@@ -48,8 +50,8 @@ bool MovableElement::getCollisionState() const { return m_collisionState; }
 *********************************************
     Arthur : 23/02 - 22/03
 *********************************************/
-void MovableElement::setPosX(int x) { m_posX = x; }
-void MovableElement::setPosY(int y) { m_posX = y; }
+void MovableElement::setPosX(unsigned int x) { m_posX = x; }
+void MovableElement::setPosY(unsigned int y) { m_posX = y; }
 void MovableElement::setCollisionState(bool collisionState) { m_collisionState = collisionState;}
 
 
@@ -59,10 +61,10 @@ void MovableElement::setCollisionState(bool collisionState) { m_collisionState =
 *********************************************
     Arthur : 8/03 - 12/03
 *********************************************/
-bool MovableElement::contains( const int posX, const int posY) const
+bool MovableElement::contains( const unsigned int posX, const unsigned int posY) const
 {
-    int  maxX = m_posX + m_width;
-    int  maxY = m_posY + m_height;
+    unsigned int  maxX = m_posX + m_width;
+    unsigned int  maxY = m_posY + m_height;
 
     return (posX >= m_posX) && (posX < maxX) && (posY >= m_posY) && (posY < maxY);
 }

@@ -24,31 +24,20 @@ using namespace std;
 *********************************************
     Arthur : 26/03 - 27/03
 *********************************************/
-GameView::GameView(int w, int h, sf::RenderWindow *mywindow):
-    View(w, h, mywindow)
+GameView::GameView(unsigned int w, unsigned int h,
+        sf::RenderWindow *mywindow):  View(w, h, mywindow)
 {
-    //=== Images Loading
-
     loadImages();
-
-    //=== font & text initialization
-
-    m_font = new sf::Font();
-    m_font->loadFromFile(FONT_2);
-
-    loadText();
 }
 
 
 /********************************************
     Destructor
 *********************************************
-    Arthur : 26/03
+    Arthur : 26/03 - 02/04
 *********************************************/
 GameView::~GameView()
 {
-    if(m_font!= NULL)
-        delete m_font;
     if(m_bottomBarGraphic!= NULL)
         delete m_bottomBarGraphic;
     if(m_lifeBoxGraphic!= NULL)
@@ -65,6 +54,19 @@ GameView::~GameView()
         delete m_explosionGraphic;
     if(m_coinGraphic!= NULL)
         delete m_coinGraphic;
+
+    if(m_pauseBackgroundGraphic!= NULL)
+        delete m_pauseBackgroundGraphic;
+    if(m_resumeButtonGraphic!= NULL)
+        delete m_resumeButtonGraphic;
+    if(m_restartButtonGraphic!= NULL)
+        delete m_restartButtonGraphic;
+    if(m_homeButtonGraphic!= NULL)
+        delete m_homeButtonGraphic;
+    if(m_pauseDistanceGraphic!= NULL)
+        delete m_pauseDistanceGraphic;
+    if(m_endBackgroundGraphic!= NULL)
+        delete m_endBackgroundGraphic;
 }
 
 
@@ -79,7 +81,7 @@ void GameView::setGameModel(GameModel *model) { m_gameModel = model; }
 /********************************************
     Image Loading
 *********************************************
-    Arthur : 26/03 - 30/03
+    Arthur : 26/03 - 01/04
 *********************************************/
 void GameView::loadImages()
 {
@@ -205,7 +207,7 @@ void GameView::loadImages()
     else
     {
         m_pauseBackgroundTexture.setSmooth(true);
-        m_pauseBackgroundGraphic = new GraphicElement(m_pauseBackgroundTexture, -100, 0, m_width, m_height);
+        m_pauseBackgroundGraphic = new GraphicElement(m_pauseBackgroundTexture, 0, 0, m_width, m_height);
     }
 
     if (!m_resumeButtonTexture.loadFromFile(PAUSE_BUTTONS_IMAGE, sf::IntRect(0,0,50,50)) )
@@ -243,56 +245,14 @@ void GameView::loadImages()
         m_pauseDistanceGraphic = new GraphicElement(m_pauseDistanceTexture, 30, 35, 20, 20);
         m_pauseDistanceGraphic->resize(20,20);
     }
-}
 
-
-/********************************************
-    Text Loading
-*********************************************
-    Arthur : 26/03
-*********************************************/
-void GameView::loadText()
-{
-    m_scoreText.setFont(*m_font);
-    m_scoreText.setPosition(720,545);
-    m_scoreText.setCharacterSize(24);
-    m_scoreText.setColor(sf::Color::White);
-    m_scoreText.setString( "" );
-
-    m_distanceText.setFont(*m_font);
-    m_distanceText.setPosition(480,545);
-    m_distanceText.setCharacterSize(24);
-    m_distanceText.setColor(sf::Color::White);
-    m_distanceText.setString( "" );
-
-    m_playerLifeText.setFont(*m_font);
-    m_playerLifeText.setPosition(30,545);
-    m_playerLifeText.setCharacterSize(24);
-    m_playerLifeText.setColor(sf::Color::White);
-    m_playerLifeText.setString( "Life " );
-
-    m_nombrePiecesText.setFont(*m_font);
-    m_nombrePiecesText.setPosition(80,70);
-    m_nombrePiecesText.setCharacterSize(24);
-    m_nombrePiecesText.setColor(sf::Color(255,204,0,255));
-
-    m_pauseResumeText.setFont(*m_font);
-    m_pauseResumeText.setPosition(80,400);
-    m_pauseResumeText.setCharacterSize(24);
-    m_pauseResumeText.setColor(sf::Color::White);
-    m_pauseResumeText.setString( "Resume" );
-
-    m_pauseRestartText.setFont(*m_font);
-    m_pauseRestartText.setPosition(80,450);
-    m_pauseRestartText.setCharacterSize(24);
-    m_pauseRestartText.setColor(sf::Color::White);
-    m_pauseRestartText.setString( "Restart" );
-
-    m_pauseHomeText.setFont(*m_font);
-    m_pauseHomeText.setPosition(80,500);
-    m_pauseHomeText.setCharacterSize(24);
-    m_pauseHomeText.setColor(sf::Color::White);
-    m_pauseHomeText.setString( "Home" );
+    if (!m_endBackgroundTexture.loadFromFile(END_BACKGROUND_IMAGE))
+        cerr << "ERROR when loading image file: " << END_BACKGROUND_IMAGE << endl;
+    else
+    {
+        m_endBackgroundTexture.setSmooth(true);
+        m_endBackgroundGraphic = new GraphicElement(m_endBackgroundTexture, 0, 0, m_width, m_height);
+    }
 }
 
 
@@ -345,8 +305,8 @@ void GameView::updateElements()
 
         m_gameModel->moveMovableElement(it->first);
 
-        int position_x = (it->first)->getPosX();
-        int position_y = (it->first)->getPosY();
+        unsigned int position_x = (it->first)->getPosX();
+        unsigned int position_y = (it->first)->getPosY();
         int move_x = (it->first)->getMoveX();
         int move_y = (it->first)->getMoveY();
 
@@ -422,11 +382,11 @@ void GameView::deleteElements()
 /********************************************
     Synchronization function
 *********************************************
-    Arthur : 26/03 - 31/03
+    Arthur : 26/03 - 02/04
 *********************************************/
 void GameView::synchronize()
 {
-    if (m_gameModel->getPauseState() == false)
+    if (m_gameModel->getPauseState() == false && m_gameModel->getEndState() == false )
     {
 
         //=== Link new mElements with gElements
@@ -442,25 +402,16 @@ void GameView::synchronize()
         m_nearBackground->setSpeed(m_gameModel->getGameSpeed() );
         m_farBackground->sync();
         m_nearBackground->sync();
-        m_remainingLifeTexture.loadFromFile(REMAINING_LIFE,
-                sf::IntRect(3*(100-m_gameModel->getPlayer()->getLife()),0,300,50));
+        m_remainingLifeTexture.loadFromFile( REMAINING_LIFE,
+                sf::IntRect( 3*( 100-m_gameModel->getPlayer()->getLife() ), 0, 300, 50 ) );
         updateElements();
 
         //=== Text update
 
-        m_distanceText.setString( "Distance : " + to_string(m_gameModel->getDistance() ) + " m" );
-        m_scoreText.setString( "Score : " + to_string(m_gameModel->getScore() ) );
-        m_distanceText.setPosition(480, 545);
+        m_text.syncGameText(m_gameModel);
 
-        //=== GameState update
-
-        if (m_gameModel->getPlayer()->getLife() == 0)
-        {
-            m_model->setGameState(false);
-            m_model->setMenuState(true);
-        }
     }
-    else
+    else if (m_gameModel->getPauseState() == true)
     {
         //=== Elements update
 
@@ -469,9 +420,22 @@ void GameView::synchronize()
 
         //=== Text update
 
-        m_distanceText.setString( to_string(m_gameModel->getDistance() ) + " m" );
-        m_nombrePiecesText.setString(to_string(m_gameModel->getNbCoinsCollected() ));
-        m_distanceText.setPosition(80, 30);
+        m_text.syncPauseText(m_gameModel);
+
+    }
+    else if (m_gameModel->getEndState() == true )
+    {
+        //=== Elements update
+
+        m_homeButtonGraphic->resize(30,30);
+        m_homeButtonGraphic->setPosition(30, 535);
+        m_restartButtonGraphic->resize(30,30);
+        m_restartButtonGraphic->setPosition(840, 535);
+
+        //=== Text update
+
+        m_text.syncEndText(m_gameModel);
+
     }
 }
 
@@ -479,13 +443,13 @@ void GameView::synchronize()
 /********************************************
     GameView Drawing
 *********************************************
-    Arthur : 26/03 - 31/03
+    Arthur : 26/03 - 01/04
 *********************************************/
 void GameView::draw()
 {
     m_window->clear();
 
-    if (m_gameModel->getPauseState() == false)
+    if (m_gameModel->getPauseState() == false && m_gameModel->getEndState() == false )
     {
         //=== Background drawing
 
@@ -504,28 +468,37 @@ void GameView::draw()
 
         //=== Text drawing
 
-        m_window->draw(m_playerLifeText);
-        m_window->draw(m_scoreText);
-        m_window->draw(m_distanceText);
+        m_text.drawGameText(m_window);
+
     }
-    else
+    else if (m_gameModel->getPauseState() == true)
     {
         //=== Background drawing & GraphicElements drawing
 
         m_window->draw(*m_pauseBackgroundGraphic);
         m_window->draw(*m_pauseDistanceGraphic);
-        m_coinGraphic->draw(m_window);
+        m_window->draw(*m_coinGraphic);
         m_window->draw(*m_resumeButtonGraphic);
         m_window->draw(*m_restartButtonGraphic);
         m_window->draw(*m_homeButtonGraphic);
 
         //=== Text drawing
 
-        m_window->draw(m_distanceText);
-        m_window->draw(m_nombrePiecesText);
-        m_window->draw(m_pauseResumeText);
-        m_window->draw(m_pauseRestartText);
-        m_window->draw(m_pauseHomeText);
+        m_text.drawPauseText(m_window);
+
+    }
+    else if (m_gameModel->getEndState() == true )
+    {
+        //=== Background drawing & GraphicElements drawing
+
+        m_window->draw(*m_endBackgroundGraphic);
+        m_window->draw(*m_restartButtonGraphic);
+        m_window->draw(*m_homeButtonGraphic);
+
+        //=== Text drawing
+
+        m_text.drawEndText(m_window);
+
     }
 
     m_window->display();
@@ -535,7 +508,7 @@ void GameView::draw()
 /********************************************
     Events treating
 *********************************************
-    Arthur : 21/02 - 31/03
+    Arthur : 21/02 - 01/04
     Florian: 21/02 - 2/03
 *********************************************/
 bool GameView::treatEvents()
@@ -573,29 +546,57 @@ bool GameView::treatEvents()
             {
                 m_gameModel->setPauseState(!m_gameModel->getPauseState() );
             }
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Add)
+            {
+                m_gameModel->setEndState(true );
+            }
 
             if (m_gameModel->getPauseState() == true)
             {
                 if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
                 {
                     if ( m_resumeButtonGraphic->getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) ||
-                                m_pauseResumeText.getGlobalBounds().contains( sf::Vector2f(event.mouseButton.x, event.mouseButton.y) ) )
+                                m_text.getPauseResumeText().getGlobalBounds().contains( sf::Vector2f(event.mouseButton.x, event.mouseButton.y) ) )
                     {
                         m_gameModel->setPauseState(false);
                     }
                     else if ( m_restartButtonGraphic->getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) ||
-                                m_pauseRestartText.getGlobalBounds().contains( sf::Vector2f(event.mouseButton.x, event.mouseButton.y) ) )
+                                m_text.getRestartText().getGlobalBounds().contains( sf::Vector2f(event.mouseButton.x, event.mouseButton.y) ) )
                     {
                         m_gameModel->setPauseState(false);
                         m_model->setGameState(false);
                         m_model->setResetGameState(true);
+                        result = false;
                     }
                     else if ( m_homeButtonGraphic->getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) ||
-                                m_pauseHomeText.getGlobalBounds().contains( sf::Vector2f(event.mouseButton.x, event.mouseButton.y) ) )
+                                m_text.getHomeText().getGlobalBounds().contains( sf::Vector2f(event.mouseButton.x, event.mouseButton.y) ) )
                     {
                         m_gameModel->setPauseState(false);
                         m_model->setGameState(false);
                         m_model->setMenuState(true);
+                        result = false;
+                    }
+                }
+            }
+            if (m_gameModel->getEndState() == true)
+            {
+                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+                {
+                    if ( m_restartButtonGraphic->getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) ||
+                                m_text.getRestartText().getGlobalBounds().contains( sf::Vector2f(event.mouseButton.x, event.mouseButton.y) ) )
+                    {
+                        m_gameModel->setEndState(false);
+                        m_model->setGameState(false);
+                        m_model->setResetGameState(true);
+                        result = false;
+                    }
+                    else if ( m_homeButtonGraphic->getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) ||
+                                m_text.getHomeText().getGlobalBounds().contains( sf::Vector2f(event.mouseButton.x, event.mouseButton.y) ) )
+                    {
+                        m_gameModel->setEndState(false);
+                        m_model->setGameState(false);
+                        m_model->setMenuState(true);
+                        result = false;
                     }
                 }
             }

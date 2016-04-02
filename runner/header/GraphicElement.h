@@ -32,18 +32,18 @@ class GraphicElement : public sf::Sprite
 public:
     //=== CTORs / DTORs
     GraphicElement(GraphicElement const& elementACopier);
-    GraphicElement(sf::Texture &image, int x, int y, int w, int h);
+    GraphicElement(sf::Texture &image, unsigned int x, unsigned int y, unsigned int w, unsigned int h);
     ~GraphicElement();
 
     //=== METHODS
     virtual void sync() {}
     virtual void draw(sf::RenderWindow *window);
-    void resize(int w, int h);
+    void resize(unsigned int w, unsigned int h);
 
 private:
     //=== ATTRIBUTES
-    int m_w;
-    int m_h;
+    unsigned int m_w;
+    unsigned int m_h;
 };
 
 #endif // GRAPHICELEMENT_H

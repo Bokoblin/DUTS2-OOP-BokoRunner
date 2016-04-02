@@ -24,7 +24,7 @@ using namespace std;
 *********************************************
     Arthur : 27/03
 *********************************************/
-Intro::Intro(int w, int h, sf::RenderWindow *window): View(w, h, window)
+Intro::Intro(unsigned int w, unsigned int h, sf::RenderWindow *window): View(w, h, window)
 {
     m_window->create( sf::VideoMode(w, h, 32), "Boko Runner", sf::Style::None );
     m_window->setFramerateLimit(30);

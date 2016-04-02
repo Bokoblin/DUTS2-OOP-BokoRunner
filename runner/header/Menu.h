@@ -38,29 +38,23 @@ const std::string BUTTONS_IMAGE = "Images/buttons.png";
 /********************************************
     Menu Class
 *********************************************
-    Arthur : 26/03 - 27/03
+    Arthur : 26/03 - 02/04
 *********************************************/
 class Menu : public View
 {
 public:
     //=== CTORs / DTORs
-    Menu(int width, int height, sf::RenderWindow *window);
+    Menu(unsigned int w, unsigned int h, sf::RenderWindow *window);
     virtual ~Menu();
 
     //=== METHODS
     virtual void synchronize() override;
     virtual void draw() override;
     virtual void loadImages() override;
-    virtual void loadText() override;
     virtual bool treatEvents() override;
 
 private:
     //=== ATTRIBUTES
-
-    //Text
-    sf::Font *m_font;
-    sf::Text m_playButtonText;
-    sf::Text m_quitButtonText;
 
     //Textures
     sf::Texture m_farBackgroundTexture;

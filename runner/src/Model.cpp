@@ -25,7 +25,7 @@ using namespace std;
     Arthur : 21/02 - 31/03
     Florian: 21/02 - 2/03
 *********************************************/
-Model::Model(int width, int height, const chrono::_V2::system_clock::time_point beginTime)  :
+Model::Model(unsigned int width, unsigned int height, const chrono::_V2::system_clock::time_point beginTime)  :
     m_width(width), m_height(height), m_programBeginningTime{beginTime}
 {
     m_introState = true;

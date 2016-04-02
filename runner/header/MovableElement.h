@@ -30,40 +30,40 @@ class MovableElement
 {
 public:
     //=== CTORs / DTORs
-    MovableElement(int posX, int posY, int w, int h, int mvX, int mvY);
-    //~MovableElement();
+    MovableElement(unsigned int posX, unsigned int posY,
+                    unsigned int w, unsigned int h, int mvX, int mvY);
     virtual ~MovableElement() {}
 
     //=== METHODS
     virtual void move() {} //defining it as virtual allows to override it
-    bool contains( const int posX, const int posY) const ;
+    bool contains( const unsigned int posX, const  unsigned int posY) const ;
     std::string to_string()const ;
 
     //=== GETTERS
+    unsigned int getPosX() const;
+    unsigned int getPosY() const;
+    unsigned int getWidth() const;
+    unsigned int getHeight() const;
     int getMoveX() const;
     int getMoveY() const;
-    int getPosX() const;
-    int getPosY() const;
-    int getWidth() const;
-    int getHeight() const;
     bool getCollisionState() const;
     virtual int getType() const {return -1;}
     virtual int getEnemyType() const {return -1;}
-    virtual int getLife() const {return -1;}
+    virtual unsigned int getLife() const {return -1;}
 
 
     //=== SETTERS
-    void setPosX(int x);
-    void setPosY(int y);
+    void setPosX(unsigned int x);
+    void setPosY(unsigned int y);
     void setCollisionState(bool collisionState);
-    virtual void setLife(int newLife) {}
+    virtual void setLife(unsigned int newLife) {}
 
 protected:
     //=== ATTRIBUTES
-    int m_posX;
-    int m_posY;
-    int m_width;
-    int m_height;
+    unsigned int m_posX;
+    unsigned int m_posY;
+    unsigned int m_width;
+    unsigned int m_height;
     int m_moveX;
     int m_moveY;
     int m_typeElement; //0 for Ball, 1 for obstacles, 2 for bonuses

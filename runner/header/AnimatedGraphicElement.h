@@ -32,7 +32,7 @@ class AnimatedGraphicElement : public GraphicElement
 public:
     //=== CTORs / DTORs
     AnimatedGraphicElement(const std::vector<sf::IntRect> & clipRects,
-                           sf::Texture &image, int x, int y, int w, int h);
+                           sf::Texture &image, unsigned int x, unsigned int y, unsigned int w, unsigned int h);
     AnimatedGraphicElement(AnimatedGraphicElement const& elementACopier);
     virtual ~AnimatedGraphicElement();
 

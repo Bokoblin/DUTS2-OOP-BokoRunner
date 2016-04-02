@@ -23,10 +23,10 @@ using namespace std::chrono;
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 26/03 - 27/03
+    Arthur : 26/03 - 01/04
 *********************************************/
-GameModel::GameModel(int width, int height, std::chrono::system_clock::time_point programBeginningTime) :
-    Model(width, height, programBeginningTime), m_pauseState{false}, m_score{0},
+GameModel::GameModel(unsigned int w, unsigned int h, std::chrono::system_clock::time_point programBeginningTime) :
+    Model(w, h, programBeginningTime), m_pauseState{false}, m_endState{false}, m_score{0},
     m_distance{0}, m_gameSpeed{4}, m_lastTime{system_clock::now()},
     m_nbCoinsCollected{0}, m_currentEnemyInterdistance{0}, m_currentCoinInterdistance{0}
 {
@@ -54,15 +54,16 @@ GameModel::~GameModel()
 /********************************************
     Getters
 *********************************************
-    Arthur : 21/02 - 30/03
+    Arthur : 21/02 - 01/04
     Florian: 21/02 - 25/02
 *********************************************/
 bool GameModel::getPauseState() const {return m_pauseState;}
+bool GameModel::getEndState() const {return m_endState;}
 MovableElement* GameModel::getPlayer() const { return m_player; }
 int GameModel::getScore() const { return m_score; }
 int GameModel::getDistance() const { return m_distance; }
 int GameModel::getGameSpeed() const { return m_gameSpeed; }
-int GameModel::getNbCoinsCollected() const { return m_nbCoinsCollected; }
+unsigned int GameModel::getNbCoinsCollected() const { return m_nbCoinsCollected; }
 const set<MovableElement*>& GameModel::getMElementsArray() { return m_movableElementsArray; }
 const set<MovableElement*>& GameModel::getNewMElementsArray() { return m_newMovableElementsArray; }
 
@@ -70,11 +71,12 @@ const set<MovableElement*>& GameModel::getNewMElementsArray() { return m_newMova
 /********************************************
     Setters
 *********************************************
-    Arthur : 8/03 - 30/03
+    Arthur : 8/03 - 01/04
 *********************************************/
 void GameModel::setPauseState(bool state) {m_pauseState = state;}
+void GameModel::setEndState(bool state) {m_endState = state;}
 void GameModel::setGameSpeed(int speed) { m_gameSpeed = speed; }
-void GameModel::setNbCoinsCollected(int number) { m_nbCoinsCollected = number;}
+void GameModel::setNbCoinsCollected(unsigned int n) { m_nbCoinsCollected = n;}
 
 
 /********************************************
@@ -86,7 +88,7 @@ void GameModel::nextStep()
 {
     system_clock::duration nextStepDelay = system_clock::now() - m_lastTime;
 
-    if (m_pauseState == false)
+    if (m_pauseState == false && m_endState == false)
     {
         if ( nextStepDelay > milliseconds(400/m_gameSpeed) )
         {
@@ -122,13 +124,19 @@ void GameModel::nextStep()
 
             deleteMovableElement();
 
+            cout << m_player->getLife() << endl;
+            if (m_player->getLife() == 0)
+            {
+                m_endState = true;
+            }
+
+
             m_lastTime = system_clock::now();
-            m_score = 2*m_distance + 20*m_nbCoinsCollected;
         }
     }
     else
     {
-        //do nothing for now
+        m_score = m_gameSpeed*m_distance + 20*m_nbCoinsCollected;
     }
 }
 
@@ -168,7 +176,7 @@ void GameModel::chooseInterdistance(int elementType)
 *********************************************
     Arthur :  8/03 - 26/03
 *********************************************/
-bool GameModel::checkIfPositionFree(const int posX, const int posY) const
+bool GameModel::checkIfPositionFree(const unsigned int posX, const unsigned int posY) const
 {
     bool posFree=true;
     set<MovableElement*>::iterator it=m_movableElementsArray.begin();
@@ -230,7 +238,7 @@ void GameModel::moveMovableElement(MovableElement *currentElement)
     Arthur : 25/02 - 26/03
     Florian: 2/03
 *********************************************/
-void GameModel::addANewMovableElement(int posX, int posY, int type)
+void GameModel::addANewMovableElement(unsigned int posX, unsigned int posY, int type)
 {
     m_newMElement = nullptr;
     if (type == 0) //Ball

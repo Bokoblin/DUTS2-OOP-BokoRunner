@@ -34,7 +34,7 @@ const std::string INTRO_IMAGE = "Images/intro.png";
 
 
 /********************************************
-    Menu Class
+    Intro Class
 *********************************************
     Arthur : 27/03
 *********************************************/
@@ -42,7 +42,7 @@ class Intro : public View
 {
     public:
     //=== CTORs / DTORs
-    Intro(int width, int height, sf::RenderWindow *window);
+    Intro(unsigned int w, unsigned int h, sf::RenderWindow *window);
     virtual ~Intro();
 
     //=== METHODS

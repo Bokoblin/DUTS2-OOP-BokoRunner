@@ -47,6 +47,8 @@ const std::string EXPLOSION_IMAGE = "Images/explosion.png";
 //PAUSE
 const std::string PAUSE_BACKGROUND_IMAGE = "Images/pause_background.png";
 const std::string PAUSE_BUTTONS_IMAGE = "Images/pause_elements.png";
+//END
+const std::string END_BACKGROUND_IMAGE = "Images/end_background.png";
 
 class GameModel;
 class Model;
@@ -61,7 +63,7 @@ class GameView : public View
 {
 public:
     //=== CTORs / DTORs
-    GameView(int w, int h, sf::RenderWindow *mywindow);
+    GameView(unsigned int w, unsigned int h, sf::RenderWindow *mywindow);
     ~GameView();
 
     //=== SETTERS
@@ -69,7 +71,6 @@ public:
 
     //=== METHODS
     virtual void loadImages();
-    virtual void loadText();
     virtual void synchronize();
     virtual void draw();
     virtual bool treatEvents();
@@ -79,17 +80,6 @@ public:
 
 private:
     GameModel *m_gameModel;
-
-    //Text
-    sf::Font *m_font;
-    sf::Text m_scoreText;
-    sf::Text m_distanceText;
-    sf::Text m_playerLifeText;
-    sf::Text m_nombrePiecesText;
-    sf::Text m_pauseResumeText;
-    sf::Text m_pauseRestartText;
-    sf::Text m_pauseHomeText;
-
 
     //Game Textures
     sf::Texture m_farBackgroundTexture;
@@ -109,6 +99,7 @@ private:
     sf::Texture m_restartButtonTexture;
     sf::Texture m_homeButtonTexture;
     sf::Texture m_pauseDistanceTexture;
+    sf::Texture m_endBackgroundTexture;
 
     //Game Graphic Elements
     SlidingBackground *m_farBackground;
@@ -122,12 +113,13 @@ private:
     AnimatedGraphicElement *m_blockEnemyGraphic;
     AnimatedGraphicElement *m_coinGraphic;
     AnimatedGraphicElement *m_explosionGraphic;
-    //Pause menu Graphic Elements
+    //Pause and End Graphic Elements
     GraphicElement *m_pauseBackgroundGraphic;
     GraphicElement *m_resumeButtonGraphic;
     GraphicElement *m_restartButtonGraphic;
     GraphicElement *m_homeButtonGraphic;
     GraphicElement *m_pauseDistanceGraphic;
+    GraphicElement *m_endBackgroundGraphic;
 
     //Containers
     std::map<MovableElement*, GraphicElement*> m_MovableToGraphicElement;

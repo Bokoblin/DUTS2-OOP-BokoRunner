@@ -22,36 +22,28 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 25/02 - 27/03
+    Arthur : 25/02 - 02/04
 *********************************************/
-Menu::Menu(int w, int h, sf::RenderWindow *window): View(w, h, window)
+Menu::Menu(unsigned int w, unsigned int h, sf::RenderWindow *window): View(w, h, window)
 {
-    m_window->create( sf::VideoMode(w, h, 32), "Boko Runner", sf::Style::Close );
-    m_window->setFramerateLimit(30);
-    m_window->setPosition(sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2, (sf::VideoMode::getDesktopMode().height - m_height)/2 ));
-
-    //=== Images Loading
+    if (m_window->getSize().x != m_width )
+    {
+        m_window->create( sf::VideoMode(w, h, 32), "Boko Runner", sf::Style::Close );
+        m_window->setFramerateLimit(30);
+        m_window->setPosition(sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2, (sf::VideoMode::getDesktopMode().height - m_height)/2 ));
+    }
 
     loadImages();
-
-    //=== font & text initialization
-
-    m_font = new sf::Font();
-    m_font->loadFromFile(FONT);
-
-    loadText();
 }
 
 
 /********************************************
     Destructor
 *********************************************
-    Arthur : 26/02 - 27/03
+    Arthur : 26/02 - 02/04
 *********************************************/
 Menu::~Menu()
 {
-    if(m_font!= NULL)
-        delete m_font;
     if(m_farBackground!= NULL)
         delete m_farBackground;
     if(m_nearBackground!= NULL)
@@ -114,50 +106,32 @@ void Menu::loadImages()
 }
 
 
-/********************************************
-    Text Loading
-*********************************************
-    Arthur : 25/03 - 27/03
-*********************************************/
-void Menu::loadText()
-{
-    m_playButtonText.setFont(*m_font);
-    m_playButtonText.setPosition(m_width/2-30, m_height/1.42);
-    m_playButtonText.setCharacterSize(24);
-    m_playButtonText.setColor(sf::Color::White);
-    m_playButtonText.setString( "PLAY" );
-
-    m_quitButtonText.setFont(*m_font);
-    m_quitButtonText.setPosition(m_width/2-30, m_height/1.15);
-    m_quitButtonText.setCharacterSize(24);
-    m_quitButtonText.setColor(sf::Color::White);
-    m_quitButtonText.setString( "QUIT" );
-}
-
 
 /********************************************
     Synchronization function
 *********************************************
-    Arthur : 26/03
+    Arthur : 26/03 - 02/04
 *********************************************/
 void Menu::synchronize()
 {
     m_titleGraphic->resize(400,200);
     m_farBackground->sync();
     m_nearBackground->sync();
+    m_text.syncMenuText(m_width, m_height);
 }
 
 
 /********************************************
     View Drawing
 *********************************************
-    Arthur : 26/03 - 27/03
+    Arthur : 26/03 - 02/04
 *********************************************/
 void Menu::draw()
 {
     m_window->clear();
 
     //=== Graphic Elements drawing
+
     m_farBackground->draw(*m_window);
     m_nearBackground->draw(*m_window);
     m_window->draw(*m_titleGraphic);
@@ -165,8 +139,8 @@ void Menu::draw()
     m_window->draw(*m_quitButtonGraphic);
 
     //=== Text Drawing
-    m_window->draw(m_playButtonText);
-    m_window->draw(m_quitButtonText);
+
+    m_text.drawMenuText(m_window);
 
     m_window->display();
 }
@@ -175,7 +149,7 @@ void Menu::draw()
 /********************************************
     Events treating
 *********************************************
-    Arthur : 25/03 - 27/03
+    Arthur : 25/03 - 02/04
 *********************************************/
 bool Menu::treatEvents()
 {
@@ -219,6 +193,7 @@ bool Menu::treatEvents()
                     {
                         m_model->setMenuState(false);
                         m_model->setGameState(true);
+                        result = false;
                     }
                     else if ( m_quitButtonGraphic->getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) )
                     {

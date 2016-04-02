@@ -22,8 +22,8 @@ using namespace std;
 *********************************************
     Arthur : 13/03
 *********************************************/
-Enemy::Enemy(int posX, int posY, int w, int h, int mvX, int mvY) :
-    MovableElement(posX, posY, w, h, mvX, mvY)
+Enemy::Enemy(unsigned int posX, unsigned int posY, unsigned int w, unsigned int h,
+        int mvX, int mvY) : MovableElement(posX, posY, w, h, mvX, mvY)
 {
     chooseEnemyType();
 }
@@ -45,6 +45,7 @@ Enemy::~Enemy()
 *********************************************
     Arthur : 15/03
 *********************************************/
+int Enemy::getType() const { return 1;}
 int Enemy::getEnemyType() const {return m_enemyType;}
 
 

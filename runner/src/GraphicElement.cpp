@@ -24,7 +24,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     Arthur : 21/02 - 14/03
     Florian: 21/02 - 2/03
 *********************************************/
-GraphicElement::GraphicElement(sf::Texture &image, int x, int y, int w, int h) : m_w{w}, m_h{h}
+GraphicElement::GraphicElement(sf::Texture &image, unsigned int x, unsigned int y,
+        unsigned int w, unsigned int h) : m_w{w}, m_h{h}
 {
     this->setTexture(image);
     this->setPosition( (float)x, (float)y);
@@ -76,7 +77,7 @@ void GraphicElement::draw(sf::RenderWindow *window)
     Arthur : 22/02 - 25/02
     Florian: 22/02 - 22/02
 *********************************************/
-void GraphicElement::resize(int width, int height)
+void GraphicElement::resize(unsigned int width, unsigned int height)
 {
     sf::FloatRect bb = this->getLocalBounds();
     float width_factor = width / bb.width;     // facteur de mise à l'échelle

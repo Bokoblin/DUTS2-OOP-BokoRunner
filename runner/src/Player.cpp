@@ -25,8 +25,9 @@ using namespace std;
     Arthur : 22/02 - 02/03
     Florian: 22/02 - 02/03
 *********************************************/
-Player::Player(int posX, int posY, int w, int h, int mvX, int mvY) :
-    MovableElement(posX, posY, w, h, mvX, mvY), m_life{100}
+Player::Player(unsigned int posX, unsigned int posY,
+        unsigned int w, unsigned int h, int mvX, int mvY) :
+        MovableElement(posX, posY, w, h, mvX, mvY), m_life{100}
 {
 
 }
@@ -48,10 +49,12 @@ Player::~Player()
 *********************************************
     Arthur : 20/03
 *********************************************/
-void Player::setLife(int new_life)
+void Player::setLife(unsigned int new_life)
 {
-    m_life = new_life;
-    if ( m_life < 0) m_life = 0;
+    if ( m_life <= new_life)
+        m_life = 0;
+    else
+        m_life = new_life;
 }
 
 

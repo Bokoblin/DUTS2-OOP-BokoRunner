@@ -18,6 +18,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #ifndef _VIEW_H
 #define _VIEW_H
 
+#include "Text.h"
 #include "Model.h"
 #include "GraphicElement.h"
 #include <SFML/Graphics.hpp>
@@ -31,8 +32,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Constant Variables
 ********************************************/
-const std::string FONT = "Fonts/Antique_Olive.ttf";
-const std::string FONT_2 = "Fonts/Roboto_Condensed.ttf";
 const std::string BACKGROUND_IMAGE_1 = "Images/city_1.png";
 const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
 
@@ -48,7 +47,7 @@ class View
 {
 public:
     //=== CTORs / DTORs
-    View(int w, int h, sf::RenderWindow *window);
+    View(unsigned int w, unsigned int h, sf::RenderWindow *window);
     ~View();
 
     //=== GETTERS
@@ -59,16 +58,16 @@ public:
 
     //=== METHODS
     virtual void loadImages();
-    virtual void loadText();
     virtual void synchronize();
     virtual void draw();
     virtual bool treatEvents();
 
 protected:
     //=== ATTRIBUTES
-    int m_width, m_height;
+    unsigned int m_width, m_height;
     sf::RenderWindow *m_window;
     Model *m_model;
+    Text m_text;
 };
 
 #endif

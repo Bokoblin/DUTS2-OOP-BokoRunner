@@ -25,7 +25,8 @@ using namespace std;
     Arthur : 21/02 - 27/03
     Florian: 21/02 - 3/03
 *********************************************/
-View::View(int w, int h, sf::RenderWindow *window): m_width(w), m_height(h), m_window{window}
+View::View(unsigned int w, unsigned int h, sf::RenderWindow *window):
+    m_width(w), m_height(h), m_window{window}
 { }
 
 
@@ -64,13 +65,6 @@ void View::setModel(Model *model) { m_model = model; }
 void View::loadImages()
 { }
 
-/********************************************
-    Text Loading
-*********************************************
-    Arthur : 27/03
-*********************************************/
-void View::loadText()
-{ }
 
 /********************************************
     Synchronization function

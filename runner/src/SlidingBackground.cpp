@@ -24,7 +24,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     Arthur : 3/03 - 3/03
     Florian: 3/03 - 3/03
 *********************************************/
-SlidingBackground::SlidingBackground(sf::Texture &image, int w, int h, unsigned int speed):
+SlidingBackground::SlidingBackground(sf::Texture &image, unsigned int w, unsigned int h, unsigned int speed):
     m_width{w}, m_height{h}, m_speed{speed}
 {
     m_left = new GraphicElement(image, 0, 0, w, h);

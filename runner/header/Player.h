@@ -32,21 +32,22 @@ class Player : public MovableElement
 {
 public:
     //=== CTORs / DTORs
-    Player(int posX, int posY, int w, int h, int mvX, int mvY);
+    Player(unsigned int posX, unsigned int posY,
+        unsigned int w, unsigned int h, int mvX, int mvY);
     virtual ~Player();
 
     //=== GETTERS
     virtual int getType() const override { return 0;}
-    virtual int getLife() const override {return m_life;}
+    virtual unsigned int getLife() const override {return m_life;}
 
     //=== SETTERS
-    virtual void setLife(int new_life) override ;
+    virtual void setLife(unsigned int new_life) override ;
 
     //=== METHODS
     virtual void move() override;
 
 private:
-    int m_life;
+    unsigned int m_life;
 };
 
 #endif // BALL_H

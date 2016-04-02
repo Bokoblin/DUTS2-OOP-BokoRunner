@@ -27,50 +27,53 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <set>
 #include <cassert>
 
-const int GAME_FLOOR = 470;
-const int PLAYER_DEFAULT_POS_X = 50 ;
+const unsigned int GAME_FLOOR = 470;
+const unsigned int PLAYER_DEFAULT_POS_X = 50 ;
 
 /********************************************
     GameModel Class
 *********************************************
-    Arthur : 26/03 - 31/03
+    Arthur : 26/03 - 01/04
 *********************************************/
 class GameModel : public Model
 {
 public:
     //=== CTORs / DTORs
-    GameModel(int width, int height, std::chrono::system_clock::time_point programBegginingTime);
+    GameModel(unsigned int width, unsigned int height, std::chrono::system_clock::time_point programBegginingTime);
     ~GameModel();
 
     //=== GETTERS
     bool getPauseState() const;
+    bool getEndState() const;
     MovableElement* getPlayer() const;
     int getScore() const;
     int getDistance() const;
     int getGameSpeed() const;
-    int getNbCoinsCollected() const;
+    unsigned int getNbCoinsCollected() const;
     const std::set<MovableElement*>& getNewMElementsArray();
     const std::set<MovableElement*>& getMElementsArray();
 
     //=== SETTERS
     void setPauseState(bool state);
+    void setEndState(bool state);
     void setGameSpeed(int speed);
-    void setNbCoinsCollected(int number) ;
+    void setNbCoinsCollected(unsigned int number) ;
 
     //=== METHODS
     virtual void nextStep() override;
     void chooseInterdistance(int elementType);
-    bool checkIfPositionFree(const int posX, const int posY) const;
+    bool checkIfPositionFree(const unsigned int posX, const unsigned int posY) const;
     void moveBallAccordingEvent(bool left);
     void moveMovableElement(MovableElement *element);
     void deleteMovableElement();
-    void addANewMovableElement(int posX, int posY, int type);
+    void addANewMovableElement(unsigned int posX, unsigned int posY, int type);
     void clearNewMovableElementList();
 
 private:
     //=== ATTRIBUTES
 
     bool m_pauseState;
+    bool m_endState;
     int m_score;
     int m_distance;
     int m_gameSpeed;

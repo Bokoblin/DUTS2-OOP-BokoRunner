@@ -21,8 +21,8 @@ using namespace std;
 *********************************************
     Arthur : 19/03
 *********************************************/
-Coin::Coin(int posX, int posY, int w, int h, int mvX, int mvY) :
-    MovableElement(posX, posY, w, h, mvX, mvY)
+Coin::Coin(unsigned int posX, unsigned int posY, unsigned int w, unsigned int h,
+        int mvX, int mvY) : MovableElement(posX, posY, w, h, mvX, mvY)
 {
 
 }

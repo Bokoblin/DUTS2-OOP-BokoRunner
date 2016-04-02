@@ -41,8 +41,8 @@ int main()
     srand(time(NULL));
     sf::RenderWindow *window = new sf::RenderWindow( sf::VideoMode(SCREEN_WIDTH,
                                                                     SCREEN_HEIGHT, 32), "Boko Runner", sf::Style::None );
-
     window->setFramerateLimit(30);
+
     Model model(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
     View view(SCREEN_WIDTH, SCREEN_HEIGHT, window);
     view.setModel(&model);
@@ -87,7 +87,6 @@ int main()
                 model.setGameState(true);
                 model.setResetGameState(false);
             }
-
         }
     }
 

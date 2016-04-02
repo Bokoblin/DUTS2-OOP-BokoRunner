@@ -33,7 +33,7 @@ class Model
 {
 public:
     //=== CTORs / DTORs
-    Model(int width, int height, const std::chrono::system_clock::time_point beginTime);
+    Model(unsigned int w, unsigned int h, const std::chrono::system_clock::time_point beginTime);
     ~Model();
 
     //=== GETTERS
@@ -54,7 +54,7 @@ public:
 
 protected:
     //=== ATTRIBUTES
-    int m_width, m_height;
+    unsigned int m_width, m_height;
     bool m_introState;
     bool m_menuState;
     bool m_gameState;

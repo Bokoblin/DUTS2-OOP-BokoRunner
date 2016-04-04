@@ -28,7 +28,7 @@ using namespace std;
 View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 {
     m_window = new sf::RenderWindow( sf::VideoMode(w, h, 32), "Runner", sf::Style::Close );
-    m_window->setFramerateLimit(30);
+    m_window->setFramerateLimit(FRAMERATE);
 
     //=== Images Loading
 
@@ -300,6 +300,9 @@ bool View::treatEvents()
     if(m_window->isOpen())
     {
         result = true;
+        bool inair = m_model->getPlayer()->getPosY()<GAME_FLOOR;
+        const_cast<MovableElement*>(m_model->getPlayer())->setFlyingState(inair);
+
 
         sf::Event event;
         while (m_window->pollEvent(event))
@@ -316,24 +319,83 @@ bool View::treatEvents()
                 }
                 if ( (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q ) && PLAYER->getPosX()  > 0 )
                 {
-                    m_model->moveBallAccordingEvent(true);
+                   // m_model->moveBallAccordingEvent(true);
+
+                   const_cast<MovableElement*>(m_model->getPlayer())->setDecelerationState(false);
+                    const_cast<MovableElement*>(m_model->getPlayer())->MoveLeft();
+                      cout
+                    << PLAYER->getVector().first
+                    << "      " << PLAYER->getVector().second
+                    << endl;
+
+
                 }
                 if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D ) && (PLAYER->getPosX() + PLAYER->getWidth()) < m_viewWidth )
                 {
-                    m_model->moveBallAccordingEvent(false);
+                   // m_model->moveBallAccordingEvent(false);
+
+                   const_cast<MovableElement*>(m_model->getPlayer())->setDecelerationState(false);
+                   const_cast<MovableElement*>(PLAYER)->MoveRight();
+                    cout
+                    << PLAYER->getVector().first
+                    << "      " << PLAYER->getVector().second
+                    <<  "   Si la balle n'est pas en l'air = 0 " << inair << endl;
+
                 }
-                if ( (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::Space))
+                if ( (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::Space) && !inair )
                 {
+                            const_cast<MovableElement*>(m_model->getPlayer())->setJumpState(true);
 
-                   m_model->setJumpBall(true);
-                    const_cast<MovableElement*>( m_model->getPlayer() )->setStartTimeJump( clock() );
-
-
+                            cout << inair <<endl;
                 }
+
                 break;
+            case sf::Event::KeyReleased:
+                  if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D ))
+                      {
+
+                            const_cast<MovableElement*>(m_model->getPlayer())->setDecelerationState(true);
+
+                      }
+
+                      if ( (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q ))
+                      {
+
+                          const_cast<MovableElement*>(m_model->getPlayer())->setDecelerationState(true);
+
+                      }
+                      if ( (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::Space ))
+                      {
+                        //
+                      }
+
+                      break;
+
+
             default:
                 break;
+
             }
+/*if( const_cast<MovableElement*>(m_model->getPlayer())->getFlyingState() == true)
+        {
+            const_cast<MovableElement*>(m_model->getPlayer())->setVectorY(
+            ( const_cast<MovableElement*>(m_model->getPlayer())->getVectorY())+(GRAVITATION/FRAMERATE));
+
+            const_cast<MovableElement*>(m_model->getPlayer())->setPositionY(
+                                                        const_cast<MovableElement*>(m_model->getPlayer())->getPosY() + (const_cast<MovableElement*>(m_model->getPlayer())->getVectorY()/FRAMERATE));
+        }
+        else{
+            const_cast<MovableElement*>(m_model->getPlayer())->setPositionY(GAME_FLOOR);
+        }
+*/
     }
     return result;
 }
+
+
+
+
+
+
+
+

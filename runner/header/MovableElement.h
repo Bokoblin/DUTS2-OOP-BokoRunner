@@ -50,7 +50,10 @@ public:
     int getType() const;
     virtual bool getJumpState() const{return false;}
     virtual bool getFlyingState() const{return false;}
+    virtual bool getDecelerationState() const {return false;}
     virtual clock_t getStartTimeJump() const{return -1;}
+    virtual std::pair<float,float> getVector() const {}
+    float getVectorY() const {}
 
 
     //=== SETTERS
@@ -58,7 +61,14 @@ public:
     void setPositionY(int y);
     virtual void setJumpState(bool newState){}
     virtual void setFlyingState(bool newState){}
+    virtual void setDecelerationState(bool newState) {};
     virtual void setStartTimeJump (clock_t time) {}
+    virtual void setVector(float x, float y){}
+    virtual void setVectorY(float y){}
+    virtual void MoveRight(){}
+    virtual void MoveLeft(){}
+    virtual void Deceleration(){}
+
 
 protected:
     //=== ATTRIBUTES

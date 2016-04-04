@@ -25,7 +25,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <vector>
 #include <ctime>
 
-const int GAME_FLOOR = 480;
+
 const int PLAYER_DEFAULT_POS_X = 50;
 
 
@@ -56,7 +56,6 @@ public:
     void nextStep();
     void chooseInterdistance();
     bool checkIfPositionFree(const int posX, const int posY) const;
-    void moveBallAccordingEvent(bool left);
     void moveMovableElement(MovableElement *currentElement);
     void deleteMovableElement(MovableElement *element);
     void addNewMovableElement(int posX, int posY, int type);

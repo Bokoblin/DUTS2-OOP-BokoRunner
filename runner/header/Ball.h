@@ -24,9 +24,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <ctime>
 #include <iostream>
 
-const double m_pi = 3.14159265358979;
-const double m_gravitation = 9.81;
-const double m_angle=m_pi/3;;
+const double PI = 3.14159265358979;
+const float GRAVITATION = 9.81;
+const double ANGLE=PI/3;
+const float ACCELERATION = 2.0;
+const float MOVE_SPEED = 2.0; //force accordée à l'objet pour le déplacement horizontal
+const float JUMP_SPEED = 7.0; //force accordée à l'objet pour le saut
+const int FRAMERATE = 30;
+const int GAME_FLOOR = 480;
 
 
 /********************************************
@@ -45,28 +50,43 @@ public:
     //=== GETTERS
     virtual bool getFlyingState() const override;
     virtual bool getJumpState() const override;
+    virtual bool getDecelerationState() const override;
     virtual clock_t getStartTimeJump() const override;
+    virtual std::pair<float,float> getVector() const;
+    virtual float getVectorY() const;
+
 
     //===SETTERS
     virtual void setFlyingState(bool etat) override;
     virtual void setJumpState(bool etat) override;
+    virtual void setDecelerationState(bool etat) override;
     virtual void setStartTimeJump(clock_t time) override;
+    virtual void setVector(float x,float y);
+    virtual void setVectorY(float y);
+
 
     //=== METHODS
     virtual void move() override;
     void calculVector();
     void RealPosition();
     void Trajectory();
+    void MoveRight() override;
+    void MoveLeft() override;
+    void Deceleration();
+    void Jump();
+
 
 
 private:
     bool m_jumping;
     bool m_flying;
+    bool m_deceleration;
     double m_Vx;
     double m_Vy;
     float m_realposX;
     float m_realposY;
     clock_t m_time_start_jump;
+    std::pair<float,float> m_vectorBall;
 };
 
 #endif // BALL_H

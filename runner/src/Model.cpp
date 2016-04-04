@@ -162,20 +162,6 @@ void Model::clearNewMovableElementList()
 }
 
 
-/********************************************
-    Ball Moving
-*********************************************
-    Arthur : 21/02 - 6/03
-    Florian: 21/02 - 2/03
-*********************************************/
-void Model::moveBallAccordingEvent(bool left)
-{
-    if (left)
-        m_player->setPositionX( m_player->getPosX() - 10 );
-    if (!left)
-        m_player->setPositionX( m_player->getPosX() + 10 );
-}
-
 
 /********************************************
     Elements Moving (enemies, bonus, ...)

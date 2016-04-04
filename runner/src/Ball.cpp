@@ -30,10 +30,8 @@ Ball::Ball(float posX,float posY, int w, int h, int mvX, int mvY) :
 {
     m_jumping = false;
     m_flying = false;
-    m_Vx = 0;
-    m_Vy =0;
-    m_realposX=0.;
-    m_realposY=0.;
+    m_vectorBall.first=0;
+    m_vectorBall.second=0;
 }
 
 /********************************************
@@ -55,7 +53,11 @@ Ball::~Ball()
 *********************************************/
     bool Ball::getFlyingState() const {return m_flying;}
     bool Ball::getJumpState() const {return m_jumping;}
+    bool Ball::getDecelerationState() const {return m_deceleration;}
     clock_t Ball::getStartTimeJump() const{ return m_time_start_jump;}
+
+    pair<float,float> Ball::getVector() const { return m_vectorBall; }
+    float Ball::getVectorY() const { return m_vectorBall.second; }
 
 /********************************************
     Setters
@@ -64,9 +66,15 @@ Ball::~Ball()
 *********************************************/
     void Ball::setFlyingState(bool etat) {m_flying = etat;}
     void Ball::setJumpState(bool etat) {m_jumping = etat;}
+    void Ball::setDecelerationState(bool etat) {m_deceleration = etat;}
     void Ball::setStartTimeJump(clock_t time){ m_time_start_jump = time;}
+    void Ball::setVectorY(float y){ m_vectorBall.second = y;}
 
-
+    void Ball::setVector(float x,float y)
+    {
+        m_vectorBall.first = x;
+        m_vectorBall.second = y;
+    }
 
 
 /********************************************
@@ -76,75 +84,64 @@ Ball::~Ball()
 *********************************************/
 void Ball::move()
 {
+    m_posX += m_vectorBall.first;
+    m_posY += m_vectorBall.second;
 
-    if (m_jumping /*|| m_flying*/)
-                                    {
-
-        calculVector();
-        RealPosition();
-        Trajectory();
-    }
-}
-
-/********************************************
-    Ball vector calcul
-*********************************************
-   Florian : 12/03
-*********************************************/
-
-void Ball::calculVector()
-{
-    m_Vx = cos(1.0*m_angle)*m_moveX;
-    m_Vy = sin(1.0*m_angle)*m_moveY;
-}
-
-
-/********************************************
-    Ball Real position calcul
-*********************************************
-   Florian : 12/03 - 23/03
-*********************************************/
-
-void Ball::RealPosition()
-{
-   double tempsCourant =(clock() - m_time_start_jump)/(double)CLOCKS_PER_SEC;
-   m_realposX=(double)(m_Vx*(tempsCourant));
-   m_realposY=(double)((m_Vy*(tempsCourant))-((m_gravitation*(tempsCourant*tempsCourant))/2000));
-   cout<< m_realposX << "               :              "<< m_realposY<<endl;
-
-}
-
-
-/********************************************
-    Ball Trajectory calcul
-*********************************************
-   Florian : 12/03
-*********************************************/
-
-void Ball::Trajectory()
-{
-    bool taper = false;
-    if(m_posY > 298 && !taper)
+    if(m_deceleration)
     {
-         m_posX = m_posX + m_realposX;
-         m_posY = m_posY - m_realposY;
-    }
-    else if(m_posY == 298)
-    {
-        m_posX = m_posX + m_realposX;
-        m_posY = m_posY + m_realposY;
-        taper = true;
-    }
-    if(taper && m_posY>550)
-    {
-        m_posX = m_posX + m_realposX;
-        m_posY = m_posY + m_realposY;
-    }
+       /* if(m_vectorBall.first < 0.0001 && m_vectorBall.first > -0.0001)
+            m_vectorBall.first =0;*/
+
+        m_vectorBall.first /= 1+MOVE_SPEED*1.0/FRAMERATE;
 
 
+    }
+
+    if(m_jumping)
+    {
+           m_vectorBall.second = -JUMP_SPEED;
+    }
+
+    if(m_flying)
+    {
+       // m_vectorBall.second += m_gravitation/FRAMERATE;
+       // m_posY+= m_vectorBall.second*1.0/FRAMERATE;
+
+    }
 
 
 }
+
+
+
+
+
+void Ball::MoveRight()
+{
+    cout << m_moveX << endl;
+    m_vectorBall.first += MOVE_SPEED*ACCELERATION*1.0/FRAMERATE;
+    cout << m_moveX << endl;
+}
+
+void Ball::MoveLeft()
+{
+    m_vectorBall.first += -MOVE_SPEED*ACCELERATION*1.0/FRAMERATE;
+}
+
+void Ball::Deceleration()
+{
+    m_vectorBall.first /= 1+MOVE_SPEED*1.0/FRAMERATE;
+
+}
+
+void Ball::Jump()
+{
+    m_vectorBall.second = -JUMP_SPEED;
+
+}
+
+
+
 
 
 

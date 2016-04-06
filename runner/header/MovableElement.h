@@ -21,22 +21,23 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <string>
 
 /********************************************
-    MovableElement Class
+    MovableElement Abstract Class
 *********************************************
-    Arthur : 23/02 - 15/03
+    Arthur : 23/02 - 05/04
     Florian: 02/03 - 02/03
 *********************************************/
 class MovableElement
 {
 public:
     //=== CTORs / DTORs
-    MovableElement(unsigned int posX, unsigned int posY,
+    MovableElement(unsigned int x, unsigned int y,
                     unsigned int w, unsigned int h, int mvX, int mvY);
-    virtual ~MovableElement() {}
+    virtual ~MovableElement();
 
     //=== METHODS
-    virtual void move() {} //defining it as virtual allows to override it
+    virtual void move()=0;
     bool contains( const unsigned int posX, const  unsigned int posY) const ;
+    bool collision( const MovableElement & other) const ;
     std::string to_string()const ;
 
     //=== GETTERS
@@ -47,16 +48,15 @@ public:
     int getMoveX() const;
     int getMoveY() const;
     bool getCollisionState() const;
-    virtual int getType() const {return -1;}
-    virtual int getEnemyType() const {return -1;}
-    virtual unsigned int getLife() const {return -1;}
+    virtual int getType() const;
+    virtual unsigned int getLife() const;
 
 
     //=== SETTERS
     void setPosX(unsigned int x);
     void setPosY(unsigned int y);
     void setCollisionState(bool collisionState);
-    virtual void setLife(unsigned int newLife) {}
+    virtual void setLife(unsigned int newLife);
 
 protected:
     //=== ATTRIBUTES
@@ -66,8 +66,17 @@ protected:
     unsigned int m_height;
     int m_moveX;
     int m_moveY;
-    int m_typeElement; //0 for Ball, 1 for obstacles, 2 for bonuses
     bool m_collisionState;
+    unsigned int m_life;
+    int m_elementType;
+    /** Element Type :
+    0 : Player
+    1 : Standard Enemy
+    2 : Totem Enemy
+    3 : Block Enemy
+    4 :  Coins
+    */
+
 };
 
 #endif // MOVABLEELEMENT_H

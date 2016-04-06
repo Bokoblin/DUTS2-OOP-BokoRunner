@@ -31,16 +31,10 @@ public:
     Enemy(unsigned int posX, unsigned int posY, unsigned int w, unsigned int h, int movX, int movY);
     virtual~Enemy();
 
-    //=== GETTERS
-    int getType() const;
-    int getEnemyType() const;
-
     //=== METHODS
     void move();
     void chooseEnemyType();
 
-private:
-    int m_enemyType; // 0: simple ennemy, 1: 3-ennemy-totem, 3: 4-ennemy-block
 };
 
 #endif // ENEMY_H

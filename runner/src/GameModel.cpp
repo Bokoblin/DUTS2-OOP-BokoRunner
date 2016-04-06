@@ -113,7 +113,7 @@ void GameModel::nextStep()
             {
                 if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
                 {
-                    addANewMovableElement(m_width, GAME_FLOOR-100, 2);
+                    addANewMovableElement(m_width, GAME_FLOOR-100, 4);
                     m_currentCoinInterdistance = 0;
                     chooseInterdistance(2);
                 }
@@ -124,17 +124,39 @@ void GameModel::nextStep()
 
             deleteMovableElement();
 
-            cout << m_player->getLife() << endl;
+            //=== Check Collisions
+
+            set<MovableElement*>::const_iterator it;
+            for (it = m_movableElementsArray.begin(); it !=m_movableElementsArray.end(); ++it)
+            {
+                if ( (*it)->getType() != 0 && m_player->collision(**it))
+                {
+                    (*it)->setCollisionState(true);
+
+                    if ( (*it)->getType() == 1) //standard enemy
+                        m_player->setLife(m_player->getLife()-10);
+
+                    else if ( (*it)->getType() == 2) //totem enemy
+                        m_player->setLife(m_player->getLife()-15);
+
+                    else if ( (*it)->getType() == 3) //block enemy
+                        m_player->setLife(m_player->getLife()-20);
+
+                    else if ( (*it)->getType() == 4) //coin
+                        m_nbCoinsCollected += 1;
+                }
+            }
+
+
             if (m_player->getLife() == 0)
             {
                 m_endState = true;
             }
 
-
             m_lastTime = system_clock::now();
         }
     }
-    else
+    else if (m_endState == true)
     {
         m_score = m_gameSpeed*m_distance + 20*m_nbCoinsCollected;
     }
@@ -250,14 +272,17 @@ void GameModel::addANewMovableElement(unsigned int posX, unsigned int posY, int 
     {
         m_newMElement = new Enemy(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
     }
-    else if (type == 2) //Coin
+    else if (type == 4) //Coin
     {
         m_newMElement = new Coin(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
     }
     assert(m_newMElement != nullptr);
-    m_newMovableElementsArray.insert( m_newMElement );
+
     if (m_movableElementsArray.find(m_newMElement) == m_movableElementsArray.end())
+    {
+        m_newMovableElementsArray.insert( m_newMElement );
         m_movableElementsArray.insert( m_newMElement );
+    }
 }
 
 

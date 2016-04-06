@@ -33,7 +33,7 @@ using namespace std;
 /********************************************
     Main function
 *********************************************
-    Arthur : 21/02 - 31/03
+    Arthur : 21/02 - 03/03
     Florian: 21/02 - 21/02
 *********************************************/
 int main()
@@ -44,8 +44,6 @@ int main()
     window->setFramerateLimit(30);
 
     Model model(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
-    View view(SCREEN_WIDTH, SCREEN_HEIGHT, window);
-    view.setModel(&model);
 
     while(window->isOpen() )
     {
@@ -89,6 +87,8 @@ int main()
             }
         }
     }
+
+    delete window;
 
     return EXIT_SUCCESS;
 }

@@ -30,7 +30,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "SFML/Graphics.hpp"
 #include "SlidingBackground.h"
 #include "AnimatedGraphicElement.h"
+#include "Button.h"
 
+#define MOUSE_POSITION sf::Vector2f(event.mouseButton.x, event.mouseButton.y)
 
 /********************************************
     Constant Variables
@@ -42,8 +44,6 @@ const std::string REMAINING_LIFE = "Images/remaining_life.png";
 const std::string BALL_IMAGE = "Images/balls.png";
 const std::string ENEMIES_IMAGE = "Images/enemies.png";
 const std::string BONUS_IMAGE = "Images/bonus.png";
-const std::string BLOCK_ENEMIES_IMAGE = "Images/enemy_block.png";
-const std::string EXPLOSION_IMAGE = "Images/explosion.png";
 //PAUSE
 const std::string PAUSE_BACKGROUND_IMAGE = "Images/pause_background.png";
 const std::string PAUSE_BUTTONS_IMAGE = "Images/pause_elements.png";
@@ -70,10 +70,10 @@ public:
     void setGameModel(GameModel *model);
 
     //=== METHODS
-    virtual void loadImages();
-    virtual void synchronize();
-    virtual void draw();
-    virtual bool treatEvents();
+    virtual void loadImages() override;
+    virtual void synchronize() override;
+    virtual void draw() const override;
+    virtual bool treatEvents() override;
     virtual void linkElements();
     virtual void updateElements();
     virtual void deleteElements();
@@ -115,11 +115,11 @@ private:
     AnimatedGraphicElement *m_explosionGraphic;
     //Pause and End Graphic Elements
     GraphicElement *m_pauseBackgroundGraphic;
-    GraphicElement *m_resumeButtonGraphic;
-    GraphicElement *m_restartButtonGraphic;
-    GraphicElement *m_homeButtonGraphic;
     GraphicElement *m_pauseDistanceGraphic;
     GraphicElement *m_endBackgroundGraphic;
+    Button *m_resumeButtonGraphic;
+    Button *m_restartButtonGraphic;
+    Button *m_homeButtonGraphic;
 
     //Containers
     std::map<MovableElement*, GraphicElement*> m_MovableToGraphicElement;

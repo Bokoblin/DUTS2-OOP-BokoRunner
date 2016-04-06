@@ -21,11 +21,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 3/03 - 3/03
-    Florian: 3/03 - 3/03
+    Arthur : 3/03 - 3/04
+    Florian: 3/03
 *********************************************/
 SlidingBackground::SlidingBackground(sf::Texture &image, unsigned int w, unsigned int h, unsigned int speed):
-    m_width{w}, m_height{h}, m_speed{speed}
+    GraphicElement(w, h), m_speed{speed}
 {
     m_left = new GraphicElement(image, 0, 0, w, h);
     m_right = new GraphicElement(image, w, 0, w, h);
@@ -35,7 +35,7 @@ SlidingBackground::SlidingBackground(sf::Texture &image, unsigned int w, unsigne
 /********************************************
     Destructor
 *********************************************
-    Arthur : 5/03 - 5/03
+    Arthur : 5/03
 *********************************************/
 SlidingBackground::~SlidingBackground()
 {
@@ -67,19 +67,19 @@ void SlidingBackground::sync()
 /********************************************
     Drawing Function
 *********************************************
-    Arthur : 3/03 - 26/03
+    Arthur : 3/03 - 03/04
 *********************************************/
-void SlidingBackground::draw(sf::RenderWindow &window)
+void SlidingBackground::draw(sf::RenderWindow *window) const
 {
-    window.draw(*m_left);
-    window.draw(*m_right);
+    window->draw(*m_left);
+    window->draw(*m_right);
 }
 
 
 /********************************************
-    SETTERS
+    Setters
 *********************************************
-    Arthur : 3/03 - 3/03
-    Florian: 3/03 - 3/03
+    Arthur : 3/03
+    Florian: 3/03
 *********************************************/
-void SlidingBackground::setSpeed(unsigned int speed) { m_speed = speed;}
+void SlidingBackground::setSpeed(unsigned int speed) { m_speed = speed; }

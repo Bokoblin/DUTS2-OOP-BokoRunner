@@ -15,19 +15,16 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include "../header/AnimatedGraphicElement.h"
-
-using namespace std::chrono;
+#include "../header/Button.h"
 
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 3/03 - 6/04
+    Arthur : 6/04
 *********************************************/
-AnimatedGraphicElement::AnimatedGraphicElement(sf::Texture &image, unsigned int x, unsigned int y, unsigned int w,
-            unsigned int h, const std::vector<sf::IntRect> & clipRects, unsigned int separator):
-    GraphicElement(image, x, y, w, h), m_clipRectsArray{clipRects},
-    m_currentClipRect{0}, m_lastAnimationTime{system_clock::now() }, m_arraySeparator{separator}
+Button::Button(const std::vector<sf::IntRect> & clipRects,
+        sf::Texture &image, unsigned int x, unsigned int y, unsigned int w, unsigned int h):
+    GraphicElement(image, x, y, w, h), m_clipRectsArray{clipRects}, m_currentClipRect{0}, m_pressedState{false}
 {
     this->setTextureRect(m_clipRectsArray[m_currentClipRect]);
 }
@@ -36,11 +33,11 @@ AnimatedGraphicElement::AnimatedGraphicElement(sf::Texture &image, unsigned int 
 /********************************************
     Copy Constructor
 *********************************************
-    Arthur : 19/03 - 6/04
+    Arthur : 6/04
 *********************************************/
-AnimatedGraphicElement::AnimatedGraphicElement(AnimatedGraphicElement const& other) :
-    GraphicElement(other), m_clipRectsArray{other.m_clipRectsArray},
-    m_currentClipRect{0}, m_lastAnimationTime{system_clock::now() }, m_arraySeparator{other.m_arraySeparator}
+Button::Button(Button const& elementACopier) :
+    GraphicElement(elementACopier), m_clipRectsArray{elementACopier.m_clipRectsArray},
+    m_currentClipRect{0}, m_pressedState{false}
 {
     this->setTextureRect(m_clipRectsArray[m_currentClipRect]);
 }
@@ -49,29 +46,31 @@ AnimatedGraphicElement::AnimatedGraphicElement(AnimatedGraphicElement const& oth
 /********************************************
     Destructor
 *********************************************
-    Arthur : 5/03
+    Arthur : 6/04
 *********************************************/
-AnimatedGraphicElement::~AnimatedGraphicElement()
+Button::~Button()
 {}
+
+
+/********************************************
+    Setters
+*********************************************
+    Arthur : 6/04
+*********************************************/
+void Button::setPressedState(bool state) { m_pressedState = state; }
 
 
 /********************************************
     Synchronization Function : change animation
 *********************************************
-    Arthur : 3/03 - 6/04
+    Arthur : 6/04
 *********************************************/
-void AnimatedGraphicElement::sync()
+void Button::sync()
 {
-    system_clock::duration duration = system_clock::now() - m_lastAnimationTime;
+    if ( m_pressedState == false )
+        m_currentClipRect = 0;
+    else
+        m_currentClipRect = 1;
 
-    if ( duration > milliseconds(200) )
-    {
-        if (m_currentClipRect == m_arraySeparator-1)
-            m_currentClipRect = 0;
-        else
-            m_currentClipRect++;
-
-        this->setTextureRect(m_clipRectsArray[m_currentClipRect]);
-        m_lastAnimationTime = system_clock::now();
-    }
+    this->setTextureRect(m_clipRectsArray[m_currentClipRect]);
 }

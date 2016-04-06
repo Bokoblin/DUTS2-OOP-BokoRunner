@@ -1,7 +1,7 @@
 Project Name : [DEV] Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current dev version : v0.4.0-devA7 (02/04/16)
+Current dev version : v0.6.0-devA2 (06/04/16)
 
 ======================================================================================
 BETA CHANNEL Changelog
@@ -106,14 +106,21 @@ v0.4.0-devA5 (29/03/16 - 30/03/16):
 - clock() usage replaced by std::chrono which do not rely on processor clock
 - graphic element animations fixed
 
-v0.4.0-devA6 (30/03/16 - 31/03/16):
+v0.5.0-devA1&2 (30/03/16 - 31/03/16):
 - Pause menu implemented with 3 buttons (resume, restart, home menu)
 
-v0.4.0-devA7 (01/04/16 - 02/04/16):
+v0.6.0-devA1 (01/04/16 - 02/04/16):
 - End Screen added with final score calculated and displayed and 2 buttons (restart, home menu)
 - Text class created to store all texts from menu, game, pause and end
 - numerous "int" moved to "unsigned int" if they shouldn't have negative values
 - some issues fixed
+
+v0.6.0-devA2 (3/04/16 - 6/04/16):
+- Abstract classes added (View && MovableElement)
+- Button Class added
+- Collision method added in MovableElement instead of using the view
+- Code clean-up
+- Bug Fixes
 
 ======================================================================================
 

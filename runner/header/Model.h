@@ -34,7 +34,7 @@ class Model
 public:
     //=== CTORs / DTORs
     Model(unsigned int w, unsigned int h, const std::chrono::system_clock::time_point beginTime);
-    ~Model();
+    virtual ~Model();
 
     //=== GETTERS
     bool getIntroState() const;
@@ -55,11 +55,13 @@ public:
 protected:
     //=== ATTRIBUTES
     unsigned int m_width, m_height;
+    const std::chrono::system_clock::time_point m_programBeginningTime;
+
+private:
     bool m_introState;
     bool m_menuState;
     bool m_gameState;
     bool m_resetGameState;
-    const std::chrono::system_clock::time_point m_programBeginningTime;
 };
 
 #endif

@@ -15,36 +15,38 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifndef GRAPHICELEMENT_H
-#define GRAPHICELEMENT_H
+#ifndef BUTTON_H
+#define BUTTON_H
 
-#include <SFML/Graphics.hpp>
-#include <chrono>
+#include "GraphicElement.h"
+#include <iostream>
 
 /********************************************
-    GraphicElement Class
+    Button Class
 *********************************************
-    Arthur : 21/02 - 6/04
-    Florian: 21/02 - 2/03
+    Arthur : 6/04
 *********************************************/
-class GraphicElement : public sf::Sprite
+class Button : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
-    GraphicElement(sf::Texture &image, unsigned int x, unsigned int y, unsigned int w, unsigned int h);
-    GraphicElement(unsigned int w, unsigned int h);
-    GraphicElement(GraphicElement const& elementACopier);
-    ~GraphicElement();
+    Button(const std::vector<sf::IntRect> & clipRects,
+                           sf::Texture &image, unsigned int x, unsigned int y, unsigned int w, unsigned int h);
+    Button(Button const& elementACopier);
+    virtual ~Button();
+
+    //=== SETTERS
+    void setPressedState(bool state);
 
     //=== METHODS
-    virtual void sync();
-    virtual void draw(sf::RenderWindow *window)const;
-    void resize(unsigned int w, unsigned int h);
+    virtual void sync() override;
 
-protected:
+private:
     //=== ATTRIBUTES
-    unsigned int m_width;
-    unsigned int m_height;
+    std::vector<sf::IntRect> m_clipRectsArray;
+    unsigned int m_currentClipRect;
+    bool m_pressedState;
+
 };
 
-#endif // GRAPHICELEMENT_H
+#endif // BUTTON_H

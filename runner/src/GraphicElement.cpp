@@ -18,18 +18,23 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "../header/GraphicElement.h"
 #include <iostream>
 
+using namespace std::chrono;
+
 /********************************************
-    Parameterized Constructor
+    Parameterized Constructors
 *********************************************
-    Arthur : 21/02 - 14/03
+    Arthur : 21/02 - 03/04
     Florian: 21/02 - 2/03
 *********************************************/
 GraphicElement::GraphicElement(sf::Texture &image, unsigned int x, unsigned int y,
-        unsigned int w, unsigned int h) : m_w{w}, m_h{h}
+        unsigned int w, unsigned int h) : m_width{w}, m_height{h}
 {
     this->setTexture(image);
-    this->setPosition( (float)x, (float)y);
+    this->setPosition(x, y);
 }
+
+GraphicElement::GraphicElement( unsigned int w, unsigned int h) : m_width{w}, m_height{h}
+{}
 
 
 /********************************************
@@ -39,7 +44,7 @@ GraphicElement::GraphicElement(sf::Texture &image, unsigned int x, unsigned int 
     Florian:  2/03 - 2/03
 *********************************************/
 GraphicElement::GraphicElement(GraphicElement const& elementACopier) :
-    Sprite(), m_w(elementACopier.m_w), m_h(elementACopier.m_h)
+    Sprite(), m_width(elementACopier.m_width), m_height(elementACopier.m_height)
 {
     this->setPosition( elementACopier.getPosition() );
     this->setTexture( *elementACopier.getTexture(), true );
@@ -50,14 +55,20 @@ GraphicElement::GraphicElement(GraphicElement const& elementACopier) :
 /********************************************
     Destructor
 *********************************************
-    Arthur : 21/02 - 21/02
-    Florian: 21/02 - 21/02
+    Arthur : 21/02
+    Florian: 21/02
 *********************************************/
 GraphicElement::~GraphicElement()
-{
-    //Dtor
-}
+{}
 
+
+/********************************************
+    Synchronization function
+*********************************************
+    Arthur : 03/04
+*********************************************/
+void GraphicElement::sync()
+{}
 
 
 /********************************************
@@ -65,7 +76,7 @@ GraphicElement::~GraphicElement()
 *********************************************
     Arthur : 30/03
 *********************************************/
-void GraphicElement::draw(sf::RenderWindow *window)
+void GraphicElement::draw(sf::RenderWindow *window) const
 {
     window->draw(*this);
 }
@@ -75,16 +86,16 @@ void GraphicElement::draw(sf::RenderWindow *window)
     Resizing function
 *********************************************
     Arthur : 22/02 - 25/02
-    Florian: 22/02 - 22/02
+    Florian: 22/02
 *********************************************/
 void GraphicElement::resize(unsigned int width, unsigned int height)
 {
     sf::FloatRect bb = this->getLocalBounds();
-    float width_factor = width / bb.width;     // facteur de mise à l'échelle
+    float width_factor = width / bb.width;
     float height_factor = height / bb.height;
     this->setScale(width_factor, height_factor);
     //modification largeur et hauteur
-    this->m_w = width;
-    this->m_h = height;
+    this->m_width = width;
+    this->m_height = height;
 }
 

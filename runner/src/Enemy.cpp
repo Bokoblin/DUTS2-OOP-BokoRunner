@@ -25,6 +25,7 @@ using namespace std;
 Enemy::Enemy(unsigned int posX, unsigned int posY, unsigned int w, unsigned int h,
         int mvX, int mvY) : MovableElement(posX, posY, w, h, mvX, mvY)
 {
+    m_life = 1;
     chooseEnemyType();
 }
 
@@ -35,18 +36,7 @@ Enemy::Enemy(unsigned int posX, unsigned int posY, unsigned int w, unsigned int 
     Arthur : 13/03
 *********************************************/
 Enemy::~Enemy()
-{
-
-}
-
-
-/********************************************
-    Getters
-*********************************************
-    Arthur : 15/03
-*********************************************/
-int Enemy::getType() const { return 1;}
-int Enemy::getEnemyType() const {return m_enemyType;}
+{}
 
 
 /********************************************
@@ -63,7 +53,7 @@ void Enemy::move()
 /********************************************
     Next Enemy Type Choosing
 *********************************************
-    Arthur : 13/03 - 15/03
+    Arthur : 13/03 - 05/04
 *********************************************/
 void Enemy::chooseEnemyType()
 {
@@ -71,21 +61,21 @@ void Enemy::chooseEnemyType()
 
     if (result <= 55)
     {
-        m_enemyType = 0;
+        m_elementType = 1;
         m_width = 30;
         m_height = 30;
     }
 
     else if (result <= 80)
     {
-        m_enemyType = 1;
+        m_elementType = 2;
         m_width = 30;
         m_height = 90;
     }
 
     else
     {
-        m_enemyType = 2;
+        m_elementType = 3;
         m_width = 50;
         m_height = 50;
     }

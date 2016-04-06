@@ -25,15 +25,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     AnimatedGraphicElement - Class
 *********************************************
-    Arthur : 3/03 - 19/03
+    Arthur : 3/03 - 06/04
 *********************************************/
 class AnimatedGraphicElement : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
-    AnimatedGraphicElement(const std::vector<sf::IntRect> & clipRects,
-                           sf::Texture &image, unsigned int x, unsigned int y, unsigned int w, unsigned int h);
-    AnimatedGraphicElement(AnimatedGraphicElement const& elementACopier);
+    AnimatedGraphicElement(sf::Texture &image, unsigned int x, unsigned int y, unsigned int w, unsigned int h,
+            const std::vector<sf::IntRect> & clipRects, unsigned int separator);
+    AnimatedGraphicElement(AnimatedGraphicElement const& other);
     virtual ~AnimatedGraphicElement();
 
     //=== METHODS
@@ -41,10 +41,10 @@ public:
 
 private:
     //=== ATTRIBUTES
-    std::vector<sf::IntRect> m_clip_rects;
-    unsigned int m_current_clip_rect;
+    std::vector<sf::IntRect> m_clipRectsArray;
+    unsigned int m_currentClipRect;
     std::chrono::system_clock::time_point m_lastAnimationTime;
-
+    unsigned int m_arraySeparator;
 };
 
 #endif // ANIMATEDGRAPHICELEMENT_H

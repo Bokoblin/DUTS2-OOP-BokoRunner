@@ -38,9 +38,9 @@ const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
 class Model;
 
 /********************************************
-    View Class
+    View Abstract Class
 *********************************************
-    Arthur : 21/02 - 27/03
+    Arthur : 21/02 - 03/04
     Florian: 21/02 - 3/03
 *********************************************/
 class View
@@ -57,17 +57,17 @@ public:
     void setModel(Model *model);
 
     //=== METHODS
-    virtual void loadImages();
-    virtual void synchronize();
-    virtual void draw();
-    virtual bool treatEvents();
+    virtual void loadImages()=0;
+    virtual void synchronize()=0;
+    virtual void draw() const =0;
+    virtual bool treatEvents()=0;
 
 protected:
     //=== ATTRIBUTES
     unsigned int m_width, m_height;
     sf::RenderWindow *m_window;
     Model *m_model;
-    Text m_text;
+    Text *m_text;
 };
 
 #endif

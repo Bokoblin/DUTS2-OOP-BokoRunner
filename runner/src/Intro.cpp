@@ -77,7 +77,7 @@ void Intro::synchronize()
 *********************************************
     Arthur : 27/03
 *********************************************/
-void Intro::draw()
+void Intro::draw() const
 {
     m_window->clear();
 

@@ -36,18 +36,11 @@ public:
         unsigned int w, unsigned int h, int mvX, int mvY);
     virtual ~Player();
 
-    //=== GETTERS
-    virtual int getType() const override { return 0;}
-    virtual unsigned int getLife() const override {return m_life;}
-
     //=== SETTERS
     virtual void setLife(unsigned int new_life) override ;
 
     //=== METHODS
     virtual void move() override;
-
-private:
-    unsigned int m_life;
 };
 
 #endif // BALL_H

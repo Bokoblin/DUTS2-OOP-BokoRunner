@@ -27,21 +27,20 @@ using namespace std;
 *********************************************/
 Player::Player(unsigned int posX, unsigned int posY,
         unsigned int w, unsigned int h, int mvX, int mvY) :
-        MovableElement(posX, posY, w, h, mvX, mvY), m_life{100}
+        MovableElement(posX, posY, w, h, mvX, mvY)
 {
-
+    m_elementType = 0;
+    m_life  = 100;
 }
 
 /********************************************
     Destructor
 *********************************************
-    Arthur : 23/02 - 22/02
-    Florian: 22/02 - 22/02
+    Arthur : 23/02
+    Florian: 22/02
 *********************************************/
 Player::~Player()
-{
-
-}
+{}
 
 
 /********************************************

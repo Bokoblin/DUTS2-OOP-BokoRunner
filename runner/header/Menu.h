@@ -27,6 +27,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <ctime>
 #include "SFML/Graphics.hpp"
 #include "SlidingBackground.h"
+#include "Button.h"
 
 /********************************************
     Constant Variables
@@ -49,7 +50,7 @@ public:
 
     //=== METHODS
     virtual void synchronize() override;
-    virtual void draw() override;
+    virtual void draw() const override;
     virtual void loadImages() override;
     virtual bool treatEvents() override;
 
@@ -67,8 +68,8 @@ private:
     SlidingBackground *m_farBackground;
     SlidingBackground *m_nearBackground;
     GraphicElement *m_titleGraphic;
-    GraphicElement *m_playButtonGraphic;
-    GraphicElement *m_quitButtonGraphic;
+    Button *m_playButtonGraphic;
+    Button *m_quitButtonGraphic;
 };
 
 #endif // MENU_H

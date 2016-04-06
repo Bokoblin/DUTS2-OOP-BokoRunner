@@ -47,7 +47,7 @@ class Intro : public View
 
     //=== METHODS
     virtual void synchronize() override;
-    virtual void draw() override;
+    virtual void draw() const override;
     virtual void loadImages() override;
     virtual bool treatEvents() override;
 

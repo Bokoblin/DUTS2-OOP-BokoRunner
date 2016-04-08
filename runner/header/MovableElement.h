@@ -54,6 +54,7 @@ public:
     virtual clock_t getStartTimeJump() const{return -1;}
     virtual std::pair<float,float> getVector() const {}
     float getVectorY() const {}
+    float getVectorX() const {}
 
 
     //=== SETTERS
@@ -65,6 +66,7 @@ public:
     virtual void setStartTimeJump (clock_t time) {}
     virtual void setVector(float x, float y){}
     virtual void setVectorY(float y){}
+    virtual void setVectorX(float x) {}
     virtual void MoveRight(){}
     virtual void MoveLeft(){}
     virtual void Deceleration(){}

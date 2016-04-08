@@ -25,14 +25,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <iostream>
 
 const double PI = 3.14159265358979;
-const float GRAVITATION = 9.81;
+const float GRAVITATION = 20;
 const double ANGLE=PI/3;
-const float ACCELERATION = 2.0;
+const float ACCELERATION = 10.0;
 const float MOVE_SPEED = 2.0; //force accordée à l'objet pour le déplacement horizontal
-const float JUMP_SPEED = 7.0; //force accordée à l'objet pour le saut
+const float JUMP_SPEED = 12.0; //force accordée à l'objet pour le saut
 const int FRAMERATE = 30;
 const int GAME_FLOOR = 480;
-
+const float PRECISION = 1E-1;
 
 /********************************************
     Ball Class
@@ -54,6 +54,7 @@ public:
     virtual clock_t getStartTimeJump() const override;
     virtual std::pair<float,float> getVector() const;
     virtual float getVectorY() const;
+    virtual float getVectorX() const;
 
 
     //===SETTERS
@@ -63,6 +64,7 @@ public:
     virtual void setStartTimeJump(clock_t time) override;
     virtual void setVector(float x,float y);
     virtual void setVectorY(float y);
+    virtual void setVectorX(float x);
 
 
     //=== METHODS

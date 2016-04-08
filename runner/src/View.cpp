@@ -300,7 +300,7 @@ bool View::treatEvents()
     if(m_window->isOpen())
     {
         result = true;
-        bool inair = m_model->getPlayer()->getPosY()<GAME_FLOOR;
+        bool inair = m_model->getPlayer()->getPosY()<GAME_FLOOR - PLAYER->getHeight();
         const_cast<MovableElement*>(m_model->getPlayer())->setFlyingState(inair);
 
 
@@ -317,7 +317,7 @@ bool View::treatEvents()
                     m_window->close();
                     result = false;
                 }
-                if ( (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q ) && PLAYER->getPosX()  > 0 )
+                if ( (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q ) && (PLAYER->getPosX()  > 0 ) && (PLAYER->getVector().first >= -7))
                 {
                    // m_model->moveBallAccordingEvent(true);
 
@@ -330,7 +330,7 @@ bool View::treatEvents()
 
 
                 }
-                if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D ) && (PLAYER->getPosX() + PLAYER->getWidth()) < m_viewWidth )
+                if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D ) && ((PLAYER->getPosX() + PLAYER->getWidth()) < m_viewWidth ) && (PLAYER->getVector().first <7))
                 {
                    // m_model->moveBallAccordingEvent(false);
 
@@ -345,6 +345,7 @@ bool View::treatEvents()
                 if ( (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::Space) && !inair )
                 {
                             const_cast<MovableElement*>(m_model->getPlayer())->setJumpState(true);
+
 
                             cout << inair <<endl;
                 }
@@ -389,6 +390,21 @@ bool View::treatEvents()
         }
 */
     }
+    if(const_cast<MovableElement*>(m_model->getPlayer())->getPosY() < 400)
+                            {
+                                const_cast<MovableElement*>(m_model->getPlayer())->setJumpState(false);
+
+
+                            }
+  /* if(const_cast<MovableElement*>(m_model->getPlayer())->getPosY() == GAME_FLOOR - PLAYER->getHeight())
+                            {
+                                const_cast<MovableElement*>(m_model->getPlayer())->setFlyingState(false);
+                                const_cast<MovableElement*>(m_model->getPlayer())->setJumpState(false);
+
+
+
+                            }*/
+
     return result;
 }
 

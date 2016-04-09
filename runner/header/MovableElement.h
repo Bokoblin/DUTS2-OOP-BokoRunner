@@ -19,19 +19,19 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define MOVABLEELEMENT_H
 
 #include <string>
+#include <ctime>
 
 /********************************************
     MovableElement Class
 *********************************************
-    Arthur : 23/02 - 15/03
-    Florian: 02/03 - 02/03
+    Arthur : 23/02 - 08/04
+    Florian: 02/03 - 06/04
 *********************************************/
 class MovableElement
 {
 public:
     //=== CTORs / DTORs
-    MovableElement(int posX, int posY, int w, int h, int mvX, int mvY);
-    //~MovableElement();
+    MovableElement(float posX, float posY, int w, int h, float mvX, float mvY);
     virtual ~MovableElement() {}
 
     //=== METHODS
@@ -40,32 +40,43 @@ public:
     std::string to_string()const ;
 
     //=== GETTERS
-    int getMoveX() const;
-    int getMoveY() const;
-    int getPosX() const;
-    int getPosY() const;
+    float getPosX() const;
+    float getPosY() const;
+    float getMoveX() const;
+    float getMoveY() const;
     int getWidth() const;
     int getHeight() const;
     bool getCollisionState() const;
     virtual int getType() const {return -1;}
     virtual int getEnemyType() const {return -1;}
     virtual int getLife() const {return -1;}
+    virtual bool getJumpState() const{return false;}
+    virtual bool getFlyingState() const{return false;}
+    virtual bool getDecelerationState() const {return false;}
+    virtual std::pair<float,float> getVector() const {}
 
 
     //=== SETTERS
-    void setPosX(int x);
-    void setPosY(int y);
+    void setPosX(float x);
+    void setPosY(float y);
+    virtual void setJumpState(bool newState){}
+    virtual void setFlyingState(bool newState){}
+    virtual void setDecelerationState(bool newState) {};
+    virtual void setStartTimeJump (clock_t time) {}
+    virtual void setVector(float x, float y){}
+    virtual void controlPlayerMovements(bool left) {}
     void setCollisionState(bool collisionState);
     virtual void setLife(int newLife);
 
+
 protected:
     //=== ATTRIBUTES
-    int m_posX;
-    int m_posY;
+    float m_posX;
+    float m_posY;
     int m_width;
     int m_height;
-    int m_moveX;
-    int m_moveY;
+    float m_moveX;
+    float m_moveY;
     int m_typeElement; //0 for Ball, 1 for obstacles, 2 for bonuses
     bool m_collisionState;
 };

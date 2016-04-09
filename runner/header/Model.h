@@ -24,18 +24,18 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <cstdlib>
 #include <iostream>
 #include <set>
-#include <vector>
 #include <cassert>
 #include <ctime>
 
-const int GAME_FLOOR = 470;
-const int PLAYER_DEFAULT_POS_X = 50 ;
+
+const int PLAYER_DEFAULT_POS_X = 50;
+
 
 /********************************************
     Model Class
 *********************************************
-    Arthur : 21/02 - 20/03
-    Florian: 21/02 - 2/03
+    Arthur : 21/02 - 8/04
+    Florian: 21/02 - 6/04
 *********************************************/
 class Model
 {
@@ -60,10 +60,9 @@ public:
     void nextStep();
     void chooseInterdistance(int elementType);
     bool checkIfPositionFree(const int posX, const int posY) const;
-    void moveBallAccordingEvent(bool left);
     void moveMovableElement(MovableElement *element);
     void deleteMovableElement();
-    void addANewMovableElement(int posX, int posY, int type);
+    void addANewMovableElement(float posX, float posY, int type);
     void clearNewMovableElementList();
 
 private:

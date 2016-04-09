@@ -1,8 +1,7 @@
 Project Name (TEMP) : Runner Beta
 Developers          : Arthur JOLIVET et Florian LARONZE
 
-Current version : v0.2.3-r1 (23/03/16)
-======================================================================================
+Current stable version : v0.3.0-r1
 
 
 v0.1.0-r1 (22/02/16) :
@@ -81,11 +80,19 @@ v0.2.3-r1 (22/03/16):
 - NewMovableElement vector replaced by a set
 - Fixed Seg Fault related due to a getter returning a copy and not the object itself
 
-======================================================================================
+
+v0.3.0-r1 (12/03/16 - 09/04/16):
+
+- Ball movements rewritten with ability to jump. 
+	The jump is made using gravity, acceleration and vectors. It describes a parable.
+- Ball unnecessary functions clean-up
+
+
+
 
 Current features in stable:
 => A paralax background is scrolling 
-=> An animated player can move on X-axis
+=> An animated player can move and jump
 => Animated Enemies and coins appears randomly and move toward left
 => The player can destroy enemies and collect coins
 => A bottom bar displays player remaining life, score and distance

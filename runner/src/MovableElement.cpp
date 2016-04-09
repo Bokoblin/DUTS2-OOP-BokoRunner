@@ -20,10 +20,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 23/02 - 10/03
+    Arthur : 23/02 - 09/04
     Florian: 02/03 - 02/03
 *********************************************/
-MovableElement::MovableElement(int posX, int posY, int w, int h, int mvX, int mvY) :
+MovableElement::MovableElement(float posX, float posY, int w, int h, float mvX, float mvY) :
     m_posX{posX}, m_posY{posY}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY}, m_collisionState{false}
 {
 
@@ -33,12 +33,12 @@ MovableElement::MovableElement(int posX, int posY, int w, int h, int mvX, int mv
 /********************************************
     Getters
 *********************************************
-    Arthur : 23/02 - 20/03
+    Arthur : 23/02 - 09/04
 *********************************************/
-int MovableElement::getMoveX() const { return m_moveX; }
-int MovableElement::getMoveY() const { return m_moveY; }
-int MovableElement::getPosX()  const { return m_posX;  }
-int MovableElement::getPosY()  const { return m_posY;  }
+float MovableElement::getMoveX() const { return m_moveX; }
+float MovableElement::getMoveY() const { return m_moveY; }
+float MovableElement::getPosX()  const { return m_posX;  }
+float MovableElement::getPosY()  const { return m_posY;  }
 int MovableElement::getWidth() const { return m_width; }
 int MovableElement::getHeight()const { return m_height;}
 bool MovableElement::getCollisionState() const { return m_collisionState; }
@@ -46,10 +46,10 @@ bool MovableElement::getCollisionState() const { return m_collisionState; }
 /********************************************
     Setters
 *********************************************
-    Arthur : 23/02 - 22/03
+    Arthur  : 23/02 - 09/04
 *********************************************/
-void MovableElement::setPosX(int x) { m_posX = x; }
-void MovableElement::setPosY(int y) { m_posX = y; }
+void MovableElement::setPosX(float x) { m_posX = x; }
+void MovableElement::setPosY(float y) { m_posX = y; }
 void MovableElement::setCollisionState(bool collisionState) { m_collisionState = collisionState;}
 void MovableElement::setLife(int newLife) {}
 
@@ -58,7 +58,7 @@ void MovableElement::setLife(int newLife) {}
    check if a position belongs to the current
    ennemy position
 *********************************************
-    Arthur : 8/03 - 12/03
+    Arthur  : 08/03 - 09/04
 *********************************************/
 bool MovableElement::contains( const int posX, const int posY) const
 {

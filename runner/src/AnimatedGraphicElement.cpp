@@ -17,68 +17,61 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 #include "../header/AnimatedGraphicElement.h"
 
-#include <iostream>
+using namespace std::chrono;
 
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 3/03 - 19/03
+    Arthur : 3/03 - 6/04
 *********************************************/
-AnimatedGraphicElement::AnimatedGraphicElement(const std::vector<sf::IntRect> & clipRects,
-                                               sf::Texture &image, int x, int y, int w, int h):
-    GraphicElement(image, x, y, w, h), m_clip_rects{clipRects}, m_current_clip_rect{0}, m_lastAnimationTime{0}
+AnimatedGraphicElement::AnimatedGraphicElement(sf::Texture &image, float x, float y, unsigned int w,
+            unsigned int h, const std::vector<sf::IntRect> & clipRects, unsigned int separator):
+    GraphicElement(image, x, y, w, h), m_clipRectsArray{clipRects},
+    m_currentClipRect{0}, m_lastAnimationTime{system_clock::now() }, m_arraySeparator{separator}
 {
-
+    this->setTextureRect(m_clipRectsArray[m_currentClipRect]);
 }
 
 
 /********************************************
     Copy Constructor
 *********************************************
-    Arthur : 19/03
+    Arthur : 19/03 - 6/04
 *********************************************/
-AnimatedGraphicElement::AnimatedGraphicElement(AnimatedGraphicElement const& elementACopier) :
-    GraphicElement(elementACopier), m_clip_rects{elementACopier.m_clip_rects}, m_current_clip_rect{0}, m_lastAnimationTime{0}
+AnimatedGraphicElement::AnimatedGraphicElement(AnimatedGraphicElement const& other) :
+    GraphicElement(other), m_clipRectsArray{other.m_clipRectsArray},
+    m_currentClipRect{0}, m_lastAnimationTime{system_clock::now() }, m_arraySeparator{other.m_arraySeparator}
 {
-
+    this->setTextureRect(m_clipRectsArray[m_currentClipRect]);
 }
 
 
 /********************************************
     Destructor
 *********************************************
-    Arthur : 5/03 - 5/03
+    Arthur : 5/03
 *********************************************/
 AnimatedGraphicElement::~AnimatedGraphicElement()
-{
-
-}
+{}
 
 
 /********************************************
-    Drawing Function
+    Synchronization Function : change animation
 *********************************************
-    Arthur : 3/03 - 19/03
+    Arthur : 3/03 - 6/04
 *********************************************/
-void AnimatedGraphicElement::draw(sf::RenderWindow *window)
+void AnimatedGraphicElement::sync()
 {
-    //=== Change Animation
-    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-    float duration = (clock() - m_lastAnimationTime) / (double)CLOCKS_PER_SEC;
-    #else
-    float duration = 100*(clock() - m_lastAnimationTime) / (double)CLOCKS_PER_SEC;
-    #endif
-    if ( duration >= 0.150) // 150ms
+    system_clock::duration duration = system_clock::now() - m_lastAnimationTime;
+
+    if ( duration > milliseconds(200) )
     {
-        this->setTextureRect(m_clip_rects[m_current_clip_rect]);
-        if (m_current_clip_rect == m_clip_rects.size()-1)
-            m_current_clip_rect = 0;
+        if (m_currentClipRect == m_arraySeparator-1)
+            m_currentClipRect = 0;
         else
-            m_current_clip_rect++;
+            m_currentClipRect++;
 
-        m_lastAnimationTime = clock();
+        this->setTextureRect(m_clipRectsArray[m_currentClipRect]);
+        m_lastAnimationTime = system_clock::now();
     }
-
-    //=== Draw
-    window->draw(*this);
 }

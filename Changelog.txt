@@ -1,8 +1,10 @@
-Project Name (TEMP) : Runner Beta
-Developers          : Arthur JOLIVET et Florian LARONZE
+Project Name : Boko Runner
+Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current stable version : v0.3.0-r1
+Current beta version : v0.6.0-r1
 
+======================================================================================
+BETA CHANNEL Changelog
 
 v0.1.0-r1 (22/02/16) :
 
@@ -52,6 +54,7 @@ v0.1.4-r1 (5/03/16):
 - ball creation independent from model creation
 - corrections
 
+---------------------------------------------------------------------------------------------------
 
 v0.2.0-r1 (19/03/16):
 
@@ -70,16 +73,18 @@ v0.2.1-rx (20/03/16 - 22/03/16):
 - player life handling added but not showing on bottom bar so far
 - bug and memory leaks fixes
 
+
 v0.2.2-r1 (22/03/16):
 
 - Graphic evolution of player's life throught an "animated" life bar
-- TEMP: when player's life is at zero, the game quits
+
 
 v0.2.3-r1 (22/03/16):
 
 - NewMovableElement vector replaced by a set
-- Fixed Seg Fault related due to a getter returning a copy and not the object itself
+- Fixed Seg Fault related to a getter returning a copy and not the object itself
 
+---------------------------------------------------------------------------------------------------
 
 v0.3.0-r1 (12/03/16 - 09/04/16):
 
@@ -87,12 +92,33 @@ v0.3.0-r1 (12/03/16 - 09/04/16):
 	The jump is made using gravity, acceleration and vectors. It describes a parable.
 - Ball unnecessary functions clean-up
 
+---------------------------------------------------------------------------------------------------
+
+v0.6.0-r1 (23/03/16 - 09/04/16):
+
+Contains v0.4.0-dev, v0.5.0-dev and v0.6.0-dev :
+
+- v0.4.0-dev (23/03/16 - 30/03/16):
+	- Added INTRO-MENU-GAME structure :
+		- INTRO displays a Splashscreen and allows to launch the menu
+		- MENU contains background images, a title image, play and quit buttons.
+		- GAME allows to do all the features from v0.3.0
+		- Added mouse support to click on different buttons
+
+	- lots of file were completely rewritten
+	- clock() usage replaced by std::chrono which do not rely on processor clock
 
 
+- v0.5.0-dev (30/03/16 - 31/03/16):
+	- Pause menu implemented with 3 buttons (resume, restart, home menu)
 
-Current features in stable:
-=> A paralax background is scrolling 
-=> An animated player can move and jump
-=> Animated Enemies and coins appears randomly and move toward left
-=> The player can destroy enemies and collect coins
-=> A bottom bar displays player remaining life, score and distance
+
+- v0.6.0-dev (01/04/16 - 06/04/16):
+	- End Screen added with final score calculated and displayed and 2 buttons (restart, home menu)
+	- Text class created to store all texts from menu, game, pause and end
+	- Abstract classes added (View && MovableElement)
+	- Button class added
+	- Collision method added in MovableElement instead of using GameView
+	- Some "int" moved to "unsigned int" if they shouldn't have negative values
+	- Big code clean-up
+	- Lots of bug Fixes

@@ -15,59 +15,61 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifndef _VIEW_H
-#define _VIEW_H
+#ifndef MENU_H
+#define MENU_H
 
-#include "Text.h"
-#include "Model.h"
-#include "GraphicElement.h"
-#include <SFML/Graphics.hpp>
-
+#include "View.h"
 #include <cstdlib>
 #include <sstream>
 #include <iostream>
 #include <string>
-
+#include <cassert>
+#include <ctime>
+#include "SFML/Graphics.hpp"
+#include "SlidingBackground.h"
+#include "Button.h"
 
 /********************************************
     Constant Variables
 ********************************************/
-const std::string BACKGROUND_IMAGE_1 = "Images/city_1.png";
-const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
+const std::string TITLE_IMAGE = "Images/title.png";
+const std::string BUTTONS_IMAGE = "Images/buttons.png";
 
-class Model;
 
 /********************************************
-    View Abstract Class
+    Menu Class
 *********************************************
-    Arthur : 21/02 - 03/04
-    Florian: 21/02 - 3/03
+    Arthur : 26/03 - 02/04
 *********************************************/
-class View
+class Menu : public View
 {
 public:
     //=== CTORs / DTORs
-    View(unsigned int w, unsigned int h, sf::RenderWindow *window);
-    ~View();
-
-    //=== GETTERS
-    sf::RenderWindow* getWindow();
-
-    //=== SETTERS
-    void setModel(Model *model);
+    Menu(unsigned int w, unsigned int h, sf::RenderWindow *window);
+    virtual ~Menu();
 
     //=== METHODS
-    virtual void loadImages()=0;
-    virtual void synchronize()=0;
-    virtual void draw() const =0;
-    virtual bool treatEvents()=0;
+    virtual void synchronize() override;
+    virtual void draw() const override;
+    virtual void loadImages() override;
+    virtual bool treatEvents() override;
 
-protected:
+private:
     //=== ATTRIBUTES
-    unsigned int m_width, m_height;
-    sf::RenderWindow *m_window;
-    Model *m_model;
-    Text *m_text;
+
+    //Textures
+    sf::Texture m_farBackgroundTexture;
+    sf::Texture m_nearBackgroundTexture;
+    sf::Texture m_titleTexture;
+    sf::Texture m_playButtonTexture;
+    sf::Texture m_quitButtonTexture;
+
+    //Graphic Elements
+    SlidingBackground *m_farBackground;
+    SlidingBackground *m_nearBackground;
+    GraphicElement *m_titleGraphic;
+    Button *m_playButtonGraphic;
+    Button *m_quitButtonGraphic;
 };
 
-#endif
+#endif // MENU_H

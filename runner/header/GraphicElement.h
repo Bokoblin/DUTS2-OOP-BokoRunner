@@ -19,29 +19,32 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define GRAPHICELEMENT_H
 
 #include <SFML/Graphics.hpp>
+#include <chrono>
 
 /********************************************
     GraphicElement Class
 *********************************************
-    Arthur : 21/02 - 19/03
+    Arthur : 21/02 - 6/04
     Florian: 21/02 - 2/03
 *********************************************/
 class GraphicElement : public sf::Sprite
 {
 public:
     //=== CTORs / DTORs
+    GraphicElement(sf::Texture &image, float x, float y, unsigned int w, unsigned int h);
+    GraphicElement(unsigned int w, unsigned int h);
     GraphicElement(GraphicElement const& elementACopier);
-    GraphicElement(sf::Texture &image, int x, int y, int w, int h);
     ~GraphicElement();
 
     //=== METHODS
-    virtual void draw(sf::RenderWindow *window);
-    void resize (int w, int h);
+    virtual void sync();
+    virtual void draw(sf::RenderWindow *window)const;
+    void resize(unsigned int w, unsigned int h);
 
-private:
+protected:
     //=== ATTRIBUTES
-    int m_w;
-    int m_h;
+    unsigned int m_width;
+    unsigned int m_height;
 };
 
 #endif // GRAPHICELEMENT_H

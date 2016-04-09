@@ -21,11 +21,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 3/03 - 3/03
-    Florian: 3/03 - 3/03
+    Arthur : 3/03 - 3/04
+    Florian: 3/03
 *********************************************/
-SlidingBackground::SlidingBackground(sf::Texture &image, int w, int h, unsigned int speed):
-    m_width{w}, m_height{h}, m_speed{speed}
+SlidingBackground::SlidingBackground(sf::Texture &image, float w, float h, unsigned int speed):
+    GraphicElement(w, h), m_speed{speed}
 {
     m_left = new GraphicElement(image, 0, 0, w, h);
     m_right = new GraphicElement(image, w, 0, w, h);
@@ -35,7 +35,7 @@ SlidingBackground::SlidingBackground(sf::Texture &image, int w, int h, unsigned 
 /********************************************
     Destructor
 *********************************************
-    Arthur : 5/03 - 5/03
+    Arthur : 5/03
 *********************************************/
 SlidingBackground::~SlidingBackground()
 {
@@ -47,36 +47,39 @@ SlidingBackground::~SlidingBackground()
 
 
 /********************************************
-    Synchronization and drawing Function
+    Synchronization Function
 *********************************************
-    Arthur : 3/03 - 3/03
-    Florian: 3/03 - 3/03
+    Arthur : 3/03 - 26/03
 *********************************************/
-void SlidingBackground::syncAndDraw(sf::RenderWindow &window)
+void SlidingBackground::sync()
 {
-    //=== Sync
-
     m_left->setPosition(m_left->getPosition().x - m_speed, m_left->getPosition().y);
     m_right->setPosition(m_right->getPosition().x - m_speed, m_right->getPosition().y);
-
 
     if ( m_left->getPosition().x + m_width < 0 )
     {
         m_left->setPosition(0, 0);
         m_right->setPosition(m_width, 0);
     }
-
-    //=== Draw
-
-    window.draw(*m_left);
-    window.draw(*m_right);
 }
 
 
 /********************************************
-    SETTERS
+    Drawing Function
 *********************************************
-    Arthur : 3/03 - 3/03
-    Florian: 3/03 - 3/03
+    Arthur : 3/03 - 03/04
 *********************************************/
-void SlidingBackground::setSpeed(unsigned int speed) { m_speed = speed;}
+void SlidingBackground::draw(sf::RenderWindow *window) const
+{
+    window->draw(*m_left);
+    window->draw(*m_right);
+}
+
+
+/********************************************
+    Setters
+*********************************************
+    Arthur : 3/03
+    Florian: 3/03
+*********************************************/
+void SlidingBackground::setSpeed(unsigned int speed) { m_speed = speed; }

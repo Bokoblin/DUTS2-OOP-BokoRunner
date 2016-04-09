@@ -15,67 +15,62 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include "../header/Model.h"
-
-using namespace std;
+#include "../header/Button.h"
 
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 21/02 - 31/03
-    Florian: 21/02 - 2/03
+    Arthur : 6/04
 *********************************************/
-Model::Model(unsigned int width, unsigned int height, const chrono::_V2::system_clock::time_point beginTime)  :
-    m_width(width), m_height(height), m_programBeginningTime{beginTime}
+Button::Button(const std::vector<sf::IntRect> & clipRects,
+        sf::Texture &image, float x, float y, unsigned int w, unsigned int h):
+    GraphicElement(image, x, y, w, h), m_clipRectsArray{clipRects}, m_currentClipRect{0}, m_pressedState{false}
 {
-    m_introState = true;
-    m_menuState = false;
-    m_gameState = false;
-    m_resetGameState = false;
+    this->setTextureRect(m_clipRectsArray[m_currentClipRect]);
+}
+
+
+/********************************************
+    Copy Constructor
+*********************************************
+    Arthur : 6/04
+*********************************************/
+Button::Button(Button const& elementACopier) :
+    GraphicElement(elementACopier), m_clipRectsArray{elementACopier.m_clipRectsArray},
+    m_currentClipRect{0}, m_pressedState{false}
+{
+    this->setTextureRect(m_clipRectsArray[m_currentClipRect]);
 }
 
 
 /********************************************
     Destructor
 *********************************************
-    Arthur : 21/02 - 26/03
-    Florian: 21/02 - 2/03
+    Arthur : 6/04
 *********************************************/
-Model::~Model()
-{
-}
-
-
-/********************************************
-    Getters
-*********************************************
-    Arthur : 21/02 - 31/03
-    Florian: 21/02 - 25/02
-*********************************************/
-bool Model::getIntroState() const {return m_introState;}
-bool Model::getMenuState() const {return m_menuState;}
-bool Model::getGameState() const {return m_gameState;}
-bool Model::getResetGameState() const {return m_resetGameState;}
-std::chrono::system_clock::time_point Model::getProgramBeginningTime() const { return m_programBeginningTime; }
-
+Button::~Button()
+{}
 
 
 /********************************************
     Setters
 *********************************************
-    Arthur : 8/03 - 31/03
+    Arthur : 6/04
 *********************************************/
-void Model::setIntroState(bool state) {m_introState = state;}
-void Model::setMenuState(bool state) {m_menuState = state;}
-void Model::setGameState(bool state) {m_gameState = state;}
-void Model::setResetGameState(bool state) {m_resetGameState = state;}
-
+void Button::setPressedState(bool state) { m_pressedState = state; }
 
 
 /********************************************
-    Next Step
+    Synchronization Function : change animation
 *********************************************
-    Arthur : 21/02 - 27/03
+    Arthur : 6/04
 *********************************************/
-void Model::nextStep()
-{ }
+void Button::sync()
+{
+    if ( m_pressedState == false )
+        m_currentClipRect = 0;
+    else
+        m_currentClipRect = 1;
+
+    this->setTextureRect(m_clipRectsArray[m_currentClipRect]);
+}

@@ -15,87 +15,100 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include "../header/GraphicElement.h"
-#include <iostream>
+#include "../header/Intro.h"
 
-using namespace std::chrono;
-
-/********************************************
-    Parameterized Constructors
-*********************************************
-    Arthur : 21/02 - 03/04
-    Florian: 21/02 - 2/03
-*********************************************/
-GraphicElement::GraphicElement(sf::Texture &image, float x, float  y,
-        unsigned int w, unsigned int h) : m_width{w}, m_height{h}
-{
-    this->setTexture(image);
-    this->setPosition(x, y);
-}
-
-GraphicElement::GraphicElement( unsigned int w, unsigned int h) : m_width{w}, m_height{h}
-{}
-
+using namespace std;
 
 /********************************************
-    Copy Constructor
+    Parameterized Constructor
 *********************************************
-    Arthur : 25/02 - 20/03
-    Florian:  2/03 - 2/03
+    Arthur : 27/03
 *********************************************/
-GraphicElement::GraphicElement(GraphicElement const& elementACopier) :
-    Sprite(), m_width(elementACopier.m_width), m_height(elementACopier.m_height)
+Intro::Intro(unsigned int w, unsigned int h, sf::RenderWindow *window): View(w, h, window)
 {
-    this->setPosition( elementACopier.getPosition() );
-    this->setTexture( *elementACopier.getTexture(), true );
-    this->setOrigin( elementACopier.getOrigin() );
+    m_window->create( sf::VideoMode(w, h, 32), "Boko Runner", sf::Style::None );
+    m_window->setFramerateLimit(30);
+    m_window->setPosition(sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2, (sf::VideoMode::getDesktopMode().height - m_height)/2 ));
+
+    loadImages();
 }
 
 
 /********************************************
     Destructor
 *********************************************
-    Arthur : 21/02
-    Florian: 21/02
+    Arthur : 27/03
 *********************************************/
-GraphicElement::~GraphicElement()
-{}
+Intro::~Intro()
+{
+    if(m_introGraphic!= NULL)
+        delete m_introGraphic;
+}
+
+
+/********************************************
+    Image Loading
+*********************************************
+    Arthur : 27/03
+*********************************************/
+void Intro::loadImages()
+{
+    if (!m_introTexture.loadFromFile(INTRO_IMAGE))
+        cerr << "ERROR when loading image file: " << INTRO_IMAGE << endl;
+    else
+    {
+        m_introTexture.setSmooth(true);
+        m_introGraphic = new GraphicElement(m_introTexture, 0,0, 400, 200);
+    }
+}
 
 
 /********************************************
     Synchronization function
 *********************************************
-    Arthur : 03/04
+    Arthur : 27/03
 *********************************************/
-void GraphicElement::sync()
-{}
+void Intro::synchronize()
+{ }
 
 
 /********************************************
-    Drawing function
+    View Drawing
 *********************************************
-    Arthur : 30/03
+    Arthur : 27/03
 *********************************************/
-void GraphicElement::draw(sf::RenderWindow *window) const
+void Intro::draw() const
 {
-    window->draw(*this);
+    m_window->clear();
+
+    m_window->draw(*m_introGraphic);
+
+    m_window->display();
 }
 
 
 /********************************************
-    Resizing function
+    Events treating
 *********************************************
-    Arthur : 22/02 - 25/02
-    Florian: 22/02
+    Arthur : 27/03
 *********************************************/
-void GraphicElement::resize(unsigned int width, unsigned int height)
+bool Intro::treatEvents()
 {
-    sf::FloatRect bb = this->getLocalBounds();
-    float width_factor = width / bb.width;
-    float height_factor = height / bb.height;
-    this->setScale(width_factor, height_factor);
-    //modification largeur et hauteur
-    this->m_width = width;
-    this->m_height = height;
-}
+    bool result = false;
 
+    if(m_window->isOpen())
+    {
+        result = true;
+
+        sf::Event event;
+        while (m_window->pollEvent(event))
+        {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_model->getIntroState() == true)
+            {
+                m_model->setIntroState(false);
+                m_model->setMenuState(true);
+            }
+        }
+    }
+    return result;
+}

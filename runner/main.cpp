@@ -19,6 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "header/View.h"
 #include "header/Model.h"
 
+
 const int SCREEN_WIDTH = 900;
 const int SCREEN_HEIGHT = 600;
 

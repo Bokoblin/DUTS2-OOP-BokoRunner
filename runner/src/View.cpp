@@ -28,7 +28,7 @@ using namespace std;
 View::View(int w, int h): m_viewWidth(w), m_viewHeight(h)
 {
     m_window = new sf::RenderWindow( sf::VideoMode(w, h, 32), "Runner", sf::Style::Close );
-    m_window->setFramerateLimit(30);
+    m_window->setFramerateLimit(FRAMERATE);
 
     //=== Images Loading
 
@@ -309,11 +309,11 @@ void View::updateElements()
                 it->second->setTexture(m_explosionTexture);
                 (it->first)->setCollisionState(true);
                 if (it->first->getEnemyType() == 0)
-                    PLAYER->setLife(PLAYER->getLife()-10);
+                    m_model->getPlayer()->setLife(m_model->getPlayer()->getLife()-10);
                 if (it->first->getEnemyType() == 1)
-                    PLAYER->setLife(PLAYER->getLife()-15);
+                    m_model->getPlayer()->setLife(m_model->getPlayer()->getLife()-15);
                 if (it->first->getEnemyType() == 2)
-                    PLAYER->setLife(PLAYER->getLife()-20);
+                    m_model->getPlayer()->setLife(m_model->getPlayer()->getLife()-20);
             }
 
             if (it->first->getEnemyType() == 1)
@@ -428,17 +428,12 @@ void View::draw()
 /********************************************
     Events treating
 *********************************************
-    Arthur : 21/02 - 22/03
-    Florian: 21/02 - 2/03
+    Arthur : 21/02 - 9/04
+    Florian: 21/02 - 06/04
 *********************************************/
 bool View::treatEvents()
 {
     bool result = false;
-    if  ( m_model->getPlayer()->getLife() == 0) //tmp
-    {
-        m_window->close();
-        result = false;
-    }
 
     if(m_window->isOpen())
     {
@@ -447,26 +442,39 @@ bool View::treatEvents()
         sf::Event event;
         while (m_window->pollEvent(event))
         {
-            if  (event.type == sf::Event::Closed)
+            switch (event.type)
             {
+            case sf::Event::Closed:
                 m_window->close();
-                result = false;
+                break;
+            case sf::Event::KeyPressed:
+                if (event.key.code == sf::Keyboard::Escape)
+                {
+                    m_window->close();
+                    result = false;
+                }
+                if ( (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q)
+                    && (m_model->getPlayer()->getVector().first <7) )
+                {
+                    m_model->getPlayer()->controlPlayerMovements(true);
+                }
+                if ( (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
+                    && (m_model->getPlayer()->getVector().first <7) )
+                {
+                    m_model->getPlayer()->controlPlayerMovements(false);
+                }
+                if ( (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::Space)
+                    && (m_model->getPlayer()->getPosY() >= GAME_FLOOR - m_model->getPlayer()->getHeight()) )
+                {
+                    m_model->getPlayer()->setJumpState(true);
+                }
+                break;
+            case sf::Event::KeyReleased:
+                    m_model->getPlayer()->setDecelerationState(true);
+                break;
+            default:
+                break;
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-            {
-                m_window->close();
-                result = false;
-            }
-        }
-        if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
-             && PLAYER->getPosX()  > 0 )
-        {
-            m_model->moveBallAccordingEvent(true);
-        }
-        if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) )
-             && (PLAYER->getPosX() + PLAYER->getWidth()) < m_viewWidth )
-        {
-            m_model->moveBallAccordingEvent(false);
         }
     }
     return result;

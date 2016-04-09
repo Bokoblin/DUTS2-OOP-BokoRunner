@@ -23,7 +23,7 @@ using namespace std;
     Parameterized Constructor
 *********************************************
     Arthur : 21/02 - 20/03
-    Florian: 21/02 - 2/03
+    Florian: 21/02 - 6/04
 *********************************************/
 Model::Model(int width, int height)  :
     m_modelWidth(width), m_modelHeight(height), m_score{0},
@@ -101,7 +101,6 @@ void Model::nextStep()
                 addANewMovableElement(m_modelWidth, GAME_FLOOR, 1);
                 m_currentEnemyInterdistance = 0;
                 chooseInterdistance(1);
-                //cout << "enemy " << m_chosenCoinInterdistance << endl;
             }
         }
         else m_currentEnemyInterdistance++;
@@ -115,7 +114,6 @@ void Model::nextStep()
                 addANewMovableElement(m_modelWidth, GAME_FLOOR, 2);
                 m_currentCoinInterdistance = 0;
                 chooseInterdistance(2);
-                //cout << "coin " << m_chosenCoinInterdistance << endl;
             }
         }
         else m_currentCoinInterdistance++;
@@ -194,20 +192,6 @@ void Model::clearNewMovableElementList()
 }
 
 
-/********************************************
-    Ball Moving
-*********************************************
-    Arthur : 21/02 - 6/03
-    Florian: 21/02 - 2/03
-*********************************************/
-void Model::moveBallAccordingEvent(bool left)
-{
-    if (left)
-        m_player->setPosX( m_player->getPosX() - 10 );
-    if (!left)
-        m_player->setPosX( m_player->getPosX() + 10 );
-}
-
 
 /********************************************
     Elements Moving (enemies, bonus, ...)
@@ -227,12 +211,12 @@ void Model::moveMovableElement(MovableElement *currentElement)
     Arthur : 25/02 - 22/03
     Florian: 2/03 - 2/03
 *********************************************/
-void Model::addANewMovableElement(int posX, int posY, int type)
+void Model::addANewMovableElement(float posX, float posY, int type)
 {
     m_newMElement = nullptr;
     if (type == 0) //Ball
     {
-        m_newMElement = new Ball(posX, posY, 30, 30, 0, 0);
+        m_newMElement = new Ball(posX, posY, 30, 30, 2.0, 12.0);
         m_player = m_newMElement;
     }
     else if (type == 1) //Enemy

@@ -21,10 +21,11 @@ using namespace std;
 *********************************************
     Arthur : 19/03
 *********************************************/
-Coin::Coin(int posX, int posY, int w, int h, int mvX, int mvY) :
-    MovableElement(posX, posY, w, h, mvX, mvY)
+Coin::Coin(unsigned int x, unsigned int y, unsigned int w, unsigned int h,
+        int mvX, int mvY) : MovableElement(x, y, w, h, mvX, mvY)
 {
-
+    m_elementType = 4;
+    m_life = 1;
 }
 
 
@@ -34,9 +35,8 @@ Coin::Coin(int posX, int posY, int w, int h, int mvX, int mvY) :
     Arthur : 19/03
 *********************************************/
 Coin::~Coin()
-{
+{}
 
-}
 
 /********************************************
     Coin Moving

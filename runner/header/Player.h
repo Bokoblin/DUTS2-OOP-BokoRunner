@@ -31,39 +31,36 @@ const int JUMP_LIMIT = 380;
 const float PRECISION = 1.0;
 
 /********************************************
-    Ball Class
+    Player Class
 *********************************************
-    Arthur : 22/02 - 8/04
+    Arthur : 22/02 - 9/04
     Florian: 22/02 - 6/04
 *********************************************/
-class Ball : public MovableElement
+class Player : public MovableElement
 {
 public:
     //=== CTORs / DTORs
-   Ball(float posX,float posY, int w, int h, float mvX, float mvY);
-    ~Ball();
+   Player(float posX,float posY, unsigned int w, unsigned int h, float mvX, float mvY);
+    virtual ~Player();
 
     //=== GETTERS
-    virtual int getType() const override { return 0;}
-    virtual int getLife() const override {return m_life;}
-    virtual bool getFlyingState() const override;
-    virtual bool getJumpState() const override;
-    virtual bool getDecelerationState() const override;
-    virtual std::pair<float,float> getVector() const override;
+    bool getFlyingState() const;
+    bool getJumpState() const;
+    bool getDecelerationState() const;
+    std::pair<float,float> getVector() const;
 
     //=== SETTERS
-    virtual void setLife(int new_life) override ;
-    virtual void setFlyingState(bool etat) override;
-    virtual void setJumpState(bool etat) override;
-    virtual void setDecelerationState(bool etat) override;
+    virtual void setLife(unsigned int new_life) ;
+    void setFlyingState(bool etat);
+    void setJumpState(bool etat);
+    void setDecelerationState(bool etat);
 
     //=== METHODS
     virtual void move() override;
-    virtual void controlPlayerMovements(bool left) override;
+    void controlPlayerMovements(bool left);
 
 
 private:
-    int m_life;
     bool m_jumping;
     bool m_flying;
     bool m_inDeceleration;

@@ -18,72 +18,50 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #ifndef _MODEL_H
 #define _MODEL_H
 
-#include "Ball.h"
-#include "Enemy.h"
-#include "Coin.h"
 #include <cstdlib>
 #include <iostream>
-#include <set>
 #include <cassert>
-#include <ctime>
-
-
-const int PLAYER_DEFAULT_POS_X = 50;
-
+#include <chrono>
 
 /********************************************
     Model Class
 *********************************************
-    Arthur : 21/02 - 8/04
-    Florian: 21/02 - 6/04
+    Arthur : 21/02 - 31/03
+    Florian: 21/02 - 2/03
 *********************************************/
 class Model
 {
 public:
     //=== CTORs / DTORs
-    Model(int width, int height);
-    ~Model();
+    Model(unsigned int w, unsigned int h, const std::chrono::system_clock::time_point beginTime);
+    virtual ~Model();
 
     //=== GETTERS
-    MovableElement* getPlayer() const;
-    int getScore() const;
-    int getDistance() const;
-    int getGameSpeed() const;
-    const std::set<MovableElement*>& getNewMElementsArray();
-    const std::set<MovableElement*>& getMElementsArray();
+    bool getIntroState() const;
+    bool getMenuState() const;
+    bool getGameState() const;
+    bool getResetGameState() const;
+    std::chrono::system_clock::time_point getProgramBeginningTime() const ;
 
     //=== SETTERS
-    void setGameSpeed(int speed);
-    void setCoinPickedUp() ;
+    void setIntroState(bool state);
+    void setMenuState(bool state);
+    void setGameState(bool state);
+    void setResetGameState(bool state);
 
     //=== METHODS
-    void nextStep();
-    void chooseInterdistance(int elementType);
-    bool checkIfPositionFree(const int posX, const int posY) const;
-    void moveMovableElement(MovableElement *element);
-    void deleteMovableElement();
-    void addANewMovableElement(float posX, float posY, int type);
-    void clearNewMovableElementList();
+    virtual void nextStep();
+
+protected:
+    //=== ATTRIBUTES
+    unsigned int m_width, m_height;
+    const std::chrono::system_clock::time_point m_programBeginningTime;
 
 private:
-    //=== ATTRIBUTES
-    int m_modelWidth, m_modelHeight;
-    int m_score;
-    int m_totalDistance;
-    int m_gameSpeed;
-    time_t m_lastTime;
-    int m_nbCoinsPickedUp;
-    int m_currentEnemyInterdistance;
-    int m_currentCoinInterdistance;
-    int m_chosenEnemyInterdistance; //interdistance between enemies
-    int m_chosenCoinInterdistance; //interdistance between coins
-
-    MovableElement *m_player;
-    MovableElement *m_newMElement;
-    //Containers
-    std::set<MovableElement*> m_movableElementsArray;
-    std::set<MovableElement*> m_newMovableElementsArray;
-
+    bool m_introState;
+    bool m_menuState;
+    bool m_gameState;
+    bool m_resetGameState;
 };
 
 #endif

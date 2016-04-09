@@ -28,17 +28,12 @@ class Coin : public MovableElement
 {
 public:
     //=== CTORs / DTORs
-    Coin(int posX, int posY, int w, int h, int movX, int movY);
+    Coin(unsigned int posX, unsigned int posY, unsigned int w, unsigned int h, int movX, int movY);
     virtual ~Coin();
-
-    //=== GETTERS
-    int getType() const { return 2;}
-
 
     //=== METHODS
     void move();
 
-private:
 };
 
 #endif // COIN_H

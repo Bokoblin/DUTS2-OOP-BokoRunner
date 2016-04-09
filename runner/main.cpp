@@ -16,33 +16,79 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include "header/View.h"
-#include "header/Model.h"
+#include "header/Menu.h"
+#include "header/Intro.h"
+#include "header/GameView.h"
+#include "header/GameModel.h"
+#include <iostream>
+#include <chrono>
 
 
 const int SCREEN_WIDTH = 900;
 const int SCREEN_HEIGHT = 600;
+const std::chrono::system_clock::time_point programBeginningTime = std::chrono::system_clock::now();
+
+using namespace std;
 
 /********************************************
     Main function
 *********************************************
-    Arthur : 21/02 - 13/03
+    Arthur : 21/02 - 03/03
     Florian: 21/02 - 21/02
 *********************************************/
 int main()
 {
     srand(time(NULL));
+    sf::RenderWindow *window = new sf::RenderWindow( sf::VideoMode(SCREEN_WIDTH,
+                                                                    SCREEN_HEIGHT, 32), "Boko Runner", sf::Style::None );
+    window->setFramerateLimit(30);
 
-    Model model(SCREEN_WIDTH, SCREEN_HEIGHT);
-    View view(SCREEN_WIDTH, SCREEN_HEIGHT);
-    view.setModel(&model);
-    model.addANewMovableElement(PLAYER_DEFAULT_POS_X, GAME_FLOOR, 0); //0 = Player
-    while(view.treatEvents())
+    Model model(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
+
+    while(window->isOpen() )
     {
-        model.nextStep();
-        view.synchronize();
-        view.draw();
+        if  (model.getIntroState() == true)
+        {
+            Intro intro(400, 200, window);
+            intro.setModel(&model);
+            while( model.getIntroState() && intro.treatEvents() )
+            {
+                intro.synchronize();
+                intro.draw();
+            }
+        }
+
+        if  (model.getMenuState() == true)
+        {
+            Menu menu(SCREEN_WIDTH, SCREEN_HEIGHT, window);
+            menu.setModel(&model);
+            while( model.getMenuState() && menu.treatEvents()  )
+            {
+                menu.synchronize();
+                menu.draw();
+            }
+        }
+
+        if  (model.getGameState() == true)
+        {
+            GameModel gModel(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
+            GameView gView(SCREEN_WIDTH, SCREEN_HEIGHT, window);
+            gView.setGameModel(&gModel);
+            while( model.getGameState() && gView.treatEvents() )
+            {
+                gModel.nextStep();
+                gView.synchronize();
+                gView.draw();
+            }
+            if (model.getResetGameState() == true)
+            {
+                model.setGameState(true);
+                model.setResetGameState(false);
+            }
+        }
     }
+
+    delete window;
 
     return EXIT_SUCCESS;
 }

@@ -15,22 +15,24 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include "../header/Ball.h"
-
+#include "../header/Player.h"
+#include <iostream>
 using namespace std;
 
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 22/02 - 09/03
-    Florian: 22/02 - 06/03
+    Arthur : 22/02 - 09/04
+    Florian: 22/02 - 06/04
 *********************************************/
-Ball::Ball(float posX, float posY, int w, int h, float mvX, float mvY) :
-    MovableElement(posX, posY, w, h, mvX, mvY), m_life{100},
+Player::Player(float posX, float posY, unsigned int w, unsigned int h, float mvX, float mvY) :
+    MovableElement(posX, posY, w, h, mvX, mvY),
     m_jumping{false}, m_flying{false}, m_inDeceleration{false}
 {
-    m_vectorBall.first=0;
-    m_vectorBall.second=0;
+    m_elementType = 0;
+    m_life  = 100;
+    m_vectorBall.first = 0;
+    m_vectorBall.second = 0;
 }
 
 /********************************************
@@ -39,10 +41,8 @@ Ball::Ball(float posX, float posY, int w, int h, float mvX, float mvY) :
     Arthur : 23/02 - 22/02
     Florian: 22/02 - 22/02
 *********************************************/
-Ball::~Ball()
-{
-
-}
+Player::~Player()
+{}
 
 
 /********************************************
@@ -51,10 +51,10 @@ Ball::~Ball()
     Arthur :  20/03 - 9/04
     Florian : 17/03 - 6/04
 *********************************************/
-bool Ball::getFlyingState() const { return m_flying; }
-bool Ball::getJumpState() const { return m_jumping; }
-bool Ball::getDecelerationState() const { return m_inDeceleration; }
-pair<float,float> Ball::getVector() const { return m_vectorBall; }
+bool Player::getFlyingState() const { return m_flying; }
+bool Player::getJumpState() const { return m_jumping; }
+bool Player::getDecelerationState() const { return m_inDeceleration; }
+pair<float,float> Player::getVector() const { return m_vectorBall; }
 
 
 /********************************************
@@ -63,15 +63,16 @@ pair<float,float> Ball::getVector() const { return m_vectorBall; }
     Arthur :  08/04 - 09/04
     Florian : 17/03 - 6/04
 *********************************************/
-void Ball::setFlyingState(bool etat) { m_flying = etat; }
-void Ball::setJumpState(bool etat) {  m_jumping = etat; }
-void Ball::setDecelerationState(bool etat) {  m_inDeceleration = etat; }
+void Player::setFlyingState(bool etat) { m_flying = etat; }
+void Player::setJumpState(bool etat) {  m_jumping = etat; }
+void Player::setDecelerationState(bool etat) {  m_inDeceleration = etat; }
 
-void Ball::setLife(int new_life)
+void Player::setLife(unsigned int new_life)
 {
-    m_life = new_life;
-    if (m_life < 0)
+    if ( m_life <= new_life)
         m_life = 0;
+    else
+        m_life = new_life;
 }
 
 
@@ -81,9 +82,9 @@ void Ball::setLife(int new_life)
     Arthur :  8/04 - 9/04
     Florian : 12/03 - 6/04
 *********************************************/
-void Ball::move()
+void Player::move()
 {
-    m_flying =m_width < GAME_FLOOR - m_height;
+    m_flying =m_width < GAME_FLOOR;
 
     if (m_posY < JUMP_LIMIT)
         m_jumping = false;
@@ -110,19 +111,19 @@ void Ball::move()
         m_posY+= m_vectorBall.second/FRAMERATE;
     }
 
-    if( m_posY == GAME_FLOOR - m_height && m_flying == true)
+    if( m_posY == GAME_FLOOR && m_flying == true)
     {
         m_flying =false;
         m_jumping=false;
-        m_posY = GAME_FLOOR - m_height;
+        m_posY = GAME_FLOOR;
     }
-    if(m_posY > GAME_FLOOR - m_height )
+    if(m_posY > GAME_FLOOR )
     {
         m_vectorBall.second = 0;
-        m_posY = GAME_FLOOR - m_height;
+        m_posY = GAME_FLOOR;
     }
 
-   //Update ball position
+   //=== Update ball position
 
     if ( m_posX + m_vectorBall.first >= 0 && (m_posX + m_width + m_vectorBall.first) <= 900 )
     {
@@ -140,12 +141,12 @@ void Ball::move()
 
 
 /********************************************
-    Ball Control
+    Player Control
 *********************************************
     Arthur :  8/04 - 9/04
     Florian : 22/03 - 6/04
 *********************************************/
-void Ball::controlPlayerMovements(bool left)
+void Player::controlPlayerMovements(bool left)
 {
     m_inDeceleration = false;
     if (left == true)

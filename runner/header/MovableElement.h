@@ -19,24 +19,24 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #define MOVABLEELEMENT_H
 
 #include <string>
-#include <ctime>
 
 /********************************************
-    MovableElement Class
+    MovableElement Abstract Class
 *********************************************
-    Arthur : 23/02 - 08/04
+    Arthur : 23/02 - 09/04
     Florian: 02/03 - 06/04
 *********************************************/
 class MovableElement
 {
 public:
     //=== CTORs / DTORs
-    MovableElement(float posX, float posY, int w, int h, float mvX, float mvY);
-    virtual ~MovableElement() {}
+    MovableElement(float posX, float posY, unsigned int w, unsigned int h, float mvX, float mvY);
+    virtual ~MovableElement();
 
     //=== METHODS
-    virtual void move() {} //defining it as virtual allows to override it
-    bool contains( const int posX, const int posY) const ;
+    virtual void move()=0;
+    bool contains(float posX, float posY) const ;
+    bool collision( const MovableElement & other) const ;
     std::string to_string()const ;
 
     //=== GETTERS
@@ -44,41 +44,40 @@ public:
     float getPosY() const;
     float getMoveX() const;
     float getMoveY() const;
-    int getWidth() const;
-    int getHeight() const;
+    unsigned int getWidth() const;
+    unsigned int getHeight() const;
     bool getCollisionState() const;
-    virtual int getType() const {return -1;}
-    virtual int getEnemyType() const {return -1;}
-    virtual int getLife() const {return -1;}
-    virtual bool getJumpState() const{return false;}
-    virtual bool getFlyingState() const{return false;}
-    virtual bool getDecelerationState() const {return false;}
-    virtual std::pair<float,float> getVector() const {}
+    virtual int getType() const;
+    virtual unsigned int getLife() const;
 
 
     //=== SETTERS
     void setPosX(float x);
     void setPosY(float y);
-    virtual void setJumpState(bool newState){}
-    virtual void setFlyingState(bool newState){}
-    virtual void setDecelerationState(bool newState) {};
-    virtual void setStartTimeJump (clock_t time) {}
-    virtual void setVector(float x, float y){}
-    virtual void controlPlayerMovements(bool left) {}
     void setCollisionState(bool collisionState);
-    virtual void setLife(int newLife);
+    virtual void setLife(unsigned int newLife);
 
 
 protected:
     //=== ATTRIBUTES
     float m_posX;
     float m_posY;
-    int m_width;
-    int m_height;
+    unsigned int m_width;
+    unsigned int m_height;
     float m_moveX;
     float m_moveY;
     int m_typeElement; //0 for Ball, 1 for obstacles, 2 for bonuses
     bool m_collisionState;
+    unsigned int m_life;
+    int m_elementType;
+    /** Element Type :
+    0 : Player
+    1 : Standard Enemy
+    2 : Totem Enemy
+    3 : Block Enemy
+    4 : Coins
+    */
+
 };
 
 #endif // MOVABLEELEMENT_H

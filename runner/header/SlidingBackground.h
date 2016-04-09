@@ -24,27 +24,26 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     SlidingBackground Class
 *********************************************
-    Arthur : 3/03 - 5/03
+    Arthur : 3/03 - 03/04
     Florian: 3/03 - 3/03
 *********************************************/
-class SlidingBackground
+class SlidingBackground : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
-    SlidingBackground(sf::Texture &image, int w, int h, unsigned int speed);
+    SlidingBackground(sf::Texture &image, float w, float h, unsigned int speed);
     virtual ~SlidingBackground();
 
     //=== METHODS
-    void syncAndDraw(sf::RenderWindow &window);
+    virtual void sync() override;
+    virtual void draw(sf::RenderWindow *window) const override;
 
     //=== SETTERS
     void setSpeed(unsigned int speed);
 
-
 private:
     //=== ATTRIBUTES
     GraphicElement *m_left, *m_right;
-    int m_width, m_height;
     unsigned int m_speed;
 
 };

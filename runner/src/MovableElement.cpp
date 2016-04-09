@@ -23,11 +23,20 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     Arthur : 23/02 - 09/04
     Florian: 02/03 - 02/03
 *********************************************/
-MovableElement::MovableElement(float posX, float posY, int w, int h, float mvX, float mvY) :
-    m_posX{posX}, m_posY{posY}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY}, m_collisionState{false}
+MovableElement::MovableElement(float x, float y, unsigned int w, unsigned int h, float mvX, float mvY) :
+    m_posX{x}, m_posY{y}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY}, m_collisionState{false}
 {
 
 }
+
+
+/********************************************
+    Destructor
+*********************************************
+    Arthur : 23/02
+*********************************************/
+MovableElement::~MovableElement()
+{}
 
 
 /********************************************
@@ -39,9 +48,11 @@ float MovableElement::getMoveX() const { return m_moveX; }
 float MovableElement::getMoveY() const { return m_moveY; }
 float MovableElement::getPosX()  const { return m_posX;  }
 float MovableElement::getPosY()  const { return m_posY;  }
-int MovableElement::getWidth() const { return m_width; }
-int MovableElement::getHeight()const { return m_height;}
+unsigned int MovableElement::getWidth() const { return m_width; }
+unsigned int MovableElement::getHeight()const { return m_height;}
 bool MovableElement::getCollisionState() const { return m_collisionState; }
+unsigned int MovableElement::getLife() const { return m_life; }
+
 
 /********************************************
     Setters
@@ -50,8 +61,9 @@ bool MovableElement::getCollisionState() const { return m_collisionState; }
 *********************************************/
 void MovableElement::setPosX(float x) { m_posX = x; }
 void MovableElement::setPosY(float y) { m_posX = y; }
-void MovableElement::setCollisionState(bool collisionState) { m_collisionState = collisionState;}
-void MovableElement::setLife(int newLife) {}
+int MovableElement::getType() const { return m_elementType; }
+void MovableElement::setCollisionState(bool state) { m_collisionState = state;}
+void MovableElement::setLife(unsigned int life) {}
 
 
 /********************************************
@@ -60,13 +72,23 @@ void MovableElement::setLife(int newLife) {}
 *********************************************
     Arthur  : 08/03 - 09/04
 *********************************************/
-bool MovableElement::contains( const int posX, const int posY) const
+bool MovableElement::contains( float posX, float posY) const
 {
-    int  maxX = m_posX + m_width;
-    int  maxY = m_posY + m_height;
+    float  maxX = m_posX + m_width;
+    float  maxY = m_posY + m_height;
 
     return (posX >= m_posX) && (posX < maxX) && (posY >= m_posY) && (posY < maxY);
 }
+
+
+bool MovableElement::collision( const MovableElement& other) const
+{
+    return ( this->contains( other.getPosX(), other.getPosY() )
+        || this->contains( other.getPosX() + other.getWidth(), other.getPosY() )
+        || this->contains( other.getPosX(), other.getPosY()+ other.getHeight() )
+        || this->contains( other.getPosX() + other.getWidth(), other.getPosY() + other.getHeight() ) );
+}
+
 
 /********************************************
     String transforming function

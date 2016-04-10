@@ -468,7 +468,7 @@ void GameView::draw() const
     Events treating
 *********************************************
     Arthur : 21/02 - 09/04
-    Florian: 21/02 - 06/04
+    Florian: 21/02 - 10/04
 *********************************************/
 bool GameView::treatEvents()
 {
@@ -482,11 +482,11 @@ bool GameView::treatEvents()
         {
             //=== Player Controls in Game Screen
 
-            if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) ) )
+            if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) ) && m_gameModel->getPlayer()->getVector().first > -10)
             {
                 m_gameModel->getPlayer()->controlPlayerMovements(true);
             }
-            else if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) ) )
+            else if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) ) && m_gameModel->getPlayer()->getVector().first < 10 )
             {
                 m_gameModel->getPlayer()->controlPlayerMovements(false);
             }

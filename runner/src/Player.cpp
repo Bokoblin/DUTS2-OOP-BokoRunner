@@ -49,7 +49,7 @@ Player::~Player()
     Getters
 *********************************************
     Arthur :  20/03 - 9/04
-    Florian : 17/03 - 6/04
+    Florian : 17/03 - 10/04
 *********************************************/
 bool Player::getFlyingState() const { return m_flying; }
 bool Player::getJumpState() const { return m_jumping; }
@@ -80,10 +80,11 @@ void Player::setLife(unsigned int new_life)
     Ball Moving
 *********************************************
     Arthur :  8/04 - 9/04
-    Florian : 12/03 - 6/04
+    Florian : 12/03 - 10/04
 *********************************************/
 void Player::move()
 {
+    cout << m_posY << endl;
     m_flying =m_width < GAME_FLOOR;
 
     if (m_posY < JUMP_LIMIT)
@@ -99,7 +100,7 @@ void Player::move()
         m_vectorBall.first /= 1+m_moveX/FRAMERATE;
     }
 
-    if(m_jumping)
+    if(m_jumping && m_posY >=GAME_FLOOR)
     {
         m_vectorBall.second = -m_moveY*GRAVITATION/FRAMERATE;
         m_posY+= m_vectorBall.second/FRAMERATE;
@@ -136,15 +137,23 @@ void Player::move()
     else
         m_posX = 900 - m_width;
 
-    m_posY += m_vectorBall.second;
-}
 
+    m_posY += m_vectorBall.second;
+
+     if(m_posY >= GAME_FLOOR + PRECISION)
+     { m_vectorBall.second =0;
+     m_posY=GAME_FLOOR;
+     }
+
+
+
+}
 
 /********************************************
     Player Control
 *********************************************
     Arthur :  8/04 - 9/04
-    Florian : 22/03 - 6/04
+    Florian : 22/03 - 10/04
 *********************************************/
 void Player::controlPlayerMovements(bool left)
 {

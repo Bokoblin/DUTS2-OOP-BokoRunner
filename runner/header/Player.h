@@ -34,7 +34,7 @@ const float PRECISION = 1.0;
     Player Class
 *********************************************
     Arthur : 22/02 - 9/04
-    Florian: 22/02 - 6/04
+    Florian: 22/02 - 10/04
 *********************************************/
 class Player : public MovableElement
 {

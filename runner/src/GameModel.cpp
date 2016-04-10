@@ -250,7 +250,7 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
     m_newMElement = nullptr;
     if (type == 0) //Ball
     {
-        m_player = new Player(posX, posY, 30, 30, 2.0, 12.0);
+        m_player = new Player(posX, posY, 30, 30, 2.0, 18.0);
         m_newMElement = m_player;
     }
     else if (type == 1) //Enemy

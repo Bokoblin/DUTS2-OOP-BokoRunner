@@ -24,7 +24,7 @@ The project allows us to put into practice the Object Oriented Programming notio
 
 ### Licence ###
 
-This project is licensed under the GNU GPL 2 license.
+This project is licensed under the Apache License Version 2.0.
 
 ### Repository ###
 

@@ -1,25 +1,22 @@
-/* Copyright (C) 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016 Jolivet Arthur & Laronze Florian
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+    http://www.apache.org/licenses/LICENSE-2.0
 
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 */
 
-#ifndef BALL_H
-#define BALL_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #include "MovableElement.h"
-#include <string>
 #include <math.h>
 
 
@@ -33,14 +30,14 @@ const float PRECISION = 1.0;
 /********************************************
     Player Class
 *********************************************
-    Arthur : 22/02 - 9/04
-    Florian: 22/02 - 10/04
+    @author Arthur  @date 22/02 - 11/04
+    @author Florian @date 22/02 - 10/04
 *********************************************/
 class Player : public MovableElement
 {
 public:
     //=== CTORs / DTORs
-   Player(float posX,float posY, unsigned int w, unsigned int h, float mvX, float mvY);
+    Player(float x, float y, float w, float h, float mvX, float mvY);
     virtual ~Player();
 
     //=== GETTERS
@@ -67,4 +64,4 @@ private:
     std::pair<float,float> m_vectorBall;
 };
 
-#endif // BALL_H
+#endif // PLAYER_H

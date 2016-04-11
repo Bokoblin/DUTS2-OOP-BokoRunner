@@ -8,6 +8,7 @@ stdout.txt
 *.pri
 *.pro.user
 *.cscope_file_list
+*.map
+*.md5
 Makefile
-
 Build

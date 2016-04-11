@@ -1,20 +1,3 @@
-/* Copyright (C) 2016 Jolivet Arthur & Laronze Florian
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
-
 #include "../header/Intro.h"
 
 using namespace std;
@@ -22,9 +5,9 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 27/03
+    @author Arthur  @date 27/03
 *********************************************/
-Intro::Intro(unsigned int w, unsigned int h, sf::RenderWindow *window): View(w, h, window)
+Intro::Intro(float w, float h, sf::RenderWindow *window): View(w, h, window)
 {
     m_window->create( sf::VideoMode(w, h, 32), "Boko Runner", sf::Style::None );
     m_window->setFramerateLimit(30);
@@ -37,7 +20,7 @@ Intro::Intro(unsigned int w, unsigned int h, sf::RenderWindow *window): View(w, 
 /********************************************
     Destructor
 *********************************************
-    Arthur : 27/03
+    @author Arthur  @date 27/03
 *********************************************/
 Intro::~Intro()
 {
@@ -49,7 +32,7 @@ Intro::~Intro()
 /********************************************
     Image Loading
 *********************************************
-    Arthur : 27/03
+    @author Arthur  @date 27/03
 *********************************************/
 void Intro::loadImages()
 {
@@ -66,7 +49,7 @@ void Intro::loadImages()
 /********************************************
     Synchronization function
 *********************************************
-    Arthur : 27/03
+    @author Arthur  @date 27/03
 *********************************************/
 void Intro::synchronize()
 { }
@@ -75,7 +58,7 @@ void Intro::synchronize()
 /********************************************
     View Drawing
 *********************************************
-    Arthur : 27/03
+    @author Arthur  @date 27/03
 *********************************************/
 void Intro::draw() const
 {
@@ -90,7 +73,7 @@ void Intro::draw() const
 /********************************************
     Events treating
 *********************************************
-    Arthur : 27/03
+    @author Arthur  @date 27/03
 *********************************************/
 bool Intro::treatEvents()
 {

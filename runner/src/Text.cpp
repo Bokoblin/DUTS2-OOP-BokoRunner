@@ -1,20 +1,3 @@
-/* Copyright (C) 2016 Jolivet Arthur & Laronze Florian
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
-
 #include "../header/Text.h"
 
 using namespace std;
@@ -22,7 +5,7 @@ using namespace std;
 /********************************************
     Default Constructor
 *********************************************
-    Arthur : 02/04
+    @author Arthur  @date 02/04
 *********************************************/
 Text::Text()
 {
@@ -36,7 +19,7 @@ Text::Text()
 /********************************************
     Destructor
 *********************************************
-    Arthur : 2/04
+    @author Arthur  @date 2/04
 *********************************************/
 Text::~Text()
 {
@@ -48,7 +31,7 @@ Text::~Text()
 /********************************************
     Getters
 *********************************************
-    Arthur : 02/04
+    @author Arthur  @date 02/04
 *********************************************/
 sf::Text Text::getPauseResumeText() { return m_pauseResumeLabel; }
 sf::Text Text::getRestartText() { return m_restartLabel; }
@@ -58,7 +41,7 @@ sf::Text Text::getHomeText() { return m_homeLabel; }
 /********************************************
     Text Loading
 *********************************************
-    Arthur : 02/04
+    @author Arthur  @date 02/04
 *********************************************/
 void Text::loadText()
 {
@@ -152,7 +135,7 @@ void Text::loadText()
 /********************************************
     Menu Text Syncing
 *********************************************
-    Arthur : 02/04
+    @author Arthur  @date 02/04
 *********************************************/
 void Text::syncMenuText(int width, int height)
 {
@@ -164,7 +147,7 @@ void Text::syncMenuText(int width, int height)
 /********************************************
     Game Screen Syncing
 *********************************************
-    Arthur : 02/04
+    @author Arthur  @date 02/04
 *********************************************/
 void Text::syncGameText(GameModel *gameModel)
 {
@@ -178,7 +161,7 @@ void Text::syncGameText(GameModel *gameModel)
 /********************************************
     Pause Screen Syncing
 *********************************************
-    Arthur : 02/04
+    @author Arthur  @date 02/04
 *********************************************/
 void Text::syncPauseText(GameModel *gameModel)
 {
@@ -197,7 +180,7 @@ void Text::syncPauseText(GameModel *gameModel)
 /********************************************
     End Screen Syncing
 *********************************************
-    Arthur : 02/04
+    @author Arthur  @date 02/04
 *********************************************/
 void Text::syncEndText(GameModel *gameModel)
 {
@@ -226,7 +209,7 @@ void Text::syncEndText(GameModel *gameModel)
 /********************************************
     Menu Screen Drawing
 *********************************************
-    Arthur : 02/04
+    @author Arthur  @date 02/04
 *********************************************/
 void Text::drawMenuText(sf::RenderWindow *window)
 {
@@ -238,7 +221,7 @@ void Text::drawMenuText(sf::RenderWindow *window)
 /********************************************
     Game Screen Drawing
 *********************************************
-    Arthur : 02/04
+    @author Arthur  @date 02/04
 *********************************************/
 void Text::drawGameText(sf::RenderWindow *window)
 {
@@ -252,7 +235,7 @@ void Text::drawGameText(sf::RenderWindow *window)
 /********************************************
     Pause Screen Drawing
 *********************************************
-    Arthur : 02/04
+    @author Arthur  @date 02/04
 *********************************************/
 void Text::drawPauseText(sf::RenderWindow *window)
 {
@@ -267,7 +250,7 @@ void Text::drawPauseText(sf::RenderWindow *window)
 /********************************************
     End Screen Drawing
 *********************************************
-    Arthur : 02/04
+    @author Arthur  @date 02/04
 *********************************************/
 void Text::drawEndText(sf::RenderWindow *window)
 {

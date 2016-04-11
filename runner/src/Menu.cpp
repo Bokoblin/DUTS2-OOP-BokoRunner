@@ -1,20 +1,3 @@
-/* Copyright (C) 2016 Jolivet Arthur & Laronze Florian
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
-
 #include "../header/Menu.h"
 
 using namespace std;
@@ -22,9 +5,9 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 25/02 - 02/04
+    @author Arthur  @date 25/02 - 02/04
 *********************************************/
-Menu::Menu(unsigned int w, unsigned int h, sf::RenderWindow *window): View(w, h, window)
+Menu::Menu(float w, float h, sf::RenderWindow *window): View(w, h, window)
 {
     if (m_window->getSize().x != m_width )
     {
@@ -40,7 +23,7 @@ Menu::Menu(unsigned int w, unsigned int h, sf::RenderWindow *window): View(w, h,
 /********************************************
     Destructor
 *********************************************
-    Arthur : 26/02 - 02/04
+    @author Arthur  @date 26/02 - 02/04
 *********************************************/
 Menu::~Menu()
 {
@@ -60,7 +43,7 @@ Menu::~Menu()
 /********************************************
     Image Loading
 *********************************************
-    Arthur : 26/03 - 6/04
+    @author Arthur  @date 26/03 - 6/04
 *********************************************/
 void Menu::loadImages()
 {
@@ -118,7 +101,7 @@ void Menu::loadImages()
 /********************************************
     Synchronization function
 *********************************************
-    Arthur : 26/03 - 06/04
+    @author Arthur  @date 26/03 - 06/04
 *********************************************/
 void Menu::synchronize()
 {
@@ -134,7 +117,7 @@ void Menu::synchronize()
 /********************************************
     View Drawing
 *********************************************
-    Arthur : 26/03 - 02/04
+    @author Arthur  @date 26/03 - 02/04
 *********************************************/
 void Menu::draw() const
 {
@@ -159,7 +142,7 @@ void Menu::draw() const
 /********************************************
     Events treating
 *********************************************
-    Arthur : 25/03 - 06/04
+    @author Arthur  @date 25/03 - 06/04
 *********************************************/
 bool Menu::treatEvents()
 {

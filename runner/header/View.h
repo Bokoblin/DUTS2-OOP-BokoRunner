@@ -1,32 +1,27 @@
-/* Copyright (C) 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016 Jolivet Arthur & Laronze Florian
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+    http://www.apache.org/licenses/LICENSE-2.0
 
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 */
 
 #ifndef _VIEW_H
 #define _VIEW_H
 
 #include "Text.h"
-#include "Model.h"
-#include "GraphicElement.h"
-#include <SFML/Graphics.hpp>
+#include "SlidingBackground.h"
+#include "AnimatedGraphicElement.h"
+#include "Button.h"
 
-#include <cstdlib>
 #include <sstream>
-#include <iostream>
-#include <string>
 
 
 /********************************************
@@ -40,14 +35,14 @@ class Model;
 /********************************************
     View Abstract Class
 *********************************************
-    Arthur : 21/02 - 03/04
-    Florian: 21/02 - 3/03
+    @author Arthur  @date 21/02 - 03/04
+    @author Florian @date 21/02 - 3/03
 *********************************************/
 class View
 {
 public:
     //=== CTORs / DTORs
-    View(unsigned int w, unsigned int h, sf::RenderWindow *window);
+    View( float w, float h, sf::RenderWindow *window);
     ~View();
 
     //=== GETTERS

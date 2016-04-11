@@ -1,18 +1,16 @@
-/* Copyright (C) 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016 Jolivet Arthur & Laronze Florian
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+    http://www.apache.org/licenses/LICENSE-2.0
 
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 */
 
 #ifndef MOVABLEELEMENT_H
@@ -23,29 +21,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 /********************************************
     MovableElement Abstract Class
 *********************************************
-    Arthur : 23/02 - 09/04
-    Florian: 02/03 - 06/04
+    @author Arthur  @date 23/02 - 11/04
+    @author Florian @date 02/03 - 06/04
 *********************************************/
 class MovableElement
 {
 public:
     //=== CTORs / DTORs
-    MovableElement(float posX, float posY, unsigned int w, unsigned int h, float mvX, float mvY);
+    MovableElement(float posX, float posY, float w, float h, float mvX, float mvY);
     virtual ~MovableElement();
 
     //=== METHODS
     virtual void move()=0;
     bool contains(float posX, float posY) const ;
     bool collision( const MovableElement & other) const ;
-    std::string to_string()const ;
 
     //=== GETTERS
     float getPosX() const;
     float getPosY() const;
     float getMoveX() const;
     float getMoveY() const;
-    unsigned int getWidth() const;
-    unsigned int getHeight() const;
+    float getWidth() const;
+    float getHeight() const;
     bool getCollisionState() const;
     virtual int getType() const;
     virtual unsigned int getLife() const;
@@ -62,8 +59,8 @@ protected:
     //=== ATTRIBUTES
     float m_posX;
     float m_posY;
-    unsigned int m_width;
-    unsigned int m_height;
+    float m_width;
+    float m_height;
     float m_moveX;
     float m_moveY;
     int m_typeElement; //0 for Ball, 1 for obstacles, 2 for bonuses

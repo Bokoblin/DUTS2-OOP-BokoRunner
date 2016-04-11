@@ -1,28 +1,10 @@
-/* Copyright (C) 2016 Jolivet Arthur & Laronze Florian
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
-
 #include "../header/SlidingBackground.h"
-#include "../header/View.h"
 
 /********************************************
     Parameterized Constructor
 *********************************************
-    Arthur : 3/03 - 3/04
-    Florian: 3/03
+    @author Arthur  @date 3/03 - 3/04
+    @author Florian  @date 3/03
 *********************************************/
 SlidingBackground::SlidingBackground(sf::Texture &image, float w, float h, unsigned int speed):
     GraphicElement(w, h), m_speed{speed}
@@ -35,7 +17,7 @@ SlidingBackground::SlidingBackground(sf::Texture &image, float w, float h, unsig
 /********************************************
     Destructor
 *********************************************
-    Arthur : 5/03
+    @author Arthur  @date 5/03
 *********************************************/
 SlidingBackground::~SlidingBackground()
 {
@@ -49,7 +31,7 @@ SlidingBackground::~SlidingBackground()
 /********************************************
     Synchronization Function
 *********************************************
-    Arthur : 3/03 - 26/03
+    @author Arthur  @date 3/03 - 26/03
 *********************************************/
 void SlidingBackground::sync()
 {
@@ -67,7 +49,7 @@ void SlidingBackground::sync()
 /********************************************
     Drawing Function
 *********************************************
-    Arthur : 3/03 - 03/04
+    @author Arthur  @date 3/03 - 03/04
 *********************************************/
 void SlidingBackground::draw(sf::RenderWindow *window) const
 {
@@ -79,7 +61,7 @@ void SlidingBackground::draw(sf::RenderWindow *window) const
 /********************************************
     Setters
 *********************************************
-    Arthur : 3/03
-    Florian: 3/03
+    @author Arthur  @date 3/03
+    @author Florian @date 3/03
 *********************************************/
 void SlidingBackground::setSpeed(unsigned int speed) { m_speed = speed; }

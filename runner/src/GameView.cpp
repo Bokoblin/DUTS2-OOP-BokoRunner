@@ -1,20 +1,3 @@
-/* Copyright (C) 2016 Jolivet Arthur & Laronze Florian
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
-
 #include "../header/GameView.h"
 
 using namespace std;
@@ -22,7 +5,7 @@ using namespace std;
 /********************************************
     Default Constructor
 *********************************************
-    Arthur : 26/03 - 27/03
+    @author Arthur  @date 26/03 - 27/03
 *********************************************/
 GameView::GameView(unsigned int w, unsigned int h,
         sf::RenderWindow *mywindow):  View(w, h, mywindow)
@@ -34,7 +17,7 @@ GameView::GameView(unsigned int w, unsigned int h,
 /********************************************
     Destructor
 *********************************************
-    Arthur : 26/03 - 02/04
+    @author Arthur  @date 26/03 - 11/04
 *********************************************/
 GameView::~GameView()
 {
@@ -42,6 +25,8 @@ GameView::~GameView()
         delete m_bottomBarGraphic;
     if(m_lifeBoxGraphic!= NULL)
         delete m_lifeBoxGraphic;
+    if(m_remainingLifeGraphic!= NULL)
+        delete m_remainingLifeGraphic;
     if(m_playerGraphic!= NULL)
         delete m_playerGraphic;
     if(m_standardEnemyGraphic!= NULL)
@@ -55,23 +40,23 @@ GameView::~GameView()
 
     if(m_pauseBackgroundGraphic!= NULL)
         delete m_pauseBackgroundGraphic;
+    if(m_pauseDistanceGraphic!= NULL)
+        delete m_pauseDistanceGraphic;
+    if(m_endBackgroundGraphic!= NULL)
+        delete m_endBackgroundGraphic;
     if(m_resumeButtonGraphic!= NULL)
         delete m_resumeButtonGraphic;
     if(m_restartButtonGraphic!= NULL)
         delete m_restartButtonGraphic;
     if(m_homeButtonGraphic!= NULL)
         delete m_homeButtonGraphic;
-    if(m_pauseDistanceGraphic!= NULL)
-        delete m_pauseDistanceGraphic;
-    if(m_endBackgroundGraphic!= NULL)
-        delete m_endBackgroundGraphic;
 }
 
 
 /********************************************
    Setters
 *********************************************
-    Arthur : 27/03
+    @author Arthur  @date 27/03
 *********************************************/
 void GameView::setGameModel(GameModel *model) { m_gameModel = model; }
 
@@ -79,7 +64,7 @@ void GameView::setGameModel(GameModel *model) { m_gameModel = model; }
 /********************************************
     Image Loading
 *********************************************
-    Arthur : 26/03 - 06/04
+    @author Arthur  @date 26/03 - 06/04
 *********************************************/
 void GameView::loadImages()
 {
@@ -257,12 +242,12 @@ void GameView::loadImages()
 /********************************************
     Link mElements with gElements
 *********************************************
-    Arthur : 18/03 - 05/04
+    @author Arthur  @date 18/03 - 05/04
 *********************************************/
 void GameView::linkElements()
 {
     set<MovableElement*>::const_iterator it;
-    for ( it = m_gameModel->getNewMElementsArray().begin(); it!=  m_gameModel->getNewMElementsArray().end(); ++it)
+    for ( it = m_gameModel->getNewMElementsArray().begin(); it != m_gameModel->getNewMElementsArray().end(); ++it)
     {
         assert((*it) != nullptr);
 
@@ -284,7 +269,7 @@ void GameView::linkElements()
 /********************************************
     Update gElements
 *********************************************
-    Arthur : 6/03 - 6/04
+    @author Arthur  @date 6/03 - 6/04
 *********************************************/
 void GameView::updateElements()
 {
@@ -305,14 +290,13 @@ void GameView::updateElements()
         it->second->sync();
         it->second->resize(it->first->getWidth(), it->first->getHeight() );
     }
-
 }
 
 
 /********************************************
     Delete gElement
 *********************************************
-    Arthur : 12/03 - 20/03
+    @author Arthur  @date 12/03 - 20/03
 *********************************************/
 void GameView::deleteElements()
 {
@@ -335,7 +319,7 @@ void GameView::deleteElements()
 /********************************************
     Synchronization function
 *********************************************
-    Arthur : 26/03 - 06/04
+    @author Arthur  @date 26/03 - 06/04
 *********************************************/
 void GameView::synchronize()
 {
@@ -402,7 +386,7 @@ void GameView::synchronize()
 /********************************************
     GameView Drawing
 *********************************************
-    Arthur : 26/03 - 01/04
+    @author Arthur  @date 26/03 - 01/04
 *********************************************/
 void GameView::draw() const
 {
@@ -467,8 +451,8 @@ void GameView::draw() const
 /********************************************
     Events treating
 *********************************************
-    Arthur : 21/02 - 09/04
-    Florian: 21/02 - 10/04
+    @author Arthur  @date 21/02 - 09/04
+    @author Florian @date 21/02 - 10/04
 *********************************************/
 bool GameView::treatEvents()
 {
@@ -482,11 +466,11 @@ bool GameView::treatEvents()
         {
             //=== Player Controls in Game Screen
 
-            if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) ) && m_gameModel->getPlayer()->getVector().first > -10)
+            if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )  )
             {
                 m_gameModel->getPlayer()->controlPlayerMovements(true);
             }
-            else if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) ) && m_gameModel->getPlayer()->getVector().first < 10 )
+            else if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) )  )
             {
                 m_gameModel->getPlayer()->controlPlayerMovements(false);
             }
@@ -585,6 +569,7 @@ bool GameView::treatEvents()
                 {
                     m_restartButtonGraphic->setPressedState(false);
                     m_homeButtonGraphic->setPressedState(false);
+
                     if ( m_restartButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) ||
                                 m_text->getRestartText().getGlobalBounds().contains(MOUSE_POSITION) )
                     {

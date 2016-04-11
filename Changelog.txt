@@ -1,7 +1,7 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current beta version : v0.6.0-r1
+Current version : v1.0.0
 
 ======================================================================================
 BETA CHANNEL Changelog
@@ -122,3 +122,15 @@ Contains v0.4.0-dev, v0.5.0-dev and v0.6.0-dev :
 	- Some "int" moved to "unsigned int" if they shouldn't have negative values
 	- Big code clean-up
 	- Lots of bug Fixes
+
+
+======================================================================================
+STABLE CHANNEL Changelog
+
+
+v1.0.0 (11/04/16):
+
+- first stable version : all minimal features are working properly
+- documentation generated with doxygen
+- licence changed for "Apache License Version 2.0"
+- classes and files inclusion clean-up thanks to Doxygen and Graphviz

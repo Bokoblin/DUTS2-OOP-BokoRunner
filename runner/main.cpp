@@ -24,17 +24,18 @@ const std::chrono::system_clock::time_point programBeginningTime = std::chrono::
 
 using namespace std;
 
+
 /********************************************
     Main function
 *********************************************
-    Arthur : 21/02 - 03/03
-    Florian: 21/02 - 21/02
+    @author Arthur  @date 21/02 - 12/04
+    @author Florian  @date 21/02
 *********************************************/
 int main()
 {
     srand(time(NULL));
     sf::RenderWindow *window = new sf::RenderWindow( sf::VideoMode(SCREEN_WIDTH,
-                                                                    SCREEN_HEIGHT, 32), "Boko Runner", sf::Style::None );
+            SCREEN_HEIGHT, 32), "Boko Runner", sf::Style::None );
     window->setFramerateLimit(30);
 
     Model model(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
@@ -67,6 +68,7 @@ int main()
         {
             GameModel gModel(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
             GameView gView(SCREEN_WIDTH, SCREEN_HEIGHT, window);
+            gView.setModel(&model);
             gView.setGameModel(&gModel);
             while( model.getGameState() && gView.treatEvents() )
             {

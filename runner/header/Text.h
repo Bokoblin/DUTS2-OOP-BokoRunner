@@ -36,6 +36,7 @@ class Text
     public:
     //=== CTORs / DTORs
     Text();
+    Text(const Text& myText) = delete;
     ~Text();
 
     //=== GETTERS
@@ -68,13 +69,15 @@ private:
     sf::Text m_pauseResumeLabel;
     sf::Text m_restartLabel;
     sf::Text m_homeLabel;
-    sf::Text m_CoinsCollectedNumberText;
+    sf::Text m_coinsCollectedNumberText;
     //End Text
     sf::Text m_endTitleLabel;
     sf::Text m_gameSpeedmultiplicatorLabel;
     sf::Text m_gameSpeedmultiplicatorText;
     sf::Text m_distanceLabel;
-    sf::Text m_CoinsCollectedNumberLabel;
+    sf::Text m_coinsCollectedNumberLabel;
+    sf::Text m_enemyDestructedBonusLabel;
+    sf::Text m_enemyDestructedBonusText;
     sf::Text m_scoreLabel;
     sf::Text m_scoreText;
 };

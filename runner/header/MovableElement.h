@@ -16,12 +16,13 @@ limitations under the License.
 #ifndef MOVABLEELEMENT_H
 #define MOVABLEELEMENT_H
 
+#include <iostream>
 #include <string>
 
 /********************************************
     MovableElement Abstract Class
 *********************************************
-    @author Arthur  @date 23/02 - 11/04
+    @author Arthur  @date 23/02 - 12/04
     @author Florian @date 02/03 - 06/04
 *********************************************/
 class MovableElement
@@ -45,14 +46,14 @@ public:
     float getHeight() const;
     bool getCollisionState() const;
     virtual int getType() const;
-    virtual unsigned int getLife() const;
+    virtual int getLife() const;
 
 
     //=== SETTERS
-    void setPosX(float x);
-    void setPosY(float y);
+    void setMoveX(float mvX);
+    void setMoveY(float mvY);
     void setCollisionState(bool collisionState);
-    virtual void setLife(unsigned int newLife);
+    virtual void setLife(int newLife);
 
 
 protected:
@@ -63,16 +64,19 @@ protected:
     float m_height;
     float m_moveX;
     float m_moveY;
-    int m_typeElement; //0 for Ball, 1 for obstacles, 2 for bonuses
     bool m_collisionState;
-    unsigned int m_life;
+    int m_life;
     int m_elementType;
     /** Element Type :
     0 : Player
     1 : Standard Enemy
     2 : Totem Enemy
     3 : Block Enemy
-    4 : Coins
+    4 : Coin
+    5 : Bonus - PV+
+    6 : Bonus - MEGA
+    7 : Bonus - FLY
+    8 : Bonus - SLOW SPEED
     */
 
 };

@@ -41,23 +41,26 @@ public:
     virtual ~Player();
 
     //=== GETTERS
+    int getState() const;
     bool getFlyingState() const;
     bool getJumpState() const;
     bool getDecelerationState() const;
     std::pair<float,float> getVector() const;
 
     //=== SETTERS
-    virtual void setLife(unsigned int new_life) ;
+    virtual void setLife(int new_life) ;
     void setFlyingState(bool etat);
     void setJumpState(bool etat);
     void setDecelerationState(bool etat);
 
     //=== METHODS
     virtual void move() override;
+    void changeState(int state);
     void controlPlayerMovements(bool left);
 
 
 private:
+    int m_state;
     bool m_jumping;
     bool m_flying;
     bool m_inDeceleration;

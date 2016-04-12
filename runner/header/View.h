@@ -42,7 +42,8 @@ class View
 {
 public:
     //=== CTORs / DTORs
-    View( float w, float h, sf::RenderWindow *window);
+    View( float w, float h, sf::RenderWindow *window );
+    View( const View& myView ) = delete;
     ~View();
 
     //=== GETTERS
@@ -59,7 +60,7 @@ public:
 
 protected:
     //=== ATTRIBUTES
-    unsigned int m_width, m_height;
+    float m_width, m_height;
     sf::RenderWindow *m_window;
     Model *m_model;
     Text *m_text;

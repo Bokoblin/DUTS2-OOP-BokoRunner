@@ -1,5 +1,6 @@
 #include "../header/Player.h"
 
+using namespace std;
 
 /********************************************
     Parameterized Constructor
@@ -8,7 +9,7 @@
     @author Florian @date 22/02 - 06/04
 *********************************************/
 Player::Player(float x, float y, float w, float h, float mvX, float mvY):
-    MovableElement(x, y, w, h, mvX, mvY),
+    MovableElement(x, y, w, h, mvX, mvY), m_state{0},
     m_jumping{false}, m_flying{false}, m_inDeceleration{false}
 {
     m_elementType = 0;
@@ -33,6 +34,7 @@ Player::~Player()
     @author Arthur  @date 20/03 - 9/04
     @author Florian @date 17/03 - 10/04
 *********************************************/
+int Player::getState() const { return m_state; }
 bool Player::getFlyingState() const { return m_flying; }
 bool Player::getJumpState() const { return m_jumping; }
 bool Player::getDecelerationState() const { return m_inDeceleration; }
@@ -42,26 +44,24 @@ std::pair<float,float> Player::getVector() const { return m_vectorBall; }
 /********************************************
     Setters
 *********************************************
-    @author Arthur  @date 08/04 - 09/04
+    @author Arthur  @date 08/04 - 11/04
     @author Florian @date 17/03 - 6/04
 *********************************************/
 void Player::setFlyingState(bool etat) { m_flying = etat; }
 void Player::setJumpState(bool etat) {  m_jumping = etat; }
 void Player::setDecelerationState(bool etat) {  m_inDeceleration = etat; }
 
-void Player::setLife(unsigned int new_life)
+void Player::setLife(int new_life)
 {
-    if ( m_life <= new_life)
-        m_life = 0;
-    else
-        m_life = new_life;
+    m_life = new_life;
+    if ( m_life > 100 ) m_life = 100;
+    else if ( m_life < 0 ) m_life = 0;
 }
 
 
 /********************************************
     Player Move Function
 *********************************************
-    @author Arthur  @date  8/04 - 9/04
     @author Florian @date  12/03 - 10/04
 *********************************************/
 void Player::move()
@@ -125,6 +125,37 @@ void Player::move()
         m_vectorBall.second =0;
         m_posY=GAME_FLOOR;
     }
+}
+
+
+/********************************************
+    Change player's state
+*********************************************
+    @author Arthur  @date  11/04
+*********************************************/
+void Player::changeState(int state)
+{
+    if ( state == 0) //normal
+    {
+        cout << "Player has taken the NORMAL type , it's not very effective" << endl;
+        m_width = 30;
+        m_height = 30;
+        m_state = 0;
+    }
+    else if ( state == 1) //mega
+    {
+        cout << "MegaEvolutionnnnnnnnn !" << endl;
+        m_width = 70;
+        m_height = 70;
+        m_state = 1;
+    }
+    else if ( state == 2) //fly
+    {
+        cout << "Player has taken the FLY type, it's super effective !" << endl;
+        //FLORIAN : the player should be able to fly without having to go down (multiple jump,...)
+        m_state = 2;
+    }
+
 }
 
 /********************************************

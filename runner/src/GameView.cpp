@@ -571,17 +571,17 @@ bool GameView::treatEvents()
                 if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
                 {
                     if ( m_resumeButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) ||
-                                m_text->getPauseResumeText().getGlobalBounds().contains(MOUSE_POSITION) )
+                                m_text->getPauseResumeText()->getGlobalBounds().contains(MOUSE_POSITION) )
                     {
                         m_resumeButtonGraphic->setPressedState(true);
                     }
                     else if ( m_restartButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) ||
-                                m_text->getRestartText().getGlobalBounds().contains(MOUSE_POSITION) )
+                                m_text->getRestartText()->getGlobalBounds().contains(MOUSE_POSITION) )
                     {
                         m_restartButtonGraphic->setPressedState(true);
                     }
                     else if ( m_homeButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) ||
-                                m_text->getHomeText().getGlobalBounds().contains(MOUSE_POSITION) )
+                                m_text->getHomeText()->getGlobalBounds().contains(MOUSE_POSITION) )
                     {
                         m_homeButtonGraphic->setPressedState(true);
                     }
@@ -593,12 +593,12 @@ bool GameView::treatEvents()
                     m_homeButtonGraphic->setPressedState(false);
 
                     if ( m_resumeButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) ||
-                                m_text->getPauseResumeText().getGlobalBounds().contains(MOUSE_POSITION) )
+                                m_text->getPauseResumeText()->getGlobalBounds().contains(MOUSE_POSITION) )
                     {
                         m_gameModel->setPauseState(false);
                     }
                     else if ( m_restartButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) ||
-                                m_text->getRestartText().getGlobalBounds().contains(MOUSE_POSITION) )
+                                m_text->getRestartText()->getGlobalBounds().contains(MOUSE_POSITION) )
                     {
                         m_gameModel->setPauseState(false);
                         m_model->setGameState(false);
@@ -606,7 +606,7 @@ bool GameView::treatEvents()
                         result = false;
                     }
                     else if ( m_homeButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) ||
-                                m_text->getHomeText().getGlobalBounds().contains(MOUSE_POSITION) )
+                                m_text->getHomeText()->getGlobalBounds().contains(MOUSE_POSITION) )
                     {
                         m_gameModel->setPauseState(false);
                         m_model->setGameState(false);
@@ -623,12 +623,12 @@ bool GameView::treatEvents()
                 if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
                 {
                     if ( m_restartButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) ||
-                                m_text->getRestartText().getGlobalBounds().contains(MOUSE_POSITION) )
+                                m_text->getRestartText()->getGlobalBounds().contains(MOUSE_POSITION) )
                     {
                         m_restartButtonGraphic->setPressedState(true);
                     }
                     else if ( m_homeButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) ||
-                                m_text->getHomeText().getGlobalBounds().contains(MOUSE_POSITION) )
+                                m_text->getHomeText()->getGlobalBounds().contains(MOUSE_POSITION) )
                     {
                         m_homeButtonGraphic->setPressedState(true);
                     }
@@ -639,7 +639,7 @@ bool GameView::treatEvents()
                     m_homeButtonGraphic->setPressedState(false);
 
                     if ( m_restartButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) ||
-                                m_text->getRestartText().getGlobalBounds().contains(MOUSE_POSITION) )
+                                m_text->getRestartText()->getGlobalBounds().contains(MOUSE_POSITION) )
                     {
                         m_gameModel->setEndState(false);
                         m_model->setGameState(false);
@@ -647,7 +647,7 @@ bool GameView::treatEvents()
                         result = false;
                     }
                     else if ( m_homeButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) ||
-                                m_text->getHomeText().getGlobalBounds().contains(MOUSE_POSITION) )
+                                m_text->getHomeText()->getGlobalBounds().contains(MOUSE_POSITION) )
                     {
                         m_gameModel->setEndState(false);
                         m_model->setGameState(false);

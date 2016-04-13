@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Jolivet Arthur & Laronze Florian
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+-->
+
+<resources>
+
+   <!-- Menu strings -->
+   <string name="m_playButtonText">JOUER</string>
+   <string name="m_quitButtonText">QUITTER</string>
+
+
+   <!--  Game strings -->
+   <string name="m_distanceText">.</string>
+   <string name="m_playerLifeLabel">Vie</string>
+
+   <!--  Pause Screen strings -->
+   <string name="m_CoinsCollectedNumberText">.</string>
+   <string name="m_pauseResumeLabel">Reprendre</string>
+   <string name="m_restartLabel">Recommencer</string>
+   <string name="m_homeLabel">Acceuil</string>
+
+   <!--  End Screen strings -->
+   <string name="m_endTitleLabel">Votre_score</string>
+   <string name="m_gameSpeedmultiplicatorLabel">Multiplicateur_vitesse</string>
+   <string name="m_gameSpeedmultiplicatorText">.</string>
+   <string name="m_distanceLabel">Distance_parcourue</string>
+   <string name="m_CoinsCollectedNumberLabel">Pieces_collectees</string>
+   <string name="m_enemyDestructedBonusLabel">Bonus_destruction_ennemies</string>
+   <string name="m_scoreLabel">Score_total</string>
+   <string name="m_scoreText">.</string>
+
+</resources>

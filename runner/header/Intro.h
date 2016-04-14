@@ -27,13 +27,13 @@ const std::string INTRO_IMAGE = "Images/intro.png";
 /********************************************
     Intro Class
 *********************************************
-    @author Arthur  @date 27/03
+    @author Arthur  @date 27/03 - 14/04
 *********************************************/
 class Intro : public View
 {
     public:
     //=== CTORs / DTORs
-    Intro(float w, float h, sf::RenderWindow *window);
+    Intro(float w, float h, sf::RenderWindow *window, Text *text);
     virtual ~Intro();
 
     //=== METHODS

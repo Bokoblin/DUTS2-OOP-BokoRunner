@@ -3,12 +3,12 @@
 using namespace std;
 
 /********************************************
-    Default Constructor
+    Parameterized Constructor
 *********************************************
     @author Arthur  @date 26/03 - 27/03
 *********************************************/
-GameView::GameView(float w, float h, sf::RenderWindow *mywindow):
-            View(w, h, mywindow), m_gameModel{nullptr}
+GameView::GameView(float w, float h, sf::RenderWindow *mywindow, Text *text):
+    View(w, h, mywindow, text), m_gameModel{nullptr}
 {
     loadImages();
 }
@@ -113,7 +113,7 @@ void GameView::loadImages()
     else
     {
         m_remainingLifeTexture.setSmooth(true);
-        m_remainingLifeGraphic = new GraphicElement(m_remainingLifeTexture, 105, 535, 300, 50);
+        m_remainingLifeGraphic = new GraphicElement(m_remainingLifeTexture, 107, 535, 300, 50);
     }
 
     if (!m_playerTexture.loadFromFile(BALL_IMAGE) )
@@ -250,7 +250,7 @@ void GameView::loadImages()
         clip_rects.push_back(sf::IntRect(50, 0, 50, 50));
 
         m_resumeButtonTexture.setSmooth(true);
-        m_resumeButtonGraphic = new Button(clip_rects, m_resumeButtonTexture, 30, 405, 20, 20);
+        m_resumeButtonGraphic = new Button(clip_rects, m_resumeButtonTexture, 30, 405, 20, 20, false);
         m_resumeButtonGraphic->resize(20,20);
     }
 
@@ -263,7 +263,7 @@ void GameView::loadImages()
         clip_rects.push_back(sf::IntRect(50, 50, 50, 50));
 
         m_restartButtonTexture.setSmooth(true);
-        m_restartButtonGraphic = new Button(clip_rects, m_restartButtonTexture, 30, 455, 20, 20);
+        m_restartButtonGraphic = new Button(clip_rects, m_restartButtonTexture, 30, 455, 20, 20, false);
         m_restartButtonGraphic->resize(20,20);
     }
 
@@ -276,7 +276,7 @@ void GameView::loadImages()
         clip_rects.push_back(sf::IntRect(50, 100, 50, 50));
 
         m_homeButtonTexture.setSmooth(true);
-        m_homeButtonGraphic = new Button(clip_rects, m_homeButtonTexture, 30, 505, 20, 20);
+        m_homeButtonGraphic = new Button(clip_rects, m_homeButtonTexture, 30, 505, 20, 20, false);
         m_homeButtonGraphic->resize(20,20);
     }
 
@@ -341,7 +341,7 @@ void GameView::linkElements()
 *********************************************/
 void GameView::updateElements()
 {
-    m_nearBackground->setSpeed(m_gameModel->getGameSpeed() );
+    m_nearBackground->setSpeed(m_gameModel->getGameSpeed() + m_gameModel->getDifficulty() );
     m_farBackground->sync();
     m_nearBackground->sync();
     m_remainingLifeTexture.loadFromFile( REMAINING_LIFE,
@@ -414,7 +414,7 @@ void GameView::synchronize()
 
         //=== Text update
 
-        m_text->syncGameText(m_gameModel);
+        m_text->syncGameMainText(m_gameModel);
 
     }
     else if (m_gameModel->getPauseState() == true)
@@ -429,7 +429,7 @@ void GameView::synchronize()
 
         //=== Text update
 
-        m_text->syncPauseText(m_gameModel);
+        m_text->syncGamePauseText(m_gameModel);
 
     }
     else if (m_gameModel->getEndState() == true )
@@ -446,7 +446,7 @@ void GameView::synchronize()
 
         //=== Text update
 
-        m_text->syncEndText(m_gameModel);
+        m_text->syncGameEndText(m_gameModel);
     }
 }
 
@@ -586,7 +586,8 @@ bool GameView::treatEvents()
                         m_homeButtonGraphic->setPressedState(true);
                     }
                 }
-                if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+
+                if (event.type == sf::Event::MouseButtonReleased)
                 {
                     m_resumeButtonGraphic->setPressedState(false);
                     m_restartButtonGraphic->setPressedState(false);
@@ -633,7 +634,8 @@ bool GameView::treatEvents()
                         m_homeButtonGraphic->setPressedState(true);
                     }
                 }
-                if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+
+                if (event.type == sf::Event::MouseButtonReleased)
                 {
                     m_restartButtonGraphic->setPressedState(false);
                     m_homeButtonGraphic->setPressedState(false);

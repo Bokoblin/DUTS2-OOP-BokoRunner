@@ -17,6 +17,7 @@ limitations under the License.
 #define TEXT_H
 
 #include "GameModel.h"
+#include "MenuModel.h"
 #include "SFML/Graphics.hpp"
 #include <map>
 #include <fstream>
@@ -50,13 +51,15 @@ class Text
 
     //=== METHODS
     void loadText();
-    void changeLanguage(std::string language);
+    void changeLanguage(std::string currentLanguage);
     void updateString(std::string file, sf::Text *currentText, std::string currentName);
-    void syncMenuText(int width, int height);
-    void syncGameText(GameModel *gameModel);
-    void syncPauseText(GameModel *gameModel);
-    void syncEndText(GameModel *gameModel);
-    void drawMenuText(sf::RenderWindow *window);
+    void syncMenuHomeText(int width, int height);
+    void syncMenuSettingsText(int width, int height);
+    void syncGameMainText(GameModel *gameModel);
+    void syncGamePauseText(GameModel *gameModel);
+    void syncGameEndText(GameModel *gameModel);
+    void drawMenuHomeText(sf::RenderWindow *window);
+    void drawMenuSettingsText(sf::RenderWindow *window);
     void drawGameText(sf::RenderWindow *window);
     void drawPauseText(sf::RenderWindow *window);
     void drawEndText(sf::RenderWindow *window);
@@ -69,6 +72,16 @@ private:
     //Menu Text
     sf::Text *m_playButtonText;
     sf::Text *m_quitButtonText;
+    //Settings
+    sf::Text *m_settingsLabel;
+    sf::Text *m_configurationLabel;
+    sf::Text *m_configLanguageLabel;
+    sf::Text *m_configLanguageEnLabel;
+    sf::Text *m_configLanguageFrLabel;
+    sf::Text *m_configLanguageEsLabel;
+    sf::Text *m_configDifficultyLabel;
+    sf::Text *m_configDifficultyNormalLabel;
+    sf::Text *m_configDifficultyMasterLabel;
     //Game Text
     sf::Text *m_distanceText;
     sf::Text *m_playerLifeLabel;
@@ -76,7 +89,7 @@ private:
     sf::Text *m_pauseResumeLabel;
     sf::Text *m_restartLabel;
     sf::Text *m_homeLabel;
-    sf::Text *m_CoinsCollectedNumberText;
+    sf::Text *m_coinsCollectedNumberText;
     //End Text
     sf::Text *m_endTitleLabel;
     sf::Text *m_gameSpeedmultiplicatorLabel;

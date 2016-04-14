@@ -20,6 +20,16 @@
    <string name="m_playButtonText">JUGAR</string>
    <string name="m_quitButtonText">DEJAR</string>
 
+   <!-- Settings strings -->
+   <string name="m_settingsLabel">Opciones</string>
+   <string name="m_configurationLabel">Configuracion</string>
+   <string name="m_configLanguageLabel">Idiomas</string>
+   <string name="m_configLanguageEnLabel">Ingles</string>
+   <string name="m_configLanguageFrLabel">Frances</string>
+   <string name="m_configLanguageEsLabel">Espanol</string>
+   <string name="m_configDifficultyLabel">Difficultad</string>
+   <string name="m_configDifficultyNormalLabel">Normal</string>
+   <string name="m_configDifficultyMasterLabel">Master</string>
 
    <!--  Game strings -->
    <string name="m_distanceText">.</string>

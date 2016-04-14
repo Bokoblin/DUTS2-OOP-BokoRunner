@@ -22,7 +22,7 @@ limitations under the License.
 #include "Button.h"
 
 #include <sstream>
-
+#define MOUSE_POSITION sf::Vector2f(event.mouseButton.x, event.mouseButton.y)
 
 /********************************************
     Constant Variables
@@ -42,7 +42,7 @@ class View
 {
 public:
     //=== CTORs / DTORs
-    View( float w, float h, sf::RenderWindow *window );
+    View( float w, float h, sf::RenderWindow *window, Text *text );
     View( const View& myView ) = delete;
     ~View();
 
@@ -62,8 +62,8 @@ protected:
     //=== ATTRIBUTES
     float m_width, m_height;
     sf::RenderWindow *m_window;
-    Model *m_model;
     Text *m_text;
+    Model *m_model;
 };
 
 #endif

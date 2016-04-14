@@ -13,40 +13,40 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef BUTTON_H
-#define BUTTON_H
+#ifndef _MENUMODEL_H
+#define _MENUMODEL_H
 
-#include "GraphicElement.h"
+#include "Model.h"
+
 
 /********************************************
-    Button Class
+    MenuModel Class
 *********************************************
-    @author Arthur  @date 6/04 - 14/04
+    @author Arthur  @date 14/04
 *********************************************/
-class Button : public GraphicElement
+class MenuModel : public Model
 {
 public:
     //=== CTORs / DTORs
-    Button(const std::vector<sf::IntRect> & clipRects,
-            sf::Texture &image, float x, float y, float w, float h, bool isRadio);
-    Button(Button const& elementACopier);
-    virtual ~Button();
+    MenuModel(const Model& model);
+    ~MenuModel();
+
+    //=== GETTERS
+    bool getHomeState() const;
+    bool getSettingsState() const;
 
     //=== SETTERS
-    void setPressedState(bool state);
-    void setActivatedState(bool state);
+    void setHomeState(bool state);
+    void setSettingsState(bool state);
 
     //=== METHODS
-    virtual void sync() override;
+    virtual void nextStep() override;
 
 private:
     //=== ATTRIBUTES
-    std::vector<sf::IntRect> m_clipRectsArray;
-    unsigned int m_currentClipRect;
-    bool m_isRadio;
-    bool m_pressed;
-    bool m_active;
-
+    bool m_homeState;
+    bool m_settingsState;
+    int m_score;
 };
 
-#endif // BUTTON_H
+#endif

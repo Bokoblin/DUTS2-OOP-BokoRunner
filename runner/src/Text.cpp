@@ -25,6 +25,37 @@ Text::~Text()
 {
     if(m_font!= NULL)
         delete m_font;
+
+    if ( m_playButtonText != NULL ) delete m_playButtonText;
+    if ( m_quitButtonText != NULL ) delete m_quitButtonText;
+    //Settings
+    if ( m_settingsLabel != NULL ) delete m_settingsLabel;
+    if ( m_configurationLabel != NULL ) delete  m_configurationLabel;
+    if ( m_configLanguageLabel != NULL ) delete m_configLanguageLabel;
+    if ( m_configLanguageEnLabel != NULL ) delete m_configLanguageEnLabel;
+    if ( m_configLanguageFrLabel != NULL ) delete m_configLanguageFrLabel;
+    if ( m_configLanguageEsLabel != NULL ) delete m_configLanguageEsLabel;
+    if ( m_configDifficultyLabel != NULL ) delete m_configDifficultyLabel;
+    if ( m_configDifficultyNormalLabel != NULL ) delete m_configDifficultyNormalLabel;
+    if ( m_configDifficultyMasterLabel != NULL ) delete m_configDifficultyMasterLabel;
+    //Game Text
+    if ( m_distanceText != NULL ) delete m_distanceText;
+    if ( m_playerLifeLabel != NULL ) delete m_playerLifeLabel;
+    //Pause Text
+    if ( m_pauseResumeLabel != NULL ) delete m_pauseResumeLabel;
+    if ( m_restartLabel != NULL ) delete m_restartLabel;
+    if ( m_homeLabel != NULL ) delete m_homeLabel;
+    if ( m_coinsCollectedNumberText != NULL ) delete m_coinsCollectedNumberText;
+    //End Text
+    if ( m_endTitleLabel != NULL ) delete m_endTitleLabel;
+    if ( m_gameSpeedmultiplicatorLabel != NULL ) delete m_gameSpeedmultiplicatorLabel;
+    if ( m_gameSpeedmultiplicatorText != NULL ) delete m_gameSpeedmultiplicatorText;
+    if ( m_distanceLabel != NULL ) delete m_distanceLabel;
+    if ( m_coinsCollectedNumberLabel != NULL ) delete m_coinsCollectedNumberLabel;
+    if ( m_enemyDestructedBonusLabel != NULL ) delete m_enemyDestructedBonusLabel;
+    if ( m_enemyDestructedBonusText != NULL ) delete m_enemyDestructedBonusText;
+    if ( m_scoreLabel != NULL ) delete m_scoreLabel;
+    if ( m_scoreText != NULL ) delete m_scoreText;
 }
 
 
@@ -51,14 +82,41 @@ void Text::loadText()
     m_quitButtonText = new sf::Text;
     m_textVector[m_quitButtonText] = "m_quitButtonText";
 
+    m_settingsLabel = new sf::Text;
+    m_textVector[m_settingsLabel] = "m_settingsLabel";
+
+    m_configurationLabel = new sf::Text;
+    m_textVector[m_configurationLabel] = "m_configurationLabel";
+
+    m_configLanguageLabel = new sf::Text;
+    m_textVector[m_configLanguageLabel] = "m_configLanguageLabel";
+
+    m_configLanguageEnLabel = new sf::Text;
+    m_textVector[m_configLanguageEnLabel] = "m_configLanguageEnLabel";
+
+    m_configLanguageFrLabel = new sf::Text;
+    m_textVector[m_configLanguageFrLabel] = "m_configLanguageFrLabel";
+
+    m_configLanguageEsLabel = new sf::Text;
+    m_textVector[m_configLanguageEsLabel] = "m_configLanguageEsLabel";
+
+    m_configDifficultyLabel = new sf::Text;
+    m_textVector[m_configDifficultyLabel] = "m_configDifficultyLabel";
+
+    m_configDifficultyNormalLabel = new sf::Text;
+    m_textVector[m_configDifficultyNormalLabel] = "m_configDifficultyNormalLabel";
+
+    m_configDifficultyMasterLabel = new sf::Text;
+    m_textVector[m_configDifficultyMasterLabel] = "m_configDifficultyMasterLabel";
+
     m_distanceText = new sf::Text;
     m_textVector[m_distanceText] = "m_distanceText";
 
     m_playerLifeLabel = new sf::Text;
     m_textVector[m_playerLifeLabel] = "m_playerLifeLabel";
 
-    m_CoinsCollectedNumberText = new sf::Text;
-    m_textVector[m_CoinsCollectedNumberText] = "m_CoinsCollectedNumberText";
+    m_coinsCollectedNumberText = new sf::Text;
+    m_textVector[m_coinsCollectedNumberText] = "m_CoinsCollectedNumberText";
 
     m_pauseResumeLabel = new sf::Text;
     m_textVector[m_pauseResumeLabel] = "m_pauseResumeLabel";
@@ -111,21 +169,19 @@ void Text::changeLanguage(string language)
 {
     for ( map<sf::Text*, string>::iterator it = m_textVector.begin(); it !=m_textVector.end(); ++it)
     {
+        it->first->setCharacterSize(24);
         it->first->setFont(*m_font);
         it->first->setColor(sf::Color::White);
         if ( language == "en")
         {
-            it->first->setCharacterSize(24);
             updateString(ENGLISH_STRINGS, it->first, it->second);
         }
         else if ( language == "fr")
         {
-            it->first->setCharacterSize(22);
             updateString(FRENCH_STRINGS, it->first, it->second);
         }
         else if ( language == "es")
         {
-            it->first->setCharacterSize(22);
             updateString(SPANISH_STRINGS, it->first, it->second);
         }
     }
@@ -174,56 +230,74 @@ void Text::updateString(string file, sf::Text *currentText, string currentName)
 
 
 /********************************************
-    Menu Text Syncing
+    Menu Home Text Syncing
 *********************************************
     @author Arthur  @date 02/04 - 13/04
 *********************************************/
-void Text::syncMenuText(int width, int height)
+void Text::syncMenuHomeText(int width, int height)
 {
-    m_playButtonText->setPosition( width/2-30, height/1.42 );
-    m_quitButtonText->setPosition( width/2-30, height/1.15 );
+    m_playButtonText->setPosition( width/2 - m_playButtonText->getGlobalBounds().width/2, height/1.42 );
+    m_quitButtonText->setPosition( width/2 - m_quitButtonText->getGlobalBounds().width/2, height/1.15 );
 }
 
+
+/********************************************
+    Menu Settings Text Syncing
+*********************************************
+    @author Arthur  @date 14/04
+*********************************************/
+void Text::syncMenuSettingsText(int width, int height)
+{
+    m_configurationLabel->setPosition(width/4 - m_configurationLabel->getGlobalBounds().width/2, 60);
+    m_configLanguageLabel->setPosition(40, 150);
+    m_configLanguageEnLabel->setPosition(80, 202);
+    m_configLanguageFrLabel->setPosition(80, 242);
+    m_configLanguageEsLabel->setPosition(80, 282);
+    m_configDifficultyLabel->setPosition(40, 370);
+    m_configDifficultyNormalLabel->setPosition(80, 417);
+    m_configDifficultyMasterLabel->setPosition(80, 457);
+}
 
 /********************************************
     Game Screen Syncing
 *********************************************
     @author Arthur  @date 02/04 - 13/04
 *********************************************/
-void Text::syncGameText(GameModel *gameModel)
+void Text::syncGameMainText(GameModel *gameModel)
 {
     m_playerLifeLabel->setPosition(40,545);
     m_distanceLabel->setPosition(530, 545);
     m_distanceText->setPosition(750,545);
+    m_distanceText->setColor(sf::Color::White);
     m_distanceText->setString( to_string(gameModel->getDistance() ) + " m" );
 }
 
 
 /********************************************
-    Pause Screen Syncing
+    Game Pause Screen Syncing
 *********************************************
     @author Arthur  @date 02/04 - 13/04
 *********************************************/
-void Text::syncPauseText(GameModel *gameModel)
+void Text::syncGamePauseText(GameModel *gameModel)
 {
     m_distanceText->setPosition(80, 30);
-    m_CoinsCollectedNumberText->setPosition(80, 70);
-    m_CoinsCollectedNumberText->setColor(sf::Color(255,204,0,255));
+    m_coinsCollectedNumberText->setPosition(80, 70);
+    m_coinsCollectedNumberText->setColor(sf::Color(255,204,0,255));
     m_pauseResumeLabel->setPosition(80, 400);
     m_restartLabel->setPosition(80, 450);
     m_homeLabel->setPosition(80, 500);
 
     m_distanceText->setString( to_string(gameModel->getDistance() ) + " m" );
-    m_CoinsCollectedNumberText->setString(to_string(gameModel->getNbCoinsCollected() ));
+    m_coinsCollectedNumberText->setString(to_string(gameModel->getNbCoinsCollected() ));
 
 }
 
 /********************************************
-    End Screen Syncing
+    Game End Screen Syncing
 *********************************************
     @author Arthur  @date 02/04 - 13/04
 *********************************************/
-void Text::syncEndText(GameModel *gameModel)
+void Text::syncGameEndText(GameModel *gameModel)
 {
     m_endTitleLabel->setPosition(400, 80);
     m_gameSpeedmultiplicatorLabel->setPosition(220, 170);
@@ -234,8 +308,8 @@ void Text::syncEndText(GameModel *gameModel)
     m_distanceText->setPosition(580, 207);
     m_distanceText->setColor(sf::Color(86,103,97,255));
     m_coinsCollectedNumberLabel->setPosition(220, 245);
-    m_CoinsCollectedNumberText->setPosition(580, 245);
-    m_CoinsCollectedNumberText->setColor(sf::Color(86,103,97,255));
+    m_coinsCollectedNumberText->setPosition(580, 245);
+    m_coinsCollectedNumberText->setColor(sf::Color(86,103,97,255));
     m_enemyDestructedBonusLabel->setPosition(220, 290);
     m_enemyDestructedBonusLabel->setColor(sf::Color::White);
     m_enemyDestructedBonusText->setPosition(580, 290);
@@ -245,25 +319,43 @@ void Text::syncEndText(GameModel *gameModel)
     m_scoreText->setPosition(580,350);
     m_scoreText->setStyle(sf::Text::Bold);
     m_homeLabel->setPosition(80,535);
-    m_restartLabel->setPosition(750,535);
+    m_restartLabel->setPosition(760-m_restartLabel->getGlobalBounds().width/2,535);
 
-    m_gameSpeedmultiplicatorText->setString(  to_string( gameModel->getGameSpeed() ));
+    m_gameSpeedmultiplicatorText->setString(  to_string( gameModel->getGameSpeed() + 2*gameModel->getDifficulty() ));
     m_distanceText->setString(  to_string( gameModel->getDistance() ) + " m" );
-    m_CoinsCollectedNumberText->setString( to_string( gameModel->getNbCoinsCollected() ) + "  X  20" );
+    m_coinsCollectedNumberText->setString( to_string( gameModel->getNbCoinsCollected() ) + "  X  20" );
     m_enemyDestructedBonusText->setString( to_string( gameModel->getEnemyDestructedBonus() ));
     m_scoreText->setString( to_string( gameModel->getScore() ) );
 }
 
 
 /********************************************
-    Menu Screen Drawing
+    Menu Home Screen Drawing
 *********************************************
     @author Arthur  @date 02/04 - 13/04
 *********************************************/
-void Text::drawMenuText(sf::RenderWindow *window)
+void Text::drawMenuHomeText(sf::RenderWindow *window)
 {
     window->draw(*m_playButtonText);
     window->draw(*m_quitButtonText);
+}
+
+
+/********************************************
+    Menu Settings Screen Drawing
+*********************************************
+    @author Arthur  @date 14/04
+*********************************************/
+void Text::drawMenuSettingsText(sf::RenderWindow *window)
+{
+    window->draw(*m_configurationLabel);
+    window->draw(*m_configLanguageLabel);
+    window->draw(*m_configLanguageEnLabel);
+    window->draw(*m_configLanguageFrLabel);
+    window->draw(*m_configLanguageEsLabel);
+    window->draw(*m_configDifficultyLabel);
+    window->draw(*m_configDifficultyNormalLabel);
+    window->draw(*m_configDifficultyMasterLabel);
 }
 
 
@@ -288,7 +380,7 @@ void Text::drawGameText(sf::RenderWindow *window)
 void Text::drawPauseText(sf::RenderWindow *window)
 {
     window->draw(*m_distanceText);
-    window->draw(*m_CoinsCollectedNumberText);
+    window->draw(*m_coinsCollectedNumberText);
     window->draw(*m_pauseResumeLabel);
     window->draw(*m_restartLabel);
     window->draw(*m_homeLabel);
@@ -308,7 +400,7 @@ void Text::drawEndText(sf::RenderWindow *window)
     window->draw(*m_distanceLabel);
     window->draw(*m_distanceText);
     window->draw(*m_coinsCollectedNumberLabel);
-    window->draw(*m_CoinsCollectedNumberText);
+    window->draw(*m_coinsCollectedNumberText);
     window->draw(*m_enemyDestructedBonusLabel);
     window->draw(*m_enemyDestructedBonusText);
     window->draw(*m_scoreLabel);

@@ -33,9 +33,12 @@ class Model
 public:
     //=== CTORs / DTORs
     Model(float w, float h, const std::chrono::system_clock::time_point beginTime);
+    Model( const Model & model);
     virtual ~Model();
 
     //=== GETTERS
+    int getDifficulty() const;
+    std::string getLanguage() const;
     bool getIntroState() const;
     bool getMenuState() const;
     bool getGameState() const;
@@ -43,6 +46,8 @@ public:
     std::chrono::system_clock::time_point getProgramBeginningTime() const ;
 
     //=== SETTERS
+    void setDifficulty(int difficulty);
+    void setLanguage(std::string language);
     void setIntroState(bool state);
     void setMenuState(bool state);
     void setGameState(bool state);
@@ -54,6 +59,8 @@ public:
 protected:
     //=== ATTRIBUTES
     float m_width, m_height;
+    int m_difficulty;
+    std::string m_language;
     const std::chrono::system_clock::time_point m_programBeginningTime;
 
 private:

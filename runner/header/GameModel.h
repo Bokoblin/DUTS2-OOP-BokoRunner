@@ -33,7 +33,7 @@ class GameModel : public Model
 {
 public:
     //=== CTORs / DTORs
-    GameModel(float width, float height, std::chrono::system_clock::time_point programBeginningTime);
+    GameModel(const Model& model);
     ~GameModel();
 
     //=== GETTERS

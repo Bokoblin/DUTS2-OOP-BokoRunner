@@ -21,8 +21,6 @@ limitations under the License.
 
 
 const int GAME_FLOOR = 480;
-const float GRAVITATION = 20;
-const float ACCELERATION = 10.0;
 const int FRAMERATE = 30;
 const int JUMP_LIMIT = 380;
 const float PRECISION = 1.0;
@@ -61,6 +59,8 @@ public:
 
 private:
     int m_state;
+    float m_gravitation;
+    float m_acceleration;
     bool m_jumping;
     bool m_flying;
     bool m_inDeceleration;

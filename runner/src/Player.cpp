@@ -6,11 +6,11 @@ using namespace std;
     Parameterized Constructor
 *********************************************
     @author Arthur  @date 22/02 - 11/04
-    @author Florian @date 22/02 - 06/04
+    @author Florian @date 22/02 - 15/04
 *********************************************/
 Player::Player(float x, float y, float w, float h, float mvX, float mvY):
-    MovableElement(x, y, w, h, mvX, mvY), m_state{0},
-    m_jumping{false}, m_flying{false}, m_inDeceleration{false}
+    MovableElement(x, y, w, h, mvX, mvY), m_state{0}, m_gravitation{20.0},
+    m_acceleration{18.0}, m_jumping{false}, m_flying{false}, m_inDeceleration{false}
 {
     m_elementType = 0;
     m_life  = 100;
@@ -62,11 +62,11 @@ void Player::setLife(int new_life)
 /********************************************
     Player Move Function
 *********************************************
-    @author Florian @date  12/03 - 10/04
+    @author Florian @date  12/03 - 15/04
 *********************************************/
 void Player::move()
 {
-    m_flying =m_width < GAME_FLOOR;
+    m_flying = m_width < GAME_FLOOR;
 
     if (m_posY < JUMP_LIMIT)
         m_jumping = false;
@@ -83,13 +83,13 @@ void Player::move()
 
     if(m_jumping && m_posY >=GAME_FLOOR)
     {
-        m_vectorBall.second = -m_moveY*GRAVITATION/FRAMERATE;
+        m_vectorBall.second = -m_acceleration*m_gravitation/FRAMERATE;
         m_posY+= m_vectorBall.second/FRAMERATE;
     }
 
     if(m_flying)
     {
-        m_vectorBall.second += GRAVITATION/FRAMERATE;
+        m_vectorBall.second += m_gravitation/FRAMERATE;
         m_posY+= m_vectorBall.second/FRAMERATE;
     }
 
@@ -108,15 +108,14 @@ void Player::move()
    //=== Update player position
 
     if ( m_posX + m_vectorBall.first >= 0 && (m_posX + m_width + m_vectorBall.first) <= 900 )
-    {
         m_posX += m_vectorBall.first;
-    }
-    else if (m_posX + m_vectorBall.first < 0 )
-    {
+    else if (m_posX + m_vectorBall.first < 0)
         m_posX = 0;
-    }
     else
         m_posX = 900 - m_width;
+
+    if(m_posY - m_height <= 0)
+       m_vectorBall.second =0;
 
     m_posY += m_vectorBall.second;
 
@@ -141,6 +140,8 @@ void Player::changeState(int state)
         m_width = 30;
         m_height = 30;
         m_state = 0;
+        m_gravitation = 20.0;
+        m_acceleration = 18.0;
     }
     else if ( state == 1) //mega
     {
@@ -148,14 +149,18 @@ void Player::changeState(int state)
         m_width = 70;
         m_height = 70;
         m_state = 1;
+        m_gravitation = 20.0;
+        m_acceleration = 18.0;
     }
     else if ( state == 2) //fly
     {
         cout << "Player has taken the FLY type, it's super effective !" << endl;
-        //FLORIAN : the player should be able to fly without having to go down (multiple jump,...)
+        m_width = 30;
+        m_height = 30;
         m_state = 2;
+        m_gravitation = 5.0;
+        m_acceleration = 70.0;
     }
-
 }
 
 /********************************************
@@ -169,8 +174,8 @@ void Player::controlPlayerMovements(bool left)
     m_inDeceleration = false;
 
     if (left == true && m_vectorBall.first > -10)
-        m_vectorBall.first -= m_moveX*ACCELERATION/FRAMERATE;
+        m_vectorBall.first -= m_moveX*m_acceleration/FRAMERATE;
     else if ( left == false && m_vectorBall.first <10)
-        m_vectorBall.first += m_moveX*ACCELERATION/FRAMERATE;
+        m_vectorBall.first += m_moveX*m_acceleration/FRAMERATE;
 }
 

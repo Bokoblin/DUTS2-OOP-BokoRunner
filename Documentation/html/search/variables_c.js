@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['screen_5fheight',['SCREEN_HEIGHT',['../main_8cpp.html#ab454541ae58bcf6555e8d723b1eb95e7',1,'main.cpp']]],
-  ['screen_5fwidth',['SCREEN_WIDTH',['../main_8cpp.html#a3482785bd2a4c8b307f9e0b6f54e2c36',1,'main.cpp']]]
+  ['title_5fimage',['TITLE_IMAGE',['../d7/db8/_menu_view_8h.html#aa74b261a6c1d7b5bf938f074fecfdac9',1,'MenuView.h']]]
 ];

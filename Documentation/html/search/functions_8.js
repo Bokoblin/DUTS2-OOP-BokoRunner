@@ -1,10 +1,6 @@
 var searchData=
 [
-  ['main',['main',['../main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main.cpp']]],
-  ['menu',['Menu',['../class_menu.html#a684fffe8b484fbc40a99e3b096ae6046',1,'Menu']]],
-  ['model',['Model',['../class_model.html#ae2b684677e349ab4527e1fab04b24370',1,'Model']]],
-  ['movableelement',['MovableElement',['../class_movable_element.html#a9629a6dfb83e76f50738ab2a803cb179',1,'MovableElement']]],
-  ['move',['move',['../class_coin.html#ab62bca5834489b9b483deaa3ca3470e9',1,'Coin::move()'],['../class_enemy.html#a9a398f8d12234f02563b27440aff7891',1,'Enemy::move()'],['../class_movable_element.html#adb194cff7b7118e612879caa2f70e409',1,'MovableElement::move()'],['../class_player.html#a1d35b7b1cd1a890042abdfdc55cafb14',1,'Player::move()']]],
-  ['moveballaccordingevent',['moveBallAccordingEvent',['../class_game_model.html#ac70a064906f8d3aee5bd5dcc79219a95',1,'GameModel']]],
-  ['movemovableelement',['moveMovableElement',['../class_game_model.html#a497fe8af6c552e328042d3e6ae0a2073',1,'GameModel']]]
+  ['linkelements',['linkElements',['../d0/d21/class_game_view.html#a8a0adb50b16d35d8467166b4ec0973ab',1,'GameView']]],
+  ['loadimages',['loadImages',['../d0/d21/class_game_view.html#ae56672c36d420ed546c986ab11684347',1,'GameView::loadImages()'],['../d7/d01/class_intro.html#a08e8cfd06ac7d5f68b12a0135ee73641',1,'Intro::loadImages()'],['../d0/ddd/class_menu_view.html#abecf99f39ad925251992d6abd3a47069',1,'MenuView::loadImages()'],['../dd/d9f/class_view.html#ab6bca263d215f3fedabd4f9865b425f8',1,'View::loadImages()']]],
+  ['loadtext',['loadText',['../da/d0e/class_text.html#a764e6ffa782f650b4e4425b28f0d4da4',1,'Text']]]
 ];

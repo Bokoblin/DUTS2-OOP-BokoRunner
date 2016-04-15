@@ -3,12 +3,12 @@
 /********************************************
     Parameterized Constructor
 *********************************************
-    @author Arthur  @date 6/04
+    @author Arthur  @date 6/04 - 14/04
 *********************************************/
 Button::Button(const std::vector<sf::IntRect> & clipRects,
-            sf::Texture &image, float x, float y, float w, float h):
+            sf::Texture &image, float x, float y, float w, float h, bool isRadio):
     GraphicElement(image, x, y, w, h), m_clipRectsArray{clipRects},
-    m_currentClipRect{0}, m_pressedState{false}
+    m_currentClipRect{0}, m_isRadio{isRadio},  m_pressed{false}, m_active{false}
 {
     this->setTextureRect(m_clipRectsArray[m_currentClipRect]);
 }
@@ -17,11 +17,11 @@ Button::Button(const std::vector<sf::IntRect> & clipRects,
 /********************************************
     Copy Constructor
 *********************************************
-    @author Arthur  @date 6/04
+    @author Arthur  @date 6/04 - 14/04
 *********************************************/
-Button::Button(Button const& elementACopier) :
-    GraphicElement(elementACopier), m_clipRectsArray{elementACopier.m_clipRectsArray},
-    m_currentClipRect{0}, m_pressedState{false}
+Button::Button(Button const& other) :
+    GraphicElement(other), m_clipRectsArray{other.m_clipRectsArray},
+    m_currentClipRect{0}, m_isRadio{other.m_isRadio}, m_pressed{false}, m_active{false}
 {
     this->setTextureRect(m_clipRectsArray[m_currentClipRect]);
 }
@@ -39,17 +39,30 @@ Button::~Button()
 /********************************************
     Setters
 *********************************************
-    @author Arthur  @date 6/04
+    @author Arthur  @date 6/04 - 14/04
 *********************************************/
-void Button::setPressedState(bool state) { m_pressedState = state; }
+void Button::setPressedState(bool state) { m_pressed = state; }
+void Button::setActivatedState(bool state) { m_active = state; }
 
 
 /********************************************
     Synchronization Function : change animation
 *********************************************
-    @author Arthur  @date 6/04 - 11/04
+    @author Arthur  @date 6/04 - 14/04
 *********************************************/
 void Button::sync()
 {
-    this->setTextureRect(m_clipRectsArray[m_pressedState]);
+    if ( m_isRadio == false)
+        this->setTextureRect(m_clipRectsArray[m_pressed]);
+    else
+    {
+        if ( m_active && !m_pressed)
+            this->setTextureRect(m_clipRectsArray[0]);
+        if ( m_active && m_pressed)
+            this->setTextureRect(m_clipRectsArray[1]);
+        if ( !m_active && !m_pressed)
+            this->setTextureRect(m_clipRectsArray[2]);
+        if ( !m_active && m_pressed)
+            this->setTextureRect(m_clipRectsArray[3]);
+    }
 }

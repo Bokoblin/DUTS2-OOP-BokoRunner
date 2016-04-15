@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['view',['View',['../class_view.html#a5bfeca11df34d978e9121f4503e20851',1,'View']]]
+  ['updateelements',['updateElements',['../d0/d21/class_game_view.html#a008f1b147d36519263015a2e46c14e49',1,'GameView']]],
+  ['updatestring',['updateString',['../da/d0e/class_text.html#ab0d86d2cd0ca0359cc6b0fb49ed19695',1,'Text']]]
 ];

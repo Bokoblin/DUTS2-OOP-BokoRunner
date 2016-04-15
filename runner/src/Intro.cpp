@@ -5,9 +5,9 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    @author Arthur  @date 27/03
+    @author Arthur  @date 27/03 - 11/04
 *********************************************/
-Intro::Intro(float w, float h, sf::RenderWindow *window): View(w, h, window)
+Intro::Intro(float w, float h, sf::RenderWindow *window, Text *text): View(w, h, window, text)
 {
     m_window->create( sf::VideoMode(w, h, 32), "Boko Runner", sf::Style::None );
     m_window->setFramerateLimit(30);
@@ -24,8 +24,7 @@ Intro::Intro(float w, float h, sf::RenderWindow *window): View(w, h, window)
 *********************************************/
 Intro::~Intro()
 {
-    if(m_introGraphic!= NULL)
-        delete m_introGraphic;
+    delete m_introGraphic;
 }
 
 

@@ -13,8 +13,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "header/Menu.h"
+
 #include "header/Intro.h"
+#include "header/MenuView.h"
 #include "header/GameView.h"
 
 
@@ -37,6 +38,7 @@ int main()
     sf::RenderWindow *window = new sf::RenderWindow( sf::VideoMode(SCREEN_WIDTH,
             SCREEN_HEIGHT, 32), "Boko Runner", sf::Style::None );
     window->setFramerateLimit(30);
+    Text *text = new Text();
 
     Model model(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
 
@@ -44,7 +46,7 @@ int main()
     {
         if  (model.getIntroState() == true)
         {
-            Intro intro(400, 200, window);
+            Intro intro(400, 200, window, text);
             intro.setModel(&model);
             while( model.getIntroState() && intro.treatEvents() )
             {
@@ -55,19 +57,22 @@ int main()
 
         if  (model.getMenuState() == true)
         {
-            Menu menu(SCREEN_WIDTH, SCREEN_HEIGHT, window);
-            menu.setModel(&model);
-            while( model.getMenuState() && menu.treatEvents()  )
+            MenuModel mModel(model);
+            MenuView mView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
+            mView.setModel(&model);
+            mView.setMenuModel(&mModel);
+            while( model.getMenuState() && mView.treatEvents()  )
             {
-                menu.synchronize();
-                menu.draw();
+                mModel.nextStep();
+                mView.synchronize();
+                mView.draw();
             }
         }
 
         if  (model.getGameState() == true)
         {
-            GameModel gModel(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
-            GameView gView(SCREEN_WIDTH, SCREEN_HEIGHT, window);
+            GameModel gModel(model);
+            GameView gView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
             gView.setModel(&model);
             gView.setGameModel(&gModel);
             while( model.getGameState() && gView.treatEvents() )
@@ -85,6 +90,7 @@ int main()
     }
 
     delete window;
+    delete text;
 
     return EXIT_SUCCESS;
 }

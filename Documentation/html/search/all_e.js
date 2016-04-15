@@ -1,6 +1,11 @@
 var searchData=
 [
-  ['remaining_5flife',['REMAINING_LIFE',['../_game_view_8h.html#a662bdb942ae3b9cc2bfeabf61e5efcd8',1,'GameView.h']]],
-  ['resize',['resize',['../class_graphic_element.html#a330c3f0f7c6dfe9a7f645a37cca2b1f6',1,'GraphicElement']]],
-  ['roboto_5ffont',['ROBOTO_FONT',['../_text_8h.html#a7c20d3e03629b4f95911cca876fecf17',1,'Text.h']]]
+  ['pause_5fbackground_5fimage',['PAUSE_BACKGROUND_IMAGE',['../dc/d46/_game_view_8h.html#a4c3fdd40851ba91d8c88040e8ef7caa4',1,'GameView.h']]],
+  ['pause_5fbuttons_5fimage',['PAUSE_BUTTONS_IMAGE',['../dc/d46/_game_view_8h.html#a526fbfb20e36edddcb47ae8860343617',1,'GameView.h']]],
+  ['player',['Player',['../d8/d53/class_player.html',1,'Player'],['../d8/d53/class_player.html#a2645246df02b2fc9002b1462e60a6497',1,'Player::Player()']]],
+  ['player_2ecpp',['Player.cpp',['../d2/d82/_player_8cpp.html',1,'']]],
+  ['player_2eh',['Player.h',['../d1/d39/_player_8h.html',1,'']]],
+  ['player_5fdefault_5fpos_5fx',['PLAYER_DEFAULT_POS_X',['../d3/d6e/_game_model_8h.html#a71dcd995a8c374537eb3213885446307',1,'GameModel.h']]],
+  ['precision',['PRECISION',['../d1/d39/_player_8h.html#ab0fe7f331f3e51db32d0a37539dc8fba',1,'Player.h']]],
+  ['programbeginningtime',['programBeginningTime',['../df/d0a/main_8cpp.html#a35c94517e00c4616279c15ce91d9d506',1,'main.cpp']]]
 ];

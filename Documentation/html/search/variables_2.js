@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['end_5fbackground_5fimage',['END_BACKGROUND_IMAGE',['../_game_view_8h.html#aa33e3f5a37bf765bc0ab5bae8d38f290',1,'GameView.h']]],
-  ['enemies_5fimage',['ENEMIES_IMAGE',['../_game_view_8h.html#a329b0b24c3ecfdd375f24714cdf0d7eb',1,'GameView.h']]]
+  ['framerate',['FRAMERATE',['../d1/d39/_player_8h.html#a3209026b00c86ed41425f65d2a9a9041',1,'Player.h']]],
+  ['french_5fstrings',['FRENCH_STRINGS',['../d4/dcf/_text_8h.html#aa3d23e3ca01695502419bfef75c55b51',1,'Text.h']]]
 ];

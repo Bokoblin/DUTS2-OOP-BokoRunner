@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['olive_5ffont',['OLIVE_FONT',['../_text_8h.html#a656f8a6af8f24b079b3a1f92e4f26107',1,'Text.h']]]
+  ['nextstep',['nextStep',['../dc/da9/class_game_model.html#ad359cff08789d396c911390e255833a2',1,'GameModel::nextStep()'],['../d4/d31/class_menu_model.html#adf7d854821326043c3030e47228edea6',1,'MenuModel::nextStep()'],['../d0/de3/class_model.html#a2f9cdd0b58d7a7902770752c75a70f60',1,'Model::nextStep()']]]
 ];

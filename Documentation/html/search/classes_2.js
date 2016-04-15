@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['coin',['Coin',['../class_coin.html',1,'']]]
+  ['coin',['Coin',['../df/d08/class_coin.html',1,'']]]
 ];

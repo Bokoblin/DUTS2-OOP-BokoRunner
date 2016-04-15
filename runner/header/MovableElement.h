@@ -16,7 +16,6 @@ limitations under the License.
 #ifndef MOVABLEELEMENT_H
 #define MOVABLEELEMENT_H
 
-#include <iostream>
 #include <string>
 
 /********************************************

@@ -5,12 +5,13 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    @author Arthur  @date 26/03 - 01/04
+    @author Arthur  @date 26/03 - 16/04
 *********************************************/
-GameModel::GameModel(float w, float h, chrono::system_clock::time_point programBeginningTime) :
-    Model(w, h, programBeginningTime), m_pauseState{false}, m_endState{false}, m_score{0},
+GameModel::GameModel(const Model& model) :
+    Model(model), m_pauseState{false}, m_endState{false}, m_score{0},
     m_distance{0}, m_gameSpeed{4}, m_nbCoinsCollected{0}, m_enemyDestructedBonus{0},
     m_currentEnemyInterdistance{0}, m_currentCoinInterdistance{0}, m_currentBonusInterdistance{0},
+    m_activeBonusType{-1},
     m_lastTime{chrono::system_clock::now()}, m_bonusStopTime{chrono::milliseconds(0)}
 {
     srand(time(NULL));
@@ -75,9 +76,9 @@ void GameModel::nextStep()
 
 	if (m_pauseState == false && m_endState == false)
 	{
-		if ( nextStepDelay > chrono::milliseconds(400/m_gameSpeed) )
+		if ( nextStepDelay > chrono::milliseconds(400/(m_gameSpeed+2*m_difficulty) ) )
 		{
-			m_distance ++;
+			m_distance += (1 + 2*m_difficulty);
 
 			//=== Handle Movable Elements Creation
 
@@ -113,7 +114,7 @@ void GameModel::nextStep()
     }
     else if (m_endState == true)
     {
-        m_score = m_gameSpeed*m_distance + 20*m_nbCoinsCollected + m_enemyDestructedBonus;
+        m_score = (m_gameSpeed+2*m_difficulty)*m_distance + 20*m_nbCoinsCollected + m_enemyDestructedBonus;
     }
 }
 
@@ -203,7 +204,7 @@ void GameModel::moveMovableElement(MovableElement *currentElement)
         currentElement->move();
     else if( currentElement != NULL )
     {
-        currentElement->setMoveX(m_gameSpeed*(-1));
+        currentElement->setMoveX(-1*(m_gameSpeed+m_difficulty));
         currentElement->move();
     }
 }
@@ -308,19 +309,35 @@ void GameModel::handleMovableElementsCollisions()
             (*it)->setCollisionState(true);
 
             if ( (*it)->getType() == 1 && m_player->getState() != 1 ) //standard enemy
-                m_player->setLife(m_player->getLife()-10);
+            {
+                if (m_difficulty == 0)
+                    m_player->setLife(m_player->getLife()-10);
+                else if (m_difficulty == 2)
+                    m_player->setLife(m_player->getLife()-20);
+            }
 
             else if ( (*it)->getType() == 1 && m_player->getState() == 1 )
                 m_enemyDestructedBonus += 100;
 
             else if ( (*it)->getType() == 2 && m_player->getState() != 1) //totem enemy
-                m_player->setLife(m_player->getLife()-15);
+            {
+                if (m_difficulty == 0)
+                    m_player->setLife(m_player->getLife()-15);
+                else if (m_difficulty == 2)
+                    m_player->setLife(m_player->getLife()-30);
+            }
+
 
             else if ( (*it)->getType() == 2 && m_player->getState() == 1 )
                 m_enemyDestructedBonus += 300;
 
             else if ( (*it)->getType() == 3 && m_player->getState() != 1) //block enemy
-                m_player->setLife(m_player->getLife()-20);
+            {
+                if (m_difficulty == 0)
+                    m_player->setLife(m_player->getLife()-20);
+                else if (m_difficulty == 2)
+                    m_player->setLife(m_player->getLife()-40);
+            }
 
             else if ( (*it)->getType() == 3 && m_player->getState() == 1 )
                 m_enemyDestructedBonus += 500;

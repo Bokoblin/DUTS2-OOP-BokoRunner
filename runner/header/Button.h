@@ -21,19 +21,20 @@ limitations under the License.
 /********************************************
     Button Class
 *********************************************
-    @author Arthur  @date 6/04
+    @author Arthur  @date 6/04 - 14/04
 *********************************************/
 class Button : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
     Button(const std::vector<sf::IntRect> & clipRects,
-            sf::Texture &image, float x, float y, float w, float h);
+            sf::Texture &image, float x, float y, float w, float h, bool isRadio);
     Button(Button const& elementACopier);
     virtual ~Button();
 
     //=== SETTERS
     void setPressedState(bool state);
+    void setActivatedState(bool state);
 
     //=== METHODS
     virtual void sync() override;
@@ -42,7 +43,9 @@ private:
     //=== ATTRIBUTES
     std::vector<sf::IntRect> m_clipRectsArray;
     unsigned int m_currentClipRect;
-    bool m_pressedState;
+    bool m_isRadio;
+    bool m_pressed;
+    bool m_active;
 
 };
 

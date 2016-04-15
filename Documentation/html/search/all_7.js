@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['intro',['Intro',['../class_intro.html',1,'Intro'],['../class_intro.html#ab254003e8b570ce0f5e50de7175b4dbe',1,'Intro::Intro()']]],
-  ['intro_2ecpp',['Intro.cpp',['../_intro_8cpp.html',1,'']]],
-  ['intro_2eh',['Intro.h',['../_intro_8h.html',1,'']]],
-  ['intro_5fimage',['INTRO_IMAGE',['../_intro_8h.html#ac4fe1625ba19240b70315818ff6b3786',1,'Intro.h']]]
+  ['handlemovableelementscollisions',['handleMovableElementsCollisions',['../dc/da9/class_game_model.html#a835edcda24e86c44228c9f44d3bba1f3',1,'GameModel']]],
+  ['handlemovableelementscreation',['handleMovableElementsCreation',['../dc/da9/class_game_model.html#afbc43d707dfd811905b92f630fbb2db0',1,'GameModel']]],
+  ['handlemovableelementsdeletion',['handleMovableElementsDeletion',['../dc/da9/class_game_model.html#aa61071c4f77a05993542bd7f035a183a',1,'GameModel']]]
 ];

@@ -154,4 +154,16 @@ v1.1.0 (15/04/16):
 		It works during 15 seconds.
 	- SLOWGAME : slow down game speed (background and elements). It works during 20 seconds. 
 
+---------------------------------------------------------------------------------------------------
+
+v1.2.0 (16/04/16):
+
+- added Settings screen in menu with :
+	- multilingual support : allows to change global language to English, French or Spanish 
+				via 3 radios buttons,
+	- difficulty changement support : allows to change difficulty to normal or master,
+					  in master gamespeed is higher and damages are doubled
+- class destructors cleaned-up
+- documentation updated
+
 

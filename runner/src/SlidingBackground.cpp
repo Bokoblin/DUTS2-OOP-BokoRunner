@@ -17,14 +17,12 @@ SlidingBackground::SlidingBackground(sf::Texture &image, float w, float h, unsig
 /********************************************
     Destructor
 *********************************************
-    @author Arthur  @date 5/03
+    @author Arthur  @date 5/03 - 15/04
 *********************************************/
 SlidingBackground::~SlidingBackground()
 {
-    if(m_left!= NULL)
-        delete m_left;
-    if(m_right!= NULL)
-        delete m_right;
+    delete m_left;
+    delete m_right;
 }
 
 

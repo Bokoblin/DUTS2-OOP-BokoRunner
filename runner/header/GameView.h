@@ -13,19 +13,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef GAME_H
-#define GAME_H
+#ifndef GAMEVIEW_H
+#define GAMEVIEW_H
 
 #include "View.h"
-
-#define MOUSE_POSITION sf::Vector2f(event.mouseButton.x, event.mouseButton.y)
 
 /********************************************
     Constant Variables
 ********************************************/
 //GAME
 const std::string BOTTOM_BAR = "Images/bottom_bar.png";
-const std::string LIFE_BOX = "Images/life.png";
+const std::string LIFE_BOX = "Images/life_bar.png";
 const std::string REMAINING_LIFE = "Images/remaining_life.png";
 const std::string BALL_IMAGE = "Images/balls.png";
 const std::string ENEMIES_IMAGE = "Images/enemies.png";
@@ -46,8 +44,8 @@ class GameView : public View
 {
 public:
 	//=== CTORs / DTORs
-	GameView(float w, float h, sf::RenderWindow *mywindow);
-	~GameView();
+	GameView(float w, float h, sf::RenderWindow *window, Text *text);
+	virtual ~GameView();
 
 	//=== SETTERS
 	void setGameModel(GameModel *model);
@@ -62,6 +60,7 @@ public:
 	virtual void deleteElements();
 
 private:
+    //=== ATTRIBUTES
     GameModel *m_gameModel;
 
     //Game Textures
@@ -115,4 +114,4 @@ private:
 };
 
 
-#endif // GAME_H
+#endif // GAMEVIEW_H

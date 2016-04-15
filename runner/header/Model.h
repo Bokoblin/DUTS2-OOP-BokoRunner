@@ -53,7 +53,7 @@ public:
 
 protected:
     //=== ATTRIBUTES
-    unsigned int m_width, m_height;
+    float m_width, m_height;
     const std::chrono::system_clock::time_point m_programBeginningTime;
 
 private:

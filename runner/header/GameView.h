@@ -39,27 +39,27 @@ const std::string END_BACKGROUND_IMAGE = "Images/end_background.png";
 /********************************************
     GameView Class
 *********************************************
-    @author Arthur  @date 21/02 - 31/03
+    @author Arthur  @date 21/02 - 12/04
     @author Florian @date 21/02 - 3/03
 *********************************************/
 class GameView : public View
 {
 public:
-    //=== CTORs / DTORs
-    GameView(unsigned int w, unsigned int h, sf::RenderWindow *mywindow);
-    ~GameView();
+	//=== CTORs / DTORs
+	GameView(float w, float h, sf::RenderWindow *mywindow);
+	~GameView();
 
-    //=== SETTERS
-    void setGameModel(GameModel *model);
+	//=== SETTERS
+	void setGameModel(GameModel *model);
 
-    //=== METHODS
-    virtual void loadImages() override;
-    virtual void synchronize() override;
-    virtual void draw() const override;
-    virtual bool treatEvents() override;
-    virtual void linkElements();
-    virtual void updateElements();
-    virtual void deleteElements();
+	//=== METHODS
+	virtual void loadImages() override;
+	virtual void synchronize() override;
+	virtual void draw() const override;
+	virtual bool treatEvents() override;
+	virtual void linkElements();
+	virtual void updateElements();
+	virtual void deleteElements();
 
 private:
     GameModel *m_gameModel;
@@ -75,7 +75,10 @@ private:
     sf::Texture m_totemEnemyTexture;
     sf::Texture m_blockEnemyTexture;
     sf::Texture m_coinTexture;
-    sf::Texture m_explosionTexture;
+    sf::Texture m_PVPlusBonusTexture;
+    sf::Texture m_megaBonusTexture;
+    sf::Texture m_flyBonusTexture;
+    sf::Texture m_slowSpeedBonusTexture;
     //Pause menu Textures
     sf::Texture m_pauseBackgroundTexture;
     sf::Texture m_resumeButtonTexture;
@@ -95,6 +98,10 @@ private:
     AnimatedGraphicElement *m_totemEnemyGraphic;
     AnimatedGraphicElement *m_blockEnemyGraphic;
     AnimatedGraphicElement *m_coinGraphic;
+    AnimatedGraphicElement *m_PVPlusBonusGraphic;
+    AnimatedGraphicElement *m_megaBonusGraphic;
+    AnimatedGraphicElement *m_flyBonusGraphic;
+    AnimatedGraphicElement *m_slowSpeedBonusGraphic;
     //Pause and End Graphic Elements
     GraphicElement *m_pauseBackgroundGraphic;
     GraphicElement *m_pauseDistanceGraphic;

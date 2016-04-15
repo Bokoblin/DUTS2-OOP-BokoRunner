@@ -1,7 +1,7 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.0.1
+Current version : v1.1.0
 
 ======================================================================================
 BETA CHANNEL Changelog
@@ -115,7 +115,7 @@ Contains v0.4.0-dev, v0.5.0-dev and v0.6.0-dev :
 
 
 - v0.6.0-dev (01/04/16 - 06/04/16):
-	- End Screen added with final score calculated and displayed and 2 buttons (restart, home menu)
+	- End Screen added with final score calculated and displayed, and 2 buttons (restart,menu)
 	- Text class created to store all texts from menu, game, pause and end
 	- Abstract classes added (View && MovableElement)
 	- Button class added
@@ -141,5 +141,17 @@ v1.0.0 (11/04/16):
 v1.0.1 (15/04/16):
 
 - added unit tests
+
+---------------------------------------------------------------------------------------------------
+
+v1.1.0 (15/04/16):
+
+- added Bonus :
+	- PV+ : restores 10 PV to player.
+	- MEGA : grows player size, making it invincible and collecting enemy destruction points.
+		It works during 10 seconds.
+	- FLY : allows the player to jump higher and going down slowly following user control.
+		It works during 15 seconds.
+	- SLOWGAME : slow down game speed (background and elements). It works during 20 seconds. 
 
 

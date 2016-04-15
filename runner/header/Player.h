@@ -21,8 +21,6 @@ limitations under the License.
 
 
 const int GAME_FLOOR = 480;
-const float GRAVITATION = 20;
-const float ACCELERATION = 10.0;
 const int FRAMERATE = 30;
 const int JUMP_LIMIT = 380;
 const float PRECISION = 1.0;
@@ -41,23 +39,28 @@ public:
     virtual ~Player();
 
     //=== GETTERS
+    int getState() const;
     bool getFlyingState() const;
     bool getJumpState() const;
     bool getDecelerationState() const;
     std::pair<float,float> getVector() const;
 
     //=== SETTERS
-    virtual void setLife(unsigned int new_life) ;
+    virtual void setLife(int new_life) ;
     void setFlyingState(bool etat);
     void setJumpState(bool etat);
     void setDecelerationState(bool etat);
 
     //=== METHODS
     virtual void move() override;
+    void changeState(int state);
     void controlPlayerMovements(bool left);
 
 
 private:
+    int m_state;
+    float m_gravitation;
+    float m_acceleration;
     bool m_jumping;
     bool m_flying;
     bool m_inDeceleration;

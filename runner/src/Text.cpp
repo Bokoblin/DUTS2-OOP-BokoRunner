@@ -71,10 +71,10 @@ void Text::loadText()
 
     //Pause Text Loading
 
-    m_CoinsCollectedNumberText.setFont(*m_font);
-    m_CoinsCollectedNumberText.setCharacterSize(24);
-    m_CoinsCollectedNumberText.setColor(sf::Color(255,204,0,255));
-    m_CoinsCollectedNumberText.setString( "" );
+    m_coinsCollectedNumberText.setFont(*m_font);
+    m_coinsCollectedNumberText.setCharacterSize(24);
+    m_coinsCollectedNumberText.setColor(sf::Color(255,204,0,255));
+    m_coinsCollectedNumberText.setString( "" );
 
     m_pauseResumeLabel.setFont(*m_font);
     m_pauseResumeLabel.setCharacterSize(24);
@@ -113,10 +113,20 @@ void Text::loadText()
     m_distanceLabel.setColor(sf::Color::White);
     m_distanceLabel.setString( "Distance travelled" );
 
-    m_CoinsCollectedNumberLabel.setFont(*m_font);
-    m_CoinsCollectedNumberLabel.setCharacterSize(24);
-    m_CoinsCollectedNumberLabel.setColor(sf::Color::Black);
-    m_CoinsCollectedNumberLabel.setString( "Coins collected" );
+    m_coinsCollectedNumberLabel.setFont(*m_font);
+    m_coinsCollectedNumberLabel.setCharacterSize(24);
+    m_coinsCollectedNumberLabel.setColor(sf::Color::Black);
+    m_coinsCollectedNumberLabel.setString( "Coins collected" );
+
+    m_enemyDestructedBonusLabel.setFont(*m_font);
+    m_enemyDestructedBonusLabel.setCharacterSize(24);
+    m_enemyDestructedBonusLabel.setColor(sf::Color::Black);
+    m_enemyDestructedBonusLabel.setString( "Enemies destructed bonus" );
+
+    m_enemyDestructedBonusText.setFont(*m_font);
+    m_enemyDestructedBonusText.setCharacterSize(24);
+    m_enemyDestructedBonusText.setColor(sf::Color::Black);
+    m_enemyDestructedBonusText.setString( "" );
 
     m_scoreLabel.setFont(*m_font);
     m_scoreLabel.setCharacterSize(24);
@@ -166,14 +176,14 @@ void Text::syncGameText(GameModel *gameModel)
 void Text::syncPauseText(GameModel *gameModel)
 {
     m_distanceText.setPosition(80, 30);
-    m_CoinsCollectedNumberText.setPosition(80, 70);
-    m_CoinsCollectedNumberText.setColor(sf::Color(255,204,0,255));
+    m_coinsCollectedNumberText.setPosition(80, 70);
+    m_coinsCollectedNumberText.setColor(sf::Color(255,204,0,255));
     m_pauseResumeLabel.setPosition(80, 400);
     m_restartLabel.setPosition(80, 450);
     m_homeLabel.setPosition(80, 500);
 
     m_distanceText.setString( to_string(gameModel->getDistance() ) + " m" );
-    m_CoinsCollectedNumberText.setString(to_string(gameModel->getNbCoinsCollected() ));
+    m_coinsCollectedNumberText.setString(to_string(gameModel->getNbCoinsCollected() ));
 
 }
 
@@ -191,9 +201,12 @@ void Text::syncEndText(GameModel *gameModel)
     m_distanceLabel.setColor(sf::Color::Black);
     m_distanceText.setPosition(580, 207);
     m_distanceText.setColor(sf::Color(86,103,97,255));
-    m_CoinsCollectedNumberLabel.setPosition(220, 245);
-    m_CoinsCollectedNumberText.setPosition(580, 245);
-    m_CoinsCollectedNumberText.setColor(sf::Color(86,103,97,255));
+    m_coinsCollectedNumberLabel.setPosition(220, 245);
+    m_coinsCollectedNumberText.setPosition(580, 245);
+    m_coinsCollectedNumberText.setColor(sf::Color(86,103,97,255));
+    m_enemyDestructedBonusLabel.setPosition(220, 285);
+    m_enemyDestructedBonusText.setPosition(580, 285);
+    m_enemyDestructedBonusText.setColor(sf::Color(86,103,97,255));
     m_scoreLabel.setPosition(220,350);
     m_scoreText.setPosition(580,350);
     m_homeLabel.setPosition(80,535);
@@ -201,7 +214,8 @@ void Text::syncEndText(GameModel *gameModel)
 
     m_gameSpeedmultiplicatorText.setString(  to_string( gameModel->getGameSpeed() ));
     m_distanceText.setString(  to_string( gameModel->getDistance() ) + " m" );
-    m_CoinsCollectedNumberText.setString( to_string( gameModel->getNbCoinsCollected() ) + "  X  20" );
+    m_coinsCollectedNumberText.setString( to_string( gameModel->getNbCoinsCollected() ) + "  X  20" );
+    m_enemyDestructedBonusText.setString( to_string( gameModel->getEnemyDestructedBonus() ));
     m_scoreText.setString( to_string( gameModel->getScore() ) );
 }
 
@@ -240,7 +254,7 @@ void Text::drawGameText(sf::RenderWindow *window)
 void Text::drawPauseText(sf::RenderWindow *window)
 {
     window->draw(m_distanceText);
-    window->draw(m_CoinsCollectedNumberText);
+    window->draw(m_coinsCollectedNumberText);
     window->draw(m_pauseResumeLabel);
     window->draw(m_restartLabel);
     window->draw(m_homeLabel);
@@ -259,8 +273,10 @@ void Text::drawEndText(sf::RenderWindow *window)
     window->draw(m_gameSpeedmultiplicatorText);
     window->draw(m_distanceLabel);
     window->draw(m_distanceText);
-    window->draw(m_CoinsCollectedNumberLabel);
-    window->draw(m_CoinsCollectedNumberText);
+    window->draw(m_coinsCollectedNumberLabel);
+    window->draw(m_coinsCollectedNumberText);
+    window->draw(m_enemyDestructedBonusLabel);
+    window->draw(m_enemyDestructedBonusText);
     window->draw(m_scoreLabel);
     window->draw(m_scoreText);
     window->draw(m_homeLabel);

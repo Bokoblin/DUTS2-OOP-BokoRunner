@@ -20,19 +20,20 @@ limitations under the License.
 #include "Player.h"
 #include "Enemy.h"
 #include "Coin.h"
+#include "Bonus.h"
 
 const unsigned int PLAYER_DEFAULT_POS_X = 50 ;
 
 /********************************************
     GameModel Class
 *********************************************
-    @author Arthur  @date 26/03 - 01/04
+    @author Arthur  @date 26/03 - 12/04
 *********************************************/
 class GameModel : public Model
 {
 public:
     //=== CTORs / DTORs
-    GameModel(unsigned int width, unsigned int height, std::chrono::system_clock::time_point programBegginingTime);
+    GameModel(float width, float height, std::chrono::system_clock::time_point programBeginningTime);
     ~GameModel();
 
     //=== GETTERS
@@ -43,8 +44,8 @@ public:
     int getDistance() const;
     int getGameSpeed() const;
     unsigned int getNbCoinsCollected() const;
+    unsigned int getEnemyDestructedBonus() const;
     const std::set<MovableElement*>& getNewMElementsArray();
-    const std::set<MovableElement*>& getMElementsArray();
 
     //=== SETTERS
     void setPauseState(bool state);
@@ -58,7 +59,9 @@ public:
     bool checkIfPositionFree(const unsigned int posX, const unsigned int posY) const;
     void moveBallAccordingEvent(bool left);
     void moveMovableElement(MovableElement *element);
-    void deleteMovableElement();
+    void handleMovableElementsCreation();
+    void handleMovableElementsCollisions();
+    void handleMovableElementsDeletion();
     void addANewMovableElement(float posX, float posY, int type);
     void clearNewMovableElementList();
 
@@ -69,12 +72,18 @@ private:
     int m_score;
     int m_distance;
     int m_gameSpeed;
-    std::chrono::system_clock::time_point m_lastTime;
+    int m_realGameSpeed;
     int m_nbCoinsCollected;
+    int m_enemyDestructedBonus;
     int m_currentEnemyInterdistance;
     int m_currentCoinInterdistance;
+    int m_currentBonusInterdistance;
     int m_chosenEnemyInterdistance;
     int m_chosenCoinInterdistance;
+    int m_chosenBonusInterdistance;
+    int m_activeBonusType; /**< nope : -1, mega : 0, fly : 1  */
+    std::chrono::system_clock::time_point m_lastTime;
+    std::chrono::system_clock::time_point m_bonusStopTime;
 
     Player *m_player;
     MovableElement *m_newMElement;

@@ -7,8 +7,8 @@ using namespace std;
 *********************************************
     @author Arthur  @date 26/03 - 27/03
 *********************************************/
-GameView::GameView(unsigned int w, unsigned int h,
-        sf::RenderWindow *mywindow):  View(w, h, mywindow)
+GameView::GameView(float w, float h, sf::RenderWindow *mywindow):
+            View(w, h, mywindow), m_gameModel{nullptr}
 {
     loadImages();
 }
@@ -17,7 +17,7 @@ GameView::GameView(unsigned int w, unsigned int h,
 /********************************************
     Destructor
 *********************************************
-    @author Arthur  @date 26/03 - 11/04
+    @author Arthur  @date 26/03 - 12/04
 *********************************************/
 GameView::~GameView()
 {
@@ -37,6 +37,14 @@ GameView::~GameView()
         delete m_blockEnemyGraphic;
     if(m_coinGraphic!= NULL)
         delete m_coinGraphic;
+    if(m_PVPlusBonusGraphic!= NULL)
+        delete m_PVPlusBonusGraphic;
+    if(m_megaBonusGraphic!= NULL)
+        delete m_megaBonusGraphic;
+    if(m_flyBonusGraphic!= NULL)
+        delete m_flyBonusGraphic;
+    if(m_slowSpeedBonusGraphic != NULL)
+        delete m_slowSpeedBonusGraphic;
 
     if(m_pauseBackgroundGraphic!= NULL)
         delete m_pauseBackgroundGraphic;
@@ -64,7 +72,7 @@ void GameView::setGameModel(GameModel *model) { m_gameModel = model; }
 /********************************************
     Image Loading
 *********************************************
-    @author Arthur  @date 26/03 - 06/04
+    @author Arthur  @date 26/03 - 11/04
 *********************************************/
 void GameView::loadImages()
 {
@@ -169,8 +177,60 @@ void GameView::loadImages()
             clip_rects.push_back(sf::IntRect(50*i,0,50,50));
 
         m_coinTexture.setSmooth(true);
-        m_coinGraphic = new AnimatedGraphicElement(m_coinTexture, 30, 95,25,25, clip_rects, 5);
+        m_coinGraphic = new AnimatedGraphicElement(m_coinTexture, 30, 95, 25, 25, clip_rects, 5);
         m_coinGraphic->setOrigin(0,50);
+    }
+
+    if (!m_PVPlusBonusTexture.loadFromFile(BONUS_IMAGE))
+        cerr << "ERROR when loading image file: " << BONUS_IMAGE << endl;
+    else
+    {
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<5; i++)
+            clip_rects.push_back(sf::IntRect(50*i,50,50,50));
+
+        m_PVPlusBonusTexture.setSmooth(true);
+        m_PVPlusBonusGraphic = new AnimatedGraphicElement(m_PVPlusBonusTexture, m_width, GAME_FLOOR, 25, 25, clip_rects, 5);
+        m_PVPlusBonusGraphic->setOrigin(0,50);
+    }
+
+    if (!m_megaBonusTexture.loadFromFile(BONUS_IMAGE))
+        cerr << "ERROR when loading image file: " << BONUS_IMAGE << endl;
+    else
+    {
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<5; i++)
+            clip_rects.push_back(sf::IntRect(50*i,100,50,50));
+
+        m_megaBonusTexture.setSmooth(true);
+        m_megaBonusGraphic = new AnimatedGraphicElement(m_megaBonusTexture, 100, 50, 25, 25, clip_rects, 5);
+        m_megaBonusGraphic->setOrigin(0,50);
+    }
+
+    if (!m_flyBonusTexture.loadFromFile(BONUS_IMAGE))
+        cerr << "ERROR when loading image file: " << BONUS_IMAGE << endl;
+    else
+    {
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<5; i++)
+            clip_rects.push_back(sf::IntRect(50*i,150,50,50));
+
+        m_flyBonusTexture.setSmooth(true);
+        m_flyBonusGraphic = new AnimatedGraphicElement(m_flyBonusTexture, 100, 50, 25, 25, clip_rects, 5);
+        m_flyBonusGraphic->setOrigin(0,50);
+    }
+
+    if (!m_slowSpeedBonusTexture.loadFromFile(BONUS_IMAGE))
+        cerr << "ERROR when loading image file: " << BONUS_IMAGE << endl;
+    else
+    {
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<5; i++)
+            clip_rects.push_back(sf::IntRect(50*i,200,50,50));
+
+        m_slowSpeedBonusTexture.setSmooth(true);
+        m_slowSpeedBonusGraphic = new AnimatedGraphicElement(m_slowSpeedBonusTexture, 100, 50, 25, 25, clip_rects, 5);
+        m_slowSpeedBonusGraphic->setOrigin(0,50);
     }
 
     if (!m_pauseBackgroundTexture.loadFromFile(PAUSE_BACKGROUND_IMAGE))
@@ -242,7 +302,7 @@ void GameView::loadImages()
 /********************************************
     Link mElements with gElements
 *********************************************
-    @author Arthur  @date 18/03 - 05/04
+    @author Arthur  @date 18/03 - 11/04
 *********************************************/
 void GameView::linkElements()
 {
@@ -261,6 +321,14 @@ void GameView::linkElements()
             m_MovableToGraphicElement[*it] = new AnimatedGraphicElement(*m_blockEnemyGraphic);
         else if ( (*it)->getType() == 4 )
             m_MovableToGraphicElement[*it] = new AnimatedGraphicElement(*m_coinGraphic);
+        else if ( (*it)->getType() == 5 )
+            m_MovableToGraphicElement[*it] = new AnimatedGraphicElement(*m_PVPlusBonusGraphic);
+        else if ( (*it)->getType() == 6 )
+            m_MovableToGraphicElement[*it] = new AnimatedGraphicElement(*m_megaBonusGraphic);
+        else if ( (*it)->getType() == 7 )
+            m_MovableToGraphicElement[*it] = new AnimatedGraphicElement(*m_flyBonusGraphic);
+        else if ( (*it)->getType() == 8 )
+            m_MovableToGraphicElement[*it] = new AnimatedGraphicElement(*m_slowSpeedBonusGraphic);
     }
     m_gameModel->clearNewMovableElementList();
 }
@@ -273,6 +341,12 @@ void GameView::linkElements()
 *********************************************/
 void GameView::updateElements()
 {
+    m_nearBackground->setSpeed(m_gameModel->getGameSpeed() );
+    m_farBackground->sync();
+    m_nearBackground->sync();
+    m_remainingLifeTexture.loadFromFile( REMAINING_LIFE,
+        sf::IntRect( 3*( 100-m_gameModel->getPlayer()->getLife() ), 0, 300, 50 ) );
+
     std::map<MovableElement*, GraphicElement*>::iterator it;
     for(it = m_MovableToGraphicElement.begin() ; it != m_MovableToGraphicElement.end() ; ++it)
     {
@@ -319,10 +393,11 @@ void GameView::deleteElements()
 /********************************************
     Synchronization function
 *********************************************
-    @author Arthur  @date 26/03 - 06/04
+    @author Arthur  @date 26/03 - 11/04
 *********************************************/
 void GameView::synchronize()
 {
+
     if (m_gameModel->getPauseState() == false && m_gameModel->getEndState() == false )
     {
         //=== Link new mElements with gElements
@@ -334,12 +409,6 @@ void GameView::synchronize()
         deleteElements();
 
         //=== Elements update
-
-        m_nearBackground->setSpeed(m_gameModel->getGameSpeed() );
-        m_farBackground->sync();
-        m_nearBackground->sync();
-        m_remainingLifeTexture.loadFromFile( REMAINING_LIFE,
-                sf::IntRect( 3*( 100-m_gameModel->getPlayer()->getLife() ), 0, 300, 50 ) );
 
         updateElements();
 
@@ -378,7 +447,6 @@ void GameView::synchronize()
         //=== Text update
 
         m_text->syncEndText(m_gameModel);
-
     }
 }
 

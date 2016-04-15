@@ -7,14 +7,17 @@ using namespace std;
 *********************************************
     @author Arthur  @date 26/03 - 01/04
 *********************************************/
-GameModel::GameModel(unsigned int w, unsigned int h, std::chrono::system_clock::time_point programBeginningTime) :
+GameModel::GameModel(float w, float h, chrono::system_clock::time_point programBeginningTime) :
     Model(w, h, programBeginningTime), m_pauseState{false}, m_endState{false}, m_score{0},
-    m_distance{0}, m_gameSpeed{4}, m_lastTime{chrono::system_clock::now()},
-    m_nbCoinsCollected{0}, m_currentEnemyInterdistance{0}, m_currentCoinInterdistance{0}
+    m_distance{0}, m_gameSpeed{4}, m_nbCoinsCollected{0}, m_enemyDestructedBonus{0},
+    m_currentEnemyInterdistance{0}, m_currentCoinInterdistance{0}, m_currentBonusInterdistance{0},
+    m_lastTime{chrono::system_clock::now()}, m_bonusStopTime{chrono::milliseconds(0)}
 {
     srand(time(NULL));
     m_chosenEnemyInterdistance = 10 +rand()%10;
     m_chosenCoinInterdistance = rand()%10;
+    m_chosenBonusInterdistance = 50 + rand()%50;
+    m_realGameSpeed = m_gameSpeed;
     addANewMovableElement(PLAYER_DEFAULT_POS_X, GAME_FLOOR, 0);
 }
 
@@ -36,7 +39,7 @@ GameModel::~GameModel()
 /********************************************
     Getters
 *********************************************
-    @author Arthur  @date 21/02 - 01/04
+    @author Arthur  @date 21/02 - 11/04
     @author Florian @date 21/02 - 25/02
 *********************************************/
 bool GameModel::getPauseState() const {return m_pauseState;}
@@ -46,7 +49,7 @@ int GameModel::getScore() const { return m_score; }
 int GameModel::getDistance() const { return m_distance; }
 int GameModel::getGameSpeed() const { return m_gameSpeed; }
 unsigned int GameModel::getNbCoinsCollected() const { return m_nbCoinsCollected; }
-const set<MovableElement*>& GameModel::getMElementsArray() { return m_movableElementsArray; }
+unsigned int GameModel::getEnemyDestructedBonus() const { return m_enemyDestructedBonus; }
 const set<MovableElement*>& GameModel::getNewMElementsArray() { return m_newMovableElementsArray; }
 
 
@@ -64,70 +67,29 @@ void GameModel::setNbCoinsCollected(unsigned int n) { m_nbCoinsCollected = n;}
 /********************************************
     Next Step
 *********************************************
-    @author Arthur  @date 21/02 - 26/03
+    @author Arthur  @date 21/02 - 12/04
 *********************************************/
 void GameModel::nextStep()
 {
-    chrono::system_clock::duration nextStepDelay = chrono::system_clock::now() - m_lastTime;
+	chrono::system_clock::duration nextStepDelay = chrono::system_clock::now() - m_lastTime;
 
-    if (m_pauseState == false && m_endState == false)
-    {
-        if ( nextStepDelay > chrono::milliseconds(400/m_gameSpeed) )
-        {
-            m_distance ++;
+	if (m_pauseState == false && m_endState == false)
+	{
+		if ( nextStepDelay > chrono::milliseconds(400/m_gameSpeed) )
+		{
+			m_distance ++;
 
-            //=== Add new enemies
+			//=== Handle Movable Elements Creation
 
-            if (m_currentEnemyInterdistance >= m_chosenEnemyInterdistance)
-            {
-                if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
-                {
-                    addANewMovableElement(m_width, GAME_FLOOR, 1);
-                    m_currentEnemyInterdistance = 0;
-                    chooseInterdistance(1);
-                }
-            }
-            else m_currentEnemyInterdistance++;
+			handleMovableElementsCreation();
 
-            //=== Add new Coins
+			//=== Handle Movable Elements Collisions
 
-            if (m_currentCoinInterdistance >= m_chosenCoinInterdistance)
-            {
-                if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
-                {
-                    addANewMovableElement(m_width, GAME_FLOOR-100, 4);
-                    m_currentCoinInterdistance = 0;
-                    chooseInterdistance(2);
-                }
-            }
-            else m_currentCoinInterdistance++;
+			handleMovableElementsCollisions();
 
-            //=== Delete Movable Elements
+            //=== Handle Movable Elements Deletion
 
-            deleteMovableElement();
-
-            //=== Check Collisions
-
-            set<MovableElement*>::const_iterator it;
-            for (it = m_movableElementsArray.begin(); it !=m_movableElementsArray.end(); ++it)
-            {
-                if ( (*it)->getType() != 0 && m_player->collision(**it))
-                {
-                    (*it)->setCollisionState(true);
-
-                    if ( (*it)->getType() == 1) //standard enemy
-                        m_player->setLife(m_player->getLife()-10);
-
-                    else if ( (*it)->getType() == 2) //totem enemy
-                        m_player->setLife(m_player->getLife()-15);
-
-                    else if ( (*it)->getType() == 3) //block enemy
-                        m_player->setLife(m_player->getLife()-20);
-
-                    else if ( (*it)->getType() == 4) //coin
-                        m_nbCoinsCollected += 1;
-                }
-            }
+            handleMovableElementsDeletion();
 
 
             if (m_player->getLife() == 0)
@@ -135,12 +97,23 @@ void GameModel::nextStep()
                 m_endState = true;
             }
 
+            //=== Bonus ending
+
+            if ( chrono::system_clock::now() >= m_bonusStopTime && m_player->getState() != 0  )
+            {
+                m_player->changeState(0);
+            }
+            else if ( chrono::system_clock::now() >= m_bonusStopTime && ( m_gameSpeed != m_realGameSpeed) )
+            {
+                m_gameSpeed = m_realGameSpeed;
+            }
+
             m_lastTime = chrono::system_clock::now();
         }
     }
     else if (m_endState == true)
     {
-        m_score = m_gameSpeed*m_distance + 20*m_nbCoinsCollected;
+        m_score = m_gameSpeed*m_distance + 20*m_nbCoinsCollected + m_enemyDestructedBonus;
     }
 }
 
@@ -148,7 +121,7 @@ void GameModel::nextStep()
 /********************************************
     choose the interdistance between elements
 *********************************************
-    @author Arthur  @date  12/03 - 26/03
+    @author Arthur  @date  12/03 - 12/04
 *********************************************/
 void GameModel::chooseInterdistance(int elementType)
 {
@@ -156,21 +129,31 @@ void GameModel::chooseInterdistance(int elementType)
     if  ( elementType  == 1 ) //enemy
     {
         if (m_chosenEnemyInterdistance > 40)
-            m_chosenEnemyInterdistance = abs(rand()%30);
+            m_chosenEnemyInterdistance = abs(rand()%31); //0 to 30m
         else if  ( m_chosenEnemyInterdistance < 10)
-            m_chosenEnemyInterdistance = abs(10 + rand()%40);
+            m_chosenEnemyInterdistance = 10 + abs(rand()%41); //10 to 50m
         else
-            m_chosenEnemyInterdistance = abs(rand()%50);
+            m_chosenEnemyInterdistance = abs(rand()%51); //0 to 50m
     }
 
     else if ( elementType == 2 ) //coin
     {
         if (m_chosenCoinInterdistance > 20)
-            m_chosenCoinInterdistance = abs(rand()%20);
+            m_chosenCoinInterdistance = abs(rand()%21); //0 to 20m
         else if  ( m_chosenCoinInterdistance < 10)
-            m_chosenCoinInterdistance = abs(15 + rand()%20);
+            m_chosenCoinInterdistance = 15 + abs(rand()%26); //15 to 40m
         else
-            m_chosenCoinInterdistance = abs(rand()%40);
+            m_chosenCoinInterdistance = abs(rand()%41); //0 to 40m
+    }
+
+    else if ( elementType == 3 ) //Bonus
+    {
+        if (m_chosenBonusInterdistance > 200)
+            m_chosenBonusInterdistance = 100 + abs(rand()%101); //100 to 200m
+        else if  ( m_chosenBonusInterdistance < 175)
+            m_chosenBonusInterdistance = 200 + abs(rand()%101); //200 to 300m
+        else
+            m_chosenBonusInterdistance = 100 + abs(rand()%201); //100 to 300m
     }
 }
 
@@ -182,18 +165,18 @@ void GameModel::chooseInterdistance(int elementType)
 *********************************************/
 bool GameModel::checkIfPositionFree(const unsigned int posX, const unsigned int posY) const
 {
-    bool posFree=true;
+    bool positionIsFree =true;
     set<MovableElement*>::iterator it=m_movableElementsArray.begin();
 
-    while (posFree &&  it != m_movableElementsArray.end() )
+    while (positionIsFree &&  it != m_movableElementsArray.end() )
     {
         if ( (*it)->contains(posX, posY) )
-            posFree = false;
+            positionIsFree = false;
         else
             ++it;
     }
 
-    return posFree;
+    return positionIsFree;
 }
 
 
@@ -216,15 +199,67 @@ void GameModel::clearNewMovableElementList()
 *********************************************/
 void GameModel::moveMovableElement(MovableElement *currentElement)
 {
-    if( currentElement != NULL )
+    if( currentElement == m_player)
         currentElement->move();
+    else if( currentElement != NULL )
+    {
+        currentElement->setMoveX(m_gameSpeed*(-1));
+        currentElement->move();
+    }
+}
+
+/********************************************
+    Handle Elements Creation
+*********************************************
+    @author Arthur  @date 12/04
+*********************************************/
+void GameModel::handleMovableElementsCreation()
+{
+    //=== Add new enemies
+
+    if (m_currentEnemyInterdistance >= m_chosenEnemyInterdistance)
+    {
+        if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
+        {
+            addANewMovableElement(m_width, GAME_FLOOR, 1);
+            m_currentEnemyInterdistance = 0;
+            chooseInterdistance(1);
+        }
+    }
+    else m_currentEnemyInterdistance++;
+
+    //=== Add new Coins
+
+    if (m_currentCoinInterdistance >= m_chosenCoinInterdistance)
+    {
+        if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
+        {
+            addANewMovableElement(m_width, GAME_FLOOR-100, 4);
+            m_currentCoinInterdistance = 0;
+            chooseInterdistance(2);
+        }
+    }
+    else m_currentCoinInterdistance++;
+
+    //=== Add new Bonus
+
+    if (m_currentBonusInterdistance >= m_chosenBonusInterdistance)
+    {
+        if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
+        {
+            addANewMovableElement(m_width, GAME_FLOOR-100, 5);
+            m_currentBonusInterdistance = 0;
+            chooseInterdistance(3);
+        }
+    }
+    else m_currentBonusInterdistance++;
 }
 
 
 /********************************************
     New MovableElement  Adding
 *********************************************
-    @author Arthur  @date 25/02 - 26/03
+    @author Arthur  @date 25/02 - 11/04
     @author Florian @date 2/03
 *********************************************/
 void GameModel::addANewMovableElement(float posX, float posY, int type)
@@ -241,7 +276,11 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
     }
     else if (type == 4) //Coin
     {
-        m_newMElement = new Coin(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
+        m_newMElement = new Coin(posX, posY, 25, 25, getGameSpeed()*(-1), 0);
+    }
+    else if (type == 5) //Bonus
+    {
+        m_newMElement = new Bonus(posX, posY, 25, 25, getGameSpeed()*(-1), 0);
     }
     assert(m_newMElement != nullptr);
 
@@ -254,20 +293,80 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
 
 
 /********************************************
-    Delete Movable Elements
+    Handle Movable Elements Deletion
 *********************************************
     @author Arthur  @date 12/03 - 31/03
 *********************************************/
-void GameModel::deleteMovableElement()
+void GameModel::handleMovableElementsCollisions()
+{
+    set<MovableElement*>::const_iterator it;
+    for (it = m_movableElementsArray.begin(); it !=m_movableElementsArray.end(); ++it)
+    {
+
+        if ( (*it)->getType() != 0 && m_player->collision(**it))
+        {
+            (*it)->setCollisionState(true);
+
+            if ( (*it)->getType() == 1 && m_player->getState() != 1 ) //standard enemy
+                m_player->setLife(m_player->getLife()-10);
+
+            else if ( (*it)->getType() == 1 && m_player->getState() == 1 )
+                m_enemyDestructedBonus += 100;
+
+            else if ( (*it)->getType() == 2 && m_player->getState() != 1) //totem enemy
+                m_player->setLife(m_player->getLife()-15);
+
+            else if ( (*it)->getType() == 2 && m_player->getState() == 1 )
+                m_enemyDestructedBonus += 300;
+
+            else if ( (*it)->getType() == 3 && m_player->getState() != 1) //block enemy
+                m_player->setLife(m_player->getLife()-20);
+
+            else if ( (*it)->getType() == 3 && m_player->getState() == 1 )
+                m_enemyDestructedBonus += 500;
+
+            else if ( (*it)->getType() == 4) //coin
+                m_nbCoinsCollected += 1;
+
+            else if ( (*it)->getType() == 5) //PV+
+                m_player->setLife(m_player->getLife()+10);
+
+            else if ( (*it)->getType() == 6) //Mega
+            {
+                m_player->changeState(1);
+                m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(10000);
+            }
+
+            else if ( (*it)->getType() == 7) //Fly
+            {
+                m_player->changeState(2);
+                m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(15000);
+            }
+
+            else if ( (*it)->getType() == 8) //SlowDown
+            {
+                m_gameSpeed = m_gameSpeed-2;
+                m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(20000);
+            }
+
+        }
+    }
+}
+
+/********************************************
+    Handle Movable Elements Deletion
+*********************************************
+    @author Arthur  @date 12/03 - 11/04
+*********************************************/
+void GameModel::handleMovableElementsDeletion()
 {
     set<MovableElement*>::iterator it = m_movableElementsArray.begin();
-    bool found=false;
-    while( it!=m_movableElementsArray.end() && !found )
+    while( it!=m_movableElementsArray.end() )
     {
         if ( ( (*it)->getPosX() + (*it)->getWidth() ) < 0 || (*it)->getCollisionState() == true )
         {
             m_movableElementsArray.erase(it);
-            found = true;
+            it = m_movableElementsArray.end();
         }
         else
             ++it;

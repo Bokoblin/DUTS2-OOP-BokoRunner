@@ -126,7 +126,7 @@ void GameView::loadImages()
             clip_rects.push_back(sf::IntRect(50*i,0,50,50));
 
         m_standardEnemyTexture.setSmooth(true);
-        m_standardEnemyGraphic = new AnimatedGraphicElement(m_standardEnemyTexture, m_width, GAME_FLOOR,30,30, clip_rects, 2);
+        m_standardEnemyGraphic = new AnimatedGraphicElement(m_standardEnemyTexture, 30, 135,30,30, clip_rects, 2);
         m_standardEnemyGraphic->setOrigin(0,50);
     }
 
@@ -152,7 +152,7 @@ void GameView::loadImages()
             clip_rects.push_back(sf::IntRect(50*i,150,50,50));
 
         m_blockEnemyTexture.setSmooth(true);
-        m_blockEnemyGraphic = new AnimatedGraphicElement(m_blockEnemyTexture, m_width, GAME_FLOOR,50,50, clip_rects, 2);
+        m_blockEnemyGraphic = new AnimatedGraphicElement(m_blockEnemyTexture, 50, 95 ,50,50, clip_rects, 2);
         m_blockEnemyGraphic->setOrigin(0,50);
     }
 
@@ -414,6 +414,8 @@ void GameView::synchronize()
         m_homeButtonGraphic->sync();
         m_coinGraphic->sync();
         m_coinGraphic->resize(20,20);
+        m_standardEnemyGraphic->sync();
+        m_standardEnemyGraphic->resize(20,20);
 
         //=== Text update
 
@@ -477,6 +479,7 @@ void GameView::draw() const
         m_window->draw(*m_pauseBackgroundGraphic);
         m_window->draw(*m_pauseDistanceGraphic);
         m_window->draw(*m_coinGraphic);
+        m_window->draw(*m_standardEnemyGraphic);
         m_window->draw(*m_resumeButtonGraphic);
         m_window->draw(*m_restartButtonGraphic);
         m_window->draw(*m_homeButtonGraphic);

@@ -44,6 +44,7 @@ Text::~Text()
 
     delete m_distanceText;
     delete m_playerLifeLabel;
+    delete m_bonusTimeoutText;
 
     //=== Pause Text
 
@@ -121,6 +122,9 @@ void Text::loadText()
 
     m_playerLifeLabel = new sf::Text;
     m_textVector[m_playerLifeLabel] = "m_playerLifeLabel";
+
+    m_bonusTimeoutText = new sf::Text;
+    m_textVector[m_bonusTimeoutText] = "m_bonusTimeoutText";
 
     m_coinsCollectedNumberText = new sf::Text;
     m_textVector[m_coinsCollectedNumberText] = "m_CoinsCollectedNumberText";
@@ -255,7 +259,7 @@ void Text::syncMenuHomeText(int width, int height)
 *********************************************/
 void Text::syncMenuSettingsText(int width, int height)
 {
-    m_configurationLabel->setPosition(width/4 - m_configurationLabel->getGlobalBounds().width/2, 60);
+    m_configurationLabel->setPosition(width/4 - m_configurationLabel->getGlobalBounds().width/2, height/10);
     m_configLanguageLabel->setPosition(40, 150);
     m_configLanguageEnLabel->setPosition(80, 202);
     m_configLanguageFrLabel->setPosition(80, 242);
@@ -268,34 +272,42 @@ void Text::syncMenuSettingsText(int width, int height)
 /********************************************
     Game Screen Syncing
 *********************************************
-    @author Arthur  @date 02/04 - 13/04
+    @author Arthur  @date 02/04 - 17/04
 *********************************************/
 void Text::syncGameMainText(GameModel *gameModel)
 {
     m_playerLifeLabel->setPosition(40,545);
-    m_distanceLabel->setPosition(530, 545);
-    m_distanceText->setPosition(750,545);
+    m_distanceLabel->setPosition(440, 545);
+    m_distanceText->setPosition(640,545);
     m_distanceText->setColor(sf::Color::White);
     m_distanceText->setString( to_string(gameModel->getDistance() ) + " m" );
+    m_bonusTimeoutText->setPosition(840,545);
+    if ( gameModel->getBonusTimeout() > 0)
+        m_bonusTimeoutText->setString( to_string(gameModel->getBonusTimeout() ));
+    else
+        m_bonusTimeoutText->setString("");
 }
 
 
 /********************************************
     Game Pause Screen Syncing
 *********************************************
-    @author Arthur  @date 02/04 - 13/04
+    @author Arthur  @date 02/04 - 17/04
 *********************************************/
 void Text::syncGamePauseText(GameModel *gameModel)
 {
     m_distanceText->setPosition(80, 30);
     m_coinsCollectedNumberText->setPosition(80, 70);
     m_coinsCollectedNumberText->setColor(sf::Color(255,204,0,255));
+    m_enemyDestructedBonusText->setPosition(80, 110);
+    m_enemyDestructedBonusText->setColor(sf::Color(0,232,209,255));
     m_pauseResumeLabel->setPosition(80, 400);
     m_restartLabel->setPosition(80, 450);
     m_homeLabel->setPosition(80, 500);
 
     m_distanceText->setString( to_string(gameModel->getDistance() ) + " m" );
     m_coinsCollectedNumberText->setString(to_string(gameModel->getNbCoinsCollected() ));
+    m_enemyDestructedBonusText->setString( to_string( gameModel->getEnemyDestructedBonus() ));
 
 }
 
@@ -369,25 +381,27 @@ void Text::drawMenuSettingsText(sf::RenderWindow *window)
 /********************************************
     Game Screen Drawing
 *********************************************
-    @author Arthur  @date 02/04 - 13/04
+    @author Arthur  @date 02/04 - 17/04
 *********************************************/
 void Text::drawGameText(sf::RenderWindow *window)
 {
     window->draw(*m_playerLifeLabel);
     window->draw(*m_distanceLabel);
     window->draw(*m_distanceText);
+    window->draw(*m_bonusTimeoutText);
 }
 
 
 /********************************************
     Pause Screen Drawing
 *********************************************
-    @author Arthur  @date 02/04 - 13/04
+    @author Arthur  @date 02/04 - 17/04
 *********************************************/
 void Text::drawPauseText(sf::RenderWindow *window)
 {
     window->draw(*m_distanceText);
     window->draw(*m_coinsCollectedNumberText);
+    window->draw(*m_enemyDestructedBonusText);
     window->draw(*m_pauseResumeLabel);
     window->draw(*m_restartLabel);
     window->draw(*m_homeLabel);

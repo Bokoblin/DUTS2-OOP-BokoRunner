@@ -34,6 +34,7 @@
    <!--  Game strings -->
    <string name="m_distanceText">.</string>
    <string name="m_playerLifeLabel">Vida</string>
+   <string name="m_bonusTimeoutText">.</string>
 
    <!--  Pause Screen strings -->
    <string name="m_CoinsCollectedNumberText">.</string>

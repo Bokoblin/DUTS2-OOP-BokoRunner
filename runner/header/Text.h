@@ -34,7 +34,7 @@ const std::string SPANISH_STRINGS = "Fonts/spanish.xml";
 /********************************************
     Text Class
 *********************************************
-    @author Arthur  @date 02/04
+    @author Arthur  @date 02/04 - 17/04
 *********************************************/
 class Text
 {
@@ -85,6 +85,8 @@ private:
     //Game Text
     sf::Text *m_distanceText;
     sf::Text *m_playerLifeLabel;
+    sf::Text *m_bonusTimeoutLabel;
+    sf::Text *m_bonusTimeoutText;
     //Pause Text
     sf::Text *m_pauseResumeLabel;
     sf::Text *m_restartLabel;

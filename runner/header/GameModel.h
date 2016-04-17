@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+﻿/* Copyright 2016 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,13 +21,14 @@ limitations under the License.
 #include "Enemy.h"
 #include "Coin.h"
 #include "Bonus.h"
+#include <iostream>
 
 const unsigned int PLAYER_DEFAULT_POS_X = 50 ;
 
 /********************************************
     GameModel Class
 *********************************************
-    @author Arthur  @date 26/03 - 12/04
+    @author Arthur  @date 26/03 - 17/04
 *********************************************/
 class GameModel : public Model
 {
@@ -45,7 +46,8 @@ public:
     int getGameSpeed() const;
     unsigned int getNbCoinsCollected() const;
     unsigned int getEnemyDestructedBonus() const;
-    const std::set<MovableElement*>& getNewMElementsArray();
+    const std::set<MovableElement*>& getNewMElementsArray() const;
+    int getBonusTimeout() const;
 
     //=== SETTERS
     void setPauseState(bool state);
@@ -84,6 +86,7 @@ private:
     int m_activeBonusType; /**< nope : -1, mega : 0, fly : 1  */
     std::chrono::system_clock::time_point m_lastTime;
     std::chrono::system_clock::time_point m_bonusStopTime;
+    std::chrono::milliseconds m_bonusTimeout;
 
     Player *m_player;
     MovableElement *m_newMElement;

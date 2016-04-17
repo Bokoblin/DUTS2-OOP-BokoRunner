@@ -5,14 +5,14 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    @author Arthur  @date 26/03 - 16/04
+    @author Arthur  @date 26/03 - 17/04
 *********************************************/
 GameModel::GameModel(const Model& model) :
     Model(model), m_pauseState{false}, m_endState{false}, m_score{0},
     m_distance{0}, m_gameSpeed{4}, m_nbCoinsCollected{0}, m_enemyDestructedBonus{0},
     m_currentEnemyInterdistance{0}, m_currentCoinInterdistance{0}, m_currentBonusInterdistance{0},
     m_activeBonusType{-1},
-    m_lastTime{chrono::system_clock::now()}, m_bonusStopTime{chrono::milliseconds(0)}
+    m_lastTime{chrono::system_clock::now()}, m_bonusStopTime{chrono::milliseconds(0)}, m_bonusTimeout{0}
 {
     srand(time(NULL));
     m_chosenEnemyInterdistance = 10 +rand()%10;
@@ -40,7 +40,7 @@ GameModel::~GameModel()
 /********************************************
     Getters
 *********************************************
-    @author Arthur  @date 21/02 - 11/04
+    @author Arthur  @date 21/02 - 17/04
     @author Florian @date 21/02 - 25/02
 *********************************************/
 bool GameModel::getPauseState() const {return m_pauseState;}
@@ -51,7 +51,8 @@ int GameModel::getDistance() const { return m_distance; }
 int GameModel::getGameSpeed() const { return m_gameSpeed; }
 unsigned int GameModel::getNbCoinsCollected() const { return m_nbCoinsCollected; }
 unsigned int GameModel::getEnemyDestructedBonus() const { return m_enemyDestructedBonus; }
-const set<MovableElement*>& GameModel::getNewMElementsArray() { return m_newMovableElementsArray; }
+const set<MovableElement*>& GameModel::getNewMElementsArray() const { return m_newMovableElementsArray; }
+int GameModel::getBonusTimeout() const { return m_bonusTimeout.count()/1000; }
 
 
 /********************************************
@@ -68,11 +69,11 @@ void GameModel::setNbCoinsCollected(unsigned int n) { m_nbCoinsCollected = n;}
 /********************************************
     Next Step
 *********************************************
-    @author Arthur  @date 21/02 - 12/04
+    @author Arthur  @date 21/02 - 17/04
 *********************************************/
 void GameModel::nextStep()
 {
-	chrono::system_clock::duration nextStepDelay = chrono::system_clock::now() - m_lastTime;
+    chrono::system_clock::duration nextStepDelay = chrono::system_clock::now() - m_lastTime;
 
 	if (m_pauseState == false && m_endState == false)
 	{
@@ -98,7 +99,11 @@ void GameModel::nextStep()
                 m_endState = true;
             }
 
-            //=== Bonus ending
+
+            //=== Bonus timeout & ending
+
+            auto timeout = std::chrono::duration_cast<std::chrono::milliseconds>(m_bonusStopTime - chrono::system_clock::now());
+            m_bonusTimeout = timeout;
 
             if ( chrono::system_clock::now() >= m_bonusStopTime && m_player->getState() != 0  )
             {
@@ -108,6 +113,7 @@ void GameModel::nextStep()
             {
                 m_gameSpeed = m_realGameSpeed;
             }
+
 
             m_lastTime = chrono::system_clock::now();
         }
@@ -382,6 +388,7 @@ void GameModel::handleMovableElementsDeletion()
     {
         if ( ( (*it)->getPosX() + (*it)->getWidth() ) < 0 || (*it)->getCollisionState() == true )
         {
+            /**<  note : do not delete the pointer, it is still used in the game view */
             m_movableElementsArray.erase(it);
             it = m_movableElementsArray.end();
         }

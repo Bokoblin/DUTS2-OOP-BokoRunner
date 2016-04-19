@@ -61,16 +61,12 @@ int main()
             MenuView mView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
             mView.setModel(&model);
             mView.setMenuModel(&mModel);
-            mModel.loadLeaderboard("scores1.txt");
-            mModel.sortLeaderboard("scores1.txt");
-            mModel.loadLeaderboard("scores1.txt");
-            exit(EXIT_SUCCESS);
-//            while( model.getMenuState() && mView.treatEvents()  )
-//            {
-//                mModel.nextStep();
-//                mView.synchronize();
-//                mView.draw();
-//            }
+            while( model.getMenuState() && mView.treatEvents()  )
+            {
+                mModel.nextStep();
+                mView.synchronize();
+                mView.draw();
+            }
         }
 
         if  (model.getGameState() == true)

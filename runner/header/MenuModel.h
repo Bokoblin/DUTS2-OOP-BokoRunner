@@ -17,6 +17,8 @@ limitations under the License.
 #define _MENUMODEL_H
 
 #include "Model.h"
+#include "algorithm"
+#include <fstream>
 
 
 /********************************************
@@ -41,6 +43,8 @@ public:
 
     //=== METHODS
     virtual void nextStep() override;
+    void loadLeaderboard(std::string file);
+    void sortLeaderboard(std::string file);
 
 private:
     //=== ATTRIBUTES

@@ -24,14 +24,14 @@ limitations under the License.
 ********************************************/
 const std::string TITLE_IMAGE = "Images/title.png";
 const std::string BUTTONS_IMAGE = "Images/buttons.png";
-const std::string SETTINGS_BUTTONS_IMAGE = "Images/settings_buttons.png";
+const std::string SETTINGS_BUTTONS_IMAGE = "Images/menu_buttons.png";
 const std::string RADIOS_IMAGE = "Images/radios.png";
 
 
 /********************************************
     MenuView Class
 *********************************************
-    @author Arthur  @date 26/03 - 14/04
+    @author Arthur  @date 26/03 - 19/04
 *********************************************/
 class MenuView : public View
 {
@@ -60,6 +60,7 @@ private:
     sf::Texture m_playButtonTexture;
     sf::Texture m_quitButtonTexture;
     sf::Texture m_settingsButtonTexture;
+    sf::Texture m_leaderboardButtonTexture;
     sf::Texture m_homeButtonTexture;
 
     //Settings Texture
@@ -72,6 +73,7 @@ private:
     Button *m_playButtonGraphic;
     Button *m_quitButtonGraphic;
     Button *m_settingsButtonGraphic;
+    Button *m_leaderboardButtonGraphic;
     Button *m_homeButtonGraphic;
 
     //Settings Graphic Elements

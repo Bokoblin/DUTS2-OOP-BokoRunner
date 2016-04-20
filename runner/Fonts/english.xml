@@ -17,39 +17,41 @@
 <resources>
 
    <!-- Menu strings -->
-   <string name="m_playButtonText">PLAY</string>
-   <string name="m_quitButtonText">QUIT</string>
+   <string name="playButtonText">PLAY</string>
+   <string name="quitButtonText">QUIT</string>
 
    <!-- Settings strings -->
-   <string name="m_settingsLabel">Settings</string>
-   <string name="m_configurationLabel">Configuration</string>
-   <string name="m_configLanguageLabel">Languages</string>
-   <string name="m_configLanguageEnLabel">English</string>
-   <string name="m_configLanguageFrLabel">French</string>
-   <string name="m_configLanguageEsLabel">Spanish</string>
-   <string name="m_configDifficultyLabel">Difficulty</string>
-   <string name="m_configDifficultyNormalLabel">Normal</string>
-   <string name="m_configDifficultyMasterLabel">Master</string>
+   <string name="settingsLabel">Settings</string>
+   <string name="configurationLabel">Configuration</string>
+   <string name="configLanguageLabel">Languages</string>
+   <string name="configLanguageEnLabel">English</string>
+   <string name="configLanguageFrLabel">French</string>
+   <string name="configLanguageEsLabel">Spanish</string>
+   <string name="configDifficultyLabel">Difficulty</string>
+   <string name="configDifficultyNormalLabel">Normal</string>
+   <string name="configDifficultyMasterLabel">Master</string>
+   <string name="leaderboardTitleLabel">Leaderboard</string>
+   <string name="leaderboardText">.</string>
 
    <!--  Game strings -->
-   <string name="m_distanceText">.</string>
-   <string name="m_playerLifeLabel">Life</string>
-   <string name="m_bonusTimeoutText">.</string>
+   <string name="distanceText">.</string>
+   <string name="playerLifeLabel">Life</string>
+   <string name="bonusTimeoutText">.</string>
 
    <!--  Pause Screen strings -->
-   <string name="m_CoinsCollectedNumberText">.</string>
-   <string name="m_pauseResumeLabel">Resume</string>
-   <string name="m_restartLabel">Restart</string>
-   <string name="m_homeLabel">Home</string>
+   <string name="CoinsCollectedNumberText">.</string>
+   <string name="pauseResumeLabel">Resume</string>
+   <string name="restartLabel">Restart</string>
+   <string name="homeLabel">Home</string>
 
    <!--  End Screen strings -->
-   <string name="m_endTitleLabel">Your_score</string>
-   <string name="m_gameSpeedmultiplicatorLabel">Speed_multiplicator</string>
-   <string name="m_gameSpeedmultiplicatorText">.</string>
-   <string name="m_distanceLabel">Distance_travelled</string>
-   <string name="m_CoinsCollectedNumberLabel">Coins_collected</string>
-   <string name="m_enemyDestructedBonusLabel">Enemies_destructed_bonus</string>
-   <string name="m_scoreLabel">Total_Score</string>
-   <string name="m_scoreText">.</string>
+   <string name="endTitleLabel">Your_score</string>
+   <string name="speedmultiplicatorLabel">Speed_multiplicator</string>
+   <string name="speedmultiplicatorText">.</string>
+   <string name="distanceLabel">Distance_travelled</string>
+   <string name="CoinsCollectedNumberLabel">Coins_collected</string>
+   <string name="enemyDestructedBonusLabel">Enemies_destructed_bonus</string>
+   <string name="scoreLabel">Total_Score</string>
+   <string name="scoreText">.</string>
 
 </resources>

@@ -37,7 +37,7 @@ const std::string END_BACKGROUND_IMAGE = "Images/end_background.png";
 /********************************************
     GameView Class
 *********************************************
-    @author Arthur  @date 21/02 - 12/04
+    @author Arthur  @date 21/02 - 19/04
     @author Florian @date 21/02 - 3/03
 *********************************************/
 class GameView : public View
@@ -62,6 +62,8 @@ public:
 private:
     //=== ATTRIBUTES
     GameModel *m_gameModel;
+    Leaderboard *m_lb;
+    bool m_scoreSavable;
 
     //Game Textures
     sf::Texture m_farBackgroundTexture;
@@ -78,13 +80,15 @@ private:
     sf::Texture m_megaBonusTexture;
     sf::Texture m_flyBonusTexture;
     sf::Texture m_slowSpeedBonusTexture;
-    //Pause menu Textures
+
+    //Pause and End Textures
     sf::Texture m_pauseBackgroundTexture;
     sf::Texture m_resumeButtonTexture;
     sf::Texture m_restartButtonTexture;
     sf::Texture m_homeButtonTexture;
     sf::Texture m_pauseDistanceTexture;
     sf::Texture m_endBackgroundTexture;
+    sf::Texture m_saveScoreButtonTexture;
 
     //Game Graphic Elements
     SlidingBackground *m_farBackground;
@@ -108,6 +112,7 @@ private:
     Button *m_resumeButtonGraphic;
     Button *m_restartButtonGraphic;
     Button *m_homeButtonGraphic;
+    Button *m_saveScoreButtonGraphic;
 
     //Containers
     std::map<MovableElement*, GraphicElement*> m_MovableToGraphicElement;

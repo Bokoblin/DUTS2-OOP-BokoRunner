@@ -46,7 +46,6 @@ Model::~Model()
 *********************************************/
 bool Model::getIntroState() const {return m_introState;}
 int Model::getDifficulty() const {return m_difficulty;}
-string Model::getLanguage() const {return m_language;}
 bool Model::getMenuState() const {return m_menuState;}
 bool Model::getGameState() const {return m_gameState;}
 bool Model::getResetGameState() const {return m_resetGameState;}

@@ -23,15 +23,15 @@ limitations under the License.
     Constant Variables
 ********************************************/
 const std::string TITLE_IMAGE = "Images/title.png";
-const std::string BUTTONS_IMAGE = "Images/buttons.png";
-const std::string SETTINGS_BUTTONS_IMAGE = "Images/settings_buttons.png";
-const std::string RADIOS_IMAGE = "Images/radios.png";
+const std::string RECT_BUTTONS_IMAGE = "Images/rect_buttons.png";
+const std::string FORM_BUTTONS_IMAGE = "Images/menu_buttons.png";
+const std::string RADIO_BUTTONS_IMAGE = "Images/radio_buttons.png";
 
 
 /********************************************
     MenuView Class
 *********************************************
-    @author Arthur  @date 26/03 - 14/04
+    @author Arthur  @date 26/03 - 20/04
 *********************************************/
 class MenuView : public View
 {
@@ -53,33 +53,29 @@ private:
     //=== ATTRIBUTES
     MenuModel *m_menuModel;
 
-    //Menu Textures
+    //Textures
     sf::Texture m_farBackgroundTexture;
     sf::Texture m_nearBackgroundTexture;
-    sf::Texture m_titleTexture;
-    sf::Texture m_playButtonTexture;
-    sf::Texture m_quitButtonTexture;
-    sf::Texture m_settingsButtonTexture;
-    sf::Texture m_homeButtonTexture;
+    sf::Texture m_titleImageTexture;
+    sf::Texture m_menuRectButtonsTexture;
+    sf::Texture m_menuFormButtonsTexture;
+    sf::Texture m_menuRadioButtonsTexture;
 
-    //Settings Texture
-    sf::Texture m_radioTexture;
-
-    //Menu Graphic Elements
+    //Graphic Elements
     SlidingBackground *m_farBackground;
     SlidingBackground *m_nearBackground;
     GraphicElement *m_titleGraphic;
-    Button *m_playButtonGraphic;
-    Button *m_quitButtonGraphic;
-    Button *m_settingsButtonGraphic;
-    Button *m_homeButtonGraphic;
-
-    //Settings Graphic Elements
-    Button *m_langEnRadioGraphic;
-    Button *m_langFrRadioGraphic;
-    Button *m_langEsRadioGraphic;
-    Button *m_difNormalRadioGraphic;
-    Button *m_difMasterRadioGraphic;
+    Button *m_playRectButton;
+    Button *m_quitRectButton;
+    Button *m_clearLbRectButton;
+    Button *m_settingsFormButton;
+    Button *m_leaderboardFormButton;
+    Button *m_homeFormButton;
+    Button *m_englishLangRadioButton;
+    Button *m_frenchLangRadioButton;
+    Button *m_spanishLangRadioButton;
+    Button *m_normalQuestRadioButton;
+    Button *m_masterQuestRadioButton;
 };
 
 #endif // MENUVIEW_H

@@ -13,6 +13,5 @@ var searchData=
   ['bottom_5fbar',['BOTTOM_BAR',['../dc/d46/_game_view_8h.html#a681b52a68a9dc2cb92ee0f6be9bf545f',1,'GameView.h']]],
   ['button',['Button',['../d4/d77/class_button.html',1,'Button'],['../d4/d77/class_button.html#a65218ebf4c9fc6cbb7460a1331c87102',1,'Button::Button(const std::vector&lt; sf::IntRect &gt; &amp;clipRects, sf::Texture &amp;image, float x, float y, float w, float h, bool isRadio)'],['../d4/d77/class_button.html#ad2977a9414e0e1206e356f69c25ea3f7',1,'Button::Button(Button const &amp;elementACopier)']]],
   ['button_2ecpp',['Button.cpp',['../d5/d4d/_button_8cpp.html',1,'']]],
-  ['button_2eh',['Button.h',['../d2/daa/_button_8h.html',1,'']]],
-  ['buttons_5fimage',['BUTTONS_IMAGE',['../d7/db8/_menu_view_8h.html#a6d1840a1f890a360a7b3083fd7cb2516',1,'MenuView.h']]]
+  ['button_2eh',['Button.h',['../d2/daa/_button_8h.html',1,'']]]
 ];

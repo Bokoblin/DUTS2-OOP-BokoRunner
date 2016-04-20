@@ -1,7 +1,7 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.1.0
+Current version : v1.3.0
 
 ======================================================================================
 BETA CHANNEL Changelog
@@ -172,6 +172,16 @@ v1.2.1 (17/04/16):
 
 - added bonus timeout displaying
 - added enemy destroyed points in pause
+
+---------------------------------------------------------------------------------------------------
+
+v1.3.0 (20/04/16):
+
+- added Leaderboard screen in menu which displays the 10th best scores and allows to clear them
+- added button in game to add score to leaderboard
+- fix issues with language
+- removed not needed texture variable in MenuView class and variables's name edited
+- documentation updated
 
 ---------------------------------------------------------------------------------------------------
 

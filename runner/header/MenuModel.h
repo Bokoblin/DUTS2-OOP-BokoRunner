@@ -17,27 +17,31 @@ limitations under the License.
 #define _MENUMODEL_H
 
 #include "Model.h"
+#include "Leaderboard.h"
 
 
 /********************************************
     MenuModel Class
 *********************************************
-    @author Arthur  @date 14/04
+    @author Arthur  @date 14/04 - 19/04
 *********************************************/
 class MenuModel : public Model
 {
 public:
     //=== CTORs / DTORs
     MenuModel(const Model& model);
-    ~MenuModel();
+    virtual ~MenuModel();
 
     //=== GETTERS
     bool getHomeState() const;
     bool getSettingsState() const;
+    bool getLeaderboardState() const;
+    Leaderboard* getLeaderboard() const;
 
     //=== SETTERS
     void setHomeState(bool state);
     void setSettingsState(bool state);
+    void setLeaderboardState(bool state);
 
     //=== METHODS
     virtual void nextStep() override;
@@ -46,6 +50,9 @@ private:
     //=== ATTRIBUTES
     bool m_homeState;
     bool m_settingsState;
+    bool m_leaderboardState;
+
+    Leaderboard *m_lb;
 };
 
 #endif

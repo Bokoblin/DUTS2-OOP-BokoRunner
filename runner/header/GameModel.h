@@ -21,7 +21,7 @@ limitations under the License.
 #include "Enemy.h"
 #include "Coin.h"
 #include "Bonus.h"
-#include <iostream>
+#include "Leaderboard.h"
 
 const unsigned int PLAYER_DEFAULT_POS_X = 50 ;
 

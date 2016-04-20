@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2016 Jolivet Arthur & Laronze Florian
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,39 +17,44 @@
 <resources>
 
    <!-- Menu strings -->
-   <string name="m_playButtonText">JUGAR</string>
-   <string name="m_quitButtonText">DEJAR</string>
+   <string name="playButtonText">JUGAR</string>
+   <string name="quitButtonText">DEJAR</string>
+   <string name="clearButtonText">BORRAR</string>
+
 
    <!-- Settings strings -->
-   <string name="m_settingsLabel">Opciones</string>
-   <string name="m_configurationLabel">Configuracion</string>
-   <string name="m_configLanguageLabel">Idiomas</string>
-   <string name="m_configLanguageEnLabel">Ingles</string>
-   <string name="m_configLanguageFrLabel">Frances</string>
-   <string name="m_configLanguageEsLabel">Espanol</string>
-   <string name="m_configDifficultyLabel">Difficultad</string>
-   <string name="m_configDifficultyNormalLabel">Normal</string>
-   <string name="m_configDifficultyMasterLabel">Master</string>
+   <string name="settingsLabel">Opciones</string>
+   <string name="configurationLabel">Configuracion</string>
+   <string name="configLanguageLabel">Idiomas</string>
+   <string name="configLanguageEnLabel">Ingles</string>
+   <string name="configLanguageFrLabel">Frances</string>
+   <string name="configLanguageEsLabel">Espanol</string>
+   <string name="configDifficultyLabel">Difficultad</string>
+   <string name="configDifficultyNormalLabel">Normal</string>
+   <string name="configDifficultyMasterLabel">Master</string>
+   <string name="leaderboardTitleLabel">Tabla_de_posiciones</string>
+   <string name="leaderboardText">Todavia_no_hay_ninguna_puntuacion</string>
+   <string name="leaderboardErrorText">Puntuacion_datos_ha_sido_corrompido._Barra_lo.</string>
 
    <!--  Game strings -->
-   <string name="m_distanceText">.</string>
-   <string name="m_playerLifeLabel">Vida</string>
-   <string name="m_bonusTimeoutText">.</string>
+   <string name="distanceText">.</string>
+   <string name="playerLifeLabel">Vida</string>
+   <string name="bonusTimeoutText">.</string>
 
    <!--  Pause Screen strings -->
-   <string name="m_CoinsCollectedNumberText">.</string>
-   <string name="m_pauseResumeLabel">Reanudar</string>
-   <string name="m_restartLabel">Reiniciar</string>
-   <string name="m_homeLabel">Menu</string>
+   <string name="CoinsCollectedNumberText">.</string>
+   <string name="pauseResumeLabel">Reanudar</string>
+   <string name="restartLabel">Reiniciar</string>
+   <string name="homeLabel">Menu</string>
 
    <!--  End Screen strings -->
-   <string name="m_endTitleLabel">Tu_puntuacion</string>
-   <string name="m_gameSpeedmultiplicatorLabel">Velocidad_multiplicator</string>
-   <string name="m_gameSpeedmultiplicatorText">.</string>
-   <string name="m_distanceLabel">Distancia_recorrida</string>
-   <string name="m_CoinsCollectedNumberLabel">Monedas_recogidas</string>
-   <string name="m_enemyDestructedBonusLabel">Prima_destruccion_enemigos</string>
-   <string name="m_scoreLabel">Puntuacion_total</string>
-   <string name="m_scoreText">.</string>
+   <string name="endTitleLabel">Tu_puntuacion</string>
+   <string name="speedmultiplicatorLabel">Velocidad_multiplicator</string>
+   <string name="speedmultiplicatorText">.</string>
+   <string name="distanceLabel">Distancia_recorrida</string>
+   <string name="CoinsCollectedNumberLabel">Monedas_recogidas</string>
+   <string name="enemyDestructedBonusLabel">Prima_destruccion_enemigos</string>
+   <string name="scoreLabel">Puntuacion_total</string>
+   <string name="scoreText">.</string>
 
 </resources>

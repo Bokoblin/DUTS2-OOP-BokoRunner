@@ -5,6 +5,7 @@ var searchData=
   ['drawendtext',['drawEndText',['../da/d0e/class_text.html#a146db79463c1203860853f03fc829c1d',1,'Text']]],
   ['drawgametext',['drawGameText',['../da/d0e/class_text.html#a61836b50a92feb108467a18591686e24',1,'Text']]],
   ['drawmenuhometext',['drawMenuHomeText',['../da/d0e/class_text.html#ae8c1daf2fb973b1fdf92e1b971b1b94a',1,'Text']]],
+  ['drawmenuleaderboardtext',['drawMenuLeaderboardText',['../da/d0e/class_text.html#aae9c452c1ebdd750d055d07346fbacff',1,'Text']]],
   ['drawmenusettingstext',['drawMenuSettingsText',['../da/d0e/class_text.html#a764a889a1cd2f2e7d9642f14a89b0bd6',1,'Text']]],
   ['drawpausetext',['drawPauseText',['../da/d0e/class_text.html#af60f79bac48acad9c93585b7ffd4a89c',1,'Text']]]
 ];

@@ -19,7 +19,7 @@ Text::Text()
 /********************************************
     Destructor
 *********************************************
-    @author Arthur  @date 2/04 - 15/04
+    @author Arthur  @date 2/04 - 20/04
 *********************************************/
 Text::~Text()
 {
@@ -31,7 +31,7 @@ Text::~Text()
     //=== Settings Text
 
     delete m_settingsLabel;
-    delete  m_configurationLabel;
+    delete m_configurationLabel;
     delete m_configLanguageLabel;
     delete m_configLanguageEnLabel;
     delete m_configLanguageFrLabel;
@@ -39,6 +39,9 @@ Text::~Text()
     delete m_configDifficultyLabel;
     delete m_configDifficultyNormalLabel;
     delete m_configDifficultyMasterLabel;
+    delete m_leaderboardTitleLabel;
+    delete m_leaderboardText;
+    delete m_clearButtonText;
 
     //=== Game Text
 
@@ -51,15 +54,15 @@ Text::~Text()
     delete m_pauseResumeLabel;
     delete m_restartLabel;
     delete m_homeLabel;
-    delete m_coinsCollectedNumberText;
+    delete m_coinsCollectedText;
 
     //=== End Text
 
     delete m_endTitleLabel;
-    delete m_gameSpeedmultiplicatorLabel;
-    delete m_gameSpeedmultiplicatorText;
+    delete m_speedmultiplicatorLabel;
+    delete m_speedmultiplicatorText;
     delete m_distanceLabel;
-    delete m_coinsCollectedNumberLabel;
+    delete m_coinsCollectedLabel;
     delete m_enemyDestructedBonusLabel;
     delete m_enemyDestructedBonusText;
     delete m_scoreLabel;
@@ -72,102 +75,119 @@ Text::~Text()
 *********************************************
     @author Arthur  @date 02/04
 *********************************************/
-sf::Text *Text::getPauseResumeText() { return m_pauseResumeLabel; }
-sf::Text *Text::getRestartText() { return m_restartLabel; }
-sf::Text *Text::getHomeText() { return m_homeLabel; }
+sf::Text *Text::getPauseResumeText() const { return m_pauseResumeLabel; }
+sf::Text *Text::getRestartText() const { return m_restartLabel; }
+sf::Text *Text::getHomeText() const { return m_homeLabel; }
+string Text::getLanguage() const {return m_currentLanguage;}
+
+
+/********************************************
+    Setters
+*********************************************
+    @author Arthur  @date 20/04
+*********************************************/
+void Text::setLanguage(string lang) { m_currentLanguage = lang;}
 
 
 /********************************************
     Text Loading
 *********************************************
-    @author Arthur  @date 02/04
+    @author Arthur  @date 02/04 - 19/04
 *********************************************/
 void Text::loadText()
 {
     m_playButtonText = new sf::Text;
-    m_textVector[m_playButtonText] = "m_playButtonText";
+    m_textVector[m_playButtonText] = "playButtonText";
 
     m_quitButtonText = new sf::Text;
-    m_textVector[m_quitButtonText] = "m_quitButtonText";
+    m_textVector[m_quitButtonText] = "quitButtonText";
 
     m_settingsLabel = new sf::Text;
-    m_textVector[m_settingsLabel] = "m_settingsLabel";
+    m_textVector[m_settingsLabel] = "settingsLabel";
 
     m_configurationLabel = new sf::Text;
-    m_textVector[m_configurationLabel] = "m_configurationLabel";
+    m_textVector[m_configurationLabel] = "configurationLabel";
 
     m_configLanguageLabel = new sf::Text;
-    m_textVector[m_configLanguageLabel] = "m_configLanguageLabel";
+    m_textVector[m_configLanguageLabel] = "configLanguageLabel";
 
     m_configLanguageEnLabel = new sf::Text;
-    m_textVector[m_configLanguageEnLabel] = "m_configLanguageEnLabel";
+    m_textVector[m_configLanguageEnLabel] = "configLanguageEnLabel";
 
     m_configLanguageFrLabel = new sf::Text;
-    m_textVector[m_configLanguageFrLabel] = "m_configLanguageFrLabel";
+    m_textVector[m_configLanguageFrLabel] = "configLanguageFrLabel";
 
     m_configLanguageEsLabel = new sf::Text;
-    m_textVector[m_configLanguageEsLabel] = "m_configLanguageEsLabel";
+    m_textVector[m_configLanguageEsLabel] = "configLanguageEsLabel";
 
     m_configDifficultyLabel = new sf::Text;
-    m_textVector[m_configDifficultyLabel] = "m_configDifficultyLabel";
+    m_textVector[m_configDifficultyLabel] = "configDifficultyLabel";
 
     m_configDifficultyNormalLabel = new sf::Text;
-    m_textVector[m_configDifficultyNormalLabel] = "m_configDifficultyNormalLabel";
+    m_textVector[m_configDifficultyNormalLabel] = "configDifficultyNormalLabel";
 
     m_configDifficultyMasterLabel = new sf::Text;
-    m_textVector[m_configDifficultyMasterLabel] = "m_configDifficultyMasterLabel";
+    m_textVector[m_configDifficultyMasterLabel] = "configDifficultyMasterLabel";
+
+    m_leaderboardTitleLabel = new sf::Text;
+    m_textVector[m_leaderboardTitleLabel] = "leaderboardTitleLabel";
+
+    m_leaderboardText = new sf::Text;
+    m_textVector[m_leaderboardText] = "leaderboardText";
+
+    m_clearButtonText = new sf::Text;
+    m_textVector[m_clearButtonText] = "clearButtonText";
 
     m_distanceText = new sf::Text;
-    m_textVector[m_distanceText] = "m_distanceText";
+    m_textVector[m_distanceText] = "distanceText";
 
     m_playerLifeLabel = new sf::Text;
-    m_textVector[m_playerLifeLabel] = "m_playerLifeLabel";
+    m_textVector[m_playerLifeLabel] = "playerLifeLabel";
 
     m_bonusTimeoutText = new sf::Text;
-    m_textVector[m_bonusTimeoutText] = "m_bonusTimeoutText";
+    m_textVector[m_bonusTimeoutText] = "bonusTimeoutText";
 
-    m_coinsCollectedNumberText = new sf::Text;
-    m_textVector[m_coinsCollectedNumberText] = "m_CoinsCollectedNumberText";
+    m_coinsCollectedText = new sf::Text;
+    m_textVector[m_coinsCollectedText] = "CoinsCollectedNumberText";
 
     m_pauseResumeLabel = new sf::Text;
-    m_textVector[m_pauseResumeLabel] = "m_pauseResumeLabel";
+    m_textVector[m_pauseResumeLabel] = "pauseResumeLabel";
 
     m_restartLabel = new sf::Text;
-    m_textVector[m_restartLabel] = "m_restartLabel";
+    m_textVector[m_restartLabel] = "restartLabel";
 
     m_homeLabel = new sf::Text;
-    m_textVector[m_homeLabel] = "m_homeLabel";
+    m_textVector[m_homeLabel] = "homeLabel";
 
     m_endTitleLabel = new sf::Text;
-    m_textVector[m_endTitleLabel] = "m_endTitleLabel";
+    m_textVector[m_endTitleLabel] = "endTitleLabel";
 
-    m_gameSpeedmultiplicatorLabel = new sf::Text;
-    m_textVector[m_gameSpeedmultiplicatorLabel] = "m_gameSpeedmultiplicatorLabel";
+    m_speedmultiplicatorLabel = new sf::Text;
+    m_textVector[m_speedmultiplicatorLabel] = "speedmultiplicatorLabel";
 
-    m_gameSpeedmultiplicatorText = new sf::Text;
-    m_textVector[m_gameSpeedmultiplicatorText] = "m_gameSpeedmultiplicatorText";
+    m_speedmultiplicatorText = new sf::Text;
+    m_textVector[m_speedmultiplicatorText] = "speedmultiplicatorText";
 
     m_distanceLabel = new sf::Text;
-    m_textVector[m_distanceLabel] = "m_distanceLabel";
+    m_textVector[m_distanceLabel] = "distanceLabel";
 
-    m_coinsCollectedNumberLabel = new sf::Text;
-    m_textVector[m_coinsCollectedNumberLabel] = "m_CoinsCollectedNumberLabel";
+    m_coinsCollectedLabel = new sf::Text;
+    m_textVector[m_coinsCollectedLabel] = "CoinsCollectedNumberLabel";
 
     m_enemyDestructedBonusLabel = new sf::Text;
-    m_textVector[m_enemyDestructedBonusLabel] = "m_enemyDestructedBonusLabel";
+    m_textVector[m_enemyDestructedBonusLabel] = "enemyDestructedBonusLabel";
 
     m_enemyDestructedBonusText = new sf::Text;
-    m_textVector[m_enemyDestructedBonusText] = "m_enemyDestructedBonusText";
+    m_textVector[m_enemyDestructedBonusText] = "enemyDestructedBonusText";
 
     m_scoreLabel = new sf::Text;
-    m_textVector[m_scoreLabel] = "m_scoreLabel";
+    m_textVector[m_scoreLabel] = "scoreLabel";
 
     m_scoreText = new sf::Text;
-    m_textVector[m_scoreText] = "m_scoreText";
+    m_textVector[m_scoreText] = "scoreText";
 
-
-    changeLanguage("en");
-
+    m_currentLanguage = "en";
+    updateWholeText();
 }
 
 
@@ -176,22 +196,24 @@ void Text::loadText()
 *********************************************
     @author Arthur  @date 13/04
 *********************************************/
-void Text::changeLanguage(string language)
+void Text::updateWholeText()
 {
-    for ( map<sf::Text*, string>::iterator it = m_textVector.begin(); it !=m_textVector.end(); ++it)
+    for ( map<sf::Text*, string>::iterator it = m_textVector.begin();
+          it !=m_textVector.end(); ++it)
     {
         it->first->setCharacterSize(24);
         it->first->setFont(*m_font);
         it->first->setColor(sf::Color::White);
-        if ( language == "en")
+
+        if ( m_currentLanguage == "en")
         {
             updateString(ENGLISH_STRINGS, it->first, it->second);
         }
-        else if ( language == "fr")
+        else if ( m_currentLanguage == "fr")
         {
             updateString(FRENCH_STRINGS, it->first, it->second);
         }
-        else if ( language == "es")
+        else if ( m_currentLanguage == "es")
         {
             updateString(SPANISH_STRINGS, it->first, it->second);
         }
@@ -236,7 +258,7 @@ void Text::updateString(string file, sf::Text *currentText, string currentName)
 	}
 
 	f.close();
-	currentText->setString( result );
+    currentText->setString(result);
 }
 
 
@@ -247,8 +269,10 @@ void Text::updateString(string file, sf::Text *currentText, string currentName)
 *********************************************/
 void Text::syncMenuHomeText(int width, int height)
 {
-    m_playButtonText->setPosition( width/2 - m_playButtonText->getGlobalBounds().width/2, height/1.42 );
-    m_quitButtonText->setPosition( width/2 - m_quitButtonText->getGlobalBounds().width/2, height/1.15 );
+    m_playButtonText->setPosition( width/2 -
+        int(m_playButtonText->getGlobalBounds().width/2), height/1.42 );
+    m_quitButtonText->setPosition( width/2 -
+        int(m_quitButtonText->getGlobalBounds().width/2), height/1.15 );
 }
 
 
@@ -259,7 +283,8 @@ void Text::syncMenuHomeText(int width, int height)
 *********************************************/
 void Text::syncMenuSettingsText(int width, int height)
 {
-    m_configurationLabel->setPosition(width/4 - m_configurationLabel->getGlobalBounds().width/2, height/10);
+    m_configurationLabel->setPosition(width/4 -
+        int(m_configurationLabel->getGlobalBounds().width/2), height/10);
     m_configLanguageLabel->setPosition(40, 150);
     m_configLanguageEnLabel->setPosition(80, 202);
     m_configLanguageFrLabel->setPosition(80, 242);
@@ -267,6 +292,55 @@ void Text::syncMenuSettingsText(int width, int height)
     m_configDifficultyLabel->setPosition(40, 370);
     m_configDifficultyNormalLabel->setPosition(80, 417);
     m_configDifficultyMasterLabel->setPosition(80, 457);
+}
+
+
+/********************************************
+    Menu Leaderboard Text Syncing
+*********************************************
+    @author Arthur  @date 19/04 - 20/04
+*********************************************/
+void Text::syncMenuLeaderboardText(int w, int h, Leaderboard* lb)
+{
+    string scores = "";
+
+    if (lb->checkFileIntegrity() == true)
+    {
+        lb->loadVectorFromFile();
+        lb->loadStringFromVector(scores);
+    }
+    else
+        scores = "corrupted";
+
+    if ( scores == "corrupted" )
+    {
+        m_textVector[m_leaderboardText] = "leaderboardErrorText";
+        updateWholeText();
+        m_leaderboardText->setPosition(w/2 -
+            int(m_leaderboardText->getGlobalBounds().width/2), 250);
+    }
+    else if ( scores == "empty")
+    {
+        m_textVector[m_leaderboardText] = "leaderboardText";
+        updateWholeText();
+        m_leaderboardText->setPosition(w/2 -
+            int(m_leaderboardText->getGlobalBounds().width/2), 250);
+    }
+    else //valid and not empty
+    {
+        m_textVector[m_leaderboardText] = "leaderboardText";
+        m_leaderboardText->setString(scores);
+        m_leaderboardText->setCharacterSize(30);
+        m_leaderboardText->setPosition(w/2 -
+            int(m_leaderboardText->getGlobalBounds().width/2), 140);
+    }
+
+    m_leaderboardTitleLabel->setPosition(w/2 -
+        int(m_leaderboardTitleLabel->getGlobalBounds().width/2), h/10);
+
+    m_clearButtonText->setCharacterSize(20);
+    m_clearButtonText->setPosition(w/2 -
+        int(m_clearButtonText->getGlobalBounds().width/2), 507);
 }
 
 /********************************************
@@ -283,7 +357,7 @@ void Text::syncGameMainText(GameModel *gameModel)
     m_distanceText->setString( to_string(gameModel->getDistance() ) + " m" );
     m_bonusTimeoutText->setPosition(840,545);
     if ( gameModel->getBonusTimeout() > 0)
-        m_bonusTimeoutText->setString( to_string(gameModel->getBonusTimeout() ));
+        m_bonusTimeoutText->setString( to_string(gameModel->getBonusTimeout()));
     else
         m_bonusTimeoutText->setString("");
 }
@@ -297,8 +371,8 @@ void Text::syncGameMainText(GameModel *gameModel)
 void Text::syncGamePauseText(GameModel *gameModel)
 {
     m_distanceText->setPosition(80, 30);
-    m_coinsCollectedNumberText->setPosition(80, 70);
-    m_coinsCollectedNumberText->setColor(sf::Color(255,204,0,255));
+    m_coinsCollectedText->setPosition(80, 70);
+    m_coinsCollectedText->setColor(sf::Color(255,204,0,255));
     m_enemyDestructedBonusText->setPosition(80, 110);
     m_enemyDestructedBonusText->setColor(sf::Color(0,232,209,255));
     m_pauseResumeLabel->setPosition(80, 400);
@@ -306,8 +380,8 @@ void Text::syncGamePauseText(GameModel *gameModel)
     m_homeLabel->setPosition(80, 500);
 
     m_distanceText->setString( to_string(gameModel->getDistance() ) + " m" );
-    m_coinsCollectedNumberText->setString(to_string(gameModel->getNbCoinsCollected() ));
-    m_enemyDestructedBonusText->setString( to_string( gameModel->getEnemyDestructedBonus() ));
+    m_coinsCollectedText->setString(to_string(gameModel->getNbCoinsCollected() ));
+    m_enemyDestructedBonusText->setString(to_string(gameModel->getEnemyDestructedBonus() ));
 
 }
 
@@ -319,16 +393,16 @@ void Text::syncGamePauseText(GameModel *gameModel)
 void Text::syncGameEndText(GameModel *gameModel)
 {
     m_endTitleLabel->setPosition(400, 80);
-    m_gameSpeedmultiplicatorLabel->setPosition(220, 170);
-    m_gameSpeedmultiplicatorText->setPosition(580, 170);
-    m_gameSpeedmultiplicatorText->setColor(sf::Color(86,103,97,255));
+    m_speedmultiplicatorLabel->setPosition(220, 170);
+    m_speedmultiplicatorText->setPosition(580, 170);
+    m_speedmultiplicatorText->setColor(sf::Color(86,103,97,255));
     m_distanceLabel->setPosition(220, 207);
     m_distanceLabel->setColor(sf::Color::White);
     m_distanceText->setPosition(580, 207);
     m_distanceText->setColor(sf::Color(86,103,97,255));
-    m_coinsCollectedNumberLabel->setPosition(220, 245);
-    m_coinsCollectedNumberText->setPosition(580, 245);
-    m_coinsCollectedNumberText->setColor(sf::Color(86,103,97,255));
+    m_coinsCollectedLabel->setPosition(220, 245);
+    m_coinsCollectedText->setPosition(580, 245);
+    m_coinsCollectedText->setColor(sf::Color(86,103,97,255));
     m_enemyDestructedBonusLabel->setPosition(220, 290);
     m_enemyDestructedBonusLabel->setColor(sf::Color::White);
     m_enemyDestructedBonusText->setPosition(580, 290);
@@ -340,9 +414,9 @@ void Text::syncGameEndText(GameModel *gameModel)
     m_homeLabel->setPosition(80,535);
     m_restartLabel->setPosition(760-m_restartLabel->getGlobalBounds().width/2,535);
 
-    m_gameSpeedmultiplicatorText->setString(  to_string( gameModel->getGameSpeed() + 2*gameModel->getDifficulty() ));
+    m_speedmultiplicatorText->setString(to_string(gameModel->getGameSpeed() + 2*gameModel->getDifficulty() ));
     m_distanceText->setString(  to_string( gameModel->getDistance() ) + " m" );
-    m_coinsCollectedNumberText->setString( to_string( gameModel->getNbCoinsCollected() ) + "  X  20" );
+    m_coinsCollectedText->setString( to_string( gameModel->getNbCoinsCollected() ) + "  X  20" );
     m_enemyDestructedBonusText->setString( to_string( gameModel->getEnemyDestructedBonus() ));
     m_scoreText->setString( to_string( gameModel->getScore() ) );
 }
@@ -379,6 +453,18 @@ void Text::drawMenuSettingsText(sf::RenderWindow *window)
 
 
 /********************************************
+    Menu Leaderboard Screen Drawing
+*********************************************
+    @author Arthur  @date 19/04 - 20/04
+*********************************************/
+void Text::drawMenuLeaderboardText(sf::RenderWindow *window)
+{
+    window->draw(*m_leaderboardTitleLabel);
+    window->draw(*m_leaderboardText);
+    window->draw(*m_clearButtonText);
+}
+
+/********************************************
     Game Screen Drawing
 *********************************************
     @author Arthur  @date 02/04 - 17/04
@@ -400,7 +486,7 @@ void Text::drawGameText(sf::RenderWindow *window)
 void Text::drawPauseText(sf::RenderWindow *window)
 {
     window->draw(*m_distanceText);
-    window->draw(*m_coinsCollectedNumberText);
+    window->draw(*m_coinsCollectedText);
     window->draw(*m_enemyDestructedBonusText);
     window->draw(*m_pauseResumeLabel);
     window->draw(*m_restartLabel);
@@ -416,12 +502,12 @@ void Text::drawPauseText(sf::RenderWindow *window)
 void Text::drawEndText(sf::RenderWindow *window)
 {
     window->draw(*m_endTitleLabel);
-    window->draw(*m_gameSpeedmultiplicatorLabel);
-    window->draw(*m_gameSpeedmultiplicatorText);
+    window->draw(*m_speedmultiplicatorLabel);
+    window->draw(*m_speedmultiplicatorText);
     window->draw(*m_distanceLabel);
     window->draw(*m_distanceText);
-    window->draw(*m_coinsCollectedNumberLabel);
-    window->draw(*m_coinsCollectedNumberText);
+    window->draw(*m_coinsCollectedLabel);
+    window->draw(*m_coinsCollectedText);
     window->draw(*m_enemyDestructedBonusLabel);
     window->draw(*m_enemyDestructedBonusText);
     window->draw(*m_scoreLabel);

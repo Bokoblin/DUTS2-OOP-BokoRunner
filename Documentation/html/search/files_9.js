@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['text_2ecpp',['Text.cpp',['../d0/d7c/_text_8cpp.html',1,'']]],
-  ['text_2eh',['Text.h',['../d4/dcf/_text_8h.html',1,'']]]
+  ['slidingbackground_2ecpp',['SlidingBackground.cpp',['../da/d49/_sliding_background_8cpp.html',1,'']]],
+  ['slidingbackground_2eh',['SlidingBackground.h',['../d7/d15/_sliding_background_8h.html',1,'']]]
 ];

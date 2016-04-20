@@ -14,7 +14,8 @@ var searchData=
   ['sethomestate',['setHomeState',['../d4/d31/class_menu_model.html#aa5ad0ccf25784c74942ba09819dda4ed',1,'MenuModel']]],
   ['setintrostate',['setIntroState',['../d0/de3/class_model.html#a4e7f03b7b2554fa0eb2042978b54d8c5',1,'Model']]],
   ['setjumpstate',['setJumpState',['../d8/d53/class_player.html#a14fed2d3751d33184f0f3e0d8b4748b9',1,'Player']]],
-  ['setlanguage',['setLanguage',['../d0/de3/class_model.html#ab667b470c19f4122020a35895ed54cfc',1,'Model']]],
+  ['setlanguage',['setLanguage',['../d0/de3/class_model.html#ab667b470c19f4122020a35895ed54cfc',1,'Model::setLanguage()'],['../da/d0e/class_text.html#a0eec153c56d7480e1e976939bbea6060',1,'Text::setLanguage()']]],
+  ['setleaderboardstate',['setLeaderboardState',['../d4/d31/class_menu_model.html#ae0ff4bc6011c33ed5a797f78d007239e',1,'MenuModel']]],
   ['setlife',['setLife',['../d8/d96/class_movable_element.html#af6414b3417d842e5654ed7c21745e995',1,'MovableElement::setLife()'],['../d8/d53/class_player.html#a53a2e9cda2dc8bfb8918510fbd4d4e87',1,'Player::setLife()']]],
   ['setmenumodel',['setMenuModel',['../d0/ddd/class_menu_view.html#ada115af36ea97a1cd2bc699fd27ff1c1',1,'MenuView']]],
   ['setmenustate',['setMenuState',['../d0/de3/class_model.html#a08f2d9c63e87ad2ffe3e5eb354b6d55e',1,'Model']]],
@@ -27,10 +28,10 @@ var searchData=
   ['setresetgamestate',['setResetGameState',['../d0/de3/class_model.html#a603c37c7bd0444a82e0f1a52f05b0bb4',1,'Model']]],
   ['setsettingsstate',['setSettingsState',['../d4/d31/class_menu_model.html#a8de107cf30070d07ff4fc1ef803a4965',1,'MenuModel']]],
   ['setspeed',['setSpeed',['../d2/d7d/class_sliding_background.html#a7fee867fd8feba2df0a0868d83dbd950',1,'SlidingBackground']]],
-  ['settings_5fbuttons_5fimage',['SETTINGS_BUTTONS_IMAGE',['../d7/db8/_menu_view_8h.html#ad80dc73b1cc044d823bb4e18159a264e',1,'MenuView.h']]],
   ['slidingbackground',['SlidingBackground',['../d2/d7d/class_sliding_background.html',1,'SlidingBackground'],['../d2/d7d/class_sliding_background.html#a6bc9c2611357698c25cc2a574575ad54',1,'SlidingBackground::SlidingBackground()']]],
   ['slidingbackground_2ecpp',['SlidingBackground.cpp',['../da/d49/_sliding_background_8cpp.html',1,'']]],
   ['slidingbackground_2eh',['SlidingBackground.h',['../d7/d15/_sliding_background_8h.html',1,'']]],
+  ['sortvector',['sortVector',['../d5/d21/class_leaderboard.html#a71d4eae178add1c8e86c2795b4cdc98e',1,'Leaderboard']]],
   ['spanish_5fstrings',['SPANISH_STRINGS',['../d4/dcf/_text_8h.html#a8392a255b7c8ab5548a2f8b544c9439f',1,'Text.h']]],
   ['sync',['sync',['../da/def/class_animated_graphic_element.html#a42574bd82286deb4c69fbd478d883a13',1,'AnimatedGraphicElement::sync()'],['../d4/d77/class_button.html#a6ebceb8075019a6a3754084d80137b0e',1,'Button::sync()'],['../d1/d4c/class_graphic_element.html#a1b181a4a56f8f69e0de70c6466dfb72a',1,'GraphicElement::sync()'],['../d2/d7d/class_sliding_background.html#a0a4cf4647c997a171b8fe7fe4a825e5d',1,'SlidingBackground::sync()']]],
   ['syncgameendtext',['syncGameEndText',['../da/d0e/class_text.html#acfcce81260e07bf35c462016e50502b3',1,'Text']]],
@@ -38,5 +39,6 @@ var searchData=
   ['syncgamepausetext',['syncGamePauseText',['../da/d0e/class_text.html#ada52a3416a641d942490f758905b42b2',1,'Text']]],
   ['synchronize',['synchronize',['../d0/d21/class_game_view.html#acace6682b2e83260ad08b2654048c3e8',1,'GameView::synchronize()'],['../d7/d01/class_intro.html#a59d1b88d2daf2f86bf56f32960f26b1d',1,'Intro::synchronize()'],['../d0/ddd/class_menu_view.html#a4065a906b083ce31c702d5c63cfc7542',1,'MenuView::synchronize()'],['../dd/d9f/class_view.html#a8aa314cc908f391bfe6e445924ca04ff',1,'View::synchronize()']]],
   ['syncmenuhometext',['syncMenuHomeText',['../da/d0e/class_text.html#abc60cb31f1e5529cef4bd7b85ab615ce',1,'Text']]],
+  ['syncmenuleaderboardtext',['syncMenuLeaderboardText',['../da/d0e/class_text.html#a41280ae0c96db064d91cb977da28f2c8',1,'Text']]],
   ['syncmenusettingstext',['syncMenuSettingsText',['../da/d0e/class_text.html#a797686a119e26d67a3eb5fd184993660',1,'Text']]]
 ];

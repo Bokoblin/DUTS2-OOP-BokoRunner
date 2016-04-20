@@ -12,3 +12,5 @@ stdout.txt
 *.md5
 Makefile
 Build
+runner/scores.txt
+runner/Fonts/.font_cache

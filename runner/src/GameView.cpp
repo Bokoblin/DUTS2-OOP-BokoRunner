@@ -8,16 +8,17 @@ using namespace std;
     @author Arthur  @date 26/03 - 27/03
 *********************************************/
 GameView::GameView(float w, float h, sf::RenderWindow *mywindow, Text *text):
-    View(w, h, mywindow, text), m_gameModel{nullptr}
+    View(w, h, mywindow, text), m_gameModel{nullptr}, m_scoreSavable{true}
 {
     loadImages();
+    m_lb = new Leaderboard;
 }
 
 
 /********************************************
     Destructor
 *********************************************
-    @author Arthur  @date 26/03 - 16/04
+    @author Arthur  @date 26/03 - 19/04
 *********************************************/
 GameView::~GameView()
 {
@@ -38,14 +39,15 @@ GameView::~GameView()
     delete m_flyBonusGraphic;
     delete m_slowSpeedBonusGraphic;
 
-    //=== Delete Pause Elements
+    //=== Delete Pause and End Elements
 
     delete m_pauseBackgroundGraphic;
     delete m_pauseDistanceGraphic;
-    delete m_endBackgroundGraphic;
     delete m_resumeButtonGraphic;
     delete m_restartButtonGraphic;
     delete m_homeButtonGraphic;
+    delete m_endBackgroundGraphic;
+    delete m_saveScoreButtonGraphic;
 }
 
 
@@ -60,7 +62,7 @@ void GameView::setGameModel(GameModel *model) { m_gameModel = model; }
 /********************************************
     Image Loading
 *********************************************
-    @author Arthur  @date 26/03 - 11/04
+    @author Arthur  @date 26/03 - 20/04
 *********************************************/
 void GameView::loadImages()
 {
@@ -284,6 +286,17 @@ void GameView::loadImages()
         m_endBackgroundTexture.setSmooth(true);
         m_endBackgroundGraphic = new GraphicElement(m_endBackgroundTexture, 0, 0, m_width, m_height);
     }
+
+    if (!m_saveScoreButtonTexture.loadFromFile(PAUSE_BUTTONS_IMAGE))
+        cerr << "ERROR when loading image file: " << PAUSE_BUTTONS_IMAGE << endl;
+    else
+    {
+        std::vector<sf::IntRect> clip_rects;
+        clip_rects.push_back(sf::IntRect(51, 200, 50, 50));
+        clip_rects.push_back(sf::IntRect(0, 200, 50, 50));
+        m_saveScoreButtonTexture.setSmooth(true);
+        m_saveScoreButtonGraphic = new Button(clip_rects, m_saveScoreButtonTexture, 730, 350, m_width, m_height, false);
+    }
 }
 
 
@@ -381,7 +394,7 @@ void GameView::deleteElements()
 /********************************************
     Synchronization function
 *********************************************
-    @author Arthur  @date 26/03 - 11/04
+    @author Arthur  @date 26/03 - 20/04
 *********************************************/
 void GameView::synchronize()
 {
@@ -434,6 +447,11 @@ void GameView::synchronize()
         m_restartButtonGraphic->resize(30,30);
         m_restartButtonGraphic->setPosition(840, 535);
 
+        m_saveScoreButtonGraphic->sync();
+        m_saveScoreButtonGraphic->resize(40,40);
+        if ( m_scoreSavable == false)
+            m_saveScoreButtonGraphic->setPosition(m_width+5, m_height+5);
+
         //=== Text update
 
         m_text->syncGameEndText(m_gameModel);
@@ -444,7 +462,7 @@ void GameView::synchronize()
 /********************************************
     GameView Drawing
 *********************************************
-    @author Arthur  @date 26/03 - 01/04
+    @author Arthur  @date 26/03 - 19/04
 *********************************************/
 void GameView::draw() const
 {
@@ -496,6 +514,8 @@ void GameView::draw() const
         m_window->draw(*m_endBackgroundGraphic);
         m_window->draw(*m_restartButtonGraphic);
         m_window->draw(*m_homeButtonGraphic);
+        if ( m_scoreSavable == true)
+            m_window->draw(*m_saveScoreButtonGraphic);
 
         //=== Text drawing
 
@@ -510,7 +530,7 @@ void GameView::draw() const
 /********************************************
     Events treating
 *********************************************
-    @author Arthur  @date 21/02 - 09/04
+    @author Arthur  @date 21/02 - 19/04
     @author Florian @date 21/02 - 10/04
 *********************************************/
 bool GameView::treatEvents()
@@ -624,12 +644,17 @@ bool GameView::treatEvents()
                     {
                         m_homeButtonGraphic->setPressedState(true);
                     }
+                    else if ( m_saveScoreButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) )
+                    {
+                        m_saveScoreButtonGraphic->setPressedState(true);
+                    }
                 }
 
                 if (event.type == sf::Event::MouseButtonReleased)
                 {
                     m_restartButtonGraphic->setPressedState(false);
                     m_homeButtonGraphic->setPressedState(false);
+                    m_saveScoreButtonGraphic->setPressedState(false);
 
                     if ( m_restartButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) ||
                                 m_text->getRestartText()->getGlobalBounds().contains(MOUSE_POSITION) )
@@ -646,6 +671,13 @@ bool GameView::treatEvents()
                         m_model->setGameState(false);
                         m_model->setMenuState(true);
                         result = false;
+                    }
+                    else if ( m_saveScoreButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) )
+                    {
+                        m_scoreSavable = false;
+                        m_lb->loadVectorFromFile();
+                        m_lb->addEntryToVector(m_gameModel->getScore() );
+                        m_lb->loadFileFromVector();
                     }
                 }
             }

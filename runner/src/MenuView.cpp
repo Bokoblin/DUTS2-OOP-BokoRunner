@@ -24,7 +24,7 @@ MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
 /********************************************
     Destructor
 *********************************************
-    @author Arthur  @date 26/02 - 15/04
+    @author Arthur  @date 26/02 - 19/04
 *********************************************/
 MenuView::~MenuView()
 {
@@ -36,6 +36,7 @@ MenuView::~MenuView()
 	delete m_playButtonGraphic;
 	delete m_quitButtonGraphic;
 	delete m_settingsButtonGraphic;
+    delete m_leaderboardButtonGraphic;
 
 	//=== Settings Elements
 
@@ -126,6 +127,18 @@ void MenuView::loadImages()
 		m_settingsButtonGraphic = new Button(clip_rects, m_settingsButtonTexture, 20, 530, 50, 50, false);
 	}
 
+    if (!m_leaderboardButtonTexture.loadFromFile(SETTINGS_BUTTONS_IMAGE) )
+        cerr << "ERROR when loading image file: " << SETTINGS_BUTTONS_IMAGE << endl;
+    else
+    {
+        std::vector<sf::IntRect> clip_rects;
+        clip_rects.push_back(sf::IntRect( 0, 100, 50, 50));
+        clip_rects.push_back(sf::IntRect( 51, 100, 50, 50));
+
+        m_leaderboardButtonTexture.setSmooth(true);
+        m_leaderboardButtonGraphic = new Button(clip_rects, m_leaderboardButtonTexture, 830, 530, 50, 50, false);
+    }
+
 	if (!m_homeButtonTexture.loadFromFile(SETTINGS_BUTTONS_IMAGE) )
 		cerr << "ERROR when loading image file: " << SETTINGS_BUTTONS_IMAGE << endl;
 	else
@@ -162,7 +175,7 @@ void MenuView::loadImages()
 /********************************************
     Synchronization function
 *********************************************
-    @author Arthur  @date 26/03 - 14/04
+    @author Arthur  @date 26/03 - 19/04
 *********************************************/
 void MenuView::synchronize()
 {
@@ -176,6 +189,7 @@ void MenuView::synchronize()
 		m_playButtonGraphic->sync();
 		m_quitButtonGraphic->sync();
 		m_settingsButtonGraphic->sync();
+        m_leaderboardButtonGraphic->sync();
 
 		//=== Text update
 
@@ -209,13 +223,25 @@ void MenuView::synchronize()
 		m_text->syncMenuSettingsText(m_width, m_height);
 
 	}
+    else if (m_menuModel->getLeaderboardState() == true)
+    {
+        //=== Elements update
+
+        m_homeButtonGraphic->sync();
+        m_homeButtonGraphic->resize(30, 30);
+
+        //=== Text update
+
+        m_text->syncMenuLeaderboardText(m_width, m_height, m_menuModel->getLeaderboard(), m_menuModel->getLanguage());
+
+    }
 }
 
 
 /********************************************
     View Drawing
 *********************************************
-    @author Arthur  @date 26/03 - 14/04
+    @author Arthur  @date 26/03 - 19/04
 *********************************************/
 void MenuView::draw() const
 {
@@ -231,6 +257,7 @@ void MenuView::draw() const
 		m_window->draw(*m_playButtonGraphic);
 		m_window->draw(*m_quitButtonGraphic);
 		m_window->draw(*m_settingsButtonGraphic);
+        m_window->draw(*m_leaderboardButtonGraphic);
 
 		//=== Text Drawing
 
@@ -254,6 +281,18 @@ void MenuView::draw() const
 
 		m_text->drawMenuSettingsText(m_window);
 	}
+    else if (m_menuModel->getLeaderboardState() == true)
+    {
+        m_window->clear(sf::Color(51, 51, 51, 255) );
+
+        //=== Graphic Elements drawing
+
+        m_window->draw(*m_homeButtonGraphic);
+
+        //=== Text Drawing
+
+        m_text->drawMenuLeaderboardText(m_window);
+    }
 
 	m_window->display();
 }
@@ -262,7 +301,7 @@ void MenuView::draw() const
 /********************************************
     Events treating
 *********************************************
-    @author Arthur  @date 25/03 - 14/04
+    @author Arthur  @date 25/03 - 19/04
 *********************************************/
 bool MenuView::treatEvents()
 {
@@ -300,6 +339,10 @@ bool MenuView::treatEvents()
 					{
 						m_settingsButtonGraphic->setPressedState(true);
 					}
+                    else if ( m_leaderboardButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) )
+                    {
+                        m_leaderboardButtonGraphic->setPressedState(true);
+                    }
 				}
 
 				if (event.type == sf::Event::MouseButtonReleased)
@@ -307,6 +350,7 @@ bool MenuView::treatEvents()
 					m_playButtonGraphic->setPressedState(false);
 					m_quitButtonGraphic->setPressedState(false);
 					m_settingsButtonGraphic->setPressedState(false);
+                    m_leaderboardButtonGraphic->setPressedState(false);
 
 					if ( m_playButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) )
 					{
@@ -324,6 +368,11 @@ bool MenuView::treatEvents()
 						m_menuModel->setHomeState(false);
 						m_menuModel->setSettingsState(true);
 					}
+                    else if ( m_leaderboardButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) )
+                    {
+                        m_menuModel->setHomeState(false);
+                        m_menuModel->setLeaderboardState(true);
+                    }
 				}
 			}
 
@@ -398,6 +447,29 @@ bool MenuView::treatEvents()
 					}
 				}
 			}
+            //Leaderboard Screen
+
+            else if (m_menuModel->getLeaderboardState() == true)
+            {
+                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+                {
+                    if ( m_homeButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) )
+                    {
+                        m_homeButtonGraphic->setPressedState(true);
+                    }
+                }
+
+                if (event.type == sf::Event::MouseButtonReleased)
+                {
+                    m_homeButtonGraphic->setPressedState(false);
+
+                    if ( m_homeButtonGraphic->getGlobalBounds().contains(MOUSE_POSITION) )
+                    {
+                        m_menuModel->setSettingsState(false);
+                        m_menuModel->setHomeState(true);
+                    }
+                }
+            }
 		}
 	}
 	return result;

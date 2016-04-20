@@ -5,8 +5,6 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <cassert>
-#include <ctype.h>
 
 class Leaderboard
 {

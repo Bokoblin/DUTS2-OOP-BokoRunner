@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2016 Jolivet Arthur & Laronze Florian
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,8 @@
    <!-- Menu strings -->
    <string name="playButtonText">JUGAR</string>
    <string name="quitButtonText">DEJAR</string>
+   <string name="clearButtonText">BORRAR</string>
+
 
    <!-- Settings strings -->
    <string name="settingsLabel">Opciones</string>
@@ -31,7 +33,8 @@
    <string name="configDifficultyNormalLabel">Normal</string>
    <string name="configDifficultyMasterLabel">Master</string>
    <string name="leaderboardTitleLabel">Tabla_de_posiciones</string>
-   <string name="leaderboardText">.</string>
+   <string name="leaderboardText">Todavia_no_hay_ninguna_puntuacion</string>
+   <string name="leaderboardErrorText">Puntuacion_datos_ha_sido_corrompido._Barra_lo.</string>
 
    <!--  Game strings -->
    <string name="distanceText">.</string>

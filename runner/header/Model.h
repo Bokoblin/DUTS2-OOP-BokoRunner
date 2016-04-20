@@ -38,7 +38,6 @@ public:
 
     //=== GETTERS
     int getDifficulty() const;
-    std::string getLanguage() const;
     bool getIntroState() const;
     bool getMenuState() const;
     bool getGameState() const;

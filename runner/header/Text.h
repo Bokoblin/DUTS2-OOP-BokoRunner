@@ -37,7 +37,7 @@ const std::string SPANISH_STRINGS = "Fonts/spanish.xml";
 /********************************************
     Text Class
 *********************************************
-    @author Arthur  @date 02/04 - 19/04
+    @author Arthur  @date 02/04 - 20/04
 *********************************************/
 class Text
 {
@@ -48,18 +48,22 @@ class Text
     ~Text();
 
     //=== GETTERS
-    sf::Text *getPauseResumeText();
-    sf::Text *getRestartText();
-    sf::Text *getHomeText();
+    sf::Text *getPauseResumeText() const;
+    sf::Text *getRestartText() const;
+    sf::Text *getHomeText() const;
+    std::string getLanguage() const;
+
+    //=== SETTERS
+    void setLanguage(std::string lang);
 
     //=== METHODS
     void loadText();
-    void changeLanguage(std::string currentLanguage);
+    void updateWholeText();
     void updateString(std::string file, sf::Text *currentText, std::string currentName);
 
     void syncMenuHomeText(int width, int height);
     void syncMenuSettingsText(int width, int height);
-    void syncMenuLeaderboardText(int w, int h, Leaderboard *lb, std::string lang);
+    void syncMenuLeaderboardText(int w, int h, Leaderboard *lb);
     void syncGameMainText(GameModel *gameModel);
     void syncGamePauseText(GameModel *gameModel);
     void syncGameEndText(GameModel *gameModel);
@@ -75,6 +79,7 @@ private:
     //=== ATTRIBUTES
     sf::Font *m_font;
     std::map<sf::Text*, std::string> m_textVector;
+    std::string m_currentLanguage;
 
     //Menu Text
     sf::Text *m_playButtonText;
@@ -92,6 +97,7 @@ private:
     //Leaderboard Text
     sf::Text *m_leaderboardTitleLabel;
     sf::Text *m_leaderboardText;
+    sf::Text *m_clearButtonText;
 
     //Game Text
     sf::Text *m_distanceText;

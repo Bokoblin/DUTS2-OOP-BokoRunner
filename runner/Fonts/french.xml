@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2016 Jolivet Arthur & Laronze Florian
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,8 @@
    <!-- Menu strings -->
    <string name="playButtonText">JOUER</string>
    <string name="quitButtonText">QUITTER</string>
+   <string name="clearButtonText">EFFACER</string>
+
 
    <!-- Settings strings -->
    <string name="settingsLabel">Options</string>
@@ -31,7 +33,8 @@
    <string name="configDifficultyNormalLabel">Normal</string>
    <string name="configDifficultyMasterLabel">Master</string>
    <string name="leaderboardTitleLabel">Classement</string>
-   <string name="leaderboardText">.</string>
+   <string name="leaderboardText">Il_n'y_a_pas_encore_de_scores</string>
+   <string name="leaderboardErrorText">Les_donnees_de_score_ont_ete_corrompues._Veuillez_les_effacer.</string>
 
    <!--  Game strings -->
    <string name="distanceText">.</string>

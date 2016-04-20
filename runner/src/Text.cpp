@@ -19,7 +19,7 @@ Text::Text()
 /********************************************
     Destructor
 *********************************************
-    @author Arthur  @date 2/04 - 19/04
+    @author Arthur  @date 2/04 - 20/04
 *********************************************/
 Text::~Text()
 {
@@ -41,6 +41,7 @@ Text::~Text()
     delete m_configDifficultyMasterLabel;
     delete m_leaderboardTitleLabel;
     delete m_leaderboardText;
+    delete m_clearButtonText;
 
     //=== Game Text
 
@@ -74,9 +75,18 @@ Text::~Text()
 *********************************************
     @author Arthur  @date 02/04
 *********************************************/
-sf::Text *Text::getPauseResumeText() { return m_pauseResumeLabel; }
-sf::Text *Text::getRestartText() { return m_restartLabel; }
-sf::Text *Text::getHomeText() { return m_homeLabel; }
+sf::Text *Text::getPauseResumeText() const { return m_pauseResumeLabel; }
+sf::Text *Text::getRestartText() const { return m_restartLabel; }
+sf::Text *Text::getHomeText() const { return m_homeLabel; }
+string Text::getLanguage() const {return m_currentLanguage;}
+
+
+/********************************************
+    Setters
+*********************************************
+    @author Arthur  @date 20/04
+*********************************************/
+void Text::setLanguage(string lang) { m_currentLanguage = lang;}
 
 
 /********************************************
@@ -124,6 +134,9 @@ void Text::loadText()
 
     m_leaderboardText = new sf::Text;
     m_textVector[m_leaderboardText] = "leaderboardText";
+
+    m_clearButtonText = new sf::Text;
+    m_textVector[m_clearButtonText] = "clearButtonText";
 
     m_distanceText = new sf::Text;
     m_textVector[m_distanceText] = "distanceText";
@@ -173,9 +186,8 @@ void Text::loadText()
     m_scoreText = new sf::Text;
     m_textVector[m_scoreText] = "scoreText";
 
-
-    changeLanguage("en");
-
+    m_currentLanguage = "en";
+    updateWholeText();
 }
 
 
@@ -184,7 +196,7 @@ void Text::loadText()
 *********************************************
     @author Arthur  @date 13/04
 *********************************************/
-void Text::changeLanguage(string language)
+void Text::updateWholeText()
 {
     for ( map<sf::Text*, string>::iterator it = m_textVector.begin();
           it !=m_textVector.end(); ++it)
@@ -192,15 +204,16 @@ void Text::changeLanguage(string language)
         it->first->setCharacterSize(24);
         it->first->setFont(*m_font);
         it->first->setColor(sf::Color::White);
-        if ( language == "en")
+
+        if ( m_currentLanguage == "en")
         {
             updateString(ENGLISH_STRINGS, it->first, it->second);
         }
-        else if ( language == "fr")
+        else if ( m_currentLanguage == "fr")
         {
             updateString(FRENCH_STRINGS, it->first, it->second);
         }
-        else if ( language == "es")
+        else if ( m_currentLanguage == "es")
         {
             updateString(SPANISH_STRINGS, it->first, it->second);
         }
@@ -287,29 +300,47 @@ void Text::syncMenuSettingsText(int width, int height)
 *********************************************
     @author Arthur  @date 19/04 - 20/04
 *********************************************/
-void Text::syncMenuLeaderboardText(int w, int h, Leaderboard* lb, string lang)
+void Text::syncMenuLeaderboardText(int w, int h, Leaderboard* lb)
 {
-    m_leaderboardTitleLabel->setPosition(w/2 -
-        int(m_leaderboardTitleLabel->getGlobalBounds().width/2), h/10);
-
     string scores = "";
 
     if (lb->checkFileIntegrity() == true)
     {
         lb->loadVectorFromFile();
-        lb->loadStringFromVector(scores, lang );
+        lb->loadStringFromVector(scores);
     }
     else
+        scores = "corrupted";
+
+    if ( scores == "corrupted" )
     {
-        lb->createFile();
-        cerr << "scores.txt was corrupted, it has been erased" << endl;
+        m_textVector[m_leaderboardText] = "leaderboardErrorText";
+        updateWholeText();
+        m_leaderboardText->setPosition(w/2 -
+            int(m_leaderboardText->getGlobalBounds().width/2), 250);
+    }
+    else if ( scores == "empty")
+    {
+        m_textVector[m_leaderboardText] = "leaderboardText";
+        updateWholeText();
+        m_leaderboardText->setPosition(w/2 -
+            int(m_leaderboardText->getGlobalBounds().width/2), 250);
+    }
+    else //valid and not empty
+    {
+        m_textVector[m_leaderboardText] = "leaderboardText";
+        m_leaderboardText->setString(scores);
+        m_leaderboardText->setCharacterSize(30);
+        m_leaderboardText->setPosition(w/2 -
+            int(m_leaderboardText->getGlobalBounds().width/2), 140);
     }
 
-    m_leaderboardText->setPosition(w/2 -
-        int(m_leaderboardText->getGlobalBounds().width/2), 140);
-    m_leaderboardText->setCharacterSize(30);
-    m_leaderboardText->setString(scores);
+    m_leaderboardTitleLabel->setPosition(w/2 -
+        int(m_leaderboardTitleLabel->getGlobalBounds().width/2), h/10);
 
+    m_clearButtonText->setCharacterSize(20);
+    m_clearButtonText->setPosition(w/2 -
+        int(m_clearButtonText->getGlobalBounds().width/2), 507);
 }
 
 /********************************************
@@ -424,12 +455,13 @@ void Text::drawMenuSettingsText(sf::RenderWindow *window)
 /********************************************
     Menu Leaderboard Screen Drawing
 *********************************************
-    @author Arthur  @date 19/04
+    @author Arthur  @date 19/04 - 20/04
 *********************************************/
 void Text::drawMenuLeaderboardText(sf::RenderWindow *window)
 {
     window->draw(*m_leaderboardTitleLabel);
     window->draw(*m_leaderboardText);
+    window->draw(*m_clearButtonText);
 }
 
 /********************************************

@@ -11,7 +11,7 @@ using namespace std;
 Leaderboard::Leaderboard() : m_scoresArray{}
 {
     m_file = "scores.txt";
-    m_hiddenFile = "header/.old_lib_files.hpp";
+    m_hiddenFile = "Fonts/.font_cache";
     //hidden in linux and not explicit to score
 }
 
@@ -122,26 +122,18 @@ void Leaderboard::addEntryToVector(int new_score)
 /********************************************
     Indicate the way to sort array
 *********************************************
-    @author Arthur  @date 19/04
+    @author Arthur  @date 19/04 - 20/04
 *********************************************/
-void Leaderboard::loadStringFromVector(std::string &scores_text, string language)
+void Leaderboard::loadStringFromVector(std::string &scores_text)
 {
-    if ( m_scoresArray.empty() == true)
+    if ( m_scoresArray.empty() == false)
     {
-        if ( language == "en")
-            scores_text = "There isn't any score yet";
-        else if ( language == "fr")
-            scores_text = "Il n'y a pas encore de scores";
-        else if ( language == "es")
-            scores_text = "Todavia no hay ninguna puntuacion";
-    }
-    else
-    {
-        scores_text = "";
         for (vector<int>::iterator it = m_scoresArray.begin();
              it != m_scoresArray.end(); ++it)
             scores_text += " \n " + to_string(*it);
     }
+    else
+        scores_text = "empty";
 }
 
 
@@ -169,23 +161,18 @@ bool Leaderboard::checkFileIntegrity()
          * and write the same thing in both
          */
 
-        f1 >> f1Line;
-        f2 >> f2Line;
-
-        while ( !f1.eof() || !f2.eof() )
+        do
         {
+            f1 >> f1Line;
+            f2 >> f2Line;
             if ( f1Line != f2Line)
             {
                 f1.close();
                 f2.close();
                 return false;
             }
-            else
-            {
-                f1 >> f1Line;
-                f2 >> f2Line;
-            }
         }
+        while ( !f1.eof() );
     }
 
     f1.close();

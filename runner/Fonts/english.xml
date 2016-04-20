@@ -19,6 +19,7 @@
    <!-- Menu strings -->
    <string name="playButtonText">PLAY</string>
    <string name="quitButtonText">QUIT</string>
+   <string name="clearButtonText">CLEAR</string>
 
    <!-- Settings strings -->
    <string name="settingsLabel">Settings</string>
@@ -31,7 +32,8 @@
    <string name="configDifficultyNormalLabel">Normal</string>
    <string name="configDifficultyMasterLabel">Master</string>
    <string name="leaderboardTitleLabel">Leaderboard</string>
-   <string name="leaderboardText">.</string>
+   <string name="leaderboardText">There_isn't_any_score_yet</string>
+   <string name="leaderboardErrorText">Score_database_has_been_corrupted._Please_clear_it.</string>
 
    <!--  Game strings -->
    <string name="distanceText">.</string>

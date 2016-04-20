@@ -13,4 +13,4 @@ stdout.txt
 Makefile
 Build
 runner/scores.txt
-runner/header/.old_lib_files.hpp
+runner/Fonts/.font_cache

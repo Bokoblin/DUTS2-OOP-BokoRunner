@@ -20,7 +20,7 @@ public:
     void loadFileFromVector();
     void sortVector();
     void addEntryToVector(int new_score);
-    void loadStringFromVector(std::string &scores_text, std::string language);
+    void loadStringFromVector(std::string &scores_text);
     bool checkFileIntegrity();
 
 

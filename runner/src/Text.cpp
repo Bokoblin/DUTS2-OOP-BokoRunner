@@ -25,6 +25,8 @@ Text::~Text()
 {
     delete m_font;
 
+    //=== Menu Settings
+
     delete m_playButtonText;
     delete m_quitButtonText;
 
@@ -39,6 +41,8 @@ Text::~Text()
     delete m_configDifficultyLabel;
     delete m_configDifficultyNormalLabel;
     delete m_configDifficultyMasterLabel;
+
+
     delete m_leaderboardTitleLabel;
     delete m_leaderboardText;
     delete m_clearButtonText;

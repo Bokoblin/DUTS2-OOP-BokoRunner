@@ -1,13 +1,13 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.3.0
+Current version : v1.3.1
 
 ======================================================================================
 BETA CHANNEL Changelog
 
 
-v0.1.0-r1 (22/02/16) :
+v0.1.0-beta.1 (22/02/16) :
 
 - Project Creation:
 	- images added in "Images" folder
@@ -15,41 +15,41 @@ v0.1.0-r1 (22/02/16) :
 	- README added
 
 
-v0.1.0-r2 (22/02/16) :
+v0.1.0-beta.2 (22/02/16) :
 
 - sources files from "Atelier 1" and "Atelier 2" added
 - header  files from "Atelier 1" and "Atelier 2" added
 
 
-v0.1.0-r3/4/5 (24/02/16) :
+v0.1.0-beta.3/4/5 (24/02/16) :
 
 - code relative to "Atelier 2" and "Atelier 3" added
 
 
-v0.1.1-r1 (25/02/16) :
+v0.1.1-beta.1 (25/02/16) :
 
 - Atelier 2 and 3 are finished until fixing issues in "TD Projet" next week
 
 
-v0.1.2-r1 (25/02/16) :
+v0.1.2-beta.1 (25/02/16) :
 
 -Merge with v0.1.2-dev from dev-arthur branch containing:
 	- Atelier 4 : adding font for ball position
 	- Atelier 2 : GraphicElement::resize() is now working
 
 
-v0.1.2-r2 (02/03/16) :
+v0.1.2-beta.2 (02/03/16) :
 
 - Bug fixes related to the creation of new ennemies
 - Documentation comments added
 
 
-v0.1.3-r1 (3/03/16):
+v0.1.3-beta.1 (3/03/16):
 
 - Paralax-Sliding Background added
 
 
-v0.1.4-r1 (5/03/16):
+v0.1.4-beta.1 (5/03/16):
 
 - Animated ball added
 - ball creation independent from model creation
@@ -57,7 +57,7 @@ v0.1.4-r1 (5/03/16):
 
 ---------------------------------------------------------------------------------------------------
 
-v0.2.0-r1 (19/03/16):
+v0.2.0-beta.1 (19/03/16):
 
 - random animated appearing enemies and coins added
 - rewritten code concerning synchronisation, events, drawing
@@ -66,7 +66,7 @@ v0.2.0-r1 (19/03/16):
 - lots of bug fixes
 
 
-v0.2.1-rx (20/03/16 - 22/03/16):
+v0.2.1-beta.1 (20/03/16 - 22/03/16):
 
 - bottom bar added with score, distance and player bar
 - far background blurred a bit for focalization
@@ -75,19 +75,19 @@ v0.2.1-rx (20/03/16 - 22/03/16):
 - bug and memory leaks fixes
 
 
-v0.2.2-r1 (22/03/16):
+v0.2.2-beta.1 (22/03/16):
 
 - Graphic evolution of player's life throught an "animated" life bar
 
 
-v0.2.3-r1 (22/03/16):
+v0.2.3-beta.1 (22/03/16):
 
 - NewMovableElement vector replaced by a set
 - Fixed Seg Fault related to a getter returning a copy and not the object itself
 
 ---------------------------------------------------------------------------------------------------
 
-v0.3.0-r1 (12/03/16 - 09/04/16):
+v0.3.0-beta.1 (12/03/16 - 09/04/16):
 
 - Ball movements rewritten with ability to jump. 
 	The jump is made using gravity, acceleration and vectors. It describes a parable.
@@ -95,11 +95,11 @@ v0.3.0-r1 (12/03/16 - 09/04/16):
 
 ---------------------------------------------------------------------------------------------------
 
-v0.6.0-r1 (23/03/16 - 09/04/16):
+v0.6.0-beta.1 (23/03/16 - 09/04/16):
 
-Contains v0.4.0-dev, v0.5.0-dev and v0.6.0-dev :
+Contains v0.4.0-dev, v0.5.0-dev and v0.6.0-alpha.1/2 :
 
-- v0.4.0-dev (23/03/16 - 30/03/16):
+- v0.4.0-alpha.x (23/03/16 - 30/03/16):
 	- Added INTRO-MENU-GAME structure :
 		- INTRO displays a Splashscreen and allows to launch the menu
 		- MENU contains background images, a title image, play and quit buttons.
@@ -110,11 +110,11 @@ Contains v0.4.0-dev, v0.5.0-dev and v0.6.0-dev :
 	- clock() usage replaced by std::chrono which do not rely on processor clock
 
 
-- v0.5.0-dev (30/03/16 - 31/03/16):
+- v0.5.0-alpha.x (30/03/16 - 31/03/16):
 	- Pause menu implemented with 3 buttons (resume, restart, home menu)
 
 
-- v0.6.0-dev (01/04/16 - 06/04/16):
+- v0.6.0-alpha.1/2 (01/04/16 - 06/04/16):
 	- End Screen added with final score calculated and displayed, and 2 buttons (restart,menu)
 	- Text class created to store all texts from menu, game, pause and end
 	- Abstract classes added (View && MovableElement)
@@ -123,6 +123,13 @@ Contains v0.4.0-dev, v0.5.0-dev and v0.6.0-dev :
 	- Some "int" moved to "unsigned int" if they shouldn't have negative values
 	- Big code clean-up
 	- Lots of bug Fixes
+
+---------------------------------------------------------------------------------------------------
+
+v0.6.0-beta.2 (10/04/16):
+
+- Player jump updated
+
 
 
 ======================================================================================
@@ -182,6 +189,12 @@ v1.3.0 (20/04/16):
 - fix issues with language
 - removed not needed texture variable in MenuView class and variables's name edited
 - documentation updated
+
+---------------------------------------------------------------------------------------------------
+
+v1.3.1 (29/04/16):
+
+- Modified unit tests and model for first project report
 
 ---------------------------------------------------------------------------------------------------
 

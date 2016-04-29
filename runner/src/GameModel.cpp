@@ -111,7 +111,7 @@ void GameModel::nextStep()
             }
             else if ( chrono::system_clock::now() >= m_bonusStopTime && ( m_gameSpeed != m_realGameSpeed) )
             {
-                m_gameSpeed = m_realGameSpeed;
+                m_gameSpeed = m_realGameSpeed; //restore speed before slow down
             }
 
 
@@ -357,18 +357,21 @@ void GameModel::handleMovableElementsCollisions()
             else if ( (*it)->getType() == 6) //Mega
             {
                 m_player->changeState(1);
+                //allows to stop Mega bonus effect in 10s
                 m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(10000);
             }
 
             else if ( (*it)->getType() == 7) //Fly
             {
                 m_player->changeState(2);
+                //allows to stop Fly bonus effect in 15
                 m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(15000);
             }
 
             else if ( (*it)->getType() == 8) //SlowDown
             {
                 m_gameSpeed = m_gameSpeed-2;
+                //allows to stop SlowDown bonus effect in 20
                 m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(20000);
             }
 

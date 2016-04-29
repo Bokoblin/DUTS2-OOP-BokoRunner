@@ -24,12 +24,11 @@ limitations under the License.
 #include "Leaderboard.h"
 #include <iostream>
 
-const unsigned int PLAYER_DEFAULT_POS_X = 50 ;
 
 /********************************************
     GameModel Class
 *********************************************
-    @author Arthur  @date 26/03 - 17/04
+    @author Arthur  @date 26/03 - 27/04
 *********************************************/
 class GameModel : public Model
 {
@@ -41,10 +40,11 @@ public:
     //=== GETTERS
     bool getPauseState() const;
     bool getEndState() const;
+    bool getTransition() const;
     Player* getPlayer() const;
     int getScore() const;
     int getDistance() const;
-    int getGameSpeed() const;
+    float getGameSpeed() const;
     unsigned int getNbCoinsCollected() const;
     unsigned int getEnemyDestructedBonus() const;
     const std::set<MovableElement*>& getNewMElementsArray() const;
@@ -53,7 +53,7 @@ public:
     //=== SETTERS
     void setPauseState(bool state);
     void setEndState(bool state);
-    void setGameSpeed(int speed);
+    void setTransition(bool inTransition);
     void setNbCoinsCollected(unsigned int number) ;
 
     //=== METHODS
@@ -72,10 +72,11 @@ private:
     //=== ATTRIBUTES
     bool m_pauseState;
     bool m_endState;
+    bool m_inTransition;
     int m_score;
     int m_distance;
-    int m_gameSpeed;
-    int m_realGameSpeed;
+    float m_gameSpeed;
+    float m_realGameSpeed;
     int m_nbCoinsCollected;
     int m_enemyDestructedBonus;
     int m_currentEnemyInterdistance;

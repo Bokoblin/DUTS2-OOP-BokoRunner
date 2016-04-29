@@ -27,8 +27,14 @@ limitations under the License.
 /********************************************
     Constant Variables
 ********************************************/
-const std::string BACKGROUND_IMAGE_1 = "Images/city_1.png";
-const std::string BACKGROUND_IMAGE_2 = "Images/city_2.png";
+const std::string DEFAULT_NEAR_BACKGROUND = "Images/background/hill_near.png";
+const std::string DEFAULT_FAR_BACKGROUND = "Images/background/hill_far.png";
+const std::string DEFAULT_FAR_T1_BACKGROUND = "Images/background/t1_far.png";
+const std::string DEFAULT_FAR_P_BACKGROUND = "Images/background/plain_far.png";
+const std::string DEFAULT_FAR_T2_BACKGROUND = "Images/background/t2_far.png";
+const std::string DEFAULT_NEAR_T1_BACKGROUND = "Images/background/t1_near.png";
+const std::string DEFAULT_NEAR_P_BACKGROUND = "Images/background/plain_near.png";
+const std::string DEFAULT_NEAR_T2_BACKGROUND = "Images/background/t2_near.png";
 
 class Model;
 

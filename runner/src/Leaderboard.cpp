@@ -1,4 +1,4 @@
-#include "Leaderboard.h"
+#include "../header/Leaderboard.h"
 
 using namespace std;
 
@@ -10,8 +10,8 @@ using namespace std;
 *********************************************/
 Leaderboard::Leaderboard() : m_scoresArray{}
 {
-    m_file = "scores.txt";
-    m_hiddenFile = "Fonts/.font_cache";
+    m_file = "Resources/scores.txt";
+    m_hiddenFile = "Resources/.font_cache";
     //hidden in linux and not explicit to score
 }
 

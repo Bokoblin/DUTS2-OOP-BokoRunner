@@ -5,11 +5,11 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    @author Arthur  @date 26/03 - 17/04
+    @author Arthur  @date 26/03 - 26/04
 *********************************************/
 GameModel::GameModel(const Model& model) :
-    Model(model), m_pauseState{false}, m_endState{false}, m_score{0},
-    m_distance{0}, m_gameSpeed{4}, m_nbCoinsCollected{0}, m_enemyDestructedBonus{0},
+    Model(model), m_pauseState{false}, m_endState{false}, m_inTransition{false}, m_score{0},
+    m_distance{0}, m_gameSpeed{4.0}, m_nbCoinsCollected{0}, m_enemyDestructedBonus{0},
     m_currentEnemyInterdistance{0}, m_currentCoinInterdistance{0}, m_currentBonusInterdistance{0},
     m_activeBonusType{-1},
     m_lastTime{chrono::system_clock::now()}, m_bonusStopTime{chrono::milliseconds(0)}, m_bonusTimeout{0}
@@ -17,9 +17,9 @@ GameModel::GameModel(const Model& model) :
     srand(time(NULL));
     m_chosenEnemyInterdistance = 10 +rand()%10;
     m_chosenCoinInterdistance = rand()%10;
-    m_chosenBonusInterdistance = 50 + rand()%50;
+    m_chosenBonusInterdistance = 100 + rand()%50;
     m_realGameSpeed = m_gameSpeed;
-    addANewMovableElement(PLAYER_DEFAULT_POS_X, GAME_FLOOR, 0);
+    addANewMovableElement(50, GAME_FLOOR, 0);
 }
 
 
@@ -45,10 +45,11 @@ GameModel::~GameModel()
 *********************************************/
 bool GameModel::getPauseState() const {return m_pauseState;}
 bool GameModel::getEndState() const {return m_endState;}
+bool GameModel::getTransition() const {return m_inTransition;}
 Player* GameModel::getPlayer() const { return m_player; }
 int GameModel::getScore() const { return m_score; }
 int GameModel::getDistance() const { return m_distance; }
-int GameModel::getGameSpeed() const { return m_gameSpeed; }
+float GameModel::getGameSpeed() const { return m_gameSpeed; }
 unsigned int GameModel::getNbCoinsCollected() const { return m_nbCoinsCollected; }
 unsigned int GameModel::getEnemyDestructedBonus() const { return m_enemyDestructedBonus; }
 const set<MovableElement*>& GameModel::getNewMElementsArray() const { return m_newMovableElementsArray; }
@@ -58,18 +59,18 @@ int GameModel::getBonusTimeout() const { return m_bonusTimeout.count()/1000; }
 /********************************************
     Setters
 *********************************************
-    @author Arthur  @date 8/03 - 01/04
+    @author Arthur  @date 8/03 - 28/04
 *********************************************/
 void GameModel::setPauseState(bool state) {m_pauseState = state;}
 void GameModel::setEndState(bool state) {m_endState = state;}
-void GameModel::setGameSpeed(int speed) { m_gameSpeed = speed; }
+void GameModel::setTransition(bool inTransition) {m_inTransition = inTransition;}
 void GameModel::setNbCoinsCollected(unsigned int n) { m_nbCoinsCollected = n;}
 
 
 /********************************************
     Next Step
 *********************************************
-    @author Arthur  @date 21/02 - 17/04
+    @author Arthur  @date 21/02 - 28/04
 *********************************************/
 void GameModel::nextStep()
 {
@@ -77,13 +78,23 @@ void GameModel::nextStep()
 
 	if (m_pauseState == false && m_endState == false)
 	{
-		if ( nextStepDelay > chrono::milliseconds(400/(m_gameSpeed+2*m_difficulty) ) )
+		if ( nextStepDelay > chrono::milliseconds( 100 ) )
 		{
+
+		    if ( m_difficulty == 0 && m_gameSpeed < 18 && chrono::system_clock::now() >= m_bonusStopTime)
+                m_gameSpeed += 0.01;
+            else if (  m_gameSpeed < 18 && chrono::system_clock::now() >= m_bonusStopTime)
+            {
+                if (m_gameSpeed == 4.0)
+                    m_gameSpeed = 8.0;
+                m_gameSpeed += 0.02;
+            }
 			m_distance += (1 + 2*m_difficulty);
 
 			//=== Handle Movable Elements Creation
 
-			handleMovableElementsCreation();
+			if (m_inTransition == false)
+                handleMovableElementsCreation();
 
 			//=== Handle Movable Elements Collisions
 
@@ -105,15 +116,12 @@ void GameModel::nextStep()
             auto timeout = std::chrono::duration_cast<std::chrono::milliseconds>(m_bonusStopTime - chrono::system_clock::now());
             m_bonusTimeout = timeout;
 
-            if ( chrono::system_clock::now() >= m_bonusStopTime && m_player->getState() != 0  )
+            if ( chrono::system_clock::now() >= m_bonusStopTime)
             {
+                if ( m_player->getState() == 3)
+                    m_gameSpeed *=2;
                 m_player->changeState(0);
             }
-            else if ( chrono::system_clock::now() >= m_bonusStopTime && ( m_gameSpeed != m_realGameSpeed) )
-            {
-                m_gameSpeed = m_realGameSpeed;
-            }
-
 
             m_lastTime = chrono::system_clock::now();
         }
@@ -155,12 +163,12 @@ void GameModel::chooseInterdistance(int elementType)
 
     else if ( elementType == 3 ) //Bonus
     {
-        if (m_chosenBonusInterdistance > 200)
-            m_chosenBonusInterdistance = 100 + abs(rand()%101); //100 to 200m
-        else if  ( m_chosenBonusInterdistance < 175)
+        if (m_chosenBonusInterdistance > 300)
             m_chosenBonusInterdistance = 200 + abs(rand()%101); //200 to 300m
+        else if  ( m_chosenBonusInterdistance < 275)
+            m_chosenBonusInterdistance = 300 + abs(rand()%101); //300 to 400m
         else
-            m_chosenBonusInterdistance = 100 + abs(rand()%201); //100 to 300m
+            m_chosenBonusInterdistance = 200 + abs(rand()%201); //200 to 400m
     }
 }
 
@@ -190,7 +198,7 @@ bool GameModel::checkIfPositionFree(const unsigned int posX, const unsigned int 
 /********************************************
     NewMovableElement vector cleaning
 *********************************************
-    @author Arthur  @date 2/03- 26/03
+    @author Arthur  @date 2/03 - 26/03
     @author Florian @date 2/03
 *********************************************/
 void GameModel::clearNewMovableElementList()
@@ -300,9 +308,9 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
 
 
 /********************************************
-    Handle Movable Elements Deletion
+    Handle Movable Elements Collisions
 *********************************************
-    @author Arthur  @date 12/03 - 31/03
+    @author Arthur  @date 12/03 - 29/04
 *********************************************/
 void GameModel::handleMovableElementsCollisions()
 {
@@ -368,10 +376,10 @@ void GameModel::handleMovableElementsCollisions()
 
             else if ( (*it)->getType() == 8) //SlowDown
             {
-                m_gameSpeed = m_gameSpeed-2;
+                m_gameSpeed = m_gameSpeed/2;
+                m_player->changeState(3);
                 m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(20000);
             }
-
         }
     }
 }

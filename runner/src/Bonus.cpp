@@ -8,7 +8,6 @@
 Bonus::Bonus(float x, float y, float w, float h, float mvX, float mvY) :
     MovableElement(x, y, w, h, mvX, mvY)
 {
-    m_life = 1;
     chooseBonusType();
 }
 

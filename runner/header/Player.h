@@ -40,13 +40,14 @@ public:
 
     //=== GETTERS
     int getState() const;
+    int getLife() const;
     bool getFlyingState() const;
     bool getJumpState() const;
     bool getDecelerationState() const;
     std::pair<float,float> getVector() const;
 
     //=== SETTERS
-    virtual void setLife(int new_life) ;
+    void setLife(int new_life);
     void setFlyingState(bool etat);
     void setJumpState(bool etat);
     void setDecelerationState(bool etat);
@@ -59,6 +60,7 @@ public:
 
 private:
     int m_state;
+    int m_life;
     float m_gravitation;
     float m_acceleration;
     bool m_jumping;

@@ -45,14 +45,11 @@ public:
     float getHeight() const;
     bool getCollisionState() const;
     virtual int getType() const;
-    virtual int getLife() const;
-
 
     //=== SETTERS
     void setMoveX(float mvX);
     void setMoveY(float mvY);
     void setCollisionState(bool collisionState);
-    virtual void setLife(int newLife);
 
 
 protected:
@@ -64,7 +61,6 @@ protected:
     float m_moveX;
     float m_moveY;
     bool m_collisionState;
-    int m_life;
     int m_elementType;
     /** Element Type :
     0 : Player

@@ -3,6 +3,12 @@
 
 #include <boost/test/unit_test.hpp>
 #include "header/GameModel.h"
+#include <fstream>
+
+
+const int SCREEN_WIDTH = 900;
+const int SCREEN_HEIGHT = 600;
+const std::chrono::system_clock::time_point programBeginningTime = std::chrono::system_clock::now();
 
 using namespace std;
 
@@ -10,20 +16,20 @@ using namespace std;
 /********************************************
     Unit Test on GameModel Class
 *********************************************
-    @author Arthur  @date 15/04
+    @author Arthur  @date 15/04 - 28/04
 *********************************************/
 BOOST_AUTO_TEST_CASE(model)
 {
     //=== Add a GameModel object
 
+    Model model(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
     GameModel *gModel = nullptr;
 
-    gModel = new GameModel(900, 600, chrono::system_clock::now());
+    gModel = new GameModel(model);
 
     BOOST_CHECK(gModel != nullptr);
     BOOST_CHECK(gModel->getProgramBeginningTime() != chrono::system_clock::from_time_t(time(NULL)));
     BOOST_CHECK(gModel->getDistance() == 0);
-    BOOST_CHECK(gModel->getMElementsArray().empty() == false); // an object of Player Class was created with it
 
 
     //=== Add an element
@@ -41,6 +47,9 @@ BOOST_AUTO_TEST_CASE(model)
 
     BOOST_CHECK( my_ball != nullptr);
     BOOST_CHECK(gModel->checkIfPositionFree(50,500) == false);
+
+    delete gModel;
+    delete my_ball;
 }
 
 
@@ -49,7 +58,7 @@ BOOST_AUTO_TEST_CASE(model)
 /********************************************
     Unit Test on Player Class
 *********************************************
-    @author Arthur  @date 15/04
+    @author Arthur  @date 15/04 - 29/04
 *********************************************/
 BOOST_AUTO_TEST_CASE(player)
 {
@@ -64,17 +73,51 @@ BOOST_AUTO_TEST_CASE(player)
 
     Enemy *my_enemy = new Enemy(70, 500, 30, 30, -10, 0);
     Coin *my_coin = new Coin(580, 500, 30, 30, -10, 0);
+    Bonus *my_bonus = new Bonus(21, 529, 30, 30, -10, 0);
 
     BOOST_CHECK( my_ball->collision(*my_enemy) == true);
     BOOST_CHECK( my_ball->collision(*my_coin) == false);
+    BOOST_CHECK( my_ball->collision(*my_bonus) == true);
 
     //=== Test life changes
 
     BOOST_CHECK( my_ball->getLife() == 100);
 
     my_ball->setLife(50);
-
     BOOST_CHECK( my_ball->getLife() == 50);
+
+    my_ball->setLife(-1);
+    BOOST_CHECK( my_ball->getLife() == 0);
+
+    my_ball->setLife(101);
+    BOOST_CHECK( my_ball->getLife() == 100);
+
+
+
+    //=== Test State changing
+    my_ball->changeState(1);
+    BOOST_CHECK( my_ball->getState() == 1);
+    BOOST_CHECK( my_ball->getWidth() == 70);
+    my_ball->changeState(0);
+
+    //=== Test Movements
+
+    BOOST_CHECK( my_ball->getVector().first == 0);
+
+    my_ball->controlPlayerMovements(true);
+
+    BOOST_CHECK( my_ball->getDecelerationState() == false);
+    BOOST_CHECK( my_ball->getVector().first < 0);
+
+    BOOST_CHECK( my_ball->getPosX() == 50);
+    my_ball->move();
+    BOOST_CHECK( my_ball->getPosX() != 50);
+    BOOST_CHECK( my_ball->getJumpState() == false);
+
+    delete my_ball;
+    delete my_coin;
+    delete my_enemy;
+    delete my_bonus;
 
 }
 
@@ -95,6 +138,7 @@ BOOST_AUTO_TEST_CASE(enemy)
     BOOST_CHECK( my_enemy->getPosX() == 40);
     BOOST_CHECK( my_enemy->getPosY() == 500);
 
+    delete my_enemy;
+
     //same results for Coin and Bonus classes
 }
-

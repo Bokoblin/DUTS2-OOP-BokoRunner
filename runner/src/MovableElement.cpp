@@ -10,7 +10,7 @@ using namespace std;
 *********************************************/
 MovableElement::MovableElement(float x, float y, float w, float h, float mvX, float mvY) :
     m_posX{x}, m_posY{y}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY},
-    m_collisionState{false}, m_life {-1}, m_elementType{-1}
+    m_collisionState{false}, m_elementType{-1}
 {}
 
 
@@ -36,7 +36,6 @@ float MovableElement::getWidth() const { return m_width; }
 float MovableElement::getHeight()const { return m_height;}
 int MovableElement::getType() const { return m_elementType; }
 bool MovableElement::getCollisionState() const { return m_collisionState; }
-int MovableElement::getLife() const { return m_life; }
 
 
 /********************************************
@@ -47,7 +46,6 @@ int MovableElement::getLife() const { return m_life; }
 void MovableElement::setMoveX(float mvX) { m_moveX = mvX;}
 void MovableElement::setMoveY(float mvY) { m_moveY = mvY;}
 void MovableElement::setCollisionState(bool state) { m_collisionState = state;}
-void MovableElement::setLife(int life) {}
 
 
 /********************************************

@@ -35,6 +35,7 @@ Player::~Player()
     @author Florian @date 17/03 - 10/04
 *********************************************/
 int Player::getState() const { return m_state; }
+int Player::getLife() const { return m_life; }
 bool Player::getFlyingState() const { return m_flying; }
 bool Player::getJumpState() const { return m_jumping; }
 bool Player::getDecelerationState() const { return m_inDeceleration; }

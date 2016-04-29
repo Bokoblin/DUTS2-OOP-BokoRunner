@@ -1,4 +1,4 @@
-#include "Leaderboard.h"
+#include "../header/Leaderboard.h"
 
 using namespace std;
 
@@ -63,10 +63,14 @@ void Leaderboard::loadFileFromVector()
     fstream f1;
     fstream f2;
 
+    //=== Open or create files
+
     f1.open( m_file.c_str(), ios::out);
     f2.open( m_hiddenFile.c_str(), ios::out);
     if (f1.fail() || f2.fail() )
         createFile();
+
+    //=== Write vector elements in files
 
     for (vector<int>::iterator it = m_scoresArray.begin();
          it != m_scoresArray.end(); ++it)
@@ -157,7 +161,7 @@ bool Leaderboard::checkFileIntegrity()
     else
     {
         /* check if one of the files has been changed
-         * does not work if the player knows the 2 files
+         * Note: is useless if the player knows the 2 files
          * and write the same thing in both
          */
 

@@ -29,7 +29,6 @@ GameView::~GameView()
     delete m_bottomBarGraphic;
     delete m_lifeBoxGraphic;
     delete m_remainingLifeGraphic;
-    delete m_playerGraphic;
     delete m_standardEnemyGraphic;
     delete m_totemEnemyGraphic;
     delete m_blockEnemyGraphic;
@@ -38,6 +37,11 @@ GameView::~GameView()
     delete m_megaBonusGraphic;
     delete m_flyBonusGraphic;
     delete m_slowSpeedBonusGraphic;
+    delete m_lb;
+
+    for (auto it = m_MovableToGraphicElement.begin();
+         it!=m_MovableToGraphicElement.end(); ++it )
+            delete it->second;
 
     //=== Delete Pause and End Elements
 
@@ -381,7 +385,7 @@ void GameView::deleteElements()
     {
         if ( (it->first)->getCollisionState() == true )
         {
-            delete it->second;
+            //delete it->second;
             m_MovableToGraphicElement.erase(it);
             found = true;
         }

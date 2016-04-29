@@ -11,6 +11,4 @@ stdout.txt
 *.map
 *.md5
 Makefile
-Build
-runner/scores.txt
-runner/Fonts/.font_cache
+runner/Resources/scores.txt

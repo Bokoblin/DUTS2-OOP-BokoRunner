@@ -75,7 +75,7 @@ Text::~Text()
 *********************************************
     @author Arthur  @date 02/04
 *********************************************/
-sf::Text *Text::getPauseResumeText() const { return m_pauseResumeLabel; }
+sf::Text *Text::getResumeText() const { return m_pauseResumeLabel; }
 sf::Text *Text::getRestartText() const { return m_restartLabel; }
 sf::Text *Text::getHomeText() const { return m_homeLabel; }
 string Text::getLanguage() const {return m_currentLanguage;}
@@ -414,7 +414,7 @@ void Text::syncGameEndText(GameModel *gameModel)
     m_homeLabel->setPosition(80,535);
     m_restartLabel->setPosition(760-m_restartLabel->getGlobalBounds().width/2,535);
 
-    m_speedmultiplicatorText->setString(to_string(gameModel->getGameSpeed() + 2*gameModel->getDifficulty() ));
+    m_speedmultiplicatorText->setString(to_string((int)gameModel->getGameSpeed() + 2*gameModel->getDifficulty() ));
     m_distanceText->setString(  to_string( gameModel->getDistance() ) + " m" );
     m_coinsCollectedText->setString( to_string( gameModel->getNbCoinsCollected() ) + "  X  20" );
     m_enemyDestructedBonusText->setString( to_string( gameModel->getEnemyDestructedBonus() ));

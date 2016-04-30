@@ -5,7 +5,6 @@ var searchData=
   ['m_5felementtype',['m_elementType',['../d8/d96/class_movable_element.html#a4065bc85c6b832da9b50f9950ce32d6f',1,'MovableElement']]],
   ['m_5fheight',['m_height',['../d1/d4c/class_graphic_element.html#a9c65a3a76f787a35881e1853699c2901',1,'GraphicElement::m_height()'],['../d0/de3/class_model.html#a1ce1dcff24d60aa9a276420dd0444e8b',1,'Model::m_height()'],['../d8/d96/class_movable_element.html#abac68151444a28e70f388ce3912bcacf',1,'MovableElement::m_height()'],['../dd/d9f/class_view.html#a7854e08f37d6b441463d88b9a94da756',1,'View::m_height()']]],
   ['m_5flanguage',['m_language',['../d0/de3/class_model.html#a757a7d0b52e316efdf46d007c93db1b5',1,'Model']]],
-  ['m_5flife',['m_life',['../d8/d96/class_movable_element.html#af499bccfdedaa90cb69cadd7f85d6642',1,'MovableElement']]],
   ['m_5fmodel',['m_model',['../dd/d9f/class_view.html#ac099397103127acf3fd07834ef04a15a',1,'View']]],
   ['m_5fmovex',['m_moveX',['../d8/d96/class_movable_element.html#a2ff054b7d2b76379019470309a8d1cd3',1,'MovableElement']]],
   ['m_5fmovey',['m_moveY',['../d8/d96/class_movable_element.html#a69d5d39a55c309b4fd1900ef2ac01784',1,'MovableElement']]],

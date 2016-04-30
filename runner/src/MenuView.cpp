@@ -69,16 +69,16 @@ void MenuView::setMenuModel(MenuModel *model)
 *********************************************/
 void MenuView::loadImages()
 {
-	if (!m_farBackgroundTexture.loadFromFile(BACKGROUND_IMAGE_2))
-		cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE_2 << endl;
+	if (!m_farBackgroundTexture.loadFromFile(DEFAULT_FAR_HILL_BACKGROUND ))
+		cerr << "ERROR when loading image file: " << DEFAULT_FAR_HILL_BACKGROUND << endl;
 	else
 	{
 		m_farBackgroundTexture.setSmooth(true);
 		m_farBackground = new SlidingBackground(m_farBackgroundTexture, 1200, m_height, 1);
 	}
 
-	if (!m_nearBackgroundTexture.loadFromFile(BACKGROUND_IMAGE_1))
-		cerr << "ERROR when loading image file: " << BACKGROUND_IMAGE_1 << endl;
+	if (!m_nearBackgroundTexture.loadFromFile(DEFAULT_NEAR_HILL_BACKGROUND ))
+		cerr << "ERROR when loading image file: " << DEFAULT_NEAR_HILL_BACKGROUND << endl;
 	else
 	{
 		m_nearBackgroundTexture.setSmooth(true);

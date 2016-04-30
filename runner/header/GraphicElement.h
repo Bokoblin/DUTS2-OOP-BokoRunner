@@ -30,13 +30,13 @@ public:
     //=== CTORs / DTORs
     GraphicElement(sf::Texture &image, float x, float y, float w, float h);
     GraphicElement( float w, float h);
-    GraphicElement(GraphicElement const& elementACopier);
+    GraphicElement(GraphicElement const& element);
     ~GraphicElement();
 
     //=== METHODS
     virtual void sync();
     virtual void draw(sf::RenderWindow *window)const;
-    void resize(float w, float h);
+    virtual void resize(float w, float h);
 
 protected:
     //=== ATTRIBUTES

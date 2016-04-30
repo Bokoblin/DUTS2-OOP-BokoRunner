@@ -159,6 +159,8 @@ void Player::changeState(int state)
         m_gravitation = 5.0;
         m_acceleration = 70.0;
     }
+    else
+        m_state = state;
 }
 
 /********************************************

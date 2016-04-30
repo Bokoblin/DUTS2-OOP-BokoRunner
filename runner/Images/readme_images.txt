@@ -10,6 +10,7 @@ It concerns :
 - remaining_life.png,
 - end_background.png,
 - radios.png (inspired by Material Design radio buttons)
+- all the background images in background folder except "hill" ones
 
 Except:
-- settings_button.png (AOSP Settings icon edited - source image under Apache License Version 2.0)
+- menu_button.png (edited from AOSP Settings icon - source image under Apache License Version 2.0)

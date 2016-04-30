@@ -22,27 +22,35 @@ limitations under the License.
 /********************************************
     SlidingBackground Class
 *********************************************
-    @author Arthur  @date 3/03 - 03/04
-    @author Florian @date 3/03 - 3/03
+    @author Arthur  @date 3/03 - 30/04
+    @author Florian @date 3/03
 *********************************************/
 class SlidingBackground : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
-    SlidingBackground(sf::Texture &image, float w, float h, unsigned int speed);
+    SlidingBackground(sf::Texture &image, float w, float h, float speed);
+    SlidingBackground(SlidingBackground const& element) = delete;
     virtual ~SlidingBackground();
 
     //=== METHODS
     virtual void sync() override;
     virtual void draw(sf::RenderWindow *window) const override;
+    virtual void resize(float w, float h) override;
+
+    //=== GETTERS
+    sf::Vector2f getPosition() const;
+    float getSeparationPositionX() const;
+
 
     //=== SETTERS
-    void setSpeed(unsigned int speed);
+    void setSpeed(float speed);
+    void setPosition(float x, float y);
 
 private:
     //=== ATTRIBUTES
     GraphicElement *m_left, *m_right;
-    unsigned int m_speed;
+    float m_speed;
 
 };
 

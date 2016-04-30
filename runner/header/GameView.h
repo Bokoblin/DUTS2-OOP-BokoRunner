@@ -18,26 +18,28 @@ limitations under the License.
 
 #include "View.h"
 
+
 /********************************************
     Constant Variables
 ********************************************/
 //GAME
-const std::string BOTTOM_BAR = "Images/bottom_bar.png";
-const std::string LIFE_BOX = "Images/life_bar.png";
-const std::string REMAINING_LIFE = "Images/remaining_life.png";
 const std::string BALL_IMAGE = "Images/balls.png";
 const std::string ENEMIES_IMAGE = "Images/enemies.png";
 const std::string BONUS_IMAGE = "Images/bonus.png";
-//PAUSE
-const std::string PAUSE_BACKGROUND_IMAGE = "Images/pause_background.png";
-const std::string PAUSE_BUTTONS_IMAGE = "Images/pause_elements.png";
-//END
-const std::string END_BACKGROUND_IMAGE = "Images/end_background.png";
+const std::string BOTTOM_BAR_IMAGE = "Images/bottom_bar.png";
+const std::string LIFE_BOX_IMAGE = "Images/life_bar.png";
+const std::string REMAINING_LIFE = "Images/remaining_life.png";
+//PAUSE & END
+const std::string PAUSE_BGND_IMAGE = "Images/pause_background.png";
+const std::string GAME_BUTTONS_IMAGE = "Images/pause_elements.png";
+const std::string END_BGND_IMAGE = "Images/end_background.png";
+
+const int TRANSITION_SPEED = 10;
 
 /********************************************
     GameView Class
 *********************************************
-    @author Arthur  @date 21/02 - 19/04
+    @author Arthur  @date 21/02 - 30/04
     @author Florian @date 21/02 - 3/03
 *********************************************/
 class GameView : public View
@@ -59,63 +61,61 @@ public:
 	virtual void updateElements();
 	virtual void deleteElements();
 
+
 private:
     //=== ATTRIBUTES
     GameModel *m_gameModel;
     Leaderboard *m_lb;
-    bool m_scoreSavable;
+    PixelateEffect *m_pixelShader;
+
+    float m_xPixelIntensity;
+    float m_yPixelIntensity;
+    sf::Clock clock;
 
     //Game Textures
     sf::Texture m_farBackgroundTexture;
+    sf::Texture m_farBgTransitionTexture;
     sf::Texture m_nearBackgroundTexture;
     sf::Texture m_bottomBarTexture;
     sf::Texture m_lifeBoxTexture;
     sf::Texture m_remainingLifeTexture;
     sf::Texture m_playerTexture;
-    sf::Texture m_standardEnemyTexture;
-    sf::Texture m_totemEnemyTexture;
-    sf::Texture m_blockEnemyTexture;
-    sf::Texture m_coinTexture;
-    sf::Texture m_PVPlusBonusTexture;
-    sf::Texture m_megaBonusTexture;
-    sf::Texture m_flyBonusTexture;
-    sf::Texture m_slowSpeedBonusTexture;
-
+    sf::Texture m_enemyTexture;
+    sf::Texture m_bonusTexture;
     //Pause and End Textures
+    sf::Texture m_gameButtonsTexture;
+    sf::Texture m_distanceIconTexture;
     sf::Texture m_pauseBackgroundTexture;
-    sf::Texture m_resumeButtonTexture;
-    sf::Texture m_restartButtonTexture;
-    sf::Texture m_homeButtonTexture;
-    sf::Texture m_pauseDistanceTexture;
     sf::Texture m_endBackgroundTexture;
-    sf::Texture m_saveScoreButtonTexture;
 
     //Game Graphic Elements
-    SlidingBackground *m_farBackground;
-    SlidingBackground *m_nearBackground;
-    GraphicElement *m_bottomBarGraphic;
-    GraphicElement *m_lifeBoxGraphic;
-    GraphicElement *m_remainingLifeGraphic;
-    AnimatedGraphicElement *m_playerGraphic;
-    AnimatedGraphicElement *m_standardEnemyGraphic;
-    AnimatedGraphicElement *m_totemEnemyGraphic;
-    AnimatedGraphicElement *m_blockEnemyGraphic;
-    AnimatedGraphicElement *m_coinGraphic;
-    AnimatedGraphicElement *m_PVPlusBonusGraphic;
-    AnimatedGraphicElement *m_megaBonusGraphic;
-    AnimatedGraphicElement *m_flyBonusGraphic;
-    AnimatedGraphicElement *m_slowSpeedBonusGraphic;
+    SlidingBackground *m_farSlBackground;
+    GraphicElement *m_farBgTransitionSprite;
+    SlidingBackground *m_nearSlBackground;
+    GraphicElement *m_nearTransitionBackground;
+    GraphicElement *m_bottomBarSprite;
+    GraphicElement *m_lifeBoxSprite;
+    GraphicElement *m_remainingLifeSprite;
+    AnimatedGraphicElement *m_playerAnimSprite;
+    AnimatedGraphicElement *m_stdEnemyAnimSprite;
+    AnimatedGraphicElement *m_totemEnemyAnimSprite;
+    AnimatedGraphicElement *m_blockEnemyAnimSprite;
+    AnimatedGraphicElement *m_coinAnimSprite;
+    AnimatedGraphicElement *m_PVPlusBonusAnimSprite;
+    AnimatedGraphicElement *m_megaBonusAnimSprite;
+    AnimatedGraphicElement *m_flyBonusAnimSprite;
+    AnimatedGraphicElement *m_slowSpeedBonusAnimSprite;
     //Pause and End Graphic Elements
-    GraphicElement *m_pauseBackgroundGraphic;
-    GraphicElement *m_pauseDistanceGraphic;
-    GraphicElement *m_endBackgroundGraphic;
-    Button *m_resumeButtonGraphic;
-    Button *m_restartButtonGraphic;
-    Button *m_homeButtonGraphic;
-    Button *m_saveScoreButtonGraphic;
+    GraphicElement *m_pauseBackgroundSprite;
+    GraphicElement *m_distanceIconSprite;
+    GraphicElement *m_endBackgroundSprite;
+    Button *m_resumeGameButton;
+    Button *m_restartGameButton;
+    Button *m_goToHomeButton;
+    Button *m_saveScoreButton;
 
     //Containers
-    std::map<MovableElement*, GraphicElement*> m_MovableToGraphicElement;
+    std::map<MovableElement*, GraphicElement*> m_MovableToGraphicElementMap;
 };
 
 

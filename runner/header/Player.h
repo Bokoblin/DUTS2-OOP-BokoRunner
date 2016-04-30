@@ -17,7 +17,7 @@ limitations under the License.
 #define PLAYER_H
 
 #include "MovableElement.h"
-#include <math.h>
+#include <cmath>
 
 
 const int GAME_FLOOR = 480;

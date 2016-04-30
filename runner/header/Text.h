@@ -25,11 +25,10 @@ limitations under the License.
 /********************************************
     Constant Variables
 ********************************************/
-const std::string OLIVE_FONT = "Fonts/Antique_Olive.ttf";
-const std::string ROBOTO_FONT = "Fonts/Roboto_Condensed.ttf";
-const std::string ENGLISH_STRINGS = "Fonts/english.xml";
-const std::string FRENCH_STRINGS = "Fonts/french.xml";
-const std::string SPANISH_STRINGS = "Fonts/spanish.xml";
+const std::string ROBOTO_FONT = "Resources/Roboto_Condensed.ttf";
+const std::string ENGLISH_STRINGS = "Resources/english.xml";
+const std::string FRENCH_STRINGS = "Resources/french.xml";
+const std::string SPANISH_STRINGS = "Resources/spanish.xml";
 
 
 /********************************************
@@ -46,7 +45,7 @@ class Text
     ~Text();
 
     //=== GETTERS
-    sf::Text *getPauseResumeText() const;
+    sf::Text *getResumeText() const;
     sf::Text *getRestartText() const;
     sf::Text *getHomeText() const;
     std::string getLanguage() const;

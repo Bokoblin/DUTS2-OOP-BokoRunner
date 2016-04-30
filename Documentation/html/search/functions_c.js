@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['resize',['resize',['../d1/d4c/class_graphic_element.html#a330c3f0f7c6dfe9a7f645a37cca2b1f6',1,'GraphicElement']]]
+  ['pixelateeffect',['PixelateEffect',['../dc/dd2/class_pixelate_effect.html#a6affb54dbae1dad10d781c3adb52724d',1,'PixelateEffect']]],
+  ['player',['Player',['../d8/d53/class_player.html#a2645246df02b2fc9002b1462e60a6497',1,'Player']]]
 ];

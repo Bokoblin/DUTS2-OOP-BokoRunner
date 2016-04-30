@@ -5,21 +5,21 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    @author Arthur  @date 26/03 - 17/04
+    @author Arthur  @date 26/03 - 30/04
 *********************************************/
 GameModel::GameModel(const Model& model) :
-    Model(model), m_pauseState{false}, m_endState{false}, m_score{0},
-    m_distance{0}, m_gameSpeed{4}, m_nbCoinsCollected{0}, m_enemyDestructedBonus{0},
+    Model(model), m_pauseState{false}, m_endState{false}, m_inTransition{false},
+    m_isTransitionPossible{false}, m_isScoreSavable{true}, m_score{0}, m_distance{0},
+    m_gameSpeed{4.0}, m_realGameSpeed{4.0}, m_currentZone{1}, m_nbCoinsCollected{0},
+    m_enemyDestructedBonus{0}, m_activeBonusType{-1},
     m_currentEnemyInterdistance{0}, m_currentCoinInterdistance{0}, m_currentBonusInterdistance{0},
-    m_activeBonusType{-1},
     m_lastTime{chrono::system_clock::now()}, m_bonusStopTime{chrono::milliseconds(0)}, m_bonusTimeout{0}
 {
     srand(time(NULL));
     m_chosenEnemyInterdistance = 10 +rand()%10;
     m_chosenCoinInterdistance = rand()%10;
-    m_chosenBonusInterdistance = 50 + rand()%50;
-    m_realGameSpeed = m_gameSpeed;
-    addANewMovableElement(PLAYER_DEFAULT_POS_X, GAME_FLOOR, 0);
+    m_chosenBonusInterdistance = 100 + rand()%50;
+    addANewMovableElement(50, GAME_FLOOR, 0);
 }
 
 
@@ -40,36 +40,42 @@ GameModel::~GameModel()
 /********************************************
     Getters
 *********************************************
-    @author Arthur  @date 21/02 - 17/04
+    @author Arthur  @date 21/02 - 30/04
     @author Florian @date 21/02 - 25/02
 *********************************************/
-bool GameModel::getPauseState() const {return m_pauseState;}
-bool GameModel::getEndState() const {return m_endState;}
-Player* GameModel::getPlayer() const { return m_player; }
+bool GameModel::getPauseState() const { return m_pauseState; }
+bool GameModel::getEndState() const { return m_endState; }
+bool GameModel::getTransitionStatus() const { return m_inTransition; }
+bool GameModel::getTransitionPossibleStatus() const { return m_isTransitionPossible; }
+bool GameModel::getScoreSavableStatus() const { return m_isScoreSavable; }
+float GameModel::getGameSpeed() const { return m_gameSpeed; }
 int GameModel::getScore() const { return m_score; }
 int GameModel::getDistance() const { return m_distance; }
-int GameModel::getGameSpeed() const { return m_gameSpeed; }
+int GameModel::getBonusTimeout() const { return m_bonusTimeout.count()/1000; }
+int GameModel::getCurrentZone() const { return m_currentZone; }
 unsigned int GameModel::getNbCoinsCollected() const { return m_nbCoinsCollected; }
 unsigned int GameModel::getEnemyDestructedBonus() const { return m_enemyDestructedBonus; }
+Player* GameModel::getPlayer() const { return m_player; }
 const set<MovableElement*>& GameModel::getNewMElementsArray() const { return m_newMovableElementsArray; }
-int GameModel::getBonusTimeout() const { return m_bonusTimeout.count()/1000; }
-
 
 /********************************************
     Setters
 *********************************************
-    @author Arthur  @date 8/03 - 01/04
+    @author Arthur  @date 8/03 - 30/04
 *********************************************/
-void GameModel::setPauseState(bool state) {m_pauseState = state;}
-void GameModel::setEndState(bool state) {m_endState = state;}
-void GameModel::setGameSpeed(int speed) { m_gameSpeed = speed; }
+void GameModel::setPauseState(bool state) { m_pauseState = state; }
+void GameModel::setEndState(bool state) { m_endState = state;}
+void GameModel::setTransitionStatus(bool status) { m_inTransition = status; }
+void GameModel::setTransitionPossibleStatus(bool status) { m_isTransitionPossible = status; }
+void GameModel::setScoreSavableStatus(bool status) { m_isScoreSavable = status; }
+void GameModel::setCurrentZone(int number) { m_currentZone = number; }
 void GameModel::setNbCoinsCollected(unsigned int n) { m_nbCoinsCollected = n;}
 
 
 /********************************************
     Next Step
 *********************************************
-    @author Arthur  @date 21/02 - 17/04
+    @author Arthur  @date 21/02 - 28/04
 *********************************************/
 void GameModel::nextStep()
 {
@@ -77,13 +83,23 @@ void GameModel::nextStep()
 
 	if (m_pauseState == false && m_endState == false)
 	{
-		if ( nextStepDelay > chrono::milliseconds(400/(m_gameSpeed+2*m_difficulty) ) )
+		if ( nextStepDelay > chrono::milliseconds( 100 ) )
 		{
+
+		    if ( m_difficulty == 0 && m_gameSpeed < 18 && chrono::system_clock::now() >= m_bonusStopTime)
+                m_gameSpeed += 0.01;
+            else if (  m_gameSpeed < 18 && chrono::system_clock::now() >= m_bonusStopTime)
+            {
+                if (m_gameSpeed == 4.0)
+                    m_gameSpeed = 8.0;
+                m_gameSpeed += 0.02;
+            }
 			m_distance += (1 + 2*m_difficulty);
 
 			//=== Handle Movable Elements Creation
 
-			handleMovableElementsCreation();
+			if (m_isTransitionPossible == false)
+                handleMovableElementsCreation();
 
 			//=== Handle Movable Elements Collisions
 
@@ -105,15 +121,19 @@ void GameModel::nextStep()
             auto timeout = std::chrono::duration_cast<std::chrono::milliseconds>(m_bonusStopTime - chrono::system_clock::now());
             m_bonusTimeout = timeout;
 
-            if ( chrono::system_clock::now() >= m_bonusStopTime && m_player->getState() != 0  )
+            if ( chrono::system_clock::now() >= m_bonusStopTime)
             {
+                if ( m_player->getState() == 3)
+                    m_gameSpeed *=2;
                 m_player->changeState(0);
             }
-            else if ( chrono::system_clock::now() >= m_bonusStopTime && ( m_gameSpeed != m_realGameSpeed) )
-            {
-                m_gameSpeed = m_realGameSpeed; //restore speed before slow down
-            }
 
+            //=== Handle transition status
+
+            if ( m_distance !=0 && m_difficulty == 0 && m_distance%500 ==0) //at each 500 meters
+                m_isTransitionPossible = true;
+            if ( m_distance !=0 && m_difficulty == 2 && m_distance%2000 ==0) //at each 2000 meters
+                m_isTransitionPossible = true;
 
             m_lastTime = chrono::system_clock::now();
         }
@@ -128,7 +148,7 @@ void GameModel::nextStep()
 /********************************************
     choose the interdistance between elements
 *********************************************
-    @author Arthur  @date  12/03 - 12/04
+    @author Arthur  @date  12/03 - 30/04
 *********************************************/
 void GameModel::chooseInterdistance(int elementType)
 {
@@ -140,7 +160,7 @@ void GameModel::chooseInterdistance(int elementType)
         else if  ( m_chosenEnemyInterdistance < 10)
             m_chosenEnemyInterdistance = 10 + abs(rand()%41); //10 to 50m
         else
-            m_chosenEnemyInterdistance = abs(rand()%51); //0 to 50m
+            m_chosenEnemyInterdistance = abs(rand()%41); //0 to 40m
     }
 
     else if ( elementType == 2 ) //coin
@@ -150,17 +170,17 @@ void GameModel::chooseInterdistance(int elementType)
         else if  ( m_chosenCoinInterdistance < 10)
             m_chosenCoinInterdistance = 15 + abs(rand()%26); //15 to 40m
         else
-            m_chosenCoinInterdistance = abs(rand()%41); //0 to 40m
+            m_chosenCoinInterdistance = abs(rand()%31); //0 to 30m
     }
 
     else if ( elementType == 3 ) //Bonus
     {
-        if (m_chosenBonusInterdistance > 200)
-            m_chosenBonusInterdistance = 100 + abs(rand()%101); //100 to 200m
-        else if  ( m_chosenBonusInterdistance < 175)
+        if (m_chosenBonusInterdistance > 300)
             m_chosenBonusInterdistance = 200 + abs(rand()%101); //200 to 300m
+        else if  ( m_chosenBonusInterdistance < 275)
+            m_chosenBonusInterdistance = 300 + abs(rand()%101); //300 to 400m
         else
-            m_chosenBonusInterdistance = 100 + abs(rand()%201); //100 to 300m
+            m_chosenBonusInterdistance = 200 + abs(rand()%201); //200 to 400m
     }
 }
 
@@ -168,16 +188,16 @@ void GameModel::chooseInterdistance(int elementType)
 /********************************************
     check if a position is free to use
 *********************************************
-    @author Arthur  @date  8/03 - 26/03
+    @author Arthur  @date  8/03 - 30/04
 *********************************************/
-bool GameModel::checkIfPositionFree(const unsigned int posX, const unsigned int posY) const
+bool GameModel::checkIfPositionFree(float x, float y) const
 {
     bool positionIsFree =true;
     set<MovableElement*>::iterator it=m_movableElementsArray.begin();
 
     while (positionIsFree &&  it != m_movableElementsArray.end() )
     {
-        if ( (*it)->contains(posX, posY) )
+        if ( (*it)->contains(x,y) )
             positionIsFree = false;
         else
             ++it;
@@ -190,7 +210,7 @@ bool GameModel::checkIfPositionFree(const unsigned int posX, const unsigned int 
 /********************************************
     NewMovableElement vector cleaning
 *********************************************
-    @author Arthur  @date 2/03- 26/03
+    @author Arthur  @date 2/03 - 26/03
     @author Florian @date 2/03
 *********************************************/
 void GameModel::clearNewMovableElementList()
@@ -300,9 +320,9 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
 
 
 /********************************************
-    Handle Movable Elements Deletion
+    Handle Movable Elements Collisions
 *********************************************
-    @author Arthur  @date 12/03 - 31/03
+    @author Arthur  @date 12/03 - 29/04
 *********************************************/
 void GameModel::handleMovableElementsCollisions()
 {
@@ -364,17 +384,17 @@ void GameModel::handleMovableElementsCollisions()
             else if ( (*it)->getType() == 7) //Fly
             {
                 m_player->changeState(2);
-                //allows to stop Fly bonus effect in 15
+                //allows to stop Fly bonus effect in 15s
                 m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(15000);
             }
 
             else if ( (*it)->getType() == 8) //SlowDown
             {
-                m_gameSpeed = m_gameSpeed-2;
-                //allows to stop SlowDown bonus effect in 20
+                m_gameSpeed = m_gameSpeed/2;
+                m_player->changeState(3);
+		//allows to stop SlowDown bonus effect in 20s
                 m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(20000);
             }
-
         }
     }
 }

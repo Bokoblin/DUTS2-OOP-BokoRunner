@@ -23,12 +23,12 @@ GraphicElement::GraphicElement( float w, float h) : m_width{w}, m_height{h}
     @author Arthur  @date 25/02 - 20/03
     @author Florian @date  2/03 - 2/03
 *********************************************/
-GraphicElement::GraphicElement(GraphicElement const& elementACopier) :
-    Sprite(), m_width(elementACopier.m_width), m_height(elementACopier.m_height)
+GraphicElement::GraphicElement(GraphicElement const& element) :
+    Sprite(), m_width(element.m_width), m_height(element.m_height)
 {
-    this->setPosition( elementACopier.getPosition() );
-    this->setTexture( *elementACopier.getTexture(), true );
-    this->setOrigin( elementACopier.getOrigin() );
+    this->setPosition( element.getPosition() );
+    this->setTexture( *element.getTexture(), true );
+    this->setOrigin( element.getOrigin() );
 }
 
 
@@ -74,7 +74,6 @@ void GraphicElement::resize(float width, float height)
     float width_factor = width / bb.width;
     float height_factor = height / bb.height;
     this->setScale(width_factor, height_factor);
-    //modification largeur et hauteur
     this->m_width = width;
     this->m_height = height;
 }

@@ -17,7 +17,6 @@ limitations under the License.
 #define MENUVIEW_H
 
 #include "View.h"
-#include "MenuModel.h"
 
 /********************************************
     Constant Variables

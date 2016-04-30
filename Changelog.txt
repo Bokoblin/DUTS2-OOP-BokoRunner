@@ -1,7 +1,7 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.3.1
+Current version : v1.4.0
 
 ======================================================================================
 BETA CHANNEL Changelog
@@ -198,4 +198,15 @@ v1.3.1 (29/04/16):
 
 ---------------------------------------------------------------------------------------------------
 
+v1.4.0 (30/04/16):
+
+- added Zone changing each 500m in Normal / 2000m in Master
+	- Zone changing is made with a scrolling far background transition
+	  and a pixel appearing near background
+- added PixelateEffect class to handle pixel transition (altered from SFML Examples - see file)
+- image loading optimized by merging textures which used same file (number of textures reduced by half)
+- lots of variable renaming
+- documentation updated
+
+---------------------------------------------------------------------------------------------------
 

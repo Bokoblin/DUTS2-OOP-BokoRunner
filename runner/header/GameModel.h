@@ -40,11 +40,14 @@ public:
     //=== GETTERS
     bool getPauseState() const;
     bool getEndState() const;
-    bool getTransition() const;
+    bool getTransitionStatus() const;
+    bool getTransitionPossibleStatus() const;
+    bool getScoreSavableStatus() const;
     Player* getPlayer() const;
     int getScore() const;
     int getDistance() const;
     float getGameSpeed() const;
+    int getCurrentZone() const;
     unsigned int getNbCoinsCollected() const;
     unsigned int getEnemyDestructedBonus() const;
     const std::set<MovableElement*>& getNewMElementsArray() const;
@@ -53,13 +56,16 @@ public:
     //=== SETTERS
     void setPauseState(bool state);
     void setEndState(bool state);
-    void setTransition(bool inTransition);
+    void setTransitionStatus(bool status);
+    void setTransitionPossibleStatus(bool status);
+    void setScoreSavableStatus(bool status);
+    void setCurrentZone(int number);
     void setNbCoinsCollected(unsigned int number) ;
 
     //=== METHODS
     virtual void nextStep() override;
     void chooseInterdistance(int elementType);
-    bool checkIfPositionFree(const unsigned int posX, const unsigned int posY) const;
+    bool checkIfPositionFree(float x, float y) const;
     void moveBallAccordingEvent(bool left);
     void moveMovableElement(MovableElement *element);
     void handleMovableElementsCreation();
@@ -73,19 +79,22 @@ private:
     bool m_pauseState;
     bool m_endState;
     bool m_inTransition;
+    bool m_isTransitionPossible;
+    bool m_isScoreSavable;
     int m_score;
     int m_distance;
     float m_gameSpeed;
     float m_realGameSpeed;
+    int m_currentZone;
     int m_nbCoinsCollected;
     int m_enemyDestructedBonus;
+    int m_activeBonusType; /**< nope : -1, mega : 0, fly : 1  */
     int m_currentEnemyInterdistance;
     int m_currentCoinInterdistance;
     int m_currentBonusInterdistance;
     int m_chosenEnemyInterdistance;
     int m_chosenCoinInterdistance;
     int m_chosenBonusInterdistance;
-    int m_activeBonusType; /**< nope : -1, mega : 0, fly : 1  */
     std::chrono::system_clock::time_point m_lastTime;
     std::chrono::system_clock::time_point m_bonusStopTime;
     std::chrono::milliseconds m_bonusTimeout;

@@ -42,8 +42,10 @@ float SlidingBackground::getSeparationPositionX() const
 /********************************************
     Setters
 *********************************************
-    @author Arthur  @date 26/04
+    @author Arthur  @date 3/03 - 26/04
+    @author Florian @date 3/03
 *********************************************/
+void SlidingBackground::setSpeed(float speed) { m_speed = speed; }
 void SlidingBackground::setPosition(float x, float y)
 {
     m_left->setPosition(x, y);
@@ -80,10 +82,14 @@ void SlidingBackground::draw(sf::RenderWindow *window) const
     window->draw(*m_right);
 }
 
+
 /********************************************
-    Setters
+    Resizing function
 *********************************************
-    @author Arthur  @date 3/03
-    @author Florian @date 3/03
+    @author Arthur  @date 30/04
 *********************************************/
-void SlidingBackground::setSpeed(float speed) { m_speed = speed; }
+void SlidingBackground::resize(float w, float h)
+{
+    m_left->resize(w, h);
+    m_right->resize(w, h);
+}

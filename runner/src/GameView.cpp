@@ -8,7 +8,8 @@ using namespace std;
     @author Arthur  @date 26/03 - 28/04
 *********************************************/
 GameView::GameView(float w, float h, sf::RenderWindow *mywindow, Text *text):
-    View(w, h, mywindow, text), m_gameModel{nullptr}, m_scoreSavable{true}
+    View(w, h, mywindow, text), m_gameModel{nullptr},
+    m_xPixelIntensity{1}, m_yPixelIntensity{1}
 {
     loadImages();
     m_lb = new Leaderboard;
@@ -72,8 +73,8 @@ void GameView::setGameModel(GameModel *model)
 *********************************************/
 void GameView::loadImages()
 {
-    if (!m_farBackgroundTexture.loadFromFile(DEFAULT_FAR_BACKGROUND))
-        cerr << "ERROR when loading image file: " << DEFAULT_FAR_BACKGROUND << endl;
+    if (!m_farBackgroundTexture.loadFromFile(DEFAULT_FAR_HILL_BACKGROUND))
+        cerr << "ERROR when loading image file: " << DEFAULT_FAR_HILL_BACKGROUND << endl;
     else
     {
         m_farBackgroundTexture.setSmooth(true);
@@ -88,8 +89,8 @@ void GameView::loadImages()
         m_farBgTransitionSprite = new GraphicElement(m_farBgTransitionTexture, 900, m_height, m_width, m_height);
     }
 
-    if (!m_nearBackgroundTexture.loadFromFile(DEFAULT_NEAR_BACKGROUND))
-        cerr << "ERROR when loading image file: " << DEFAULT_NEAR_BACKGROUND << endl;
+    if (!m_nearBackgroundTexture.loadFromFile(DEFAULT_NEAR_HILL_BACKGROUND))
+        cerr << "ERROR when loading image file: " << DEFAULT_NEAR_HILL_BACKGROUND << endl;
     else
     {
         m_nearBackgroundTexture.setSmooth(true);
@@ -290,38 +291,61 @@ void GameView::linkElements()
 /********************************************
     Update gElements
 *********************************************
-    @author Arthur  @date 6/03 - 28/04
+    @author Arthur  @date 6/03 - 30/04
 *********************************************/
 void GameView::updateElements()
 {
     //=== Handle Transitions between zones
 
-    if ( m_gameModel->getTransition() == true)
+    if ( m_gameModel->getTransitionStatus() == true)
     {
+        //Set backgrouns speed and position
         m_farBgTransitionSprite->setPosition(m_farBgTransitionSprite->getPosition().x - TRANSITION_SPEED, 0);
         m_farSlBackground->setSpeed(TRANSITION_SPEED);
         m_nearSlBackground->setSpeed(0);
 
+        //Update zone background image and position at half transition
         if (m_farBgTransitionSprite->getPosition().x  <= 5 && m_farBgTransitionSprite->getPosition().x  >= -5)
         {
-            m_farBackgroundTexture.loadFromFile(DEFAULT_FAR_P_BACKGROUND);
+            if (m_gameModel->getCurrentZone() == 1)
+            {
+                m_farBackgroundTexture.loadFromFile(DEFAULT_FAR_PLAIN_BACKGROUND);
+                m_nearBackgroundTexture.loadFromFile(DEFAULT_NEAR_PLAIN_BACKGROUND);
+            }
+            else
+            {
+                m_farBackgroundTexture.loadFromFile(DEFAULT_FAR_HILL_BACKGROUND);
+                m_nearBackgroundTexture.loadFromFile(DEFAULT_NEAR_HILL_BACKGROUND);
+            }
+
             m_farSlBackground->setPosition(-300, 0);
-            m_nearBackgroundTexture.loadFromFile(DEFAULT_NEAR_P_BACKGROUND);
             m_nearSlBackground->setPosition(0, 0);
         }
 
+        //Update pixel creation of near backgound from 3/4 transition to end transition
         if ( m_farBgTransitionSprite->getPosition().x < m_width/2 && m_xPixelIntensity >=0)
         {
-            m_pixelShader->load(DEFAULT_NEAR_T1_BACKGROUND);
+            if (m_gameModel->getCurrentZone() == 1)
+                m_pixelShader->load(DEFAULT_NEAR_T1_BACKGROUND);
+            else
+                m_pixelShader->load(DEFAULT_NEAR_T2_BACKGROUND);
             m_xPixelIntensity -= 0.009;
             m_yPixelIntensity -= 0.009;
             m_pixelShader->update(clock.getElapsedTime().asSeconds(), m_xPixelIntensity, m_yPixelIntensity);
         }
 
+        //Finish transition
         if (m_farBgTransitionSprite->getPosition().x + m_farBgTransitionSprite->getLocalBounds().width <= 0)
         {
-            m_gameModel->setTransition(false);
-            m_farBackgroundTexture.loadFromFile(DEFAULT_FAR_P_BACKGROUND);
+            //Update Transition status
+            m_gameModel->setTransitionStatus(false);
+            m_gameModel->setTransitionPossibleStatus(false);
+
+            //Set current zone
+            if (m_gameModel->getCurrentZone() == 1)
+                m_gameModel->setCurrentZone(2);
+            else
+                m_gameModel->setCurrentZone(1);
         }
     }
     else
@@ -329,12 +353,17 @@ void GameView::updateElements()
         m_farSlBackground->setSpeed( (m_gameModel->getGameSpeed() + m_gameModel->getDifficulty() )/2);
         m_nearSlBackground->setSpeed(m_gameModel->getGameSpeed() + m_gameModel->getDifficulty() );
 
-        if ( m_gameModel->getDistance() >= 500 && m_gameModel->getDistance() < 550 && m_farSlBackground->getSeparationPositionX() > m_width-100)
+        if ( m_gameModel->getTransitionPossibleStatus() == true && m_farSlBackground->getSeparationPositionX() > m_width-100)
         {
-            m_gameModel->setTransition(true);
+            m_gameModel->setTransitionStatus(true);
             m_xPixelIntensity = 1;
             m_yPixelIntensity = 1;
             m_farBgTransitionSprite->setPosition(m_farSlBackground->getPosition().x +1200, 0);
+
+            if (m_gameModel->getCurrentZone() == 1)
+                m_farBgTransitionTexture.loadFromFile(DEFAULT_FAR_T1_BACKGROUND);
+            else
+                m_farBgTransitionTexture.loadFromFile(DEFAULT_FAR_T2_BACKGROUND);
         }
     }
 
@@ -443,7 +472,7 @@ void GameView::synchronize()
 
         m_saveScoreButton->sync();
         m_saveScoreButton->resize(40,40);
-        if ( m_scoreSavable == false)
+        if ( m_gameModel->getScoreSavableStatus() == false)
             m_saveScoreButton->setPosition(m_width+5, m_height+5);
 
         //=== Text update
@@ -467,7 +496,8 @@ void GameView::draw() const
         //=== Standalone GraphicElements drawing
 
         m_farSlBackground->draw(m_window);
-        if ( m_gameModel->getTransition() == true)
+
+        if ( m_gameModel->getTransitionStatus() == true)
         {
             m_window->draw(*m_farBgTransitionSprite);
             m_window->draw(*m_pixelShader);
@@ -516,7 +546,7 @@ void GameView::draw() const
         m_window->draw(*m_endBackgroundSprite);
         m_window->draw(*m_restartGameButton);
         m_window->draw(*m_goToHomeButton);
-        if ( m_scoreSavable == true)
+        if ( m_gameModel->getScoreSavableStatus() == true)
             m_window->draw(*m_saveScoreButton);
 
         //=== Text drawing
@@ -680,7 +710,7 @@ bool GameView::treatEvents()
                     }
                     else if ( m_saveScoreButton->getGlobalBounds().contains(MOUSE_POSITION) )
                     {
-                        m_scoreSavable = false;
+                        m_gameModel->setScoreSavableStatus(false);
                         m_lb->loadVectorFromFile();
                         m_lb->addEntryToVector(m_gameModel->getScore() );
                         m_lb->loadFileFromVector();

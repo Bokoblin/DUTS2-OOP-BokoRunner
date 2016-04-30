@@ -41,7 +41,7 @@ const int TRANSITION_SPEED = 10;
 /********************************************
     GameView Class
 *********************************************
-    @author Arthur  @date 21/02 - 28/04
+    @author Arthur  @date 21/02 - 30/04
     @author Florian @date 21/02 - 3/03
 *********************************************/
 class GameView : public View
@@ -69,10 +69,10 @@ private:
     GameModel *m_gameModel;
     Leaderboard *m_lb;
     Pixelate *m_pixelShader;
+
     float m_xPixelIntensity;
     float m_yPixelIntensity;
     sf::Clock clock;
-    bool m_scoreSavable;
 
     //Game Textures
     sf::Texture m_farBackgroundTexture;

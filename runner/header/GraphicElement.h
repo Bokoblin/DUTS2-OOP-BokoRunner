@@ -36,7 +36,7 @@ public:
     //=== METHODS
     virtual void sync();
     virtual void draw(sf::RenderWindow *window)const;
-    void resize(float w, float h);
+    virtual void resize(float w, float h);
 
 protected:
     //=== ATTRIBUTES

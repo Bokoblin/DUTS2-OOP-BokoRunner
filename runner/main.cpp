@@ -40,7 +40,9 @@ int main()
     window->setFramerateLimit(30);
     Text *text = new Text();
 
+    DataModel data;
     Model model(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
+    model.setDataModel(&data);
 
     while(window->isOpen() )
     {
@@ -58,6 +60,7 @@ int main()
         if  (model.getMenuState() == true)
         {
             MenuModel mModel(model);
+            mModel.setDataModel(&data);
             MenuView mView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
             mView.setModel(&model);
             mView.setMenuModel(&mModel);
@@ -72,6 +75,7 @@ int main()
         if  (model.getGameState() == true)
         {
             GameModel gModel(model);
+            gModel.setDataModel(&data);
             GameView gView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
             gView.setModel(&model);
             gView.setGameModel(&gModel);
@@ -88,6 +92,8 @@ int main()
             }
         }
     }
+
+    data.pushConfigurationToFile();
 
     delete window;
     delete text;

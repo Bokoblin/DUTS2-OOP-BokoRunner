@@ -213,7 +213,7 @@ void MenuView::synchronize()
 
 		//=== Text update
 
-		m_text->syncMenuSettingsText(m_width, m_height);
+		m_text->syncMenuSettingsText(m_menuModel, m_width, m_height);
 
 	}
     else if (m_menuModel->getLeaderboardState() == true)

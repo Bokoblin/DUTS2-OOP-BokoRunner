@@ -21,11 +21,12 @@ limitations under the License.
 #include <cassert>
 #include <chrono>
 #include <set>
+#include "DataModel.h"
 
 /********************************************
     Model Class
 *********************************************
-    @author Arthur  @date 21/02 - 31/03
+    @author Arthur  @date 21/02 - 2/05
     @author Florian @date 21/02 - 2/03
 *********************************************/
 class Model
@@ -37,6 +38,7 @@ public:
     virtual ~Model();
 
     //=== GETTERS
+    DataModel *getDataModel() const;
     int getDifficulty() const;
     bool getIntroState() const;
     bool getMenuState() const;
@@ -45,6 +47,7 @@ public:
     std::chrono::system_clock::time_point getProgramBeginningTime() const ;
 
     //=== SETTERS
+    void setDataModel(DataModel *data);
     void setDifficulty(int difficulty);
     void setLanguage(std::string language);
     void setIntroState(bool state);
@@ -60,6 +63,7 @@ protected:
     float m_width, m_height;
     int m_difficulty;
     std::string m_language;
+    DataModel *m_dataModel;
     const std::chrono::system_clock::time_point m_programBeginningTime;
 
 private:

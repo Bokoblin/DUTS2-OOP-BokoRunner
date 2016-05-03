@@ -41,11 +41,12 @@ Model::~Model()
 /********************************************
     Getters
 *********************************************
-    @author Arthur  @date 21/02 - 14/04
+    @author Arthur  @date 21/02 - 2/05
     @author Florian @date 21/02 - 25/02
 *********************************************/
-bool Model::getIntroState() const {return m_introState;}
+DataModel *Model::getDataModel() const {return m_dataModel;}
 int Model::getDifficulty() const {return m_difficulty;}
+bool Model::getIntroState() const {return m_introState;}
 bool Model::getMenuState() const {return m_menuState;}
 bool Model::getGameState() const {return m_gameState;}
 bool Model::getResetGameState() const {return m_resetGameState;}
@@ -55,8 +56,9 @@ chrono::system_clock::time_point Model::getProgramBeginningTime() const { return
 /********************************************
     Setters
 *********************************************
-    @author Arthur  @date 8/03 - 14/04
+    @author Arthur  @date 8/03 - 2/05
 *********************************************/
+void Model::setDataModel(DataModel *data) {m_dataModel = data;}
 void Model::setDifficulty(int difficulty) {m_difficulty = difficulty;}
 void Model::setLanguage(std::string language) {m_language = language;}
 void Model::setIntroState(bool state) {m_introState = state;}

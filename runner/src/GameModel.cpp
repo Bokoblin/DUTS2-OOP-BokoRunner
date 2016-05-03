@@ -9,9 +9,9 @@ using namespace std;
 *********************************************/
 GameModel::GameModel(const Model& model) :
     Model(model), m_pauseState{false}, m_endState{false}, m_inTransition{false},
-    m_isTransitionPossible{false}, m_isScoreSavable{true}, m_score{0}, m_distance{0},
-    m_gameSpeed{4.0}, m_realGameSpeed{4.0}, m_currentZone{1}, m_nbCoinsCollected{0},
-    m_enemyDestructedBonus{0}, m_activeBonusType{-1},
+    m_isTransitionPossible{false}, m_isSavePossible{true},
+    m_gameSpeed{4.0}, m_realGameSpeed{4.0}, m_currentZone{1},
+    m_activeBonusType{-1},
     m_currentEnemyInterdistance{0}, m_currentCoinInterdistance{0}, m_currentBonusInterdistance{0},
     m_lastTime{chrono::system_clock::now()}, m_bonusStopTime{chrono::milliseconds(0)}, m_bonusTimeout{0}
 {
@@ -20,6 +20,7 @@ GameModel::GameModel(const Model& model) :
     m_chosenCoinInterdistance = rand()%10;
     m_chosenBonusInterdistance = 100 + rand()%50;
     addANewMovableElement(50, GAME_FLOOR, 0);
+    m_dataModel->resetCurrentGame();
 }
 
 
@@ -40,21 +41,17 @@ GameModel::~GameModel()
 /********************************************
     Getters
 *********************************************
-    @author Arthur  @date 21/02 - 30/04
+    @author Arthur  @date 21/02 - 2/05
     @author Florian @date 21/02 - 25/02
 *********************************************/
 bool GameModel::getPauseState() const { return m_pauseState; }
 bool GameModel::getEndState() const { return m_endState; }
 bool GameModel::getTransitionStatus() const { return m_inTransition; }
 bool GameModel::getTransitionPossibleStatus() const { return m_isTransitionPossible; }
-bool GameModel::getScoreSavableStatus() const { return m_isScoreSavable; }
+bool GameModel::getSaveStatus() const { return m_isSavePossible; }
 float GameModel::getGameSpeed() const { return m_gameSpeed; }
-int GameModel::getScore() const { return m_score; }
-int GameModel::getDistance() const { return m_distance; }
 int GameModel::getBonusTimeout() const { return m_bonusTimeout.count()/1000; }
 int GameModel::getCurrentZone() const { return m_currentZone; }
-unsigned int GameModel::getNbCoinsCollected() const { return m_nbCoinsCollected; }
-unsigned int GameModel::getEnemyDestructedBonus() const { return m_enemyDestructedBonus; }
 Player* GameModel::getPlayer() const { return m_player; }
 const set<MovableElement*>& GameModel::getNewMElementsArray() const { return m_newMovableElementsArray; }
 
@@ -67,9 +64,8 @@ void GameModel::setPauseState(bool state) { m_pauseState = state; }
 void GameModel::setEndState(bool state) { m_endState = state;}
 void GameModel::setTransitionStatus(bool status) { m_inTransition = status; }
 void GameModel::setTransitionPossibleStatus(bool status) { m_isTransitionPossible = status; }
-void GameModel::setScoreSavableStatus(bool status) { m_isScoreSavable = status; }
+void GameModel::setSaveStatus(bool status) { m_isSavePossible = status; }
 void GameModel::setCurrentZone(int number) { m_currentZone = number; }
-void GameModel::setNbCoinsCollected(unsigned int n) { m_nbCoinsCollected = n;}
 
 
 /********************************************
@@ -94,7 +90,7 @@ void GameModel::nextStep()
                     m_gameSpeed = 8.0;
                 m_gameSpeed += 0.02;
             }
-			m_distance += (1 + 2*m_difficulty);
+			m_dataModel->setCurrentDistance(1 + 2*m_difficulty);
 
 			//=== Handle Movable Elements Creation
 
@@ -130,9 +126,11 @@ void GameModel::nextStep()
 
             //=== Handle transition status
 
-            if ( m_distance !=0 && m_difficulty == 0 && m_distance%500 ==0) //at each 500 meters
+            if ( m_dataModel->getCurrentDistance() !=0 && m_difficulty == 0
+                && m_dataModel->getCurrentDistance()%500 ==0) //at each 500 meters
                 m_isTransitionPossible = true;
-            if ( m_distance !=0 && m_difficulty == 2 && m_distance%2000 ==0) //at each 2000 meters
+            if ( m_dataModel->getCurrentDistance() !=0 && m_difficulty == 2
+                && m_dataModel->getCurrentDistance()%2000 ==0) //at each 2000 meters
                 m_isTransitionPossible = true;
 
             m_lastTime = chrono::system_clock::now();
@@ -140,7 +138,7 @@ void GameModel::nextStep()
     }
     else if (m_endState == true)
     {
-        m_score = (m_gameSpeed+2*m_difficulty)*m_distance + 20*m_nbCoinsCollected + m_enemyDestructedBonus;
+        m_dataModel->setCurrentScore(m_gameSpeed, m_difficulty);
     }
 }
 
@@ -343,7 +341,7 @@ void GameModel::handleMovableElementsCollisions()
             }
 
             else if ( (*it)->getType() == 1 && m_player->getState() == 1 )
-                m_enemyDestructedBonus += 100;
+                m_dataModel->setCurrentEnemiesDestructed(100);
 
             else if ( (*it)->getType() == 2 && m_player->getState() != 1) //totem enemy
             {
@@ -355,7 +353,7 @@ void GameModel::handleMovableElementsCollisions()
 
 
             else if ( (*it)->getType() == 2 && m_player->getState() == 1 )
-                m_enemyDestructedBonus += 300;
+                m_dataModel->setCurrentEnemiesDestructed(300);
 
             else if ( (*it)->getType() == 3 && m_player->getState() != 1) //block enemy
             {
@@ -366,10 +364,10 @@ void GameModel::handleMovableElementsCollisions()
             }
 
             else if ( (*it)->getType() == 3 && m_player->getState() == 1 )
-                m_enemyDestructedBonus += 500;
+                m_dataModel->setCurrentEnemiesDestructed(500);
 
             else if ( (*it)->getType() == 4) //coin
-                m_nbCoinsCollected += 1;
+                m_dataModel->setCurrentCoinsCollected(1);
 
             else if ( (*it)->getType() == 5) //PV+
                 m_player->setLife(m_player->getLife()+10);

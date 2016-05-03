@@ -61,11 +61,11 @@ class Text
     void updateString(std::string file, sf::Text *currentText, std::string currentName);
 
     void syncMenuHomeText(int width, int height);
-    void syncMenuSettingsText(int width, int height);
+    void syncMenuSettingsText(MenuModel *gameModel, int width, int height);
     void syncMenuLeaderboardText(int w, int h, Leaderboard *lb);
-    void syncGameMainText(GameModel *gameModel);
-    void syncGamePauseText(GameModel *gameModel);
-    void syncGameEndText(GameModel *gameModel);
+    void syncGameText(GameModel *gameModel);
+    void syncPauseText(GameModel *gameModel);
+    void syncEndText(GameModel *gameModel);
 
     void drawMenuHomeText(sf::RenderWindow *window);
     void drawMenuSettingsText(sf::RenderWindow *window);
@@ -85,7 +85,7 @@ private:
     sf::Text *m_quitButtonText;
     //Settings Text
     sf::Text *m_settingsLabel;
-    sf::Text *m_configurationLabel;
+    sf::Text *m_configTitleLabel;
     sf::Text *m_configLanguageLabel;
     sf::Text *m_configLanguageEnLabel;
     sf::Text *m_configLanguageFrLabel;
@@ -93,6 +93,13 @@ private:
     sf::Text *m_configDifficultyLabel;
     sf::Text *m_configDifficultyNormalLabel;
     sf::Text *m_configDifficultyMasterLabel;
+    sf::Text *m_statTitlesLabel;
+    sf::Text *m_totalDistanceLabel;
+    sf::Text *m_totalEnemiesDestructedLabel;
+    sf::Text *m_totalGamesPlayedLabel;
+    sf::Text *m_totalDistanceText;
+    sf::Text *m_totalEnemiesDestructedText;
+    sf::Text *m_totalGamesPlayedText;
     //Leaderboard Text
     sf::Text *m_leaderboardTitleLabel;
     sf::Text *m_leaderboardText;
@@ -103,6 +110,8 @@ private:
     sf::Text *m_playerLifeLabel;
     sf::Text *m_bonusTimeoutLabel;
     sf::Text *m_bonusTimeoutText;
+    sf::Text *m_saveButtonText;
+    sf::Text *m_totalCoinsText;
     //Pause Text
     sf::Text *m_pauseResumeLabel;
     sf::Text *m_restartLabel;

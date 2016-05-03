@@ -32,17 +32,19 @@
    <string name="configDifficultyLabel">Difficultad</string>
    <string name="configDifficultyNormalLabel">Normal</string>
    <string name="configDifficultyMasterLabel">Master</string>
+   <string name="statsLabel">Estadisticas</string>
+   <string name="totalDistanceLabel">Total_distancia_recorrida</string>
+   <string name="totalEnemiesDestructedLabel">Total_destrucciones_enemigos</string>
+   <string name="totalGamesPlayedLabel">Juegos_lanzados</string>
    <string name="leaderboardTitleLabel">Tabla_de_posiciones</string>
    <string name="leaderboardText">Todavia_no_hay_ninguna_puntuacion</string>
    <string name="leaderboardErrorText">Puntuacion_datos_ha_sido_corrompido._Barra_lo.</string>
 
    <!--  Game strings -->
-   <string name="distanceText">.</string>
    <string name="playerLifeLabel">Vida</string>
-   <string name="bonusTimeoutText">.</string>
+   <string name="saveButtonText">SALVAR</string>
 
    <!--  Pause Screen strings -->
-   <string name="CoinsCollectedNumberText">.</string>
    <string name="pauseResumeLabel">Reanudar</string>
    <string name="restartLabel">Reiniciar</string>
    <string name="homeLabel">Menu</string>
@@ -50,11 +52,9 @@
    <!--  End Screen strings -->
    <string name="endTitleLabel">Tu_puntuacion</string>
    <string name="speedmultiplicatorLabel">Velocidad_multiplicator</string>
-   <string name="speedmultiplicatorText">.</string>
    <string name="distanceLabel">Distancia_recorrida</string>
    <string name="CoinsCollectedNumberLabel">Monedas_recogidas</string>
    <string name="enemyDestructedBonusLabel">Prima_destruccion_enemigos</string>
    <string name="scoreLabel">Puntuacion_total</string>
-   <string name="scoreText">.</string>
 
 </resources>

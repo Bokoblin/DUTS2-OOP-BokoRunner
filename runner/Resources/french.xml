@@ -32,17 +32,19 @@
    <string name="configDifficultyLabel">Difficulte</string>
    <string name="configDifficultyNormalLabel">Normal</string>
    <string name="configDifficultyMasterLabel">Master</string>
+   <string name="statsLabel">Statistiques</string>
+   <string name="totalDistanceLabel">Distance_totale_parcourue</string>
+   <string name="totalEnemiesDestructedLabel">Total_d'ennemies_detruits</string>
+   <string name="totalGamesPlayedLabel">Parties_lancees</string>
    <string name="leaderboardTitleLabel">Classement</string>
    <string name="leaderboardText">Il_n'y_a_pas_encore_de_scores</string>
    <string name="leaderboardErrorText">Les_donnees_de_score_ont_ete_corrompues._Veuillez_les_effacer.</string>
 
    <!--  Game strings -->
-   <string name="distanceText">.</string>
    <string name="playerLifeLabel">Vie</string>
-   <string name="bonusTimeoutText">.</string>
+   <string name="saveButtonText">SAUVER</string>
 
    <!--  Pause Screen strings -->
-   <string name="CoinsCollectedNumberText">.</string>
    <string name="pauseResumeLabel">Reprendre</string>
    <string name="restartLabel">Recommencer</string>
    <string name="homeLabel">Accueil</string>
@@ -50,11 +52,9 @@
    <!--  End Screen strings -->
    <string name="endTitleLabel">Votre_score</string>
    <string name="speedmultiplicatorLabel">Multiplicateur_vitesse</string>
-   <string name="speedmultiplicatorText">.</string>
    <string name="distanceLabel">Distance_parcourue</string>
    <string name="CoinsCollectedNumberLabel">Pieces_collectees</string>
    <string name="enemyDestructedBonusLabel">Bonus_destruction_ennemies</string>
    <string name="scoreLabel">Score_total</string>
-   <string name="scoreText">.</string>
 
 </resources>

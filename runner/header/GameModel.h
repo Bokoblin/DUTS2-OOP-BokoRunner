@@ -21,14 +21,13 @@ limitations under the License.
 #include "Enemy.h"
 #include "Coin.h"
 #include "Bonus.h"
-#include "Leaderboard.h"
 #include <iostream>
 
 
 /********************************************
     GameModel Class
 *********************************************
-    @author Arthur  @date 26/03 - 27/04
+    @author Arthur  @date 26/03 - 2/05
 *********************************************/
 class GameModel : public Model
 {
@@ -42,14 +41,10 @@ public:
     bool getEndState() const;
     bool getTransitionStatus() const;
     bool getTransitionPossibleStatus() const;
-    bool getScoreSavableStatus() const;
+    bool getSaveStatus() const;
     Player* getPlayer() const;
-    int getScore() const;
-    int getDistance() const;
     float getGameSpeed() const;
     int getCurrentZone() const;
-    unsigned int getNbCoinsCollected() const;
-    unsigned int getEnemyDestructedBonus() const;
     const std::set<MovableElement*>& getNewMElementsArray() const;
     int getBonusTimeout() const;
 
@@ -58,7 +53,7 @@ public:
     void setEndState(bool state);
     void setTransitionStatus(bool status);
     void setTransitionPossibleStatus(bool status);
-    void setScoreSavableStatus(bool status);
+    void setSaveStatus(bool status);
     void setCurrentZone(int number);
     void setNbCoinsCollected(unsigned int number) ;
 
@@ -80,14 +75,10 @@ private:
     bool m_endState;
     bool m_inTransition;
     bool m_isTransitionPossible;
-    bool m_isScoreSavable;
-    int m_score;
-    int m_distance;
+    bool m_isSavePossible;
     float m_gameSpeed;
     float m_realGameSpeed;
     int m_currentZone;
-    int m_nbCoinsCollected;
-    int m_enemyDestructedBonus;
     int m_activeBonusType; /**< nope : -1, mega : 0, fly : 1  */
     int m_currentEnemyInterdistance;
     int m_currentCoinInterdistance;

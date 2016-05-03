@@ -12,7 +12,6 @@ GameView::GameView(float w, float h, sf::RenderWindow *mywindow, Text *text):
     m_xPixelIntensity{1}, m_yPixelIntensity{1}
 {
     loadImages();
-    m_lb = new Leaderboard;
     m_pixelShader = new Pixelate();
 }
 
@@ -47,10 +46,10 @@ GameView::~GameView()
 
     delete m_pauseBackgroundSprite;
     delete m_distanceIconSprite;
+    delete m_endBackgroundSprite;
     delete m_resumeGameButton;
     delete m_restartGameButton;
     delete m_goToHomeButton;
-    delete m_endBackgroundSprite;
     delete m_saveScoreButton;
 }
 
@@ -215,12 +214,19 @@ void GameView::loadImages()
         m_goToHomeButton = new Button(clip_rects_home,
                     m_gameButtonsTexture, 30, 505, 20, 20, false);
         m_goToHomeButton->resize(20,20);
+    }
 
-        std::vector<sf::IntRect> clip_rects_save;
-        clip_rects_save.push_back(sf::IntRect(51, 200, 50, 50));
-        clip_rects_save.push_back(sf::IntRect(0, 200, 50, 50));
+    if (!m_gameRectButtonTexture.loadFromFile(GRECT_BUTTON_IMAGE) )
+		cerr << "ERROR when loading image file: " << GRECT_BUTTON_IMAGE << endl;
+	else
+	{
+        m_gameRectButtonTexture.setSmooth(true);
+
+		std::vector<sf::IntRect> clip_rects_save;
+        clip_rects_save.push_back(sf::IntRect(0, 179, 150, 40));
+        clip_rects_save.push_back(sf::IntRect(151, 179, 150, 40));
         m_saveScoreButton = new Button(clip_rects_save,
-                    m_gameButtonsTexture, 730, 350, m_width, m_height, false);
+                    m_gameRectButtonTexture, 730, 350, m_width/2-75, 430, false);
     }
 
 
@@ -289,14 +295,12 @@ void GameView::linkElements()
 
 
 /********************************************
-    Update gElements
+    Create seamless transition between zones
 *********************************************
-    @author Arthur  @date 6/03 - 30/04
+    @author Arthur  @date 25/04 - 30/04
 *********************************************/
-void GameView::updateElements()
+void GameView::handleZonesTransition()
 {
-    //=== Handle Transitions between zones
-
     if ( m_gameModel->getTransitionStatus() == true)
     {
         //Set backgrouns speed and position
@@ -366,26 +370,73 @@ void GameView::updateElements()
                 m_farBgTransitionTexture.loadFromFile(DEFAULT_FAR_T2_BACKGROUND);
         }
     }
+}
 
-    //=== Update Elements
 
-    m_farSlBackground->sync();
-    m_nearSlBackground->sync();
+/********************************************
+    Update gElements
+*********************************************
+    @author Arthur  @date 6/03 - 3/05
+*********************************************/
+void GameView::updateElements()
+{
+     if (!m_gameModel->getPauseState() && !m_gameModel->getEndState())
+     {
+         //=== Handle Transitions between zones
 
-    m_remainingLifeTexture.loadFromFile( REMAINING_LIFE,
-                                         sf::IntRect( 3*( 100-m_gameModel->getPlayer()->getLife() ), 0, 300, 50 ) );
+         handleZonesTransition();
 
-    std::map<MovableElement*, GraphicElement*>::iterator it;
-    for(it = m_MovableToGraphicElementMap.begin() ; it != m_MovableToGraphicElementMap.end() ; ++it)
+        //=== Update Game Elements
+
+        m_farSlBackground->sync();
+        m_nearSlBackground->sync();
+
+        m_remainingLifeTexture.loadFromFile( REMAINING_LIFE,
+        sf::IntRect( 3*( 100-m_gameModel->getPlayer()->getLife() ), 0, 300, 50 ) );
+
+        std::map<MovableElement*, GraphicElement*>::iterator it;
+        for(it = m_MovableToGraphicElementMap.begin() ; it != m_MovableToGraphicElementMap.end() ; ++it)
+        {
+            m_gameModel->moveMovableElement(it->first);
+
+            float position_x = (it->first)->getPosX();
+            float position_y = (it->first)->getPosY();
+
+            it->second->setPosition( position_x, position_y );
+            it->second->sync();
+            it->second->resize(it->first->getWidth(), it->first->getHeight() );
+        }
+
+    }
+    else if ( m_gameModel->getPauseState() )
     {
-        m_gameModel->moveMovableElement(it->first);
+        m_resumeGameButton->sync();
+        m_restartGameButton->sync();
+        m_goToHomeButton->sync();
+        m_coinAnimSprite->sync();
+        m_coinAnimSprite->resize(20,20);
+        m_stdEnemyAnimSprite->sync();
+        m_stdEnemyAnimSprite->resize(20,20);
+    }
+    else if ( m_gameModel->getEndState() )
+    {
+        m_goToHomeButton->sync();
+        m_goToHomeButton->resize(30,30);
+        m_goToHomeButton->setPosition(30, 535);
 
-        float position_x = (it->first)->getPosX();
-        float position_y = (it->first)->getPosY();
+        m_coinAnimSprite->resize(25,25);
+        m_coinAnimSprite->setPosition(m_width/2.4, 563);
 
-        it->second->setPosition( position_x, position_y );
-        it->second->sync();
-        it->second->resize(it->first->getWidth(), it->first->getHeight() );
+        m_restartGameButton->sync();
+        m_restartGameButton->resize(30,30);
+        m_restartGameButton->setPosition(840, 535);
+
+        m_saveScoreButton->sync();
+        if ( m_gameModel->getSaveStatus() == false)
+            m_saveScoreButton->setPosition(m_width+5, m_height+5);
+        else
+            m_saveScoreButton->setPosition(m_width/2 -
+				m_saveScoreButton->getGlobalBounds().width/2, 430);
     }
 }
 
@@ -417,67 +468,33 @@ void GameView::deleteElements()
 /********************************************
     Synchronization function
 *********************************************
-    @author Arthur  @date 26/03 - 27/04
+    @author Arthur  @date 26/03 - 03/05
 *********************************************/
 void GameView::synchronize()
 {
 
-    if (m_gameModel->getPauseState() == false && m_gameModel->getEndState() == false )
+    if (!m_gameModel->getPauseState()&& !m_gameModel->getEndState())
     {
-        //=== Link new mElements with gElements
 
-        linkElements();
-
-        //=== Elements deleting if not used anymore
-
-        deleteElements();
-
-        //=== Elements update
-
-        updateElements();
-
-        //=== Text update
-
-        m_text->syncGameMainText(m_gameModel);
+        linkElements(); //Link new mElements with gElements
+        deleteElements(); //Elements deleting if not used anymore
+        updateElements(); //Elements update
+        m_text->syncGameText(m_gameModel); //Text update
 
     }
-    else if (m_gameModel->getPauseState() == true)
+    else if (m_gameModel->getPauseState())
     {
-        //=== Elements update
 
-        m_resumeGameButton->sync();
-        m_restartGameButton->sync();
-        m_goToHomeButton->sync();
-        m_coinAnimSprite->sync();
-        m_coinAnimSprite->resize(20,20);
-        m_stdEnemyAnimSprite->sync();
-        m_stdEnemyAnimSprite->resize(20,20);
-
-        //=== Text update
-
-        m_text->syncGamePauseText(m_gameModel);
+        updateElements(); //Elements update
+        m_text->syncPauseText(m_gameModel); //Text update
 
     }
-    else if (m_gameModel->getEndState() == true )
+    else if (m_gameModel->getEndState())
     {
-        //=== Buttons update
 
-        m_goToHomeButton->sync();
-        m_goToHomeButton->resize(30,30);
-        m_goToHomeButton->setPosition(30, 535);
+        updateElements(); //Buttons update
+        m_text->syncEndText(m_gameModel); //Text update
 
-        m_restartGameButton->sync();
-        m_restartGameButton->resize(30,30);
-        m_restartGameButton->setPosition(840, 535);
-
-        m_saveScoreButton->sync();
-        m_saveScoreButton->resize(40,40);
-        if ( m_gameModel->getScoreSavableStatus() == false)
-            m_saveScoreButton->setPosition(m_width+5, m_height+5);
-
-        //=== Text update
-
-        m_text->syncGameEndText(m_gameModel);
     }
 }
 
@@ -545,8 +562,9 @@ void GameView::draw() const
 
         m_window->draw(*m_endBackgroundSprite);
         m_window->draw(*m_restartGameButton);
+        m_window->draw(*m_coinAnimSprite);
         m_window->draw(*m_goToHomeButton);
-        if ( m_gameModel->getScoreSavableStatus() == true)
+        if ( m_gameModel->getSaveStatus() == true)
             m_window->draw(*m_saveScoreButton);
 
         //=== Text drawing
@@ -710,10 +728,8 @@ bool GameView::treatEvents()
                     }
                     else if ( m_saveScoreButton->getGlobalBounds().contains(MOUSE_POSITION) )
                     {
-                        m_gameModel->setScoreSavableStatus(false);
-                        m_lb->loadVectorFromFile();
-                        m_lb->addEntryToVector(m_gameModel->getScore() );
-                        m_lb->loadFileFromVector();
+                        m_gameModel->setSaveStatus(false);
+                        m_model->getDataModel()->saveCurrentGame();
                     }
                 }
             }

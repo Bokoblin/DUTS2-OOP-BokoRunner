@@ -6,14 +6,10 @@ using namespace std;
 /********************************************
     Default Constructor
 *********************************************
-    @author Arthur  @date 19/04 - 20/04
+    @author Arthur  @date 19/04 - 2/05
 *********************************************/
 Leaderboard::Leaderboard() : m_scoresArray{}
-{
-    m_file = "Resources/scores.txt";
-    m_hiddenFile = "Resources/.font_cache";
-    //hidden in linux and not explicit to score
-}
+{ }
 
 
 /********************************************
@@ -37,7 +33,7 @@ void Leaderboard::loadVectorFromFile()
 
     m_scoresArray.clear();
 
-    f.open(m_file.c_str(), ios::in);
+    f.open(SCORES_FILE.c_str(), ios::in);
 
     if (f.fail() )
         createFile();
@@ -63,8 +59,8 @@ void Leaderboard::loadFileFromVector()
     fstream f1;
     fstream f2;
 
-    f1.open( m_file.c_str(), ios::out);
-    f2.open( m_hiddenFile.c_str(), ios::out);
+    f1.open( SCORES_FILE.c_str(), ios::out);
+    f2.open( HIDDEN_SCORES_FILE.c_str(), ios::out);
     if (f1.fail() || f2.fail() )
         createFile();
 
@@ -149,8 +145,8 @@ bool Leaderboard::checkFileIntegrity()
     string f1Line;
     string f2Line;
 
-    f1.open( m_file.c_str(), ios::in);
-    f2.open( m_hiddenFile.c_str(), ios::in);
+    f1.open( SCORES_FILE.c_str(), ios::in);
+    f2.open( HIDDEN_SCORES_FILE.c_str(), ios::in);
 
     if ( f1.fail() || f2.fail() )
         createFile();
@@ -193,11 +189,11 @@ void Leaderboard::createFile()
 
     fstream f;
 
-    f.open( m_file.c_str(), ios::out);
+    f.open( SCORES_FILE.c_str(), ios::out);
     f << "";
     f.close();
 
-    f.open( m_hiddenFile.c_str(), ios::out);
+    f.open( HIDDEN_SCORES_FILE.c_str(), ios::out);
     f << "";
     f.close();
 }

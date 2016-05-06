@@ -10,7 +10,7 @@ using namespace std;
 *********************************************/
 DataModel::DataModel() :
     m_currentCoinsCollected{0}, m_currentDistance{0},
-    m_currentEnemyDestructed{0}, m_currentScore{0}
+    m_currentFlattenedEnemies{0}, m_currentScore{0}
 {
     if ( checkFileIntegrity() == false)
         createFile();
@@ -33,46 +33,50 @@ DataModel::~DataModel()
 /********************************************
     Getters
 *********************************************
-    @author Arthur  @date 2/05
+    @author Arthur  @date 2/05 - 6/05
 *********************************************/
 int DataModel::getTotalCoinsCollected() const { return m_totalCoinsCollected; }
 int DataModel::getTotalDistanceTravelled() const { return m_totalDistance; }
-int DataModel::getTotalEnemiesDestructed() const { return m_totalEnemiesDestructed; }
+int DataModel::getTotalEnemiesDestructed() const { return m_totalFlattenedEnemies; }
 int DataModel::getTotalGamesPlayed() const { return m_totalGamesPlayed; }
 int DataModel::getCurrentCoinsCollected() const { return m_currentCoinsCollected; }
 int DataModel::getCurrentDistance() const { return m_currentDistance; }
-int DataModel::getCurrentEnemyDestructed() const { return m_currentEnemyDestructed; }
+int DataModel::getCurrentFlattenedEnemies() const { return m_currentFlattenedEnemies; }
 int DataModel::getCurrentScore() const { return m_currentScore; }
+string DataModel::getLanguage() const {return m_currentLanguage;}
 
 
 /********************************************
     Setters
 *********************************************
-    @author Arthur  @date 2/05
+    @author Arthur  @date 2/05 - 6/05
 *********************************************/
 void DataModel::setCurrentCoinsCollected(int n) { m_currentCoinsCollected += n; }
 void DataModel::setCurrentDistance(int n) { m_currentDistance += n; }
-void DataModel::setCurrentEnemiesDestructed(int n) { m_currentEnemyDestructed += n; }
-void DataModel::setCurrentScore(float speed, int difficulty)
+void DataModel::setCurrentFlattenedEnemies(int n) { m_currentFlattenedEnemies += n; }
+void DataModel::setLanguage(string lang) { m_currentLanguage = lang;}
+void DataModel::setCurrentScore(float speed)
 {
-    m_currentScore = ( (speed+2*difficulty)*m_currentDistance
-            + 20*m_currentCoinsCollected + m_currentEnemyDestructed );
+    m_currentScore = ( speed*m_currentDistance
+            + 20*m_currentCoinsCollected + m_currentFlattenedEnemies );
 }
 
 /********************************************
     Fetch Configuration data from file
 *********************************************
-    @author Arthur  @date 2/05
+    @author Arthur  @date 2/05 - 6/05
 *********************************************/
 void DataModel::fetchConfigurationFromFile()
 {
-    updateInt(m_totalCoinsCollected, "total_coins_collected");
-    updateInt(m_totalDistance, "total_distance_travelled");
-    updateInt(m_totalEnemiesDestructed, "total_enemies_destroyed");
-    updateInt(m_totalGamesPlayed, "total_games_played");
+    updateValue(m_totalCoinsCollected, "total_coins_collected");
+    updateValue(m_totalDistance, "total_distance_travelled");
+    updateValue(m_totalFlattenedEnemies, "total_enemies_destroyed");
+    updateValue(m_totalGamesPlayed, "total_games_played");
+    updateValue(m_currentLanguage, "language");
 }
 
-void DataModel::updateInt(int &currentVariable, string currentName)
+template <typename Type>
+void DataModel::updateValue(Type &currentVariable, string currentName)
 {
     fstream f;
     size_t found = string::npos;
@@ -104,8 +108,11 @@ void DataModel::updateInt(int &currentVariable, string currentName)
 
     f.close();
 
-    currentVariable = stoi(result);
+    std::stringstream ss;
+    ss << result;
+    ss >> currentVariable;
 }
+
 
 /********************************************
     Fetch Configuration data from file
@@ -138,7 +145,7 @@ void DataModel::pushConfigurationToFile()
         else if (line.find("total_enemies_destroyed") !=std::string::npos)
         {
             line.replace(line.begin() + line.find('>')+1, line.begin() + line.find('<'),
-                         to_string(m_totalEnemiesDestructed));
+                         to_string(m_totalFlattenedEnemies));
             line += "</int>";
         }
         else if (line.find("total_distance_travelled") !=std::string::npos)
@@ -152,6 +159,11 @@ void DataModel::pushConfigurationToFile()
             line.replace(line.begin() + line.find('>')+1, line.end(),
                          to_string(m_totalGamesPlayed));
             line += "</int>";
+        }
+        else if (line.find("language") !=std::string::npos)
+        {
+            line.replace(line.begin() + line.find('>')+1, line.end(), m_currentLanguage);
+            line += "</string>";
         }
 
         line += "\n";
@@ -194,7 +206,7 @@ void DataModel::resetCurrentGame()
     m_totalGamesPlayed += 1;
     m_currentCoinsCollected = 0;
     m_currentDistance = 0;
-    m_currentEnemyDestructed = 0;
+    m_currentFlattenedEnemies = 0;
     m_currentScore = 0;
 }
 
@@ -208,7 +220,7 @@ void DataModel::saveCurrentGame()
 {
     m_totalCoinsCollected += m_currentCoinsCollected;
     m_totalDistance += m_currentDistance;
-    m_totalEnemiesDestructed += m_currentEnemyDestructed;
+    m_totalFlattenedEnemies += m_currentFlattenedEnemies;
 
     m_leaderboard->loadVectorFromFile();
     m_leaderboard->addEntryToVector(m_currentScore);
@@ -264,7 +276,7 @@ bool DataModel::checkFileIntegrity()
 /********************************************
     (Re)create files
 *********************************************
-    @author Arthur  @date 2/05
+    @author Arthur  @date 2/05 - 6/05
 *********************************************/
 void DataModel::createFile()
 {
@@ -279,9 +291,9 @@ void DataModel::createFile()
     f << "    	<int name=\"total_enemies_destroyed\">0</int>\n";
     f << "    	<int name=\"total_games_played\">0</int>\n";
     f << "    </stats>\n";
-    f << "   <shop>\n";
-    f << "    	<boolean name=\"double_coin_bought\" value=\"false\" />\n";
-    f << "   </shop>\n";
+    f << "    <config>\n";
+    f << "    <string name=\"language\">en</string>\n";
+    f << "    </config>\n";
     f << "</runner>\n";
 
     f.close();
@@ -295,9 +307,9 @@ void DataModel::createFile()
     f << "    	<int name=\"total_enemies_destroyed\">0</int>\n";
     f << "    	<int name=\"total_games_played\">0</int>\n";
     f << "    </stats>\n";
-    f << "   <shop>\n";
-    f << "    	<boolean name=\"double_coin_bought\" value=\"false\" />\n";
-    f << "   </shop>\n";
+    f << "    <config>\n";
+    f << "    <string name=\"language\">en</string>\n";
+    f << "    </config>\n";
     f << "</runner>\n";
     f.close();
 }

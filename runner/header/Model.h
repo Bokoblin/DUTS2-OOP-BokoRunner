@@ -26,7 +26,7 @@ limitations under the License.
 /********************************************
     Model Class
 *********************************************
-    @author Arthur  @date 21/02 - 2/05
+    @author Arthur  @date 21/02 - 6/05
     @author Florian @date 21/02 - 2/03
 *********************************************/
 class Model
@@ -49,7 +49,6 @@ public:
     //=== SETTERS
     void setDataModel(DataModel *data);
     void setDifficulty(int difficulty);
-    void setLanguage(std::string language);
     void setIntroState(bool state);
     void setMenuState(bool state);
     void setGameState(bool state);
@@ -62,7 +61,6 @@ protected:
     //=== ATTRIBUTES
     float m_width, m_height;
     int m_difficulty;
-    std::string m_language;
     DataModel *m_dataModel;
     const std::chrono::system_clock::time_point m_programBeginningTime;
 

@@ -193,9 +193,9 @@ void MenuView::synchronize()
 	{
 		//=== Elements update
 
-		m_englishLangRadioButton->setActivatedState(m_text->getLanguage() == "en");
-		m_frenchLangRadioButton->setActivatedState(m_text->getLanguage() == "fr");
-		m_spanishLangRadioButton->setActivatedState(m_text->getLanguage() == "es");
+		m_englishLangRadioButton->setActivatedState(m_menuModel->getDataModel()->getLanguage() == "en");
+		m_frenchLangRadioButton->setActivatedState(m_menuModel->getDataModel()->getLanguage() == "fr");
+		m_spanishLangRadioButton->setActivatedState(m_menuModel->getDataModel()->getLanguage() == "es");
 		m_normalQuestRadioButton->setActivatedState(m_model->getDifficulty() == 0);
 		m_masterQuestRadioButton->setActivatedState(m_model->getDifficulty() != 0);
 		m_homeFormButton->sync();
@@ -422,20 +422,17 @@ bool MenuView::treatEvents()
 					}
 					else if ( m_englishLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
 					{
-						m_model->setLanguage("en");
-						m_text->setLanguage("en");
+						m_menuModel->getDataModel()->setLanguage("en");
 						m_text->updateWholeText();
 					}
 					else if ( m_frenchLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
 					{
-						m_model->setLanguage("fr");
-						m_text->setLanguage("fr");
+						m_menuModel->getDataModel()->setLanguage("fr");
 						m_text->updateWholeText();
 					}
 					else if ( m_spanishLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
 					{
-						m_model->setLanguage("es");
-						m_text->setLanguage("es");
+						m_menuModel->getDataModel()->setLanguage("es");
 						m_text->updateWholeText();
 					}
 					else if ( m_normalQuestRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )

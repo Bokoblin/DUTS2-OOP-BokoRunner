@@ -82,9 +82,9 @@ void GameModel::nextStep()
 		if ( nextStepDelay > chrono::milliseconds( 100 ) )
 		{
 
-		    if ( m_difficulty == 0 && m_gameSpeed < 18 && chrono::system_clock::now() >= m_bonusStopTime)
+		    if ( m_difficulty == 0 && m_gameSpeed < 16 && chrono::system_clock::now() >= m_bonusStopTime)
                 m_gameSpeed += 0.01;
-            else if (  m_gameSpeed < 18 && chrono::system_clock::now() >= m_bonusStopTime)
+            if ( m_difficulty != 0 && m_gameSpeed < 18 && chrono::system_clock::now() >= m_bonusStopTime)
             {
                 if (m_gameSpeed == 4.0)
                     m_gameSpeed = 8.0;
@@ -138,7 +138,7 @@ void GameModel::nextStep()
     }
     else if (m_endState == true)
     {
-        m_dataModel->setCurrentScore(m_gameSpeed, m_difficulty);
+        m_dataModel->setCurrentScore(m_gameSpeed);
     }
 }
 
@@ -159,6 +159,9 @@ void GameModel::chooseInterdistance(int elementType)
             m_chosenEnemyInterdistance = 10 + abs(rand()%41); //10 to 50m
         else
             m_chosenEnemyInterdistance = abs(rand()%41); //0 to 40m
+
+        if ( m_difficulty !=0 )
+            m_chosenEnemyInterdistance /= 3;
     }
 
     else if ( elementType == 2 ) //coin
@@ -341,7 +344,7 @@ void GameModel::handleMovableElementsCollisions()
             }
 
             else if ( (*it)->getType() == 1 && m_player->getState() == 1 )
-                m_dataModel->setCurrentEnemiesDestructed(100);
+                m_dataModel->setCurrentFlattenedEnemies(100);
 
             else if ( (*it)->getType() == 2 && m_player->getState() != 1) //totem enemy
             {
@@ -353,18 +356,18 @@ void GameModel::handleMovableElementsCollisions()
 
 
             else if ( (*it)->getType() == 2 && m_player->getState() == 1 )
-                m_dataModel->setCurrentEnemiesDestructed(300);
+                m_dataModel->setCurrentFlattenedEnemies(300);
 
             else if ( (*it)->getType() == 3 && m_player->getState() != 1) //block enemy
             {
                 if (m_difficulty == 0)
-                    m_player->setLife(m_player->getLife()-20);
+                    m_player->setLife(m_player->getLife()-25);
                 else if (m_difficulty == 2)
-                    m_player->setLife(m_player->getLife()-40);
+                    m_player->setLife(m_player->getLife()-50);
             }
 
             else if ( (*it)->getType() == 3 && m_player->getState() == 1 )
-                m_dataModel->setCurrentEnemiesDestructed(500);
+                m_dataModel->setCurrentFlattenedEnemies(500);
 
             else if ( (*it)->getType() == 4) //coin
                 m_dataModel->setCurrentCoinsCollected(1);

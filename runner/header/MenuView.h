@@ -17,6 +17,7 @@ limitations under the License.
 #define MENUVIEW_H
 
 #include "View.h"
+#include <SFML/Audio.hpp>
 
 /********************************************
     Constant Variables
@@ -25,12 +26,13 @@ const std::string TITLE_IMAGE = "Images/title.png";
 const std::string RECT_BUTTONS_IMAGE = "Images/rect_buttons.png";
 const std::string FORM_BUTTONS_IMAGE = "Images/menu_buttons.png";
 const std::string RADIO_BUTTONS_IMAGE = "Images/radio_buttons.png";
-
+const std::string MENU_MUSIC = "Music/menu_sound.ogg";
 
 /********************************************
     MenuView Class
 *********************************************
     @author Arthur  @date 26/03 - 20/04
+    @author Florian @date 20/04 - 03/05
 *********************************************/
 class MenuView : public View
 {
@@ -75,6 +77,9 @@ private:
     Button *m_spanishLangRadioButton;
     Button *m_normalQuestRadioButton;
     Button *m_masterQuestRadioButton;
+    //Music
+    sf::Music m_menuMusic;
 };
+
 
 #endif // MENUVIEW_H

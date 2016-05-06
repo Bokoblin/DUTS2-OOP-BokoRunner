@@ -1,7 +1,7 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.4.0
+Current version : v1.5.0
 
 ======================================================================================
 BETA CHANNEL Changelog
@@ -210,3 +210,6 @@ v1.4.0 (30/04/16):
 
 ---------------------------------------------------------------------------------------------------
 
+v1.5.0 (6/05/16)
+
+- added Music in menu and game

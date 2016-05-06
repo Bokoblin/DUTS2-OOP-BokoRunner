@@ -6,10 +6,22 @@ using namespace std;
     Parameterized Constructor
 *********************************************
     @author Arthur  @date 25/02 - 14/04
+    @author Florian @date 22/04 - 06/05
+
 *********************************************/
 MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
 	View(w, h, window,text), m_menuModel{nullptr}
 {
+    if (!m_menuMusic.openFromFile(MENU_MUSIC))
+        cerr << "ERROR when loading music file: " << MENU_MUSIC << endl;
+    else
+    {
+        m_menuMusic.play();
+        m_menuMusic.setLoop(true);
+        m_menuMusic.setAttenuation(50);
+    }
+
+
 	if (m_window->getSize().x != m_width )
 	{
 		m_window->create( sf::VideoMode(w, h, 32), "Boko Runner", sf::Style::Close );
@@ -302,6 +314,7 @@ void MenuView::draw() const
     Events treating
 *********************************************
     @author Arthur  @date 25/03 - 20/04
+    @author Florian @date 22/04 - 06/05
 *********************************************/
 bool MenuView::treatEvents()
 {
@@ -353,6 +366,8 @@ bool MenuView::treatEvents()
 
 					if ( m_playRectButton->getGlobalBounds().contains(MOUSE_POSITION) )
 					{
+                        if(m_menuMusic.getStatus() == sf::Music::Status::Playing )
+                            m_menuMusic.stop();
 						m_model->setMenuState(false);
 						m_model->setGameState(true);
 						result = false;

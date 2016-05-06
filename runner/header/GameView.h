@@ -17,6 +17,7 @@ limitations under the License.
 #define GAMEVIEW_H
 
 #include "View.h"
+#include <SFML/Audio.hpp>
 
 
 /********************************************
@@ -33,6 +34,12 @@ const std::string REMAINING_LIFE = "Images/remaining_life.png";
 const std::string PAUSE_BGND_IMAGE = "Images/pause_background.png";
 const std::string GAME_BUTTONS_IMAGE = "Images/pause_elements.png";
 const std::string END_BGND_IMAGE = "Images/end_background.png";
+//MUSIC
+const std::string GAME_NORMAL_THEME_MUSIC = "Music/game_normal_sound.ogg";
+const std::string GAME_MASTER_THEME_MUSIC = "Music/game_master_sound.wav";
+const std::string COINS_COLLECTED_MUSIC = "Music/coin_collected_sound.ogg";
+const std::string ENEMIES_DESTRUCTED_MUSIC = "Music/destroyed_enemies_sound.ogg";
+
 
 const int TRANSITION_SPEED = 10;
 
@@ -40,7 +47,7 @@ const int TRANSITION_SPEED = 10;
     GameView Class
 *********************************************
     @author Arthur  @date 21/02 - 30/04
-    @author Florian @date 21/02 - 3/03
+    @author Florian @date 21/02 - 6/05
 *********************************************/
 class GameView : public View
 {
@@ -113,6 +120,11 @@ private:
     Button *m_restartGameButton;
     Button *m_goToHomeButton;
     Button *m_saveScoreButton;
+
+    //Music
+    sf::Music m_gameThemeMusic;
+    sf::Music m_coinMusic;
+    sf::Music m_destructedEnemiesMusic;
 
     //Containers
     std::map<MovableElement*, GraphicElement*> m_MovableToGraphicElementMap;

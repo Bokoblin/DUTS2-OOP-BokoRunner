@@ -14,6 +14,20 @@ GameView::GameView(float w, float h, sf::RenderWindow *mywindow, Text *text):
     loadImages();
     m_lb = new Leaderboard;
     m_pixelShader = new PixelateEffect();
+
+if (!m_gameThemeMusic.openFromFile(GAME_NORMAL_THEME_MUSIC))
+        cerr << "ERROR when loading music file: " << GAME_NORMAL_THEME_MUSIC << endl;
+    else
+    {
+        m_gameThemeMusic.play();
+        m_gameThemeMusic.setLoop(true);
+    }
+
+    if (!m_coinMusic.openFromFile(COINS_COLLECTED_MUSIC))
+            cerr << "ERROR when loading music file: " << COINS_COLLECTED_MUSIC << endl;
+
+    if (!m_destructedEnemiesMusic.openFromFile(ENEMIES_DESTRUCTED_MUSIC))
+            cerr << "ERROR when loading music file: " << ENEMIES_DESTRUCTED_MUSIC << endl;
 }
 
 
@@ -405,6 +419,13 @@ void GameView::deleteElements()
     {
         if ( (it->first)->getCollisionState() == true )
         {
+            if ( (it->first)->getType() == 4 )
+                m_coinMusic.play();
+
+
+            if ( (it->first)->getType() == 1 || (it->first)->getType() == 2 || (it->first)->getType() ==3  )
+                m_destructedEnemiesMusic.play();
+
             delete it->second;
             m_MovableToGraphicElementMap.erase(it);
             found = true;
@@ -461,6 +482,12 @@ void GameView::synchronize()
     }
     else if (m_gameModel->getEndState() == true )
     {
+	//=== Music ending
+
+        if(m_gameThemeMusic.getStatus() == sf::Music::Status::Playing )
+            m_gameThemeMusic.stop();
+
+
         //=== Buttons update
 
         m_goToHomeButton->sync();
@@ -564,7 +591,7 @@ void GameView::draw() const
     Events treating
 *********************************************
     @author Arthur  @date 21/02 - 19/04
-    @author Florian @date 21/02 - 10/04
+    @author Florian @date 21/02 - 06/05
 *********************************************/
 bool GameView::treatEvents()
 {
@@ -608,6 +635,10 @@ bool GameView::treatEvents()
                         && event.key.code == sf::Keyboard::Escape)
             {
                 m_gameModel->setPauseState(!m_gameModel->getPauseState() );
+                if(m_gameThemeMusic.getStatus() == sf::Music::Status::Playing )
+                    m_gameThemeMusic.pause();
+                else if(m_gameThemeMusic.getStatus() == sf::Music::Status::Paused)
+                    m_gameThemeMusic.play();
             }
             if (event.type == sf::Event::KeyReleased)
                 m_gameModel->getPlayer()->setDecelerationState(true);
@@ -622,6 +653,8 @@ bool GameView::treatEvents()
                             m_text->getResumeText()->getGlobalBounds().contains(MOUSE_POSITION) )
                     {
                         m_resumeGameButton->setPressedState(true);
+                        if(m_gameThemeMusic.getStatus() == sf::Music::Status::Paused)
+                            m_gameThemeMusic.play();
                     }
                     else if ( m_restartGameButton->getGlobalBounds().contains(MOUSE_POSITION) ||
                               m_text->getRestartText()->getGlobalBounds().contains(MOUSE_POSITION) )

@@ -12,5 +12,5 @@ stdout.txt
 *.md5
 Makefile
 runner/Resources/scores.txt
-runner/Resources/.temp.xml
 runner/Resources/config.xml
+runner/Resources/.*

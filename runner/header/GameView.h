@@ -32,7 +32,8 @@ const std::string BOTTOM_BAR_IMAGE = "Images/bottom_bar.png";
 const std::string LIFE_BOX_IMAGE = "Images/life_bar.png";
 const std::string REMAINING_LIFE = "Images/remaining_life.png";
 //PAUSE & END
-const std::string PAUSE_BGND_IMAGE = "Images/pause_background.png";
+const std::string PAUSE_BGND_HILL_IMAGE = "Images/pause_bg_hill.png";
+const std::string PAUSE_BGND_PLAIN_IMAGE = "Images/pause_bg_plain.png";
 const std::string GAME_BUTTONS_IMAGE = "Images/pause_elements.png";
 const std::string GRECT_BUTTON_IMAGE = "Images/rect_buttons.png";
 const std::string END_BGND_IMAGE = "Images/end_background.png";

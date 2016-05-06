@@ -240,8 +240,8 @@ void GameView::loadImages()
     }
 
 
-    if (!m_pauseBackgroundTexture.loadFromFile(PAUSE_BGND_IMAGE))
-        cerr << "ERROR when loading image file: " << PAUSE_BGND_IMAGE << endl;
+    if (!m_pauseBackgroundTexture.loadFromFile(PAUSE_BGND_HILL_IMAGE))
+        cerr << "ERROR when loading image file: " << PAUSE_BGND_PLAIN_IMAGE << endl;
     else
     {
         m_pauseBackgroundTexture.setSmooth(true);
@@ -376,7 +376,7 @@ void GameView::handleZonesTransition()
 /********************************************
     Update gElements
 *********************************************
-    @author Arthur  @date 6/03 - 3/05
+    @author Arthur  @date 6/03 - 5/05
 *********************************************/
 void GameView::updateElements()
 {
@@ -410,6 +410,11 @@ void GameView::updateElements()
     }
     else if ( m_gameModel->getPauseState() )
     {
+        if (m_gameModel->getCurrentZone() == 1)
+                m_pauseBackgroundTexture.loadFromFile(PAUSE_BGND_HILL_IMAGE);
+            else
+                m_pauseBackgroundTexture.loadFromFile(PAUSE_BGND_PLAIN_IMAGE);
+
         m_resumeGameButton->sync();
         m_restartGameButton->sync();
         m_goToHomeButton->sync();

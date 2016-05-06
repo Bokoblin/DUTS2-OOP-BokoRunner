@@ -18,6 +18,7 @@ limitations under the License.
 
 #include "Leaderboard.h"
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <cassert>
 
@@ -26,12 +27,12 @@ limitations under the License.
 ********************************************/
 //GAME
 const std::string CONFIG_FILE = "Resources/config.xml";
-const std::string HIDDEN_CONFIG_FILE = "Resources/.temp.xml";
+const std::string HIDDEN_CONFIG_FILE = "Resources/.fragment_cache";
 
 /********************************************
     DataModel Class
 *********************************************
-    @author Arthur  @date 2/05 - 3/05
+    @author Arthur  @date 2/05 - 6/05
 *********************************************/
 class DataModel
 {
@@ -47,14 +48,16 @@ public:
     int getTotalGamesPlayed() const;
     int getCurrentCoinsCollected() const;
     int getCurrentDistance() const;
-    int getCurrentEnemyDestructed() const;
+    int getCurrentFlattenedEnemies() const;
     int getCurrentScore() const;
+    std::string getLanguage() const;
 
     //=== SETTERS
     void setCurrentCoinsCollected(int number);
     void setCurrentDistance(int number);
-    void setCurrentEnemiesDestructed(int number);
-    void setCurrentScore(float speed, int difficulty);
+    void setCurrentFlattenedEnemies(int number);
+    void setCurrentScore(float speed);
+    void setLanguage(std::string lang);
 
     //=== METHODS
     void fetchConfigurationFromFile();
@@ -63,7 +66,8 @@ public:
     void resetCurrentGame();
     void createFile();
     bool checkFileIntegrity();
-    void updateInt(int &variable, std::string name);
+    template <typename Type>
+    void updateValue(Type &variable, std::string name);
 
 
 private:
@@ -72,20 +76,17 @@ private:
     //Global
     int m_totalCoinsCollected;
     int m_totalDistance;
-    int m_totalEnemiesDestructed;
+    int m_totalFlattenedEnemies;
     int m_totalGamesPlayed;
+    std::string m_currentLanguage;
 
     //Current Game
     int m_currentCoinsCollected;
     int m_currentDistance;
-    int m_currentEnemyDestructed;
+    int m_currentFlattenedEnemies;
     int m_currentScore;
 
     Leaderboard *m_leaderboard;
-
-    //Containers
-    //std::vector<std::string> m_ItemsUnlockedArray; //for next dev
-
 };
 
 #endif

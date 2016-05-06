@@ -29,7 +29,7 @@ using namespace std;
 /********************************************
     Main function
 *********************************************
-    @author Arthur  @date 21/02 - 12/04
+    @author Arthur  @date 21/02 - 06/05
     @author Florian  @date 21/02
 *********************************************/
 int main()
@@ -38,11 +38,11 @@ int main()
     sf::RenderWindow *window = new sf::RenderWindow( sf::VideoMode(SCREEN_WIDTH,
             SCREEN_HEIGHT, 32), "Boko Runner", sf::Style::None );
     window->setFramerateLimit(30);
-    Text *text = new Text();
 
     DataModel data;
     Model model(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
     model.setDataModel(&data);
+    Text *text = new Text(&data);
 
     while(window->isOpen() )
     {
@@ -95,8 +95,8 @@ int main()
 
     data.pushConfigurationToFile();
 
-    delete window;
     delete text;
+    delete window;
 
     return EXIT_SUCCESS;
 }

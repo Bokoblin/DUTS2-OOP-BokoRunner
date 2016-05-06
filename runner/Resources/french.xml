@@ -16,45 +16,41 @@
 
 <resources>
 
-   <!-- Menu strings -->
-   <string name="playButtonText">JOUER</string>
-   <string name="quitButtonText">QUITTER</string>
-   <string name="clearButtonText">EFFACER</string>
-
-
-   <!-- Settings strings -->
-   <string name="settingsLabel">Options</string>
-   <string name="configurationLabel">Configuration</string>
-   <string name="configLanguageLabel">Langues</string>
-   <string name="configLanguageEnLabel">Anglais</string>
-   <string name="configLanguageFrLabel">Francais</string>
-   <string name="configLanguageEsLabel">Espagnol</string>
+   <!-- Menu, Settings & Leaderboard strings -->
+   <string name="playButtonLabel">JOUER</string>
+   <string name="quitButtonLabel">QUITTER</string>
+   <string name="clearButtonLabel">EFFACER</string>
+   <string name="configTitleLabel">Configuration</string>
+   <string name="configLangTitleLabel">Langues</string>
+   <string name="configLangEngLabel">Anglais</string>
+   <string name="configLangFraLabel">Francais</string>
+   <string name="configLangEspLabel">Espagnol</string>
    <string name="configDifficultyLabel">Difficulte</string>
    <string name="configDifficultyNormalLabel">Normal</string>
    <string name="configDifficultyMasterLabel">Master</string>
-   <string name="statsLabel">Statistiques</string>
+   <string name="statisticsTitleLabel">Statistiques</string>
    <string name="totalDistanceLabel">Distance_totale_parcourue</string>
-   <string name="totalEnemiesDestructedLabel">Total_d'ennemies_detruits</string>
+   <string name="totalFlattenedEnemiesLabel">Total_ennemies_aplatis</string>
    <string name="totalGamesPlayedLabel">Parties_lancees</string>
    <string name="leaderboardTitleLabel">Classement</string>
-   <string name="leaderboardText">Il_n'y_a_pas_encore_de_scores</string>
-   <string name="leaderboardErrorText">Les_donnees_de_score_ont_ete_corrompues._Veuillez_les_effacer.</string>
+   <string name="leaderboardLabel">Il_n'y_a_pas_encore_de_scores</string>
+   <string name="leaderboardErrorLabel">Les_donnees_de_score_ont_ete_corrompues._Veuillez_les_effacer.</string>
 
    <!--  Game strings -->
    <string name="playerLifeLabel">Vie</string>
-   <string name="saveButtonText">SAUVER</string>
+   <string name="saveButtonLabel">SAUVER</string>
 
    <!--  Pause Screen strings -->
    <string name="pauseResumeLabel">Reprendre</string>
-   <string name="restartLabel">Recommencer</string>
-   <string name="homeLabel">Accueil</string>
+   <string name="pauseRestartLabel">Recommencer</string>
+   <string name="pauseGotoHomeLabel">Accueil</string>
 
    <!--  End Screen strings -->
    <string name="endTitleLabel">Votre_score</string>
-   <string name="speedmultiplicatorLabel">Multiplicateur_vitesse</string>
-   <string name="distanceLabel">Distance_parcourue</string>
-   <string name="CoinsCollectedNumberLabel">Pieces_collectees</string>
-   <string name="enemyDestructedBonusLabel">Bonus_destruction_ennemies</string>
-   <string name="scoreLabel">Score_total</string>
+   <string name="speedMultiplierLabel">Multiplicateur_vitesse</string>
+   <string name="currentDistanceLabel">Distance_parcourue</string>
+   <string name="coinsCollectedLabel">Pieces_collectees</string>
+   <string name="flattenedEnemiesLabel">Bonus_destruction_ennemies</string>
+   <string name="currentScoreLabel">Score_total</string>
 
 </resources>

@@ -17,7 +17,6 @@ limitations under the License.
 #define TEXT_H
 
 #include "GameModel.h"
-#include "MenuModel.h"
 #include "SFML/Graphics.hpp"
 #include <map>
 
@@ -34,13 +33,13 @@ const std::string SPANISH_STRINGS = "Resources/spanish.xml";
 /********************************************
     Text Class
 *********************************************
-    @author Arthur  @date 02/04 - 20/04
+    @author Arthur  @date 02/04 - 06/05
 *********************************************/
 class Text
 {
     public:
     //=== CTORs / DTORs
-    Text();
+    Text(DataModel *data);
     Text(const Text& myText) = delete;
     ~Text();
 
@@ -48,10 +47,6 @@ class Text
     sf::Text *getResumeText() const;
     sf::Text *getRestartText() const;
     sf::Text *getHomeText() const;
-    std::string getLanguage() const;
-
-    //=== SETTERS
-    void setLanguage(std::string lang);
 
     //=== METHODS
     void loadText();
@@ -59,11 +54,11 @@ class Text
     void updateString(std::string file, sf::Text *currentText, std::string currentName);
 
     void syncMenuHomeText(int width, int height);
-    void syncMenuSettingsText(int width, int height);
+    void syncMenuSettingsText( int width, int height);
     void syncMenuLeaderboardText(int w, int h, Leaderboard *lb);
-    void syncGameMainText(GameModel *gameModel);
-    void syncGamePauseText(GameModel *gameModel);
-    void syncGameEndText(GameModel *gameModel);
+    void syncGameText(GameModel *gameModel);
+    void syncPauseText();
+    void syncEndText(GameModel *gameModel);
 
     void drawMenuHomeText(sf::RenderWindow *window);
     void drawMenuSettingsText(sf::RenderWindow *window);
@@ -75,47 +70,56 @@ class Text
 private:
     //=== ATTRIBUTES
     sf::Font *m_font;
-    std::map<sf::Text*, std::string> m_textVector;
-    std::string m_currentLanguage;
+    DataModel *m_dataModel;
+    std::map<sf::Text*, std::string> m_textMap;
 
-    //Menu Text
-    sf::Text *m_playButtonText;
-    sf::Text *m_quitButtonText;
-    //Settings Text
-    sf::Text *m_settingsLabel;
-    sf::Text *m_configurationLabel;
-    sf::Text *m_configLanguageLabel;
-    sf::Text *m_configLanguageEnLabel;
-    sf::Text *m_configLanguageFrLabel;
-    sf::Text *m_configLanguageEsLabel;
+    //Menu, Settings and Leaderboard Labels
+    // ( loaded from file)
+    sf::Text *m_playButtonLabel;
+    sf::Text *m_quitButtonLabel;
+    sf::Text *m_clearButtonLabel;
+    sf::Text *m_configTitleLabel;
+    sf::Text *m_configLangTitleLabel;
+    sf::Text *m_configLangEngLabel;
+    sf::Text *m_configLangFraLabel;
+    sf::Text *m_configLangEspLabel;
     sf::Text *m_configDifficultyLabel;
     sf::Text *m_configDifficultyNormalLabel;
     sf::Text *m_configDifficultyMasterLabel;
-    //Leaderboard Text
+    sf::Text *m_statisticsTitleLabel;
+    sf::Text *m_totalDistanceLabel;
+    sf::Text *m_totalFlattenedEnemiesLabel;
+    sf::Text *m_totalGamesPlayedLabel;
     sf::Text *m_leaderboardTitleLabel;
-    sf::Text *m_leaderboardText;
-    sf::Text *m_clearButtonText;
 
-    //Game Text
-    sf::Text *m_distanceText;
+    //Game (Main, Pause & End) Labels
     sf::Text *m_playerLifeLabel;
-    sf::Text *m_bonusTimeoutLabel;
-    sf::Text *m_bonusTimeoutText;
-    //Pause Text
-    sf::Text *m_pauseResumeLabel;
-    sf::Text *m_restartLabel;
-    sf::Text *m_homeLabel;
-    sf::Text *m_coinsCollectedText;
-    //End Text
-    sf::Text *m_endTitleLabel;
-    sf::Text *m_speedmultiplicatorLabel;
-    sf::Text *m_speedmultiplicatorText;
-    sf::Text *m_distanceLabel;
+    sf::Text *m_currentDistanceLabel;
     sf::Text *m_coinsCollectedLabel;
-    sf::Text *m_enemyDestructedBonusLabel;
-    sf::Text *m_enemyDestructedBonusText;
-    sf::Text *m_scoreLabel;
-    sf::Text *m_scoreText;
+    sf::Text *m_pauseResumeLabel;
+    sf::Text *m_pauseRestartLabel;
+    sf::Text *m_pauseGoToHomeLabel;
+    sf::Text *m_endTitleLabel;
+    sf::Text *m_speedMultiplierLabel;
+    sf::Text *m_flattenedEnemiesLabel;
+    sf::Text *m_currentScoreLabel;
+
+    //Menu, Settings and Leaderboard DataText
+    // ( loaded from parsed data)
+    sf::Text *m_totalDistanceText;
+    sf::Text *m_totalFlattenedEnemiesText;
+    sf::Text *m_totalGamesPlayedText;
+    sf::Text *m_leaderboardContentText;
+
+    //Game (Main, Pause & End) DataText
+    sf::Text *m_currentDistanceText;
+    sf::Text *m_bonusTimeoutText;
+    sf::Text *m_saveButtonText;
+    sf::Text *m_totalCoinsCollectedText;
+    sf::Text *m_currentCoinsCollectedText;
+    sf::Text *m_speedMultiplierText;
+    sf::Text *m_flattenedEnemiesText;
+    sf::Text *m_currentScoreText;
 };
 
 #endif // TEXT_H

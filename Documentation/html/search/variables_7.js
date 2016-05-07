@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['life_5fbox_5fimage',['LIFE_BOX_IMAGE',['../dc/d46/_game_view_8h.html#a9cb654f7d768ab76ede65fbbdc173b45',1,'GameView.h']]]
+  ['intro_5fimage',['INTRO_IMAGE',['../db/d6c/_intro_8h.html#ac4fe1625ba19240b70315818ff6b3786',1,'Intro.h']]]
 ];

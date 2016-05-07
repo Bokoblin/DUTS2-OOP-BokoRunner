@@ -25,7 +25,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Boko Runner
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">An S2 Oriented Object Programming Project</div>
   </td>
@@ -99,7 +99,7 @@ Inheritance diagram for GameModel:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d3/d84/class_game_model__inherit__graph.png" border="0" usemap="#_game_model_inherit__map" alt="Inheritance graph"/></div>
 <map name="_game_model_inherit__map" id="_game_model_inherit__map">
-<area shape="rect" id="node2" href="../../d0/de3/class_model.html" title="{Model\n|# m_width\l# m_height\l# m_difficulty\l# m_language\l# m_programBeginningTime\l|+ Model()\l+ Model()\l+ ~Model()\l+ getDifficulty()\l+ getIntroState()\l+ getMenuState()\l+ getGameState()\l+ getResetGameState()\l+ getProgramBeginningTime()\l+ setDifficulty()\land 6 more...\l}" alt="" coords="10,5,205,288"/>
+<area shape="rect" id="node2" href="../../d0/de3/class_model.html" title="{Model\n|# m_width\l# m_height\l# m_difficulty\l# m_dataModel\l# m_programBeginningTime\l|+ Model()\l+ Model()\l+ ~Model()\l+ getDataModel()\l+ getDifficulty()\l+ getIntroState()\l+ getMenuState()\l+ getGameState()\l+ getResetGameState()\l+ getProgramBeginningTime()\land 7 more...\l}" alt="" coords="10,5,205,288"/>
 </map>
 </div>
 <table class="memberdecls">
@@ -117,22 +117,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa41846cf5fad53298f8a3acdc867f1c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d5cbfc591167b102c31571aa4bec64f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#a9d5cbfc591167b102c31571aa4bec64f">getTransitionPossibleStatus</a> () const </td></tr>
 <tr class="separator:a9d5cbfc591167b102c31571aa4bec64f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acac3a6d5056e04bed9dc29578de40df3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#acac3a6d5056e04bed9dc29578de40df3">getScoreSavableStatus</a> () const </td></tr>
-<tr class="separator:acac3a6d5056e04bed9dc29578de40df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0b281164e18a5c2ffa4de4283795f55"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#aa0b281164e18a5c2ffa4de4283795f55">getSaveStatus</a> () const </td></tr>
+<tr class="separator:aa0b281164e18a5c2ffa4de4283795f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac407c533d127ebad4817100e0a7d733e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d53/class_player.html">Player</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#ac407c533d127ebad4817100e0a7d733e">getPlayer</a> () const </td></tr>
 <tr class="separator:ac407c533d127ebad4817100e0a7d733e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dfdebaeece80eca88fe3e2a057f729c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#a4dfdebaeece80eca88fe3e2a057f729c">getScore</a> () const </td></tr>
-<tr class="separator:a4dfdebaeece80eca88fe3e2a057f729c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6af53faf9cac72ebd8410bdc62c3768"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#aa6af53faf9cac72ebd8410bdc62c3768">getDistance</a> () const </td></tr>
-<tr class="separator:aa6af53faf9cac72ebd8410bdc62c3768"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1b92e31ed26976ec2a7b4bf4279df14"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#ae1b92e31ed26976ec2a7b4bf4279df14">getGameSpeed</a> () const </td></tr>
 <tr class="separator:ae1b92e31ed26976ec2a7b4bf4279df14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a033d79f6dae5182c0a4841dfc7410ab2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#a033d79f6dae5182c0a4841dfc7410ab2">getCurrentZone</a> () const </td></tr>
 <tr class="separator:a033d79f6dae5182c0a4841dfc7410ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae079993b4a51f88f8ea0a9b442ae0fe"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#aae079993b4a51f88f8ea0a9b442ae0fe">getNbCoinsCollected</a> () const </td></tr>
-<tr class="separator:aae079993b4a51f88f8ea0a9b442ae0fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcd801e1f7ece7df555a8f76dd17783d"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#adcd801e1f7ece7df555a8f76dd17783d">getEnemyDestructedBonus</a> () const </td></tr>
-<tr class="separator:adcd801e1f7ece7df555a8f76dd17783d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8436b7e6969972c911ecb8e966b52fd8"><td class="memItemLeft" align="right" valign="top">const std::set&lt; <a class="el" href="../../d8/d96/class_movable_element.html">MovableElement</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#a8436b7e6969972c911ecb8e966b52fd8">getNewMElementsArray</a> () const </td></tr>
 <tr class="separator:a8436b7e6969972c911ecb8e966b52fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8c58464f2fcf8248ddfcbaae4a8a028"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#ae8c58464f2fcf8248ddfcbaae4a8a028">getBonusTimeout</a> () const </td></tr>
@@ -145,8 +137,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a95482c84487ccac25f27737ba7321f77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab499fdf56a6b1e5aaee0eba76919224d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#ab499fdf56a6b1e5aaee0eba76919224d">setTransitionPossibleStatus</a> (bool status)</td></tr>
 <tr class="separator:ab499fdf56a6b1e5aaee0eba76919224d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9e0b527f88b6b430452c0d099f63d02"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#ac9e0b527f88b6b430452c0d099f63d02">setScoreSavableStatus</a> (bool status)</td></tr>
-<tr class="separator:ac9e0b527f88b6b430452c0d099f63d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4879c8f704d09b6000ea8eacb1e1fe32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#a4879c8f704d09b6000ea8eacb1e1fe32">setSaveStatus</a> (bool status)</td></tr>
+<tr class="separator:a4879c8f704d09b6000ea8eacb1e1fe32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef99f32fbbb3025b8e9b0cad0d09afeb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#aef99f32fbbb3025b8e9b0cad0d09afeb">setCurrentZone</a> (int number)</td></tr>
 <tr class="separator:aef99f32fbbb3025b8e9b0cad0d09afeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66c7e601686d213cd5431a2d78a0b889"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da9/class_game_model.html#a66c7e601686d213cd5431a2d78a0b889">setNbCoinsCollected</a> (unsigned int number)</td></tr>
@@ -178,6 +170,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a427a805ff8293a1a55ec9e1e98900405 inherit pub_methods_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6ebd2062a0b823db841a0b88baac4c0 inherit pub_methods_class_model"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/class_model.html#ad6ebd2062a0b823db841a0b88baac4c0">~Model</a> ()</td></tr>
 <tr class="separator:ad6ebd2062a0b823db841a0b88baac4c0 inherit pub_methods_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4d1cfe4268a349e190db73674f33fb9 inherit pub_methods_class_model"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/d8c/class_data_model.html">DataModel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/class_model.html#af4d1cfe4268a349e190db73674f33fb9">getDataModel</a> () const </td></tr>
+<tr class="separator:af4d1cfe4268a349e190db73674f33fb9 inherit pub_methods_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5cfc2aafa3644d37e90ff4ab433c2bdf inherit pub_methods_class_model"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/class_model.html#a5cfc2aafa3644d37e90ff4ab433c2bdf">getDifficulty</a> () const </td></tr>
 <tr class="separator:a5cfc2aafa3644d37e90ff4ab433c2bdf inherit pub_methods_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68d8d86b2524bd986b4bba8d12896f6e inherit pub_methods_class_model"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/class_model.html#a68d8d86b2524bd986b4bba8d12896f6e">getIntroState</a> () const </td></tr>
@@ -190,10 +184,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4b69807916b253900c01329441ceacce inherit pub_methods_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24f04ea3dc429c1ede5c6c03208c2a6f inherit pub_methods_class_model"><td class="memItemLeft" align="right" valign="top">std::chrono::system_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/class_model.html#a24f04ea3dc429c1ede5c6c03208c2a6f">getProgramBeginningTime</a> () const </td></tr>
 <tr class="separator:a24f04ea3dc429c1ede5c6c03208c2a6f inherit pub_methods_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e149120f6a8611b38cfbb62e8da7534 inherit pub_methods_class_model"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/class_model.html#a4e149120f6a8611b38cfbb62e8da7534">setDataModel</a> (<a class="el" href="../../d9/d8c/class_data_model.html">DataModel</a> *data)</td></tr>
+<tr class="separator:a4e149120f6a8611b38cfbb62e8da7534 inherit pub_methods_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f67e8e203c90743a221e45edd3b8cf8 inherit pub_methods_class_model"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/class_model.html#a0f67e8e203c90743a221e45edd3b8cf8">setDifficulty</a> (int difficulty)</td></tr>
 <tr class="separator:a0f67e8e203c90743a221e45edd3b8cf8 inherit pub_methods_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab667b470c19f4122020a35895ed54cfc inherit pub_methods_class_model"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/class_model.html#ab667b470c19f4122020a35895ed54cfc">setLanguage</a> (std::string language)</td></tr>
-<tr class="separator:ab667b470c19f4122020a35895ed54cfc inherit pub_methods_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e7f03b7b2554fa0eb2042978b54d8c5 inherit pub_methods_class_model"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/class_model.html#a4e7f03b7b2554fa0eb2042978b54d8c5">setIntroState</a> (bool state)</td></tr>
 <tr class="separator:a4e7f03b7b2554fa0eb2042978b54d8c5 inherit pub_methods_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08f2d9c63e87ad2ffe3e5eb354b6d55e inherit pub_methods_class_model"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/class_model.html#a08f2d9c63e87ad2ffe3e5eb354b6d55e">setMenuState</a> (bool state)</td></tr>
@@ -212,8 +206,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a1ce1dcff24d60aa9a276420dd0444e8b inherit pro_attribs_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d61055bf90e07fb62d5f790b29cfb8b inherit pro_attribs_class_model"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/class_model.html#a4d61055bf90e07fb62d5f790b29cfb8b">m_difficulty</a></td></tr>
 <tr class="separator:a4d61055bf90e07fb62d5f790b29cfb8b inherit pro_attribs_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a757a7d0b52e316efdf46d007c93db1b5 inherit pro_attribs_class_model"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/class_model.html#a757a7d0b52e316efdf46d007c93db1b5">m_language</a></td></tr>
-<tr class="separator:a757a7d0b52e316efdf46d007c93db1b5 inherit pro_attribs_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6450868b7818811c9ccb6fec590e5a4a inherit pro_attribs_class_model"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/d8c/class_data_model.html">DataModel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/class_model.html#a6450868b7818811c9ccb6fec590e5a4a">m_dataModel</a></td></tr>
+<tr class="separator:a6450868b7818811c9ccb6fec590e5a4a inherit pro_attribs_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3343aab8d7ee097b272f825a150730e0 inherit pro_attribs_class_model"><td class="memItemLeft" align="right" valign="top">const std::chrono::system_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/de3/class_model.html#a3343aab8d7ee097b272f825a150730e0">m_programBeginningTime</a></td></tr>
 <tr class="separator:a3343aab8d7ee097b272f825a150730e0 inherit pro_attribs_class_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -369,21 +363,6 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa6af53faf9cac72ebd8410bdc62c3768"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int GameModel::getDistance </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="a2705e597faf90d7cb7b1c74e8edecf39"></a>
 <div class="memitem">
 <div class="memproto">
@@ -399,42 +378,12 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="adcd801e1f7ece7df555a8f76dd17783d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int GameModel::getEnemyDestructedBonus </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="ae1b92e31ed26976ec2a7b4bf4279df14"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">float GameModel::getGameSpeed </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aae079993b4a51f88f8ea0a9b442ae0fe"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int GameModel::getNbCoinsCollected </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -489,27 +438,12 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4dfdebaeece80eca88fe3e2a057f729c"></a>
+<a class="anchor" id="aa0b281164e18a5c2ffa4de4283795f55"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int GameModel::getScore </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="acac3a6d5056e04bed9dc29578de40df3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool GameModel::getScoreSavableStatus </td>
+          <td class="memname">bool GameModel::getSaveStatus </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -716,12 +650,12 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac9e0b527f88b6b430452c0d099f63d02"></a>
+<a class="anchor" id="a4879c8f704d09b6000ea8eacb1e1fe32"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void GameModel::setScoreSavableStatus </td>
+          <td class="memname">void GameModel::setSaveStatus </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>status</em></td><td>)</td>

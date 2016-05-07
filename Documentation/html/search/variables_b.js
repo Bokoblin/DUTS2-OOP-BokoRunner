@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['screen_5fheight',['SCREEN_HEIGHT',['../df/d0a/main_8cpp.html#ab454541ae58bcf6555e8d723b1eb95e7',1,'SCREEN_HEIGHT():&#160;main.cpp'],['../d0/de6/unit__test_8cpp.html#ab454541ae58bcf6555e8d723b1eb95e7',1,'SCREEN_HEIGHT():&#160;unit_test.cpp']]],
-  ['screen_5fwidth',['SCREEN_WIDTH',['../df/d0a/main_8cpp.html#a3482785bd2a4c8b307f9e0b6f54e2c36',1,'SCREEN_WIDTH():&#160;main.cpp'],['../d0/de6/unit__test_8cpp.html#a3482785bd2a4c8b307f9e0b6f54e2c36',1,'SCREEN_WIDTH():&#160;unit_test.cpp']]],
-  ['spanish_5fstrings',['SPANISH_STRINGS',['../d4/dcf/_text_8h.html#a8392a255b7c8ab5548a2f8b544c9439f',1,'Text.h']]]
+  ['pause_5fbgnd_5fhill_5fimage',['PAUSE_BGND_HILL_IMAGE',['../dc/d46/_game_view_8h.html#adcffb98dd9ab8c622d501e5fdeb4f04c',1,'GameView.h']]],
+  ['pause_5fbgnd_5fplain_5fimage',['PAUSE_BGND_PLAIN_IMAGE',['../dc/d46/_game_view_8h.html#ae5aecedefe9b4e692b51c60d4672f67f',1,'GameView.h']]],
+  ['precision',['PRECISION',['../d1/d39/_player_8h.html#ab0fe7f331f3e51db32d0a37539dc8fba',1,'Player.h']]],
+  ['programbeginningtime',['programBeginningTime',['../df/d0a/main_8cpp.html#a35c94517e00c4616279c15ce91d9d506',1,'programBeginningTime():&#160;main.cpp'],['../d0/de6/unit__test_8cpp.html#a35c94517e00c4616279c15ce91d9d506',1,'programBeginningTime():&#160;unit_test.cpp']]]
 ];

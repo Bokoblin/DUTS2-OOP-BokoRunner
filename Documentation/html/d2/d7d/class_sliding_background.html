@@ -25,7 +25,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Boko Runner
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">An S2 Oriented Object Programming Project</div>
   </td>
@@ -117,6 +117,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aaf15096e43a87f2dd871a9591fb2b86b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9aa0c999fae449008dec538352505ac2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d7d/class_sliding_background.html#a9aa0c999fae449008dec538352505ac2">resize</a> (float w, float h) override</td></tr>
 <tr class="separator:a9aa0c999fae449008dec538352505ac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a4be19f3a133db47d79fbdc16455b26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d7d/class_sliding_background.html#a9a4be19f3a133db47d79fbdc16455b26">decreaseAlpha</a> (int level)</td></tr>
+<tr class="separator:a9a4be19f3a133db47d79fbdc16455b26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb552a84e6bdf6ff08dcaff536648057"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d7d/class_sliding_background.html#abb552a84e6bdf6ff08dcaff536648057">increaseAlpha</a> (int level)</td></tr>
+<tr class="separator:abb552a84e6bdf6ff08dcaff536648057"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a104031d0658dd13a9fbeff0b5177a56e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d7d/class_sliding_background.html#a104031d0658dd13a9fbeff0b5177a56e">getAlpha</a> () const </td></tr>
+<tr class="separator:a104031d0658dd13a9fbeff0b5177a56e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae49594982c5a5bf59dbb174e5fcba76b"><td class="memItemLeft" align="right" valign="top">sf::Vector2f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d7d/class_sliding_background.html#ae49594982c5a5bf59dbb174e5fcba76b">getPosition</a> () const </td></tr>
 <tr class="separator:ae49594982c5a5bf59dbb174e5fcba76b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18a7786707c03a3470c2f54b150a19c2"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d7d/class_sliding_background.html#a18a7786707c03a3470c2f54b150a19c2">getSeparationPositionX</a> () const </td></tr>
@@ -125,6 +131,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:acf7e6810c5b76678740a89ad38ef5bb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3278139430d3795d13f6dd169a441748"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d7d/class_sliding_background.html#a3278139430d3795d13f6dd169a441748">setPosition</a> (float x, float y)</td></tr>
 <tr class="separator:a3278139430d3795d13f6dd169a441748"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5561001d09d2b969f39830138b6b02a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d7d/class_sliding_background.html#a5561001d09d2b969f39830138b6b02a8">setAlpha</a> (int alpha)</td></tr>
+<tr class="separator:a5561001d09d2b969f39830138b6b02a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_graphic_element"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_graphic_element')"><img src="../../closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="../../d1/d4c/class_graphic_element.html">GraphicElement</a></td></tr>
 <tr class="memitem:a99ea07105e5cd693873c7876e388c0ac inherit pub_methods_class_graphic_element"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d4c/class_graphic_element.html#a99ea07105e5cd693873c7876e388c0ac">GraphicElement</a> (sf::Texture &amp;image, float x, float y, float w, float h)</td></tr>
 <tr class="separator:a99ea07105e5cd693873c7876e388c0ac inherit pub_methods_class_graphic_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -230,6 +238,22 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a9a4be19f3a133db47d79fbdc16455b26"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SlidingBackground::decreaseAlpha </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>level</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="aaf15096e43a87f2dd871a9591fb2b86b"></a>
 <div class="memitem">
 <div class="memproto">
@@ -253,6 +277,21 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reimplemented from <a class="el" href="../../d1/d4c/class_graphic_element.html#abf796d133d9b9e76e37c86038b5ec1d1">GraphicElement</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a104031d0658dd13a9fbeff0b5177a56e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int SlidingBackground::getAlpha </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -280,6 +319,22 @@ Additional Inherited Members</h2></td></tr>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="abb552a84e6bdf6ff08dcaff536648057"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SlidingBackground::increaseAlpha </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>level</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -319,6 +374,22 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reimplemented from <a class="el" href="../../d1/d4c/class_graphic_element.html#a330c3f0f7c6dfe9a7f645a37cca2b1f6">GraphicElement</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5561001d09d2b969f39830138b6b02a8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SlidingBackground::setAlpha </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>alpha</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

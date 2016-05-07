@@ -86,13 +86,13 @@ bool MovableElement::collision( const MovableElement& other) const
     topB = other.m_posY - other.m_height;
     bottomB = other.m_posY;
 
-    if(bottomA <= topB)
+    if(bottomA < topB)
         return false;
-    if(topA >= bottomB)
+    if(topA > bottomB)
         return false;
-    if(rightA <= leftB)
+    if(rightA < leftB)
         return false;
-    if(leftA >= rightB)
+    if(leftA > rightB)
         return false;
 
     return true;

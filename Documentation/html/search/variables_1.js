@@ -1,11 +1,5 @@
 var searchData=
 [
-  ['default_5ffar_5fhill_5fbackground',['DEFAULT_FAR_HILL_BACKGROUND',['../d1/d1f/_view_8h.html#a6a20f91010512138adabc8ce2cdc64dd',1,'View.h']]],
-  ['default_5ffar_5fplain_5fbackground',['DEFAULT_FAR_PLAIN_BACKGROUND',['../d1/d1f/_view_8h.html#aba277633a6e93d31179bba17cc2fd300',1,'View.h']]],
-  ['default_5ffar_5ft1_5fbackground',['DEFAULT_FAR_T1_BACKGROUND',['../d1/d1f/_view_8h.html#abae2582fa61fd53146530465e552321e',1,'View.h']]],
-  ['default_5ffar_5ft2_5fbackground',['DEFAULT_FAR_T2_BACKGROUND',['../d1/d1f/_view_8h.html#aab0e6c9959659777b44b4df4115356d8',1,'View.h']]],
-  ['default_5fnear_5fhill_5fbackground',['DEFAULT_NEAR_HILL_BACKGROUND',['../d1/d1f/_view_8h.html#afb55118b82560f36f986af45f8f0b7d8',1,'View.h']]],
-  ['default_5fnear_5fplain_5fbackground',['DEFAULT_NEAR_PLAIN_BACKGROUND',['../d1/d1f/_view_8h.html#ac2e966adc96e0ee297e775c78614c4d0',1,'View.h']]],
-  ['default_5fnear_5ft1_5fbackground',['DEFAULT_NEAR_T1_BACKGROUND',['../d1/d1f/_view_8h.html#a29ef129cabe3204ebe260874fe12f3b7',1,'View.h']]],
-  ['default_5fnear_5ft2_5fbackground',['DEFAULT_NEAR_T2_BACKGROUND',['../d1/d1f/_view_8h.html#afd110c575ba2881bb522ff576e6573e2',1,'View.h']]]
+  ['coins_5fcollected_5fmusic',['COINS_COLLECTED_MUSIC',['../dc/d46/_game_view_8h.html#a2fc73433610bd69d7b815526736c077f',1,'GameView.h']]],
+  ['config_5ffile',['CONFIG_FILE',['../db/d4b/_data_model_8h.html#ae6a0ab22b1685639e0f2d27a2e297509',1,'DataModel.h']]]
 ];

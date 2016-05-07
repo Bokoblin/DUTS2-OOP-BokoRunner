@@ -25,7 +25,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Boko Runner
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">An S2 Oriented Object Programming Project</div>
   </td>
@@ -83,6 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions_c.html#index_c"><span>c</span></a></li>
       <li><a href="functions_d.html#index_d"><span>d</span></a></li>
       <li><a href="functions_e.html#index_e"><span>e</span></a></li>
+      <li><a href="functions_f.html#index_f"><span>f</span></a></li>
       <li class="current"><a href="functions_g.html#index_g"><span>g</span></a></li>
       <li><a href="functions_h.html#index_h"><span>h</span></a></li>
       <li><a href="functions_i.html#index_i"><span>i</span></a></li>
@@ -124,14 +125,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>GameView()
 : <a class="el" href="d0/d21/class_game_view.html#ad12a95865fe874f2205d210063a2d398">GameView</a>
 </li>
+<li>getAlpha()
+: <a class="el" href="d2/d7d/class_sliding_background.html#a104031d0658dd13a9fbeff0b5177a56e">SlidingBackground</a>
+</li>
 <li>getBonusTimeout()
 : <a class="el" href="dc/da9/class_game_model.html#ae8c58464f2fcf8248ddfcbaae4a8a028">GameModel</a>
 </li>
 <li>getCollisionState()
 : <a class="el" href="d8/d96/class_movable_element.html#ace2876142505ff4a2327d48791f14bcd">MovableElement</a>
 </li>
+<li>getCurrentCoinsCollected()
+: <a class="el" href="d9/d8c/class_data_model.html#aa29ea6b9cec84a8e94b664b7d92ce039">DataModel</a>
+</li>
+<li>getCurrentDistance()
+: <a class="el" href="d9/d8c/class_data_model.html#a2d300b26f52317bc61ac7aec25f49325">DataModel</a>
+</li>
+<li>getCurrentFlattenedEnemies()
+: <a class="el" href="d9/d8c/class_data_model.html#a608943f3192a8f73dcc934a5a65a8ccf">DataModel</a>
+</li>
+<li>getCurrentScore()
+: <a class="el" href="d9/d8c/class_data_model.html#ae63f478f2e3ea75d2ea444f10c8f33f0">DataModel</a>
+</li>
 <li>getCurrentZone()
 : <a class="el" href="dc/da9/class_game_model.html#a033d79f6dae5182c0a4841dfc7410ab2">GameModel</a>
+</li>
+<li>getDataModel()
+: <a class="el" href="d0/de3/class_model.html#af4d1cfe4268a349e190db73674f33fb9">Model</a>
 </li>
 <li>getDecelerationState()
 : <a class="el" href="d8/d53/class_player.html#a2632c331c63318f834b5301e23345620">Player</a>
@@ -139,14 +158,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>getDifficulty()
 : <a class="el" href="d0/de3/class_model.html#a5cfc2aafa3644d37e90ff4ab433c2bdf">Model</a>
 </li>
-<li>getDistance()
-: <a class="el" href="dc/da9/class_game_model.html#aa6af53faf9cac72ebd8410bdc62c3768">GameModel</a>
-</li>
 <li>getEndState()
 : <a class="el" href="dc/da9/class_game_model.html#a2705e597faf90d7cb7b1c74e8edecf39">GameModel</a>
-</li>
-<li>getEnemyDestructedBonus()
-: <a class="el" href="dc/da9/class_game_model.html#adcd801e1f7ece7df555a8f76dd17783d">GameModel</a>
 </li>
 <li>getFlyingState()
 : <a class="el" href="d8/d53/class_player.html#ab7555f4bd78f065c5fead476327906e9">Player</a>
@@ -173,7 +186,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="d8/d53/class_player.html#a07043cbfd1492396367d60b40e7f0c24">Player</a>
 </li>
 <li>getLanguage()
-: <a class="el" href="da/d0e/class_text.html#a80d5202e3fca53914664b680721c0f80">Text</a>
+: <a class="el" href="d9/d8c/class_data_model.html#ad9a0b621adbe2b0802fb58525a748008">DataModel</a>
 </li>
 <li>getLeaderboard()
 : <a class="el" href="d4/d31/class_menu_model.html#a1ea397eacdbbd431d3c60a57fe006dc4">MenuModel</a>
@@ -192,9 +205,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>getMoveY()
 : <a class="el" href="d8/d96/class_movable_element.html#a61721fa12f3595270db1e3bda043c36c">MovableElement</a>
-</li>
-<li>getNbCoinsCollected()
-: <a class="el" href="dc/da9/class_game_model.html#aae079993b4a51f88f8ea0a9b442ae0fe">GameModel</a>
 </li>
 <li>getNewMElementsArray()
 : <a class="el" href="dc/da9/class_game_model.html#a8436b7e6969972c911ecb8e966b52fd8">GameModel</a>
@@ -226,11 +236,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>getResumeText()
 : <a class="el" href="da/d0e/class_text.html#a6d1af7701e68c53c7838be27ffb08bb1">Text</a>
 </li>
-<li>getScore()
-: <a class="el" href="dc/da9/class_game_model.html#a4dfdebaeece80eca88fe3e2a057f729c">GameModel</a>
-</li>
-<li>getScoreSavableStatus()
-: <a class="el" href="dc/da9/class_game_model.html#acac3a6d5056e04bed9dc29578de40df3">GameModel</a>
+<li>getSaveStatus()
+: <a class="el" href="dc/da9/class_game_model.html#aa0b281164e18a5c2ffa4de4283795f55">GameModel</a>
 </li>
 <li>getSeparationPositionX()
 : <a class="el" href="d2/d7d/class_sliding_background.html#a18a7786707c03a3470c2f54b150a19c2">SlidingBackground</a>
@@ -240,6 +247,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>getState()
 : <a class="el" href="d8/d53/class_player.html#a375aeaad18846d2fdde1f7c8e9c1c36d">Player</a>
+</li>
+<li>getTotalCoinsCollected()
+: <a class="el" href="d9/d8c/class_data_model.html#aba5b109533232e137b9d8a0e9f658586">DataModel</a>
+</li>
+<li>getTotalDistanceTravelled()
+: <a class="el" href="d9/d8c/class_data_model.html#ad701a07c0937a290028b9ce0ca2052d4">DataModel</a>
+</li>
+<li>getTotalEnemiesDestructed()
+: <a class="el" href="d9/d8c/class_data_model.html#a83a4bc36f77ca7081ede1438bfcff193">DataModel</a>
+</li>
+<li>getTotalGamesPlayed()
+: <a class="el" href="d9/d8c/class_data_model.html#a569e8d77b1f4c6456ccd499d158721ae">DataModel</a>
 </li>
 <li>getTransitionPossibleStatus()
 : <a class="el" href="dc/da9/class_game_model.html#a9d5cbfc591167b102c31571aa4bec64f">GameModel</a>
@@ -260,7 +279,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="dd/d9f/class_view.html#a2758aa0c98b4c0e34ff3babb78ba0756">View</a>
 </li>
 <li>GraphicElement()
-: <a class="el" href="d1/d4c/class_graphic_element.html#afff75ac658ff7b2158be877aa74e1f20">GraphicElement</a>
+: <a class="el" href="d1/d4c/class_graphic_element.html#a99ea07105e5cd693873c7876e388c0ac">GraphicElement</a>
 </li>
 </ul>
 </div><!-- contents -->

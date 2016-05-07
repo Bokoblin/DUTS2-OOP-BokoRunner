@@ -20,7 +20,7 @@ limitations under the License.
 #include "SlidingBackground.h"
 #include "AnimatedGraphicElement.h"
 #include "Button.h"
-#include "PixelateEffect.h"
+#include <SFML/Audio.hpp>
 
 #define MOUSE_POSITION sf::Vector2f(event.mouseButton.x, event.mouseButton.y)
 

@@ -22,7 +22,7 @@ limitations under the License.
 /********************************************
     SlidingBackground Class
 *********************************************
-    @author Arthur  @date 3/03 - 30/04
+    @author Arthur  @date 3/03 - 7/05
     @author Florian @date 3/03
 *********************************************/
 class SlidingBackground : public GraphicElement
@@ -37,20 +37,24 @@ public:
     virtual void sync() override;
     virtual void draw(sf::RenderWindow *window) const override;
     virtual void resize(float w, float h) override;
+    void decreaseAlpha(int level);
+    void increaseAlpha(int level);
 
     //=== GETTERS
+    int getAlpha() const;
     sf::Vector2f getPosition() const;
     float getSeparationPositionX() const;
-
 
     //=== SETTERS
     void setSpeed(float speed);
     void setPosition(float x, float y);
+    void setAlpha(int alpha);
 
 private:
     //=== ATTRIBUTES
     GraphicElement *m_left, *m_right;
     float m_speed;
+    int m_alpha;
 
 };
 

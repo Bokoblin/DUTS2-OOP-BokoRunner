@@ -25,7 +25,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Boko Runner
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.6.0</span>
    </div>
    <div id="projectbrief">An S2 Oriented Object Programming Project</div>
   </td>
@@ -83,6 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions_c.html#index_c"><span>c</span></a></li>
       <li><a href="functions_d.html#index_d"><span>d</span></a></li>
       <li><a href="functions_e.html#index_e"><span>e</span></a></li>
+      <li><a href="functions_f.html#index_f"><span>f</span></a></li>
       <li><a href="functions_g.html#index_g"><span>g</span></a></li>
       <li><a href="functions_h.html#index_h"><span>h</span></a></li>
       <li><a href="functions_i.html#index_i"><span>i</span></a></li>
@@ -118,14 +119,35 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
+<li>saveCurrentGame()
+: <a class="el" href="d9/d8c/class_data_model.html#a9fb6c7f16a5246354b94250e6785dafa">DataModel</a>
+</li>
 <li>setActivatedState()
 : <a class="el" href="d4/d77/class_button.html#ac40d50b37b0a005f04e49aa5208bfeef">Button</a>
+</li>
+<li>setAlpha()
+: <a class="el" href="d2/d7d/class_sliding_background.html#a5561001d09d2b969f39830138b6b02a8">SlidingBackground</a>
 </li>
 <li>setCollisionState()
 : <a class="el" href="d8/d96/class_movable_element.html#aabe87903c8c1f8db3fccf3acf011adb6">MovableElement</a>
 </li>
+<li>setCurrentCoinsCollected()
+: <a class="el" href="d9/d8c/class_data_model.html#a410cc3ed009008798bd911f5a0590815">DataModel</a>
+</li>
+<li>setCurrentDistance()
+: <a class="el" href="d9/d8c/class_data_model.html#a2ba1aec958fe9fe024180e717f0805b9">DataModel</a>
+</li>
+<li>setCurrentFlattenedEnemies()
+: <a class="el" href="d9/d8c/class_data_model.html#af6f575b0331ce53442c5ad0aca9ff5b9">DataModel</a>
+</li>
+<li>setCurrentScore()
+: <a class="el" href="d9/d8c/class_data_model.html#a7c6e55aa4920d989397f5948f8852a92">DataModel</a>
+</li>
 <li>setCurrentZone()
 : <a class="el" href="dc/da9/class_game_model.html#aef99f32fbbb3025b8e9b0cad0d09afeb">GameModel</a>
+</li>
+<li>setDataModel()
+: <a class="el" href="d0/de3/class_model.html#a4e149120f6a8611b38cfbb62e8da7534">Model</a>
 </li>
 <li>setDecelerationState()
 : <a class="el" href="d8/d53/class_player.html#a04e0c59541c37a082ee2f86e39c9d68b">Player</a>
@@ -155,8 +177,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="d8/d53/class_player.html#a14fed2d3751d33184f0f3e0d8b4748b9">Player</a>
 </li>
 <li>setLanguage()
-: <a class="el" href="d0/de3/class_model.html#ab667b470c19f4122020a35895ed54cfc">Model</a>
-, <a class="el" href="da/d0e/class_text.html#a0eec153c56d7480e1e976939bbea6060">Text</a>
+: <a class="el" href="d9/d8c/class_data_model.html#a8d1b34bd67b25ef0144b7404d34ca5de">DataModel</a>
 </li>
 <li>setLeaderboardState()
 : <a class="el" href="d4/d31/class_menu_model.html#ae0ff4bc6011c33ed5a797f78d007239e">MenuModel</a>
@@ -194,8 +215,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>setResetGameState()
 : <a class="el" href="d0/de3/class_model.html#a603c37c7bd0444a82e0f1a52f05b0bb4">Model</a>
 </li>
-<li>setScoreSavableStatus()
-: <a class="el" href="dc/da9/class_game_model.html#ac9e0b527f88b6b430452c0d099f63d02">GameModel</a>
+<li>setSaveStatus()
+: <a class="el" href="dc/da9/class_game_model.html#a4879c8f704d09b6000ea8eacb1e1fe32">GameModel</a>
 </li>
 <li>setSettingsState()
 : <a class="el" href="d4/d31/class_menu_model.html#a8de107cf30070d07ff4fc1ef803a4965">MenuModel</a>
@@ -221,14 +242,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="d1/d4c/class_graphic_element.html#a1b181a4a56f8f69e0de70c6466dfb72a">GraphicElement</a>
 , <a class="el" href="d2/d7d/class_sliding_background.html#a0a4cf4647c997a171b8fe7fe4a825e5d">SlidingBackground</a>
 </li>
-<li>syncGameEndText()
-: <a class="el" href="da/d0e/class_text.html#acfcce81260e07bf35c462016e50502b3">Text</a>
+<li>syncEndText()
+: <a class="el" href="da/d0e/class_text.html#a9522545d4a32e9539c13db707a389093">Text</a>
 </li>
-<li>syncGameMainText()
-: <a class="el" href="da/d0e/class_text.html#afad9f17135ebdd2277f3bb3a135179f7">Text</a>
-</li>
-<li>syncGamePauseText()
-: <a class="el" href="da/d0e/class_text.html#ada52a3416a641d942490f758905b42b2">Text</a>
+<li>syncGameText()
+: <a class="el" href="da/d0e/class_text.html#aa4101104d0fc21853d11233936473986">Text</a>
 </li>
 <li>synchronize()
 : <a class="el" href="d0/d21/class_game_view.html#acace6682b2e83260ad08b2654048c3e8">GameView</a>
@@ -244,6 +262,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>syncMenuSettingsText()
 : <a class="el" href="da/d0e/class_text.html#a797686a119e26d67a3eb5fd184993660">Text</a>
+</li>
+<li>syncPauseText()
+: <a class="el" href="da/d0e/class_text.html#aa3074c341983037c550dcc42b01b7a37">Text</a>
 </li>
 </ul>
 </div><!-- contents -->

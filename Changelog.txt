@@ -1,7 +1,7 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.5.0
+Current version : v1.6.0
 
 ======================================================================================
 BETA CHANNEL Changelog
@@ -204,7 +204,7 @@ v1.4.0 (30/04/16):
 	- Zone changing is made with a scrolling far background transition
 	  and a pixel appearing near background
 - added PixelateEffect class to handle pixel transition (altered from SFML Examples - see file)
-- image loading optimized by merging textures which used same file (number of textures reduced by half)
+- image loading optimized by merging textures using same file (number of textures reduced by half)
 - lots of variable renaming
 - documentation updated
 
@@ -213,3 +213,26 @@ v1.4.0 (30/04/16):
 v1.5.0 (6/05/16)
 
 - added Music in menu and game
+
+Note: all additional features are implemented
+
+---------------------------------------------------------------------------------------------------
+
+v1.6.0 (7/05/16)
+
+Features :
+- added configuration saving in file thanks to a new class DataModel :
+	- save and load accumulated money, distance travelled, flattened enemies, games played,
+	- save and load last chosen language,
+	- allows to save and load other data for future features such as shop,
+
+Fixes and miscs:
+- fixed zone transition rendering and fading effect added
+- new pause background added for zone 2
+- updated save button
+- fixed menu music loop
+- accelerated apparition of enemies and increased enemies damage in Master mode
+- text class strings refactored for consistency and more lisibility
+- documentation updated
+
+---------------------------------------------------------------------------------------------------

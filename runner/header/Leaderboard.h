@@ -6,6 +6,18 @@
 #include <vector>
 #include <algorithm>
 
+/********************************************
+    Constant Variables
+********************************************/
+const std::string SCORES_FILE = "Resources/scores.txt";
+const std::string HIDDEN_SCORES_FILE = "Resources/.font_cache";
+//hidden in linux and not explicit to score
+
+/********************************************
+    Leaderboard Class
+*********************************************
+    @author Arthur  @date  19/04 - 2/05
+*********************************************/
 class Leaderboard
 {
 public:
@@ -26,9 +38,6 @@ public:
 
 private:
     std::vector<int> m_scoresArray;
-
-    std::string m_file;
-    std::string m_hiddenFile;
 
 };
 

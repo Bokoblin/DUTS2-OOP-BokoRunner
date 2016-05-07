@@ -16,45 +16,41 @@
 
 <resources>
 
-   <!-- Menu strings -->
-   <string name="playButtonText">JUGAR</string>
-   <string name="quitButtonText">DEJAR</string>
-   <string name="clearButtonText">BORRAR</string>
-
-
-   <!-- Settings strings -->
-   <string name="settingsLabel">Opciones</string>
-   <string name="configurationLabel">Configuracion</string>
-   <string name="configLanguageLabel">Idiomas</string>
-   <string name="configLanguageEnLabel">Ingles</string>
-   <string name="configLanguageFrLabel">Frances</string>
-   <string name="configLanguageEsLabel">Espanol</string>
+   <!-- Menu, Settings & Leaderboard strings -->
+   <string name="playButtonLabel">JUGAR</string>
+   <string name="quitButtonLabel">DEJAR</string>
+   <string name="clearButtonLabel">BORRAR</string>
+   <string name="configTitleLabel">Configuracion</string>
+   <string name="configLangTitleLabel">Idiomas</string>
+   <string name="configLangEngLabel">Ingles</string>
+   <string name="configLangFraLabel">Frances</string>
+   <string name="configLangEspLabel">Espanol</string>
    <string name="configDifficultyLabel">Difficultad</string>
    <string name="configDifficultyNormalLabel">Normal</string>
    <string name="configDifficultyMasterLabel">Master</string>
+   <string name="statisticsTitleLabel">Estadisticas</string>
+   <string name="totalDistanceLabel">Total_distancia_recorrida</string>
+   <string name="totalFlattenedEnemiesLabel">Total_destrucciones_enemigos</string>
+   <string name="totalGamesPlayedLabel">Juegos_lanzados</string>
    <string name="leaderboardTitleLabel">Tabla_de_posiciones</string>
    <string name="leaderboardText">Todavia_no_hay_ninguna_puntuacion</string>
    <string name="leaderboardErrorText">Puntuacion_datos_ha_sido_corrompido._Barra_lo.</string>
 
    <!--  Game strings -->
-   <string name="distanceText">.</string>
    <string name="playerLifeLabel">Vida</string>
-   <string name="bonusTimeoutText">.</string>
+   <string name="saveButtonLabel">SALVAR</string>
 
    <!--  Pause Screen strings -->
-   <string name="CoinsCollectedNumberText">.</string>
    <string name="pauseResumeLabel">Reanudar</string>
-   <string name="restartLabel">Reiniciar</string>
-   <string name="homeLabel">Menu</string>
+   <string name="pauseRestartLabel">Reiniciar</string>
+   <string name="pauseGotoHomeLabel">Menu</string>
 
    <!--  End Screen strings -->
    <string name="endTitleLabel">Tu_puntuacion</string>
-   <string name="speedmultiplicatorLabel">Velocidad_multiplicator</string>
-   <string name="speedmultiplicatorText">.</string>
-   <string name="distanceLabel">Distancia_recorrida</string>
-   <string name="CoinsCollectedNumberLabel">Monedas_recogidas</string>
-   <string name="enemyDestructedBonusLabel">Prima_destruccion_enemigos</string>
-   <string name="scoreLabel">Puntuacion_total</string>
-   <string name="scoreText">.</string>
+   <string name="speedMultiplierLabel">Velocidad_multiplicator</string>
+   <string name="currentDistanceLabel">Distancia_recorrida</string>
+   <string name="coinsCollectedLabel">Monedas_recogidas</string>
+   <string name="flattenedEnemiesLabel">Prima_destruccion_enemigos</string>
+   <string name="currentScoreLabel">Puntuacion_total</string>
 
 </resources>

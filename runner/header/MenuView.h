@@ -17,7 +17,7 @@ limitations under the License.
 #define MENUVIEW_H
 
 #include "View.h"
-#include <SFML/Audio.hpp>
+#include "MenuModel.h"
 
 /********************************************
     Constant Variables

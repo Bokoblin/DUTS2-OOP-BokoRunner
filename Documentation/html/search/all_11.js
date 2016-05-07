@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['text',['Text',['../da/d0e/class_text.html',1,'Text'],['../da/d0e/class_text.html#ab3e26143fccc52699bcc5149cae852bc',1,'Text::Text()'],['../da/d0e/class_text.html#a1a635da2e47aee10767dfbf7e6d0c24c',1,'Text::Text(const Text &amp;myText)=delete']]],
+  ['text',['Text',['../da/d0e/class_text.html',1,'Text'],['../da/d0e/class_text.html#a1d79a5b3c589f73fee1babdaeb29840e',1,'Text::Text(DataModel *data)'],['../da/d0e/class_text.html#a1a635da2e47aee10767dfbf7e6d0c24c',1,'Text::Text(const Text &amp;myText)=delete']]],
   ['text_2ecpp',['Text.cpp',['../d0/d7c/_text_8cpp.html',1,'']]],
   ['text_2eh',['Text.h',['../d4/dcf/_text_8h.html',1,'']]],
   ['title_5fimage',['TITLE_IMAGE',['../d7/db8/_menu_view_8h.html#aa74b261a6c1d7b5bf938f074fecfdac9',1,'MenuView.h']]],

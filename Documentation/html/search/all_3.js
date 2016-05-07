@@ -1,5 +1,9 @@
 var searchData=
 [
+  ['datamodel',['DataModel',['../d9/d8c/class_data_model.html',1,'DataModel'],['../d9/d8c/class_data_model.html#abff03aef2cb531142a35781bb87c3365',1,'DataModel::DataModel()']]],
+  ['datamodel_2ecpp',['DataModel.cpp',['../d4/d76/_data_model_8cpp.html',1,'']]],
+  ['datamodel_2eh',['DataModel.h',['../db/d4b/_data_model_8h.html',1,'']]],
+  ['decreasealpha',['decreaseAlpha',['../d2/d7d/class_sliding_background.html#a9a4be19f3a133db47d79fbdc16455b26',1,'SlidingBackground']]],
   ['default_5ffar_5fhill_5fbackground',['DEFAULT_FAR_HILL_BACKGROUND',['../d1/d1f/_view_8h.html#a6a20f91010512138adabc8ce2cdc64dd',1,'View.h']]],
   ['default_5ffar_5fplain_5fbackground',['DEFAULT_FAR_PLAIN_BACKGROUND',['../d1/d1f/_view_8h.html#aba277633a6e93d31179bba17cc2fd300',1,'View.h']]],
   ['default_5ffar_5ft1_5fbackground',['DEFAULT_FAR_T1_BACKGROUND',['../d1/d1f/_view_8h.html#abae2582fa61fd53146530465e552321e',1,'View.h']]],

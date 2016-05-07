@@ -16,44 +16,41 @@
 
 <resources>
 
-   <!-- Menu strings -->
-   <string name="playButtonText">PLAY</string>
-   <string name="quitButtonText">QUIT</string>
-   <string name="clearButtonText">CLEAR</string>
-
-   <!-- Settings strings -->
-   <string name="settingsLabel">Settings</string>
-   <string name="configurationLabel">Configuration</string>
-   <string name="configLanguageLabel">Languages</string>
-   <string name="configLanguageEnLabel">English</string>
-   <string name="configLanguageFrLabel">French</string>
-   <string name="configLanguageEsLabel">Spanish</string>
+   <!-- Menu, Settings & Leaderboard strings -->
+   <string name="playButtonLabel">PLAY</string>
+   <string name="quitButtonLabel">QUIT</string>
+   <string name="clearButtonLabel">CLEAR</string>
+   <string name="configTitleLabel">Configuration</string>
+   <string name="configLangTitleLabel">Languages</string>
+   <string name="configLangEngLabel">English</string>
+   <string name="configLangFraLabel">French</string>
+   <string name="configLangEspLabel">Spanish</string>
    <string name="configDifficultyLabel">Difficulty</string>
    <string name="configDifficultyNormalLabel">Normal</string>
    <string name="configDifficultyMasterLabel">Master</string>
+   <string name="statisticsTitleLabel">Stats</string>
+   <string name="totalDistanceLabel">Overall_distance_travelled</string>
+   <string name="totalFlattenedEnemiesLabel">Overall_flattened_enemies</string>
+   <string name="totalGamesPlayedLabel">Games_played</string>
    <string name="leaderboardTitleLabel">Leaderboard</string>
    <string name="leaderboardText">There_isn't_any_score_yet</string>
    <string name="leaderboardErrorText">Score_database_has_been_corrupted._Please_clear_it.</string>
 
    <!--  Game strings -->
-   <string name="distanceText">.</string>
    <string name="playerLifeLabel">Life</string>
-   <string name="bonusTimeoutText">.</string>
+   <string name="saveButtonLabel">SAVE</string>
 
    <!--  Pause Screen strings -->
-   <string name="CoinsCollectedNumberText">.</string>
    <string name="pauseResumeLabel">Resume</string>
-   <string name="restartLabel">Restart</string>
-   <string name="homeLabel">Home</string>
+   <string name="pauseRestartLabel">Restart</string>
+   <string name="pauseGotoHomeLabel">Home</string>
 
    <!--  End Screen strings -->
    <string name="endTitleLabel">Your_score</string>
-   <string name="speedmultiplicatorLabel">Speed_multiplicator</string>
-   <string name="speedmultiplicatorText">.</string>
-   <string name="distanceLabel">Distance_travelled</string>
-   <string name="CoinsCollectedNumberLabel">Coins_collected</string>
-   <string name="enemyDestructedBonusLabel">Enemies_destructed_bonus</string>
-   <string name="scoreLabel">Total_Score</string>
-   <string name="scoreText">.</string>
+   <string name="speedMultiplierLabel">Speed_multiplicator</string>
+   <string name="currentDistanceLabel">Distance_travelled</string>
+   <string name="coinsCollectedLabel">Coins_collected</string>
+   <string name="flattenedEnemiesLabel">Enemies_destructed_bonus</string>
+   <string name="currentScoreLabel">Total_Score</string>
 
 </resources>

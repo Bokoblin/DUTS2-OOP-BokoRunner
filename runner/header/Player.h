@@ -19,7 +19,6 @@ limitations under the License.
 #include "MovableElement.h"
 #include <cmath>
 
-
 const int GAME_FLOOR = 480;
 const int FRAMERATE = 30;
 const int JUMP_LIMIT = 380;

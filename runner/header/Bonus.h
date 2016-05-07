@@ -18,7 +18,6 @@ limitations under the License.
 
 #include "MovableElement.h"
 
-
 /********************************************
     Bonus Class ( PV+, MEGA, FLY, SLOWSPEED)
 *********************************************

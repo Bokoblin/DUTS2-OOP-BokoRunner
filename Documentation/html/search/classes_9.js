@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['slidingbackground',['SlidingBackground',['../d2/d7d/class_sliding_background.html',1,'']]]
+  ['pixelateeffect',['PixelateEffect',['../dc/dd2/class_pixelate_effect.html',1,'']]],
+  ['player',['Player',['../d8/d53/class_player.html',1,'']]]
 ];

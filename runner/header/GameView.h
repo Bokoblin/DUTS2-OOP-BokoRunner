@@ -16,9 +16,8 @@ limitations under the License.
 #ifndef GAMEVIEW_H
 #define GAMEVIEW_H
 
+#include "PixelateEffect.h"
 #include "View.h"
-#include <SFML/Audio.hpp>
-
 
 /********************************************
     Constant Variables
@@ -31,8 +30,10 @@ const std::string BOTTOM_BAR_IMAGE = "Images/bottom_bar.png";
 const std::string LIFE_BOX_IMAGE = "Images/life_bar.png";
 const std::string REMAINING_LIFE = "Images/remaining_life.png";
 //PAUSE & END
-const std::string PAUSE_BGND_IMAGE = "Images/pause_background.png";
+const std::string PAUSE_BGND_HILL_IMAGE = "Images/pause_bg_hill.png";
+const std::string PAUSE_BGND_PLAIN_IMAGE = "Images/pause_bg_plain.png";
 const std::string GAME_BUTTONS_IMAGE = "Images/pause_elements.png";
+const std::string GRECT_BUTTON_IMAGE = "Images/rect_buttons.png";
 const std::string END_BGND_IMAGE = "Images/end_background.png";
 //MUSIC
 const std::string GAME_NORMAL_THEME_MUSIC = "Music/game_normal_sound.ogg";
@@ -46,7 +47,7 @@ const int TRANSITION_SPEED = 10;
 /********************************************
     GameView Class
 *********************************************
-    @author Arthur  @date 21/02 - 30/04
+    @author Arthur  @date 21/02 - 6/05
     @author Florian @date 21/02 - 6/05
 *********************************************/
 class GameView : public View
@@ -67,12 +68,12 @@ public:
 	virtual void linkElements();
 	virtual void updateElements();
 	virtual void deleteElements();
+	void handleZonesTransition();
 
 
 private:
     //=== ATTRIBUTES
     GameModel *m_gameModel;
-    Leaderboard *m_lb;
     PixelateEffect *m_pixelShader;
 
     float m_xPixelIntensity;
@@ -91,6 +92,7 @@ private:
     sf::Texture m_bonusTexture;
     //Pause and End Textures
     sf::Texture m_gameButtonsTexture;
+    sf::Texture m_gameRectButtonTexture;
     sf::Texture m_distanceIconTexture;
     sf::Texture m_pauseBackgroundTexture;
     sf::Texture m_endBackgroundTexture;
@@ -99,7 +101,6 @@ private:
     SlidingBackground *m_farSlBackground;
     GraphicElement *m_farBgTransitionSprite;
     SlidingBackground *m_nearSlBackground;
-    GraphicElement *m_nearTransitionBackground;
     GraphicElement *m_bottomBarSprite;
     GraphicElement *m_lifeBoxSprite;
     GraphicElement *m_remainingLifeSprite;

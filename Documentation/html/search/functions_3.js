@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['datamodel',['DataModel',['../d9/d8c/class_data_model.html#abff03aef2cb531142a35781bb87c3365',1,'DataModel']]],
+  ['decreasealpha',['decreaseAlpha',['../d2/d7d/class_sliding_background.html#a9a4be19f3a133db47d79fbdc16455b26',1,'SlidingBackground']]],
   ['deleteelements',['deleteElements',['../d0/d21/class_game_view.html#a846a7e19032fae9c622388ac75ae8332',1,'GameView']]],
   ['draw',['draw',['../d0/d21/class_game_view.html#a722a133ad4cd1a9837fb00c42261e32a',1,'GameView::draw()'],['../d1/d4c/class_graphic_element.html#abf796d133d9b9e76e37c86038b5ec1d1',1,'GraphicElement::draw()'],['../d7/d01/class_intro.html#a91916f91a5e23ad18c073b0e197909ff',1,'Intro::draw()'],['../d0/ddd/class_menu_view.html#afc192ac56acaea05f2f4831ede44c0fe',1,'MenuView::draw()'],['../dc/dd2/class_pixelate_effect.html#a1874b97b897e90b42cb560c43ebca146',1,'PixelateEffect::draw()'],['../d2/d7d/class_sliding_background.html#aaf15096e43a87f2dd871a9591fb2b86b',1,'SlidingBackground::draw()'],['../dd/d9f/class_view.html#af66293fb9b42b533c85399ca3f6c97bd',1,'View::draw()']]],
   ['drawendtext',['drawEndText',['../da/d0e/class_text.html#a146db79463c1203860853f03fc829c1d',1,'Text']]],

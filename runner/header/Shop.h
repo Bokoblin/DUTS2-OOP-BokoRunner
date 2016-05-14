@@ -13,50 +13,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef _MENUMODEL_H
-#define _MENUMODEL_H
+#ifndef _SHOP_H
+#define _SHOP_H
 
-#include "Model.h"
-#include "Shop.h"
+#include "ShopItem.h"
+#include "DataModel.h"
 
 /********************************************
-    MenuModel Class
+    Shop Class
 *********************************************
-    @author Arthur  @date 14/04 - 14/05
+    @author Arthur  @date 11/05 - 14/05
 *********************************************/
-class MenuModel : public Model
+class Shop
 {
 public:
     //=== CTORs / DTORs
-    MenuModel(const Model& model);
-    virtual ~MenuModel();
-
-    //=== GETTERS
-    bool getHomeState() const;
-    bool getSettingsState() const;
-    bool getLeaderboardState() const;
-    bool getShopState() const;
-    Leaderboard* getLeaderboard() const;
-
-    //=== SETTERS
-    void setHomeState(bool state);
-    void setSettingsState(bool state);
-    void setLeaderboardState(bool state);
-    void setShopState(bool state);
+    Shop(DataModel *data);
+    ~Shop();
 
     //=== METHODS
-    virtual void nextStep() override;
-    void launchShop();
+    bool buyItem(ShopItem *item);
+    std::string toString() const;
 
 private:
     //=== ATTRIBUTES
-    bool m_homeState;
-    bool m_settingsState;
-    bool m_leaderboardState;
-    bool m_shopState;
+    DataModel *m_dataModel;
 
-    Leaderboard *m_leaderboard;
-    Shop *m_shop;
+    std::set<ShopItem*> m_shopItemsArray;
 };
 
 #endif

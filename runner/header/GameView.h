@@ -23,7 +23,7 @@ limitations under the License.
     Constant Variables
 ********************************************/
 //GAME
-const std::string BALL_IMAGE = "Images/balls.png";
+const std::string BALL_IMAGE = "Images/defaultball.png";
 const std::string ENEMIES_IMAGE = "Images/enemies.png";
 const std::string BONUS_IMAGE = "Images/bonus.png";
 const std::string BOTTOM_BAR_IMAGE = "Images/bottom_bar.png";

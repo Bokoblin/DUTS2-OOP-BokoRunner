@@ -16,10 +16,15 @@ limitations under the License.
 #ifndef _DATAMODEL_H
 #define _DATAMODEL_H
 
+#include "ShopItem.h"
 #include "Leaderboard.h"
+#include "../../Libs/pugixml-1.7/src/pugixml.hpp"
 #include <iostream>
+#include <string>
 #include <sstream>
 #include <cassert>
+#include <vector>
+#include <set>
 
 /********************************************
     Constant Variables
@@ -28,10 +33,30 @@ limitations under the License.
 const std::string CONFIG_FILE = "Resources/config.xml";
 const std::string HIDDEN_CONFIG_FILE = "Resources/.fragment_cache";
 
+const std::string DEFAULT_CONFIG_CONTENT = " \
+<?xml version=\"1.0\" encoding=\"utf-8\"?>\n \
+<runner>\n \
+<config>\n \
+<string name=\"language\">en</string>\n \
+<int name=\"total_coins_collected\">0</int>\n \
+<int name=\"total_distance_travelled\">0</int>\n \
+<int name=\"total_enemies_destroyed\">0</int>\n \
+<int name=\"total_games_played\">0</int>\n \
+</config>\n \
+<shop>\n \
+<item name=\"DOUBLE_COINS\" description=\"Double_the_number_of_coins_collected\" price=\"500\" boughtState=\"false\"/>\n \
+<item name=\"INCREASE_MEGA\" description=\"Increase_the_mega_bonus_duration_of_5_seconds\" price=\"50\" boughtState=\"false\"/>\n \
+<item name=\"INCREASE_FLY\" description=\"Increase_the_fly_bonus_duration_of_5_seconds\" price=\"50\" boughtState=\"false\"/>\n \
+<item name=\"MORPH_SKIN\" description=\"Unlock_morph_skin_for_the_ball\" price=\"300\" boughtState=\"false\"/>\n \
+<item name=\"MONSTER_SKIN\" description=\"Unlock_monster_skin_for_the_ball\" price=\"350\" boughtState=\"false\"/>\n \
+</shop>\n \
+</runner>\n";
+
+
 /********************************************
     DataModel Class
 *********************************************
-    @author Arthur  @date 2/05 - 6/05
+    @author Arthur  @date 2/05 - 15/05
 *********************************************/
 class DataModel
 {
@@ -50,8 +75,10 @@ public:
     int getCurrentFlattenedEnemies() const;
     int getCurrentScore() const;
     std::string getLanguage() const;
+    std::vector<std::string> getActivatedItemsArray() const;
 
     //=== SETTERS
+    void setTotalCoinsCollected(int number);
     void setCurrentCoinsCollected(int number);
     void setCurrentDistance(int number);
     void setCurrentFlattenedEnemies(int number);
@@ -59,15 +86,16 @@ public:
     void setLanguage(std::string lang);
 
     //=== METHODS
+    void createFile();
+    bool checkFileIntegrity();
     void fetchConfigurationFromFile();
+    void fetchBuyableItemsFromFile(std::set<ShopItem*> &setArray);
+    template <typename T>
+    void updateValue(T &variable, std::string name);
+    void updateActivatedItemsArray();
     void pushConfigurationToFile();
     void saveCurrentGame();
     void resetCurrentGame();
-    void createFile();
-    bool checkFileIntegrity();
-    template <typename Type>
-    void updateValue(Type &variable, std::string name);
-
 
 private:
     //=== ATTRIBUTES
@@ -86,6 +114,8 @@ private:
     int m_currentScore;
 
     Leaderboard *m_leaderboard;
+
+    std::vector<std::string> m_activatedItemsArray;
 };
 
 #endif

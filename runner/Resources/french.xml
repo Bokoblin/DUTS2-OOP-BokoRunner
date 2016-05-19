@@ -36,6 +36,14 @@
    <string name="leaderboardLabel">Il_n'y_a_pas_encore_de_scores</string>
    <string name="leaderboardErrorLabel">Les_donnees_de_score_ont_ete_corrompues._Veuillez_les_effacer.</string>
 
+   <!--  Shop strings -->
+   <string name="boughtLabel">Obtenu</string>
+   <string name="buyableLabel">Acheter</string>
+   <string name="shopDialogTitleLabel">Acheter_cet_objet_?</string>
+   <string name="shopDialogContentLabel">Nom_:_Prix___:__pieces</string>
+   <string name="shopDialogNegativeLabel">ANNULER</string>
+   <string name="shopDialogPositiveLabel">OK</string>
+
    <!--  Game strings -->
    <string name="playerLifeLabel">Vie</string>
    <string name="saveButtonLabel">SAUVER</string>

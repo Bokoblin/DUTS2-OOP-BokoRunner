@@ -36,6 +36,14 @@
    <string name="leaderboardText">Todavia_no_hay_ninguna_puntuacion</string>
    <string name="leaderboardErrorText">Puntuacion_datos_ha_sido_corrompido._Barra_lo.</string>
 
+   <!--  Shop strings -->
+   <string name="boughtLabel">Comprado</string>
+   <string name="buyableLabel">Comprar</string>
+   <string name="shopDialogTitleLabel">Comprar_este_item_?</string>
+   <string name="shopDialogContentLabel">Nombre_:_Precio_:__monedas</string>
+   <string name="shopDialogNegativeLabel">CANCELAR</string>
+   <string name="shopDialogPositiveLabel">OK</string>
+
    <!--  Game strings -->
    <string name="playerLifeLabel">Vida</string>
    <string name="saveButtonLabel">SALVAR</string>

@@ -18,7 +18,10 @@ limitations under the License.
 
 #include <chrono>
 #include <set>
-#include "DataModel.h"
+#include "DataBase.h"
+
+#define NORMAL_DIFFICULTY 0
+#define MASTER_DIFFICULTY 2
 
 /********************************************
     Model Class
@@ -35,7 +38,7 @@ public:
     virtual ~Model();
 
     //=== GETTERS
-    DataModel *getDataModel() const;
+    DataBase *getDataBase() const;
     int getDifficulty() const;
     bool getIntroState() const;
     bool getMenuState() const;
@@ -44,7 +47,7 @@ public:
     std::chrono::system_clock::time_point getProgramBeginningTime() const ;
 
     //=== SETTERS
-    void setDataModel(DataModel *data);
+    void setDataBase(DataBase *data);
     void setDifficulty(int difficulty);
     void setIntroState(bool state);
     void setMenuState(bool state);
@@ -58,7 +61,7 @@ protected:
     //=== ATTRIBUTES
     float m_width, m_height;
     int m_difficulty;
-    DataModel *m_dataModel;
+    DataBase *m_dataBase;
     const std::chrono::system_clock::time_point m_programBeginningTime;
 
 private:

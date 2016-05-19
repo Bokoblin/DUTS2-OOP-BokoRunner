@@ -13,14 +13,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 #include "header/Intro.h"
 #include "header/MenuView.h"
 #include "header/GameView.h"
 
 
-const int SCREEN_WIDTH = 900;
-const int SCREEN_HEIGHT = 600;
+/********************************************
+    Constant Variables
+********************************************/
+const int INTRO_WIDTH = 400;
+const int INTRO_HEIGHT = 200;
 const std::chrono::system_clock::time_point programBeginningTime = std::chrono::system_clock::now();
 
 using namespace std;
@@ -36,19 +38,19 @@ int main()
 {
     srand(time(NULL));
     sf::RenderWindow *window = new sf::RenderWindow( sf::VideoMode(SCREEN_WIDTH,
-            SCREEN_HEIGHT, 32), "Boko Runner", sf::Style::None );
-    window->setFramerateLimit(30);
+            SCREEN_HEIGHT, SCREEN_BPP), APP_TITLE, sf::Style::None );
+    window->setFramerateLimit(FRAMERATE);
 
-    DataModel data;
+    DataBase data;
     Model model(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
-    model.setDataModel(&data);
+    model.setDataBase(&data);
     Text *text = new Text(&data);
 
     while(window->isOpen() )
     {
         if  (model.getIntroState() == true)
         {
-            Intro intro(400, 200, window, text);
+            Intro intro(INTRO_WIDTH, INTRO_HEIGHT, window, text);
             intro.setModel(&model);
             while( model.getIntroState() && intro.treatEvents() )
             {
@@ -60,7 +62,7 @@ int main()
         if  (model.getMenuState() == true)
         {
             MenuModel mModel(model);
-            mModel.setDataModel(&data);
+            mModel.setDataBase(&data);
             MenuView mView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
             mView.setModel(&model);
             mView.setMenuModel(&mModel);
@@ -75,7 +77,7 @@ int main()
         if  (model.getGameState() == true)
         {
             GameModel gModel(model);
-            gModel.setDataModel(&data);
+            gModel.setDataBase(&data);
             GameView gView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
             gView.setModel(&model);
             gView.setGameModel(&gModel);

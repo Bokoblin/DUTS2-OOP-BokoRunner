@@ -36,6 +36,14 @@
    <string name="leaderboardText">There_isn't_any_score_yet</string>
    <string name="leaderboardErrorText">Score_database_has_been_corrupted._Please_clear_it.</string>
 
+   <!--  Shop strings -->
+   <string name="boughtLabel">Bought</string>
+   <string name="buyableLabel">Buy</string>
+   <string name="shopDialogTitleLabel">Buy_this_item_?</string>
+   <string name="shopDialogContentLabel">Name_:_Price__:__coins</string>
+   <string name="shopDialogNegativeLabel">CANCEL</string>
+   <string name="shopDialogPositiveLabel">OK</string>
+
    <!--  Game strings -->
    <string name="playerLifeLabel">Life</string>
    <string name="saveButtonLabel">SAVE</string>

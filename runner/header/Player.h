@@ -24,6 +24,14 @@ const int FRAMERATE = 30;
 const int JUMP_LIMIT = 380;
 const float PRECISION = 1.0;
 
+enum playerState
+{
+    NORMAL,
+    MEGA,
+    FLY,
+    OTHER
+};
+
 /********************************************
     Player Class
 *********************************************

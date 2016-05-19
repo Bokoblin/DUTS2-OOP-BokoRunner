@@ -17,19 +17,22 @@ limitations under the License.
 #define _SHOP_H
 
 #include "ShopItem.h"
-#include "DataModel.h"
+#include "DataBase.h"
 
 /********************************************
     Shop Class
 *********************************************
-    @author Arthur  @date 11/05 - 14/05
+    @author Arthur  @date 11/05 - 16/05
 *********************************************/
 class Shop
 {
 public:
     //=== CTORs / DTORs
-    Shop(DataModel *data);
+    Shop(DataBase *data);
     ~Shop();
+
+    //=== GETTERS
+    std::vector<ShopItem*> getShopItemsArray() const;
 
     //=== METHODS
     bool buyItem(ShopItem *item);
@@ -37,9 +40,9 @@ public:
 
 private:
     //=== ATTRIBUTES
-    DataModel *m_dataModel;
+    DataBase *m_dataBase;
 
-    std::set<ShopItem*> m_shopItemsArray;
+    std::vector<ShopItem*> m_shopItemsArray;
 };
 
 #endif

@@ -31,12 +31,14 @@ MenuModel::~MenuModel()
 /********************************************
     Getters
 *********************************************
-    @author Arthur  @date 14/04 - 14/05
+    @author Arthur  @date 14/04 - 16/05
 *********************************************/
 bool MenuModel::getHomeState() const { return m_homeState; }
+bool& MenuModel::getHomeState() { return m_homeState; }
 bool MenuModel::getSettingsState() const{ return m_settingsState;}
 bool MenuModel::getLeaderboardState() const{ return m_leaderboardState;}
 bool MenuModel::getShopState() const { return m_shopState; }
+bool& MenuModel::getShopState() { return m_shopState; }
 Leaderboard* MenuModel::getLeaderboard() const{ return m_leaderboard;}
 
 
@@ -54,18 +56,17 @@ void MenuModel::setShopState(bool state){ m_shopState = state;}
 /********************************************
     Next Step
 *********************************************
-    @author Arthur  @date 14/04 - 14/05
+    @author Arthur  @date 14/04 - 16/05
 *********************************************/
 void MenuModel::nextStep()
 {
+    //=== Delete shop if not anymore in shopState
+
     if ( m_shopState == false && m_shop != nullptr)
     {
         delete m_shop;
         m_shop = nullptr;
     }
-
-    if ( m_leaderboardState == true && m_shop == nullptr)
-        launchShop();
 }
 
 /********************************************
@@ -73,10 +74,22 @@ void MenuModel::nextStep()
 *********************************************
     @author Arthur  @date 14/05
 *********************************************/
-void MenuModel::launchShop()
+Shop* MenuModel::launchShop()
 {
     m_homeState = false;
     m_shopState = true;
 
-    m_shop = new Shop(m_dataModel);
+    m_shop = new Shop(m_dataBase);
+
+    return m_shop;
+}
+
+/********************************************
+    Change app language
+*********************************************
+    @author Arthur  @date 16/05
+*********************************************/
+void MenuModel::changeLanguage(string lang)
+{
+    m_dataBase->setLanguage(lang);
 }

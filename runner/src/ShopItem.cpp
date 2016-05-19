@@ -1,4 +1,4 @@
-#include "ShopItem.h"
+#include "../header/ShopItem.h"
 
 using namespace std;
 
@@ -43,17 +43,14 @@ void ShopItem::setBoughtState(bool state) { m_isBought = state; }
 /********************************************
     String cast function
 *********************************************
-    @author Arthur  @date 13/05 - 15/05
+    @author Arthur  @date 13/05 - 18/05
 *********************************************/
 string ShopItem::toString() const
 {
     string result = "=== " + m_name + " ===\n";
     result += "Description : " + m_description + "\n";
     result += "Price : " + to_string(m_price) + "\n";
-    if ( m_isBought == true)
-        result += "Already bought ? YES\n";
-    else
-        result += "Already bought ? NO\n";
+    result += "Already bought ? " + to_string(m_isBought) +"\n";
 
     return result;
 }

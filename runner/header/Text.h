@@ -20,6 +20,7 @@ limitations under the License.
 #include "SFML/Graphics.hpp"
 #include <map>
 
+#define HALF_WIDTH getGlobalBounds().width/2
 
 /********************************************
     Constant Variables
@@ -33,13 +34,13 @@ const std::string SPANISH_STRINGS = "Resources/spanish.xml";
 /********************************************
     Text Class
 *********************************************
-    @author Arthur  @date 02/04 - 06/05
+    @author Arthur  @date 02/04 - 17/05
 *********************************************/
 class Text
 {
     public:
     //=== CTORs / DTORs
-    Text(DataModel *data);
+    Text(DataBase *data);
     Text(const Text& myText) = delete;
     ~Text();
 
@@ -53,9 +54,12 @@ class Text
     void updateWholeText();
     void updateString(std::string file, sf::Text *currentText, std::string currentName);
 
-    void syncMenuHomeText(int width, int height);
-    void syncMenuSettingsText( int width, int height);
+    void syncMenuHomeText(int w, int h);
+    void syncMenuSettingsText( int w, int h);
     void syncMenuLeaderboardText(int w, int h, Leaderboard *lb);
+    void syncMenuShopText(int w, int h);
+    void syncDialogText(std::string &title, std::string &content,
+                         std::string &negative_choice, std::string &positive_choices);
     void syncGameText(GameModel *gameModel);
     void syncPauseText();
     void syncEndText(GameModel *gameModel);
@@ -63,6 +67,7 @@ class Text
     void drawMenuHomeText(sf::RenderWindow *window);
     void drawMenuSettingsText(sf::RenderWindow *window);
     void drawMenuLeaderboardText(sf::RenderWindow *window);
+    void drawMenuShopText(sf::RenderWindow *window);
     void drawGameText(sf::RenderWindow *window);
     void drawPauseText(sf::RenderWindow *window);
     void drawEndText(sf::RenderWindow *window);
@@ -70,7 +75,7 @@ class Text
 private:
     //=== ATTRIBUTES
     sf::Font *m_font;
-    DataModel *m_dataModel;
+    DataBase *m_dataModel;
     std::map<sf::Text*, std::string> m_textMap;
 
     //Menu, Settings and Leaderboard Labels
@@ -104,12 +109,16 @@ private:
     sf::Text *m_flattenedEnemiesLabel;
     sf::Text *m_currentScoreLabel;
 
-    //Menu, Settings and Leaderboard DataText
+    //Menu, Settings, Shop and Leaderboard DataText
     // ( loaded from parsed data)
     sf::Text *m_totalDistanceText;
     sf::Text *m_totalFlattenedEnemiesText;
     sf::Text *m_totalGamesPlayedText;
     sf::Text *m_leaderboardContentText;
+    sf::Text *m_shopDialogTitleLabel;
+    sf::Text *m_shopDialogContentLabel;
+    sf::Text *m_shopDialogNegativeLabel;
+    sf::Text *m_shopDialogPositiveLabel;
 
     //Game (Main, Pause & End) DataText
     sf::Text *m_currentDistanceText;

@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef BUYABLEITEM_H
-#define BUYABLEITEM_H
+#ifndef SHOPITEM_H
+#define SHOPITEM_H
 
 #include <string>
 
@@ -50,4 +50,4 @@ class ShopItem
         bool m_isBought;
 };
 
-#endif // BUYABLEITEM_H
+#endif

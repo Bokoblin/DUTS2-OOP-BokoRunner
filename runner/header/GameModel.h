@@ -22,11 +22,12 @@ limitations under the License.
 #include "Coin.h"
 #include "Bonus.h"
 
+#define DEFAULT_SPEED 4.0
 
 /********************************************
     GameModel Class
 *********************************************
-    @author Arthur  @date 26/03 - 2/05
+    @author Arthur  @date 26/03 - 18/05
 *********************************************/
 class GameModel : public Model
 {
@@ -76,9 +77,7 @@ private:
     bool m_isTransitionPossible;
     bool m_isSavePossible;
     float m_gameSpeed;
-    float m_realGameSpeed;
     int m_currentZone;
-    int m_activeBonusType; /**< nope : -1, mega : 0, fly : 1  */
     int m_currentEnemyInterdistance;
     int m_currentCoinInterdistance;
     int m_currentBonusInterdistance;
@@ -88,14 +87,11 @@ private:
     std::chrono::system_clock::time_point m_lastTime;
     std::chrono::system_clock::time_point m_bonusStopTime;
     std::chrono::milliseconds m_bonusTimeout;
-
     Player *m_player;
-    MovableElement *m_newMElement;
 
     //Containers
     std::set<MovableElement*> m_movableElementsArray;
     std::set<MovableElement*> m_newMovableElementsArray;
-
 };
 
 #endif

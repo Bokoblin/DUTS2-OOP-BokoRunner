@@ -7,7 +7,7 @@ using namespace std;
 *********************************************
     @author Arthur  @date 02/04 - 6/05
 *********************************************/
-Text::Text(DataModel *dataModel) : m_dataModel{dataModel}
+Text::Text(DataBase *dataModel) : m_dataModel{dataModel}
 {
     m_font = new sf::Font();
     m_font->loadFromFile(ROBOTO_FONT);
@@ -160,6 +160,18 @@ void Text::loadText()
     m_currentScoreText = new sf::Text;
     m_textMap[m_currentScoreText] = "currentScoreText";
 
+    m_shopDialogTitleLabel = new sf::Text;
+    m_textMap[m_shopDialogTitleLabel] = "shopDialogTitleLabel";
+
+    m_shopDialogContentLabel = new sf::Text;
+    m_textMap[m_shopDialogContentLabel] = "shopDialogContentLabel";
+
+    m_shopDialogNegativeLabel = new sf::Text;
+    m_textMap[m_shopDialogNegativeLabel] = "shopDialogNegativeLabel";
+
+    m_shopDialogPositiveLabel = new sf::Text;
+    m_textMap[m_shopDialogPositiveLabel] = "shopDialogPositiveLabel";
+
     updateWholeText();
 }
 
@@ -240,12 +252,12 @@ void Text::updateString(string file, sf::Text *text, string name)
 *********************************************
     @author Arthur  @date 02/04 - 13/04
 *********************************************/
-void Text::syncMenuHomeText(int width, int height)
+void Text::syncMenuHomeText(int w, int h)
 {
-    m_playButtonLabel->setPosition( width/2 -
-        int(m_playButtonLabel->getGlobalBounds().width/2), height/1.42 );
-    m_quitButtonLabel->setPosition( width/2 -
-        int(m_quitButtonLabel->getGlobalBounds().width/2), height/1.15 );
+    m_playButtonLabel->setPosition( w/2 -
+        int(m_playButtonLabel->HALF_WIDTH), h/1.42 );
+    m_quitButtonLabel->setPosition( w/2 -
+        int(m_quitButtonLabel->HALF_WIDTH), h/1.15 );
 }
 
 
@@ -257,16 +269,16 @@ void Text::syncMenuHomeText(int width, int height)
 void Text::syncMenuSettingsText(int width, int height)
 {
     m_configTitleLabel->setPosition(width/4 -
-        int(m_configTitleLabel->getGlobalBounds().width/2), height/10);
+        int(m_configTitleLabel->HALF_WIDTH), height/10);
     m_configLangTitleLabel->setPosition(40, 150);
-    m_configLangEngLabel->setPosition(80, 202);
-    m_configLangFraLabel->setPosition(80, 242);
-    m_configLangEspLabel->setPosition(80, 282);
+    m_configLangEngLabel->setPosition(85, 202);
+    m_configLangFraLabel->setPosition(85, 242);
+    m_configLangEspLabel->setPosition(85, 282);
     m_configDifficultyLabel->setPosition(40, 370);
-    m_configDifficultyNormalLabel->setPosition(80, 417);
-    m_configDifficultyMasterLabel->setPosition(80, 457);
+    m_configDifficultyNormalLabel->setPosition(85, 417);
+    m_configDifficultyMasterLabel->setPosition(85, 457);
     m_statisticsTitleLabel->setPosition( width - (width/4 +
-        int(m_configTitleLabel->getGlobalBounds().width/2)), height/10);
+        int(m_configTitleLabel->HALF_WIDTH)), height/10);
     m_totalDistanceLabel->setPosition(450, 170);
     m_totalFlattenedEnemiesLabel->setPosition(450, 220);
     m_totalGamesPlayedLabel->setPosition(450, 270);
@@ -305,14 +317,14 @@ void Text::syncMenuLeaderboardText(int w, int h, Leaderboard* lb)
         m_textMap[m_leaderboardContentText] = "leaderboardErrorText";
         updateWholeText();
         m_leaderboardContentText->setPosition(w/2 -
-            int(m_leaderboardContentText->getGlobalBounds().width/2), 250);
+            int(m_leaderboardContentText->HALF_WIDTH), 250);
     }
     else if ( scores == "empty")
     {
         m_textMap[m_leaderboardContentText] = "leaderboardText";
         updateWholeText();
         m_leaderboardContentText->setPosition(w/2 -
-                int(m_leaderboardContentText->getGlobalBounds().width/2), 250);
+                int(m_leaderboardContentText->HALF_WIDTH), 250);
     }
     else //valid and not empty
     {
@@ -320,16 +332,45 @@ void Text::syncMenuLeaderboardText(int w, int h, Leaderboard* lb)
         m_leaderboardContentText->setString(scores);
         m_leaderboardContentText->setCharacterSize(30);
         m_leaderboardContentText->setPosition(w/2 -
-                int(m_leaderboardContentText->getGlobalBounds().width/2), 100);
+                int(m_leaderboardContentText->HALF_WIDTH), 100);
     }
 
     m_leaderboardTitleLabel->setPosition(w/2 -
-            int(m_leaderboardTitleLabel->getGlobalBounds().width/2), h/10);
+            int(m_leaderboardTitleLabel->HALF_WIDTH), h/10);
 
     m_clearButtonLabel->setCharacterSize(20);
     m_clearButtonLabel->setPosition(w/2 -
-            int(m_clearButtonLabel->getGlobalBounds().width/2), 507);
+            int(m_clearButtonLabel->HALF_WIDTH), 507);
 }
+
+
+/********************************************
+    Menu Shop Text Syncing
+*********************************************
+    @author Arthur  @date 16/05 -
+*********************************************/
+void Text::syncMenuShopText(int w, int h)
+{
+    m_totalCoinsCollectedText->setPosition(w/2, 50);
+    m_totalCoinsCollectedText->setColor(sf::Color(255,204,0,255));
+
+    m_totalCoinsCollectedText->setString( to_string( m_dataModel->getTotalCoinsCollected() ));
+}
+
+
+/********************************************
+    Shop Dialog Sync
+*********************************************
+    @author Arthur  @date 17/04
+*********************************************/
+void Text::syncDialogText(string &title, string &content, string &negative_choice, string &positive_choice)
+{
+    title = m_shopDialogTitleLabel->getString();
+    content = m_shopDialogContentLabel->getString();
+    negative_choice = m_shopDialogNegativeLabel->getString();
+    positive_choice = m_shopDialogPositiveLabel->getString();
+}
+
 
 /********************************************
     Game Screen Syncing
@@ -405,13 +446,13 @@ void Text::syncEndText(GameModel *gameModel)
     if ( gameModel->getSaveStatus() == false)
             m_saveButtonText->setPosition(-100, -100);
     else
-        m_saveButtonText->setPosition(450 - int(m_saveButtonText->getGlobalBounds().width/2), 437);
+        m_saveButtonText->setPosition(450 - int(m_saveButtonText->HALF_WIDTH), 437);
 
     //bottom bar text
     m_pauseGoToHomeLabel->setPosition(80,535);
-    m_totalCoinsCollectedText->setPosition(450 - int(m_totalCoinsCollectedText->getGlobalBounds().width/2), 535);
+    m_totalCoinsCollectedText->setPosition(450 - int(m_totalCoinsCollectedText->HALF_WIDTH), 535);
     m_totalCoinsCollectedText->setColor(sf::Color(255,204,0,255));
-    m_pauseRestartLabel->setPosition(760-m_pauseRestartLabel->getGlobalBounds().width/2,535);
+    m_pauseRestartLabel->setPosition(760-m_pauseRestartLabel->HALF_WIDTH,535);
 
     m_speedMultiplierText->setString( to_string((int)gameModel->getGameSpeed() ));
     m_currentDistanceText->setString( to_string( m_dataModel->getCurrentDistance() ) + " m" );
@@ -470,6 +511,19 @@ void Text::drawMenuLeaderboardText(sf::RenderWindow *window)
     window->draw(*m_leaderboardContentText);
     window->draw(*m_clearButtonLabel);
 }
+
+
+/********************************************
+    Menu Shop Screen Drawing
+*********************************************
+    @author Arthur  @date 16/05 -
+*********************************************/
+void Text::drawMenuShopText(sf::RenderWindow *window)
+{
+    window->draw(*m_totalCoinsCollectedText);
+    // ...
+}
+
 
 /********************************************
     Game Screen Drawing

@@ -19,13 +19,22 @@ limitations under the License.
 #include "PixelateEffect.h"
 #include "View.h"
 
+#define KEYBOARD_LEFT    (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) \
+                       || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
+#define KEYBOARD_RIGHT  (sf::Keyboard::isKeyPressed(sf::Keyboard::D) \
+                       || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) )
+#define KEYBOARD_JUMP  (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) \
+                       || sf::Keyboard::isKeyPressed(sf::Keyboard::Space ) )
+
+#define MOVE_LEFT true
+#define MOVE_RIGHT false
+
 /********************************************
     Constant Variables
 ********************************************/
 //GAME
-const std::string BALL_IMAGE = "Images/defaultball.png";
+const std::string BALL_IMAGE = "Images/ball.png";
 const std::string ENEMIES_IMAGE = "Images/enemies.png";
-const std::string BONUS_IMAGE = "Images/bonus.png";
 const std::string BOTTOM_BAR_IMAGE = "Images/bottom_bar.png";
 const std::string LIFE_BOX_IMAGE = "Images/life_bar.png";
 const std::string REMAINING_LIFE = "Images/remaining_life.png";
@@ -37,7 +46,7 @@ const std::string GRECT_BUTTON_IMAGE = "Images/rect_buttons.png";
 const std::string END_BGND_IMAGE = "Images/end_background.png";
 //MUSIC
 const std::string GAME_NORMAL_THEME_MUSIC = "Music/game_normal_sound.ogg";
-const std::string GAME_MASTER_THEME_MUSIC = "Music/game_master_sound.wav";
+const std::string GAME_MASTER_THEME_MUSIC = "Music/game_master_sound.ogg";
 const std::string COINS_COLLECTED_MUSIC = "Music/coin_collected_sound.ogg";
 const std::string ENEMIES_DESTRUCTED_MUSIC = "Music/destroyed_enemies_sound.ogg";
 

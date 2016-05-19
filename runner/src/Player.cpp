@@ -135,27 +135,27 @@ void Player::move()
 *********************************************/
 void Player::changeState(int state)
 {
-    if ( state == 0) //normal
+    if ( state == NORMAL)
     {
+        m_state = NORMAL;
         m_width = 30;
         m_height = 30;
-        m_state = 0;
         m_gravitation = 20.0;
         m_acceleration = 18.0;
     }
-    else if ( state == 1) //mega
+    else if ( state == MEGA)
     {
+        m_state = MEGA;
         m_width = 70;
         m_height = 70;
-        m_state = 1;
         m_gravitation = 20.0;
         m_acceleration = 18.0;
     }
-    else if ( state == 2) //fly
+    else if ( state == FLY)
     {
+        m_state = FLY;
         m_width = 30;
         m_height = 30;
-        m_state = 2;
         m_gravitation = 5.0;
         m_acceleration = 70.0;
     }

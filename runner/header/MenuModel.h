@@ -22,7 +22,7 @@ limitations under the License.
 /********************************************
     MenuModel Class
 *********************************************
-    @author Arthur  @date 14/04 - 14/05
+    @author Arthur  @date 14/04 - 16/05
 *********************************************/
 class MenuModel : public Model
 {
@@ -33,9 +33,11 @@ public:
 
     //=== GETTERS
     bool getHomeState() const;
+    bool& getHomeState();
     bool getSettingsState() const;
     bool getLeaderboardState() const;
     bool getShopState() const;
+    bool& getShopState();
     Leaderboard* getLeaderboard() const;
 
     //=== SETTERS
@@ -46,7 +48,8 @@ public:
 
     //=== METHODS
     virtual void nextStep() override;
-    void launchShop();
+    Shop* launchShop();
+    void changeLanguage(std::string lang);
 
 private:
     //=== ATTRIBUTES

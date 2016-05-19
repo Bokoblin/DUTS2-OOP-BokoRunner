@@ -10,17 +10,19 @@ using namespace std;
 GameModel::GameModel(const Model& model) :
     Model(model), m_pauseState{false}, m_endState{false}, m_inTransition{false},
     m_isTransitionPossible{false}, m_isSavePossible{true},
-    m_gameSpeed{4.0}, m_realGameSpeed{4.0}, m_currentZone{1},
-    m_activeBonusType{-1},
+    m_gameSpeed{DEFAULT_SPEED}, m_currentZone{1},
     m_currentEnemyInterdistance{0}, m_currentCoinInterdistance{0}, m_currentBonusInterdistance{0},
     m_lastTime{chrono::system_clock::now()}, m_bonusStopTime{chrono::milliseconds(0)}, m_bonusTimeout{0}
 {
     srand(time(NULL));
+    //default interdistances (in meters) for elements
     m_chosenEnemyInterdistance = 10 +rand()%10;
     m_chosenCoinInterdistance = rand()%10;
     m_chosenBonusInterdistance = 100 + rand()%50;
-    addANewMovableElement(50, GAME_FLOOR, 0);
-    m_dataModel->resetCurrentGame();
+    //create player
+    addANewMovableElement(50, GAME_FLOOR, PLAYER);
+
+    m_dataBase->resetCurrentGame();
 }
 
 
@@ -87,16 +89,16 @@ void GameModel::nextStep()
 		{
             //=== Update distance and gamespeed
 
-		    if ( m_difficulty == 0 && m_gameSpeed < 16 && chrono::system_clock::now() >= m_bonusStopTime)
+		    if ( m_difficulty == NORMAL_DIFFICULTY && m_gameSpeed < 16 && chrono::system_clock::now() >= m_bonusStopTime)
             {
                 m_gameSpeed += 0.01;
             }
-            else if ( m_difficulty != 0 && m_gameSpeed < 18 && chrono::system_clock::now() >= m_bonusStopTime)
+            else if ( m_difficulty != NORMAL_DIFFICULTY && m_gameSpeed < 18 && chrono::system_clock::now() >= m_bonusStopTime)
             {
                 if (m_gameSpeed == 4.0) m_gameSpeed = 8.0;
                 m_gameSpeed += 0.02;
             }
-			m_dataModel->setCurrentDistance(1 + 2*m_difficulty);
+			m_dataBase->setCurrentDistance(1 + 2*m_difficulty);
 
 			//=== Handle Movable Elements Creation & Deletion
 
@@ -113,35 +115,33 @@ void GameModel::nextStep()
 
             if ( chrono::system_clock::now() >= m_bonusStopTime)
             {
-                if ( m_player->getState() == 3)
+                if ( m_player->getState() == OTHER)
                     m_gameSpeed *=2;
-                m_player->changeState(0);
+                m_player->changeState(NORMAL);
             }
 
 
             //=== Handle transition status
 
-            if ( m_dataModel->getCurrentDistance() !=0 && m_difficulty == 0
-                && m_dataModel->getCurrentDistance()%500 ==0) //at each 500 meters
+            if ( m_dataBase->getCurrentDistance() !=0 && m_difficulty == NORMAL_DIFFICULTY
+                && m_dataBase->getCurrentDistance()%500 ==0) //at each 500 meters
                 m_isTransitionPossible = true;
-            if ( m_dataModel->getCurrentDistance() !=0 && m_difficulty == 2
-                && m_dataModel->getCurrentDistance()%2000 ==0) //at each 2000 meters
+            if ( m_dataBase->getCurrentDistance() !=0 && m_difficulty == MASTER_DIFFICULTY
+                && m_dataBase->getCurrentDistance()%2000 ==0) //at each 2000 meters
                 m_isTransitionPossible = true;
 
 
             //=== Handle Game's end
 
             if (m_player->getLife() == 0)
-            {
                 m_endState = true;
-            }
 
             m_lastTime = chrono::system_clock::now();
         }
     }
     else if (m_endState == true)
     {
-        m_dataModel->setCurrentScore(m_gameSpeed);
+        m_dataBase->setCurrentScore(m_gameSpeed);
     }
 }
 
@@ -149,12 +149,13 @@ void GameModel::nextStep()
 /********************************************
     choose the interdistance between elements
 *********************************************
-    @author Arthur  @date  12/03 - 6/05
+    @author Arthur  @date  12/03 - 18/05
 *********************************************/
 void GameModel::chooseInterdistance(int elementType)
 {
     //allows to calculate interdistance in different situations
-    if  ( elementType  == 1 ) //enemy
+
+    if  ( elementType  == STANDARDENEMY ) //any enemy
     {
         if (m_chosenEnemyInterdistance > 40)
             m_chosenEnemyInterdistance = abs(rand()%31); //0 to 30m
@@ -163,10 +164,10 @@ void GameModel::chooseInterdistance(int elementType)
         else
             m_chosenEnemyInterdistance = abs(rand()%41); //0 to 40m
 
-        if ( m_difficulty !=0 ) m_chosenEnemyInterdistance /= 3;
+        if ( m_difficulty != NORMAL_DIFFICULTY ) m_chosenEnemyInterdistance /= 3;
     }
 
-    else if ( elementType == 2 ) //coin
+    else if ( elementType == COIN )
     {
         if (m_chosenCoinInterdistance > 20)
             m_chosenCoinInterdistance = abs(rand()%21); //0 to 20m
@@ -176,7 +177,7 @@ void GameModel::chooseInterdistance(int elementType)
             m_chosenCoinInterdistance = abs(rand()%31); //0 to 30m
     }
 
-    else if ( elementType == 3 ) //Bonus
+    else if ( elementType == PVPLUSBONUS ) //any Bonus
     {
         if (m_chosenBonusInterdistance > 300)
             m_chosenBonusInterdistance = 200 + abs(rand()%101); //200 to 300m
@@ -251,9 +252,9 @@ void GameModel::handleMovableElementsCreation()
     {
         if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
         {
-            addANewMovableElement(m_width, GAME_FLOOR, 1);
+            addANewMovableElement(m_width, GAME_FLOOR, STANDARDENEMY);
             m_currentEnemyInterdistance = 0;
-            chooseInterdistance(1);
+            chooseInterdistance(STANDARDENEMY);
         }
     }
     else m_currentEnemyInterdistance++;
@@ -264,9 +265,9 @@ void GameModel::handleMovableElementsCreation()
     {
         if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
         {
-            addANewMovableElement(m_width, GAME_FLOOR-100, 4);
+            addANewMovableElement(m_width, GAME_FLOOR-100, COIN);
             m_currentCoinInterdistance = 0;
-            chooseInterdistance(2);
+            chooseInterdistance(COIN);
         }
     }
     else m_currentCoinInterdistance++;
@@ -277,9 +278,9 @@ void GameModel::handleMovableElementsCreation()
     {
         if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
         {
-            addANewMovableElement(m_width, GAME_FLOOR-100, 5);
+            addANewMovableElement(m_width, GAME_FLOOR-100, PVPLUSBONUS);
             m_currentBonusInterdistance = 0;
-            chooseInterdistance(3);
+            chooseInterdistance(PVPLUSBONUS);
         }
     }
     else m_currentBonusInterdistance++;
@@ -294,21 +295,21 @@ void GameModel::handleMovableElementsCreation()
 *********************************************/
 void GameModel::addANewMovableElement(float posX, float posY, int type)
 {
-    m_newMElement = nullptr;
-    if (type == 0) //Player
+    MovableElement *m_newMElement = nullptr;
+    if (type == PLAYER)
     {
         m_player = new Player(posX, posY, 30, 30, 2.0, 18.0);
         m_newMElement = m_player;
     }
-    else if (type == 1) //Enemy
+    else if (type == STANDARDENEMY)//any enemy, transformation in CTOR
     {
         m_newMElement = new Enemy(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
     }
-    else if (type == 4) //Coin
+    else if (type == COIN)
     {
         m_newMElement = new Coin(posX, posY, 25, 25, getGameSpeed()*(-1), 0);
     }
-    else if (type == 5) //Bonus
+    else if (type == PVPLUSBONUS) //any bonus, transformation in CTOR
     {
         m_newMElement = new Bonus(posX, posY, 25, 25, getGameSpeed()*(-1), 0);
     }
@@ -319,82 +320,77 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
         m_newMovableElementsArray.insert( m_newMElement );
         m_movableElementsArray.insert( m_newMElement );
     }
+    m_newMElement = nullptr;
 }
 
 
 /********************************************
     Handle Movable Elements Collisions
 *********************************************
-    @author Arthur  @date 12/03 - 29/04
+    @author Arthur  @date 12/03 - 18/05
 *********************************************/
 void GameModel::handleMovableElementsCollisions()
 {
     set<MovableElement*>::const_iterator it;
     for (it = m_movableElementsArray.begin(); it !=m_movableElementsArray.end(); ++it)
     {
-        if ( (*it)->getCollisionState() == false && (*it)->getType() != 0 && m_player->collision(**it))
+        if ( (*it)->getCollisionState() == false && (*it)->getType() != PLAYER && m_player->collision(**it))
         {
             (*it)->setCollisionState(true);
 
-            if ( (*it)->getType() == 1 && m_player->getState() != 1 ) //standard enemy
+            if ( (*it)->getType() == STANDARDENEMY && m_player->getState() != 1 )
             {
-                if (m_difficulty == 0)
+                if (m_difficulty == NORMAL_DIFFICULTY)
                     m_player->setLife(m_player->getLife()-10);
-                else if (m_difficulty == 2)
+                else if (m_difficulty == MASTER_DIFFICULTY)
                     m_player->setLife(m_player->getLife()-20);
             }
+            else if ( (*it)->getType() == STANDARDENEMY && m_player->getState() == 1 )
+                m_dataBase->setCurrentFlattenedEnemies(100);
 
-            else if ( (*it)->getType() == 1 && m_player->getState() == 1 )
-                m_dataModel->setCurrentFlattenedEnemies(100);
 
-            else if ( (*it)->getType() == 2 && m_player->getState() != 1) //totem enemy
+            else if ( (*it)->getType() == TOTEMENEMY && m_player->getState() != 1)
             {
-                if (m_difficulty == 0)
+                if (m_difficulty == NORMAL_DIFFICULTY)
                     m_player->setLife(m_player->getLife()-15);
-                else if (m_difficulty == 2)
+                else if (m_difficulty == MASTER_DIFFICULTY)
                     m_player->setLife(m_player->getLife()-30);
             }
+            else if ( (*it)->getType() == TOTEMENEMY && m_player->getState() == 1 )
+                m_dataBase->setCurrentFlattenedEnemies(300);
 
-
-            else if ( (*it)->getType() == 2 && m_player->getState() == 1 )
-                m_dataModel->setCurrentFlattenedEnemies(300);
-
-            else if ( (*it)->getType() == 3 && m_player->getState() != 1) //block enemy
+            else if ( (*it)->getType() == BLOCKENEMY && m_player->getState() != 1)
             {
-                if (m_difficulty == 0)
+                if (m_difficulty == NORMAL_DIFFICULTY)
                     m_player->setLife(m_player->getLife()-25);
-                else if (m_difficulty == 2)
+                else if (m_difficulty == MASTER_DIFFICULTY)
                     m_player->setLife(m_player->getLife()-50);
             }
+            else if ( (*it)->getType() == BLOCKENEMY && m_player->getState() == 1 )
+                m_dataBase->setCurrentFlattenedEnemies(500);
 
-            else if ( (*it)->getType() == 3 && m_player->getState() == 1 )
-                m_dataModel->setCurrentFlattenedEnemies(500);
+            else if ( (*it)->getType() == COIN)
+                m_dataBase->setCurrentCoinsCollected(1);
 
-            else if ( (*it)->getType() == 4) //coin
-                m_dataModel->setCurrentCoinsCollected(1);
-
-            else if ( (*it)->getType() == 5) //PV+
+            else if ( (*it)->getType() == PVPLUSBONUS)
                 m_player->setLife(m_player->getLife()+10);
 
-            else if ( (*it)->getType() == 6) //Mega
+            else if ( (*it)->getType() == MEGABONUS) //stop Mega bonus effect in 10s
             {
-                m_player->changeState(1);
-                //allows to stop Mega bonus effect in 10s
+                m_player->changeState(MEGA);
                 m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(10000);
             }
 
-            else if ( (*it)->getType() == 7) //Fly
+            else if ( (*it)->getType() == FLYBONUS) //stop Fly bonus effect in 15s
             {
-                m_player->changeState(2);
-                //allows to stop Fly bonus effect in 15s
+                m_player->changeState(FLY);
                 m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(15000);
             }
 
-            else if ( (*it)->getType() == 8) //SlowDown
+            else if ( (*it)->getType() == SLOWSPEEDBONUS) //stop SlowDown bonus effect in 20s
             {
                 m_gameSpeed = m_gameSpeed/2;
-                m_player->changeState(3);
-                //allows to stop SlowDown bonus effect in 20s
+                m_player->changeState(OTHER);
                 m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(20000);
             }
         }

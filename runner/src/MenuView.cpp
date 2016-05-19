@@ -5,12 +5,11 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    @author Arthur  @date 25/02 - 14/04
+    @author Arthur  @date 25/02 - 16/05
     @author Florian @date 22/04 - 06/05
-
 *********************************************/
 MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
-	View(w, h, window,text), m_menuModel{nullptr}
+	View(w, h, window,text), m_menuModel{nullptr}, m_shopView{nullptr}
 {
     if (!m_menuMusic.openFromFile(MENU_MUSIC))
         cerr << "ERROR when loading music file: " << MENU_MUSIC << endl;
@@ -21,11 +20,10 @@ MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
         m_menuMusic.setAttenuation(50);
     }
 
-
 	if (m_window->getSize().x != m_width )
 	{
-		m_window->create( sf::VideoMode(w, h, 32), "Boko Runner", sf::Style::Close );
-		m_window->setFramerateLimit(30);
+		m_window->create( sf::VideoMode(w, h, SCREEN_BPP), APP_TITLE, sf::Style::Close );
+		m_window->setFramerateLimit(FRAMERATE);
 		m_window->setPosition(sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2,
 				(sf::VideoMode::getDesktopMode().height - m_height)/2 ));
 	}
@@ -37,7 +35,7 @@ MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
 /********************************************
     Destructor
 *********************************************
-    @author Arthur  @date 26/02 - 20/04
+    @author Arthur  @date 26/02 - 16/05
 *********************************************/
 MenuView::~MenuView()
 {
@@ -50,6 +48,7 @@ MenuView::~MenuView()
 	delete m_quitRectButton;
 	delete m_settingsFormButton;
     delete m_leaderboardFormButton;
+    delete m_shopFormButton;
     delete m_clearLbRectButton;
 
 	//=== Settings Graphic Elements
@@ -77,7 +76,7 @@ void MenuView::setMenuModel(MenuModel *model)
 /********************************************
     Image Loading
 *********************************************
-    @author Arthur  @date 26/03 - 20/04
+    @author Arthur  @date 26/03 - 16/05
 *********************************************/
 void MenuView::loadImages()
 {
@@ -107,29 +106,29 @@ void MenuView::loadImages()
 
 	//=== Initialize PLAY, QUIT and CLEAR Leaderboard buttons
 
-	if (!m_menuRectButtonsTexture.loadFromFile(RECT_BUTTONS_IMAGE) )
-		cerr << "ERROR when loading image file: " << RECT_BUTTONS_IMAGE << endl;
+	if (!m_menuRectButtonsTexture.loadFromFile(MENU_RECT_BUTTONS_IMAGE) )
+		cerr << "ERROR when loading image file: " << MENU_RECT_BUTTONS_IMAGE << endl;
 	else
 	{
         m_menuRectButtonsTexture.setSmooth(true);
 
-		std::vector<sf::IntRect> clip_rects_play;
+		vector<sf::IntRect> clip_rects_play;
 		clip_rects_play.push_back(sf::IntRect( 0, 0, 150, 80));
 		clip_rects_play.push_back(sf::IntRect(151, 0, 150, 80));
 		m_playRectButton = new Button(clip_rects_play, m_menuRectButtonsTexture, m_width/2-75, m_height/1.5, 150, 80, false);
 
-		std::vector<sf::IntRect> clip_rects_quit;
+		vector<sf::IntRect> clip_rects_quit;
 		clip_rects_quit.push_back(sf::IntRect( 0, 0, 150, 80));
 		clip_rects_quit.push_back(sf::IntRect(151, 0, 150, 80));
 		m_quitRectButton = new Button(clip_rects_quit, m_menuRectButtonsTexture, m_width/2-75, m_height/1.2, 150, 80, false);
 
-        std::vector<sf::IntRect> clip_rects_clear;
+        vector<sf::IntRect> clip_rects_clear;
 		clip_rects_clear.push_back(sf::IntRect( 0, 100, 150, 40));
 		clip_rects_clear.push_back(sf::IntRect(151, 100, 150, 40));
         m_clearLbRectButton = new Button(clip_rects_clear, m_menuRectButtonsTexture, m_width/2-75, 500, 150, 40, false);
     }
 
-    //=== Initialize SETTINGS, LEADERBOARD and HOME form buttons
+    //=== Initialize SETTINGS, LEADERBOARD, SHOP and HOME form buttons
 
 	if (!m_menuFormButtonsTexture.loadFromFile(FORM_BUTTONS_IMAGE) )
 		cerr << "ERROR when loading image file: " << FORM_BUTTONS_IMAGE << endl;
@@ -137,20 +136,25 @@ void MenuView::loadImages()
 	{
 		m_menuFormButtonsTexture.setSmooth(true);
 
-		std::vector<sf::IntRect> clip_rects_settings;
+		vector<sf::IntRect> clip_rects_settings;
 		clip_rects_settings.push_back(sf::IntRect( 0, 0, 50, 50));
 		clip_rects_settings.push_back(sf::IntRect( 51, 0, 50, 50));
 		m_settingsFormButton = new Button(clip_rects_settings, m_menuFormButtonsTexture, 20, 530, 50, 50, false);
 
-		std::vector<sf::IntRect> clip_rects_home;
+		vector<sf::IntRect> clip_rects_home;
 		clip_rects_home.push_back(sf::IntRect( 0, 50, 50, 50));
 		clip_rects_home.push_back(sf::IntRect( 51, 50, 50, 50));
 		m_homeFormButton = new Button(clip_rects_home, m_menuFormButtonsTexture, 10, 10, 50, 50, false);
 
-        std::vector<sf::IntRect> clip_rects_lb;
+        vector<sf::IntRect> clip_rects_lb;
         clip_rects_lb.push_back(sf::IntRect( 0, 100, 50, 50));
         clip_rects_lb.push_back(sf::IntRect( 51, 100, 50, 50));
         m_leaderboardFormButton = new Button(clip_rects_lb, m_menuFormButtonsTexture, 830, 530, 50, 50, false);
+
+        vector<sf::IntRect> clip_rects_shop;
+        clip_rects_shop.push_back(sf::IntRect( 0, 150, 50, 50));
+        clip_rects_shop.push_back(sf::IntRect( 51, 150, 50, 50));
+        m_shopFormButton = new Button(clip_rects_shop, m_menuFormButtonsTexture, 830, 10, 50, 50, false);
 	}
 
 
@@ -162,7 +166,7 @@ void MenuView::loadImages()
 	{
 		m_menuRadioButtonsTexture.setSmooth(true);
 
-		std::vector<sf::IntRect> clip_rects;
+		vector<sf::IntRect> clip_rects;
 		clip_rects.push_back(sf::IntRect(  0,   0, 50, 50) );
 		clip_rects.push_back(sf::IntRect(50,   0, 50, 50) );
 		clip_rects.push_back(sf::IntRect(  0, 50, 50, 50) );
@@ -180,7 +184,7 @@ void MenuView::loadImages()
 /********************************************
     Synchronization function
 *********************************************
-    @author Arthur  @date 26/03 - 07/05
+    @author Arthur  @date 26/03 - 16/05
 *********************************************/
 void MenuView::synchronize()
 {
@@ -198,6 +202,7 @@ void MenuView::synchronize()
 		m_quitRectButton->sync();
 		m_settingsFormButton->sync();
         m_leaderboardFormButton->sync();
+        m_shopFormButton->sync();
 
 		//=== Text update
 
@@ -208,11 +213,11 @@ void MenuView::synchronize()
 	{
 		//=== Elements update
 
-		m_englishLangRadioButton->setActivatedState(m_menuModel->getDataModel()->getLanguage() == "en");
-		m_frenchLangRadioButton->setActivatedState(m_menuModel->getDataModel()->getLanguage() == "fr");
-		m_spanishLangRadioButton->setActivatedState(m_menuModel->getDataModel()->getLanguage() == "es");
-		m_normalQuestRadioButton->setActivatedState(m_model->getDifficulty() == 0);
-		m_masterQuestRadioButton->setActivatedState(m_model->getDifficulty() != 0);
+		m_englishLangRadioButton->setActivatedState(m_menuModel->getDataBase()->getLanguage() == "en");
+		m_frenchLangRadioButton->setActivatedState(m_menuModel->getDataBase()->getLanguage() == "fr");
+		m_spanishLangRadioButton->setActivatedState(m_menuModel->getDataBase()->getLanguage() == "es");
+		m_normalQuestRadioButton->setActivatedState(m_model->getDifficulty() == NORMAL_DIFFICULTY);
+		m_masterQuestRadioButton->setActivatedState(m_model->getDifficulty() != NORMAL_DIFFICULTY);
 		m_homeFormButton->sync();
 		m_englishLangRadioButton->sync();
 		m_frenchLangRadioButton->sync();
@@ -220,11 +225,11 @@ void MenuView::synchronize()
 		m_normalQuestRadioButton->sync();
 		m_masterQuestRadioButton->sync();
 		m_homeFormButton->resize(30, 30);
-		m_englishLangRadioButton->resize(25, 25);
-		m_frenchLangRadioButton->resize(25, 25);
-		m_spanishLangRadioButton->resize(25, 25);
-		m_normalQuestRadioButton->resize(25, 25);
-		m_masterQuestRadioButton->resize(25, 25);
+		m_englishLangRadioButton->resize(26, 26);
+		m_frenchLangRadioButton->resize(26, 26);
+		m_spanishLangRadioButton->resize(26, 26);
+		m_normalQuestRadioButton->resize(26, 26);
+		m_masterQuestRadioButton->resize(26, 26);
 
 		//=== Text update
 
@@ -247,13 +252,24 @@ void MenuView::synchronize()
 			m_menuModel->getLeaderboard());
 
     }
+    else if (m_menuModel->getShopState() == true)
+    {
+        m_shopView->synchronize();
+    }
+
+    //=== Delete shopView if not anymore in shopState
+    if ( m_menuModel->getShopState() == false && m_shopView != nullptr)
+    {
+        delete m_shopView;
+        m_shopView = nullptr;
+    }
 }
 
 
 /********************************************
     Menu View Drawing
 *********************************************
-    @author Arthur  @date 26/03 - 20/04
+    @author Arthur  @date 26/03 - 16/05
 *********************************************/
 void MenuView::draw() const
 {
@@ -270,15 +286,16 @@ void MenuView::draw() const
 		m_window->draw(*m_quitRectButton);
 		m_window->draw(*m_settingsFormButton);
         m_window->draw(*m_leaderboardFormButton);
+        m_window->draw(*m_shopFormButton);
 
 		//=== Text Drawing
 
 		m_text->drawMenuHomeText(m_window);
-
+        m_window->display();
 	}
 	else if (m_menuModel->getSettingsState() == true)
 	{
-		m_window->clear(sf::Color(51, 51, 51, 255) );
+		m_window->clear( GREY_BG_COLOR );
 
 		//=== Graphic Elements drawing
 
@@ -292,11 +309,11 @@ void MenuView::draw() const
 		//=== Text Drawing
 
 		m_text->drawMenuSettingsText(m_window);
-
+        m_window->display();
 	}
     else if (m_menuModel->getLeaderboardState() == true)
     {
-        m_window->clear(sf::Color(51, 51, 51, 255) );
+        m_window->clear( GREY_BG_COLOR );
 
         //=== Graphic Elements drawing
 
@@ -306,10 +323,11 @@ void MenuView::draw() const
         //=== Text Drawing
 
         m_text->drawMenuLeaderboardText(m_window);
-
+        m_window->display();
     }
+    else if (m_menuModel->getShopState() == true)
+        m_shopView->draw();
 
-	m_window->display();
 }
 
 
@@ -337,27 +355,27 @@ bool MenuView::treatEvents()
 				result = false;
 			}
 
-			//Home Screen
+			//=== Home Screen
+
 			if (m_menuModel->getHomeState() == true)
 			{
 				if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 				{
-					if ( m_playRectButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
+					if ( m_playRectButton->IS_POINTED )
 						m_playRectButton->setPressedState(true);
-					}
-					else if ( m_quitRectButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
+
+					else if ( m_quitRectButton->IS_POINTED )
 						m_quitRectButton->setPressedState(true);
-					}
-					else if ( m_settingsFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
+
+					else if ( m_settingsFormButton->IS_POINTED )
 						m_settingsFormButton->setPressedState(true);
-					}
-                    else if ( m_leaderboardFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
-                    {
+
+                    else if ( m_leaderboardFormButton->IS_POINTED )
                         m_leaderboardFormButton->setPressedState(true);
-                    }
+
+                    else if ( m_shopFormButton->IS_POINTED )
+                        m_shopFormButton->setPressedState(true);
+
 				}
 
 				if (event.type == sf::Event::MouseButtonReleased)
@@ -366,8 +384,9 @@ bool MenuView::treatEvents()
 					m_quitRectButton->setPressedState(false);
 					m_settingsFormButton->setPressedState(false);
                     m_leaderboardFormButton->setPressedState(false);
+                    m_shopFormButton->setPressedState(false);
 
-					if ( m_playRectButton->getGlobalBounds().contains(MOUSE_POSITION) )
+					if ( m_playRectButton->IS_POINTED )
 					{
                         if(m_menuMusic.getStatus() == sf::Music::Status::Playing )
                             m_menuMusic.stop();
@@ -375,53 +394,53 @@ bool MenuView::treatEvents()
 						m_model->setGameState(true);
 						result = false;
 					}
-					else if ( m_quitRectButton->getGlobalBounds().contains(MOUSE_POSITION) )
+					else if ( m_quitRectButton->IS_POINTED )
 					{
 						m_window->close();
 						result = false;
 					}
-					else if ( m_settingsFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
+					else if ( m_settingsFormButton->IS_POINTED )
 					{
 						m_menuModel->setHomeState(false);
 						m_menuModel->setSettingsState(true);
 					}
-                    else if ( m_leaderboardFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
+                    else if ( m_leaderboardFormButton->IS_POINTED )
                     {
                         m_menuModel->setHomeState(false);
                         m_menuModel->setLeaderboardState(true);
                     }
+                    else if ( m_shopFormButton->IS_POINTED )
+                    {
+                        m_shopView = new ShopView(m_width, m_height, m_window, m_text);
+                        m_shopView->setShopModel( m_menuModel->launchShop() );
+                    }
 				}
 			}
 
-			//Settings Screen
+			//=== SETTINGS SCREEN
+
 			else if (m_menuModel->getSettingsState() == true)
 			{
 				if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 				{
-					if ( m_homeFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
+					if ( m_homeFormButton->IS_POINTED )
 						m_homeFormButton->setPressedState(true);
-					}
-					else if ( m_englishLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
+
+					else if ( m_englishLangRadioButton->IS_POINTED )
 						m_englishLangRadioButton->setPressedState(true);
-					}
-					else if ( m_frenchLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
+
+					else if ( m_frenchLangRadioButton->IS_POINTED )
 						m_frenchLangRadioButton->setPressedState(true);
-					}
-					else if ( m_spanishLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
+
+					else if ( m_spanishLangRadioButton->IS_POINTED )
 						m_spanishLangRadioButton->setPressedState(true);
-					}
-					else if ( m_normalQuestRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
+
+					else if ( m_normalQuestRadioButton->IS_POINTED )
 						m_normalQuestRadioButton->setPressedState(true);
-					}
-					else if ( m_masterQuestRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
+
+					else if ( m_masterQuestRadioButton->IS_POINTED )
 						m_masterQuestRadioButton->setPressedState(true);
-					}
+
 				}
 
 				if (event.type == sf::Event::MouseButtonReleased)
@@ -433,31 +452,31 @@ bool MenuView::treatEvents()
 					m_normalQuestRadioButton->setPressedState(false);
 					m_masterQuestRadioButton->setPressedState(false);
 
-					if ( m_homeFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
+					if ( m_homeFormButton->IS_POINTED )
 					{
 						m_menuModel->setSettingsState(false);
 						m_menuModel->setHomeState(true);
 					}
-					else if ( m_englishLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
+					else if ( m_englishLangRadioButton->IS_POINTED )
 					{
-						m_menuModel->getDataModel()->setLanguage("en");
+						m_menuModel->changeLanguage("en");
 						m_text->updateWholeText();
 					}
-					else if ( m_frenchLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
+					else if ( m_frenchLangRadioButton->IS_POINTED )
 					{
-						m_menuModel->getDataModel()->setLanguage("fr");
+						m_menuModel->changeLanguage("fr");
 						m_text->updateWholeText();
 					}
-					else if ( m_spanishLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
+					else if ( m_spanishLangRadioButton->IS_POINTED )
 					{
-						m_menuModel->getDataModel()->setLanguage("es");
+						m_menuModel->changeLanguage("es");
 						m_text->updateWholeText();
 					}
-					else if ( m_normalQuestRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
+					else if ( m_normalQuestRadioButton->IS_POINTED )
 					{
 						m_model->setDifficulty(0);
 					}
-					else if ( m_masterQuestRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
+					else if ( m_masterQuestRadioButton->IS_POINTED )
 					{
 						m_model->setDifficulty(2);
 					}
@@ -469,14 +488,11 @@ bool MenuView::treatEvents()
             {
                 if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
                 {
-                    if ( m_homeFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
-                    {
+                    if ( m_homeFormButton->IS_POINTED )
                         m_homeFormButton->setPressedState(true);
-                    }
-                    if ( m_clearLbRectButton->getGlobalBounds().contains(MOUSE_POSITION) )
-                    {
+
+                    if ( m_clearLbRectButton->IS_POINTED )
                         m_clearLbRectButton->setPressedState(true);
-                    }
                 }
 
                 if (event.type == sf::Event::MouseButtonReleased)
@@ -484,16 +500,23 @@ bool MenuView::treatEvents()
                     m_homeFormButton->setPressedState(false);
                     m_clearLbRectButton->setPressedState(false);
 
-                    if ( m_homeFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
+                    if ( m_homeFormButton->IS_POINTED )
                     {
-                        m_menuModel->setSettingsState(false);
+                        m_menuModel->setLeaderboardState(false);
                         m_menuModel->setHomeState(true);
                     }
-                    if ( m_clearLbRectButton->getGlobalBounds().contains(MOUSE_POSITION) )
+                    if ( m_clearLbRectButton->IS_POINTED )
                     {
                         m_menuModel->getLeaderboard()->createFile();
                     }
                 }
+            }
+
+            //if treatEvents return true = if shop is stopping
+            else if ( m_menuModel->getShopState() == true && m_shopView->treatEvents(event) == true )
+            {
+                m_menuModel->setShopState(false);
+                m_menuModel->setHomeState(true);
             }
 		}
 	}

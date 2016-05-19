@@ -5,62 +5,54 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    @author Arthur  @date 11/05 - 14/05
+    @author Arthur  @date 11/05 - 16/05
 *********************************************/
-Shop::Shop(DataModel *data) :  m_dataModel{data}
+Shop::Shop(DataBase *data) :  m_dataBase{data}
 {
-    m_dataModel->fetchBuyableItemsFromFile(m_shopItemsArray);
-
-    //Model Example - to remove with working view :
-
-    cout << this->toString() << endl;
-    cout << endl << "===================================" << endl << endl;
-
-    if ( buyItem(*m_shopItemsArray.begin() ) == false)
-        cout << "Item can't be bought ! (Not enough money or already bought item)" << endl;
-    else
-    {
-        cout << "Item has been bought !" << endl;
-    }
+    m_dataBase->fetchBuyableItemsFromFile(m_shopItemsArray);
 }
 
 
 /********************************************
     Destructor
 *********************************************
-    @author Arthur  @date 11/05
+    @author Arthur  @date 11/05 - 18/05
 *********************************************/
 Shop::~Shop()
 {
-
+    for (ShopItem *si: m_shopItemsArray)
+        delete si;
 }
+
+
+/********************************************
+    Getters
+*********************************************
+    @author Arthur  @date 16/05
+*********************************************/
+vector<ShopItem*> Shop::getShopItemsArray() const { return m_shopItemsArray; }
 
 
 /********************************************
     Buy items
 *********************************************
-    @author Arthur  @date 11/05 - 15/05
+    @author Arthur  @date 11/05 - 18/05
 *********************************************/
 bool Shop::buyItem(ShopItem *my_item)
 {
-    if ( my_item->getBoughtState() == false && my_item->getPrice() <= m_dataModel->getTotalCoinsCollected() )
+    if ( my_item->getBoughtState() == false && my_item->getPrice() <= m_dataBase->getTotalCoinsCollected() )
     {
-        m_dataModel->setTotalCoinsCollected( -my_item->getPrice() );
+        m_dataBase->setTotalCoinsCollected( -my_item->getPrice() );
         my_item->setBoughtState(true);
-        m_dataModel->getActivatedItemsArray().push_back( my_item->getName() );
+        m_dataBase->getActivatedItemsArray().push_back( my_item->getName() );
 
         pugi::xml_document doc;
         doc.load_file("Resources/config.xml");
 
         for (pugi::xml_node item: doc.child("runner").child("shop").children("item") )
         {
-            string name = my_item->getName();
-            for (unsigned int i=0; i < name.size(); i++)
-                if (name[i] == ' ') name[i] = '_';
-
-            if ( item.attribute("name").value() == name  )
+            if ( item.attribute("name").value() == my_item->getName()  )
             {
-                cout << "done" << endl;
                 pugi::xml_attribute state = item.attribute("boughtState");
                 state.set_value(true);
                 doc.save_file("Resources/config.xml");

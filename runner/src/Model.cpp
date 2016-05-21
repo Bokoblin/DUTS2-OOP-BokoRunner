@@ -8,11 +8,11 @@ using namespace std;
     @author Arthur  @date 21/02 - 6/05
     @author Florian @date 21/02 - 2/03
 *********************************************/
-Model::Model(float w, float h, const std::chrono::system_clock::time_point beginTime)  :
+Model::Model(float w, float h)  :
     m_width(w), m_height(h), m_difficulty{NORMAL_DIFFICULTY},
-    m_dataBase{nullptr}, m_programBeginningTime{beginTime}
+    m_dataBase{nullptr}
 {
-    m_introState = true;
+    m_introState = false;
     m_menuState = false;
     m_gameState = false;
     m_resetGameState = false;
@@ -24,9 +24,9 @@ Model::Model(float w, float h, const std::chrono::system_clock::time_point begin
     @author Arthur  @date 14/04 - 6/05
 *********************************************/
 Model::Model(const Model& model) :
-    m_width(model.m_width), m_height(model.m_height), m_difficulty{model.m_difficulty},m_dataBase{model.m_dataBase},
-    m_programBeginningTime{model.m_programBeginningTime}, m_introState{model.m_introState},
-    m_menuState{model.m_menuState}, m_gameState{model.m_gameState}, m_resetGameState{model.m_resetGameState}
+    m_width(model.m_width), m_height(model.m_height), m_difficulty{model.m_difficulty},
+    m_dataBase{model.m_dataBase}, m_introState{model.m_introState}, m_menuState{model.m_menuState},
+    m_gameState{model.m_gameState}, m_resetGameState{model.m_resetGameState}
 { }
 
 /********************************************
@@ -51,7 +51,6 @@ bool Model::getIntroState() const {return m_introState;}
 bool Model::getMenuState() const {return m_menuState;}
 bool Model::getGameState() const {return m_gameState;}
 bool Model::getResetGameState() const {return m_resetGameState;}
-chrono::system_clock::time_point Model::getProgramBeginningTime() const { return m_programBeginningTime; }
 
 
 /********************************************

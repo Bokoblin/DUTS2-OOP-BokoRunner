@@ -36,22 +36,22 @@ const std::string HIDDEN_CONFIG_FILE = "Resources/.fragment_cache";
 const std::string DEFAULT_CONFIG_CONTENT = " \
 <?xml version=\"1.0\" encoding=\"utf-8\"?>\n \
 <runner>\n \
-<config>\n \
-<string name=\"language\">en</string>\n \
-<string name=\"ball_skin\">default</string>\n \
-<int name=\"total_coins_collected\">0</int>\n \
-<int name=\"total_distance_travelled\">0</int>\n \
-<int name=\"total_enemies_destroyed\">0</int>\n \
-<int name=\"total_games_played\">0</int>\n \
-</config>\n \
-<shop>\n \
-<item id=\"doubler\" name=\"Coin Doubler\" description=\"Double coins collected number\" price=\"500\" boughtState=\"false\"/>\n \
-<item id=\"shieldplus\" name=\"Increase Shield bonus\" description=\"Increase bonus duration by 5s\" price=\"50\" boughtState=\"false\"/>\n \
-<item id=\"megaplus\" name=\"Increase Mega bonus\" description=\"Increase bonus duration by 5s\" price=\"100\" boughtState=\"false\"/>\n \
-<item id=\"flyplus\" name=\"Increase Fly bonus\" description=\"Increase bonus duration by 5s\" price=\"70\" boughtState=\"false\"/>\n \
-<item id=\"morphing\" name=\"Morph ball skin\" description=\"Unlock ball's morph skin\" price=\"300\" boughtState=\"false\"/>\n \
-<item id=\"capsule\" name=\"Capsule ball skin\" description=\"Unlock ball's capsule skin\" price=\"350\" boughtState=\"false\"/>\n \
-</shop>\n \
+    <config>\n \
+        <string name=\"language\">en</string>\n \
+        <string name=\"ball_skin\">default</string>\n \
+        <int name=\"total_coins_collected\">0</int>\n \
+        <int name=\"total_distance_travelled\">0</int>\n \
+        <int name=\"total_enemies_destroyed\">0</int>\n \
+        <int name=\"total_games_played\">0</int>\n \
+    </config>\n \
+    <shop>\n \
+        <item id=\"doubler\" name=\"Coin Doubler\" description=\"Double coins collected number\" price=\"500\" boughtState=\"false\"/>\n \
+        <item id=\"shieldplus\" name=\"Increase Shield bonus\" description=\"Protect two times\" price=\"50\" boughtState=\"false\"/>\n \
+        <item id=\"megaplus\" name=\"Increase Mega bonus\" description=\"Increase bonus duration by 5s\" price=\"100\" boughtState=\"false\"/>\n \
+        <item id=\"flyplus\" name=\"Increase Fly bonus\" description=\"Increase bonus duration by 5s\" price=\"70\" boughtState=\"false\"/>\n \
+        <item id=\"morphing\" name=\"Morph ball skin\" description=\"Unlock ball's morph skin\" price=\"300\" boughtState=\"false\"/>\n \
+        <item id=\"capsule\" name=\"Capsule ball skin\" description=\"Unlock ball's capsule skin\" price=\"350\" boughtState=\"false\"/>\n \
+    </shop>\n \
 </runner>\n";
 
 

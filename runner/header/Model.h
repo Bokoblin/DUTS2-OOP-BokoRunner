@@ -26,14 +26,14 @@ limitations under the License.
 /********************************************
     Model Class
 *********************************************
-    @author Arthur  @date 21/02 - 6/05
+    @author Arthur  @date 21/02 - 21/05
     @author Florian @date 21/02 - 2/03
 *********************************************/
 class Model
 {
 public:
     //=== CTORs / DTORs
-    Model(float w, float h, const std::chrono::system_clock::time_point beginTime);
+    Model(float w, float h);
     Model( const Model & model);
     virtual ~Model();
 
@@ -44,7 +44,6 @@ public:
     bool getMenuState() const;
     bool getGameState() const;
     bool getResetGameState() const;
-    std::chrono::system_clock::time_point getProgramBeginningTime() const ;
 
     //=== SETTERS
     void setDataBase(DataBase *data);
@@ -62,7 +61,6 @@ protected:
     float m_width, m_height;
     int m_difficulty;
     DataBase *m_dataBase;
-    const std::chrono::system_clock::time_point m_programBeginningTime;
 
 private:
     bool m_introState;

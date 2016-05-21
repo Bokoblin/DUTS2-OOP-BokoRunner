@@ -23,7 +23,6 @@ limitations under the License.
 ********************************************/
 const int INTRO_WIDTH = 400;
 const int INTRO_HEIGHT = 200;
-const std::chrono::system_clock::time_point programBeginningTime = std::chrono::system_clock::now();
 
 using namespace std;
 
@@ -42,9 +41,12 @@ int main()
     window->setFramerateLimit(FRAMERATE);
 
     DataBase data;
-    Model model(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
+    Model model(SCREEN_WIDTH, SCREEN_HEIGHT);
     model.setDataBase(&data);
     Text *text = new Text(&data);
+
+    //Allows to choose which screen will be launch at Run
+    model.setIntroState(true);
 
     while(window->isOpen() )
     {

@@ -28,7 +28,8 @@ enum element
     PVPLUSBONUS,
     MEGABONUS,
     FLYBONUS,
-    SLOWSPEEDBONUS
+    SLOWSPEEDBONUS,
+    SHIELDBONUS
 };
 
 

@@ -35,18 +35,29 @@ void Bonus::move()
 /********************************************
     Next Bonus Type Choosing
 *********************************************
-    @author Arthur  @date 11/04 - 12/04
+    @author Arthur  @date 11/04 - 21/05
 *********************************************/
 void Bonus::chooseBonusType()
 {
-    int result = 1 + rand()%100;
+    int result = 85;//1 + rand()%100;
 
-    if (result <= 45)
-        m_elementType = 5;
-    else if (result <= 60)
-        m_elementType = 6;
-    else if ( result <= 80)
-        m_elementType = 7;
+    if (result <= 30)
+        m_elementType = PVPLUSBONUS;
+    else if (result <= 50)
+        m_elementType = MEGABONUS;
+    else if ( result <= 65)
+        m_elementType = FLYBONUS;
+    else if ( result <= 75)
+        m_elementType = SLOWSPEEDBONUS;
     else
-        m_elementType = 8;
+        m_elementType = SHIELDBONUS;
+
+    /* Bonus percentage
+    *    1-30 : PV+       ~30%
+    *  31-50 : MEGA    ~20%
+    *  51-65 : FLY       ~15%
+    *  66-75 : SLOW   ~10%
+    * 76-100: SHIELD ~25%
+    */
+
 }

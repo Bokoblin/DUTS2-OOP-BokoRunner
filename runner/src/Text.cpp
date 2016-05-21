@@ -390,7 +390,7 @@ void Text::syncMenuLeaderboardText(int w, int h, Leaderboard* lb)
 
     m_clearButtonLabel->setCharacterSize(20);
     m_clearButtonLabel->setPosition(w/2 -
-            int(m_clearButtonLabel->HALF_WIDTH), 507);
+            int(m_clearButtonLabel->HALF_WIDTH), 547);
 }
 
 

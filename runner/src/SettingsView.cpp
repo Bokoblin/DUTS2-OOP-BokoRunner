@@ -190,15 +190,15 @@ void SettingsView::synchronize()
 
     //=== Resize Radio buttons
 
-    m_homeFormButton->resize(30, 30);
-    m_englishLangRadio->resize(26, 26);
-    m_frenchLangRadio->resize(26, 26);
-    m_spanishLangRadio->resize(26, 26);
-    m_normalModeRadio->resize(26, 26);
-    m_masterModeRadio->resize(26, 26);
-    m_defaultBallSkinRadio->resize(26, 26);
-    m_morphBallSkinRadio->resize(26, 26);
-    m_capsuleBallSkinRadio->resize(26, 26);
+    m_homeFormButton->resize(FORM_BUTTONS_SIZE);
+    m_englishLangRadio->resize(RADIO_BUTTONS_SIZE);
+    m_frenchLangRadio->resize(RADIO_BUTTONS_SIZE);
+    m_spanishLangRadio->resize(RADIO_BUTTONS_SIZE);
+    m_normalModeRadio->resize(RADIO_BUTTONS_SIZE);
+    m_masterModeRadio->resize(RADIO_BUTTONS_SIZE);
+    m_defaultBallSkinRadio->resize(RADIO_BUTTONS_SIZE);
+    m_morphBallSkinRadio->resize(RADIO_BUTTONS_SIZE);
+    m_capsuleBallSkinRadio->resize(RADIO_BUTTONS_SIZE);
 
     //=== Text update
 
@@ -207,7 +207,7 @@ void SettingsView::synchronize()
 
 
 /********************************************
-    Menu View Drawing
+    Settings View Drawing
 *********************************************
     @author Arthur  @date 20/05
 *********************************************/

@@ -13,32 +13,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef SHOPVIEW_H
-#define SHOPVIEW_H
+#ifndef SETTINGSVIEW_H
+#define SETTINGSVIEW_H
 
 #include "View.h"
-#include "Shop.h"
-#include "ShopItemCard.h"
-#include "Dialog.h"
+#include "Settings.h"
 
 
 /********************************************
-    ShopView Class
+    SettingsView Class
 *********************************************
-    @author Arthur  @date 11/05 - 18/05
+    @author Arthur  @date 20/05
 *********************************************/
-class ShopView : public View
+class SettingsView : public View
 {
 public:
     //=== CTORs / DTORs
-    ShopView(float w, float h, sf::RenderWindow *window, Text * text);
-    virtual ~ShopView();
-
-    //=== GETTERS
-    ShopItem* getCardItem( GraphicElement *elem) const;
+    SettingsView(float w, float h, sf::RenderWindow *window, Text * text);
+    virtual ~SettingsView();
 
     //=== SETTERS
-    void setShopModel(Shop *model);
+    void setSettingsModel(Settings *model);
 
     //=== METHODS
     virtual void synchronize() override;
@@ -46,27 +41,32 @@ public:
     virtual void loadImages() override;
     virtual bool treatEvents() override;
     bool treatEvents( sf::Event event );
-    void displayCards() const;
-    void createCards();
 
 private:
     //=== ATTRIBUTES
-    Shop *m_shop;
+    Settings *m_settings;
     int m_currentIndicator;
-    int m_totalIndicator;
+    int m_nbIndicators;
 
     //Textures
-    sf::Texture m_menuFormButtonsTexture;
-    sf::Texture m_coinTexture;
+    sf::Texture m_menuButtonTexture;
+    sf::Texture m_radioButtonsTexture;
     sf::Texture m_pageIndicatorTexture;
+    sf::Texture m_logoIUTTexture;
 
     //Graphic Elements
-    GraphicElement *m_coinSprite;
     Button *m_homeFormButton;
     Button *m_pageIndicatorButton;
-    Dialog *m_buyDialog;
+    Button *m_englishLangRadio;
+    Button *m_frenchLangRadio;
+    Button *m_spanishLangRadio;
+    Button *m_normalModeRadio;
+    Button *m_masterModeRadio;
+    Button *m_defaultBallSkinRadio;
+    Button *m_morphBallSkinRadio;
+    Button *m_capsuleBallSkinRadio;
+    GraphicElement *m_logoIUTSprite;
 
-    std::vector<ShopItemCard *> m_shopItemsCardArray;
     std::map<int, Button *> m_pageIndicators;
 };
 

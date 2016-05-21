@@ -5,11 +5,11 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    @author Arthur  @date 25/02 - 16/05
+    @author Arthur  @date 25/02 - 20/05
     @author Florian @date 22/04 - 06/05
 *********************************************/
 MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
-	View(w, h, window,text), m_menuModel{nullptr}, m_shopView{nullptr}
+    View(w, h, window,text), m_menuModel{nullptr}, m_settingsView{nullptr},  m_shopView{nullptr}
 {
     if (!m_menuMusic.openFromFile(MENU_MUSIC))
         cerr << "ERROR when loading music file: " << MENU_MUSIC << endl;
@@ -22,7 +22,7 @@ MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
 
 	if (m_window->getSize().x != m_width )
 	{
-		m_window->create( sf::VideoMode(w, h, SCREEN_BPP), APP_TITLE, sf::Style::Close );
+        m_window->create( sf::VideoMode(w, h, SCREEN_BPP), APP_TITLE, sf::Style::Close );
 		m_window->setFramerateLimit(FRAMERATE);
 		m_window->setPosition(sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2,
 				(sf::VideoMode::getDesktopMode().height - m_height)/2 ));
@@ -50,15 +50,6 @@ MenuView::~MenuView()
     delete m_leaderboardFormButton;
     delete m_shopFormButton;
     delete m_clearLbRectButton;
-
-	//=== Settings Graphic Elements
-
-	delete m_homeFormButton;
-	delete m_englishLangRadioButton;
-	delete m_frenchLangRadioButton;
-	delete m_spanishLangRadioButton;
-	delete m_normalQuestRadioButton;
-	delete m_masterQuestRadioButton;
 }
 
 
@@ -157,34 +148,13 @@ void MenuView::loadImages()
         m_shopFormButton = new Button(clip_rects_shop, m_menuFormButtonsTexture, 830, 10, 50, 50, false);
 	}
 
-
-	//=== Initialize settings radio buttons
-
-	if (!m_menuRadioButtonsTexture.loadFromFile(RADIO_BUTTONS_IMAGE) )
-		cerr << "ERROR when loading image file: " << RADIO_BUTTONS_IMAGE << endl;
-	else
-	{
-		m_menuRadioButtonsTexture.setSmooth(true);
-
-		vector<sf::IntRect> clip_rects;
-		clip_rects.push_back(sf::IntRect(  0,   0, 50, 50) );
-		clip_rects.push_back(sf::IntRect(50,   0, 50, 50) );
-		clip_rects.push_back(sf::IntRect(  0, 50, 50, 50) );
-		clip_rects.push_back(sf::IntRect(50, 50, 50, 50) );
-
-		m_englishLangRadioButton  = new Button(clip_rects, m_menuRadioButtonsTexture, 50, 205, 50, 50, true);
-		m_frenchLangRadioButton   = new Button(clip_rects, m_menuRadioButtonsTexture, 50, 245, 50, 50, true);
-		m_spanishLangRadioButton = new Button(clip_rects, m_menuRadioButtonsTexture, 50, 285, 50, 50, true);
-		m_normalQuestRadioButton = new Button(clip_rects, m_menuRadioButtonsTexture, 50, 420, 50, 50, true);
-		m_masterQuestRadioButton = new Button(clip_rects, m_menuRadioButtonsTexture, 50, 460, 50, 50, true);
-	}
 }
 
 
 /********************************************
     Synchronization function
 *********************************************
-    @author Arthur  @date 26/03 - 16/05
+    @author Arthur  @date 26/03 - 20/05
 *********************************************/
 void MenuView::synchronize()
 {
@@ -211,30 +181,7 @@ void MenuView::synchronize()
 	}
 	else if (m_menuModel->getSettingsState() == true)
 	{
-		//=== Elements update
-
-		m_englishLangRadioButton->setActivatedState(m_menuModel->getDataBase()->getLanguage() == "en");
-		m_frenchLangRadioButton->setActivatedState(m_menuModel->getDataBase()->getLanguage() == "fr");
-		m_spanishLangRadioButton->setActivatedState(m_menuModel->getDataBase()->getLanguage() == "es");
-		m_normalQuestRadioButton->setActivatedState(m_model->getDifficulty() == NORMAL_DIFFICULTY);
-		m_masterQuestRadioButton->setActivatedState(m_model->getDifficulty() != NORMAL_DIFFICULTY);
-		m_homeFormButton->sync();
-		m_englishLangRadioButton->sync();
-		m_frenchLangRadioButton->sync();
-		m_spanishLangRadioButton->sync();
-		m_normalQuestRadioButton->sync();
-		m_masterQuestRadioButton->sync();
-		m_homeFormButton->resize(30, 30);
-		m_englishLangRadioButton->resize(26, 26);
-		m_frenchLangRadioButton->resize(26, 26);
-		m_spanishLangRadioButton->resize(26, 26);
-		m_normalQuestRadioButton->resize(26, 26);
-		m_masterQuestRadioButton->resize(26, 26);
-
-		//=== Text update
-
-		m_text->syncMenuSettingsText(m_width, m_height);
-
+        m_settingsView->synchronize();
 	}
     else if (m_menuModel->getLeaderboardState() == true)
     {
@@ -257,8 +204,15 @@ void MenuView::synchronize()
         m_shopView->synchronize();
     }
 
+    //=== Delete settingsView if not anymore in shopState
+    if ( !m_menuModel->getSettingsState() && m_settingsView != nullptr)
+    {
+        delete m_settingsView;
+        m_settingsView = nullptr;
+    }
+
     //=== Delete shopView if not anymore in shopState
-    if ( m_menuModel->getShopState() == false && m_shopView != nullptr)
+    if ( !m_menuModel->getShopState() && m_shopView != nullptr)
     {
         delete m_shopView;
         m_shopView = nullptr;
@@ -269,7 +223,7 @@ void MenuView::synchronize()
 /********************************************
     Menu View Drawing
 *********************************************
-    @author Arthur  @date 26/03 - 16/05
+    @author Arthur  @date 26/03 - 20/05
 *********************************************/
 void MenuView::draw() const
 {
@@ -295,21 +249,7 @@ void MenuView::draw() const
 	}
 	else if (m_menuModel->getSettingsState() == true)
 	{
-		m_window->clear( GREY_BG_COLOR );
-
-		//=== Graphic Elements drawing
-
-		m_window->draw(*m_homeFormButton);
-		m_window->draw(*m_englishLangRadioButton);
-		m_window->draw(*m_frenchLangRadioButton);
-		m_window->draw(*m_spanishLangRadioButton);
-		m_window->draw(*m_normalQuestRadioButton);
-		m_window->draw(*m_masterQuestRadioButton);
-
-		//=== Text Drawing
-
-		m_text->drawMenuSettingsText(m_window);
-        m_window->display();
+        m_settingsView->draw();
 	}
     else if (m_menuModel->getLeaderboardState() == true)
     {
@@ -322,7 +262,7 @@ void MenuView::draw() const
 
         //=== Text Drawing
 
-        m_text->drawMenuLeaderboardText(m_window);
+        m_text->drawLeaderboardText(m_window);
         m_window->display();
     }
     else if (m_menuModel->getShopState() == true)
@@ -334,7 +274,7 @@ void MenuView::draw() const
 /********************************************
     Events treating
 *********************************************
-    @author Arthur  @date 25/03 - 20/04
+    @author Arthur  @date 25/03 - 20/05
     @author Florian @date 22/04 - 06/05
 *********************************************/
 bool MenuView::treatEvents()
@@ -355,11 +295,11 @@ bool MenuView::treatEvents()
 				result = false;
 			}
 
-			//=== Home Screen
+            //=== Home Events
 
 			if (m_menuModel->getHomeState() == true)
 			{
-				if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+                if (MOUSE_LEFT_PRESSED_EVENT)
 				{
 					if ( m_playRectButton->IS_POINTED )
 						m_playRectButton->setPressedState(true);
@@ -375,7 +315,6 @@ bool MenuView::treatEvents()
 
                     else if ( m_shopFormButton->IS_POINTED )
                         m_shopFormButton->setPressedState(true);
-
 				}
 
 				if (event.type == sf::Event::MouseButtonReleased)
@@ -401,8 +340,9 @@ bool MenuView::treatEvents()
 					}
 					else if ( m_settingsFormButton->IS_POINTED )
 					{
-						m_menuModel->setHomeState(false);
-						m_menuModel->setSettingsState(true);
+                        m_settingsView = new SettingsView(m_width, m_height, m_window, m_text);
+                        m_settingsView->setModel(m_model);
+                        m_settingsView->setSettingsModel( m_menuModel->launchSettings() );
 					}
                     else if ( m_leaderboardFormButton->IS_POINTED )
                     {
@@ -417,73 +357,8 @@ bool MenuView::treatEvents()
 				}
 			}
 
-			//=== SETTINGS SCREEN
+            //=== Leaderboard Events
 
-			else if (m_menuModel->getSettingsState() == true)
-			{
-				if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
-				{
-					if ( m_homeFormButton->IS_POINTED )
-						m_homeFormButton->setPressedState(true);
-
-					else if ( m_englishLangRadioButton->IS_POINTED )
-						m_englishLangRadioButton->setPressedState(true);
-
-					else if ( m_frenchLangRadioButton->IS_POINTED )
-						m_frenchLangRadioButton->setPressedState(true);
-
-					else if ( m_spanishLangRadioButton->IS_POINTED )
-						m_spanishLangRadioButton->setPressedState(true);
-
-					else if ( m_normalQuestRadioButton->IS_POINTED )
-						m_normalQuestRadioButton->setPressedState(true);
-
-					else if ( m_masterQuestRadioButton->IS_POINTED )
-						m_masterQuestRadioButton->setPressedState(true);
-
-				}
-
-				if (event.type == sf::Event::MouseButtonReleased)
-				{
-					m_homeFormButton->setPressedState(false);
-					m_englishLangRadioButton->setPressedState(false);
-					m_frenchLangRadioButton->setPressedState(false);
-					m_spanishLangRadioButton->setPressedState(false);
-					m_normalQuestRadioButton->setPressedState(false);
-					m_masterQuestRadioButton->setPressedState(false);
-
-					if ( m_homeFormButton->IS_POINTED )
-					{
-						m_menuModel->setSettingsState(false);
-						m_menuModel->setHomeState(true);
-					}
-					else if ( m_englishLangRadioButton->IS_POINTED )
-					{
-						m_menuModel->changeLanguage("en");
-						m_text->updateWholeText();
-					}
-					else if ( m_frenchLangRadioButton->IS_POINTED )
-					{
-						m_menuModel->changeLanguage("fr");
-						m_text->updateWholeText();
-					}
-					else if ( m_spanishLangRadioButton->IS_POINTED )
-					{
-						m_menuModel->changeLanguage("es");
-						m_text->updateWholeText();
-					}
-					else if ( m_normalQuestRadioButton->IS_POINTED )
-					{
-						m_model->setDifficulty(0);
-					}
-					else if ( m_masterQuestRadioButton->IS_POINTED )
-					{
-						m_model->setDifficulty(2);
-					}
-				}
-			}
-
-            //Leaderboard Screen
             else if (m_menuModel->getLeaderboardState() == true)
             {
                 if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
@@ -512,8 +387,19 @@ bool MenuView::treatEvents()
                 }
             }
 
-            //if treatEvents return true = if shop is stopping
-            else if ( m_menuModel->getShopState() == true && m_shopView->treatEvents(event) == true )
+            //=== Settings Events
+
+            //if treatEvents return true == if settings is stopping
+            else if (m_menuModel->getSettingsState() && m_settingsView->treatEvents(event))
+            {
+                m_menuModel->setSettingsState(false);
+                m_menuModel->setHomeState(true);
+            }
+
+            //=== Shop Events
+
+            //if treatEvents return true == if shop is stopping
+            else if (m_menuModel->getShopState() && m_shopView->treatEvents(event))
             {
                 m_menuModel->setShopState(false);
                 m_menuModel->setHomeState(true);

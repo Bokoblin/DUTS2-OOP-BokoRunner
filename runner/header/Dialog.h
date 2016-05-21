@@ -17,7 +17,7 @@ limitations under the License.
 #define DIALOG_H
 
 #include "GraphicElement.h"
-#include <iostream>
+#include "Text.h"
 #include "ShopItem.h"
 
 #define HALF_WIDTH getGlobalBounds().width/2
@@ -27,21 +27,19 @@ limitations under the License.
 /********************************************
     Constant Variables
 ********************************************/
-const std::string REGULAR_FONT = "Resources/Roboto_Regular.ttf";
-const std::string BOLD_FONT = "Resources/Roboto_Bold.ttf";
 const std::string DIALOG_IMAGE = "Images/dialog.png";
 
 
 /********************************************
     Dialog Class
 *********************************************
-    @author Arthur  @date 16/05 - 18/05
+    @author Arthur  @date 16/05 - 20/05
 *********************************************/
 class Dialog
 {
     public:
         //=== CTORs / DTORs
-        Dialog(int posX, int posY, ShopItem *item, std::string title, std::string content, std::string negAnswer, std::string posAnswer);
+        Dialog(int x, int y, ShopItem *item, Text *t,  std::string title, std::string content, std::string negAnswer, std::string posAnswer);
         Dialog(const Dialog& d)=delete;
         ~Dialog();
 
@@ -64,8 +62,7 @@ class Dialog
         sf::Texture m_dialogTexture;
         GraphicElement *m_dialogSprite;
 
-        sf::Font *m_regularFont;
-        sf::Font *m_boldFont;
+        Text *m_text;
         sf::Text m_dialogTitleLabel;
         sf::Text m_dialogContent;
         sf::Text m_negativeButton;

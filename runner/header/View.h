@@ -22,11 +22,14 @@ limitations under the License.
 #include "Button.h"
 #include <SFML/Audio.hpp>
 
+#define GREY_BG_COLOR sf::Color(51, 51, 51, 255)
+#define MOUSE_LEFT_PRESSED_EVENT event.type == sf::Event::MouseButtonPressed &&           event.mouseButton.button == sf::Mouse::Left
 #define IS_POINTED getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))
 
 /********************************************
     Constant Variables
 ********************************************/
+const std::string IUT_LOGO_IMAGE = "Images/logo_iut.png";
 const std::string DEFAULT_FAR_HILL_BACKGROUND = "Images/background/hill_far.png";
 const std::string DEFAULT_NEAR_HILL_BACKGROUND = "Images/background/hill_near.png";
 const std::string DEFAULT_FAR_PLAIN_BACKGROUND = "Images/background/plain_far.png";
@@ -35,6 +38,8 @@ const std::string DEFAULT_FAR_T1_BACKGROUND = "Images/background/t1_far.png";
 const std::string DEFAULT_NEAR_T1_BACKGROUND = "Images/background/t1_near.png";
 const std::string DEFAULT_FAR_T2_BACKGROUND = "Images/background/t2_far.png";
 const std::string DEFAULT_NEAR_T2_BACKGROUND = "Images/background/t2_near.png";
+const std::string INDICATOR_IMAGE = "Images/indicator_buttons.png";
+const std::string RADIO_BUTTONS_IMAGE = "Images/radio_buttons.png";
 const std::string MENU_RECT_BUTTONS_IMAGE = "Images/rect_buttons.png";
 const std::string FORM_BUTTONS_IMAGE = "Images/menu_buttons.png";
 const std::string BONUS_IMAGE = "Images/bonus.png";

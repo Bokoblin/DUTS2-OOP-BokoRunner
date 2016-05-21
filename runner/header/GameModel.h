@@ -22,7 +22,7 @@ limitations under the License.
 #include "Coin.h"
 #include "Bonus.h"
 
-#define DEFAULT_SPEED 4.0
+#define DEFAULT_SPEED 5.0
 
 /********************************************
     GameModel Class

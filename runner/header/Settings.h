@@ -13,44 +13,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef BUTTON_H
-#define BUTTON_H
+#ifndef _SETTINGS_H
+#define _SETTINGS_H
 
-#include "GraphicElement.h"
+#include "DataBase.h"
 
 /********************************************
-    Button Class
+    Settings Class
 *********************************************
-    @author Arthur  @date 6/04 - 20/05
+    @author Arthur  @date 20/05 - 21/05
 *********************************************/
-class Button : public GraphicElement
+class Settings
 {
 public:
     //=== CTORs / DTORs
-    Button(const std::vector<sf::IntRect> & clipRects,
-            sf::Texture &image, float x, float y, float w, float h, bool isRadio);
-    Button(Button const& elementACopier);
-    virtual ~Button();
+    Settings(DataBase *data);
+    ~Settings();
 
     //=== GETTERS
-    bool getDisabledState() const;
-
-    //=== SETTERS
-    void setPressedState(bool state);
-    void setActivatedState(bool state);
-    void setDisabledState(bool state);
+    DataBase *getDataBase() const;
+    bool getMorphSkinAvailability() const;
+    bool getCapsuleSkinAvailability() const;
 
     //=== METHODS
-    virtual void sync() override;
+    void changeLanguage(std::string lang);
+    void changeBallSkin(std::string skin);
+    void checkItemsAvailability();
 
 private:
     //=== ATTRIBUTES
-    std::vector<sf::IntRect> m_clipRectsArray;
-    unsigned int m_currentClipRect;
-    bool m_isRadio;
-    bool m_pressed;
-    bool m_active;
-    bool m_disabled;
+    DataBase *m_dataBase; //to not delete in dtor
+    bool m_morphSkinIsAvailable;
+    bool m_capsuleSkinIsAvailable;
 };
 
-#endif // BUTTON_H
+#endif

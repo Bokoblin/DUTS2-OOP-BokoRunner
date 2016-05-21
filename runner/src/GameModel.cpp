@@ -23,6 +23,7 @@ GameModel::GameModel(const Model& model) :
     addANewMovableElement(50, GAME_FLOOR, PLAYER);
 
     m_dataBase->resetCurrentGame();
+    m_dataBase->updateActivatedItemsArray();
 }
 
 
@@ -242,55 +243,52 @@ void GameModel::moveMovableElement(MovableElement *currentElement)
 /********************************************
     Handle Elements Creation
 *********************************************
-    @author Arthur  @date 12/04
+    @author Arthur  @date 12/04 - 19/05
 *********************************************/
 void GameModel::handleMovableElementsCreation()
 {
-    //=== Add new enemies
-
-    if (m_currentEnemyInterdistance >= m_chosenEnemyInterdistance)
+    if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
     {
-        if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
+        //=== Add new enemies
+
+        if (m_currentEnemyInterdistance >= m_chosenEnemyInterdistance)
         {
             addANewMovableElement(m_width, GAME_FLOOR, STANDARDENEMY);
             m_currentEnemyInterdistance = 0;
             chooseInterdistance(STANDARDENEMY);
+            return; //to not add another element if interdistance valid
         }
-    }
-    else m_currentEnemyInterdistance++;
+        else m_currentEnemyInterdistance++;
 
-    //=== Add new Coins
+        //=== Add new Coins
 
-    if (m_currentCoinInterdistance >= m_chosenCoinInterdistance)
-    {
-        if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
+        if (m_currentCoinInterdistance >= m_chosenCoinInterdistance)
         {
             addANewMovableElement(m_width, GAME_FLOOR-100, COIN);
             m_currentCoinInterdistance = 0;
             chooseInterdistance(COIN);
+            return; //to not add another element if interdistance valid
         }
-    }
-    else m_currentCoinInterdistance++;
+        else m_currentCoinInterdistance++;
 
-    //=== Add new Bonus
+        //=== Add new Bonus
 
-    if (m_currentBonusInterdistance >= m_chosenBonusInterdistance)
-    {
-        if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
+        if (m_currentBonusInterdistance >= m_chosenBonusInterdistance)
         {
             addANewMovableElement(m_width, GAME_FLOOR-100, PVPLUSBONUS);
             m_currentBonusInterdistance = 0;
             chooseInterdistance(PVPLUSBONUS);
+            return; //to not add another element if interdistance valid
         }
+        else m_currentBonusInterdistance++;
     }
-    else m_currentBonusInterdistance++;
 }
 
 
 /********************************************
     New MovableElement  Adding
 *********************************************
-    @author Arthur  @date 25/02 - 11/04
+    @author Arthur  @date 25/02 - 18/05
     @author Florian @date 2/03
 *********************************************/
 void GameModel::addANewMovableElement(float posX, float posY, int type)
@@ -327,71 +325,112 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
 /********************************************
     Handle Movable Elements Collisions
 *********************************************
-    @author Arthur  @date 12/03 - 18/05
+    @author Arthur  @date 12/03 - 20/05
 *********************************************/
 void GameModel::handleMovableElementsCollisions()
 {
-    set<MovableElement*>::const_iterator it;
-    for (it = m_movableElementsArray.begin(); it !=m_movableElementsArray.end(); ++it)
+    for ( MovableElement* element : m_movableElementsArray )
     {
-        if ( (*it)->getCollisionState() == false && (*it)->getType() != PLAYER && m_player->collision(**it))
+        if ( !element->getCollisionState() && element->getType() != PLAYER && m_player->collision(*element))
         {
-            (*it)->setCollisionState(true);
+            element->setCollisionState(true);
 
-            if ( (*it)->getType() == STANDARDENEMY && m_player->getState() != 1 )
+            //=== Different behaviours following element type
+
+            switch ( element->getType() )
             {
-                if (m_difficulty == NORMAL_DIFFICULTY)
-                    m_player->setLife(m_player->getLife()-10);
-                else if (m_difficulty == MASTER_DIFFICULTY)
-                    m_player->setLife(m_player->getLife()-20);
-            }
-            else if ( (*it)->getType() == STANDARDENEMY && m_player->getState() == 1 )
-                m_dataBase->setCurrentFlattenedEnemies(100);
+            case STANDARDENEMY:
+                if ( m_player->getState() != MEGA ) {
+                    if (m_difficulty == NORMAL_DIFFICULTY)
+                        m_player->setLife(m_player->getLife()-10);
+                    else if (m_difficulty == MASTER_DIFFICULTY)
+                        m_player->setLife(m_player->getLife()-20);
+                }
+                else {
+                    //add 100 to number of flattened enemies
+                    m_dataBase->setCurrentFlattenedEnemies(100);
+                }
+                break;
 
 
-            else if ( (*it)->getType() == TOTEMENEMY && m_player->getState() != 1)
-            {
-                if (m_difficulty == NORMAL_DIFFICULTY)
-                    m_player->setLife(m_player->getLife()-15);
-                else if (m_difficulty == MASTER_DIFFICULTY)
-                    m_player->setLife(m_player->getLife()-30);
-            }
-            else if ( (*it)->getType() == TOTEMENEMY && m_player->getState() == 1 )
-                m_dataBase->setCurrentFlattenedEnemies(300);
+            case TOTEMENEMY:
+                if ( m_player->getState() != MEGA ) {
+                    if (m_difficulty == NORMAL_DIFFICULTY)
+                        m_player->setLife(m_player->getLife()-15);
+                    else if (m_difficulty == MASTER_DIFFICULTY)
+                        m_player->setLife(m_player->getLife()-30);
+                }
+                else {
+                    //add 300 to number of flattened enemies
+                    m_dataBase->setCurrentFlattenedEnemies(300);
+                }
+                break;
 
-            else if ( (*it)->getType() == BLOCKENEMY && m_player->getState() != 1)
-            {
-                if (m_difficulty == NORMAL_DIFFICULTY)
-                    m_player->setLife(m_player->getLife()-25);
-                else if (m_difficulty == MASTER_DIFFICULTY)
-                    m_player->setLife(m_player->getLife()-50);
-            }
-            else if ( (*it)->getType() == BLOCKENEMY && m_player->getState() == 1 )
-                m_dataBase->setCurrentFlattenedEnemies(500);
 
-            else if ( (*it)->getType() == COIN)
-                m_dataBase->setCurrentCoinsCollected(1);
+            case BLOCKENEMY:
+                if ( m_player->getState() != MEGA ) {
+                    if (m_difficulty == NORMAL_DIFFICULTY)
+                        m_player->setLife(m_player->getLife()-25);
+                    else if (m_difficulty == MASTER_DIFFICULTY)
+                        m_player->setLife(m_player->getLife()-50);
+                }
+                else {
+                    //add 500 to number of flattened enemies
+                    m_dataBase->setCurrentFlattenedEnemies(500);
+                }
+                break;
 
-            else if ( (*it)->getType() == PVPLUSBONUS)
+
+            case COIN:
+                if ( m_dataBase->getActivatedItemsArray().find("doubler")
+                     == m_dataBase->getActivatedItemsArray().end() )
+                    m_dataBase->setCurrentCoinsCollected(1); //1-increment coins number
+                else
+                    m_dataBase->setCurrentCoinsCollected(2);
+                break;
+
+
+            case PVPLUSBONUS:
                 m_player->setLife(m_player->getLife()+10);
+                break;
 
-            else if ( (*it)->getType() == MEGABONUS) //stop Mega bonus effect in 10s
+
+            case MEGABONUS:
             {
+                int mega_bonus_timeout = 10000; //stop Mega bonus effect in 10s
+                if ( m_dataBase->getActivatedItemsArray().find("megaplus")
+                     != m_dataBase->getActivatedItemsArray().end() )
+                    mega_bonus_timeout += 5000;
+
                 m_player->changeState(MEGA);
-                m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(10000);
+                m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(mega_bonus_timeout);
             }
+                break;
 
-            else if ( (*it)->getType() == FLYBONUS) //stop Fly bonus effect in 15s
+
+            case FLYBONUS:
             {
+                int fly_bonus_timeout = 15000; //stop Fly bonus effect in 15s
+                if ( m_dataBase->getActivatedItemsArray().find("flyplus")
+                     != m_dataBase->getActivatedItemsArray().end() )
+                    fly_bonus_timeout += 5000;
+
                 m_player->changeState(FLY);
-                m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(15000);
+                m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(fly_bonus_timeout);
             }
+                break;
 
-            else if ( (*it)->getType() == SLOWSPEEDBONUS) //stop SlowDown bonus effect in 20s
+            case SLOWSPEEDBONUS:
             {
+                //stop SlowDown bonus effect in 20s
                 m_gameSpeed = m_gameSpeed/2;
                 m_player->changeState(OTHER);
                 m_bonusStopTime = chrono::system_clock::now() + chrono::milliseconds(20000);
+            }
+                break;
+
+            default:
+                break;
             }
         }
     }
@@ -407,9 +446,10 @@ void GameModel::handleMovableElementsDeletion()
     set<MovableElement*>::iterator it = m_movableElementsArray.begin();
     while( it!=m_movableElementsArray.end() )
     {
-        if ( ( (*it)->getPosX() + (*it)->getWidth() ) < 0 || (*it)->getCollisionState() == true )
+        if ( ( (*it)->getPosX() + (*it)->getWidth() ) < 0
+             || (*it)->getCollisionState() == true )
         {
-            /**<  note : do not delete the pointer, it is still used in the game view */
+            /**<  note : Pointers are deleted in Dtor */
             m_movableElementsArray.erase(it);
             it = m_movableElementsArray.end();
         }

@@ -22,7 +22,7 @@ limitations under the License.
 /********************************************
     AnimatedGraphicElement Class
 *********************************************
-    @author Arthur  @date 3/03 - 06/04
+    @author Arthur  @date 3/03 - 20/05
 *********************************************/
 class AnimatedGraphicElement : public GraphicElement
 {
@@ -32,6 +32,9 @@ public:
             const std::vector<sf::IntRect> & clipRects, unsigned int separator);
     AnimatedGraphicElement(AnimatedGraphicElement const& other);
     virtual ~AnimatedGraphicElement();
+
+    //=== SETTERS
+    void setClipRectArray(std::vector<sf::IntRect> array);
 
     //=== METHODS
     virtual void sync() override;

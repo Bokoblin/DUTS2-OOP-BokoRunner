@@ -16,10 +16,15 @@
 
 <resources>
 
-   <!-- Menu, Settings & Leaderboard strings -->
+   <!-- Menu & Leaderboard strings -->
    <string name="playButtonLabel">JOUER</string>
    <string name="quitButtonLabel">QUITTER</string>
    <string name="clearButtonLabel">EFFACER</string>
+   <string name="leaderboardTitleLabel">Classement</string>
+   <string name="leaderboardLabel">Il_n'y_a_pas_encore_de_scores</string>
+   <string name="leaderboardErrorLabel">Les_donnees_de_score_ont_ete_corrompues._Veuillez_les_effacer.</string>
+
+   <!-- Settings strings -->
    <string name="configTitleLabel">Configuration</string>
    <string name="configLangTitleLabel">Langues</string>
    <string name="configLangEngLabel">Anglais</string>
@@ -28,13 +33,17 @@
    <string name="configDifficultyLabel">Difficulte</string>
    <string name="configDifficultyNormalLabel">Normal</string>
    <string name="configDifficultyMasterLabel">Master</string>
+   <string name="configCustomTitleLabel">Customisation_de_la_balle</string>
+   <string name="configDefaultBallskinLabel">Apparence_par_defaut</string>
+   <string name="configMorphBallskinLabel">Apparence_"morphing"</string>
+   <string name="configCapsuleBallskinLabel">Apparence_"capsule"</string>
    <string name="statisticsTitleLabel">Statistiques</string>
    <string name="totalDistanceLabel">Distance_totale_parcourue</string>
-   <string name="totalFlattenedEnemiesLabel">Total_ennemies_aplatis</string>
-   <string name="totalGamesPlayedLabel">Parties_lancees</string>
-   <string name="leaderboardTitleLabel">Classement</string>
-   <string name="leaderboardLabel">Il_n'y_a_pas_encore_de_scores</string>
-   <string name="leaderboardErrorLabel">Les_donnees_de_score_ont_ete_corrompues._Veuillez_les_effacer.</string>
+   <string name="totalFlattenedEnemiesLabel">Total_d'ennemies_aplatis</string>
+   <string name="totalGamesPlayedLabel">Nombre_de_parties_lancees</string>
+   <string name="creditsTitleLabel">Credits</string>
+   <string name="creditsContentLabel">Ce_jeu_a_ete_developpe_en_tant_que_projet_de_POO_a_l'IUT_de_Bordeaux</string>
+   <string name="copyrightLabel">2016_Jolivet_Arthur_&_Laronze_Florian</string>
 
    <!--  Shop strings -->
    <string name="boughtLabel">Obtenu</string>
@@ -59,6 +68,6 @@
    <string name="currentDistanceLabel">Distance_parcourue</string>
    <string name="coinsCollectedLabel">Pieces_collectees</string>
    <string name="flattenedEnemiesLabel">Bonus_destruction_ennemies</string>
-   <string name="currentScoreLabel">Score_total</string>
+   <string name="currentScoreLabel">Total</string>
 
 </resources>

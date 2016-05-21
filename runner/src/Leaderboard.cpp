@@ -155,19 +155,18 @@ bool Leaderboard::checkFileIntegrity()
     else
     {
         /* check if one of the files has been changed
-         * Note: is useless if the player knows the 2 files
+         * Note: is useless if the user knows the 2 files
          * and write the same thing in both
          */
 
-        do
-        {
+        do {
             f1 >> f1Line;
             f2 >> f2Line;
             if ( f1Line != f2Line)
             {
                 f1.close();
                 f2.close();
-                return false;
+                return false;//lines are different
             }
         }
         while ( !f1.eof() );

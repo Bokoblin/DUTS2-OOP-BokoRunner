@@ -82,7 +82,7 @@ public:
 
 private:
     //=== ATTRIBUTES
-    GameModel *m_gameModel;
+    GameModel *m_gameModel; //to not delete in dtor
     PixelateEffect *m_pixelShader;
 
     float m_xPixelIntensity;
@@ -113,7 +113,7 @@ private:
     GraphicElement *m_bottomBarSprite;
     GraphicElement *m_lifeBoxSprite;
     GraphicElement *m_remainingLifeSprite;
-    AnimatedGraphicElement *m_playerAnimSprite;
+    AnimatedGraphicElement *m_playerAnimSprite; //deleted in map array
     AnimatedGraphicElement *m_stdEnemyAnimSprite;
     AnimatedGraphicElement *m_totemEnemyAnimSprite;
     AnimatedGraphicElement *m_blockEnemyAnimSprite;

@@ -16,10 +16,15 @@
 
 <resources>
 
-   <!-- Menu, Settings & Leaderboard strings -->
+   <!-- Menu & Leaderboard strings -->
    <string name="playButtonLabel">PLAY</string>
    <string name="quitButtonLabel">QUIT</string>
    <string name="clearButtonLabel">CLEAR</string>
+   <string name="leaderboardTitleLabel">Leaderboard</string>
+   <string name="leaderboardText">There_isn't_any_score_yet</string>
+   <string name="leaderboardErrorText">Score_database_has_been_corrupted._Please_clear_it.</string>
+
+   <!-- Settings strings -->
    <string name="configTitleLabel">Configuration</string>
    <string name="configLangTitleLabel">Languages</string>
    <string name="configLangEngLabel">English</string>
@@ -28,13 +33,17 @@
    <string name="configDifficultyLabel">Difficulty</string>
    <string name="configDifficultyNormalLabel">Normal</string>
    <string name="configDifficultyMasterLabel">Master</string>
+   <string name="configCustomTitleLabel">Ball_customization</string>
+   <string name="configDefaultBallskinLabel">Default_skin</string>
+   <string name="configMorphBallskinLabel">Morph_skin</string>
+   <string name="configCapsuleBallskinLabel">Capsule_skin</string>
    <string name="statisticsTitleLabel">Stats</string>
    <string name="totalDistanceLabel">Overall_distance_travelled</string>
    <string name="totalFlattenedEnemiesLabel">Overall_flattened_enemies</string>
-   <string name="totalGamesPlayedLabel">Games_played</string>
-   <string name="leaderboardTitleLabel">Leaderboard</string>
-   <string name="leaderboardText">There_isn't_any_score_yet</string>
-   <string name="leaderboardErrorText">Score_database_has_been_corrupted._Please_clear_it.</string>
+   <string name="totalGamesPlayedLabel">Number_of_games_played</string>
+   <string name="creditsTitleLabel">Credits</string>
+   <string name="creditsContentLabel">This_game_has_been_developed_as_our_OOP_Project_at_IUT_de_Bordeaux</string>
+   <string name="copyrightLabel">2016_Jolivet_Arthur_&_Laronze_Florian</string>
 
    <!--  Shop strings -->
    <string name="boughtLabel">Bought</string>
@@ -59,6 +68,6 @@
    <string name="currentDistanceLabel">Distance_travelled</string>
    <string name="coinsCollectedLabel">Coins_collected</string>
    <string name="flattenedEnemiesLabel">Enemies_destructed_bonus</string>
-   <string name="currentScoreLabel">Total_Score</string>
+   <string name="currentScoreLabel">Total</string>
 
 </resources>

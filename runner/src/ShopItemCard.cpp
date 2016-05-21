@@ -7,8 +7,8 @@ using namespace std;
 *********************************************
     @author Arthur  @date 16/05 - 19/05
 *********************************************/
-ShopItemCard::ShopItemCard(int num, ShopItem *item) : m_id{num}, m_posY{150},
-    m_shownState{false}, m_item{item}
+ShopItemCard::ShopItemCard(int num, ShopItem *item, Text *t) :
+    m_id{num}, m_posY{150}, m_shownState{false}, m_item{item}, m_text{t}
 {
     if ( num%3 == 0)
         m_posX = 100;
@@ -19,25 +19,22 @@ ShopItemCard::ShopItemCard(int num, ShopItem *item) : m_id{num}, m_posY{150},
 
     loadImages();
 
-    m_font = new sf::Font();
-    m_font->loadFromFile(CONDENSED_FONT);
-
     m_name.setCharacterSize(20);
-    m_name.setFont(*m_font);
+    m_name.setFont( *m_text->getCondensedFont() );
     m_name.setColor(sf::Color::White);
     m_name.setString( item->getName() );
     m_name.setPosition( m_posX + m_width/2
                     - (int)m_name.HALF_WIDTH, m_posY+15);
 
     m_desc.setCharacterSize(16);
-    m_desc.setFont(*m_font);
+    m_desc.setFont( *m_text->getCondensedFont() );
     m_desc.setColor(sf::Color::White);
     m_desc.setString( item->getDescription() );
     m_desc.setPosition( m_posX + m_width/2
                     - (int)m_desc.HALF_WIDTH, m_posY+200);
 
     m_buyButtonContent.setCharacterSize(20);
-    m_buyButtonContent.setFont(*m_font);
+    m_buyButtonContent.setFont( *m_text->getCondensedFont() );
     m_buyButtonContent.setColor(sf::Color::White);
 }
 
@@ -49,7 +46,7 @@ ShopItemCard::ShopItemCard(int num, ShopItem *item) : m_id{num}, m_posY{150},
 *********************************************/
 ShopItemCard::~ShopItemCard()
 {
-    delete m_font;
+    m_text = nullptr;
     delete m_cardBackgroundSprite;
     delete m_buyButton;
 }
@@ -111,7 +108,7 @@ void ShopItemCard::loadImages()
 
 
 /********************************************
-    Draw function
+    Sync function
 *********************************************
     @author Arthur  @date 16/05 - 19/05
 *********************************************/
@@ -125,11 +122,11 @@ void ShopItemCard::sync()
     else
     {
         m_buyButton->setActivatedState(false);
-        m_buyButton->sync();
         m_buyButtonContent.setString( "Buy" );
     }
     m_buyButtonContent.setPosition( m_posX + m_width/2
                     - (int)m_buyButtonContent.HALF_WIDTH, m_posY+258);
+    m_buyButton->sync();
 }
 
 

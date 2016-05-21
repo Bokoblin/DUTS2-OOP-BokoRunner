@@ -65,11 +65,13 @@ GameView::~GameView()
 /********************************************
    Setters
 *********************************************
-    @author Arthur  @date 27/03 - 19/05
+    @author Arthur  @date 27/03 - 20/05
 *********************************************/
 void GameView::setGameModel(GameModel *model)
 {
     m_gameModel = model;
+
+    //=== change default game music if in master mode
 
     string game_music;
     if ( m_gameModel->getDifficulty() == NORMAL_DIFFICULTY)
@@ -83,6 +85,23 @@ void GameView::setGameModel(GameModel *model)
     {
         m_gameThemeMusic.play();
         m_gameThemeMusic.setLoop(true);
+    }
+
+    //=== change ball skin if not default one
+
+    if (m_gameModel->getDataBase()->getBallSkin() == "morphing")
+    {
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<8; i++)
+            clip_rects.push_back(sf::IntRect(50*i,50,50,50));
+        m_playerAnimSprite->setClipRectArray(clip_rects);
+    }
+    else if (m_gameModel->getDataBase()->getBallSkin() == "capsule")
+    {
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<8; i++)
+            clip_rects.push_back(sf::IntRect(50*i,100,50,50));
+        m_playerAnimSprite->setClipRectArray(clip_rects);
     }
 }
 
@@ -525,7 +544,7 @@ void GameView::synchronize()
     {
         updateElements(); //Elements update
         m_text->syncPauseText(); //Text update
-        sf::sleep(sf::milliseconds(300)); //limit CPU usage in pause state
+        sf::sleep(sf::milliseconds(250)); //limit CPU usage in pause state
     }
     else if (m_gameModel->getEndState())
     {
@@ -537,7 +556,7 @@ void GameView::synchronize()
         //=== Buttons & text update
 
         updateElements(); //Buttons update
-        m_text->syncEndText(m_gameModel); //Text update
+        m_text->syncEndText(m_gameModel, m_width, m_height); //Text update
 
     }
 }

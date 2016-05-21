@@ -21,20 +21,30 @@ limitations under the License.
 #include <map>
 
 #define HALF_WIDTH getGlobalBounds().width/2
+#define GOLD_COLOR sf::Color(255,204,0,255)
+#define ENEMY_BLUE_COLOR sf::Color(0,232,209,255)
+#define END_GREY_COLOR sf::Color(86,103,97,255)
 
 /********************************************
     Constant Variables
 ********************************************/
-const std::string ROBOTO_FONT = "Resources/Roboto_Condensed.ttf";
+const std::string ROBOTO_REGULAR_FONT = "Resources/Roboto_Regular.ttf";
+const std::string ROBOTO_CONDENSED_FONT = "Resources/Roboto_Condensed.ttf";
+const std::string ROBOTO_BOLD_FONT = "Resources/Roboto_Bold.ttf";
 const std::string ENGLISH_STRINGS = "Resources/english.xml";
 const std::string FRENCH_STRINGS = "Resources/french.xml";
 const std::string SPANISH_STRINGS = "Resources/spanish.xml";
 
+const int PAUSE_TEXT_X = 80;
+const int RADIO_TEXT_X = 100;
+const int SUBTOTAL_LABEL_X = 220;
+const int SUBTOTAL_VALUE_X = 580;
+const int CONTENT_CHARACTER_SIZE = 20;
 
 /********************************************
     Text Class
 *********************************************
-    @author Arthur  @date 02/04 - 17/05
+    @author Arthur  @date 02/04 - 20/05
 *********************************************/
 class Text
 {
@@ -45,6 +55,9 @@ class Text
     ~Text();
 
     //=== GETTERS
+    sf::Font *getRegularFont() const;
+    sf::Font *getCondensedFont() const;
+    sf::Font *getBoldFont() const;
     sf::Text *getResumeText() const;
     sf::Text *getRestartText() const;
     sf::Text *getHomeText() const;
@@ -55,18 +68,18 @@ class Text
     void updateString(std::string file, sf::Text *currentText, std::string currentName);
 
     void syncMenuHomeText(int w, int h);
-    void syncMenuSettingsText( int w, int h);
+    void syncSettingsText( int w, int h);
     void syncMenuLeaderboardText(int w, int h, Leaderboard *lb);
-    void syncMenuShopText(int w, int h);
+    void syncShopText(int w, int h);
     void syncDialogText(std::string &title, std::string &content,
-                         std::string &negative_choice, std::string &positive_choices);
+                                     std::string &neg_choice, std::string &pos_choices);
     void syncGameText(GameModel *gameModel);
     void syncPauseText();
-    void syncEndText(GameModel *gameModel);
+    void syncEndText(GameModel *gameModel, int w, int h);
 
     void drawMenuHomeText(sf::RenderWindow *window);
-    void drawMenuSettingsText(sf::RenderWindow *window);
-    void drawMenuLeaderboardText(sf::RenderWindow *window);
+    void drawMenuSettingsText(sf::RenderWindow *window, int currentPage);
+    void drawLeaderboardText(sf::RenderWindow *window);
     void drawMenuShopText(sf::RenderWindow *window);
     void drawGameText(sf::RenderWindow *window);
     void drawPauseText(sf::RenderWindow *window);
@@ -74,28 +87,44 @@ class Text
 
 private:
     //=== ATTRIBUTES
-    sf::Font *m_font;
-    DataBase *m_dataModel;
+    sf::Font *m_regularFont;
+    sf::Font *m_condensedFont;
+    sf::Font *m_BoldFont;
+    DataBase *m_dataBase;
     std::map<sf::Text*, std::string> m_textMap;
 
-    //Menu, Settings and Leaderboard Labels
-    // ( loaded from file)
+    //Menu and Leaderboard Labels -- loaded from file
     sf::Text *m_playButtonLabel;
     sf::Text *m_quitButtonLabel;
     sf::Text *m_clearButtonLabel;
+    sf::Text *m_leaderboardTitleLabel;
+
+    //Settings Labels
     sf::Text *m_configTitleLabel;
     sf::Text *m_configLangTitleLabel;
     sf::Text *m_configLangEngLabel;
     sf::Text *m_configLangFraLabel;
     sf::Text *m_configLangEspLabel;
-    sf::Text *m_configDifficultyLabel;
+    sf::Text *m_configDifficultyTitleLabel;
     sf::Text *m_configDifficultyNormalLabel;
     sf::Text *m_configDifficultyMasterLabel;
+    sf::Text *m_configCustomTitleLabel;
+    sf::Text *m_configDefaultBallskinLabel;
+    sf::Text *m_configMorphBallskinLabel;
+    sf::Text *m_configCapsuleBallskinLabel;
     sf::Text *m_statisticsTitleLabel;
     sf::Text *m_totalDistanceLabel;
     sf::Text *m_totalFlattenedEnemiesLabel;
     sf::Text *m_totalGamesPlayedLabel;
-    sf::Text *m_leaderboardTitleLabel;
+    sf::Text *m_creditsTitleLabel;
+    sf::Text *m_creditsContentLabel;
+    sf::Text *m_copyrightLabel;
+
+    //Shop Labels
+    sf::Text *m_shopDialogTitleLabel;
+    sf::Text *m_shopDialogContentLabel;
+    sf::Text *m_shopDialogNegativeLabel;
+    sf::Text *m_shopDialogPositiveLabel;
 
     //Game (Main, Pause & End) Labels
     sf::Text *m_playerLifeLabel;
@@ -109,23 +138,18 @@ private:
     sf::Text *m_flattenedEnemiesLabel;
     sf::Text *m_currentScoreLabel;
 
-    //Menu, Settings, Shop and Leaderboard DataText
-    // ( loaded from parsed data)
+    //Seetings and Leaderboard DataText -- loaded from parsed data
     sf::Text *m_totalDistanceText;
     sf::Text *m_totalFlattenedEnemiesText;
     sf::Text *m_totalGamesPlayedText;
     sf::Text *m_leaderboardContentText;
-    sf::Text *m_shopDialogTitleLabel;
-    sf::Text *m_shopDialogContentLabel;
-    sf::Text *m_shopDialogNegativeLabel;
-    sf::Text *m_shopDialogPositiveLabel;
 
     //Game (Main, Pause & End) DataText
     sf::Text *m_currentDistanceText;
     sf::Text *m_bonusTimeoutText;
     sf::Text *m_saveButtonText;
-    sf::Text *m_totalCoinsCollectedText;
-    sf::Text *m_currentCoinsCollectedText;
+    sf::Text *m_totalCoinsNbText;
+    sf::Text *m_currentCoinsNbText;
     sf::Text *m_speedMultiplierText;
     sf::Text *m_flattenedEnemiesText;
     sf::Text *m_currentScoreText;

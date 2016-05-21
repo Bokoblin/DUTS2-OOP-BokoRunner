@@ -131,7 +131,7 @@ void Player::move()
 /********************************************
     Change player's state
 *********************************************
-    @author Arthur  @date  11/04
+    @author Arthur  @date  11/04 - 21/05
 *********************************************/
 void Player::changeState(int state)
 {
@@ -158,6 +158,14 @@ void Player::changeState(int state)
         m_height = 30;
         m_gravitation = 5.0;
         m_acceleration = 70.0;
+    }
+    else if ( state == SHIELD)
+    {
+        m_state = SHIELD;
+        m_width = 30;
+        m_height = 30;
+        m_gravitation = 20.0;
+        m_acceleration = 18.0;
     }
     else
         m_state = state;

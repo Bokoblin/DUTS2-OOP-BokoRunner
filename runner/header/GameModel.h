@@ -23,11 +23,12 @@ limitations under the License.
 #include "Bonus.h"
 
 #define DEFAULT_SPEED 5.0
+#define SHIELD_TIMEOUT -581374
 
 /********************************************
     GameModel Class
 *********************************************
-    @author Arthur  @date 26/03 - 18/05
+    @author Arthur  @date 26/03 - 21/05
 *********************************************/
 class GameModel : public Model
 {
@@ -85,7 +86,6 @@ private:
     int m_chosenCoinInterdistance;
     int m_chosenBonusInterdistance;
     std::chrono::system_clock::time_point m_lastTime;
-    std::chrono::system_clock::time_point m_bonusStopTime;
     std::chrono::milliseconds m_bonusTimeout;
     Player *m_player;
 

@@ -35,6 +35,7 @@ limitations under the License.
 //GAME
 const std::string BALL_IMAGE = "Images/ball.png";
 const std::string ENEMIES_IMAGE = "Images/enemies.png";
+const std::string SHIELD_IMAGE = "Images/shield.png";
 const std::string BOTTOM_BAR_IMAGE = "Images/bottom_bar.png";
 const std::string LIFE_BOX_IMAGE = "Images/life_bar.png";
 const std::string REMAINING_LIFE = "Images/remaining_life.png";
@@ -56,7 +57,7 @@ const int TRANSITION_SPEED = 10;
 /********************************************
     GameView Class
 *********************************************
-    @author Arthur  @date 21/02 - 6/05
+    @author Arthur  @date 21/02 - 21/05
     @author Florian @date 21/02 - 6/05
 *********************************************/
 class GameView : public View
@@ -98,6 +99,7 @@ private:
     sf::Texture m_remainingLifeTexture;
     sf::Texture m_playerTexture;
     sf::Texture m_enemyTexture;
+    sf::Texture m_shieldTexture;
     sf::Texture m_bonusTexture;
     //Pause and End Textures
     sf::Texture m_gameButtonsTexture;
@@ -122,6 +124,9 @@ private:
     AnimatedGraphicElement *m_megaBonusAnimSprite;
     AnimatedGraphicElement *m_flyBonusAnimSprite;
     AnimatedGraphicElement *m_slowSpeedBonusAnimSprite;
+    AnimatedGraphicElement *m_shieldBonusAnimSprite;
+    AnimatedGraphicElement *m_shieldAnimSprite;
+
     //Pause and End Graphic Elements
     GraphicElement *m_pauseBackgroundSprite;
     GraphicElement *m_distanceIconSprite;

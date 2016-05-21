@@ -25,7 +25,7 @@ GameView::GameView(float w, float h, sf::RenderWindow *mywindow, Text *text):
 /********************************************
     Destructor
 *********************************************
-    @author Arthur  @date 26/03 - 28/04
+    @author Arthur  @date 26/03 - 21/05
 *********************************************/
 GameView::~GameView()
 {
@@ -45,6 +45,8 @@ GameView::~GameView()
     delete m_megaBonusAnimSprite;
     delete m_flyBonusAnimSprite;
     delete m_slowSpeedBonusAnimSprite;
+    delete m_shieldBonusAnimSprite;
+    delete m_shieldAnimSprite;
     delete m_pixelShader;
     for (auto it = m_MovableToGraphicElementMap.begin();
          it!=m_MovableToGraphicElementMap.end(); ++it )
@@ -196,6 +198,19 @@ void GameView::loadImages()
         m_blockEnemyAnimSprite->setOrigin(0,50);
     }
 
+    if (!m_shieldTexture.loadFromFile(SHIELD_IMAGE))
+        cerr << "ERROR when loading image file: " << SHIELD_IMAGE << endl;
+    else
+    {
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<8; i++)
+            clip_rects.push_back(sf::IntRect(50*i,0,50,50));
+
+        m_shieldTexture.setSmooth(true);
+        m_shieldAnimSprite = new AnimatedGraphicElement(m_shieldTexture, 50, GAME_FLOOR, 40, 40, clip_rects, 8);
+        m_shieldAnimSprite->setOrigin(0,50);
+    }
+
     if (!m_bonusTexture.loadFromFile(BONUS_IMAGE))
         cerr << "ERROR when loading image file: " << BONUS_IMAGE << endl;
     else
@@ -226,6 +241,11 @@ void GameView::loadImages()
         for (int i=0; i<5; i++) clip_rects_slow.push_back(sf::IntRect(50*i,200,50,50));
         m_slowSpeedBonusAnimSprite = new AnimatedGraphicElement(m_bonusTexture, 100, 50, 25, 25, clip_rects_slow, 5);
         m_slowSpeedBonusAnimSprite->setOrigin(0,50);
+
+        std::vector<sf::IntRect> clip_rects_shield;
+        for (int i=0; i<5; i++) clip_rects_shield.push_back(sf::IntRect(50*i,250,50,50));
+        m_shieldBonusAnimSprite = new AnimatedGraphicElement(m_bonusTexture, 100, 50, 25, 25, clip_rects_shield, 5);
+        m_shieldBonusAnimSprite->setOrigin(0,50);
     }
 
 
@@ -303,7 +323,7 @@ void GameView::loadImages()
 /********************************************
     Link mElements with gElements
 *********************************************
-    @author Arthur  @date 18/03 - 11/04
+    @author Arthur  @date 18/03 - 21/05
 *********************************************/
 void GameView::linkElements()
 {
@@ -330,6 +350,8 @@ void GameView::linkElements()
             m_MovableToGraphicElementMap[*it] = new AnimatedGraphicElement(*m_flyBonusAnimSprite);
         else if ( (*it)->getType() == SLOWSPEEDBONUS )
             m_MovableToGraphicElementMap[*it] = new AnimatedGraphicElement(*m_slowSpeedBonusAnimSprite);
+        else if ( (*it)->getType() == SHIELDBONUS )
+            m_MovableToGraphicElementMap[*it] = new AnimatedGraphicElement(*m_shieldBonusAnimSprite);
     }
     m_gameModel->clearNewMovableElementList();
 }
@@ -455,6 +477,12 @@ void GameView::updateElements()
             it->second->resize(it->first->getWidth(), it->first->getHeight() );
         }
 
+        //=== Update shield sprite
+
+        m_shieldAnimSprite->setPosition( m_gameModel->getPlayer()->getPosX()-5, m_gameModel->getPlayer()->getPosY()+5 );
+        m_shieldAnimSprite->sync();
+        m_shieldAnimSprite->resize(40,40);
+
     }
     else if ( m_gameModel->getPauseState() )
     {
@@ -565,7 +593,7 @@ void GameView::synchronize()
 /********************************************
     GameView Drawing
 *********************************************
-    @author Arthur  @date 26/03 - 07/05
+    @author Arthur  @date 26/03 - 21/05
 *********************************************/
 void GameView::draw() const
 {
@@ -596,6 +624,9 @@ void GameView::draw() const
         {
             it->second->draw(m_window);
         }
+
+        if ( m_gameModel->getPlayer()->getState() == SHIELD)
+            m_window->draw(*m_shieldAnimSprite);
 
         //=== Text drawing
 
@@ -697,7 +728,7 @@ bool GameView::treatEvents()
 
             if (m_gameModel->getPauseState() == true)
             {
-                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+                if (MOUSE_LEFT_PRESSED_EVENT)
                 {
                     if ( m_resumeGameButton->IS_POINTED || m_text->getResumeText()->IS_POINTED )
                     {
@@ -746,7 +777,7 @@ bool GameView::treatEvents()
 
             else if (m_gameModel->getEndState() == true)
             {
-                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+                if (MOUSE_LEFT_PRESSED_EVENT)
                 {
                     if ( m_restartGameButton->IS_POINTED || m_text->getRestartText()->IS_POINTED )
                     {

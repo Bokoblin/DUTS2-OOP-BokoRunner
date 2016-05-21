@@ -5,11 +5,12 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    @author Arthur  @date 25/02 - 20/05
+    @author Arthur  @date 25/02 - 21/05
     @author Florian @date 22/04 - 06/05
 *********************************************/
 MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
-    View(w, h, window,text), m_menuModel{nullptr}, m_settingsView{nullptr},  m_shopView{nullptr}
+    View(w, h, window,text), m_menuModel{nullptr}, m_leaderboardView{nullptr},
+    m_settingsView{nullptr},  m_shopView{nullptr}
 {
     if (!m_menuMusic.openFromFile(MENU_MUSIC))
         cerr << "ERROR when loading music file: " << MENU_MUSIC << endl;
@@ -35,12 +36,10 @@ MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
 /********************************************
     Destructor
 *********************************************
-    @author Arthur  @date 26/02 - 16/05
+    @author Arthur  @date 26/02 - 21/05
 *********************************************/
 MenuView::~MenuView()
 {
-	//=== Home Menu Graphic Elements
-
 	delete m_farBackground;
 	delete m_nearBackground;
 	delete m_titleGraphic;
@@ -49,7 +48,6 @@ MenuView::~MenuView()
 	delete m_settingsFormButton;
     delete m_leaderboardFormButton;
     delete m_shopFormButton;
-    delete m_clearLbRectButton;
 }
 
 
@@ -95,7 +93,7 @@ void MenuView::loadImages()
 		m_titleGraphic = new GraphicElement(m_titleImageTexture, m_width/2-200, m_height/6, 400, 200);
 	}
 
-	//=== Initialize PLAY, QUIT and CLEAR Leaderboard buttons
+	//=== Initialize PLAY and QUIT buttons
 
 	if (!m_menuRectButtonsTexture.loadFromFile(MENU_RECT_BUTTONS_IMAGE) )
 		cerr << "ERROR when loading image file: " << MENU_RECT_BUTTONS_IMAGE << endl;
@@ -112,14 +110,9 @@ void MenuView::loadImages()
 		clip_rects_quit.push_back(sf::IntRect( 0, 0, 150, 80));
 		clip_rects_quit.push_back(sf::IntRect(151, 0, 150, 80));
 		m_quitRectButton = new Button(clip_rects_quit, m_menuRectButtonsTexture, m_width/2-75, m_height/1.2, 150, 80, false);
-
-        vector<sf::IntRect> clip_rects_clear;
-		clip_rects_clear.push_back(sf::IntRect( 0, 100, 150, 40));
-		clip_rects_clear.push_back(sf::IntRect(151, 100, 150, 40));
-        m_clearLbRectButton = new Button(clip_rects_clear, m_menuRectButtonsTexture, m_width/2-75, 500, 150, 40, false);
     }
 
-    //=== Initialize SETTINGS, LEADERBOARD, SHOP and HOME form buttons
+    //=== Initialize SETTINGS, LEADERBOARD and SHOP form buttons
 
 	if (!m_menuFormButtonsTexture.loadFromFile(FORM_BUTTONS_IMAGE) )
 		cerr << "ERROR when loading image file: " << FORM_BUTTONS_IMAGE << endl;
@@ -132,11 +125,6 @@ void MenuView::loadImages()
 		clip_rects_settings.push_back(sf::IntRect( 51, 0, 50, 50));
 		m_settingsFormButton = new Button(clip_rects_settings, m_menuFormButtonsTexture, 20, 530, 50, 50, false);
 
-		vector<sf::IntRect> clip_rects_home;
-		clip_rects_home.push_back(sf::IntRect( 0, 50, 50, 50));
-		clip_rects_home.push_back(sf::IntRect( 51, 50, 50, 50));
-		m_homeFormButton = new Button(clip_rects_home, m_menuFormButtonsTexture, 10, 10, 50, 50, false);
-
         vector<sf::IntRect> clip_rects_lb;
         clip_rects_lb.push_back(sf::IntRect( 0, 100, 50, 50));
         clip_rects_lb.push_back(sf::IntRect( 51, 100, 50, 50));
@@ -147,14 +135,13 @@ void MenuView::loadImages()
         clip_rects_shop.push_back(sf::IntRect( 51, 150, 50, 50));
         m_shopFormButton = new Button(clip_rects_shop, m_menuFormButtonsTexture, 830, 10, 50, 50, false);
 	}
-
 }
 
 
 /********************************************
     Synchronization function
 *********************************************
-    @author Arthur  @date 26/03 - 20/05
+    @author Arthur  @date 26/03 - 21/05
 *********************************************/
 void MenuView::synchronize()
 {
@@ -164,7 +151,6 @@ void MenuView::synchronize()
 	if (m_menuModel->getHomeState() == true)
 	{
 		//=== Elements update
-
 		m_titleGraphic->resize(400,200);
 		m_farBackground->sync();
 		m_nearBackground->sync();
@@ -175,33 +161,22 @@ void MenuView::synchronize()
         m_shopFormButton->sync();
 
 		//=== Text update
-
 		m_text->syncMenuHomeText(m_width, m_height);
-
 	}
-	else if (m_menuModel->getSettingsState() == true)
-	{
+    else if (m_menuModel->getLeaderboardState())
+        m_leaderboardView->synchronize();
+
+	else if (m_menuModel->getSettingsState())
         m_settingsView->synchronize();
-	}
-    else if (m_menuModel->getLeaderboardState() == true)
-    {
-        //=== Elements update
 
-        m_homeFormButton->sync();
-        m_clearLbRectButton->sync();
-        m_clearLbRectButton->setPosition(m_width/2 -
-				m_clearLbRectButton->getGlobalBounds().width/2, 500);
-        m_homeFormButton->resize(30, 30);
-
-        //=== Text update
-
-        m_text->syncMenuLeaderboardText(m_width, m_height,
-			m_menuModel->getLeaderboard());
-
-    }
-    else if (m_menuModel->getShopState() == true)
-    {
+    else if (m_menuModel->getShopState())
         m_shopView->synchronize();
+
+    //=== Delete leaderboardView if not anymore in leaderboardState
+    if ( !m_menuModel->getLeaderboardState() && m_leaderboardView != nullptr)
+    {
+        delete m_leaderboardView;
+        m_leaderboardView = nullptr;
     }
 
     //=== Delete settingsView if not anymore in shopState
@@ -223,16 +198,15 @@ void MenuView::synchronize()
 /********************************************
     Menu View Drawing
 *********************************************
-    @author Arthur  @date 26/03 - 20/05
+    @author Arthur  @date 26/03 - 21/05
 *********************************************/
 void MenuView::draw() const
 {
-	if (m_menuModel->getHomeState() == true)
+	if (m_menuModel->getHomeState())
 	{
 		m_window->clear();
 
 		//=== Graphic Elements drawing
-
 		m_farBackground->draw(m_window);
 		m_nearBackground->draw(m_window);
 		m_window->draw(*m_titleGraphic);
@@ -243,29 +217,17 @@ void MenuView::draw() const
         m_window->draw(*m_shopFormButton);
 
 		//=== Text Drawing
-
 		m_text->drawMenuHomeText(m_window);
+
         m_window->display();
 	}
-	else if (m_menuModel->getSettingsState() == true)
-	{
+	else if (m_menuModel->getSettingsState())
         m_settingsView->draw();
-	}
-    else if (m_menuModel->getLeaderboardState() == true)
-    {
-        m_window->clear( GREY_BG_COLOR );
 
-        //=== Graphic Elements drawing
+    else if (m_menuModel->getLeaderboardState())
+        m_leaderboardView->draw();
 
-        m_window->draw(*m_homeFormButton);
-        m_window->draw(*m_clearLbRectButton);
-
-        //=== Text Drawing
-
-        m_text->drawLeaderboardText(m_window);
-        m_window->display();
-    }
-    else if (m_menuModel->getShopState() == true)
+    else if (m_menuModel->getShopState())
         m_shopView->draw();
 
 }
@@ -274,7 +236,7 @@ void MenuView::draw() const
 /********************************************
     Events treating
 *********************************************
-    @author Arthur  @date 25/03 - 20/05
+    @author Arthur  @date 25/03 - 21/05
     @author Florian @date 22/04 - 06/05
 *********************************************/
 bool MenuView::treatEvents()
@@ -338,17 +300,17 @@ bool MenuView::treatEvents()
 						m_window->close();
 						result = false;
 					}
+                    else if ( m_leaderboardFormButton->IS_POINTED )
+                    {
+                        m_leaderboardView = new LeaderboardView(m_width, m_height, m_window, m_text);
+                        m_leaderboardView->setLeaderboardModel( m_menuModel->launchLeaderboard() );
+                    }
 					else if ( m_settingsFormButton->IS_POINTED )
 					{
                         m_settingsView = new SettingsView(m_width, m_height, m_window, m_text);
                         m_settingsView->setModel(m_model);
                         m_settingsView->setSettingsModel( m_menuModel->launchSettings() );
 					}
-                    else if ( m_leaderboardFormButton->IS_POINTED )
-                    {
-                        m_menuModel->setHomeState(false);
-                        m_menuModel->setLeaderboardState(true);
-                    }
                     else if ( m_shopFormButton->IS_POINTED )
                     {
                         m_shopView = new ShopView(m_width, m_height, m_window, m_text);
@@ -359,38 +321,18 @@ bool MenuView::treatEvents()
 
             //=== Leaderboard Events
 
-            else if (m_menuModel->getLeaderboardState() == true)
+            //if treatEvents return true == if leaderboard is stopping
+            else if (m_menuModel->getLeaderboardState()
+                     && m_leaderboardView->treatEvents(event))
             {
-                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
-                {
-                    if ( m_homeFormButton->IS_POINTED )
-                        m_homeFormButton->setPressedState(true);
-
-                    if ( m_clearLbRectButton->IS_POINTED )
-                        m_clearLbRectButton->setPressedState(true);
-                }
-
-                if (event.type == sf::Event::MouseButtonReleased)
-                {
-                    m_homeFormButton->setPressedState(false);
-                    m_clearLbRectButton->setPressedState(false);
-
-                    if ( m_homeFormButton->IS_POINTED )
-                    {
-                        m_menuModel->setLeaderboardState(false);
-                        m_menuModel->setHomeState(true);
-                    }
-                    if ( m_clearLbRectButton->IS_POINTED )
-                    {
-                        m_menuModel->getLeaderboard()->createFile();
-                    }
-                }
+                m_menuModel->setLeaderboardState(false);
+                m_menuModel->setHomeState(true);
             }
 
             //=== Settings Events
 
-            //if treatEvents return true == if settings is stopping
-            else if (m_menuModel->getSettingsState() && m_settingsView->treatEvents(event))
+            else if (m_menuModel->getSettingsState()
+                     && m_settingsView->treatEvents(event))
             {
                 m_menuModel->setSettingsState(false);
                 m_menuModel->setHomeState(true);
@@ -398,8 +340,8 @@ bool MenuView::treatEvents()
 
             //=== Shop Events
 
-            //if treatEvents return true == if shop is stopping
-            else if (m_menuModel->getShopState() && m_shopView->treatEvents(event))
+            else if (m_menuModel->getShopState()
+                     && m_shopView->treatEvents(event))
             {
                 m_menuModel->setShopState(false);
                 m_menuModel->setHomeState(true);

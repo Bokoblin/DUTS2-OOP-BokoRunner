@@ -18,6 +18,7 @@ limitations under the License.
 
 #include "View.h"
 #include "MenuModel.h"
+#include "LeaderboardView.h"
 #include "SettingsView.h"
 #include "ShopView.h"
 
@@ -36,7 +37,7 @@ const std::string MENU_MUSIC = "Music/menu_sound.ogg";
 /********************************************
     MenuView Class
 *********************************************
-    @author Arthur  @date 26/03 - 20/05
+    @author Arthur  @date 26/03 - 21/05
     @author Florian @date 20/04 - 03/05
 *********************************************/
 class MenuView : public View
@@ -58,6 +59,7 @@ public:
 private:
     //=== ATTRIBUTES
     MenuModel *m_menuModel;
+    LeaderboardView *m_leaderboardView;
     SettingsView *m_settingsView;
     ShopView *m_shopView;
 
@@ -74,11 +76,9 @@ private:
     GraphicElement *m_titleGraphic;
     Button *m_playRectButton;
     Button *m_quitRectButton;
-    Button *m_clearLbRectButton;
     Button *m_settingsFormButton;
     Button *m_leaderboardFormButton;
     Button *m_shopFormButton;
-    Button *m_homeFormButton;
 
     //Music
     sf::Music m_menuMusic;

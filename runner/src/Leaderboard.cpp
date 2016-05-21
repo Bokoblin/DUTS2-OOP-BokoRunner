@@ -36,11 +36,12 @@ void Leaderboard::loadVectorFromFile()
     f.open(SCORES_FILE.c_str(), ios::in);
 
     if (f.fail() )
-        createFile();
+        createFile(); //create an empty file if file doesn't exist
 
     f >> line;
     while ( !f.eof() )
     {
+        //transform each line in int and add it to vector array
         m_scoresArray.push_back(stoi( line ));
         f >> line;
     }
@@ -98,9 +99,9 @@ void Leaderboard::sortVector()
 
     sort( m_scoresArray.begin(), m_scoresArray.end(), wayToSort );
 
-    //=== keep only 10 scores
+    //=== keep only a certain number of scores
 
-    while (m_scoresArray.size() > 10)
+    while (m_scoresArray.size() > MAX_SCORES)
         m_scoresArray.pop_back();
 }
 
@@ -112,13 +113,14 @@ void Leaderboard::sortVector()
 *********************************************/
 void Leaderboard::addEntryToVector(int new_score)
 {
+    //add new score to vector, then sort it
     m_scoresArray.push_back(new_score);
     sortVector();
 }
 
 
 /********************************************
-    Indicate the way to sort array
+    fetch string content with the vector
 *********************************************
     @author Arthur  @date 19/04 - 20/04
 *********************************************/
@@ -126,12 +128,13 @@ void Leaderboard::loadStringFromVector(std::string &scores_text)
 {
     if ( m_scoresArray.empty() == false)
     {
+        //add each case content in string
         for (vector<int>::iterator it = m_scoresArray.begin();
              it != m_scoresArray.end(); ++it)
             scores_text += " \n " + to_string(*it);
     }
     else
-        scores_text = "empty";
+        scores_text = "empty"; //if array is empty
 }
 
 

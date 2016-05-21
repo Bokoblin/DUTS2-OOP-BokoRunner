@@ -23,6 +23,7 @@ limitations under the License.
 #include <SFML/Audio.hpp>
 
 #define GREY_BG_COLOR sf::Color(51, 51, 51, 255)
+#define FORM_BUTTONS_SIZE 30,30
 #define MOUSE_LEFT_PRESSED_EVENT event.type == sf::Event::MouseButtonPressed &&           event.mouseButton.button == sf::Mouse::Left
 #define IS_POINTED getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))
 

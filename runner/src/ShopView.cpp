@@ -158,7 +158,7 @@ void ShopView::displayCards() const
 void ShopView::synchronize()
 {
     m_homeFormButton->sync();
-    m_homeFormButton->resize(30, 30);
+    m_homeFormButton->resize(FORM_BUTTONS_SIZE);
 
     m_text->syncShopText(m_width, m_height);
 
@@ -263,7 +263,8 @@ bool ShopView::treatEvents(sf::Event event)
                 content.insert(content.find("\n")+11, to_string(card->getItem()->getPrice() ) );
 
                 //create buy dialog
-                m_buyDialog = new Dialog( m_width/2 - 125, m_height/2-100,                    card->getItem(), m_text, title, content, negative_choice, positive_choice);
+                m_buyDialog = new Dialog( m_width/2 - 125, m_height/2-100,
+                                         card->getItem(), m_text, title, content, negative_choice, positive_choice);
             }
 
         //Mouse up on negative button

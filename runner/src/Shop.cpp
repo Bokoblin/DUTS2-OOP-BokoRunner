@@ -36,15 +36,18 @@ vector<ShopItem*> Shop::getShopItemsArray() const { return m_shopItemsArray; }
 /********************************************
     Buy items
 *********************************************
-    @author Arthur  @date 11/05 - 18/05
+    @author Arthur  @date 11/05 - 19/05
 *********************************************/
 bool Shop::buyItem(ShopItem *my_item)
 {
-    if ( my_item->getBoughtState() == false && my_item->getPrice() <= m_dataBase->getTotalCoinsCollected() )
+    if ( !my_item->getBoughtState() && my_item->getPrice() <= m_dataBase->getTotalCoinsNumber() )
     {
+        //=== update objects
+
         m_dataBase->setTotalCoinsCollected( -my_item->getPrice() );
         my_item->setBoughtState(true);
-        m_dataBase->getActivatedItemsArray().push_back( my_item->getName() );
+
+        //=== update config files
 
         pugi::xml_document doc;
         doc.load_file("Resources/config.xml");
@@ -55,8 +58,10 @@ bool Shop::buyItem(ShopItem *my_item)
             {
                 pugi::xml_attribute state = item.attribute("boughtState");
                 state.set_value(true);
-                doc.save_file("Resources/config.xml");
-                doc.save_file("Resources/.fragment_cache");
+                const char * config = CONFIG_FILE.c_str(); //the save_file method asks for char*
+                const char * config_hidden = HIDDEN_CONFIG_FILE.c_str();
+                doc.save_file(config);
+                doc.save_file(config_hidden);
             }
         }
         return true;

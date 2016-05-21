@@ -38,18 +38,19 @@ const std::string DEFAULT_CONFIG_CONTENT = " \
 <runner>\n \
 <config>\n \
 <string name=\"language\">en</string>\n \
+<string name=\"ball_skin\">default</string>\n \
 <int name=\"total_coins_collected\">0</int>\n \
 <int name=\"total_distance_travelled\">0</int>\n \
 <int name=\"total_enemies_destroyed\">0</int>\n \
 <int name=\"total_games_played\">0</int>\n \
 </config>\n \
 <shop>\n \
-<item name=\"Coin Doubler\" description=\"Double coins collected number\" price=\"500\" boughtState=\"false\"/>\n \
-<item name=\"Increase Shield bonus\" description=\"Increase bonus duration by 5s\" price=\"50\" boughtState=\"false\"/>\n \
-<item name=\"Increase Mega bonus\" description=\"Increase bonus duration by 5s\" price=\"100\" boughtState=\"false\"/>\n \
-<item name=\"Increase Fly bonus\" description=\"Increase bonus duration by 5s\" price=\"70\" boughtState=\"false\"/>\n \
-<item name=\"Morph ball skin\" description=\"Unlock ball's morph skin\" price=\"300\" boughtState=\"false\"/>\n \
-<item name=\"Monster ball skin\" description=\"Unlock ball's monster skin\" price=\"350\" boughtState=\"false\"/>\n \
+<item id=\"doubler\" name=\"Coin Doubler\" description=\"Double coins collected number\" price=\"500\" boughtState=\"false\"/>\n \
+<item id=\"shieldplus\" name=\"Increase Shield bonus\" description=\"Increase bonus duration by 5s\" price=\"50\" boughtState=\"false\"/>\n \
+<item id=\"megaplus\" name=\"Increase Mega bonus\" description=\"Increase bonus duration by 5s\" price=\"100\" boughtState=\"false\"/>\n \
+<item id=\"flyplus\" name=\"Increase Fly bonus\" description=\"Increase bonus duration by 5s\" price=\"70\" boughtState=\"false\"/>\n \
+<item id=\"morphing\" name=\"Morph ball skin\" description=\"Unlock ball's morph skin\" price=\"300\" boughtState=\"false\"/>\n \
+<item id=\"capsule\" name=\"Capsule ball skin\" description=\"Unlock ball's capsule skin\" price=\"350\" boughtState=\"false\"/>\n \
 </shop>\n \
 </runner>\n";
 
@@ -57,7 +58,7 @@ const std::string DEFAULT_CONFIG_CONTENT = " \
 /********************************************
     DataBase Class
 *********************************************
-    @author Arthur  @date 2/05 - 16/05
+    @author Arthur  @date 2/05 - 21/05
 *********************************************/
 class DataBase
 {
@@ -68,16 +69,17 @@ public:
     ~DataBase();
 
     //=== GETTERS
-    int getTotalCoinsCollected() const;
-    int getTotalDistanceTravelled() const;
-    int getTotalEnemiesDestructed() const;
+    int getTotalCoinsNumber() const;
+    int getTotalDistance() const;
+    int getTotalFlattenedEnemies() const;
     int getTotalGamesPlayed() const;
-    int getCurrentCoinsCollected() const;
+    int getCurrentCoinsNumber() const;
     int getCurrentDistance() const;
     int getCurrentFlattenedEnemies() const;
     int getCurrentScore() const;
     std::string getLanguage() const;
-    std::vector<std::string> getActivatedItemsArray() const;
+    std::string getBallSkin() const;
+    const std::set<std::string>& getActivatedItemsArray() const;
 
     //=== SETTERS
     void setTotalCoinsCollected(int number);
@@ -86,6 +88,7 @@ public:
     void setCurrentFlattenedEnemies(int number);
     void setCurrentScore(float speed);
     void setLanguage(std::string lang);
+    void setBallSkin(std::string skin);
 
     //=== METHODS
     void createFile();
@@ -108,16 +111,17 @@ private:
     int m_totalFlattenedEnemies;
     int m_totalGamesPlayed;
     std::string m_currentLanguage;
+    std::string m_currentBallSkin;
 
     //Current Game
-    int m_currentCoinsCollected;
+    int m_currentCoinsNumber;
     int m_currentDistance;
     int m_currentFlattenedEnemies;
     int m_currentScore;
 
     Leaderboard *m_leaderboard;
 
-    std::vector<std::string> m_activatedItemsArray;
+    std::set<std::string> m_activatedItemsArray;
 };
 
 #endif

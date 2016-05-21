@@ -91,6 +91,8 @@ void ShopView::loadImages()
             clip_rects.push_back(sf::IntRect(50,   0, 50, 50) );
             clip_rects.push_back(sf::IntRect(  0, 50, 50, 50) );
             clip_rects.push_back(sf::IntRect(50, 50, 50, 50) );
+            clip_rects.push_back(sf::IntRect( 0, 0, 50, 50) );
+            clip_rects.push_back(sf::IntRect( 0, 50, 50, 50) );
 
             m_pageIndicatorButton  = new Button(clip_rects, m_pageIndicatorTexture, 0, 580, 15, 15, true);
         }
@@ -108,7 +110,7 @@ void ShopView::createCards()
     int i = 0;
     for ( ShopItem *item : m_shop->getShopItemsArray() )
     {
-        m_shopItemsCardArray.push_back( new ShopItemCard(i, item)  );
+        m_shopItemsCardArray.push_back( new ShopItemCard(i, item, m_text)  );
         i++;
     }
 
@@ -158,7 +160,7 @@ void ShopView::synchronize()
     m_homeFormButton->sync();
     m_homeFormButton->resize(30, 30);
 
-    m_text->syncMenuShopText(m_width, m_height);
+    m_text->syncShopText(m_width, m_height);
 
     for( ShopItemCard *card : m_shopItemsCardArray)
     {
@@ -215,7 +217,7 @@ bool ShopView::treatEvents(sf::Event event)
 {
     bool stop_shop = false;
 
-    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+    if (MOUSE_LEFT_PRESSED_EVENT)
     {
         if ( m_homeFormButton->IS_POINTED )
             m_homeFormButton->setPressedState(true);
@@ -261,8 +263,7 @@ bool ShopView::treatEvents(sf::Event event)
                 content.insert(content.find("\n")+11, to_string(card->getItem()->getPrice() ) );
 
                 //create buy dialog
-                m_buyDialog = new Dialog( m_width/2 - 125, m_height/2-100, card->getItem(),
-                    title, content, negative_choice, positive_choice);
+                m_buyDialog = new Dialog( m_width/2 - 125, m_height/2-100,                    card->getItem(), m_text, title, content, negative_choice, positive_choice);
             }
 
         //Mouse up on negative button

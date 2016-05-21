@@ -17,12 +17,13 @@ limitations under the License.
 #define _MENUMODEL_H
 
 #include "Model.h"
+#include "Settings.h"
 #include "Shop.h"
 
 /********************************************
     MenuModel Class
 *********************************************
-    @author Arthur  @date 14/04 - 16/05
+    @author Arthur  @date 14/04 - 20/05
 *********************************************/
 class MenuModel : public Model
 {
@@ -33,11 +34,11 @@ public:
 
     //=== GETTERS
     bool getHomeState() const;
-    bool& getHomeState();
+    //bool& getHomeState();
     bool getSettingsState() const;
     bool getLeaderboardState() const;
     bool getShopState() const;
-    bool& getShopState();
+    //bool& getShopState();
     Leaderboard* getLeaderboard() const;
 
     //=== SETTERS
@@ -49,7 +50,7 @@ public:
     //=== METHODS
     virtual void nextStep() override;
     Shop* launchShop();
-    void changeLanguage(std::string lang);
+    Settings* launchSettings();
 
 private:
     //=== ATTRIBUTES
@@ -59,6 +60,7 @@ private:
     bool m_shopState;
 
     Leaderboard *m_leaderboard;
+    Settings *m_settings;
     Shop *m_shop;
 };
 

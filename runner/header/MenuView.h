@@ -18,6 +18,7 @@ limitations under the License.
 
 #include "View.h"
 #include "MenuModel.h"
+#include "SettingsView.h"
 #include "ShopView.h"
 
 
@@ -29,13 +30,13 @@ const int SCREEN_HEIGHT = 600;
 const int SCREEN_BPP = 32;
 const std::string APP_TITLE = "Boko Runner";
 const std::string TITLE_IMAGE = "Images/title.png";
-const std::string RADIO_BUTTONS_IMAGE = "Images/radio_buttons.png";
 const std::string MENU_MUSIC = "Music/menu_sound.ogg";
+
 
 /********************************************
     MenuView Class
 *********************************************
-    @author Arthur  @date 26/03 - 16/05
+    @author Arthur  @date 26/03 - 20/05
     @author Florian @date 20/04 - 03/05
 *********************************************/
 class MenuView : public View
@@ -57,6 +58,7 @@ public:
 private:
     //=== ATTRIBUTES
     MenuModel *m_menuModel;
+    SettingsView *m_settingsView;
     ShopView *m_shopView;
 
     //Textures
@@ -65,7 +67,6 @@ private:
     sf::Texture m_titleImageTexture;
     sf::Texture m_menuRectButtonsTexture;
     sf::Texture m_menuFormButtonsTexture;
-    sf::Texture m_menuRadioButtonsTexture;
 
     //Graphic Elements
     SlidingBackground *m_farBackground;
@@ -78,11 +79,7 @@ private:
     Button *m_leaderboardFormButton;
     Button *m_shopFormButton;
     Button *m_homeFormButton;
-    Button *m_englishLangRadioButton;
-    Button *m_frenchLangRadioButton;
-    Button *m_spanishLangRadioButton;
-    Button *m_normalQuestRadioButton;
-    Button *m_masterQuestRadioButton;
+
     //Music
     sf::Music m_menuMusic;
 };

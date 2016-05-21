@@ -18,6 +18,7 @@ limitations under the License.
 
 #include "Button.h"
 #include "ShopItem.h"
+#include "Text.h"
 #include <iostream>
 
 #define HALF_WIDTH getGlobalBounds().width/2
@@ -41,7 +42,7 @@ class ShopItemCard
 {
     public:
         //=== CTORs / DTORs
-        ShopItemCard(int id, ShopItem *item);
+        ShopItemCard(int id, ShopItem *item, Text *t);
         ~ShopItemCard();
 
         //=== GETTERS
@@ -67,7 +68,7 @@ class ShopItemCard
         bool m_shownState;
 
         ShopItem *m_item;
-        sf::Font *m_font;
+        Text *m_text;
         sf::Text m_name;
         sf::Text m_desc;
         sf::Text m_buyButtonContent;

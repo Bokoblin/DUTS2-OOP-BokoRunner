@@ -9,13 +9,12 @@ using namespace std;
     @author Arthur  @date 2/05
 *********************************************/
 DataBase::DataBase() :
-    m_currentCoinsCollected{0}, m_currentDistance{0},
+    m_currentCoinsNumber{0}, m_currentDistance{0},
     m_currentFlattenedEnemies{0}, m_currentScore{0}
 {
     if ( checkFileIntegrity() == false)
         createFile();
-    fetchConfigurationFromFile();DataBase
-    updateActivatedItemsArray();
+    fetchConfigurationFromFile();
     m_leaderboard = new Leaderboard;
 }
 
@@ -35,32 +34,34 @@ DataBase::~DataBase()
 *********************************************
     @author Arthur  @date 2/05 - 14/05
 *********************************************/
-int DataBase::getTotalCoinsCollected() const { return m_totalCoinsCollected; }
-int DataBase::getTotalDistanceTravelled() const { return m_totalDistance; }
-int DataBase::getTotalEnemiesDestructed() const { return m_totalFlattenedEnemies; }
+int DataBase::getTotalCoinsNumber() const { return m_totalCoinsCollected; }
+int DataBase::getTotalDistance() const { return m_totalDistance; }
+int DataBase::getTotalFlattenedEnemies() const { return m_totalFlattenedEnemies; }
 int DataBase::getTotalGamesPlayed() const { return m_totalGamesPlayed; }
-int DataBase::getCurrentCoinsCollected() const { return m_currentCoinsCollected; }
+int DataBase::getCurrentCoinsNumber() const { return m_currentCoinsNumber; }
 int DataBase::getCurrentDistance() const { return m_currentDistance; }
 int DataBase::getCurrentFlattenedEnemies() const { return m_currentFlattenedEnemies; }
 int DataBase::getCurrentScore() const { return m_currentScore; }
-string DataBase::getLanguage() const {return m_currentLanguage;}
-vector<string> DataBase::getActivatedItemsArray() const { return m_activatedItemsArray; }
+string DataBase::getLanguage() const { return m_currentLanguage;}
+string DataBase::getBallSkin() const { return m_currentBallSkin; }
+const set<string>& DataBase::getActivatedItemsArray() const { return m_activatedItemsArray; }
 
 
 /********************************************
     Setters
 *********************************************
-    @author Arthur  @date 2/05 - 6/05
+    @author Arthur  @date 2/05 - 20/05
 *********************************************/
 void DataBase::setTotalCoinsCollected(int n) { m_totalCoinsCollected += n; }
-void DataBase::setCurrentCoinsCollected(int n) { m_currentCoinsCollected += n; }
+void DataBase::setCurrentCoinsCollected(int n) { m_currentCoinsNumber += n; }
 void DataBase::setCurrentDistance(int n) { m_currentDistance += n; }
 void DataBase::setCurrentFlattenedEnemies(int n) { m_currentFlattenedEnemies += n; }
 void DataBase::setLanguage(string lang) { m_currentLanguage = lang;}
+void DataBase::setBallSkin(string skin) { m_currentBallSkin = skin; }
 void DataBase::setCurrentScore(float speed)
 {
     m_currentScore = ( speed*m_currentDistance
-            + 20*m_currentCoinsCollected + m_currentFlattenedEnemies );
+            + 20*m_currentCoinsNumber + m_currentFlattenedEnemies );
 }
 
 
@@ -95,6 +96,8 @@ bool DataBase::checkFileIntegrity()
     string f1Line;
     string f2Line;
 
+    //=== Open files / create them if not existing
+
     f1.open( CONFIG_FILE.c_str(), ios::in);
     f2.open( HIDDEN_CONFIG_FILE.c_str(), ios::in);
 
@@ -102,21 +105,24 @@ bool DataBase::checkFileIntegrity()
         createFile();
     else
     {
-        do
-        {
+        /* check if one of the files has been changed
+         * Note: is useless if the user knows the 2 files
+         * and write the same thing in both
+         */
+        do {
             f1 >> f1Line;
             f2 >> f2Line;
             if ( f1Line != f2Line)
             {
                 f1.close();
                 f2.close();
-                return false;
+                return false; //lines are different
             }
-            if ( f1Line == "")
+            if ( f1Line == "") //both are empty (checked before difference)
             {
                 f1.close();
                 f2.close();
-                return false;
+                return false; //lines shouldn't be empty
             }
         }
         while ( !f1.eof() );
@@ -132,7 +138,7 @@ bool DataBase::checkFileIntegrity()
 /********************************************
     Fetch Configuration data from file
 *********************************************
-    @author Arthur  @date 2/05 - 11/05
+    @author Arthur  @date 2/05 - 20/05
 *********************************************/
 void DataBase::fetchConfigurationFromFile()
 {
@@ -141,6 +147,7 @@ void DataBase::fetchConfigurationFromFile()
     updateValue(m_totalFlattenedEnemies, "total_enemies_destroyed");
     updateValue(m_totalGamesPlayed, "total_games_played");
     updateValue(m_currentLanguage, "language");
+    updateValue(m_currentBallSkin, "ball_skin");
 
     updateActivatedItemsArray();
 }
@@ -158,6 +165,7 @@ void DataBase::fetchBuyableItemsFromFile(vector<ShopItem*> &setArray)
     string desc = "";
     int price = 0;
 
+    //open file with pugi library and init nodes
     pugi::xml_document doc;
     doc.load_file("Resources/config.xml");
 
@@ -196,9 +204,13 @@ void DataBase::updateValue(Type &variable, std::string name)
     string line="";
 
     f.open(CONFIG_FILE, ios::in);
-    assert( !f.fail() );
 
+    assert( !f.fail());
+    /* look for the line containing the name parameter
+    * then update in this line the area between brackets
+    */
     f >> line;
+
     while( !f.eof() && found == string::npos)
     {
         found=line.find("name=\""+ name + "\"");
@@ -228,7 +240,7 @@ void DataBase::updateValue(Type &variable, std::string name)
 /********************************************
     Update vector array of activated items
 *********************************************
-    @author Arthur  @date 14/05
+    @author Arthur  @date 14/05 - 21/05
 *********************************************/
 void DataBase::updateActivatedItemsArray()
 {
@@ -242,7 +254,7 @@ void DataBase::updateActivatedItemsArray()
     {
         string tmp = item.attribute("boughtState").value();
         if ( tmp == "true")
-            m_activatedItemsArray.push_back( item.attribute("name").value() );
+            m_activatedItemsArray.insert( item.attribute("id").value() );
     }
 }
 
@@ -250,7 +262,7 @@ void DataBase::updateActivatedItemsArray()
 /********************************************
     Push Configuration data to file
 *********************************************
-    @author Arthur  @date 2/05
+    @author Arthur  @date 2/05 - 20/05
 *********************************************/
 void DataBase::pushConfigurationToFile()
 {
@@ -265,6 +277,11 @@ void DataBase::pushConfigurationToFile()
 
     if (f1.fail() || f2.fail() )
         createFile();
+
+    /* for each line, compare to the read only file and rewrite it the same
+    * except when condition are granted. In that case replace elements of lines
+    * with variables value and add the closing tag
+    */
 
     getline(f1, line, '\n');
     while ( !f1.eof())
@@ -296,6 +313,11 @@ void DataBase::pushConfigurationToFile()
         else if (line.find("language") !=std::string::npos)
         {
             line.replace(line.begin() + line.find('>')+1, line.end(), m_currentLanguage);
+            line += "</string>";
+        }
+        else if (line.find("ball_skin") !=std::string::npos)
+        {
+            line.replace(line.begin() + line.find('>')+1, line.end(), m_currentBallSkin);
             line += "</string>";
         }
 
@@ -336,10 +358,12 @@ void DataBase::pushConfigurationToFile()
 *********************************************/
 void DataBase::saveCurrentGame()
 {
-    m_totalCoinsCollected += m_currentCoinsCollected;
+    //add current game values to total values
+    m_totalCoinsCollected += m_currentCoinsNumber;
     m_totalDistance += m_currentDistance;
     m_totalFlattenedEnemies += m_currentFlattenedEnemies;
 
+    //update leaderboard
     m_leaderboard->loadVectorFromFile();
     m_leaderboard->addEntryToVector(m_currentScore);
     m_leaderboard->loadFileFromVector();
@@ -353,8 +377,9 @@ void DataBase::saveCurrentGame()
 *********************************************/
 void DataBase::resetCurrentGame()
 {
+    //for launching a new game
     m_totalGamesPlayed += 1;
-    m_currentCoinsCollected = 0;
+    m_currentCoinsNumber = 0;
     m_currentDistance = 0;
     m_currentFlattenedEnemies = 0;
     m_currentScore = 0;

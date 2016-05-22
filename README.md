@@ -25,7 +25,8 @@ The project allows us to put into practice the Object Oriented Programming notio
 
 ### Licence ###
 
-See "readme_licences" file
+Our project is, in majority, licenced under Apache License Version 2.0.
+See "readme_licences" file for more information and exceptions.
 
 ### Repository ###
 

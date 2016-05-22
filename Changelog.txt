@@ -1,7 +1,7 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.7.0
+Current version : v1.7.1
 
 ======================================================================================
 BETA CHANNEL Changelog
@@ -264,4 +264,17 @@ Fixes and miscs:
 * dynamic means that if <item> rows are added in config file, the number of cards and pages 
   will be automatically changed after relaunching Shop
   Note : You have to remember how works configuration "security", though
+
+---------------------------------------------------------------------------------------------------
+
+v1.7.1 (22/05/16)
+
+Features :
+- added a mute button in pause that allows to mute/unmute game sound
+
+Fixes and miscs:
+- Fixed music relaunching on resume pressed instead of release
+- Fixed indicators drawing
+- Removed unused texture separator for animated sprites
+- Reorganized files
 ---------------------------------------------------------------------------------------------------

@@ -10,21 +10,11 @@ There is also PugiXML library in /LIBS folder, it is licenced by his creator und
 
 IMAGES :
 
-The following file were created by ourself with the software paint.net, or were given by our teachers :
-- title.png,
-- intro.png,
-- ball.png,    (provided one edited)
-- bonus.png,   (provided one edited)
-- life_bar.png,(inspired by provided one)
-- rect_buttons.png, (inspired by provided one)
-- pause_background.png,
-- pause_elements.png,
-- remaining_life.png,
-- end_background.png,
-- radio_buttons.png (inspired by Material Design radio buttons)
-- all the background images in /background folder
+The majority of files were created by ourself with the software paint.net, or were given by our teachers.
+Some are were inspired by provided one or inspired by Material Design (e.g. radios, sound)
+They are licenced under Apache Licence Version 2.0
 
-The following files were edited but not created by us
+The following files were edited but not created by us : 
 - menu_buttons.png (first 100*50 pixels edited from AOSP Settings icon - source image under Apache License Version 2.0)
 
 ======================
@@ -44,7 +34,7 @@ The following musics were created by Paul Samra, a friend. They are under BeerWa
 
 FONTS : 
 
-The fonts in /Resources folder come from Google Fonts. It is licenced under Apache Licence Version 2.0:
+The fonts in /Resources folder come from Google Fonts. They are licenced under Apache Licence Version 2.0:
 - Roboto_Regular.ttf,
 - Roboto_Bold.ttf,
 - Roboto_Condensed.ttf

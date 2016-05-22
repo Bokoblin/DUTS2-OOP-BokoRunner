@@ -18,20 +18,26 @@ limitations under the License.
 
 #include "View.h"
 #include "MenuModel.h"
+#include "LeaderboardView.h"
+#include "SettingsView.h"
+#include "ShopView.h"
+
 
 /********************************************
     Constant Variables
 ********************************************/
+const int SCREEN_WIDTH = 900;
+const int SCREEN_HEIGHT = 600;
+const int SCREEN_BPP = 32;
+const std::string APP_TITLE = "Boko Runner";
 const std::string TITLE_IMAGE = "Images/title.png";
-const std::string RECT_BUTTONS_IMAGE = "Images/rect_buttons.png";
-const std::string FORM_BUTTONS_IMAGE = "Images/menu_buttons.png";
-const std::string RADIO_BUTTONS_IMAGE = "Images/radio_buttons.png";
 const std::string MENU_MUSIC = "Music/menu_sound.ogg";
+
 
 /********************************************
     MenuView Class
 *********************************************
-    @author Arthur  @date 26/03 - 20/04
+    @author Arthur  @date 26/03 - 21/05
     @author Florian @date 20/04 - 03/05
 *********************************************/
 class MenuView : public View
@@ -53,6 +59,9 @@ public:
 private:
     //=== ATTRIBUTES
     MenuModel *m_menuModel;
+    LeaderboardView *m_leaderboardView;
+    SettingsView *m_settingsView;
+    ShopView *m_shopView;
 
     //Textures
     sf::Texture m_farBackgroundTexture;
@@ -60,7 +69,6 @@ private:
     sf::Texture m_titleImageTexture;
     sf::Texture m_menuRectButtonsTexture;
     sf::Texture m_menuFormButtonsTexture;
-    sf::Texture m_menuRadioButtonsTexture;
 
     //Graphic Elements
     SlidingBackground *m_farBackground;
@@ -68,15 +76,10 @@ private:
     GraphicElement *m_titleGraphic;
     Button *m_playRectButton;
     Button *m_quitRectButton;
-    Button *m_clearLbRectButton;
     Button *m_settingsFormButton;
     Button *m_leaderboardFormButton;
-    Button *m_homeFormButton;
-    Button *m_englishLangRadioButton;
-    Button *m_frenchLangRadioButton;
-    Button *m_spanishLangRadioButton;
-    Button *m_normalQuestRadioButton;
-    Button *m_masterQuestRadioButton;
+    Button *m_shopFormButton;
+
     //Music
     sf::Music m_menuMusic;
 };

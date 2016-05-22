@@ -13,7 +13,8 @@ The project allows us to put into practice the Object Oriented Programming notio
 ### Which tools have been used ? ###
 
 * Code::Blocks & QT Creator IDE
-* STL & SFML Library
+* SFML Library
+* Pugixml library
 * C++ Language
 
 
@@ -24,7 +25,7 @@ The project allows us to put into practice the Object Oriented Programming notio
 
 ### Licence ###
 
-This project is licensed under the Apache License Version 2.0.
+See "readme_licences" file
 
 ### Repository ###
 

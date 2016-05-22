@@ -14,14 +14,6 @@ GameView::GameView(float w, float h, sf::RenderWindow *mywindow, Text *text):
     loadImages();
     m_pixelShader = new PixelateEffect();
 
-if (!m_gameThemeMusic.openFromFile(GAME_NORMAL_THEME_MUSIC))
-        cerr << "ERROR when loading music file: " << GAME_NORMAL_THEME_MUSIC << endl;
-    else
-    {
-        m_gameThemeMusic.play();
-        m_gameThemeMusic.setLoop(true);
-    }
-
     if (!m_coinMusic.openFromFile(COINS_COLLECTED_MUSIC))
             cerr << "ERROR when loading music file: " << COINS_COLLECTED_MUSIC << endl;
 
@@ -33,7 +25,7 @@ if (!m_gameThemeMusic.openFromFile(GAME_NORMAL_THEME_MUSIC))
 /********************************************
     Destructor
 *********************************************
-    @author Arthur  @date 26/03 - 28/04
+    @author Arthur  @date 26/03 - 21/05
 *********************************************/
 GameView::~GameView()
 {
@@ -53,8 +45,9 @@ GameView::~GameView()
     delete m_megaBonusAnimSprite;
     delete m_flyBonusAnimSprite;
     delete m_slowSpeedBonusAnimSprite;
+    delete m_shieldBonusAnimSprite;
+    delete m_shieldAnimSprite;
     delete m_pixelShader;
-
     for (auto it = m_MovableToGraphicElementMap.begin();
          it!=m_MovableToGraphicElementMap.end(); ++it )
             delete it->second;
@@ -74,9 +67,45 @@ GameView::~GameView()
 /********************************************
    Setters
 *********************************************
-    @author Arthur  @date 27/03
+    @author Arthur  @date 27/03 - 20/05
 *********************************************/
-void GameView::setGameModel(GameModel *model) { m_gameModel = model; }
+void GameView::setGameModel(GameModel *model)
+{
+    m_gameModel = model;
+
+    //=== change default game music if in master mode
+
+    string game_music;
+    if ( m_gameModel->getDifficulty() == NORMAL_DIFFICULTY)
+        game_music = GAME_NORMAL_THEME_MUSIC;
+    else
+        game_music = GAME_MASTER_THEME_MUSIC;
+
+    if (!m_gameThemeMusic.openFromFile(game_music))
+        cerr << "ERROR when loading music file: " << game_music << endl;
+    else
+    {
+        m_gameThemeMusic.play();
+        m_gameThemeMusic.setLoop(true);
+    }
+
+    //=== change ball skin if not default one
+
+    if (m_gameModel->getDataBase()->getBallSkin() == "morphing")
+    {
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<8; i++)
+            clip_rects.push_back(sf::IntRect(50*i,50,50,50));
+        m_playerAnimSprite->setClipRectArray(clip_rects);
+    }
+    else if (m_gameModel->getDataBase()->getBallSkin() == "capsule")
+    {
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<8; i++)
+            clip_rects.push_back(sf::IntRect(50*i,100,50,50));
+        m_playerAnimSprite->setClipRectArray(clip_rects);
+    }
+}
 
 
 /********************************************
@@ -169,6 +198,19 @@ void GameView::loadImages()
         m_blockEnemyAnimSprite->setOrigin(0,50);
     }
 
+    if (!m_shieldTexture.loadFromFile(SHIELD_IMAGE))
+        cerr << "ERROR when loading image file: " << SHIELD_IMAGE << endl;
+    else
+    {
+        std::vector<sf::IntRect> clip_rects;
+        for (int i=0; i<8; i++)
+            clip_rects.push_back(sf::IntRect(50*i,0,50,50));
+
+        m_shieldTexture.setSmooth(true);
+        m_shieldAnimSprite = new AnimatedGraphicElement(m_shieldTexture, 50, GAME_FLOOR, 40, 40, clip_rects, 8);
+        m_shieldAnimSprite->setOrigin(0,50);
+    }
+
     if (!m_bonusTexture.loadFromFile(BONUS_IMAGE))
         cerr << "ERROR when loading image file: " << BONUS_IMAGE << endl;
     else
@@ -199,6 +241,11 @@ void GameView::loadImages()
         for (int i=0; i<5; i++) clip_rects_slow.push_back(sf::IntRect(50*i,200,50,50));
         m_slowSpeedBonusAnimSprite = new AnimatedGraphicElement(m_bonusTexture, 100, 50, 25, 25, clip_rects_slow, 5);
         m_slowSpeedBonusAnimSprite->setOrigin(0,50);
+
+        std::vector<sf::IntRect> clip_rects_shield;
+        for (int i=0; i<5; i++) clip_rects_shield.push_back(sf::IntRect(50*i,250,50,50));
+        m_shieldBonusAnimSprite = new AnimatedGraphicElement(m_bonusTexture, 100, 50, 25, 25, clip_rects_shield, 5);
+        m_shieldBonusAnimSprite->setOrigin(0,50);
     }
 
 
@@ -276,7 +323,7 @@ void GameView::loadImages()
 /********************************************
     Link mElements with gElements
 *********************************************
-    @author Arthur  @date 18/03 - 11/04
+    @author Arthur  @date 18/03 - 21/05
 *********************************************/
 void GameView::linkElements()
 {
@@ -285,24 +332,26 @@ void GameView::linkElements()
     {
         assert((*it) != nullptr);
 
-        if ( (*it)->getType() == 0 )
+        if ( (*it)->getType() == PLAYER )
             m_MovableToGraphicElementMap[*it] = m_playerAnimSprite;
-        else if ( (*it)->getType() == 1 )
+        else if ( (*it)->getType() == STANDARDENEMY )
             m_MovableToGraphicElementMap[*it] = new AnimatedGraphicElement(*m_stdEnemyAnimSprite);
-        else if ( (*it)->getType() == 2 )
+        else if ( (*it)->getType() == TOTEMENEMY )
             m_MovableToGraphicElementMap[*it] = new AnimatedGraphicElement(*m_totemEnemyAnimSprite);
-        else if ( (*it)->getType() == 3 )
+        else if ( (*it)->getType() == BLOCKENEMY )
             m_MovableToGraphicElementMap[*it] = new AnimatedGraphicElement(*m_blockEnemyAnimSprite);
-        else if ( (*it)->getType() == 4 )
+        else if ( (*it)->getType() == COIN )
             m_MovableToGraphicElementMap[*it] = new AnimatedGraphicElement(*m_coinAnimSprite);
-        else if ( (*it)->getType() == 5 )
+        else if ( (*it)->getType() == PVPLUSBONUS )
             m_MovableToGraphicElementMap[*it] = new AnimatedGraphicElement(*m_PVPlusBonusAnimSprite);
-        else if ( (*it)->getType() == 6 )
+        else if ( (*it)->getType() == MEGABONUS )
             m_MovableToGraphicElementMap[*it] = new AnimatedGraphicElement(*m_megaBonusAnimSprite);
-        else if ( (*it)->getType() == 7 )
+        else if ( (*it)->getType() == FLYBONUS )
             m_MovableToGraphicElementMap[*it] = new AnimatedGraphicElement(*m_flyBonusAnimSprite);
-        else if ( (*it)->getType() == 8 )
+        else if ( (*it)->getType() == SLOWSPEEDBONUS )
             m_MovableToGraphicElementMap[*it] = new AnimatedGraphicElement(*m_slowSpeedBonusAnimSprite);
+        else if ( (*it)->getType() == SHIELDBONUS )
+            m_MovableToGraphicElementMap[*it] = new AnimatedGraphicElement(*m_shieldBonusAnimSprite);
     }
     m_gameModel->clearNewMovableElementList();
 }
@@ -428,6 +477,12 @@ void GameView::updateElements()
             it->second->resize(it->first->getWidth(), it->first->getHeight() );
         }
 
+        //=== Update shield sprite
+
+        m_shieldAnimSprite->setPosition( m_gameModel->getPlayer()->getPosX()-5, m_gameModel->getPlayer()->getPosY()+5 );
+        m_shieldAnimSprite->sync();
+        m_shieldAnimSprite->resize(40,40);
+
     }
     else if ( m_gameModel->getPauseState() )
     {
@@ -508,19 +563,16 @@ void GameView::synchronize()
 
     if (!m_gameModel->getPauseState()&& !m_gameModel->getEndState())
     {
-
         linkElements(); //Link new mElements with gElements
         deleteElements(); //Elements deleting if not used anymore
         updateElements(); //Elements update
         m_text->syncGameText(m_gameModel); //Text update
-
     }
     else if (m_gameModel->getPauseState())
     {
-
         updateElements(); //Elements update
         m_text->syncPauseText(); //Text update
-
+        sf::sleep(sf::milliseconds(250)); //limit CPU usage in pause state
     }
     else if (m_gameModel->getEndState())
     {
@@ -529,11 +581,10 @@ void GameView::synchronize()
         if(m_gameThemeMusic.getStatus() == sf::Music::Status::Playing )
             m_gameThemeMusic.stop();
 
-
         //=== Buttons & text update
 
         updateElements(); //Buttons update
-        m_text->syncEndText(m_gameModel); //Text update
+        m_text->syncEndText(m_gameModel, m_width, m_height); //Text update
 
     }
 }
@@ -542,7 +593,7 @@ void GameView::synchronize()
 /********************************************
     GameView Drawing
 *********************************************
-    @author Arthur  @date 26/03 - 07/05
+    @author Arthur  @date 26/03 - 21/05
 *********************************************/
 void GameView::draw() const
 {
@@ -573,6 +624,9 @@ void GameView::draw() const
         {
             it->second->draw(m_window);
         }
+
+        if ( m_gameModel->getPlayer()->getState() == SHIELD)
+            m_window->draw(*m_shieldAnimSprite);
 
         //=== Text drawing
 
@@ -635,18 +689,15 @@ bool GameView::treatEvents()
         {
             //=== Player Controls in Game Screen
 
-            if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)
-                  || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )  )
+            if ( KEYBOARD_LEFT )
             {
-                m_gameModel->getPlayer()->controlPlayerMovements(true);
+                m_gameModel->getPlayer()->controlPlayerMovements(MOVE_LEFT);
             }
-            else if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::D)
-                       || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) )  )
+            else if ( KEYBOARD_RIGHT )
             {
-                m_gameModel->getPlayer()->controlPlayerMovements(false);
+                m_gameModel->getPlayer()->controlPlayerMovements(MOVE_RIGHT);
             }
-            if ( (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
-                        || sf::Keyboard::isKeyPressed(sf::Keyboard::Space ) ) )
+            if ( KEYBOARD_JUMP )
             {
                 m_gameModel->getPlayer()->setJumpState(true);
             }
@@ -677,22 +728,19 @@ bool GameView::treatEvents()
 
             if (m_gameModel->getPauseState() == true)
             {
-                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+                if (MOUSE_LEFT_PRESSED_EVENT)
                 {
-                    if ( m_resumeGameButton->getGlobalBounds().contains(MOUSE_POSITION) ||
-                            m_text->getResumeText()->getGlobalBounds().contains(MOUSE_POSITION) )
+                    if ( m_resumeGameButton->IS_POINTED || m_text->getResumeText()->IS_POINTED )
                     {
                         m_resumeGameButton->setPressedState(true);
                         if(m_gameThemeMusic.getStatus() == sf::Music::Status::Paused)
                             m_gameThemeMusic.play();
                     }
-                    else if ( m_restartGameButton->getGlobalBounds().contains(MOUSE_POSITION) ||
-                              m_text->getRestartText()->getGlobalBounds().contains(MOUSE_POSITION) )
+                    else if ( m_restartGameButton->IS_POINTED || m_text->getRestartText()->IS_POINTED )
                     {
                         m_restartGameButton->setPressedState(true);
                     }
-                    else if ( m_goToHomeButton->getGlobalBounds().contains(MOUSE_POSITION) ||
-                              m_text->getHomeText()->getGlobalBounds().contains(MOUSE_POSITION) )
+                    else if ( m_goToHomeButton->IS_POINTED || m_text->getHomeText()->IS_POINTED )
                     {
                         m_goToHomeButton->setPressedState(true);
                     }
@@ -704,21 +752,18 @@ bool GameView::treatEvents()
                     m_restartGameButton->setPressedState(false);
                     m_goToHomeButton->setPressedState(false);
 
-                    if ( m_resumeGameButton->getGlobalBounds().contains(MOUSE_POSITION) ||
-                            m_text->getResumeText()->getGlobalBounds().contains(MOUSE_POSITION) )
+                    if ( m_resumeGameButton->IS_POINTED || m_text->getResumeText()->IS_POINTED )
                     {
                         m_gameModel->setPauseState(false);
                     }
-                    else if ( m_restartGameButton->getGlobalBounds().contains(MOUSE_POSITION) ||
-                              m_text->getRestartText()->getGlobalBounds().contains(MOUSE_POSITION) )
+                    else if ( m_restartGameButton->IS_POINTED || m_text->getRestartText()->IS_POINTED )
                     {
                         m_gameModel->setPauseState(false);
                         m_model->setGameState(false);
                         m_model->setResetGameState(true);
                         result = false;
                     }
-                    else if ( m_goToHomeButton->getGlobalBounds().contains(MOUSE_POSITION) ||
-                              m_text->getHomeText()->getGlobalBounds().contains(MOUSE_POSITION) )
+                    else if ( m_goToHomeButton->IS_POINTED || m_text->getHomeText()->IS_POINTED )
                     {
                         m_gameModel->setPauseState(false);
                         m_model->setGameState(false);
@@ -732,19 +777,17 @@ bool GameView::treatEvents()
 
             else if (m_gameModel->getEndState() == true)
             {
-                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+                if (MOUSE_LEFT_PRESSED_EVENT)
                 {
-                    if ( m_restartGameButton->getGlobalBounds().contains(MOUSE_POSITION) ||
-                            m_text->getRestartText()->getGlobalBounds().contains(MOUSE_POSITION) )
+                    if ( m_restartGameButton->IS_POINTED || m_text->getRestartText()->IS_POINTED )
                     {
                         m_restartGameButton->setPressedState(true);
                     }
-                    else if ( m_goToHomeButton->getGlobalBounds().contains(MOUSE_POSITION) ||
-                              m_text->getHomeText()->getGlobalBounds().contains(MOUSE_POSITION) )
+                    else if ( m_goToHomeButton->IS_POINTED || m_text->getHomeText()->IS_POINTED )
                     {
                         m_goToHomeButton->setPressedState(true);
                     }
-                    else if ( m_saveScoreButton->getGlobalBounds().contains(MOUSE_POSITION) )
+                    else if ( m_saveScoreButton->IS_POINTED )
                     {
                         m_saveScoreButton->setPressedState(true);
                     }
@@ -756,26 +799,24 @@ bool GameView::treatEvents()
                     m_goToHomeButton->setPressedState(false);
                     m_saveScoreButton->setPressedState(false);
 
-                    if ( m_restartGameButton->getGlobalBounds().contains(MOUSE_POSITION) ||
-                            m_text->getRestartText()->getGlobalBounds().contains(MOUSE_POSITION) )
+                    if ( m_restartGameButton->IS_POINTED || m_text->getRestartText()->IS_POINTED )
                     {
                         m_gameModel->setEndState(false);
                         m_model->setGameState(false);
                         m_model->setResetGameState(true);
                         result = false;
                     }
-                    else if ( m_goToHomeButton->getGlobalBounds().contains(MOUSE_POSITION) ||
-                              m_text->getHomeText()->getGlobalBounds().contains(MOUSE_POSITION) )
+                    else if ( m_goToHomeButton->IS_POINTED || m_text->getHomeText()->IS_POINTED )
                     {
                         m_gameModel->setEndState(false);
                         m_model->setGameState(false);
                         m_model->setMenuState(true);
                         result = false;
                     }
-                    else if ( m_saveScoreButton->getGlobalBounds().contains(MOUSE_POSITION) )
+                    else if ( m_saveScoreButton->IS_POINTED )
                     {
                         m_gameModel->setSaveStatus(false);
-                        m_model->getDataModel()->saveCurrentGame();
+                        m_model->getDataBase()->saveCurrentGame();
                     }
                 }
             }

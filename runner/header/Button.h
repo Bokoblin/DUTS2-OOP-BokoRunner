@@ -21,7 +21,7 @@ limitations under the License.
 /********************************************
     Button Class
 *********************************************
-    @author Arthur  @date 6/04 - 14/04
+    @author Arthur  @date 6/04 - 20/05
 *********************************************/
 class Button : public GraphicElement
 {
@@ -32,9 +32,13 @@ public:
     Button(Button const& elementACopier);
     virtual ~Button();
 
+    //=== GETTERS
+    bool getDisabledState() const;
+
     //=== SETTERS
     void setPressedState(bool state);
     void setActivatedState(bool state);
+    void setDisabledState(bool state);
 
     //=== METHODS
     virtual void sync() override;
@@ -46,7 +50,7 @@ private:
     bool m_isRadio;
     bool m_pressed;
     bool m_active;
-
+    bool m_disabled;
 };
 
 #endif // BUTTON_H

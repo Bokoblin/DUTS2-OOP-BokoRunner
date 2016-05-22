@@ -8,7 +8,6 @@
 
 const int SCREEN_WIDTH = 900;
 const int SCREEN_HEIGHT = 600;
-const std::chrono::system_clock::time_point programBeginningTime = std::chrono::system_clock::now();
 
 using namespace std;
 
@@ -22,13 +21,12 @@ BOOST_AUTO_TEST_CASE(model)
 {
     //=== Add a GameModel object
 
-    Model model(SCREEN_WIDTH, SCREEN_HEIGHT, programBeginningTime);
+    Model model(SCREEN_WIDTH, SCREEN_HEIGHT);
     GameModel *gModel = nullptr;
 
     gModel = new GameModel(model);
 
     BOOST_CHECK(gModel != nullptr);
-    BOOST_CHECK(gModel->getProgramBeginningTime() != chrono::system_clock::from_time_t(time(NULL)));
     BOOST_CHECK(gModel->getDistance() == 0);
 
 

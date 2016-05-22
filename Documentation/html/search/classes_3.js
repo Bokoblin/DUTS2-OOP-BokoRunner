@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['datamodel',['DataModel',['../d9/d8c/class_data_model.html',1,'']]]
+  ['database',['DataBase',['../d1/d4c/class_data_base.html',1,'']]],
+  ['dialog',['Dialog',['../df/da9/class_dialog.html',1,'']]]
 ];

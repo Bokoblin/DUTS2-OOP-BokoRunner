@@ -1,9 +1,16 @@
 var searchData=
 [
-  ['radio_5fbuttons_5fimage',['RADIO_BUTTONS_IMAGE',['../d7/db8/_menu_view_8h.html#a0f89357ad03f9054b8c1c40da5d7bee9',1,'MenuView.h']]],
-  ['rect_5fbuttons_5fimage',['RECT_BUTTONS_IMAGE',['../d7/db8/_menu_view_8h.html#abaf882c5da7a6d0c6cc2107c4ff866d9',1,'MenuView.h']]],
-  ['remaining_5flife',['REMAINING_LIFE',['../dc/d46/_game_view_8h.html#a662bdb942ae3b9cc2bfeabf61e5efcd8',1,'GameView.h']]],
-  ['resetcurrentgame',['resetCurrentGame',['../d9/d8c/class_data_model.html#a47975da8944ca5c12dd3dbb0e3a166bd',1,'DataModel']]],
-  ['resize',['resize',['../d1/d4c/class_graphic_element.html#a330c3f0f7c6dfe9a7f645a37cca2b1f6',1,'GraphicElement::resize()'],['../d2/d7d/class_sliding_background.html#a9aa0c999fae449008dec538352505ac2',1,'SlidingBackground::resize()']]],
-  ['roboto_5ffont',['ROBOTO_FONT',['../d4/dcf/_text_8h.html#a7c20d3e03629b4f95911cca876fecf17',1,'Text.h']]]
+  ['pause_5fbgnd_5fhill_5fimage',['PAUSE_BGND_HILL_IMAGE',['../dc/d46/_game_view_8h.html#adcffb98dd9ab8c622d501e5fdeb4f04c',1,'GameView.h']]],
+  ['pause_5fbgnd_5fplain_5fimage',['PAUSE_BGND_PLAIN_IMAGE',['../dc/d46/_game_view_8h.html#ae5aecedefe9b4e692b51c60d4672f67f',1,'GameView.h']]],
+  ['pause_5ftext_5fx',['PAUSE_TEXT_X',['../d4/dcf/_text_8h.html#a8bf0eccbc88b61e982b6901be0c1d8a7',1,'Text.h']]],
+  ['pixelateeffect',['PixelateEffect',['../dc/dd2/class_pixelate_effect.html',1,'PixelateEffect'],['../dc/dd2/class_pixelate_effect.html#a6affb54dbae1dad10d781c3adb52724d',1,'PixelateEffect::PixelateEffect()']]],
+  ['pixelateeffect_2ecpp',['PixelateEffect.cpp',['../dd/d63/_pixelate_effect_8cpp.html',1,'']]],
+  ['pixelateeffect_2eh',['PixelateEffect.h',['../de/de8/_pixelate_effect_8h.html',1,'']]],
+  ['player',['Player',['../d8/d53/class_player.html',1,'Player'],['../d8/d53/class_player.html#a2645246df02b2fc9002b1462e60a6497',1,'Player::Player()'],['../d8/d5d/_movable_element_8h.html#aa94081298ab2dfd0f261cce6c203d9aaade5dc3e0dbd007d995ed3e37bde5ce7e',1,'PLAYER():&#160;MovableElement.h']]],
+  ['player_2ecpp',['Player.cpp',['../d2/d82/_player_8cpp.html',1,'']]],
+  ['player_2eh',['Player.h',['../d1/d39/_player_8h.html',1,'']]],
+  ['playerstate',['playerState',['../d1/d39/_player_8h.html#ac99b33f6f6328604217e630ed33e9cde',1,'Player.h']]],
+  ['precision',['PRECISION',['../d1/d39/_player_8h.html#ab0fe7f331f3e51db32d0a37539dc8fba',1,'Player.h']]],
+  ['pushconfigurationtofile',['pushConfigurationToFile',['../d1/d4c/class_data_base.html#a062d748fb688b4e299b1884e532db1ed',1,'DataBase']]],
+  ['pvplusbonus',['PVPLUSBONUS',['../d8/d5d/_movable_element_8h.html#aa94081298ab2dfd0f261cce6c203d9aaa2cef54d42371db37363e1005aba167d3',1,'MovableElement.h']]]
 ];

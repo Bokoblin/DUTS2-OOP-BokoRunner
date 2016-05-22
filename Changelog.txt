@@ -1,7 +1,7 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.6.0
+Current version : v1.7.0
 
 ======================================================================================
 BETA CHANNEL Changelog
@@ -235,4 +235,33 @@ Fixes and miscs:
 - text class strings refactored for consistency and more lisibility
 - documentation updated
 
+---------------------------------------------------------------------------------------------------
+
+v1.7.0 (22/05/16)
+
+Features :
+- added a shop to buy items :
+	- show 3 dynamic* item cards per pages, dynamic page indicators allow to change current page
+	- Each card contains the item name, a description, a generic image and a buy button
+		- buy button is red and disable if an item is bought
+		- otherwise, it is green and create a dialog when clicking on it
+	- The dialog shows a confirmation, name and price of the item, and two action Cancel & OK
+- Once items are bought, they are effective on the game
+- Rewritten Settings and Leaderboard following Shop structure
+	- remade Settings UI in two pages :
+		- Configuration, to toggle radio (with 3 new ones for ball configuration)
+		- Stats and Credits
+- Added a shield bonus
+Fixes and miscs:
+- fixed bonus timeout not suspending at pause state
+- added enums for better reading (elements, player states & bonus)
+- removed some unused variables
+- added lots of defines and constantes to avoid hard coded values
+- added master music (rapider than normal mode one)
+- added lots of comments
+- documentation updated
+
+* dynamic means that if <item> rows are added in config file, the number of cards and pages 
+  will be automatically changed after relaunching Shop
+  Note : You have to remember how works configuration "security", though
 ---------------------------------------------------------------------------------------------------

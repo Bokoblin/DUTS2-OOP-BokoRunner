@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['life_5fbox_5fimage',['LIFE_BOX_IMAGE',['../dc/d46/_game_view_8h.html#a9cb654f7d768ab76ede65fbbdc173b45',1,'GameView.h']]]
+  ['jump_5flimit',['JUMP_LIMIT',['../d1/d39/_player_8h.html#a185328717b00ba167ffa5cb4289c0695',1,'Player.h']]]
 ];

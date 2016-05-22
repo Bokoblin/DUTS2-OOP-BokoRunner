@@ -25,7 +25,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Boko Runner
-   &#160;<span id="projectnumber">1.6.0</span>
+   &#160;<span id="projectnumber">1.7.0</span>
    </div>
    <div id="projectbrief">An S2 Oriented Object Programming Project</div>
   </td>
@@ -100,9 +100,12 @@ Inheritance diagram for View:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d7/d03/class_view__inherit__graph.png" border="0" usemap="#_view_inherit__map" alt="Inheritance graph"/></div>
 <map name="_view_inherit__map" id="_view_inherit__map">
-<area shape="rect" id="node2" href="../../d0/d21/class_game_view.html" title="{GameView\n||+ GameView()\l+ ~GameView()\l+ setGameModel()\l+ loadImages()\l+ synchronize()\l+ draw()\l+ treatEvents()\l+ linkElements()\l+ updateElements()\l+ deleteElements()\l+ handleZonesTransition()\l}" alt="" coords="5,307,176,531"/>
-<area shape="rect" id="node3" href="../../d7/d01/class_intro.html" title="{Intro\n||+ Intro()\l+ ~Intro()\l+ synchronize()\l+ draw()\l+ loadImages()\l+ treatEvents()\l}" alt="" coords="200,343,312,494"/>
-<area shape="rect" id="node4" href="../../d0/ddd/class_menu_view.html" title="{MenuView\n||+ MenuView()\l+ ~MenuView()\l+ setMenuModel()\l+ synchronize()\l+ draw()\l+ loadImages()\l+ treatEvents()\l}" alt="" coords="337,336,463,501"/>
+<area shape="rect" id="node2" href="../../d0/d21/class_game_view.html" title="{GameView\n||+ GameView()\l+ ~GameView()\l+ setGameModel()\l+ loadImages()\l+ synchronize()\l+ draw()\l+ treatEvents()\l+ linkElements()\l+ updateElements()\l+ deleteElements()\l+ handleZonesTransition()\l}" alt="" coords="5,292,176,516"/>
+<area shape="rect" id="node3" href="../../d7/d01/class_intro.html" title="{Intro\n||+ Intro()\l+ ~Intro()\l+ synchronize()\l+ draw()\l+ loadImages()\l+ treatEvents()\l}" alt="" coords="200,329,312,479"/>
+<area shape="rect" id="node4" href="../../d5/dd7/class_leaderboard_view.html" title="{LeaderboardView\n||+ LeaderboardView()\l+ ~LeaderboardView()\l+ setLeaderboardModel()\l+ synchronize()\l+ draw()\l+ loadImages()\l+ treatEvents()\l+ treatEvents()\l}" alt="" coords="337,314,503,494"/>
+<area shape="rect" id="node5" href="../../d0/ddd/class_menu_view.html" title="{MenuView\n||+ MenuView()\l+ ~MenuView()\l+ setMenuModel()\l+ synchronize()\l+ draw()\l+ loadImages()\l+ treatEvents()\l}" alt="" coords="527,321,654,487"/>
+<area shape="rect" id="node6" href="../../d6/da1/class_settings_view.html" title="{SettingsView\n||+ SettingsView()\l+ ~SettingsView()\l+ setSettingsModel()\l+ synchronize()\l+ draw()\l+ loadImages()\l+ treatEvents()\l+ treatEvents()\l}" alt="" coords="678,314,821,494"/>
+<area shape="rect" id="node7" href="../../d7/d44/class_shop_view.html" title="{ShopView\n||+ ShopView()\l+ ~ShopView()\l+ getCardItem()\l+ setShopModel()\l+ synchronize()\l+ draw()\l+ loadImages()\l+ treatEvents()\l+ treatEvents()\l+ displayCards()\l+ createCards()\l}" alt="" coords="845,292,971,516"/>
 </map>
 </div>
 <table class="memberdecls">
@@ -114,8 +117,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0e424aa42ec82ed5a5173416061bf5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0dc854db9aabbea98a334dec89f785c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/class_view.html#ad0dc854db9aabbea98a334dec89f785c">~View</a> ()</td></tr>
 <tr class="separator:ad0dc854db9aabbea98a334dec89f785c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2758aa0c98b4c0e34ff3babb78ba0756"><td class="memItemLeft" align="right" valign="top">sf::RenderWindow *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/class_view.html#a2758aa0c98b4c0e34ff3babb78ba0756">getWindow</a> ()</td></tr>
-<tr class="separator:a2758aa0c98b4c0e34ff3babb78ba0756"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a848f3e21b91a60f23343e7388cb22908"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/class_view.html#a848f3e21b91a60f23343e7388cb22908">setModel</a> (<a class="el" href="../../d0/de3/class_model.html">Model</a> *model)</td></tr>
 <tr class="separator:a848f3e21b91a60f23343e7388cb22908"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6bca263d215f3fedabd4f9865b425f8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d9f/class_view.html#ab6bca263d215f3fedabd4f9865b425f8">loadImages</a> ()=0</td></tr>
@@ -240,22 +241,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="../../d0/d21/class_game_view.html#a722a133ad4cd1a9837fb00c42261e32a">GameView</a>, <a class="el" href="../../d0/ddd/class_menu_view.html#afc192ac56acaea05f2f4831ede44c0fe">MenuView</a>, and <a class="el" href="../../d7/d01/class_intro.html#a91916f91a5e23ad18c073b0e197909ff">Intro</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a2758aa0c98b4c0e34ff3babb78ba0756"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">sf::RenderWindow * View::getWindow </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Implemented in <a class="el" href="../../d0/d21/class_game_view.html#a722a133ad4cd1a9837fb00c42261e32a">GameView</a>, <a class="el" href="../../d0/ddd/class_menu_view.html#afc192ac56acaea05f2f4831ede44c0fe">MenuView</a>, <a class="el" href="../../d7/d44/class_shop_view.html#a1f12d2ba0a0d0098c1bbc389bc9be5c0">ShopView</a>, <a class="el" href="../../d7/d01/class_intro.html#a91916f91a5e23ad18c073b0e197909ff">Intro</a>, <a class="el" href="../../d6/da1/class_settings_view.html#a544d061db5add0085d04015d4557016e">SettingsView</a>, and <a class="el" href="../../d5/dd7/class_leaderboard_view.html#aaa5f1ec0e7c98c4638b31d1985692d3a">LeaderboardView</a>.</p>
 
 </div>
 </div>
@@ -280,7 +266,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="../../d0/d21/class_game_view.html#ae56672c36d420ed546c986ab11684347">GameView</a>, <a class="el" href="../../d0/ddd/class_menu_view.html#abecf99f39ad925251992d6abd3a47069">MenuView</a>, and <a class="el" href="../../d7/d01/class_intro.html#a08e8cfd06ac7d5f68b12a0135ee73641">Intro</a>.</p>
+<p>Implemented in <a class="el" href="../../d0/d21/class_game_view.html#ae56672c36d420ed546c986ab11684347">GameView</a>, <a class="el" href="../../d0/ddd/class_menu_view.html#abecf99f39ad925251992d6abd3a47069">MenuView</a>, <a class="el" href="../../d7/d44/class_shop_view.html#ad271793bd94e88db871815780fd1288c">ShopView</a>, <a class="el" href="../../d7/d01/class_intro.html#a08e8cfd06ac7d5f68b12a0135ee73641">Intro</a>, <a class="el" href="../../d6/da1/class_settings_view.html#a082d8ae4426574ef7ef334fe06d6a75a">SettingsView</a>, and <a class="el" href="../../d5/dd7/class_leaderboard_view.html#a6b811b78648e88452f7f3e1a7ffd8299">LeaderboardView</a>.</p>
 
 </div>
 </div>
@@ -321,7 +307,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="../../d0/d21/class_game_view.html#acace6682b2e83260ad08b2654048c3e8">GameView</a>, <a class="el" href="../../d0/ddd/class_menu_view.html#a4065a906b083ce31c702d5c63cfc7542">MenuView</a>, and <a class="el" href="../../d7/d01/class_intro.html#a59d1b88d2daf2f86bf56f32960f26b1d">Intro</a>.</p>
+<p>Implemented in <a class="el" href="../../d0/d21/class_game_view.html#acace6682b2e83260ad08b2654048c3e8">GameView</a>, <a class="el" href="../../d0/ddd/class_menu_view.html#a4065a906b083ce31c702d5c63cfc7542">MenuView</a>, <a class="el" href="../../d7/d44/class_shop_view.html#acb7f6019738c0f24bddbe083e4a740ca">ShopView</a>, <a class="el" href="../../d7/d01/class_intro.html#a59d1b88d2daf2f86bf56f32960f26b1d">Intro</a>, <a class="el" href="../../d6/da1/class_settings_view.html#ad44edfa8ec74c6258f68dae6f1e200e5">SettingsView</a>, and <a class="el" href="../../d5/dd7/class_leaderboard_view.html#abe408759eb00eb96f8d8c357cfd2cad9">LeaderboardView</a>.</p>
 
 </div>
 </div>
@@ -346,7 +332,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="../../d0/d21/class_game_view.html#a0160ec73d6893ee9288240ec92e0d4a3">GameView</a>, <a class="el" href="../../d0/ddd/class_menu_view.html#a158cec66a5ca64754a6612bda3193bc9">MenuView</a>, and <a class="el" href="../../d7/d01/class_intro.html#a1ab8b5b708369a8178c51a2c49298fc4">Intro</a>.</p>
+<p>Implemented in <a class="el" href="../../d0/d21/class_game_view.html#a0160ec73d6893ee9288240ec92e0d4a3">GameView</a>, <a class="el" href="../../d0/ddd/class_menu_view.html#a158cec66a5ca64754a6612bda3193bc9">MenuView</a>, <a class="el" href="../../d7/d44/class_shop_view.html#a451251e52e766b03bf72b915ac4bf881">ShopView</a>, <a class="el" href="../../d7/d01/class_intro.html#a1ab8b5b708369a8178c51a2c49298fc4">Intro</a>, <a class="el" href="../../d6/da1/class_settings_view.html#a612dc843d42d2a9dd036815c355fae3e">SettingsView</a>, and <a class="el" href="../../d5/dd7/class_leaderboard_view.html#a308077733ad8a94e053bed23da42a771">LeaderboardView</a>.</p>
 
 </div>
 </div>
@@ -452,8 +438,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>D:/Bibliotheque/Documents/Arthur/IUT/S2/Prog Objet/Projet/POO-Runner/runner/header/<a class="el" href="../../d1/d1f/_view_8h_source.html">View.h</a></li>
-<li>D:/Bibliotheque/Documents/Arthur/IUT/S2/Prog Objet/Projet/POO-Runner/runner/src/<a class="el" href="../../d0/d04/_view_8cpp.html">View.cpp</a></li>
+<li><a class="el" href="../../d1/d1f/_view_8h_source.html">View.h</a></li>
+<li><a class="el" href="../../d0/d04/_view_8cpp.html">View.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

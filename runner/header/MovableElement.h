@@ -18,10 +18,25 @@ limitations under the License.
 
 #include <string>
 
+enum element
+{
+    PLAYER,
+    STANDARDENEMY,
+    TOTEMENEMY,
+    BLOCKENEMY,
+    COIN,
+    PVPLUSBONUS,
+    MEGABONUS,
+    FLYBONUS,
+    SLOWSPEEDBONUS,
+    SHIELDBONUS
+};
+
+
 /********************************************
     MovableElement Abstract Class
 *********************************************
-    @author Arthur  @date 23/02 - 12/04
+    @author Arthur  @date 23/02 - 18/05
     @author Florian @date 02/03 - 06/04
 *********************************************/
 class MovableElement
@@ -62,18 +77,6 @@ protected:
     float m_moveY;
     bool m_collisionState;
     int m_elementType;
-    /** Element Type :
-    0 : Player
-    1 : Standard Enemy
-    2 : Totem Enemy
-    3 : Block Enemy
-    4 : Coin
-    5 : Bonus - PV+
-    6 : Bonus - MEGA
-    7 : Bonus - FLY
-    8 : Bonus - SLOW SPEED
-    */
-
 };
 
 #endif // MOVABLEELEMENT_H

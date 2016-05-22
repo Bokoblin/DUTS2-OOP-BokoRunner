@@ -17,34 +17,35 @@ limitations under the License.
 #define _MODEL_H
 
 #include <chrono>
-#include <set>
-#include "DataModel.h"
+#include "DataBase.h"
+
+#define NORMAL_DIFFICULTY 0
+#define MASTER_DIFFICULTY 2
 
 /********************************************
     Model Class
 *********************************************
-    @author Arthur  @date 21/02 - 6/05
+    @author Arthur  @date 21/02 - 21/05
     @author Florian @date 21/02 - 2/03
 *********************************************/
 class Model
 {
 public:
     //=== CTORs / DTORs
-    Model(float w, float h, const std::chrono::system_clock::time_point beginTime);
+    Model(float w, float h);
     Model( const Model & model);
     virtual ~Model();
 
     //=== GETTERS
-    DataModel *getDataModel() const;
+    DataBase *getDataBase() const;
     int getDifficulty() const;
     bool getIntroState() const;
     bool getMenuState() const;
     bool getGameState() const;
     bool getResetGameState() const;
-    std::chrono::system_clock::time_point getProgramBeginningTime() const ;
 
     //=== SETTERS
-    void setDataModel(DataModel *data);
+    void setDataBase(DataBase *data);
     void setDifficulty(int difficulty);
     void setIntroState(bool state);
     void setMenuState(bool state);
@@ -58,8 +59,7 @@ protected:
     //=== ATTRIBUTES
     float m_width, m_height;
     int m_difficulty;
-    DataModel *m_dataModel;
-    const std::chrono::system_clock::time_point m_programBeginningTime;
+    DataBase *m_dataBase;
 
 private:
     bool m_introState;

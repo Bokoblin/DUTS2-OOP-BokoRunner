@@ -37,6 +37,16 @@ AnimatedGraphicElement::AnimatedGraphicElement(AnimatedGraphicElement const& oth
 AnimatedGraphicElement::~AnimatedGraphicElement()
 {}
 
+/********************************************
+    Setter
+*********************************************
+    @author Arthur  @date 20/05
+*********************************************/
+void AnimatedGraphicElement::setClipRectArray(std::vector<sf::IntRect> crA)
+{
+    m_clipRectsArray = crA;
+}
+
 
 /********************************************
     Synchronization Function : change animation

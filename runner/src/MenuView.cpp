@@ -5,12 +5,12 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    @author Arthur  @date 25/02 - 14/04
+    @author Arthur  @date 25/02 - 21/05
     @author Florian @date 22/04 - 06/05
-
 *********************************************/
 MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
-	View(w, h, window,text), m_menuModel{nullptr}
+    View(w, h, window,text), m_menuModel{nullptr}, m_leaderboardView{nullptr},
+    m_settingsView{nullptr},  m_shopView{nullptr}
 {
     if (!m_menuMusic.openFromFile(MENU_MUSIC))
         cerr << "ERROR when loading music file: " << MENU_MUSIC << endl;
@@ -21,11 +21,10 @@ MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
         m_menuMusic.setAttenuation(50);
     }
 
-
 	if (m_window->getSize().x != m_width )
 	{
-		m_window->create( sf::VideoMode(w, h, 32), "Boko Runner", sf::Style::Close );
-		m_window->setFramerateLimit(30);
+        m_window->create( sf::VideoMode(w, h, SCREEN_BPP), APP_TITLE, sf::Style::Close );
+		m_window->setFramerateLimit(FRAMERATE);
 		m_window->setPosition(sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2,
 				(sf::VideoMode::getDesktopMode().height - m_height)/2 ));
 	}
@@ -37,12 +36,10 @@ MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
 /********************************************
     Destructor
 *********************************************
-    @author Arthur  @date 26/02 - 20/04
+    @author Arthur  @date 26/02 - 21/05
 *********************************************/
 MenuView::~MenuView()
 {
-	//=== Home Menu Graphic Elements
-
 	delete m_farBackground;
 	delete m_nearBackground;
 	delete m_titleGraphic;
@@ -50,16 +47,7 @@ MenuView::~MenuView()
 	delete m_quitRectButton;
 	delete m_settingsFormButton;
     delete m_leaderboardFormButton;
-    delete m_clearLbRectButton;
-
-	//=== Settings Graphic Elements
-
-	delete m_homeFormButton;
-	delete m_englishLangRadioButton;
-	delete m_frenchLangRadioButton;
-	delete m_spanishLangRadioButton;
-	delete m_normalQuestRadioButton;
-	delete m_masterQuestRadioButton;
+    delete m_shopFormButton;
 }
 
 
@@ -77,7 +65,7 @@ void MenuView::setMenuModel(MenuModel *model)
 /********************************************
     Image Loading
 *********************************************
-    @author Arthur  @date 26/03 - 20/04
+    @author Arthur  @date 26/03 - 16/05
 *********************************************/
 void MenuView::loadImages()
 {
@@ -105,31 +93,26 @@ void MenuView::loadImages()
 		m_titleGraphic = new GraphicElement(m_titleImageTexture, m_width/2-200, m_height/6, 400, 200);
 	}
 
-	//=== Initialize PLAY, QUIT and CLEAR Leaderboard buttons
+	//=== Initialize PLAY and QUIT buttons
 
-	if (!m_menuRectButtonsTexture.loadFromFile(RECT_BUTTONS_IMAGE) )
-		cerr << "ERROR when loading image file: " << RECT_BUTTONS_IMAGE << endl;
+	if (!m_menuRectButtonsTexture.loadFromFile(MENU_RECT_BUTTONS_IMAGE) )
+		cerr << "ERROR when loading image file: " << MENU_RECT_BUTTONS_IMAGE << endl;
 	else
 	{
         m_menuRectButtonsTexture.setSmooth(true);
 
-		std::vector<sf::IntRect> clip_rects_play;
+		vector<sf::IntRect> clip_rects_play;
 		clip_rects_play.push_back(sf::IntRect( 0, 0, 150, 80));
 		clip_rects_play.push_back(sf::IntRect(151, 0, 150, 80));
 		m_playRectButton = new Button(clip_rects_play, m_menuRectButtonsTexture, m_width/2-75, m_height/1.5, 150, 80, false);
 
-		std::vector<sf::IntRect> clip_rects_quit;
+		vector<sf::IntRect> clip_rects_quit;
 		clip_rects_quit.push_back(sf::IntRect( 0, 0, 150, 80));
 		clip_rects_quit.push_back(sf::IntRect(151, 0, 150, 80));
 		m_quitRectButton = new Button(clip_rects_quit, m_menuRectButtonsTexture, m_width/2-75, m_height/1.2, 150, 80, false);
-
-        std::vector<sf::IntRect> clip_rects_clear;
-		clip_rects_clear.push_back(sf::IntRect( 0, 100, 150, 40));
-		clip_rects_clear.push_back(sf::IntRect(151, 100, 150, 40));
-        m_clearLbRectButton = new Button(clip_rects_clear, m_menuRectButtonsTexture, m_width/2-75, 500, 150, 40, false);
     }
 
-    //=== Initialize SETTINGS, LEADERBOARD and HOME form buttons
+    //=== Initialize SETTINGS, LEADERBOARD and SHOP form buttons
 
 	if (!m_menuFormButtonsTexture.loadFromFile(FORM_BUTTONS_IMAGE) )
 		cerr << "ERROR when loading image file: " << FORM_BUTTONS_IMAGE << endl;
@@ -137,42 +120,20 @@ void MenuView::loadImages()
 	{
 		m_menuFormButtonsTexture.setSmooth(true);
 
-		std::vector<sf::IntRect> clip_rects_settings;
+		vector<sf::IntRect> clip_rects_settings;
 		clip_rects_settings.push_back(sf::IntRect( 0, 0, 50, 50));
 		clip_rects_settings.push_back(sf::IntRect( 51, 0, 50, 50));
 		m_settingsFormButton = new Button(clip_rects_settings, m_menuFormButtonsTexture, 20, 530, 50, 50, false);
 
-		std::vector<sf::IntRect> clip_rects_home;
-		clip_rects_home.push_back(sf::IntRect( 0, 50, 50, 50));
-		clip_rects_home.push_back(sf::IntRect( 51, 50, 50, 50));
-		m_homeFormButton = new Button(clip_rects_home, m_menuFormButtonsTexture, 10, 10, 50, 50, false);
-
-        std::vector<sf::IntRect> clip_rects_lb;
+        vector<sf::IntRect> clip_rects_lb;
         clip_rects_lb.push_back(sf::IntRect( 0, 100, 50, 50));
         clip_rects_lb.push_back(sf::IntRect( 51, 100, 50, 50));
         m_leaderboardFormButton = new Button(clip_rects_lb, m_menuFormButtonsTexture, 830, 530, 50, 50, false);
-	}
 
-
-	//=== Initialize settings radio buttons
-
-	if (!m_menuRadioButtonsTexture.loadFromFile(RADIO_BUTTONS_IMAGE) )
-		cerr << "ERROR when loading image file: " << RADIO_BUTTONS_IMAGE << endl;
-	else
-	{
-		m_menuRadioButtonsTexture.setSmooth(true);
-
-		std::vector<sf::IntRect> clip_rects;
-		clip_rects.push_back(sf::IntRect(  0,   0, 50, 50) );
-		clip_rects.push_back(sf::IntRect(50,   0, 50, 50) );
-		clip_rects.push_back(sf::IntRect(  0, 50, 50, 50) );
-		clip_rects.push_back(sf::IntRect(50, 50, 50, 50) );
-
-		m_englishLangRadioButton  = new Button(clip_rects, m_menuRadioButtonsTexture, 50, 205, 50, 50, true);
-		m_frenchLangRadioButton   = new Button(clip_rects, m_menuRadioButtonsTexture, 50, 245, 50, 50, true);
-		m_spanishLangRadioButton = new Button(clip_rects, m_menuRadioButtonsTexture, 50, 285, 50, 50, true);
-		m_normalQuestRadioButton = new Button(clip_rects, m_menuRadioButtonsTexture, 50, 420, 50, 50, true);
-		m_masterQuestRadioButton = new Button(clip_rects, m_menuRadioButtonsTexture, 50, 460, 50, 50, true);
+        vector<sf::IntRect> clip_rects_shop;
+        clip_rects_shop.push_back(sf::IntRect( 0, 150, 50, 50));
+        clip_rects_shop.push_back(sf::IntRect( 51, 150, 50, 50));
+        m_shopFormButton = new Button(clip_rects_shop, m_menuFormButtonsTexture, 830, 10, 50, 50, false);
 	}
 }
 
@@ -180,7 +141,7 @@ void MenuView::loadImages()
 /********************************************
     Synchronization function
 *********************************************
-    @author Arthur  @date 26/03 - 07/05
+    @author Arthur  @date 26/03 - 21/05
 *********************************************/
 void MenuView::synchronize()
 {
@@ -190,7 +151,6 @@ void MenuView::synchronize()
 	if (m_menuModel->getHomeState() == true)
 	{
 		//=== Elements update
-
 		m_titleGraphic->resize(400,200);
 		m_farBackground->sync();
 		m_nearBackground->sync();
@@ -198,54 +158,39 @@ void MenuView::synchronize()
 		m_quitRectButton->sync();
 		m_settingsFormButton->sync();
         m_leaderboardFormButton->sync();
+        m_shopFormButton->sync();
 
 		//=== Text update
-
 		m_text->syncMenuHomeText(m_width, m_height);
-
 	}
-	else if (m_menuModel->getSettingsState() == true)
-	{
-		//=== Elements update
+    else if (m_menuModel->getLeaderboardState())
+        m_leaderboardView->synchronize();
 
-		m_englishLangRadioButton->setActivatedState(m_menuModel->getDataModel()->getLanguage() == "en");
-		m_frenchLangRadioButton->setActivatedState(m_menuModel->getDataModel()->getLanguage() == "fr");
-		m_spanishLangRadioButton->setActivatedState(m_menuModel->getDataModel()->getLanguage() == "es");
-		m_normalQuestRadioButton->setActivatedState(m_model->getDifficulty() == 0);
-		m_masterQuestRadioButton->setActivatedState(m_model->getDifficulty() != 0);
-		m_homeFormButton->sync();
-		m_englishLangRadioButton->sync();
-		m_frenchLangRadioButton->sync();
-		m_spanishLangRadioButton->sync();
-		m_normalQuestRadioButton->sync();
-		m_masterQuestRadioButton->sync();
-		m_homeFormButton->resize(30, 30);
-		m_englishLangRadioButton->resize(25, 25);
-		m_frenchLangRadioButton->resize(25, 25);
-		m_spanishLangRadioButton->resize(25, 25);
-		m_normalQuestRadioButton->resize(25, 25);
-		m_masterQuestRadioButton->resize(25, 25);
+	else if (m_menuModel->getSettingsState())
+        m_settingsView->synchronize();
 
-		//=== Text update
+    else if (m_menuModel->getShopState())
+        m_shopView->synchronize();
 
-		m_text->syncMenuSettingsText(m_width, m_height);
-
-	}
-    else if (m_menuModel->getLeaderboardState() == true)
+    //=== Delete leaderboardView if not anymore in leaderboardState
+    if ( !m_menuModel->getLeaderboardState() && m_leaderboardView != nullptr)
     {
-        //=== Elements update
+        delete m_leaderboardView;
+        m_leaderboardView = nullptr;
+    }
 
-        m_homeFormButton->sync();
-        m_clearLbRectButton->sync();
-        m_clearLbRectButton->setPosition(m_width/2 -
-				m_clearLbRectButton->getGlobalBounds().width/2, 500);
-        m_homeFormButton->resize(30, 30);
+    //=== Delete settingsView if not anymore in shopState
+    if ( !m_menuModel->getSettingsState() && m_settingsView != nullptr)
+    {
+        delete m_settingsView;
+        m_settingsView = nullptr;
+    }
 
-        //=== Text update
-
-        m_text->syncMenuLeaderboardText(m_width, m_height,
-			m_menuModel->getLeaderboard());
-
+    //=== Delete shopView if not anymore in shopState
+    if ( !m_menuModel->getShopState() && m_shopView != nullptr)
+    {
+        delete m_shopView;
+        m_shopView = nullptr;
     }
 }
 
@@ -253,16 +198,15 @@ void MenuView::synchronize()
 /********************************************
     Menu View Drawing
 *********************************************
-    @author Arthur  @date 26/03 - 20/04
+    @author Arthur  @date 26/03 - 21/05
 *********************************************/
 void MenuView::draw() const
 {
-	if (m_menuModel->getHomeState() == true)
+	if (m_menuModel->getHomeState())
 	{
 		m_window->clear();
 
 		//=== Graphic Elements drawing
-
 		m_farBackground->draw(m_window);
 		m_nearBackground->draw(m_window);
 		m_window->draw(*m_titleGraphic);
@@ -270,53 +214,29 @@ void MenuView::draw() const
 		m_window->draw(*m_quitRectButton);
 		m_window->draw(*m_settingsFormButton);
         m_window->draw(*m_leaderboardFormButton);
+        m_window->draw(*m_shopFormButton);
 
 		//=== Text Drawing
-
 		m_text->drawMenuHomeText(m_window);
 
+        m_window->display();
 	}
-	else if (m_menuModel->getSettingsState() == true)
-	{
-		m_window->clear(sf::Color(51, 51, 51, 255) );
+	else if (m_menuModel->getSettingsState())
+        m_settingsView->draw();
 
-		//=== Graphic Elements drawing
+    else if (m_menuModel->getLeaderboardState())
+        m_leaderboardView->draw();
 
-		m_window->draw(*m_homeFormButton);
-		m_window->draw(*m_englishLangRadioButton);
-		m_window->draw(*m_frenchLangRadioButton);
-		m_window->draw(*m_spanishLangRadioButton);
-		m_window->draw(*m_normalQuestRadioButton);
-		m_window->draw(*m_masterQuestRadioButton);
+    else if (m_menuModel->getShopState())
+        m_shopView->draw();
 
-		//=== Text Drawing
-
-		m_text->drawMenuSettingsText(m_window);
-
-	}
-    else if (m_menuModel->getLeaderboardState() == true)
-    {
-        m_window->clear(sf::Color(51, 51, 51, 255) );
-
-        //=== Graphic Elements drawing
-
-        m_window->draw(*m_homeFormButton);
-        m_window->draw(*m_clearLbRectButton);
-
-        //=== Text Drawing
-
-        m_text->drawMenuLeaderboardText(m_window);
-
-    }
-
-	m_window->display();
 }
 
 
 /********************************************
     Events treating
 *********************************************
-    @author Arthur  @date 25/03 - 20/04
+    @author Arthur  @date 25/03 - 21/05
     @author Florian @date 22/04 - 06/05
 *********************************************/
 bool MenuView::treatEvents()
@@ -337,27 +257,26 @@ bool MenuView::treatEvents()
 				result = false;
 			}
 
-			//Home Screen
+            //=== Home Events
+
 			if (m_menuModel->getHomeState() == true)
 			{
-				if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+                if (MOUSE_LEFT_PRESSED_EVENT)
 				{
-					if ( m_playRectButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
+					if ( m_playRectButton->IS_POINTED )
 						m_playRectButton->setPressedState(true);
-					}
-					else if ( m_quitRectButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
+
+					else if ( m_quitRectButton->IS_POINTED )
 						m_quitRectButton->setPressedState(true);
-					}
-					else if ( m_settingsFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
+
+					else if ( m_settingsFormButton->IS_POINTED )
 						m_settingsFormButton->setPressedState(true);
-					}
-                    else if ( m_leaderboardFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
-                    {
+
+                    else if ( m_leaderboardFormButton->IS_POINTED )
                         m_leaderboardFormButton->setPressedState(true);
-                    }
+
+                    else if ( m_shopFormButton->IS_POINTED )
+                        m_shopFormButton->setPressedState(true);
 				}
 
 				if (event.type == sf::Event::MouseButtonReleased)
@@ -366,8 +285,9 @@ bool MenuView::treatEvents()
 					m_quitRectButton->setPressedState(false);
 					m_settingsFormButton->setPressedState(false);
                     m_leaderboardFormButton->setPressedState(false);
+                    m_shopFormButton->setPressedState(false);
 
-					if ( m_playRectButton->getGlobalBounds().contains(MOUSE_POSITION) )
+					if ( m_playRectButton->IS_POINTED )
 					{
                         if(m_menuMusic.getStatus() == sf::Music::Status::Playing )
                             m_menuMusic.stop();
@@ -375,125 +295,56 @@ bool MenuView::treatEvents()
 						m_model->setGameState(true);
 						result = false;
 					}
-					else if ( m_quitRectButton->getGlobalBounds().contains(MOUSE_POSITION) )
+					else if ( m_quitRectButton->IS_POINTED )
 					{
 						m_window->close();
 						result = false;
 					}
-					else if ( m_settingsFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
-						m_menuModel->setHomeState(false);
-						m_menuModel->setSettingsState(true);
-					}
-                    else if ( m_leaderboardFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
+                    else if ( m_leaderboardFormButton->IS_POINTED )
                     {
-                        m_menuModel->setHomeState(false);
-                        m_menuModel->setLeaderboardState(true);
+                        m_leaderboardView = new LeaderboardView(m_width, m_height, m_window, m_text);
+                        m_leaderboardView->setLeaderboardModel( m_menuModel->launchLeaderboard() );
+                    }
+					else if ( m_settingsFormButton->IS_POINTED )
+					{
+                        m_settingsView = new SettingsView(m_width, m_height, m_window, m_text);
+                        m_settingsView->setModel(m_model);
+                        m_settingsView->setSettingsModel( m_menuModel->launchSettings() );
+					}
+                    else if ( m_shopFormButton->IS_POINTED )
+                    {
+                        m_shopView = new ShopView(m_width, m_height, m_window, m_text);
+                        m_shopView->setShopModel( m_menuModel->launchShop() );
                     }
 				}
 			}
 
-			//Settings Screen
-			else if (m_menuModel->getSettingsState() == true)
-			{
-				if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
-				{
-					if ( m_homeFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
-						m_homeFormButton->setPressedState(true);
-					}
-					else if ( m_englishLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
-						m_englishLangRadioButton->setPressedState(true);
-					}
-					else if ( m_frenchLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
-						m_frenchLangRadioButton->setPressedState(true);
-					}
-					else if ( m_spanishLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
-						m_spanishLangRadioButton->setPressedState(true);
-					}
-					else if ( m_normalQuestRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
-						m_normalQuestRadioButton->setPressedState(true);
-					}
-					else if ( m_masterQuestRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
-						m_masterQuestRadioButton->setPressedState(true);
-					}
-				}
+            //=== Leaderboard Events
 
-				if (event.type == sf::Event::MouseButtonReleased)
-				{
-					m_homeFormButton->setPressedState(false);
-					m_englishLangRadioButton->setPressedState(false);
-					m_frenchLangRadioButton->setPressedState(false);
-					m_spanishLangRadioButton->setPressedState(false);
-					m_normalQuestRadioButton->setPressedState(false);
-					m_masterQuestRadioButton->setPressedState(false);
-
-					if ( m_homeFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
-						m_menuModel->setSettingsState(false);
-						m_menuModel->setHomeState(true);
-					}
-					else if ( m_englishLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
-						m_menuModel->getDataModel()->setLanguage("en");
-						m_text->updateWholeText();
-					}
-					else if ( m_frenchLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
-						m_menuModel->getDataModel()->setLanguage("fr");
-						m_text->updateWholeText();
-					}
-					else if ( m_spanishLangRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
-						m_menuModel->getDataModel()->setLanguage("es");
-						m_text->updateWholeText();
-					}
-					else if ( m_normalQuestRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
-						m_model->setDifficulty(0);
-					}
-					else if ( m_masterQuestRadioButton->getGlobalBounds().contains(MOUSE_POSITION) )
-					{
-						m_model->setDifficulty(2);
-					}
-				}
-			}
-
-            //Leaderboard Screen
-            else if (m_menuModel->getLeaderboardState() == true)
+            //if treatEvents return true == if leaderboard is stopping
+            else if (m_menuModel->getLeaderboardState()
+                     && m_leaderboardView->treatEvents(event))
             {
-                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
-                {
-                    if ( m_homeFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
-                    {
-                        m_homeFormButton->setPressedState(true);
-                    }
-                    if ( m_clearLbRectButton->getGlobalBounds().contains(MOUSE_POSITION) )
-                    {
-                        m_clearLbRectButton->setPressedState(true);
-                    }
-                }
+                m_menuModel->setLeaderboardState(false);
+                m_menuModel->setHomeState(true);
+            }
 
-                if (event.type == sf::Event::MouseButtonReleased)
-                {
-                    m_homeFormButton->setPressedState(false);
-                    m_clearLbRectButton->setPressedState(false);
+            //=== Settings Events
 
-                    if ( m_homeFormButton->getGlobalBounds().contains(MOUSE_POSITION) )
-                    {
-                        m_menuModel->setSettingsState(false);
-                        m_menuModel->setHomeState(true);
-                    }
-                    if ( m_clearLbRectButton->getGlobalBounds().contains(MOUSE_POSITION) )
-                    {
-                        m_menuModel->getLeaderboard()->createFile();
-                    }
-                }
+            else if (m_menuModel->getSettingsState()
+                     && m_settingsView->treatEvents(event))
+            {
+                m_menuModel->setSettingsState(false);
+                m_menuModel->setHomeState(true);
+            }
+
+            //=== Shop Events
+
+            else if (m_menuModel->getShopState()
+                     && m_shopView->treatEvents(event))
+            {
+                m_menuModel->setShopState(false);
+                m_menuModel->setHomeState(true);
             }
 		}
 	}

@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['shield',['SHIELD',['../d1/d39/_player_8h.html#ac99b33f6f6328604217e630ed33e9cdeaffdd98146fb0c71b3381f94b036a100f',1,'Player.h']]],
-  ['shieldbonus',['SHIELDBONUS',['../d8/d5d/_movable_element_8h.html#aa94081298ab2dfd0f261cce6c203d9aaa100d6256669be93274d124c3e1f5916c',1,'MovableElement.h']]],
-  ['slowspeedbonus',['SLOWSPEEDBONUS',['../d8/d5d/_movable_element_8h.html#aa94081298ab2dfd0f261cce6c203d9aaaa8f741781e7503907f04bd1bb7df32e5',1,'MovableElement.h']]],
-  ['standardenemy',['STANDARDENEMY',['../d8/d5d/_movable_element_8h.html#aa94081298ab2dfd0f261cce6c203d9aaa134f0909974f131e678b1a7451f38827',1,'MovableElement.h']]]
+  ['plain',['PLAIN',['../d3/d6e/_game_model_8h.html#a5470eb43ca93def6f1c6c1241e08fb38a8386f3e3e7be0b7b603636867c133a5d',1,'GameModel.h']]],
+  ['player',['PLAYER',['../d8/d5d/_movable_element_8h.html#aa94081298ab2dfd0f261cce6c203d9aaade5dc3e0dbd007d995ed3e37bde5ce7e',1,'MovableElement.h']]],
+  ['pvplusbonus',['PVPLUSBONUS',['../d8/d5d/_movable_element_8h.html#aa94081298ab2dfd0f261cce6c203d9aaa2cef54d42371db37363e1005aba167d3',1,'MovableElement.h']]]
 ];

@@ -142,6 +142,12 @@ void Text::loadText()
     m_shopDialogPositiveLabel = new sf::Text;
     m_textMap[m_shopDialogPositiveLabel] = "shopDialogPositiveLabel";
 
+    m_buySuccessContentLabel = new sf::Text;
+    m_textMap[m_buySuccessContentLabel] = "buySuccessContentLabel";
+
+    m_buyFailureContentLabel = new sf::Text;
+    m_textMap[m_buyFailureContentLabel] = "buyFailureContentLabel";
+
     m_leaderboardTitleLabel = new sf::Text;
     m_textMap[m_leaderboardTitleLabel] = "leaderboardTitleLabel";
 
@@ -216,7 +222,7 @@ void Text::updateWholeText()
     for ( map<sf::Text*, string>::iterator it = m_textMap.begin();
           it !=m_textMap.end(); ++it)
     {
-        it->first->setCharacterSize(24);
+        it->first->setCharacterSize(DEFAULT_CHARACTER_SIZE);
         it->first->setFont(*m_condensedFont);
         it->first->setColor(sf::Color::White);
 
@@ -243,36 +249,36 @@ void Text::updateWholeText()
 *********************************************/
 void Text::updateString(string file, sf::Text *text, string name)
 {
-	fstream f;
-	size_t found = string::npos;
-	string line="";
-	string result="";
+    fstream f;
+    size_t found = string::npos;
+    string line="";
+    string result="";
 
-	f.open(file.c_str(), ios::in);
-	assert( !f.fail() );
+    f.open(file.c_str(), ios::in);
+    assert( !f.fail() );
 
-	f >> line;
-	while( !f.eof() && found == string::npos)
-	{
-		found=line.find("name=\""+ name + "\"");
-		if (found!=std::string::npos)
-		{
-		    int pos = 0;
-		    while ( line[pos] != '>') pos++;
-		    pos++;
-		    while ( line[pos] != '<')
+    f >> line;
+    while( !f.eof() && found == string::npos)
+    {
+        found=line.find("name=\""+ name + "\"");
+        if (found!=std::string::npos)
+        {
+            int pos = 0;
+            while ( line[pos] != '>') pos++;
+            pos++;
+            while ( line[pos] != '<')
             {
                 result += line[pos];
                 pos++;
             }
             for (unsigned int i=0; i < result.size(); i++)
                 if (result[i] == '_') result[i] = ' ';
-		}
+        }
 
-		f >> line;
-	}
+        f >> line;
+    }
 
-	f.close();
+    f.close();
     text->setString(result);
 }
 
@@ -301,7 +307,7 @@ void Text::syncSettingsText(int w, int h)
     //=== Configuration
 
     m_configTitleLabel->setPosition(w/2 -
-        int(m_configTitleLabel->HALF_WIDTH), h/12);
+        int(m_configTitleLabel->HALF_WIDTH), TITLE_TEXT_ROW);
     m_configLangTitleLabel->setPosition(40, 150);
     m_configLangEngLabel->setPosition(RADIO_TEXT_X, 202);
     m_configLangFraLabel->setPosition(RADIO_TEXT_X, 242);
@@ -317,7 +323,7 @@ void Text::syncSettingsText(int w, int h)
     //=== Statistics
 
     m_statisticsTitleLabel->setPosition(w/2 -
-        int(m_statisticsTitleLabel->HALF_WIDTH), h/12);
+        int(m_statisticsTitleLabel->HALF_WIDTH), TITLE_TEXT_ROW);
     m_totalDistanceLabel->setPosition(RADIO_TEXT_X, 150);
     m_totalDistanceLabel->setCharacterSize(CONTENT_CHARACTER_SIZE);
     m_totalFlattenedEnemiesLabel->setPosition(RADIO_TEXT_X, 190);
@@ -386,7 +392,7 @@ void Text::syncMenuLeaderboardText(int w, int h, Leaderboard* lb)
     }
 
     m_leaderboardTitleLabel->setPosition(w/2 -
-            int(m_leaderboardTitleLabel->HALF_WIDTH), h/10);
+            int(m_leaderboardTitleLabel->HALF_WIDTH), TITLE_TEXT_ROW);
 
     m_clearButtonLabel->setCharacterSize(20);
     m_clearButtonLabel->setPosition(w/2 -
@@ -401,7 +407,7 @@ void Text::syncMenuLeaderboardText(int w, int h, Leaderboard* lb)
 *********************************************/
 void Text::syncShopText(int w, int h)
 {
-    m_totalCoinsNbText->setPosition(w/2, h/12);
+    m_totalCoinsNbText->setPosition(w/2, TITLE_TEXT_ROW);
     m_totalCoinsNbText->setColor(GOLD_COLOR);
 
     m_totalCoinsNbText->setString( to_string( m_dataBase->getTotalCoinsNumber() ));
@@ -413,12 +419,29 @@ void Text::syncShopText(int w, int h)
 *********************************************
     @author Arthur  @date 17/04
 *********************************************/
-void Text::syncDialogText(string &title, string &content, string &neg_choice, string &pos_choice)
+void Text::syncDialogText(string context, string &title, string &content, string &neg_choice, string &pos_choice)
 {
-    title = m_shopDialogTitleLabel->getString();
-    content = m_shopDialogContentLabel->getString();
-    neg_choice = m_shopDialogNegativeLabel->getString();
-    pos_choice = m_shopDialogPositiveLabel->getString();
+    if ( context == "askBying")
+    {
+        title = m_shopDialogTitleLabel->getString();
+        content = m_shopDialogContentLabel->getString();
+        neg_choice = m_shopDialogNegativeLabel->getString();
+        pos_choice = m_shopDialogPositiveLabel->getString();
+    }
+    else if  ( context == "success")
+    {
+        title = "";
+        content = m_buySuccessContentLabel->getString();
+        neg_choice = "";
+        pos_choice = m_shopDialogPositiveLabel->getString();
+    }
+    else if  ( context == "failure")
+    {
+        title = "";
+        content = m_buyFailureContentLabel->getString();
+        neg_choice = "";
+        pos_choice = m_shopDialogPositiveLabel->getString();
+    }
 }
 
 
@@ -473,7 +496,7 @@ void Text::syncPauseText()
 void Text::syncEndText(GameModel *gameModel, int w, int h)
 {
     //=== Score sub-total text
-    m_endTitleLabel->setPosition(w/2 - int(m_endTitleLabel->HALF_WIDTH), h/12);
+    m_endTitleLabel->setPosition(w/2 - int(m_endTitleLabel->HALF_WIDTH), TITLE_TEXT_ROW);
     m_endTitleLabel->setFont(*m_BoldFont);
     m_speedMultiplierLabel->setPosition(SUBTOTAL_LABEL_X, 170);
     m_speedMultiplierText->setPosition(SUBTOTAL_VALUE_X, 170);

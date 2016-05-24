@@ -15,12 +15,12 @@ GameModel::GameModel(const Model& model) :
     m_lastTime{chrono::system_clock::now()},  m_bonusTimeout{0}
 {
     srand(time(NULL));
-    //default interdistances (in meters) for elements
-    m_chosenEnemyInterdistance = 10 +rand()%10;
-    m_chosenCoinInterdistance = rand()%10;
-    m_chosenBonusInterdistance = 100 + rand()%50;
+    //initial interdistances for elements
+    m_chosenEnemyInterdistance = 10 +rand()%11;  //10 to 20 m
+    m_chosenCoinInterdistance = rand()%11; //0 to 10m
+    m_chosenBonusInterdistance = 100 + rand()%51; //100 to 150 m
     //create player
-    addANewMovableElement(50, GAME_FLOOR, PLAYER);
+    addANewMovableElement(DEFAULT_PLAYER_X, GAME_FLOOR, PLAYER);
 
     m_dataBase->resetCurrentGame();
     m_dataBase->updateActivatedItemsArray();
@@ -30,12 +30,12 @@ GameModel::GameModel(const Model& model) :
 /********************************************
     Destructor
 *********************************************
-    @author Arthur  @date 26/03
+    @author Arthur  @date 26/03 - 24/05
 *********************************************/
 GameModel::~GameModel()
 {
-    for (set<MovableElement*>::iterator it = m_movableElementsArray.begin(); it!=m_movableElementsArray.end(); ++it)
-        delete *it;
+    for (auto element : m_movableElementsArray)
+        delete element;
 
     m_movableElementsArray.clear();
 }
@@ -53,7 +53,7 @@ bool GameModel::getTransitionStatus() const { return m_inTransition; }
 bool GameModel::getTransitionPossibleStatus() const { return m_isTransitionPossible; }
 bool GameModel::getSaveStatus() const { return m_isSavePossible; }
 float GameModel::getGameSpeed() const { return m_gameSpeed; }
-int GameModel::getBonusTimeout() const { return m_bonusTimeout.count()/1000; }
+int GameModel::getBonusTimeout() const { return m_bonusTimeout.count()/1000; } // return seconds
 int GameModel::getCurrentZone() const { return m_currentZone; }
 Player* GameModel::getPlayer() const { return m_player; }
 const set<MovableElement*>& GameModel::getNewMElementsArray() const { return m_newMovableElementsArray; }
@@ -74,11 +74,11 @@ void GameModel::setCurrentZone(int number) { m_currentZone = number; }
 /********************************************
     Next Step
 *********************************************
-    @author Arthur  @date 21/02 - 21/05
+    @author Arthur  @date 21/02 - 24/05
 *********************************************/
 void GameModel::nextStep()
 {
-    chrono::system_clock::duration nextStepDelay = chrono::system_clock::now() - m_lastTime;
+    chrono::system_clock::duration currentNextStepDelay = chrono::system_clock::now() - m_lastTime;
 
 	if (m_pauseState == false && m_endState == false)
 	{
@@ -87,20 +87,20 @@ void GameModel::nextStep()
         //outside of delay otherwise some highspeed collisions are not triggered
         handleMovableElementsCollisions();
 
-		if ( nextStepDelay > chrono::milliseconds( 100 ) )
+		if ( currentNextStepDelay > chrono::milliseconds( NEXT_STEP_DELAY ) )
 		{
             //=== Update distance and gamespeed
 
-		    if ( m_difficulty == NORMAL_DIFFICULTY && m_gameSpeed < 16
-                     && m_bonusTimeout <= chrono::milliseconds(0))
+		    if ( m_difficulty == NORMAL_DIFFICULTY && m_gameSpeed < SPEED_LIMIT
+                     && m_bonusTimeout <= chrono::milliseconds(0) )
             {
-                m_gameSpeed += 0.01;
+                m_gameSpeed += SPEED_STEP;
             }
-            else if ( m_difficulty != NORMAL_DIFFICULTY && m_gameSpeed < 18
-                     && m_bonusTimeout <= chrono::milliseconds(0))
+            else if ( m_difficulty != NORMAL_DIFFICULTY && m_gameSpeed < SPEED_LIMIT
+                     && m_bonusTimeout <= chrono::milliseconds(0) )
             {
-                if (m_gameSpeed == 4.0) m_gameSpeed = 8.0;
-                m_gameSpeed += 0.02;
+                if (m_gameSpeed == DEFAULT_SPEED) m_gameSpeed = 2*DEFAULT_SPEED;
+                m_gameSpeed += 2*SPEED_STEP;
             }
 			m_dataBase->setCurrentDistance(1 + 2*m_difficulty);
 
@@ -115,7 +115,7 @@ void GameModel::nextStep()
             //=== Bonus timeout & ending
 
             if ( m_bonusTimeout > chrono::milliseconds(0))
-                m_bonusTimeout -= chrono::milliseconds( 100 ); //next step delay
+                m_bonusTimeout -= chrono::milliseconds( NEXT_STEP_DELAY );
 
             if ( m_bonusTimeout <= chrono::milliseconds(0)
                 && m_player->getState() != SHIELD)
@@ -129,10 +129,10 @@ void GameModel::nextStep()
             //=== Handle transition status
 
             if ( m_dataBase->getCurrentDistance() !=0 && m_difficulty == NORMAL_DIFFICULTY
-                && m_dataBase->getCurrentDistance()%500 ==0) //at each 500 meters
+                && m_dataBase->getCurrentDistance()%ZONE_CHANGING_DISTANCE ==0)
                 m_isTransitionPossible = true;
             if ( m_dataBase->getCurrentDistance() !=0 && m_difficulty == MASTER_DIFFICULTY
-                && m_dataBase->getCurrentDistance()%2000 ==0) //at each 2000 meters
+                && m_dataBase->getCurrentDistance()%(4*ZONE_CHANGING_DISTANCE) ==0)
                 m_isTransitionPossible = true;
 
 
@@ -154,7 +154,7 @@ void GameModel::nextStep()
 /********************************************
     choose the interdistance between elements
 *********************************************
-    @author Arthur  @date  12/03 - 18/05
+    @author Arthur  @date  12/03 - 24/05
 *********************************************/
 void GameModel::chooseInterdistance(int elementType)
 {
@@ -174,12 +174,12 @@ void GameModel::chooseInterdistance(int elementType)
 
     else if ( elementType == COIN )
     {
-        if (m_chosenCoinInterdistance > 20)
-            m_chosenCoinInterdistance = abs(rand()%21); //0 to 20m
+        if (m_chosenCoinInterdistance > 10)
+            m_chosenCoinInterdistance = abs(rand()%21); //0 to 10m
         else if  ( m_chosenCoinInterdistance < 10)
-            m_chosenCoinInterdistance = 15 + abs(rand()%26); //15 to 40m
+            m_chosenCoinInterdistance = 10 + abs(rand()%11); //10 to 20m
         else
-            m_chosenCoinInterdistance = abs(rand()%31); //0 to 30m
+            m_chosenCoinInterdistance = abs(rand()%21); //0 to 20m
     }
 
     else if ( elementType == PVPLUSBONUS ) //any Bonus
@@ -247,7 +247,7 @@ void GameModel::moveMovableElement(MovableElement *currentElement)
 /********************************************
     Handle Elements Creation
 *********************************************
-    @author Arthur  @date 12/04 - 19/05
+    @author Arthur  @date 12/04 - 24/05
 *********************************************/
 void GameModel::handleMovableElementsCreation()
 {
@@ -268,7 +268,7 @@ void GameModel::handleMovableElementsCreation()
 
         if (m_currentCoinInterdistance >= m_chosenCoinInterdistance)
         {
-            addANewMovableElement(m_width, GAME_FLOOR-100, COIN);
+            addANewMovableElement(m_width, GAME_FLOOR-rand()%100, COIN);
             m_currentCoinInterdistance = 0;
             chooseInterdistance(COIN);
             return; //to not add another element if interdistance valid
@@ -279,7 +279,7 @@ void GameModel::handleMovableElementsCreation()
 
         if (m_currentBonusInterdistance >= m_chosenBonusInterdistance)
         {
-            addANewMovableElement(m_width, GAME_FLOOR-100, PVPLUSBONUS);
+            addANewMovableElement(m_width, BONUS_ROW, PVPLUSBONUS);
             m_currentBonusInterdistance = 0;
             chooseInterdistance(PVPLUSBONUS);
             return; //to not add another element if interdistance valid
@@ -305,15 +305,15 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
     }
     else if (type == STANDARDENEMY)//any enemy, transformation in CTOR
     {
-        m_newMElement = new Enemy(posX, posY, 30, 30, getGameSpeed()*(-1), 0);
+        m_newMElement = new Enemy(posX, posY, 30, 30, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
     }
     else if (type == COIN)
     {
-        m_newMElement = new Coin(posX, posY, 25, 25, getGameSpeed()*(-1), 0);
+        m_newMElement = new Coin(posX, posY, 25, 25, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
     }
     else if (type == PVPLUSBONUS) //any bonus, transformation in CTOR
     {
-        m_newMElement = new Bonus(posX, posY, 25, 25, getGameSpeed()*(-1), 0);
+        m_newMElement = new Bonus(posX, posY, 25, 25, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
     }
     assert(m_newMElement != nullptr);
 

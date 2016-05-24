@@ -52,6 +52,8 @@
    <string name="shopDialogContentLabel">Nombre_:_Precio_:__monedas</string>
    <string name="shopDialogNegativeLabel">CANCELAR</string>
    <string name="shopDialogPositiveLabel">OK</string>
+   <string name="buySuccessContentLabel">Gracias_por_su_compra.</string>
+   <string name="buyFailureContentLabel">Algo_salio_mal.</string>
 
    <!--  Game strings -->
    <string name="playerLifeLabel">Vida</string>

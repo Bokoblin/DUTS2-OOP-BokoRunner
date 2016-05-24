@@ -20,6 +20,7 @@ limitations under the License.
 #include "Settings.h"
 
 #define RADIO_BUTTONS_SIZE 26,26
+#define INDICATOR_BUTTONS_SIZE 22,22
 
 /********************************************
     SettingsView Class

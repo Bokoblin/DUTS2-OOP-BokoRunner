@@ -57,7 +57,7 @@ void AnimatedGraphicElement::sync()
 {
     system_clock::duration duration = system_clock::now() - m_lastAnimationTime;
 
-    if ( duration > milliseconds(200) )
+    if ( duration > milliseconds(ANIM_DELAY) )
     {
         if (m_currentClipRect == m_clipRectsArray.size()-1 )
             m_currentClipRect = 0;

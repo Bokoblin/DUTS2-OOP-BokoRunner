@@ -203,12 +203,8 @@ void GameView::loadImages()
         cerr << "ERROR when loading image file: " << SHIELD_IMAGE << endl;
     else
     {
-        std::vector<sf::IntRect> clip_rects;
-        for (int i=0; i<8; i++)
-            clip_rects.push_back(sf::IntRect(50*i,0,50,50));
-
         m_shieldTexture.setSmooth(true);
-        m_shieldAnimSprite = new AnimatedGraphicElement(m_shieldTexture, 50, GAME_FLOOR, 40, 40, clip_rects);
+        m_shieldAnimSprite = new GraphicElement(m_shieldTexture, 50, GAME_FLOOR, 40, 40);
         m_shieldAnimSprite->setOrigin(0,50);
     }
 
@@ -286,12 +282,12 @@ void GameView::loadImages()
     }
 
     if (!m_gameRectButtonTexture.loadFromFile(GRECT_BUTTON_IMAGE) )
-		cerr << "ERROR when loading image file: " << GRECT_BUTTON_IMAGE << endl;
-	else
-	{
+        cerr << "ERROR when loading image file: " << GRECT_BUTTON_IMAGE << endl;
+    else
+    {
         m_gameRectButtonTexture.setSmooth(true);
 
-		std::vector<sf::IntRect> clip_rects_save;
+        std::vector<sf::IntRect> clip_rects_save;
         clip_rects_save.push_back(sf::IntRect(0, 179, 150, 40));
         clip_rects_save.push_back(sf::IntRect(151, 179, 150, 40));
         m_saveScoreButton = new Button(clip_rects_save,
@@ -386,7 +382,7 @@ void GameView::handleZonesTransition()
         //Update zone background image and position at half transition
         if (m_farBgTransitionSprite->getPosition().x  <= 5 && m_farBgTransitionSprite->getPosition().x  >= -5)
         {
-            if (m_gameModel->getCurrentZone() == 1)
+            if (m_gameModel->getCurrentZone() == HILL)
             {
                 m_farBackgroundTexture.loadFromFile(DEFAULT_FAR_PLAIN_BACKGROUND);
                 m_nearBackgroundTexture.loadFromFile(DEFAULT_NEAR_PLAIN_BACKGROUND);
@@ -417,10 +413,10 @@ void GameView::handleZonesTransition()
             m_gameModel->setTransitionPossibleStatus(false);
 
             //Set current zone
-            if (m_gameModel->getCurrentZone() == 1)
-                m_gameModel->setCurrentZone(2);
+            if (m_gameModel->getCurrentZone() == HILL)
+                m_gameModel->setCurrentZone(PLAIN);
             else
-                m_gameModel->setCurrentZone(1);
+                m_gameModel->setCurrentZone(HILL);
         }
     }
     else
@@ -434,9 +430,9 @@ void GameView::handleZonesTransition()
             m_gameModel->setTransitionStatus(true);
             m_xPixelIntensity = 1;
             m_yPixelIntensity = 1;
-            m_farBgTransitionSprite->setPosition(m_farSlBackground->getPosition().x +1200, 0);
+            m_farBgTransitionSprite->setPosition(m_farSlBackground->getPosition().x + 1200, 0);
 
-            if (m_gameModel->getCurrentZone() == 1)
+            if (m_gameModel->getCurrentZone() == HILL)
             {
                 m_pixelShader->load(DEFAULT_NEAR_T1_BACKGROUND);
                 m_farBgTransitionTexture.loadFromFile(DEFAULT_FAR_T1_BACKGROUND);
@@ -526,7 +522,7 @@ void GameView::updateElements()
             m_saveScoreButton->setPosition(m_width+5, m_height+5);
         else
             m_saveScoreButton->setPosition(m_width/2 -
-				m_saveScoreButton->getGlobalBounds().width/2, 430);
+                m_saveScoreButton->getGlobalBounds().width/2, 430);
     }
 }
 
@@ -545,11 +541,12 @@ void GameView::deleteElements()
     {
         if ( (it->first)->getCollisionState() == true )
         {
-            if ( (it->first)->getType() == 4 )
+            if ( (it->first)->getType() == COIN )
                 m_coinMusic.play();
 
-
-            if ( (it->first)->getType() == 1 || (it->first)->getType() == 2 || (it->first)->getType() ==3  )
+            if ( (it->first)->getType() == STANDARDENEMY
+                || (it->first)->getType() == TOTEMENEMY
+                || (it->first)->getType() ==BLOCKENEMY  )
                 m_destructedEnemiesMusic.play();
 
             delete it->second;
@@ -581,7 +578,7 @@ void GameView::synchronize()
     {
         updateElements(); //Elements update
         m_text->syncPauseText(); //Text update
-        sf::sleep(sf::milliseconds(200)); //limit CPU usage in pause state
+        sf::sleep(sf::milliseconds(2*NEXT_STEP_DELAY)); //limit CPU usage in pause state
     }
     else if (m_gameModel->getEndState())//END
     {

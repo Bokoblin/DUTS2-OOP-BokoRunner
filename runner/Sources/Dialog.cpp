@@ -5,7 +5,7 @@ using namespace std;
 /********************************************
     Parameterized Constructor
 *********************************************
-    @author Arthur  @date 16/05 - 20/05
+    @author Arthur  @date 16/05 - 24/05
 *********************************************/
 Dialog::Dialog(int x, int y, ShopItem *item, Text *t, string title, string content, string negAnswer, string posAnswer):
     m_posX{x}, m_posY{y}, m_itemLinked{item}, m_text{t}
@@ -36,13 +36,13 @@ Dialog::Dialog(int x, int y, ShopItem *item, Text *t, string title, string conte
     m_negativeButton.setFont(*m_text->getBoldFont());
     m_negativeButton.setColor(MATERIAL_TEAL_COLOR);
     m_negativeButton.setString( negAnswer );
-    m_negativeButton.setPosition( m_posX + m_width/2, m_posY + m_height - 35);
+    m_negativeButton.setPosition( m_posX + 0.5*m_width, m_posY + 0.83*m_height);
 
     m_positiveButton.setCharacterSize(14);
     m_positiveButton.setFont(*m_text->getBoldFont());
     m_positiveButton.setColor(MATERIAL_TEAL_COLOR);
     m_positiveButton.setString( posAnswer );
-    m_positiveButton.setPosition( m_posX + m_width - 40, m_posY + m_height - 35);
+    m_positiveButton.setPosition( m_posX + 0.8*m_width, m_posY + 0.83*m_height);
 }
 
 

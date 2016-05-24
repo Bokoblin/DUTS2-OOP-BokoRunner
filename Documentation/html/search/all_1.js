@@ -6,6 +6,7 @@ var searchData=
   ['bonus_2ecpp',['Bonus.cpp',['../d6/dd1/_bonus_8cpp.html',1,'']]],
   ['bonus_2eh',['Bonus.h',['../d6/dc7/_bonus_8h.html',1,'']]],
   ['bonus_5fimage',['BONUS_IMAGE',['../d1/d1f/_view_8h.html#af3432ceb64286e0384ec138577399f71',1,'View.h']]],
+  ['bonus_5frow',['BONUS_ROW',['../d3/d6e/_game_model_8h.html#ab44326d5cb77b52476d9c26b3fc67a3b',1,'GameModel.h']]],
   ['boost_5fauto_5ftest_5fcase',['BOOST_AUTO_TEST_CASE',['../d0/de6/unit__test_8cpp.html#aaf39a544a63a9469834a74e592cc5055',1,'BOOST_AUTO_TEST_CASE(model):&#160;unit_test.cpp'],['../d0/de6/unit__test_8cpp.html#a81d75a4b0ae13c079a174a1941d5d8aa',1,'BOOST_AUTO_TEST_CASE(player):&#160;unit_test.cpp'],['../d0/de6/unit__test_8cpp.html#ac5bf888c4c8fb64860c1968f969a3332',1,'BOOST_AUTO_TEST_CASE(enemy):&#160;unit_test.cpp']]],
   ['boost_5ftest_5fdyn_5flink',['BOOST_TEST_DYN_LINK',['../d0/de6/unit__test_8cpp.html#a139f00d2466d591f60b8d6a73c8273f1',1,'unit_test.cpp']]],
   ['boost_5ftest_5fmodule',['BOOST_TEST_MODULE',['../d0/de6/unit__test_8cpp.html#a6b2a3852db8bb19ab6909bac01859985',1,'unit_test.cpp']]],

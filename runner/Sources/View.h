@@ -22,6 +22,8 @@ limitations under the License.
 #include "Button.h"
 #include <SFML/Audio.hpp>
 
+#define ENVIRONMENT_CENTER sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2, \
+				(sf::VideoMode::getDesktopMode().height - m_height)/2 )
 #define GREY_BG_COLOR sf::Color(51, 51, 51, 255)
 #define FORM_BUTTONS_SIZE 30,30
 #define MOUSE_LEFT_PRESSED_EVENT event.type == sf::Event::MouseButtonPressed &&           event.mouseButton.button == sf::Mouse::Left
@@ -30,6 +32,8 @@ limitations under the License.
 /********************************************
     Constant Variables
 ********************************************/
+const int SCREEN_BPP = 32;
+const std::string APP_TITLE = "Boko Runner";
 const std::string IUT_LOGO_IMAGE = "Images/logo_iut.png";
 const std::string DEFAULT_FAR_HILL_BACKGROUND = "Images/background/hill_far.png";
 const std::string DEFAULT_NEAR_HILL_BACKGROUND = "Images/background/hill_near.png";

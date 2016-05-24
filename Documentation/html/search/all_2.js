@@ -14,6 +14,7 @@ var searchData=
   ['coin',['Coin',['../df/d08/class_coin.html',1,'Coin'],['../df/d08/class_coin.html#aae9ec102ffd9b22065380a01b83659de',1,'Coin::Coin()'],['../d8/d5d/_movable_element_8h.html#aa94081298ab2dfd0f261cce6c203d9aaa3db211bb0d30db282da5a13b354f69c8',1,'COIN():&#160;MovableElement.h']]],
   ['coin_2ecpp',['Coin.cpp',['../d2/da4/_coin_8cpp.html',1,'']]],
   ['coin_2eh',['Coin.h',['../d2/d85/_coin_8h.html',1,'']]],
+  ['coin_5fmultiplier',['COIN_MULTIPLIER',['../d4/df5/_data_base_8h.html#ac6be9393e7b840ded443e107379d78d1',1,'DataBase.h']]],
   ['coins_5fcollected_5fmusic',['COINS_COLLECTED_MUSIC',['../dc/d46/_game_view_8h.html#a2fc73433610bd69d7b815526736c077f',1,'GameView.h']]],
   ['collision',['collision',['../d8/d96/class_movable_element.html#a9e36b5808e6681f14feff44aa6ea25a2',1,'MovableElement']]],
   ['condensed_5ffont',['CONDENSED_FONT',['../d6/df3/_shop_item_card_8h.html#a3c95dc86bd428aa1a78b4666909ca582',1,'ShopItemCard.h']]],

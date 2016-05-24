@@ -2,7 +2,7 @@ var searchData=
 [
   ['gamemodel',['GameModel',['../dc/da9/class_game_model.html#a7dd2be470ae4fa02d082ca7eeff89d3c',1,'GameModel']]],
   ['gameview',['GameView',['../d0/d21/class_game_view.html#ad12a95865fe874f2205d210063a2d398',1,'GameView']]],
-  ['getactivateditemsarray',['getActivatedItemsArray',['../d1/d4c/class_data_base.html#ad0402ff881f6e625d46746c1b36cafb9',1,'DataBase']]],
+  ['getactivateditemsarray',['getActivatedItemsArray',['../d1/d4c/class_data_base.html#a646246e79e17ed22428c46de46e93c50',1,'DataBase']]],
   ['getalpha',['getAlpha',['../d2/d7d/class_sliding_background.html#a104031d0658dd13a9fbeff0b5177a56e',1,'SlidingBackground']]],
   ['getballskin',['getBallSkin',['../d1/d4c/class_data_base.html#a9963d37a8be707bfe3043152e5b05f04',1,'DataBase']]],
   ['getboldfont',['getBoldFont',['../da/d0e/class_text.html#aee86ef90e9042393a8058b2f573f5a69',1,'Text']]],

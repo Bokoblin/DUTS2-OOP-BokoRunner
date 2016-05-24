@@ -19,6 +19,8 @@ limitations under the License.
 #include "GraphicElement.h"
 #include <chrono>
 
+const int ANIM_DELAY = 200;
+
 /********************************************
     AnimatedGraphicElement Class
 *********************************************

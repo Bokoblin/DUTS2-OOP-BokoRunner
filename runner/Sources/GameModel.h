@@ -22,8 +22,27 @@ limitations under the License.
 #include "Coin.h"
 #include "Bonus.h"
 
-#define DEFAULT_SPEED 5.0
-#define SHIELD_TIMEOUT -581374
+#define ELEMENT_MOVE_X getGameSpeed()*(-1)
+#define ELEMENT_MOVE_Y 0
+
+enum zones
+{
+    HILL = 1,
+    PLAIN = 2
+};
+
+/********************************************
+    Constant Variables
+********************************************/
+const int DEFAULT_PLAYER_X = 50;
+const int SPEED_LIMIT = 18.0;
+const int NEXT_STEP_DELAY = 100;
+const int ZONE_CHANGING_DISTANCE = 500;
+const int BONUS_ROW = GAME_FLOOR-100;
+const int SHIELD_TIMEOUT = -581374;
+const float DEFAULT_SPEED = 5.0;
+const float SPEED_STEP = 0.01;
+
 
 /********************************************
     GameModel Class

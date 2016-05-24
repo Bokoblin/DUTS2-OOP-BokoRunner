@@ -228,7 +228,7 @@ bool ShopView::treatEvents(sf::Event event)
 
         for ( auto card : m_shopItemsCardArray )
             if ( card->getBuyButton()->IS_POINTED
-                && card->getShownState() && m_buyDialog == nullptr)
+                    && card->getShownState() && m_buyDialog == nullptr)
                 card->getBuyButton()->setPressedState(true);
     }
 
@@ -241,7 +241,7 @@ bool ShopView::treatEvents(sf::Event event)
             it.second->setPressedState(false);
 
         for ( auto card : m_shopItemsCardArray )
-                card->getBuyButton()->setPressedState(false);
+            card->getBuyButton()->setPressedState(false);
 
         //=== handle mouse up on a button
 
@@ -254,17 +254,17 @@ bool ShopView::treatEvents(sf::Event event)
 
         for ( auto card : m_shopItemsCardArray )
             if ( card->getBuyButton()->IS_POINTED && card->getShownState()
-                && !card->getItem()->getBoughtState() && m_buyDialog == nullptr)
+                    && !card->getItem()->getBoughtState() && m_buyDialog == nullptr)
             {
                 //Get dialog text from file
                 string title, content, negative_choice, positive_choice;
-                m_text->syncDialogText(title, content, negative_choice, positive_choice);
+                m_text->syncDialogText("askBying", title, content, negative_choice, positive_choice);
                 content.insert(content.find(" : ")+3, card->getItem()->getName() + "\n\n" );
                 content.insert(content.find("\n")+11, to_string(card->getItem()->getPrice() ) );
 
                 //create buy dialog
                 m_buyDialog = new Dialog( m_width/2 - 125, m_height/2-100,
-                                         card->getItem(), m_text, title, content, negative_choice, positive_choice);
+                                          card->getItem(), m_text, title, content, negative_choice, positive_choice);
             }
 
         //Mouse up on negative button
@@ -273,10 +273,28 @@ bool ShopView::treatEvents(sf::Event event)
             delete m_buyDialog;
             m_buyDialog = nullptr;
         }
-        //Mouse up on positive button
-        else if ( m_buyDialog != nullptr && m_buyDialog->getPositiveButton().IS_POINTED )
+        //Mouse up on positive button as dialog
+        else if ( m_buyDialog != nullptr && m_buyDialog->getPositiveButton().IS_POINTED
+                  &&  m_buyDialog->getNegativeButton().getString() != "")
         {
-            m_shop->buyItem(m_buyDialog->getItemLinked() );
+            bool result = m_shop->buyItem(m_buyDialog->getItemLinked() );
+            delete m_buyDialog;
+            m_buyDialog = nullptr;
+
+            string title, content, negative_choice, positive_choice;
+            if ( result)
+                m_text->syncDialogText("success", title, content, negative_choice, positive_choice);
+            else
+                m_text->syncDialogText("failure", title, content, negative_choice, positive_choice);
+
+            m_buyDialog = new Dialog( m_width/2 - 125, m_height/2-100,
+                                      nullptr, m_text, title, content, negative_choice, positive_choice);
+        }
+
+        //Mouse up on positive button as toast
+        else if ( m_buyDialog != nullptr && m_buyDialog->getPositiveButton().IS_POINTED
+                  &&  m_buyDialog->getNegativeButton().getString() == "")
+        {
             delete m_buyDialog;
             m_buyDialog = nullptr;
         }

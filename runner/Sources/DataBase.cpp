@@ -61,7 +61,7 @@ void DataBase::setBallSkin(string skin) { m_currentBallSkin = skin; }
 void DataBase::setCurrentScore(float speed)
 {
     m_currentScore = ( speed*m_currentDistance
-            + 20*m_currentCoinsNumber + m_currentFlattenedEnemies );
+            + COIN_MULTIPLIER*m_currentCoinsNumber + m_currentFlattenedEnemies );
 }
 
 
@@ -167,7 +167,7 @@ void DataBase::fetchBuyableItemsFromFile(vector<ShopItem*> &setArray)
 
     //open file with pugi library and init nodes
     pugi::xml_document doc;
-    doc.load_file("Resources/config.xml");
+    doc.load_file(CONFIG_FILE.c_str());
 
     pugi::xml_node shop = doc.child("runner").child("shop");
 
@@ -195,8 +195,8 @@ void DataBase::fetchBuyableItemsFromFile(vector<ShopItem*> &setArray)
 *********************************************
     @author Arthur  @date 13/04 - 2/05
 *********************************************/
-template <typename Type>
-void DataBase::updateValue(Type &variable, std::string name)
+template <typename T>
+void DataBase::updateValue(T &variable, std::string name)
 {
     fstream f;
     size_t found = string::npos;
@@ -245,7 +245,7 @@ void DataBase::updateValue(Type &variable, std::string name)
 void DataBase::updateActivatedItemsArray()
 {
     pugi::xml_document doc;
-    doc.load_file("Resources/config.xml");
+    doc.load_file(CONFIG_FILE.c_str());
 
     pugi::xml_node runner = doc.child("runner");
     pugi::xml_node shop = runner.child("shop");

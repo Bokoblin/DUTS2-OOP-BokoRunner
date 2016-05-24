@@ -95,9 +95,7 @@ Leaderboard* MenuModel::launchLeaderboard()
     m_homeState = false;
     m_leaderboardState = true;
 
-    //m_leaderboard = new Leaderboard(m_dataBase);
     m_leaderboard = new Leaderboard();
-
     return m_leaderboard;
 }
 
@@ -113,7 +111,6 @@ Shop* MenuModel::launchShop()
     m_shopState = true;
 
     m_shop = new Shop(m_dataBase);
-
     return m_shop;
 }
 
@@ -128,6 +125,5 @@ Settings* MenuModel::launchSettings()
     m_settingsState = true;
 
     m_settings = new Settings(m_dataBase);
-
     return m_settings;
 }

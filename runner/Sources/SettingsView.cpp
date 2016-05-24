@@ -20,7 +20,7 @@ SettingsView::SettingsView(float w, float h, sf::RenderWindow *window, Text * t)
         {
             m_pageIndicators[i] = new Button(*m_pageIndicatorButton);
             m_pageIndicators[i]->setPosition( m_width/2 - 12*m_nbIndicators + 24*i, 550 );
-            m_pageIndicators[i]->resize(22, 22);
+            m_pageIndicators[i]->resize(INDICATOR_BUTTONS_SIZE);
         }
 }
 

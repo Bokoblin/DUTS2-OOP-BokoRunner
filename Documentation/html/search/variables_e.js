@@ -1,11 +1,10 @@
 var searchData=
 [
-  ['scores_5ffile',['SCORES_FILE',['../d3/d4b/_leaderboard_8h.html#a102c599351ada3a03cd9099e63ffd4ee',1,'Leaderboard.h']]],
-  ['screen_5fbpp',['SCREEN_BPP',['../d7/db8/_menu_view_8h.html#a8194731fdeea643e725e3a89d2f7ec59',1,'MenuView.h']]],
-  ['screen_5fheight',['SCREEN_HEIGHT',['../d7/db8/_menu_view_8h.html#ab454541ae58bcf6555e8d723b1eb95e7',1,'SCREEN_HEIGHT():&#160;MenuView.h'],['../d0/de6/unit__test_8cpp.html#ab454541ae58bcf6555e8d723b1eb95e7',1,'SCREEN_HEIGHT():&#160;unit_test.cpp']]],
-  ['screen_5fwidth',['SCREEN_WIDTH',['../d7/db8/_menu_view_8h.html#a3482785bd2a4c8b307f9e0b6f54e2c36',1,'SCREEN_WIDTH():&#160;MenuView.h'],['../d0/de6/unit__test_8cpp.html#a3482785bd2a4c8b307f9e0b6f54e2c36',1,'SCREEN_WIDTH():&#160;unit_test.cpp']]],
-  ['shield_5fimage',['SHIELD_IMAGE',['../dc/d46/_game_view_8h.html#a1960e1086aba80c1833290187673fe1b',1,'GameView.h']]],
-  ['spanish_5fstrings',['SPANISH_STRINGS',['../d4/dcf/_text_8h.html#a8392a255b7c8ab5548a2f8b544c9439f',1,'Text.h']]],
-  ['subtotal_5flabel_5fx',['SUBTOTAL_LABEL_X',['../d4/dcf/_text_8h.html#a36b32d196ecb290b7c9b8e0be62ca84d',1,'Text.h']]],
-  ['subtotal_5fvalue_5fx',['SUBTOTAL_VALUE_X',['../d4/dcf/_text_8h.html#a2edddeb9988ead06dd12eadf929b3f9f',1,'Text.h']]]
+  ['radio_5fbuttons_5fimage',['RADIO_BUTTONS_IMAGE',['../d1/d1f/_view_8h.html#a0f89357ad03f9054b8c1c40da5d7bee9',1,'View.h']]],
+  ['radio_5ftext_5fx',['RADIO_TEXT_X',['../d4/dcf/_text_8h.html#aec433d33110513f9e494b5a6d3893978',1,'Text.h']]],
+  ['rect_5fimage',['RECT_IMAGE',['../d6/df3/_shop_item_card_8h.html#a6b2296298aad5c5cce8a5941da446597',1,'ShopItemCard.h']]],
+  ['remaining_5flife',['REMAINING_LIFE',['../dc/d46/_game_view_8h.html#a662bdb942ae3b9cc2bfeabf61e5efcd8',1,'GameView.h']]],
+  ['roboto_5fbold_5ffont',['ROBOTO_BOLD_FONT',['../d4/dcf/_text_8h.html#abaf8026bdf74f09ee46c921405f6d1f9',1,'Text.h']]],
+  ['roboto_5fcondensed_5ffont',['ROBOTO_CONDENSED_FONT',['../d4/dcf/_text_8h.html#ad5cb698ef99e764300f965ca1ebb0ab8',1,'Text.h']]],
+  ['roboto_5fregular_5ffont',['ROBOTO_REGULAR_FONT',['../d4/dcf/_text_8h.html#a61794e8275ddb6119cf4f8f37aaaff6f',1,'Text.h']]]
 ];

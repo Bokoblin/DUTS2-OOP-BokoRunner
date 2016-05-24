@@ -3,7 +3,6 @@
 
 #include <boost/test/unit_test.hpp>
 #include "GameModel.h"
-#include <fstream>
 
 
 const int SCREEN_WIDTH = 900;

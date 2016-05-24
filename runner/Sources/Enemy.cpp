@@ -43,22 +43,28 @@ void Enemy::chooseEnemyType()
 
     if (result <= 55)
     {
-        m_elementType = 1;
+        m_elementType = STANDARDENEMY;
         m_width = 30;
         m_height = 30;
     }
 
     else if (result <= 80)
     {
-        m_elementType = 2;
+        m_elementType = TOTEMENEMY;
         m_width = 30;
         m_height = 90;
     }
 
     else
     {
-        m_elementType = 3;
+        m_elementType = BLOCKENEMY;
         m_width = 50;
         m_height = 50;
     }
+
+    /** Enemy percentage :  \n
+    *   1-55 : STANDARD  ~55% \n
+    *  56-80 : TOTEM       ~25% \n
+    *  81-100 : BLOCK     ~20%
+    */
 }

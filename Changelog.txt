@@ -1,7 +1,7 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.7.1
+Current version : v1.7.2
 
 ======================================================================================
 BETA CHANNEL Changelog
@@ -97,7 +97,7 @@ v0.3.0-beta.1 (12/03/16 - 09/04/16):
 
 v0.6.0-beta.1 (23/03/16 - 09/04/16):
 
-Contains v0.4.0-dev, v0.5.0-dev and v0.6.0-alpha.1/2 :
+Contains v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 
 - v0.4.0-alpha.x (23/03/16 - 30/03/16):
 	- Added INTRO-MENU-GAME structure :
@@ -273,8 +273,22 @@ Features :
 - added a mute button in pause that allows to mute/unmute game sound
 
 Fixes and miscs:
-- Fixed music relaunching on resume pressed instead of release
-- Fixed indicators drawing
-- Removed unused texture separator for animated sprites
-- Reorganized files
+- fixed music relaunching on resume pressed instead of release
+- fixed indicators drawing
+- removed unused texture separator for animated sprites
+- reorganized files
+
+---------------------------------------------------------------------------------------------------
+
+v1.7.2 (24/05/16)
+
+Features :
+- added buying results (success/failure)
+- added half-random y position for coins, lowered interdistance
+
+Fixes and miscs:
+- fixed again images on linux
+- shield image and element changes
+- code enhancement
+- documentation updated
 ---------------------------------------------------------------------------------------------------

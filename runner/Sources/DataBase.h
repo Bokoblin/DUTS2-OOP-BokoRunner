@@ -43,14 +43,16 @@ const std::string DEFAULT_CONFIG_CONTENT = " \
         <int name=\"total_games_played\">0</int>\n \
     </config>\n \
     <shop>\n \
-        <item id=\"doubler\" name=\"Coin Doubler\" description=\"Double coins collected number\" price=\"500\" boughtState=\"false\"/>\n \
-        <item id=\"shieldplus\" name=\"Increase Shield bonus\" description=\"Protect two times\" price=\"50\" boughtState=\"false\"/>\n \
-        <item id=\"megaplus\" name=\"Increase Mega bonus\" description=\"Increase bonus duration by 5s\" price=\"100\" boughtState=\"false\"/>\n \
-        <item id=\"flyplus\" name=\"Increase Fly bonus\" description=\"Increase bonus duration by 5s\" price=\"70\" boughtState=\"false\"/>\n \
-        <item id=\"morphing\" name=\"Morph ball skin\" description=\"Unlock ball's morph skin\" price=\"300\" boughtState=\"false\"/>\n \
-        <item id=\"capsule\" name=\"Capsule ball skin\" description=\"Unlock ball's capsule skin\" price=\"350\" boughtState=\"false\"/>\n \
+        <item id=\"doubler\" name=\"Coin Doubler\" description=\"Double coins collected number\" price=\"1000\" boughtState=\"false\"/>\n \
+        <item id=\"shieldplus\" name=\"Increase Shield bonus\" description=\"Protect two times\" price=\"100\" boughtState=\"false\"/>\n \
+        <item id=\"megaplus\" name=\"Increase Mega bonus\" description=\"Increase bonus duration by 5s\" price=\"200\" boughtState=\"false\"/>\n \
+        <item id=\"flyplus\" name=\"Increase Fly bonus\" description=\"Increase bonus duration by 5s\" price=\"180\" boughtState=\"false\"/>\n \
+        <item id=\"morphing\" name=\"Morph ball skin\" description=\"Unlock ball's morph skin\" price=\"500\" boughtState=\"false\"/>\n \
+        <item id=\"capsule\" name=\"Capsule ball skin\" description=\"Unlock ball's capsule skin\" price=\"600\" boughtState=\"false\"/>\n \
     </shop>\n \
 </runner>\n";
+
+const int COIN_MULTIPLIER = 20;
 
 
 /********************************************

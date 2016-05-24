@@ -117,6 +117,7 @@ private:
     GraphicElement *m_bottomBarSprite;
     GraphicElement *m_lifeBoxSprite;
     GraphicElement *m_remainingLifeSprite;
+    GraphicElement *m_shieldAnimSprite;
     AnimatedGraphicElement *m_playerAnimSprite; //deleted in map array
     AnimatedGraphicElement *m_stdEnemyAnimSprite;
     AnimatedGraphicElement *m_totemEnemyAnimSprite;
@@ -127,7 +128,6 @@ private:
     AnimatedGraphicElement *m_flyBonusAnimSprite;
     AnimatedGraphicElement *m_slowSpeedBonusAnimSprite;
     AnimatedGraphicElement *m_shieldBonusAnimSprite;
-    AnimatedGraphicElement *m_shieldAnimSprite;
 
     //Pause and End Graphic Elements
     GraphicElement *m_pauseBackgroundSprite;

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['half_5fwidth',['HALF_WIDTH',['../db/da9/_dialog_8h.html#aa75c1d0e19554b331d6efb58adcfd5f5',1,'HALF_WIDTH():&#160;Dialog.h'],['../d6/df3/_shop_item_card_8h.html#aa75c1d0e19554b331d6efb58adcfd5f5',1,'HALF_WIDTH():&#160;ShopItemCard.h'],['../d4/dcf/_text_8h.html#aa75c1d0e19554b331d6efb58adcfd5f5',1,'HALF_WIDTH():&#160;Text.h']]]
+  ['indicator_5fbuttons_5fsize',['INDICATOR_BUTTONS_SIZE',['../d7/d6b/_settings_view_8h.html#a9e26a18267bd7ff3687f9c19360f8d4f',1,'SettingsView.h']]],
+  ['is_5fpointed',['IS_POINTED',['../d1/d1f/_view_8h.html#a650212ed1eb2d196036790391f5553d5',1,'View.h']]]
 ];

@@ -21,6 +21,7 @@ limitations under the License.
 #include <map>
 
 #define HALF_WIDTH getGlobalBounds().width/2
+#define TITLE_TEXT_ROW h/12
 #define GOLD_COLOR sf::Color(255,204,0,255)
 #define ENEMY_BLUE_COLOR sf::Color(0,232,209,255)
 #define END_GREY_COLOR sf::Color(86,103,97,255)
@@ -39,12 +40,13 @@ const int PAUSE_TEXT_X = 80;
 const int RADIO_TEXT_X = 100;
 const int SUBTOTAL_LABEL_X = 220;
 const int SUBTOTAL_VALUE_X = 580;
+const int DEFAULT_CHARACTER_SIZE = 24;
 const int CONTENT_CHARACTER_SIZE = 20;
 
 /********************************************
     Text Class
 *********************************************
-    @author Arthur  @date 02/04 - 20/05
+    @author Arthur  @date 02/04 - 24/05
 *********************************************/
 class Text
 {
@@ -71,7 +73,7 @@ class Text
     void syncSettingsText( int w, int h);
     void syncMenuLeaderboardText(int w, int h, Leaderboard *lb);
     void syncShopText(int w, int h);
-    void syncDialogText(std::string &title, std::string &content,
+    void syncDialogText(std::string context, std::string &title, std::string &content,
                                      std::string &neg_choice, std::string &pos_choices);
     void syncGameText(GameModel *gameModel);
     void syncPauseText();
@@ -125,6 +127,8 @@ private:
     sf::Text *m_shopDialogContentLabel;
     sf::Text *m_shopDialogNegativeLabel;
     sf::Text *m_shopDialogPositiveLabel;
+    sf::Text *m_buySuccessContentLabel;
+    sf::Text *m_buyFailureContentLabel;
 
     //Game (Main, Pause & End) Labels
     sf::Text *m_playerLifeLabel;

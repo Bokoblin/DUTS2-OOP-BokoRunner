@@ -25,8 +25,7 @@ MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
 	{
         m_window->create( sf::VideoMode(w, h, SCREEN_BPP), APP_TITLE, sf::Style::Close );
 		m_window->setFramerateLimit(FRAMERATE);
-		m_window->setPosition(sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2,
-				(sf::VideoMode::getDesktopMode().height - m_height)/2 ));
+		m_window->setPosition(ENVIRONMENT_CENTER);
 	}
 
 	loadImages();
@@ -91,6 +90,7 @@ void MenuView::loadImages()
 	{
 		m_titleImageTexture.setSmooth(true);
 		m_titleGraphic = new GraphicElement(m_titleImageTexture, m_width/2-200, m_height/6, 400, 200);
+		m_titleGraphic->resize(400,200);
 	}
 
 	//=== Initialize PLAY and QUIT buttons
@@ -104,12 +104,14 @@ void MenuView::loadImages()
 		vector<sf::IntRect> clip_rects_play;
 		clip_rects_play.push_back(sf::IntRect( 0, 0, 150, 80));
 		clip_rects_play.push_back(sf::IntRect(151, 0, 150, 80));
-		m_playRectButton = new Button(clip_rects_play, m_menuRectButtonsTexture, m_width/2-75, m_height/1.5, 150, 80, false);
+		m_playRectButton = new Button(clip_rects_play, m_menuRectButtonsTexture,
+                                 m_width/2-75, m_height/1.5, 150, 80, false);
 
 		vector<sf::IntRect> clip_rects_quit;
 		clip_rects_quit.push_back(sf::IntRect( 0, 0, 150, 80));
 		clip_rects_quit.push_back(sf::IntRect(151, 0, 150, 80));
-		m_quitRectButton = new Button(clip_rects_quit, m_menuRectButtonsTexture, m_width/2-75, m_height/1.2, 150, 80, false);
+		m_quitRectButton = new Button(clip_rects_quit, m_menuRectButtonsTexture,
+                                 m_width/2-75, m_height/1.2, 150, 80, false);
     }
 
     //=== Initialize SETTINGS, LEADERBOARD and SHOP form buttons
@@ -123,17 +125,20 @@ void MenuView::loadImages()
 		vector<sf::IntRect> clip_rects_settings;
 		clip_rects_settings.push_back(sf::IntRect( 0, 0, 50, 50));
 		clip_rects_settings.push_back(sf::IntRect( 51, 0, 50, 50));
-		m_settingsFormButton = new Button(clip_rects_settings, m_menuFormButtonsTexture, 20, 530, 50, 50, false);
+		m_settingsFormButton = new Button(clip_rects_settings,
+                                    m_menuFormButtonsTexture, 20, 530, 50, 50, false);
 
         vector<sf::IntRect> clip_rects_lb;
         clip_rects_lb.push_back(sf::IntRect( 0, 100, 50, 50));
         clip_rects_lb.push_back(sf::IntRect( 51, 100, 50, 50));
-        m_leaderboardFormButton = new Button(clip_rects_lb, m_menuFormButtonsTexture, 830, 530, 50, 50, false);
+        m_leaderboardFormButton = new Button(clip_rects_lb,
+                                             m_menuFormButtonsTexture, 830, 530, 50, 50, false);
 
         vector<sf::IntRect> clip_rects_shop;
         clip_rects_shop.push_back(sf::IntRect( 0, 150, 50, 50));
         clip_rects_shop.push_back(sf::IntRect( 51, 150, 50, 50));
-        m_shopFormButton = new Button(clip_rects_shop, m_menuFormButtonsTexture, 830, 10, 50, 50, false);
+        m_shopFormButton = new Button(clip_rects_shop,
+                                      m_menuFormButtonsTexture, 830, 10, 50, 50, false);
 	}
 }
 
@@ -151,7 +156,6 @@ void MenuView::synchronize()
 	if (m_menuModel->getHomeState() == true)
 	{
 		//=== Elements update
-		m_titleGraphic->resize(400,200);
 		m_farBackground->sync();
 		m_nearBackground->sync();
 		m_playRectButton->sync();

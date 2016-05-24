@@ -87,7 +87,7 @@ void LeaderboardView::synchronize()
     m_homeFormButton->sync();
     m_clearLbRectButton->sync();
     m_clearLbRectButton->setPosition(m_width/2 -
-    m_clearLbRectButton->getGlobalBounds().width/2, 540);
+    m_clearLbRectButton->HALF_WIDTH, 540);
     m_homeFormButton->resize(FORM_BUTTONS_SIZE);
 
     //=== Text update

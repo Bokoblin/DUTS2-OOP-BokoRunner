@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['waytosort',['wayToSort',['../de/d82/_leaderboard_8cpp.html#a199eafd8d7a1f8bcbc04edccbebbb168',1,'Leaderboard.cpp']]]
+  ['zone_5fchanging_5fdistance',['ZONE_CHANGING_DISTANCE',['../_game_model_8h.html#a82302429486fa167fd940493ab2dc7fc',1,'GameModel.h']]],
+  ['zones',['zones',['../_game_model_8h.html#a5470eb43ca93def6f1c6c1241e08fb38',1,'GameModel.h']]]
 ];

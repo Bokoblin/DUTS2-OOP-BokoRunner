@@ -36,13 +36,13 @@ Dialog::Dialog(int x, int y, ShopItem *item, Text *t, string title, string conte
     m_negativeButton.setFont(*m_text->getBoldFont());
     m_negativeButton.setColor(MATERIAL_TEAL_COLOR);
     m_negativeButton.setString( negAnswer );
-    m_negativeButton.setPosition( m_posX + 0.5*m_width, m_posY + 0.83*m_height);
+    m_negativeButton.setPosition((float) (m_posX + 0.5 * m_width), (float) (m_posY + 0.83 * m_height));
 
     m_positiveButton.setCharacterSize(14);
     m_positiveButton.setFont(*m_text->getBoldFont());
     m_positiveButton.setColor(MATERIAL_TEAL_COLOR);
     m_positiveButton.setString( posAnswer );
-    m_positiveButton.setPosition( m_posX + 0.8*m_width, m_posY + 0.83*m_height);
+    m_positiveButton.setPosition((float) (m_posX + 0.8 * m_width), (float) (m_posY + 0.83 * m_height));
 }
 
 

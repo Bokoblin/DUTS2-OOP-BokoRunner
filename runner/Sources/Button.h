@@ -54,4 +54,4 @@ private:
     bool m_disabled;
 };
 
-#endif // BUTTON_H
+#endif

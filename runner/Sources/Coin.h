@@ -36,4 +36,4 @@ public:
 
 };
 
-#endif // COIN_H
+#endif

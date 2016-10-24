@@ -80,8 +80,8 @@ void ShopItemCard::loadImages()
 {
     //=== Initialize BUY, BOUGHT Buttons
 
-	if (!m_rectButtonsTexture.loadFromFile(RECT_IMAGE) )
-		cerr << "ERROR when loading image file: " << RECT_IMAGE << endl;
+	if (!m_rectButtonsTexture.loadFromFile(RECT_BUTTONS_IMAGE) )
+		cerr << "ERROR when loading image file: " << RECT_BUTTONS_IMAGE << endl;
 	else
 	{
         m_rectButtonsTexture.setSmooth(true);

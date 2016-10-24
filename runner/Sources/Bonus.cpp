@@ -52,11 +52,11 @@ void Bonus::chooseBonusType()
     else
         m_elementType = SHIELDBONUS;
 
-    /** Bonus percentage :  \n
-    *    1-30 : PV+       ~30% \n
-    *  31-50 : MEGA    ~20% \n
-    *  51-65 : FLY       ~15% \n
-    *  66-75 : SLOW   ~10% \n
+    /** Bonus percentage : \n
+    *  1-30 : PV+    ~30% \n
+    * 31-50 : MEGA   ~20% \n
+    * 51-65 : FLY    ~15% \n
+    * 66-75 : SLOW   ~10% \n
     * 76-100: SHIELD ~25%
     */
 }

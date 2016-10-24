@@ -22,7 +22,6 @@
    <string name="clearButtonLabel">BORRAR</string>
    <string name="leaderboardTitleLabel">Tabla_de_posiciones</string>
    <string name="leaderboardText">Todavia_no_hay_ninguna_puntuacion</string>
-   <string name="leaderboardErrorText">Puntuacion_datos_ha_sido_corrompido._Barra_lo.</string>
 
    <!-- Settings strings -->
    <string name="configTitleLabel">Configuracion</string>

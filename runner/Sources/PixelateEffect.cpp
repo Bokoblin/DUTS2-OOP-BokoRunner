@@ -57,7 +57,7 @@ bool PixelateEffect::onLoad(std::string image)
 *********************************************
     @author Arthur  @date 28/04
 *********************************************/
-void PixelateEffect::update(float time, float x, float y)
+void PixelateEffect::update(float x, float y)
 {
     if (m_isLoaded)
         m_shader.setParameter("pixel_threshold", (x + y) / 30);

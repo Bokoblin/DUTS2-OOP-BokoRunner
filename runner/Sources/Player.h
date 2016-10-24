@@ -18,6 +18,7 @@ limitations under the License.
 
 #include "MovableElement.h"
 #include <cmath>
+#include <utility>
 
 const int GAME_FLOOR = 480;
 const int FRAMERATE = 30;
@@ -77,4 +78,4 @@ private:
     std::pair<float,float> m_vectorBall;
 };
 
-#endif // PLAYER_H
+#endif

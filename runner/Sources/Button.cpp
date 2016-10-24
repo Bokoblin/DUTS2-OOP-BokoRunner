@@ -67,7 +67,7 @@ void Button::setClipRectArray(std::vector<sf::IntRect> crA)
 *********************************************/
 void Button::sync()
 {
-    if ( m_isRadio == false)
+    if (!m_isRadio)
         this->setTextureRect(m_clipRectsArray[m_pressed]);
     else
     {

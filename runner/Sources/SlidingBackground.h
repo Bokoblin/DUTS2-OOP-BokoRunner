@@ -48,14 +48,14 @@ public:
     //=== SETTERS
     void setSpeed(float speed);
     void setPosition(float x, float y);
-    void setAlpha(int alpha);
+    void setAlpha(sf::Uint8 alpha);
 
 private:
     //=== ATTRIBUTES
     GraphicElement *m_left, *m_right;
     float m_speed;
-    int m_alpha;
+    sf::Uint8 m_alpha;
 
 };
 
-#endif // SLIDINGBACKGROUND_H
+#endif

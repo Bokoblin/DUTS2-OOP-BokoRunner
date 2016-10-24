@@ -57,7 +57,7 @@ External libraries used by SFML
 #ifndef PIXELATEEFFECT_H
 #define PIXELATEEFFECT_H
 
-#include <SFML/Graphics.hpp>
+#include "GraphicElement.h"
 
 
 /********************************************
@@ -72,14 +72,12 @@ External libraries used by SFML
 *********************************************/
 class PixelateEffect : public sf::Drawable
 {
-
     public:
-
         PixelateEffect();
         ~PixelateEffect();
 
         void load(std::string image);
-        void update(float time, float x, float y);
+        void update(float x, float y);
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         bool onLoad(std::string image);
 
@@ -89,4 +87,5 @@ class PixelateEffect : public sf::Drawable
         sf::Sprite m_sprite;
         sf::Shader m_shader;
 };
-#endif // PIXELATEEFFECT_H
+
+#endif

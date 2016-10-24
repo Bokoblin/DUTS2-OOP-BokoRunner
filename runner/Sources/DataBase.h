@@ -16,49 +16,63 @@ limitations under the License.
 #ifndef _DATABASE_H
 #define _DATABASE_H
 
-#include "../../Libs/pugixml-1.7/src/pugixml.hpp"
-#include "ShopItem.h"
-#include "Leaderboard.h"
+#include "../Libs/pugixml-1.7/src/pugixml.hpp"
 #include <iostream>
 #include <sstream>
 #include <cassert>
+#include <vector>
 #include <set>
+#include <fstream>
 
 /********************************************
     Constant Variables
 ********************************************/
-//GAME
-const std::string CONFIG_FILE = "Resources/config.xml";
-const std::string HIDDEN_CONFIG_FILE = "Resources/.fragment_cache";
-
-const std::string DEFAULT_CONFIG_CONTENT = " \
-<?xml version=\"1.0\" encoding=\"utf-8\"?>\n \
-<runner>\n \
-    <config>\n \
-        <string name=\"language\">en</string>\n \
-        <string name=\"ball_skin\">default</string>\n \
-        <int name=\"total_coins_collected\">0</int>\n \
-        <int name=\"total_distance_travelled\">0</int>\n \
-        <int name=\"total_enemies_destroyed\">0</int>\n \
-        <int name=\"total_games_played\">0</int>\n \
-    </config>\n \
-    <shop>\n \
-        <item id=\"doubler\" name=\"Coin Doubler\" description=\"Double coins collected number\" price=\"1000\" boughtState=\"false\"/>\n \
-        <item id=\"shieldplus\" name=\"Increase Shield bonus\" description=\"Protect two times\" price=\"100\" boughtState=\"false\"/>\n \
-        <item id=\"megaplus\" name=\"Increase Mega bonus\" description=\"Increase bonus duration by 5s\" price=\"200\" boughtState=\"false\"/>\n \
-        <item id=\"flyplus\" name=\"Increase Fly bonus\" description=\"Increase bonus duration by 5s\" price=\"180\" boughtState=\"false\"/>\n \
-        <item id=\"morphing\" name=\"Morph ball skin\" description=\"Unlock ball's morph skin\" price=\"500\" boughtState=\"false\"/>\n \
-        <item id=\"capsule\" name=\"Capsule ball skin\" description=\"Unlock ball's capsule skin\" price=\"600\" boughtState=\"false\"/>\n \
-    </shop>\n \
-</runner>\n";
 
 const int COIN_MULTIPLIER = 20;
+const int MAX_SCORES = 10;
 
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+const std::string CONFIG_FILE = "Resources/config.xml";
+#else
+const std::string CONFIG_FILE = "~/.config/runner/config.xml";
+#endif
+
+const std::string DEFAULT_CONFIG_CONTENT = "<?xml version=\"1.0\"?>\n"
+        "<runner>\n"
+        "\t<config>\n"
+        "\t\t<configItem name=\"language\" value=\"en\"/>\n"
+        "\t\t<configItem name=\"ball_skin\" value=\"default\"/>\n"
+        "\t\t<configItem name=\"total_coins_collected\" value=\"0\"/>\n"
+        "\t\t<configItem name=\"total_distance_travelled\" value=\"0\"/>\n"
+        "\t\t<configItem name=\"total_enemies_destroyed\" value=\"0\"/>\n"
+        "\t\t<configItem name=\"total_games_played\" value=\"0\"/>\n"
+        "\t</config>\n"
+        "\t<shop>\n"
+        "\t\t<shopItem id=\"doubler\" name=\"Coin Doubler\" description=\"Double coins collected number\" price=\"1000\" boughtState=\"false\"/>\n"
+        "\t\t<shopItem id=\"shieldplus\" name=\"Increase Shield bonus\" description=\"Protect two times\" price=\"100\" boughtState=\"false\"/>\n"
+        "\t\t<shopItem id=\"megaplus\" name=\"Increase Mega bonus\" description=\"Increase bonus duration by 5s\" price=\"200\" boughtState=\"false\"/>\n"
+        "\t\t<shopItem id=\"flyplus\" name=\"Increase Fly bonus\" description=\"Increase bonus duration by 5s\" price=\"180\" boughtState=\"false\"/>\n"
+        "\t\t<shopItem id=\"morphing\" name=\"Morph ball skin\" description=\"Unlock ball's morph skin\" price=\"500\" boughtState=\"false\"/>\n"
+        "\t\t<shopItem id=\"capsule\" name=\"Capsule ball skin\" description=\"Unlock ball's capsule skin\" price=\"60\" boughtState=\"false\"/>\n"
+        "\t</shop>\n"
+        "\t<scores>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t</scores>\n"
+        "</runner>";
 
 /********************************************
     DataBase Class
 *********************************************
-    @author Arthur  @date 2/05 - 21/05
+    @author Arthur  @date 2/05 - 24/10
 *********************************************/
 class DataBase
 {
@@ -66,7 +80,6 @@ public:
     //=== CTORs / DTORs
     DataBase();
     DataBase(const DataBase& d)=delete;
-    ~DataBase();
 
     //=== GETTERS
     int getTotalCoinsNumber() const;
@@ -94,18 +107,19 @@ public:
     void createFile();
     bool checkFileIntegrity();
     void fetchConfigurationFromFile();
-    void fetchBuyableItemsFromFile(std::vector<ShopItem*> &setArray);
-    template <typename T>
-    void updateValue(T &variable, std::string name);
+    void updateConfigValues();
     void updateActivatedItemsArray();
+    void updateScoreArray();
     void pushConfigurationToFile();
+    void addEntryToScoreArray(int new_score);
+    void loadStringFromArray(std::string &scores_text);
     void saveCurrentGame();
     void resetCurrentGame();
+    void resetScore();
 
 private:
     //=== ATTRIBUTES
-
-    //Global
+    //Global App
     int m_totalCoinsCollected;
     int m_totalDistance;
     int m_totalFlattenedEnemies;
@@ -119,8 +133,7 @@ private:
     int m_currentFlattenedEnemies;
     int m_currentScore;
 
-    Leaderboard *m_leaderboard;
-
+    std::set<int> m_scoresArray;
     std::set<std::string> m_activatedItemsArray;
 };
 

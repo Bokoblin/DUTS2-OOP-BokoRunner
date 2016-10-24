@@ -61,7 +61,7 @@ void MenuModel::nextStep()
 {
     //=== Delete leaderboard if not anymore in shopState
 
-    if ( m_leaderboardState == false && m_leaderboard != nullptr)
+    if (!m_leaderboardState && m_leaderboard != nullptr)
     {
         delete m_leaderboard;
         m_leaderboard = nullptr;
@@ -69,7 +69,7 @@ void MenuModel::nextStep()
 
     //=== Delete shop if not anymore in shopState
 
-    if ( m_shopState == false && m_shop != nullptr)
+    if (!m_shopState && m_shop != nullptr)
     {
         delete m_shop;
         m_shop = nullptr;
@@ -77,7 +77,7 @@ void MenuModel::nextStep()
 
     //=== Delete settings if not anymore in shopState
 
-    if ( m_settingsState == false && m_settings != nullptr)
+    if (!m_settingsState && m_settings != nullptr)
     {
         delete m_settings;
         m_settings = nullptr;
@@ -95,7 +95,7 @@ Leaderboard* MenuModel::launchLeaderboard()
     m_homeState = false;
     m_leaderboardState = true;
 
-    m_leaderboard = new Leaderboard();
+    m_leaderboard = new Leaderboard(m_dataBase);
     return m_leaderboard;
 }
 

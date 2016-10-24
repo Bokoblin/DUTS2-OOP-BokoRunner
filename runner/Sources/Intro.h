@@ -19,12 +19,6 @@ limitations under the License.
 #include "View.h"
 
 /********************************************
-    Constant Variables
-********************************************/
-const std::string INTRO_IMAGE = "Images/intro.png";
-
-
-/********************************************
     Intro Class
 *********************************************
     @author Arthur  @date 27/03 - 14/04
@@ -48,4 +42,4 @@ private:
     GraphicElement *m_introGraphic;
 };
 
-#endif // INTRO_H
+#endif

@@ -16,6 +16,8 @@ limitations under the License.
 #ifndef _VIEW_H
 #define _VIEW_H
 
+#include "GameModel.h"
+#include "ImagesConstants.h"
 #include "Text.h"
 #include "SlidingBackground.h"
 #include "AnimatedGraphicElement.h"
@@ -34,36 +36,22 @@ limitations under the License.
 ********************************************/
 const int SCREEN_BPP = 32;
 const std::string APP_TITLE = "Boko Runner";
-const std::string IUT_LOGO_IMAGE = "Images/logo_iut.png";
-const std::string DEFAULT_FAR_HILL_BACKGROUND = "Images/background/hill_far.png";
-const std::string DEFAULT_NEAR_HILL_BACKGROUND = "Images/background/hill_near.png";
-const std::string DEFAULT_FAR_PLAIN_BACKGROUND = "Images/background/plain_far.png";
-const std::string DEFAULT_NEAR_PLAIN_BACKGROUND = "Images/background/plain_near.png";
-const std::string DEFAULT_FAR_T1_BACKGROUND = "Images/background/t1_far.png";
-const std::string DEFAULT_NEAR_T1_BACKGROUND = "Images/background/t1_near.png";
-const std::string DEFAULT_FAR_T2_BACKGROUND = "Images/background/t2_far.png";
-const std::string DEFAULT_NEAR_T2_BACKGROUND = "Images/background/t2_near.png";
-const std::string INDICATOR_IMAGE = "Images/indicator_buttons.png";
-const std::string RADIO_BUTTONS_IMAGE = "Images/radio_buttons.png";
-const std::string MENU_RECT_BUTTONS_IMAGE = "Images/rect_buttons.png";
-const std::string FORM_BUTTONS_IMAGE = "Images/menu_buttons.png";
-const std::string BONUS_IMAGE = "Images/bonus.png";
 
 class Model;
 
 /********************************************
     View Abstract Class
 *********************************************
-    @author Arthur  @date 21/02 - 18/05
+    @author Arthur  @date 21/02 - 23/10
     @author Florian @date 21/02 - 3/03
 *********************************************/
 class View
 {
     public:
         //=== CTORs / DTORs
-        View( float w, float h, sf::RenderWindow *window, Text *text );
+        View(float w, float h, sf::RenderWindow *window, Text *text );
         View( const View& myView ) = delete;
-        ~View();
+        virtual ~View();
 
         //=== SETTERS
         void setModel(Model *model);

@@ -164,8 +164,8 @@ void SettingsView::synchronize()
 
     m_morphBallSkinRadio->setDisabledState(!m_settings->getMorphSkinAvailability());
     m_capsuleBallSkinRadio->setDisabledState(!m_settings->getCapsuleSkinAvailability());
-    m_defaultBallSkinRadio->setDisabledState( m_settings->getMorphSkinAvailability() == false
-                    && m_settings->getCapsuleSkinAvailability() == false  );
+    m_defaultBallSkinRadio->setDisabledState(!m_settings->getMorphSkinAvailability()
+                                             && !m_settings->getCapsuleSkinAvailability());
 
     //=== Sync Radio buttons
 
@@ -202,7 +202,7 @@ void SettingsView::synchronize()
 
     //=== Text update
 
-    m_text->syncSettingsText(m_width, m_height);
+    m_text->syncSettingsText();
 }
 
 

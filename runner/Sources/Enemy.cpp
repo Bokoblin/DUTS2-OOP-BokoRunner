@@ -47,14 +47,12 @@ void Enemy::chooseEnemyType()
         m_width = 30;
         m_height = 30;
     }
-
     else if (result <= 80)
     {
         m_elementType = TOTEMENEMY;
         m_width = 30;
         m_height = 90;
     }
-
     else
     {
         m_elementType = BLOCKENEMY;
@@ -63,8 +61,8 @@ void Enemy::chooseEnemyType()
     }
 
     /** Enemy percentage :  \n
-    *   1-55 : STANDARD  ~55% \n
-    *  56-80 : TOTEM       ~25% \n
+    *    1-55 : STANDARD  ~55% \n
+    *   56-80 : TOTEM     ~25% \n
     *  81-100 : BLOCK     ~20%
     */
 }

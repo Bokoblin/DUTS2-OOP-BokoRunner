@@ -34,9 +34,6 @@ public:
     ShopView(float w, float h, sf::RenderWindow *window, Text * text);
     virtual ~ShopView();
 
-    //=== GETTERS
-    ShopItem* getCardItem( GraphicElement *elem) const;
-
     //=== SETTERS
     void setShopModel(Shop *model);
 

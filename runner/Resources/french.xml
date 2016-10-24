@@ -22,7 +22,6 @@
    <string name="clearButtonLabel">EFFACER</string>
    <string name="leaderboardTitleLabel">Classement</string>
    <string name="leaderboardLabel">Il_n'y_a_pas_encore_de_scores</string>
-   <string name="leaderboardErrorLabel">Les_donnees_de_score_ont_ete_corrompues._Veuillez_les_effacer.</string>
 
    <!-- Settings strings -->
    <string name="configTitleLabel">Configuration</string>

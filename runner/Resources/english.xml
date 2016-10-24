@@ -22,7 +22,6 @@
    <string name="clearButtonLabel">CLEAR</string>
    <string name="leaderboardTitleLabel">Leaderboard</string>
    <string name="leaderboardText">There_isn't_any_score_yet</string>
-   <string name="leaderboardErrorText">Score_database_has_been_corrupted._Please_clear_it.</string>
 
    <!-- Settings strings -->
    <string name="configTitleLabel">Configuration</string>

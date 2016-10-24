@@ -32,25 +32,11 @@ limitations under the License.
 /********************************************
     Constant Variables
 ********************************************/
-//GAME
-const std::string BALL_IMAGE = "Images/ball.png";
-const std::string ENEMIES_IMAGE = "Images/enemies.png";
-const std::string SHIELD_IMAGE = "Images/shield.png";
-const std::string BOTTOM_BAR_IMAGE = "Images/bottom_bar.png";
-const std::string LIFE_BOX_IMAGE = "Images/life_bar.png";
-const std::string REMAINING_LIFE = "Images/remaining_life.png";
-//PAUSE & END
-const std::string PAUSE_BGND_HILL_IMAGE = "Images/pause_bg_hill.png";
-const std::string PAUSE_BGND_PLAIN_IMAGE = "Images/pause_bg_plain.png";
-const std::string GAME_BUTTONS_IMAGE = "Images/pause_elements.png";
-const std::string GRECT_BUTTON_IMAGE = "Images/rect_buttons.png";
-const std::string END_BGND_IMAGE = "Images/end_background.png";
 //MUSIC
 const std::string GAME_NORMAL_THEME_MUSIC = "Music/game_normal_sound.ogg";
 const std::string GAME_MASTER_THEME_MUSIC = "Music/game_master_sound.ogg";
 const std::string COINS_COLLECTED_MUSIC = "Music/coin_collected_sound.ogg";
 const std::string ENEMIES_DESTRUCTED_MUSIC = "Music/destroyed_enemies_sound.ogg";
-
 
 const int TRANSITION_SPEED = 10;
 const int PAUSE_FORM_X = 30;
@@ -90,7 +76,6 @@ private:
     float m_xPixelIntensity;
     float m_yPixelIntensity;
     bool m_isMusicEnabled;
-    sf::Clock clock;
 
     //Game Textures
     sf::Texture m_farBackgroundTexture;
@@ -149,4 +134,4 @@ private:
 };
 
 
-#endif // GAMEVIEW_H
+#endif

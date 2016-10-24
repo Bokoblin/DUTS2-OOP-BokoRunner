@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['pause_5fbgnd_5fhill_5fimage',['PAUSE_BGND_HILL_IMAGE',['../dc/d46/_game_view_8h.html#adcffb98dd9ab8c622d501e5fdeb4f04c',1,'GameView.h']]],
-  ['pause_5fbgnd_5fplain_5fimage',['PAUSE_BGND_PLAIN_IMAGE',['../dc/d46/_game_view_8h.html#ae5aecedefe9b4e692b51c60d4672f67f',1,'GameView.h']]],
-  ['pause_5fform_5fx',['PAUSE_FORM_X',['../dc/d46/_game_view_8h.html#ababb4cf070cb6b20b2f91076ee741313',1,'GameView.h']]],
-  ['pause_5ftext_5fx',['PAUSE_TEXT_X',['../d4/dcf/_text_8h.html#a8bf0eccbc88b61e982b6901be0c1d8a7',1,'Text.h']]],
-  ['precision',['PRECISION',['../d1/d39/_player_8h.html#ab0fe7f331f3e51db32d0a37539dc8fba',1,'Player.h']]]
+  ['radio_5fbuttons_5fimage',['RADIO_BUTTONS_IMAGE',['../_images_constants_8h.html#a0f89357ad03f9054b8c1c40da5d7bee9',1,'ImagesConstants.h']]],
+  ['radio_5ftext_5fx',['RADIO_TEXT_X',['../_text_8h.html#aec433d33110513f9e494b5a6d3893978',1,'Text.h']]],
+  ['rect_5fbuttons_5fimage',['RECT_BUTTONS_IMAGE',['../_images_constants_8h.html#abaf882c5da7a6d0c6cc2107c4ff866d9',1,'ImagesConstants.h']]],
+  ['remaining_5flife',['REMAINING_LIFE',['../_images_constants_8h.html#a662bdb942ae3b9cc2bfeabf61e5efcd8',1,'ImagesConstants.h']]],
+  ['roboto_5fbold_5ffont',['ROBOTO_BOLD_FONT',['../_text_8h.html#abaf8026bdf74f09ee46c921405f6d1f9',1,'Text.h']]],
+  ['roboto_5fcondensed_5ffont',['ROBOTO_CONDENSED_FONT',['../_text_8h.html#ad5cb698ef99e764300f965ca1ebb0ab8',1,'Text.h']]],
+  ['roboto_5fregular_5ffont',['ROBOTO_REGULAR_FONT',['../_text_8h.html#a61794e8275ddb6119cf4f8f37aaaff6f',1,'Text.h']]]
 ];

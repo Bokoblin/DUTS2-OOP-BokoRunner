@@ -7,7 +7,8 @@ using namespace std;
 *********************************************
     @author Arthur  @date 02/04 - 6/05
 *********************************************/
-Text::Text(DataBase *dataModel) : m_dataBase{dataModel}
+Text::Text(DataBase *dataModel, const int width, const int height)
+        : m_dataBase{dataModel}, m_width{width}, m_height{height}
 {
     m_regularFont = new sf::Font();
     m_regularFont->loadFromFile(ROBOTO_REGULAR_FONT);
@@ -288,12 +289,12 @@ void Text::updateString(string file, sf::Text *text, string name)
 *********************************************
     @author Arthur  @date 02/04 - 13/04
 *********************************************/
-void Text::syncMenuHomeText(int w, int h)
+void Text::syncMenuHomeText()
 {
-    m_playButtonLabel->setPosition( w/2 -
-        int(m_playButtonLabel->HALF_WIDTH), h/1.42 );
-    m_quitButtonLabel->setPosition( w/2 -
-        int(m_quitButtonLabel->HALF_WIDTH), h/1.15 );
+    m_playButtonLabel->setPosition( m_width/2 -
+        int(m_playButtonLabel->HALF_WIDTH), (float) (m_height / 1.42));
+    m_quitButtonLabel->setPosition( m_width/2 -
+        int(m_quitButtonLabel->HALF_WIDTH), (float) (m_height / 1.15));
 }
 
 
@@ -302,11 +303,11 @@ void Text::syncMenuHomeText(int w, int h)
 *********************************************
     @author Arthur  @date 14/04 - 20/05
 *********************************************/
-void Text::syncSettingsText(int w, int h)
+void Text::syncSettingsText()
 {
     //=== Configuration
 
-    m_configTitleLabel->setPosition(w/2 -
+    m_configTitleLabel->setPosition(m_width/2 -
         int(m_configTitleLabel->HALF_WIDTH), TITLE_TEXT_ROW);
     m_configLangTitleLabel->setPosition(40, 150);
     m_configLangEngLabel->setPosition(RADIO_TEXT_X, 202);
@@ -315,14 +316,14 @@ void Text::syncSettingsText(int w, int h)
     m_configDifficultyTitleLabel->setPosition(40, 370);
     m_configDifficultyNormalLabel->setPosition(RADIO_TEXT_X, 417);
     m_configDifficultyMasterLabel->setPosition(RADIO_TEXT_X, 457);
-    m_configCustomTitleLabel->setPosition(w/2+40, 150);
-    m_configDefaultBallskinLabel->setPosition(w/2+RADIO_TEXT_X, 202);
-    m_configMorphBallskinLabel->setPosition(w/2+RADIO_TEXT_X, 242);
-    m_configCapsuleBallskinLabel->setPosition(w/2+RADIO_TEXT_X, 282);
+    m_configCustomTitleLabel->setPosition(m_width/2+40, 150);
+    m_configDefaultBallskinLabel->setPosition(m_width/2+RADIO_TEXT_X, 202);
+    m_configMorphBallskinLabel->setPosition(m_width/2+RADIO_TEXT_X, 242);
+    m_configCapsuleBallskinLabel->setPosition(m_width/2+RADIO_TEXT_X, 282);
 
     //=== Statistics
 
-    m_statisticsTitleLabel->setPosition(w/2 -
+    m_statisticsTitleLabel->setPosition(m_width/2 -
         int(m_statisticsTitleLabel->HALF_WIDTH), TITLE_TEXT_ROW);
     m_totalDistanceLabel->setPosition(RADIO_TEXT_X, 150);
     m_totalDistanceLabel->setCharacterSize(CONTENT_CHARACTER_SIZE);
@@ -330,15 +331,15 @@ void Text::syncSettingsText(int w, int h)
     m_totalFlattenedEnemiesLabel->setCharacterSize(CONTENT_CHARACTER_SIZE);
     m_totalGamesPlayedLabel->setPosition(RADIO_TEXT_X, 230);
     m_totalGamesPlayedLabel->setCharacterSize(CONTENT_CHARACTER_SIZE);
-    m_totalDistanceText->setPosition(w/2, 150);
-    m_totalFlattenedEnemiesText->setPosition(w/2, 190);
-    m_totalGamesPlayedText->setPosition(w/2, 230);
-    m_creditsTitleLabel->setPosition(w/2 -
-        int(m_creditsTitleLabel->HALF_WIDTH), h/2);
+    m_totalDistanceText->setPosition(m_width/2, 150);
+    m_totalFlattenedEnemiesText->setPosition(m_width/2, 190);
+    m_totalGamesPlayedText->setPosition(m_width/2, 230);
+    m_creditsTitleLabel->setPosition(m_width/2 -
+        int(m_creditsTitleLabel->HALF_WIDTH), m_width/2);
     m_creditsContentLabel->setPosition(RADIO_TEXT_X, 400);
     m_creditsContentLabel->setCharacterSize(CONTENT_CHARACTER_SIZE);
     m_copyrightLabel->setCharacterSize(CONTENT_CHARACTER_SIZE);
-    m_copyrightLabel->setPosition(w/2 -
+    m_copyrightLabel->setPosition(m_width/2 -
         int(m_copyrightLabel->HALF_WIDTH), 490);
 
 
@@ -354,48 +355,34 @@ void Text::syncSettingsText(int w, int h)
 /********************************************
     Menu Leaderboard Text Syncing
 *********************************************
-    @author Arthur  @date 19/04 - 20/04
+    @author Arthur  @date 19/04 - 24/10
 *********************************************/
-void Text::syncMenuLeaderboardText(int w, int h, Leaderboard* lb)
+void Text::syncMenuLeaderboardText()
 {
     string scores = "";
+    m_dataBase->loadStringFromArray(scores);
 
-    if (lb->checkFileIntegrity() == true)
-    {
-        lb->loadVectorFromFile();
-        lb->loadStringFromVector(scores);
-    }
-    else
-        scores = "corrupted";
-
-    if ( scores == "corrupted" )
-    {
-        m_textMap[m_leaderboardContentText] = "leaderboardErrorText";
-        updateWholeText();
-        m_leaderboardContentText->setPosition(w/2 -
-            int(m_leaderboardContentText->HALF_WIDTH), 250);
-    }
-    else if ( scores == "empty")
+    if ( scores.empty() )
     {
         m_textMap[m_leaderboardContentText] = "leaderboardText";
         updateWholeText();
-        m_leaderboardContentText->setPosition(w/2 -
+        m_leaderboardContentText->setPosition(m_width/2 -
                 int(m_leaderboardContentText->HALF_WIDTH), 250);
     }
-    else //valid and not empty
+    else
     {
         m_textMap[m_leaderboardContentText] = "leaderboardText";
         m_leaderboardContentText->setString(scores);
         m_leaderboardContentText->setCharacterSize(30);
-        m_leaderboardContentText->setPosition(w/2 -
+        m_leaderboardContentText->setPosition(m_width/2 -
                 int(m_leaderboardContentText->HALF_WIDTH), 100);
     }
 
-    m_leaderboardTitleLabel->setPosition(w/2 -
+    m_leaderboardTitleLabel->setPosition(m_width/2 -
             int(m_leaderboardTitleLabel->HALF_WIDTH), TITLE_TEXT_ROW);
 
     m_clearButtonLabel->setCharacterSize(20);
-    m_clearButtonLabel->setPosition(w/2 -
+    m_clearButtonLabel->setPosition(m_width/2 -
             int(m_clearButtonLabel->HALF_WIDTH), 547);
 }
 
@@ -405,9 +392,9 @@ void Text::syncMenuLeaderboardText(int w, int h, Leaderboard* lb)
 *********************************************
     @author Arthur  @date 16/05 -
 *********************************************/
-void Text::syncShopText(int w, int h)
+void Text::syncShopText()
 {
-    m_totalCoinsNbText->setPosition(w/2, TITLE_TEXT_ROW);
+    m_totalCoinsNbText->setPosition(m_width/2, TITLE_TEXT_ROW);
     m_totalCoinsNbText->setColor(GOLD_COLOR);
 
     m_totalCoinsNbText->setString( to_string( m_dataBase->getTotalCoinsNumber() ));
@@ -450,7 +437,7 @@ void Text::syncDialogText(string context, string &title, string &content, string
 *********************************************
     @author Arthur  @date 02/04 - 17/04
 *********************************************/
-void Text::syncGameText(GameModel *gameModel)
+void Text::syncGameText(int bonusTimeout)
 {
     m_playerLifeLabel->setPosition(40,545);
     m_currentDistanceLabel->setPosition(440, 545);
@@ -459,8 +446,8 @@ void Text::syncGameText(GameModel *gameModel)
     m_currentDistanceText->setString( to_string(
             m_dataBase->getCurrentDistance() ) + " m" );
     m_bonusTimeoutText->setPosition(840,545);
-    if ( gameModel->getBonusTimeout() > 0)
-        m_bonusTimeoutText->setString( to_string(gameModel->getBonusTimeout() ) );
+    if ( bonusTimeout > 0)
+        m_bonusTimeoutText->setString( to_string(bonusTimeout) );
     else
         m_bonusTimeoutText->setString("");
 }
@@ -493,10 +480,10 @@ void Text::syncPauseText()
 *********************************************
     @author Arthur  @date 02/04 - 20/05
 *********************************************/
-void Text::syncEndText(GameModel *gameModel, int w, int h)
+void Text::syncEndText(bool isGameSaved, int gameSpeed)
 {
     //=== Score sub-total text
-    m_endTitleLabel->setPosition(w/2 - int(m_endTitleLabel->HALF_WIDTH), TITLE_TEXT_ROW);
+    m_endTitleLabel->setPosition(m_width/2 - int(m_endTitleLabel->HALF_WIDTH), TITLE_TEXT_ROW);
     m_endTitleLabel->setFont(*m_BoldFont);
     m_speedMultiplierLabel->setPosition(SUBTOTAL_LABEL_X, 170);
     m_speedMultiplierText->setPosition(SUBTOTAL_VALUE_X, 170);
@@ -517,7 +504,7 @@ void Text::syncEndText(GameModel *gameModel, int w, int h)
     m_currentScoreText->setPosition(SUBTOTAL_VALUE_X,350);
     m_currentScoreText->setFont(*m_BoldFont);
     m_saveButtonText->setCharacterSize(20);
-    if ( gameModel->getSaveStatus() == false)
+    if (!isGameSaved)
             m_saveButtonText->setPosition(-100, -100);
     else
         m_saveButtonText->setPosition(450 - int(m_saveButtonText->HALF_WIDTH), 437);
@@ -528,7 +515,7 @@ void Text::syncEndText(GameModel *gameModel, int w, int h)
     m_totalCoinsNbText->setColor(GOLD_COLOR);
     m_pauseRestartLabel->setPosition(760-m_pauseRestartLabel->HALF_WIDTH,535);
 
-    m_speedMultiplierText->setString( to_string((int)gameModel->getGameSpeed() ));
+    m_speedMultiplierText->setString( to_string(gameSpeed));
     m_currentDistanceText->setString( to_string( m_dataBase->getCurrentDistance() ) + " m" );
     m_currentCoinsNbText->setString( to_string( m_dataBase->getCurrentCoinsNumber() ) + "  X  20" );
     m_totalCoinsNbText->setString( to_string( m_dataBase->getTotalCoinsNumber() ));
@@ -542,7 +529,7 @@ void Text::syncEndText(GameModel *gameModel, int w, int h)
 *********************************************
     @author Arthur  @date 02/04 - 13/04
 *********************************************/
-void Text::drawMenuHomeText(sf::RenderWindow *window)
+void Text::drawMenuHomeText(sf::RenderWindow *window) const
 {
     window->draw(*m_playButtonLabel);
     window->draw(*m_quitButtonLabel);
@@ -554,7 +541,7 @@ void Text::drawMenuHomeText(sf::RenderWindow *window)
 *********************************************
     @author Arthur  @date 14/04 - 20/05
 *********************************************/
-void Text::drawMenuSettingsText(sf::RenderWindow *window, int currentPage)
+void Text::drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const
 {
     if ( currentPage == 0)
     {
@@ -592,7 +579,7 @@ void Text::drawMenuSettingsText(sf::RenderWindow *window, int currentPage)
 *********************************************
     @author Arthur  @date 19/04 - 20/04
 *********************************************/
-void Text::drawLeaderboardText(sf::RenderWindow *window)
+void Text::drawLeaderboardText(sf::RenderWindow *window) const
 {
     window->draw(*m_leaderboardTitleLabel);
     window->draw(*m_leaderboardContentText);
@@ -605,7 +592,7 @@ void Text::drawLeaderboardText(sf::RenderWindow *window)
 *********************************************
     @author Arthur  @date 16/05
 *********************************************/
-void Text::drawMenuShopText(sf::RenderWindow *window)
+void Text::drawMenuShopText(sf::RenderWindow *window) const
 {
     window->draw(*m_totalCoinsNbText);
 }
@@ -616,7 +603,7 @@ void Text::drawMenuShopText(sf::RenderWindow *window)
 *********************************************
     @author Arthur  @date 02/04 - 17/04
 *********************************************/
-void Text::drawGameText(sf::RenderWindow *window)
+void Text::drawGameText(sf::RenderWindow *window) const
 {
     window->draw(*m_playerLifeLabel);
     window->draw(*m_currentDistanceLabel);
@@ -630,7 +617,7 @@ void Text::drawGameText(sf::RenderWindow *window)
 *********************************************
     @author Arthur  @date 02/04 - 17/04
 *********************************************/
-void Text::drawPauseText(sf::RenderWindow *window)
+void Text::drawPauseText(sf::RenderWindow *window) const
 {
     window->draw(*m_currentDistanceText);
     window->draw(*m_currentCoinsNbText);
@@ -646,7 +633,7 @@ void Text::drawPauseText(sf::RenderWindow *window)
 *********************************************
     @author Arthur  @date 02/04 - 3/05
 *********************************************/
-void Text::drawEndText(sf::RenderWindow *window)
+void Text::drawEndText(sf::RenderWindow *window) const
 {
     window->draw(*m_endTitleLabel);
     window->draw(*m_speedMultiplierLabel);

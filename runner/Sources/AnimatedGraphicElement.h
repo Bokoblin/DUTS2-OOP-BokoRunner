@@ -48,4 +48,4 @@ private:
     std::chrono::system_clock::time_point m_lastAnimationTime;
 };
 
-#endif // ANIMATEDGRAPHICELEMENT_H
+#endif

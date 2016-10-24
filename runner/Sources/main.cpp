@@ -43,14 +43,14 @@ int main()
     DataBase data;
     Model model(SCREEN_WIDTH, SCREEN_HEIGHT);
     model.setDataBase(&data);
-    Text *text = new Text(&data);
+    Text *text = new Text(&data, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     //Allows to choose which screen will be launch at Run
     model.setIntroState(true);
 
     while(window->isOpen() )
     {
-        if  (model.getIntroState() == true)
+        if  ( model.getIntroState() )
         {
             Intro intro(INTRO_WIDTH, INTRO_HEIGHT, window, text);
             intro.setModel(&model);
@@ -61,7 +61,7 @@ int main()
             }
         }
 
-        if  (model.getMenuState() == true)
+        if  ( model.getMenuState() )
         {
             MenuModel mModel(model);
             mModel.setDataBase(&data);
@@ -76,7 +76,7 @@ int main()
             }
         }
 
-        if  (model.getGameState() == true)
+        if  ( model.getGameState() )
         {
             GameModel gModel(model);
             gModel.setDataBase(&data);
@@ -89,7 +89,7 @@ int main()
                 gView.synchronize();
                 gView.draw();
             }
-            if (model.getResetGameState() == true)
+            if ( model.getResetGameState() )
             {
                 model.setGameState(true);
                 model.setResetGameState(false);

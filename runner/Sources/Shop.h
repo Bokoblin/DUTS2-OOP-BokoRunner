@@ -43,6 +43,8 @@ private:
     DataBase *m_dataBase;
 
     std::vector<ShopItem*> m_shopItemsArray;
+
+    void fetchBuyableItemsFromFile();
 };
 
 #endif

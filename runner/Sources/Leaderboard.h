@@ -16,42 +16,26 @@ limitations under the License.
 #ifndef LEADERBOARD_H
 #define LEADERBOARD_H
 
-#include <fstream>
-#include <vector>
-#include <algorithm>
-
-/********************************************
-    Constant Variables
-********************************************/
-const std::string SCORES_FILE = "Resources/scores.txt";
-const std::string HIDDEN_SCORES_FILE = "Resources/.font_cache";
-//hidden in linux and not explicit to score
-const int MAX_SCORES = 10;
+#include "DataBase.h"
 
 /********************************************
     Leaderboard Class
 *********************************************
-    @author Arthur  @date  19/04 - 21/05
+    @author Arthur  @date  19/04 - 24/10
 *********************************************/
 class Leaderboard
 {
 public:
     //=== CTORs / DTORs
-    Leaderboard();
+    Leaderboard(DataBase *data);
     ~Leaderboard();
 
-    //=== METHODS
-    void createFile();
-    void loadVectorFromFile();
-    void loadFileFromVector();
-    void sortVector();
-    void addEntryToVector(int new_score);
-    void loadStringFromVector(std::string &scores_text);
-    bool checkFileIntegrity();
+    //=== GETTERS
+    DataBase *getDataBase() const;
 
 private:
-    std::vector<int> m_scoresArray;
-
+    //=== ATTRIBUTES
+    DataBase *m_dataBase; //to not delete in dtor
 };
 
 #endif

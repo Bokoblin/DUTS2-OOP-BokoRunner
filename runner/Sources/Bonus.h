@@ -35,4 +35,4 @@ public:
     void chooseBonusType();
 
 };
-#endif // BONUS_H
+#endif

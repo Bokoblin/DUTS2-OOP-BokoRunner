@@ -26,10 +26,8 @@ MovableElement::~MovableElement()
 /********************************************
     Getters
 *********************************************
-    @author Arthur  @date 23/02 - 11/04
+    @author Arthur  @date 23/02 - 23/10
 *********************************************/
-float MovableElement::getMoveX() const { return m_moveX; }
-float MovableElement::getMoveY() const { return m_moveY; }
 float MovableElement::getPosX()  const { return m_posX;  }
 float MovableElement::getPosY()  const { return m_posY;  }
 float MovableElement::getWidth() const { return m_width; }

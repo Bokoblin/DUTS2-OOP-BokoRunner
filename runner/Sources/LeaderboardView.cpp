@@ -11,7 +11,8 @@ using namespace std;
 LeaderboardView::LeaderboardView(float w, float h, sf::RenderWindow *window, Text * t):
     View(w, h, window, t), m_leaderboard{nullptr}
 {
-	    loadImages();
+    loadImages();
+    m_text->syncMenuLeaderboardText();
 }
 
 
@@ -78,7 +79,7 @@ void LeaderboardView::loadImages()
 /********************************************
     Synchronization function
 *********************************************
-    @author Arthur  @date 20/05 - 21/05
+    @author Arthur  @date 20/05 - 24/10
 *********************************************/
 void LeaderboardView::synchronize()
 {
@@ -89,10 +90,6 @@ void LeaderboardView::synchronize()
     m_clearLbRectButton->setPosition(m_width/2 -
     m_clearLbRectButton->HALF_WIDTH, 540);
     m_homeFormButton->resize(FORM_BUTTONS_SIZE);
-
-    //=== Text update
-
-    m_text->syncMenuLeaderboardText(m_width, m_height, m_leaderboard);
 }
 
 
@@ -151,7 +148,8 @@ bool LeaderboardView::treatEvents(sf::Event event)
         }
         if ( m_clearLbRectButton->IS_POINTED )
         {
-            m_leaderboard->createFile();
+            m_leaderboard->getDataBase()->resetScore();
+            m_text->syncMenuLeaderboardText();
         }
     }
     return stop_leaderboard;

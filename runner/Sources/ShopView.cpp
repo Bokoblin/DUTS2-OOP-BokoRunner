@@ -116,15 +116,15 @@ void ShopView::createCards()
 
     //=== Create Pages Indicator
 
-    m_totalIndicator = m_shop->getShopItemsArray().size()/3;
+    m_totalIndicator = (int) (m_shop->getShopItemsArray().size() / 3);
     if ( m_shop->getShopItemsArray().size()%3 != 0)
         m_totalIndicator++;
 
-    for (int i=0; i < m_totalIndicator; i++)
+    for (int j=0; j < m_totalIndicator; j++)
     {
-        m_pageIndicators[i] = new Button(*m_pageIndicatorButton);
-        m_pageIndicators[i]->setPosition( m_width/2 - 10*m_totalIndicator + 20*i, 550 );
-        m_pageIndicators[i]->resize(22, 22);
+        m_pageIndicators[j] = new Button(*m_pageIndicatorButton);
+        m_pageIndicators[j]->setPosition( m_width/2 - 10*m_totalIndicator + 20*j, 550 );
+        m_pageIndicators[j]->resize(22, 22);
     }
 }
 
@@ -160,7 +160,7 @@ void ShopView::synchronize()
     m_homeFormButton->sync();
     m_homeFormButton->resize(FORM_BUTTONS_SIZE);
 
-    m_text->syncShopText(m_width, m_height);
+    m_text->syncShopText();
 
     for( ShopItemCard *card : m_shopItemsCardArray)
     {
@@ -263,8 +263,8 @@ bool ShopView::treatEvents(sf::Event event)
                 content.insert(content.find("\n")+11, to_string(card->getItem()->getPrice() ) );
 
                 //create buy dialog
-                m_buyDialog = new Dialog( m_width/2 - 125, m_height/2-100,
-                                          card->getItem(), m_text, title, content, negative_choice, positive_choice);
+                m_buyDialog = new Dialog((int) (m_width / 2 - 125), (int) (m_height / 2 - 100),
+                                         card->getItem(), m_text, title, content, negative_choice, positive_choice);
             }
 
         //Mouse up on negative button
@@ -287,8 +287,8 @@ bool ShopView::treatEvents(sf::Event event)
             else
                 m_text->syncDialogText("failure", title, content, negative_choice, positive_choice);
 
-            m_buyDialog = new Dialog( m_width/2 - 125, m_height/2-100,
-                                      nullptr, m_text, title, content, negative_choice, positive_choice);
+            m_buyDialog = new Dialog((int) (m_width / 2 - 125), (int) (m_height / 2 - 100),
+                                     nullptr, m_text, title, content, negative_choice, positive_choice);
         }
 
         //Mouse up on positive button as toast

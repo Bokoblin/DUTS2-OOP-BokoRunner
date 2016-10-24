@@ -53,7 +53,7 @@ float SlidingBackground::getSeparationPositionX() const
     @author Florian @date 3/03
 *********************************************/
 void SlidingBackground::setSpeed(float speed) { m_speed = speed; }
-void SlidingBackground::setAlpha(int alpha) { m_alpha = alpha; }
+void SlidingBackground::setAlpha(sf::Uint8 alpha) { m_alpha = alpha; }
 void SlidingBackground::setPosition(float x, float y)
 {
     m_left->setPosition(x, y);

@@ -28,9 +28,8 @@ limitations under the License.
 ********************************************/
 const int SCREEN_WIDTH = 900;
 const int SCREEN_HEIGHT = 600;
-const std::string TITLE_IMAGE = "Images/title.png";
-const std::string MENU_MUSIC = "Music/menu_sound.ogg";
 
+const std::string MENU_MUSIC = "Music/menu_sound.ogg";
 
 /********************************************
     MenuView Class
@@ -82,5 +81,4 @@ private:
     sf::Music m_menuMusic;
 };
 
-
-#endif // MENUVIEW_H
+#endif

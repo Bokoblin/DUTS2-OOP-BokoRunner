@@ -9,7 +9,7 @@ using namespace std;
 *********************************************/
 Intro::Intro(float w, float h, sf::RenderWindow *window, Text *text): View(w, h, window, text)
 {
-    m_window->create( sf::VideoMode(w, h, SCREEN_BPP), APP_TITLE, sf::Style::None );
+    m_window->create(sf::VideoMode((unsigned int) w, (unsigned int) h, SCREEN_BPP), APP_TITLE, sf::Style::None );
     m_window->setFramerateLimit(30);
     m_window->setPosition(ENVIRONMENT_CENTER);
 
@@ -85,7 +85,7 @@ bool Intro::treatEvents()
         sf::Event event;
         while (m_window->pollEvent(event))
         {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_model->getIntroState() == true)
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_model->getIntroState())
             {
                 m_model->setIntroState(false);
                 m_model->setMenuState(true);

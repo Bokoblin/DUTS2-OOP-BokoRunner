@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef MOVABLEELEMENT_H
 #define MOVABLEELEMENT_H
 
-#include <string>
+#include <cstdlib>
 
 enum element
 {
@@ -54,8 +54,6 @@ public:
     //=== GETTERS
     float getPosX() const;
     float getPosY() const;
-    float getMoveX() const;
-    float getMoveY() const;
     float getWidth() const;
     float getHeight() const;
     bool getCollisionState() const;
@@ -79,4 +77,4 @@ protected:
     int m_elementType;
 };
 
-#endif // MOVABLEELEMENT_H
+#endif

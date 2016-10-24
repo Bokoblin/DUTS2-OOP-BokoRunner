@@ -47,7 +47,6 @@ class Dialog
         const sf::Text& getNegativeButton() const;
         const sf::Text& getPositiveButton() const;
         ShopItem *getItemLinked() const;
-        bool getOverridingState() const;
 
         //=== METHODS
         void draw(sf::RenderWindow *window) const;

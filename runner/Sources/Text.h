@@ -16,12 +16,12 @@ limitations under the License.
 #ifndef TEXT_H
 #define TEXT_H
 
-#include "GameModel.h"
+#include "DataBase.h"
 #include "SFML/Graphics.hpp"
 #include <map>
 
 #define HALF_WIDTH getGlobalBounds().width/2
-#define TITLE_TEXT_ROW h/12
+#define TITLE_TEXT_ROW m_height/12
 #define GOLD_COLOR sf::Color(255,204,0,255)
 #define ENEMY_BLUE_COLOR sf::Color(0,232,209,255)
 #define END_GREY_COLOR sf::Color(86,103,97,255)
@@ -46,13 +46,13 @@ const int CONTENT_CHARACTER_SIZE = 20;
 /********************************************
     Text Class
 *********************************************
-    @author Arthur  @date 02/04 - 24/05
+    @author Arthur  @date 02/04 - 23/10
 *********************************************/
 class Text
 {
     public:
     //=== CTORs / DTORs
-    Text(DataBase *data);
+    Text(DataBase *data, const int width, const int height);
     Text(const Text& myText) = delete;
     ~Text();
 
@@ -69,26 +69,27 @@ class Text
     void updateWholeText();
     void updateString(std::string file, sf::Text *currentText, std::string currentName);
 
-    void syncMenuHomeText(int w, int h);
-    void syncSettingsText( int w, int h);
-    void syncMenuLeaderboardText(int w, int h, Leaderboard *lb);
-    void syncShopText(int w, int h);
+    void syncMenuHomeText();
+    void syncSettingsText();
+    void syncMenuLeaderboardText();
+    void syncShopText();
     void syncDialogText(std::string context, std::string &title, std::string &content,
                                      std::string &neg_choice, std::string &pos_choices);
-    void syncGameText(GameModel *gameModel);
+    void syncGameText(int bonusTimeout);
     void syncPauseText();
-    void syncEndText(GameModel *gameModel, int w, int h);
+    void syncEndText(bool saveStatus, int gameSpeed);
 
-    void drawMenuHomeText(sf::RenderWindow *window);
-    void drawMenuSettingsText(sf::RenderWindow *window, int currentPage);
-    void drawLeaderboardText(sf::RenderWindow *window);
-    void drawMenuShopText(sf::RenderWindow *window);
-    void drawGameText(sf::RenderWindow *window);
-    void drawPauseText(sf::RenderWindow *window);
-    void drawEndText(sf::RenderWindow *window);
+    void drawMenuHomeText(sf::RenderWindow *window) const;
+    void drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const;
+    void drawLeaderboardText(sf::RenderWindow *window) const;
+    void drawMenuShopText(sf::RenderWindow *window) const;
+    void drawGameText(sf::RenderWindow *window) const;
+    void drawPauseText(sf::RenderWindow *window) const;
+    void drawEndText(sf::RenderWindow *window) const;
 
 private:
     //=== ATTRIBUTES
+    const int m_width, m_height;
     sf::Font *m_regularFont;
     sf::Font *m_condensedFont;
     sf::Font *m_BoldFont;
@@ -142,7 +143,7 @@ private:
     sf::Text *m_flattenedEnemiesLabel;
     sf::Text *m_currentScoreLabel;
 
-    //Seetings and Leaderboard DataText -- loaded from parsed data
+    //Settings and Leaderboard DataText -- loaded from parsed data
     sf::Text *m_totalDistanceText;
     sf::Text *m_totalFlattenedEnemiesText;
     sf::Text *m_totalGamesPlayedText;
@@ -159,4 +160,4 @@ private:
     sf::Text *m_currentScoreText;
 };
 
-#endif // TEXT_H
+#endif

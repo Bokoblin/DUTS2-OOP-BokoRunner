@@ -9,7 +9,7 @@ using namespace std;
 *********************************************/
 Shop::Shop(DataBase *data) :  m_dataBase{data}
 {
-    m_dataBase->fetchBuyableItemsFromFile(m_shopItemsArray);
+    fetchBuyableItemsFromFile();
 }
 
 
@@ -36,7 +36,7 @@ vector<ShopItem*> Shop::getShopItemsArray() const { return m_shopItemsArray; }
 /********************************************
     Buy items
 *********************************************
-    @author Arthur  @date 11/05 - 19/05
+    @author Arthur  @date 11/05 - 24/10
 *********************************************/
 bool Shop::buyItem(ShopItem *my_item)
 {
@@ -50,18 +50,18 @@ bool Shop::buyItem(ShopItem *my_item)
         //=== update config files
 
         pugi::xml_document doc;
-        doc.load_file("Resources/config.xml");
+        doc.load_file(CONFIG_FILE.c_str());
 
-        for (pugi::xml_node item: doc.child("runner").child("shop").children("item") )
+        pugi::xml_node runner = doc.child("runner");
+        pugi::xml_node shop = runner.child("shop");
+
+        for (pugi::xml_node shopItem: shop.children("shopItem"))
         {
-            if ( item.attribute("name").value() == my_item->getName()  )
+            if ( string(shopItem.attribute("name").value()) == my_item->getName()  )
             {
-                pugi::xml_attribute state = item.attribute("boughtState");
+                pugi::xml_attribute state = shopItem.attribute("boughtState");
                 state.set_value(true);
-                const char * config = CONFIG_FILE.c_str(); //the save_file method asks for char*
-                const char * config_hidden = HIDDEN_CONFIG_FILE.c_str();
-                doc.save_file(config);
-                doc.save_file(config_hidden);
+                doc.save_file(CONFIG_FILE.c_str());
             }
         }
         return true;
@@ -86,4 +86,39 @@ string Shop::toString() const
     }
 
     return result;
+}
+
+/********************************************
+    Fetch Shop Items from file
+*********************************************
+    @author Arthur  @date 11/05 - 24/10
+*********************************************/
+void Shop::fetchBuyableItemsFromFile() {
+    string result_value = "";
+    string name = "";
+    string desc = "";
+    int price = 0;
+
+    //open file with pugi library and init nodes
+    pugi::xml_document doc;
+    doc.load_file(CONFIG_FILE.c_str());
+
+    pugi::xml_node shop = doc.child("runner").child("shop");
+
+    for (pugi::xml_node shopItem: shop.children("shopItem"))
+    {
+        //update item's attributes
+        bool state = false;
+        std::stringstream ss;
+        name = shopItem.attribute("name").value();
+        desc = shopItem.attribute("description").value();
+        result_value = shopItem.attribute("price").value();
+        ss << result_value;
+        ss >> price;
+        result_value = shopItem.attribute("boughtState").value();
+        if (result_value == "true" ) state=true;
+
+        //add item to array
+        m_shopItemsArray.push_back( new ShopItem(name, desc, price, state) );
+    }
 }

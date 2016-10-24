@@ -1,7 +1,7 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.7.2
+Current version : v1.7.3
 
 ======================================================================================
 BETA CHANNEL Changelog
@@ -290,5 +290,20 @@ Fixes and miscs:
 - fixed again images on linux
 - shield image and element changes
 - code enhancement
+- documentation updated
+---------------------------------------------------------------------------------------------------
+
+v1.7.3 (24/10/16)
+
+Important changes:
+- added CMakeLists.txt, 
+- added SFML Library in Libs folders for those not having it yet
+- rewritten Leaderboard storage system into Database class
+- removed second config file to check manual modifications
+
+Fixes and miscs:
+- moved all images path strings to a dedicated file
+- code enhancement (ex. simplified if statements, made some function const)
+- removed unused code
 - documentation updated
 ---------------------------------------------------------------------------------------------------

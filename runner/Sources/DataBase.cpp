@@ -12,21 +12,9 @@ DataBase::DataBase() :
     m_currentCoinsNumber{0}, m_currentDistance{0},
     m_currentFlattenedEnemies{0}, m_currentScore{0}
 {
-    if ( checkFileIntegrity() == false)
+    if (!checkFileIntegrity())
         createFile();
     fetchConfigurationFromFile();
-    m_leaderboard = new Leaderboard;
-}
-
-
-/********************************************
-    Destructor
-*********************************************
-    @author Arthur  @date 2/05
-*********************************************/
-DataBase::~DataBase()
-{
-    delete m_leaderboard;
 }
 
 /*******************************************
@@ -60,187 +48,154 @@ void DataBase::setLanguage(string lang) { m_currentLanguage = lang;}
 void DataBase::setBallSkin(string skin) { m_currentBallSkin = skin; }
 void DataBase::setCurrentScore(float speed)
 {
-    m_currentScore = ( speed*m_currentDistance
-            + COIN_MULTIPLIER*m_currentCoinsNumber + m_currentFlattenedEnemies );
+    m_currentScore = (int)(speed * m_currentDistance
+                            + COIN_MULTIPLIER*m_currentCoinsNumber + m_currentFlattenedEnemies );
 }
 
 
 /********************************************
     (Re)create files
 *********************************************
-    @author Arthur  @date 2/05 - 11/05
+    @author Arthur  @date 2/05 - 24/10
 *********************************************/
 void DataBase::createFile()
 {
     fstream f;
-
     f.open( CONFIG_FILE.c_str(), ios::out);
-    f << DEFAULT_CONFIG_CONTENT;
-    f.close();
-
-    f.open( HIDDEN_CONFIG_FILE.c_str(), ios::out);
     f << DEFAULT_CONFIG_CONTENT;
     f.close();
 }
 
 
 /********************************************
-    Check if someone has changed one file
+    Check if file data is OK
 *********************************************
-    @author Arthur  @date 2/05
+    @author Arthur  @date 2/05 - 24/10
 *********************************************/
 bool DataBase::checkFileIntegrity()
 {
-    fstream f1;
-    fstream f2;
-    string f1Line;
-    string f2Line;
+    fstream f;
+    string line;
 
-    //=== Open files / create them if not existing
+    f.open( CONFIG_FILE.c_str(), ios::in);
 
-    f1.open( CONFIG_FILE.c_str(), ios::in);
-    f2.open( HIDDEN_CONFIG_FILE.c_str(), ios::in);
+    //=== Opening test
+    if ( f.fail() )
+        return false;
 
-    if ( f1.fail() || f2.fail() )
-        createFile();
-    else
-    {
-        /* check if one of the files has been changed
-         * Note: is useless if the user knows the 2 files
-         * and write the same thing in both
-         */
-        do {
-            f1 >> f1Line;
-            f2 >> f2Line;
-            if ( f1Line != f2Line)
-            {
-                f1.close();
-                f2.close();
-                return false; //lines are different
-            }
-            if ( f1Line == "") //both are empty (checked before difference)
-            {
-                f1.close();
-                f2.close();
-                return false; //lines shouldn't be empty
-            }
-        }
-        while ( !f1.eof() );
+    //=== Count lines / elements test
+    bool isPresentConfig = false; //should be true
+    bool isPresentShop = false; //should be true
+    bool isPresentScore = false; //should be true
+    int nbLines = 0; //should be 31
+    int nbConfigChildren = 0; //should be 6
+    int nbShopChildren = 0; //should be 6
+    int nbScoreChildren = 0; //should be 10
+    do {
+        getline(f, line, '\n');
+        nbLines++;
+
+        unsigned long long int found = line.find("<config>");
+        if ( found != string::npos)
+            isPresentConfig = true;
+
+        found = line.find("<shop>");
+        if ( found != string::npos)
+            isPresentShop = true;
+
+        found = line.find("<scores>");
+        if ( found != string::npos)
+            isPresentScore = true;
+
+        found = line.find("<configItem");
+        if ( found != string::npos)
+            nbConfigChildren++;
+
+        found = line.find("<shopItem");
+        if ( found != string::npos)
+            nbShopChildren++;
+
+        found = line.find("<scoreItem");
+        if ( found != string::npos)
+            nbScoreChildren++;
     }
+    while ( !f.eof() );
 
-    f1.close();
-    f2.close();
-
-    return true;
+    return !(!isPresentConfig || !isPresentShop || !isPresentScore || (nbLines != 31 && nbLines != 32)
+             || nbConfigChildren!=6 || nbShopChildren!=6 || nbScoreChildren!=10);
 }
 
 
 /********************************************
     Fetch Configuration data from file
 *********************************************
-    @author Arthur  @date 2/05 - 20/05
+    @author Arthur  @date 2/05 - 24/10
 *********************************************/
 void DataBase::fetchConfigurationFromFile()
 {
-    updateValue(m_totalCoinsCollected, "total_coins_collected");
-    updateValue(m_totalDistance, "total_distance_travelled");
-    updateValue(m_totalFlattenedEnemies, "total_enemies_destroyed");
-    updateValue(m_totalGamesPlayed, "total_games_played");
-    updateValue(m_currentLanguage, "language");
-    updateValue(m_currentBallSkin, "ball_skin");
-
+    updateConfigValues();
+    updateScoreArray();
     updateActivatedItemsArray();
-}
-
-
-/********************************************
-    Fetch Shop Items from file
-*********************************************
-    @author Arthur  @date 11/05 - 18/05
-*********************************************/
-void DataBase::fetchBuyableItemsFromFile(vector<ShopItem*> &setArray)
-{
-    string result_value = "";
-    string name = "";
-    string desc = "";
-    int price = 0;
-
-    //open file with pugi library and init nodes
-    pugi::xml_document doc;
-    doc.load_file(CONFIG_FILE.c_str());
-
-    pugi::xml_node shop = doc.child("runner").child("shop");
-
-    for (pugi::xml_node item: shop.children("item"))
-    {
-        //update item's attributes
-        bool state = false;
-        std::stringstream ss;
-        name = item.attribute("name").value();
-        desc = item.attribute("description").value();
-        result_value = item.attribute("price").value();
-        ss << result_value;
-        ss >> price;
-        result_value = item.attribute("boughtState").value();
-        if (result_value == "true" ) state=true;
-
-        //add item to array
-        setArray.push_back( new ShopItem(name, desc, price, state) );
-    }
 }
 
 
 /********************************************
     Update variable value from file
 *********************************************
-    @author Arthur  @date 13/04 - 2/05
+    @author Arthur  @date 24/10
 *********************************************/
-template <typename T>
-void DataBase::updateValue(T &variable, std::string name)
+void DataBase::updateConfigValues()
 {
-    fstream f;
-    size_t found = string::npos;
-    string result = "";
-    string line="";
+    pugi::xml_document doc;
+    doc.load_file(CONFIG_FILE.c_str());
 
-    f.open(CONFIG_FILE, ios::in);
+    pugi::xml_node runner = doc.child("runner");
+    pugi::xml_node config = runner.child("config");
 
-    assert( !f.fail());
-    /* look for the line containing the name parameter
-    * then update in this line the area between brackets
-    */
-    f >> line;
-
-    while( !f.eof() && found == string::npos)
+    for (pugi::xml_node configItem: config.children("configItem"))
     {
-        found=line.find("name=\""+ name + "\"");
-        if (found!=string::npos)
-        {
-            int pos = 0;
-            while ( line[pos] != '>') pos++;
-            pos++;
-            while ( line[pos] != '<')
-            {
-                result += line[pos];
-                pos++;
-            }
-            for (unsigned int i=0; i < result.size(); i++)
-                if (result[i] == '_') result[i] = ' ';
-        }
-        f >> line;
+        if (string(configItem.attribute("name").value()) == "language")
+            m_currentLanguage = configItem.attribute("value").value();
+        else if (string(configItem.attribute("name").value()) == "ball_skin")
+            m_currentBallSkin = configItem.attribute("value").value();
+        else if (string(configItem.attribute("name").value()) == "total_coins_collected")
+            m_totalCoinsCollected = atoi(configItem.attribute("value").value());
+        else if (string(configItem.attribute("name").value()) == "total_distance_travelled")
+            m_totalDistance = atoi(configItem.attribute("value").value());
+        else if (string(configItem.attribute("name").value()) == "total_enemies_destroyed")
+            m_totalFlattenedEnemies = atoi(configItem.attribute("value").value());
+        else if (string(configItem.attribute("name").value()) == "total_games_played")
+            m_totalGamesPlayed = atoi(configItem.attribute("value").value());
     }
-    f.close();
-
-    std::stringstream ss;
-    ss << result;
-    ss >> variable;
 }
 
 
 /********************************************
-    Update vector array of activated items
+    Update score array
 *********************************************
-    @author Arthur  @date 14/05 - 21/05
+    @author Arthur  @date 23/10 - 24/10
+*********************************************/
+void DataBase::updateScoreArray()
+{
+    pugi::xml_document doc;
+    doc.load_file(CONFIG_FILE.c_str());
+
+    pugi::xml_node runner = doc.child("runner");
+    pugi::xml_node scores = runner.child("scores");
+
+    m_scoresArray.clear();
+    for (pugi::xml_node scoreItem: scores.children("scoreItem"))
+    {
+        if (string(scoreItem.attribute("value").value()) != "0")
+            m_scoresArray.insert(atoi(scoreItem.attribute("value").value()));
+    }
+}
+
+
+/********************************************
+    Update array of activated items
+*********************************************
+    @author Arthur  @date 14/05 - 24/10
 *********************************************/
 void DataBase::updateActivatedItemsArray()
 {
@@ -250,11 +205,10 @@ void DataBase::updateActivatedItemsArray()
     pugi::xml_node runner = doc.child("runner");
     pugi::xml_node shop = runner.child("shop");
 
-    for (pugi::xml_node item: shop.children("item"))
+    for (pugi::xml_node shopItem: shop.children("shopItem"))
     {
-        string tmp = item.attribute("boughtState").value();
-        if ( tmp == "true")
-            m_activatedItemsArray.insert( item.attribute("id").value() );
+        if ( string(shopItem.attribute("boughtState").value()) == "true")
+            m_activatedItemsArray.insert( shopItem.attribute("id").value() );
     }
 }
 
@@ -262,99 +216,77 @@ void DataBase::updateActivatedItemsArray()
 /********************************************
     Push Configuration data to file
 *********************************************
-    @author Arthur  @date 2/05 - 20/05
+    @author Arthur  @date 2/05 - 24/10
 *********************************************/
 void DataBase::pushConfigurationToFile()
 {
-    fstream f1;
-    fstream f2;
-    string line = "";
+    pugi::xml_document doc;
+    doc.load_file(CONFIG_FILE.c_str());
 
-    //=== replace by variables values
+    pugi::xml_node runner = doc.child("runner");
+    pugi::xml_node config = runner.child("config");
+    pugi::xml_node scores = runner.child("scores");
 
-    f1.open(CONFIG_FILE, ios::in);
-    f2.open(HIDDEN_CONFIG_FILE, ios::out);
-
-    if (f1.fail() || f2.fail() )
-        createFile();
-
-    /* for each line, compare to the read only file and rewrite it the same
-    * except when condition are granted. In that case replace elements of lines
-    * with variables value and add the closing tag
-    */
-
-    getline(f1, line, '\n');
-    while ( !f1.eof())
+    //Save config
+    for (pugi::xml_node configItem: config.children("configItem"))
     {
-        if (line.find("total_coins_collected") !=std::string::npos)
+        if ( string(configItem.attribute("name").value()) == "language" )
         {
-            line.replace(line.begin() + line.find('>')+1, line.begin() + line.find('<'),
-                         to_string(m_totalCoinsCollected));
-            line += "</int>";
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            nodeValue.set_value(m_currentLanguage.c_str());
         }
-        else if (line.find("total_enemies_destroyed") !=std::string::npos)
+        else if ( string(configItem.attribute("name").value()) == "ball_skin" )
         {
-            line.replace(line.begin() + line.find('>')+1, line.begin() + line.find('<'),
-                         to_string(m_totalFlattenedEnemies));
-            line += "</int>";
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            nodeValue.set_value(m_currentBallSkin.c_str());
         }
-        else if (line.find("total_distance_travelled") !=std::string::npos)
+        else if ( string(configItem.attribute("name").value()) == "total_coins_collected" )
         {
-            line.replace(line.begin() + line.find('>')+1, line.begin() + line.find('<'),
-                         to_string(m_totalDistance));
-            line += "</int>";
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            nodeValue.set_value((to_string(m_totalCoinsCollected)).c_str());
         }
-        else if (line.find("total_games_played") !=std::string::npos)
+        else if ( string(configItem.attribute("name").value()) == "total_distance_travelled" )
         {
-            line.replace(line.begin() + line.find('>')+1, line.end(),
-                         to_string(m_totalGamesPlayed));
-            line += "</int>";
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            nodeValue.set_value((to_string(m_totalDistance)).c_str());
         }
-        else if (line.find("language") !=std::string::npos)
+        else if ( string(configItem.attribute("name").value()) == "total_enemies_destroyed" )
         {
-            line.replace(line.begin() + line.find('>')+1, line.end(), m_currentLanguage);
-            line += "</string>";
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            nodeValue.set_value((to_string(m_totalFlattenedEnemies)).c_str());
         }
-        else if (line.find("ball_skin") !=std::string::npos)
+        else if ( string(configItem.attribute("name").value()) == "total_games_played" )
         {
-            line.replace(line.begin() + line.find('>')+1, line.end(), m_currentBallSkin);
-            line += "</string>";
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            nodeValue.set_value((to_string(m_totalGamesPlayed)).c_str());
         }
-
-        line += "\n";
-        f2 << line;
-        getline(f1, line, '\n');
     }
 
-    f1.close();
-    f2.close();
-
-    //=== Copy second file
-
-    f1.open(HIDDEN_CONFIG_FILE, ios::in);
-    f2.open(CONFIG_FILE, ios::out);
-
-    if (f1.fail() || f2.fail() )
-        createFile();
-
-    getline(f1, line, '\n');
-    while ( !f1.eof())
+    //Save score
+    set<int>::iterator it = m_scoresArray.begin();
+    for (pugi::xml_node scoreItem: scores.children("scoreItem"))
     {
-        line += "\n";
-        f2 << line;
-        getline(f1, line, '\n');
+        if ( it!=m_scoresArray.end())
+        {
+            pugi::xml_attribute nodeValue = scoreItem.attribute("value");
+            nodeValue.set_value((to_string(*it)).c_str());
+            ++it;
+        }
+        else
+        {
+            pugi::xml_attribute nodeValue = scoreItem.attribute("value");
+            nodeValue.set_value("0");
+        }
     }
 
-    f1.close();
-    f2.close();
-
+    doc.save_file(CONFIG_FILE.c_str());
 }
 
 
 /********************************************
     Save Current Game
 *********************************************
-    @author Arthur  @date 2/05
+    @author Arthur  @date 2/05 - 23/10
 *********************************************/
 void DataBase::saveCurrentGame()
 {
@@ -362,13 +294,42 @@ void DataBase::saveCurrentGame()
     m_totalCoinsCollected += m_currentCoinsNumber;
     m_totalDistance += m_currentDistance;
     m_totalFlattenedEnemies += m_currentFlattenedEnemies;
-
-    //update leaderboard
-    m_leaderboard->loadVectorFromFile();
-    m_leaderboard->addEntryToVector(m_currentScore);
-    m_leaderboard->loadFileFromVector();
+    addEntryToScoreArray(m_currentScore);
 }
 
+/********************************************
+    Add a new score to the score array
+*********************************************
+    @author Arthur  @date 23/10
+*********************************************/
+void DataBase::addEntryToScoreArray(int new_score)
+{
+    m_scoresArray.insert(new_score);
+    while (m_scoresArray.size() > MAX_SCORES)
+        m_scoresArray.erase(m_scoresArray.begin());
+}
+
+/********************************************
+    update string content from array
+*********************************************
+    @author Arthur  @date 23/10
+*********************************************/
+void DataBase::loadStringFromArray(std::string &scores_text)
+{
+    if (!m_scoresArray.empty())
+    {
+        //add each case content in string
+        int i = 1;
+        for (set<int>::reverse_iterator it = m_scoresArray.rbegin(); it!=m_scoresArray.rend(); ++it)
+        {
+            if ( i != 10)
+                scores_text += "\n" + to_string(i) + ".   " + to_string(*it);
+            else
+                scores_text += "\n" + to_string(i) + ". " + to_string(*it);
+            i++;
+        }
+    }
+}
 
 /********************************************
     Reset Current Game
@@ -383,4 +344,14 @@ void DataBase::resetCurrentGame()
     m_currentDistance = 0;
     m_currentFlattenedEnemies = 0;
     m_currentScore = 0;
+}
+
+/********************************************
+    Reset Score
+*********************************************
+    @author Arthur  @date 24/10
+*********************************************/
+void DataBase::resetScore()
+{
+    m_scoresArray.clear();
 }

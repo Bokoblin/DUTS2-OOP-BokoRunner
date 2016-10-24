@@ -21,6 +21,7 @@ limitations under the License.
 #include "Enemy.h"
 #include "Coin.h"
 #include "Bonus.h"
+#include <chrono>
 
 #define ELEMENT_MOVE_X getGameSpeed()*(-1)
 #define ELEMENT_MOVE_Y 0
@@ -35,7 +36,7 @@ enum zones
     Constant Variables
 ********************************************/
 const int DEFAULT_PLAYER_X = 50;
-const int SPEED_LIMIT = 18.0;
+const int SPEED_LIMIT = 18;
 const int NEXT_STEP_DELAY = 100;
 const int ZONE_CHANGING_DISTANCE = 500;
 const int BONUS_ROW = GAME_FLOOR-100;
@@ -75,13 +76,11 @@ public:
     void setTransitionPossibleStatus(bool status);
     void setSaveStatus(bool status);
     void setCurrentZone(int number);
-    void setNbCoinsCollected(unsigned int number) ;
 
     //=== METHODS
     virtual void nextStep() override;
     void chooseInterdistance(int elementType);
     bool checkIfPositionFree(float x, float y) const;
-    void moveBallAccordingEvent(bool left);
     void moveMovableElement(MovableElement *element);
     void handleMovableElementsCreation();
     void handleMovableElementsCollisions();

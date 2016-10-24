@@ -16,6 +16,7 @@ limitations under the License.
 #ifndef SHOPITEMCARD_H
 #define SHOPITEMCARD_H
 
+#include "ImagesConstants.h"
 #include "Button.h"
 #include "ShopItem.h"
 #include "Text.h"
@@ -25,12 +26,6 @@ limitations under the License.
 #define GREEN_BUTTON_UP sf::IntRect(0, 178, 150, 43)
 #define GREEN_BUTTON_DOWN sf::IntRect(151, 179, 150, 40)
 
-/********************************************
-    Constant Variables
-********************************************/
-const std::string CONDENSED_FONT = "Resources/Roboto_Condensed.ttf";
-const std::string CARD_IMAGE = "Images/card.png";
-const std::string RECT_IMAGE = "Images/rect_buttons.png";
 
 /********************************************
     ShopItemCard Class

@@ -37,4 +37,4 @@ public:
 
 };
 
-#endif // ENEMY_H
+#endif

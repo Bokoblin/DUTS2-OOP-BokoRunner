@@ -14,7 +14,7 @@ GameModel::GameModel(const Model& model) :
     m_currentEnemyInterdistance{0}, m_currentCoinInterdistance{0}, m_currentBonusInterdistance{0},
     m_lastTime{chrono::system_clock::now()},  m_bonusTimeout{0}
 {
-    srand(time(NULL));
+    srand((unsigned int) time(NULL));
     //initial interdistances for elements
     m_chosenEnemyInterdistance = 10 +rand()%11;  //10 to 20 m
     m_chosenCoinInterdistance = rand()%11; //0 to 10m
@@ -53,7 +53,7 @@ bool GameModel::getTransitionStatus() const { return m_inTransition; }
 bool GameModel::getTransitionPossibleStatus() const { return m_isTransitionPossible; }
 bool GameModel::getSaveStatus() const { return m_isSavePossible; }
 float GameModel::getGameSpeed() const { return m_gameSpeed; }
-int GameModel::getBonusTimeout() const { return m_bonusTimeout.count()/1000; } // return seconds
+int GameModel::getBonusTimeout() const { return (int) (m_bonusTimeout.count() / 1000); } // return seconds
 int GameModel::getCurrentZone() const { return m_currentZone; }
 Player* GameModel::getPlayer() const { return m_player; }
 const set<MovableElement*>& GameModel::getNewMElementsArray() const { return m_newMovableElementsArray; }
@@ -80,7 +80,7 @@ void GameModel::nextStep()
 {
     chrono::system_clock::duration currentNextStepDelay = chrono::system_clock::now() - m_lastTime;
 
-	if (m_pauseState == false && m_endState == false)
+	if (!m_pauseState && !m_endState)
 	{
 	    //=== Handle Movable Elements Collisions
 
@@ -106,7 +106,7 @@ void GameModel::nextStep()
 
 			//=== Handle Movable Elements Creation & Deletion
 
-			if (m_isTransitionPossible == false)
+			if (!m_isTransitionPossible)
                 handleMovableElementsCreation();
 
             handleMovableElementsDeletion();
@@ -144,7 +144,7 @@ void GameModel::nextStep()
             m_lastTime = chrono::system_clock::now();
         }
     }
-    else if (m_endState == true)
+    else if (m_endState)
     {
         m_dataBase->setCurrentScore(m_gameSpeed);
     }
@@ -251,7 +251,7 @@ void GameModel::moveMovableElement(MovableElement *currentElement)
 *********************************************/
 void GameModel::handleMovableElementsCreation()
 {
-    if (checkIfPositionFree(m_width, GAME_FLOOR) == true)
+    if (checkIfPositionFree(m_width, GAME_FLOOR))
     {
         //=== Add new enemies
 
@@ -322,7 +322,6 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
         m_newMovableElementsArray.insert( m_newMElement );
         m_movableElementsArray.insert( m_newMElement );
     }
-    m_newMElement = nullptr;
 }
 
 
@@ -485,7 +484,7 @@ void GameModel::handleMovableElementsDeletion()
     while( it!=m_movableElementsArray.end() )
     {
         if ( ( (*it)->getPosX() + (*it)->getWidth() ) < 0
-             || (*it)->getCollisionState() == true )
+             || (*it)->getCollisionState())
         {
             /**<  note : Pointers are deleted in Dtor */
             m_movableElementsArray.erase(it);

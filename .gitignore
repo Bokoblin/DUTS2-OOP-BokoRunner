@@ -2,16 +2,13 @@
 *.layout
 *.o
 *.cbp
-stderr.txt
-stdout.txt
 *.pro
 *.pri
 *.pro.user
 *.cscope_file_list
 *.map
 *.md5
+*.idea
 Makefile
-runner/Resources/scores.txt
 runner/Resources/config.xml
-runner/Resources/.*
 runner/bin

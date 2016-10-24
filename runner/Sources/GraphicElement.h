@@ -44,4 +44,4 @@ protected:
     float m_height;
 };
 
-#endif // GRAPHICELEMENT_H
+#endif

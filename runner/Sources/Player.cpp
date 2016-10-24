@@ -72,7 +72,7 @@ void Player::move()
     if (m_posY < JUMP_LIMIT)
         m_jumping = false;
 
-    if(m_inDeceleration == true)
+    if(m_inDeceleration)
     {
         if(fabs(m_vectorBall.first) < PRECISION)
         {
@@ -94,7 +94,7 @@ void Player::move()
         m_posY+= m_vectorBall.second/FRAMERATE;
     }
 
-    if( m_posY == GAME_FLOOR && m_flying == true)
+    if( m_posY == GAME_FLOOR && m_flying)
     {
         m_flying =false;
         m_jumping=false;
@@ -181,9 +181,9 @@ void Player::controlPlayerMovements(bool left)
 {
     m_inDeceleration = false;
 
-    if (left == true && m_vectorBall.first > -10)
+    if (left && m_vectorBall.first > -10)
         m_vectorBall.first -= m_moveX*m_acceleration/FRAMERATE;
-    else if ( left == false && m_vectorBall.first <10)
+    else if (!left && m_vectorBall.first < 10)
         m_vectorBall.first += m_moveX*m_acceleration/FRAMERATE;
 }
 

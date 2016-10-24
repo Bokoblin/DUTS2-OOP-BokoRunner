@@ -60,7 +60,7 @@ void Settings::changeBallSkin(string skin)
 *********************************************/
 void Settings::checkItemsAvailability()
 {
-    if ( m_dataBase->getActivatedItemsArray().empty() == true )
+    if (m_dataBase->getActivatedItemsArray().empty())
     {
         //no need to find if array is empty
         m_morphSkinIsAvailable = false;
@@ -69,16 +69,10 @@ void Settings::checkItemsAvailability()
     else
     {
         //check in array if a bought item is present and update the variable value
-        if ( m_dataBase->getActivatedItemsArray().find("morphing")
-            == m_dataBase->getActivatedItemsArray().end() )
-            m_morphSkinIsAvailable = false;
-        else
-            m_morphSkinIsAvailable = true;
+        m_morphSkinIsAvailable = !(m_dataBase->getActivatedItemsArray().find("morphing")
+                                   == m_dataBase->getActivatedItemsArray().end());
 
-        if ( m_dataBase->getActivatedItemsArray().find("capsule")
-            == m_dataBase->getActivatedItemsArray().end() )
-            m_capsuleSkinIsAvailable = false;
-        else
-            m_capsuleSkinIsAvailable = true;
+        m_capsuleSkinIsAvailable = !(m_dataBase->getActivatedItemsArray().find("capsule")
+                                     == m_dataBase->getActivatedItemsArray().end());
     }
 }

@@ -8,7 +8,7 @@ using namespace std;
     @author Arthur  @date 21/02 - 6/05
     @author Florian @date 21/02 - 2/03
 *********************************************/
-Model::Model(float w, float h)  :
+Model::Model(int w, int h)  :
     m_width(w), m_height(h), m_difficulty{NORMAL_DIFFICULTY},
     m_dataBase{nullptr}
 {

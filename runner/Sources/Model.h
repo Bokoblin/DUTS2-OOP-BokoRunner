@@ -16,7 +16,6 @@ limitations under the License.
 #ifndef _MODEL_H
 #define _MODEL_H
 
-#include <chrono>
 #include "DataBase.h"
 
 #define NORMAL_DIFFICULTY 0
@@ -32,7 +31,7 @@ class Model
 {
 public:
     //=== CTORs / DTORs
-    Model(float w, float h);
+    Model(int w, int h);
     Model( const Model & model);
     virtual ~Model();
 
@@ -57,7 +56,7 @@ public:
 
 protected:
     //=== ATTRIBUTES
-    float m_width, m_height;
+    int m_width, m_height;
     int m_difficulty;
     DataBase *m_dataBase;
 

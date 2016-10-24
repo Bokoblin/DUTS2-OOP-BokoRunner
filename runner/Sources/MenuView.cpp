@@ -153,7 +153,7 @@ void MenuView::synchronize()
     if ( m_menuMusic.getPlayingOffset() >= sf::milliseconds(28840))
         m_menuMusic.setPlayingOffset( sf::milliseconds(4851));
 
-	if (m_menuModel->getHomeState() == true)
+	if (m_menuModel->getHomeState())
 	{
 		//=== Elements update
 		m_farBackground->sync();
@@ -165,7 +165,7 @@ void MenuView::synchronize()
         m_shopFormButton->sync();
 
 		//=== Text update
-		m_text->syncMenuHomeText(m_width, m_height);
+		m_text->syncMenuHomeText();
 	}
     else if (m_menuModel->getLeaderboardState())
         m_leaderboardView->synchronize();
@@ -263,7 +263,7 @@ bool MenuView::treatEvents()
 
             //=== Home Events
 
-			if (m_menuModel->getHomeState() == true)
+			if (m_menuModel->getHomeState())
 			{
                 if (MOUSE_LEFT_PRESSED_EVENT)
 				{

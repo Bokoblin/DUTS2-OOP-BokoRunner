@@ -1,7 +1,7 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.7.3
+Current version : v1.7.4
 
 ======================================================================================
 BETA CHANNEL Changelog
@@ -305,5 +305,13 @@ Fixes and miscs:
 - moved all images path strings to a dedicated file
 - code enhancement (ex. simplified if statements, made some function const)
 - removed unused code
+- documentation updated
+---------------------------------------------------------------------------------------------------
+
+v1.7.4 (01/12/16)
+
+- refactored project structure
+- removed obsolete unit test class
+- updated README.md
 - documentation updated
 ---------------------------------------------------------------------------------------------------

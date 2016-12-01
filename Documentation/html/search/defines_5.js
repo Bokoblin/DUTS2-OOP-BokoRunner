@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['indicator_5fbuttons_5fsize',['INDICATOR_BUTTONS_SIZE',['../_settings_view_8h.html#a9e26a18267bd7ff3687f9c19360f8d4f',1,'SettingsView.h']]],
-  ['is_5fpointed',['IS_POINTED',['../_view_8h.html#a650212ed1eb2d196036790391f5553d5',1,'View.h']]]
+  ['keyboard_5fjump',['KEYBOARD_JUMP',['../d0/dc2/a00104.html#a3b38b2d7348188cda3c19c57b2aa2dfa',1,'GameView.h']]],
+  ['keyboard_5fleft',['KEYBOARD_LEFT',['../d0/dc2/a00104.html#a4612dd83bca673367f9fb1358f0554fa',1,'GameView.h']]],
+  ['keyboard_5fright',['KEYBOARD_RIGHT',['../d0/dc2/a00104.html#a42bc34fa6bd2406ff5101a5582c2372e',1,'GameView.h']]]
 ];

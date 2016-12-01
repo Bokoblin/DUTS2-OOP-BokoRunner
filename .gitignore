@@ -1,7 +1,6 @@
 *.depend
 *.layout
 *.o
-*.cbp
 *.pro
 *.pri
 *.pro.user
@@ -9,6 +8,5 @@
 *.map
 *.md5
 *.idea
-Makefile
-runner/Resources/config.xml
-runner/bin
+cmake-build-debug/
+res/config.xml

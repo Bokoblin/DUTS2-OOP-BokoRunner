@@ -18,16 +18,16 @@ limitations under the License.
 
 #include "View.h"
 
-/********************************************
-    Intro Class
-*********************************************
-    @author Arthur  @date 27/03 - 14/04
-*********************************************/
+/**
+ * Intro Class
+ * @author Arthur
+ * @date 27/03 - 14/04
+ */
 class Intro : public View
 {
     public:
     //=== CTORs / DTORs
-    Intro(float w, float h, sf::RenderWindow *window, Text *text);
+    Intro(float w, float h, sf::RenderWindow *window, TextHandler *text);
     virtual ~Intro();
 
     //=== METHODS

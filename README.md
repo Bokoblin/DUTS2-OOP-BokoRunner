@@ -1,11 +1,10 @@
-# README : Project Runner #
+# README : Boko Runner #
 
 
 ### Description ###
 
-
-This repository is being used for the programming project of our "University Technology Diploma" second semester in 
-Computer Science. This project consists in creating a "runner" game (an auto-scrolling platform game) where the player 
+Boko Runner is a C++ OOP project we've done as our DUT second semester's programming project.
+It consists in creating a "runner" game (an auto-scrolling platform game) where the player 
 has to dodge each obstacles and collect bonuses to increase its score. The game ends when the player's life bar is empty.
 The project allowed us to put into practice the Object Oriented Programming notions that we learnt in S2.
 
@@ -22,6 +21,11 @@ The project allowed us to put into practice the Object Oriented Programming noti
 * Arthur Jolivet
 * Florian Laronze
 
+
+### Documentation ###
+
+The Doxygen documentation can be found at 
+[this address](http://info-timide.iut.u-bordeaux.fr/perso/2017/ajolivet/documentations/BokoRunner/).
 
 ### Licences ###
 

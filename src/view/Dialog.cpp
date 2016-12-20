@@ -2,12 +2,12 @@
 
 using namespace std;
 
-/********************************************
-    Parameterized Constructor
-*********************************************
-    @author Arthur  @date 16/05 - 24/05
-*********************************************/
-Dialog::Dialog(int x, int y, ShopItem *item, Text *t, string title, string content, string negAnswer, string posAnswer):
+/**
+ * Parameterized Constructor
+ * @author Arthur
+ * @date 16/05 - 24/05
+ */
+Dialog::Dialog(int x, int y, ShopItem *item, TextHandler *t, string title, string content, string negAnswer, string posAnswer):
     m_posX{x}, m_posY{y}, m_itemLinked{item}, m_text{t}
 {
     //=== Initialize Dialog Sprite
@@ -46,11 +46,11 @@ Dialog::Dialog(int x, int y, ShopItem *item, Text *t, string title, string conte
 }
 
 
-/********************************************
-    Destructor
-*********************************************
-    @author Arthur  @date 16/05 - 20/05
-*********************************************/
+/**
+ * Destructor
+ * @author Arthur
+ * @date 16/05 - 20/05
+ */
 Dialog::~Dialog()
 {
     m_text = nullptr;
@@ -58,21 +58,18 @@ Dialog::~Dialog()
 }
 
 
-/********************************************
-   Getters
-*********************************************
-    @author Arthur  @date 16/05
-*********************************************/
+//=== Getters
+
 const sf::Text& Dialog::getNegativeButton() const { return m_negativeButton; }
 const sf::Text& Dialog::getPositiveButton() const { return m_positiveButton; }
 ShopItem *Dialog::getItemLinked() const {return m_itemLinked; }
 
 
-/********************************************
-    Draw function
-*********************************************
-    @author Arthur  @date 16/05
-*********************************************/
+/**
+ * Draw function
+ * @author Arthur
+ * @date 16/05
+ */
 void Dialog::draw(sf::RenderWindow *window) const
 {
     window->draw(*m_dialogSprite);

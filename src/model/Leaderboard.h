@@ -18,11 +18,11 @@ limitations under the License.
 
 #include "DataBase.h"
 
-/********************************************
-    Leaderboard Class
-*********************************************
-    @author Arthur  @date  19/04 - 24/10
-*********************************************/
+/**
+ * Leaderboard Class
+ * @author Arthur
+ * @date  19/04 - 24/10
+ */
 class Leaderboard
 {
 public:

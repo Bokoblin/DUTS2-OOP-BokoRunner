@@ -30,8 +30,8 @@
    <string name="configLangFraLabel">Frances</string>
    <string name="configLangEspLabel">Espanol</string>
    <string name="configDifficultyLabel">Difficultad</string>
-   <string name="configDifficultyNormalLabel">Normal</string>
-   <string name="configDifficultyMasterLabel">Master</string>
+   <string name="configEasyModeLabel">Facil</string>
+   <string name="configHardModeLabel">Difficultado</string>
    <string name="configCustomTitleLabel">Personalizacion_de_la_bala</string>
    <string name="configDefaultBallskinLabel">Apariencia_predeterminada</string>
    <string name="configMorphBallskinLabel">Apariencia_"morphing"</string>

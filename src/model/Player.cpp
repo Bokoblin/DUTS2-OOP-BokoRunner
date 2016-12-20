@@ -2,12 +2,11 @@
 
 using namespace std;
 
-/********************************************
-    Parameterized Constructor
-*********************************************
-    @author Arthur  @date 22/02 - 11/04
-    @author Florian @date 22/02 - 15/04
-*********************************************/
+/**
+ * Parameterized Constructor
+ * @author Arthur, Florian
+ * @date 22/02 - 15/04
+ */
 Player::Player(float x, float y, float w, float h, float mvX, float mvY):
     MovableElement(x, y, w, h, mvX, mvY), m_state{0}, m_gravitation{20.0},
     m_acceleration{18.0}, m_jumping{false}, m_flying{false}, m_inDeceleration{false}
@@ -18,22 +17,17 @@ Player::Player(float x, float y, float w, float h, float mvX, float mvY):
     m_vectorBall.second = 0;
 }
 
-/********************************************
-    Destructor
-*********************************************
-    @author Arthur  @date 22/02
-    @author Florian @date 22/02
-*********************************************/
+/**
+ * Destructor
+ * @author Arthur, Florian
+ * @date 22/02
+ */
 Player::~Player()
 {}
 
 
-/********************************************
-    Getters
-*********************************************
-    @author Arthur  @date 20/03 - 9/04
-    @author Florian @date 17/03 - 10/04
-*********************************************/
+//=== Getters
+
 int Player::getState() const { return m_state; }
 int Player::getLife() const { return m_life; }
 bool Player::getFlyingState() const { return m_flying; }
@@ -42,16 +36,11 @@ bool Player::getDecelerationState() const { return m_inDeceleration; }
 std::pair<float,float> Player::getVector() const { return m_vectorBall; }
 
 
-/********************************************
-    Setters
-*********************************************
-    @author Arthur  @date 08/04 - 11/04
-    @author Florian @date 17/03 - 6/04
-*********************************************/
-void Player::setFlyingState(bool etat) { m_flying = etat; }
-void Player::setJumpState(bool etat) {  m_jumping = etat; }
-void Player::setDecelerationState(bool etat) {  m_inDeceleration = etat; }
+//=== Setters
 
+void Player::setFlyingState(bool state) { m_flying = state; }
+void Player::setJumpState(bool state) {  m_jumping = state; }
+void Player::setDecelerationState(bool state) {  m_inDeceleration = state; }
 void Player::setLife(int new_life)
 {
     m_life = new_life;
@@ -60,11 +49,11 @@ void Player::setLife(int new_life)
 }
 
 
-/********************************************
-    Player Move Function
-*********************************************
-    @author Florian @date  12/03 - 15/04
-*********************************************/
+/**
+ * Player Move Function
+ * @author Florian
+ * @date  12/03 - 15/04
+ */
 void Player::move()
 {
     m_flying = m_width < GAME_FLOOR;
@@ -128,11 +117,11 @@ void Player::move()
 }
 
 
-/********************************************
-    Change player's state
-*********************************************
-    @author Arthur  @date  11/04 - 21/05
-*********************************************/
+/**
+ * Change player's state
+ * @author Arthur
+ * @date  11/04 - 21/05
+ */
 void Player::changeState(int state)
 {
     if ( state == NORMAL)
@@ -171,12 +160,11 @@ void Player::changeState(int state)
         m_state = state;
 }
 
-/********************************************
-    Player Control Function
-*********************************************
-    @author Arthur  @date  8/04 - 9/04
-    @author Florian @date  22/03 - 10/04
-*********************************************/
+/**
+ * Player Control Function
+ * Arthur, Florian
+ * @date  22/03 - 10/04
+ */
 void Player::controlPlayerMovements(bool left)
 {
     m_inDeceleration = false;

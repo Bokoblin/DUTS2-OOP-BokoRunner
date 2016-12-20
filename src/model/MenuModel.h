@@ -13,19 +13,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef _MENUMODEL_H
-#define _MENUMODEL_H
+#ifndef MENU_MODEL_H
+#define MENU_MODEL_H
 
 #include "Model.h"
 #include "Leaderboard.h"
 #include "Settings.h"
 #include "Shop.h"
 
-/********************************************
-    MenuModel Class
-*********************************************
-    @author Arthur  @date 14/04 - 21/05
-*********************************************/
+enum MenuState
+{
+    HOME,
+    SETTINGS,
+    LEADERBOARD,
+    SHOP
+};
+
+/**
+ * MenuModel Class
+ * @author Arthur
+ * @date 14/04 - 20/12
+ */
 class MenuModel : public Model
 {
 public:
@@ -34,16 +42,10 @@ public:
     virtual ~MenuModel();
 
     //=== GETTERS
-    bool getHomeState() const;
-    bool getSettingsState() const;
-    bool getLeaderboardState() const;
-    bool getShopState() const;
+    MenuState getMenuState() const;
 
     //=== SETTERS
-    void setHomeState(bool state);
-    void setSettingsState(bool state);
-    void setLeaderboardState(bool state);
-    void setShopState(bool state);
+    void setMenuState(MenuState state);
 
     //=== METHODS
     virtual void nextStep() override;
@@ -53,11 +55,7 @@ public:
 
 private:
     //=== ATTRIBUTES
-    bool m_homeState;
-    bool m_settingsState;
-    bool m_leaderboardState;
-    bool m_shopState;
-
+    MenuState m_menuState;
     Leaderboard *m_leaderboard;
     Settings *m_settings;
     Shop *m_shop;

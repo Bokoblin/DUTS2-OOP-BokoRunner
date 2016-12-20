@@ -17,7 +17,7 @@ limitations under the License.
 #define DIALOG_H
 
 #include "GraphicElement.h"
-#include "Text.h"
+#include "TextHandler.h"
 #include "../Model/ShopItem.h"
 #include "ImagesConstants.h"
 
@@ -25,16 +25,16 @@ limitations under the License.
 #define MATERIAL_TEAL_COLOR sf::Color(0, 150, 136, 255)
 
 
-/********************************************
-    Dialog Class
-*********************************************
-    @author Arthur  @date 16/05 - 20/05
-*********************************************/
+/**
+ * Dialog Class
+ * @author Arthur
+ * @date 16/05 - 20/05
+ */
 class Dialog
 {
     public:
         //=== CTORs / DTORs
-        Dialog(int x, int y, ShopItem *item, Text *t,  std::string title, std::string content, std::string negAnswer, std::string posAnswer);
+        Dialog(int x, int y, ShopItem *item, TextHandler *t,  std::string title, std::string content, std::string negAnswer, std::string posAnswer);
         Dialog(const Dialog& d)=delete;
         ~Dialog();
 
@@ -56,7 +56,7 @@ class Dialog
         sf::Texture m_dialogTexture;
         GraphicElement *m_dialogSprite;
 
-        Text *m_text;
+        TextHandler *m_text;
         sf::Text m_dialogTitleLabel;
         sf::Text m_dialogContent;
         sf::Text m_negativeButton;

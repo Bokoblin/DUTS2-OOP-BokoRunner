@@ -31,17 +31,16 @@ const int SCREEN_HEIGHT = 600;
 
 const std::string MENU_MUSIC = "../res/audio/menu_sound.ogg";
 
-/********************************************
-    MenuView Class
-*********************************************
-    @author Arthur  @date 26/03 - 21/05
-    @author Florian @date 20/04 - 03/05
-*********************************************/
+/**
+ * MenuView Class
+ * @author Arthur, Florian
+ * @date 26/03 - 21/05
+ */
 class MenuView : public View
 {
 public:
     //=== CTORs / DTORs
-    MenuView(float w, float h, sf::RenderWindow *window, Text * text);
+    MenuView(float w, float h, sf::RenderWindow *window, TextHandler * text);
     virtual ~MenuView();
 
     //=== SETTERS

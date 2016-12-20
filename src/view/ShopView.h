@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef SHOPVIEW_H
-#define SHOPVIEW_H
+#ifndef SHOP_VIEW_H
+#define SHOP_VIEW_H
 
 #include "View.h"
 #include "../Model/Shop.h"
@@ -22,16 +22,16 @@ limitations under the License.
 #include "Dialog.h"
 
 
-/********************************************
-    ShopView Class
-*********************************************
-    @author Arthur  @date 11/05 - 18/05
-*********************************************/
+/**
+ * ShopView Class
+ * @author Arthur
+ * @date 11/05 - 18/05
+ */
 class ShopView : public View
 {
 public:
     //=== CTORs / DTORs
-    ShopView(float w, float h, sf::RenderWindow *window, Text * text);
+    ShopView(float w, float h, sf::RenderWindow *window, TextHandler * text);
     virtual ~ShopView();
 
     //=== SETTERS

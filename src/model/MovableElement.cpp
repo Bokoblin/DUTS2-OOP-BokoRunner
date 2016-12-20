@@ -2,32 +2,27 @@
 
 using namespace std;
 
-/********************************************
-    Parameterized Constructor
-*********************************************
-    @author Arthur  @date 23/02 - 09/04
-    @author Florian @date 02/03 - 02/03
-*********************************************/
+/**
+ * Parameterized Constructor
+ * @author Arthur, Florian
+ * @date 23/02 - 09/04
+ */
 MovableElement::MovableElement(float x, float y, float w, float h, float mvX, float mvY) :
     m_posX{x}, m_posY{y}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY},
     m_collisionState{false}, m_elementType{-1}
 {}
 
 
-/********************************************
-    Destructor
-*********************************************
-    @author Arthur  @date 23/02
-*********************************************/
-MovableElement::~MovableElement()
-{}
+/**
+ * Destructor
+ * @author Arthur
+ * @date 23/02
+ */
+MovableElement::~MovableElement() {}
 
 
-/********************************************
-    Getters
-*********************************************
-    @author Arthur  @date 23/02 - 23/10
-*********************************************/
+//=== Getters
+
 float MovableElement::getPosX()  const { return m_posX;  }
 float MovableElement::getPosY()  const { return m_posY;  }
 float MovableElement::getWidth() const { return m_width; }
@@ -36,21 +31,18 @@ int MovableElement::getType() const { return m_elementType; }
 bool MovableElement::getCollisionState() const { return m_collisionState; }
 
 
-/********************************************
-    Setters
-*********************************************
-    @author Arthur  @date 23/02 - 12/04
-*********************************************/
+//=== Setters
+
 void MovableElement::setMoveX(float mvX) { m_moveX = mvX;}
 void MovableElement::setMoveY(float mvY) { m_moveY = mvY;}
 void MovableElement::setCollisionState(bool state) { m_collisionState = state;}
 
 
-/********************************************
-   Check if a position belongs to an element
-*********************************************
-    @author Arthur  @date 08/03 - 09/04
-*********************************************/
+/**
+ * Check if a position belongs to an element
+ * @author Arthur
+ * @date 08/03 - 09/04
+ */
 bool MovableElement::contains( float posX, float posY) const
 {
     float  maxX = m_posX + m_width;
@@ -60,15 +52,16 @@ bool MovableElement::contains( float posX, float posY) const
 }
 
 
-/********************************************
-   Test collision function
-*********************************************
-    @author Arthur  @date 02/04 - 11/04
-*********************************************/
+/**
+ * Determine if elements are colliding
+ *
+ * Note : element's origin corresponds to left-bottom point
+ *
+ * @author Arthur
+ * @date 02/04 - 20/12
+ */
 bool MovableElement::collision( const MovableElement& other) const
 {
-    /**<  Coordinates note : element's origin corresponds to left-bottom point */
-
     float leftA, leftB;
     float rightA, rightB;
     float topA, topB;
@@ -84,14 +77,5 @@ bool MovableElement::collision( const MovableElement& other) const
     topB = other.m_posY - other.m_height;
     bottomB = other.m_posY;
 
-    if(bottomA < topB)
-        return false;
-    if(topA > bottomB)
-        return false;
-    if(rightA < leftB)
-        return false;
-    if(leftA > rightB)
-        return false;
-
-    return true;
+    return bottomA >= topB && topA <= bottomB && rightA >= leftB && leftA <= rightB;
 }

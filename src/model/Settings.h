@@ -13,16 +13,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef _SETTINGS_H
-#define _SETTINGS_H
+#ifndef SETTINGS_H
+#define SETTINGS_H
 
 #include "DataBase.h"
 
-/********************************************
-    Settings Class
-*********************************************
-    @author Arthur  @date 20/05 - 21/05
-*********************************************/
+/**
+ * Settings Class
+ * @author Arthur
+ * @date 20/05 - 21/05
+ */
 class Settings
 {
 public:

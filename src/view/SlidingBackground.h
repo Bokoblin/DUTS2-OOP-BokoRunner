@@ -13,18 +13,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef SLIDINGBACKGROUND_H
-#define SLIDINGBACKGROUND_H
+#ifndef SLIDING_BACKGROUND_H
+#define SLIDING_BACKGROUND_H
 
 #include "GraphicElement.h"
 
 
-/********************************************
-    SlidingBackground Class
-*********************************************
-    @author Arthur  @date 3/03 - 7/05
-    @author Florian @date 3/03
-*********************************************/
+/**
+ * SlidingBackground Class
+ * @author Arthur, Florian
+ * @date 3/03 - 7/05
+ */
 class SlidingBackground : public GraphicElement
 {
 public:

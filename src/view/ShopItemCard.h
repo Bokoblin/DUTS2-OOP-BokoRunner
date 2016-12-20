@@ -13,13 +13,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef SHOPITEMCARD_H
-#define SHOPITEMCARD_H
+#ifndef SHOP_ITEM_CARD_H
+#define SHOP_ITEM_CARD_H
 
 #include "ImagesConstants.h"
 #include "Button.h"
 #include "../Model/ShopItem.h"
-#include "Text.h"
+#include "TextHandler.h"
 
 #define HALF_WIDTH getGlobalBounds().width/2
 #define RED_BUTTON_UP sf::IntRect( 0, 100, 150, 40)
@@ -27,16 +27,16 @@ limitations under the License.
 #define GREEN_BUTTON_DOWN sf::IntRect(151, 179, 150, 40)
 
 
-/********************************************
-    ShopItemCard Class
-*********************************************
-    @author Arthur  @date 16/05 - 18/05
-*********************************************/
+/**
+ * ShopItemCard Class
+ * @author Arthur
+ * @date 16/05 - 18/05
+ */
 class ShopItemCard
 {
     public:
         //=== CTORs / DTORs
-        ShopItemCard(int id, ShopItem *item, Text *t);
+        ShopItemCard(int id, ShopItem *item, TextHandler *t);
         ~ShopItemCard();
 
         //=== GETTERS
@@ -62,7 +62,7 @@ class ShopItemCard
         bool m_shownState;
 
         ShopItem *m_item;
-        Text *m_text;
+        TextHandler *m_text;
         sf::Text m_name;
         sf::Text m_desc;
         sf::Text m_buyButtonContent;

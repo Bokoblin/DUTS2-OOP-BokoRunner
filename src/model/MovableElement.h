@@ -13,32 +13,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef MOVABLEELEMENT_H
-#define MOVABLEELEMENT_H
+#ifndef MOVABLE_ELEMENT_H
+#define MOVABLE_ELEMENT_H
 
 #include <cstdlib>
 
-enum element
+enum Element
 {
     PLAYER,
-    STANDARDENEMY,
-    TOTEMENEMY,
-    BLOCKENEMY,
+    STANDARD_ENEMY,
+    TOTEM_ENEMY,
+    BLOCK_ENEMY,
     COIN,
-    PVPLUSBONUS,
-    MEGABONUS,
-    FLYBONUS,
-    SLOWSPEEDBONUS,
-    SHIELDBONUS
+    PV_PLUS_BONUS,
+    MEGA_BONUS,
+    FLY_BONUS,
+    SLOW_SPEED_BONUS,
+    SHIELD_BONUS
 };
 
 
-/********************************************
-    MovableElement Abstract Class
-*********************************************
-    @author Arthur  @date 23/02 - 18/05
-    @author Florian @date 02/03 - 06/04
-*********************************************/
+/**
+ * MovableElement Class
+ * @author Arthur, Florian
+ * @date 23/02 - 18/05
+ */
 class MovableElement
 {
 public:

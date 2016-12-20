@@ -2,22 +2,21 @@
 
 using namespace std;
 
-/********************************************
-    Parameterized Constructor
-*********************************************
-    @author Arthur  @date 11/05 - 16/05
-*********************************************/
+/**
+ * Parameterized Constructor
+ * @author Arthur  @date 11/05 - 16/05
+ */
 Shop::Shop(DataBase *data) :  m_dataBase{data}
 {
     fetchBuyableItemsFromFile();
 }
 
 
-/********************************************
-    Destructor
-*********************************************
-    @author Arthur  @date 11/05 - 18/05
-*********************************************/
+/**
+ * Destructor
+ * @author Arthur
+ * @date 11/05 - 18/05
+ */
 Shop::~Shop()
 {
     for (ShopItem *si: m_shopItemsArray)
@@ -25,19 +24,16 @@ Shop::~Shop()
 }
 
 
-/********************************************
-    Getters
-*********************************************
-    @author Arthur  @date 16/05
-*********************************************/
+//=== Getters
+
 vector<ShopItem*> Shop::getShopItemsArray() const { return m_shopItemsArray; }
 
 
-/********************************************
-    Buy items
-*********************************************
-    @author Arthur  @date 11/05 - 24/10
-*********************************************/
+/**
+ * Buy items
+ * @author Arthur
+ * @date 11/05 - 24/10
+ */
 bool Shop::buyItem(ShopItem *my_item)
 {
     if ( !my_item->getBoughtState() && my_item->getPrice() <= m_dataBase->getTotalCoinsNumber() )
@@ -71,11 +67,11 @@ bool Shop::buyItem(ShopItem *my_item)
 }
 
 
-/********************************************
-    String cast function
-*********************************************
-    @author Arthur  @date 14/05
-*********************************************/
+/**
+ * String cast function
+ * @author Arthur
+ * @date 14/05
+ */
 string Shop::toString() const
 {
     string result = "== Shop content ==\n";
@@ -88,11 +84,10 @@ string Shop::toString() const
     return result;
 }
 
-/********************************************
-    Fetch Shop Items from file
-*********************************************
-    @author Arthur  @date 11/05 - 24/10
-*********************************************/
+/**
+ * Fetch Shop Items from file
+ * @author Arthur  @date 11/05 - 24/10
+ */
 void Shop::fetchBuyableItemsFromFile() {
     string result_value = "";
     string name = "";

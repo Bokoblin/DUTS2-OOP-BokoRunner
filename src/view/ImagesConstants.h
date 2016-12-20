@@ -3,11 +3,11 @@
 
 #include <string>
 
-/********************************************
-    Images Constants Container File
-*********************************************
-    @author Arthur  @date 23/10 - 01/12
-*********************************************/
+/**
+ * Images Constants Container File
+ * @author Arthur
+ * @date 23/10 - 01/12
+ */
 const std::string IMAGE_FOLDER = "../res/images/";
 const std::string INTRO_IMAGE = IMAGE_FOLDER + "intro.png";
 const std::string TITLE_IMAGE = IMAGE_FOLDER + "title.png";

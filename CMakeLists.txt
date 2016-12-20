@@ -67,8 +67,8 @@ set(SOURCE_FILES
         src/view/ShopView.h
         src/view/SlidingBackground.cpp
         src/view/SlidingBackground.h
-        src/view/Text.cpp
-        src/view/Text.h
+        src/view/TextHandler.cpp
+        src/view/TextHandler.h
         src/view/View.cpp
         src/view/View.h
         )

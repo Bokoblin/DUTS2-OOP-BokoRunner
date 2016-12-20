@@ -18,17 +18,17 @@ limitations under the License.
 
 #include "GraphicElement.h"
 
-/********************************************
-    Button Class
-*********************************************
-    @author Arthur  @date 6/04 - 22/05
-*********************************************/
+/**
+ * Button Class
+ * @author Arthur
+ * @date 6/04 - 22/05
+ */
 class Button : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
-    Button(const std::vector<sf::IntRect> & clipRects,
-            sf::Texture &image, float x, float y, float w, float h, bool isRadio);
+    Button(const std::vector<sf::IntRect> & clipRect,
+           sf::Texture &image, float x, float y, float w, float h, bool isRadio);
     Button(Button const& elementACopier);
     virtual ~Button();
 
@@ -46,7 +46,7 @@ public:
 
 private:
     //=== ATTRIBUTES
-    std::vector<sf::IntRect> m_clipRectsArray;
+    std::vector<sf::IntRect> m_clipRectArray;
     unsigned int m_currentClipRect;
     bool m_isRadio;
     bool m_pressed;

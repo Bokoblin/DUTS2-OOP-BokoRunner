@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef _GAMEMODEL_H
-#define _GAMEMODEL_H
+#ifndef GAME_MODEL_H
+#define GAME_MODEL_H
 
 #include "Model.h"
 #include "Player.h"
@@ -26,10 +26,9 @@ limitations under the License.
 #define ELEMENT_MOVE_X getGameSpeed()*(-1)
 #define ELEMENT_MOVE_Y 0
 
-enum zones
-{
-    HILL = 1,
-    PLAIN = 2
+enum Zone {
+    HILL,
+    PLAIN
 };
 
 /********************************************
@@ -45,11 +44,11 @@ const float DEFAULT_SPEED = 5.0;
 const float SPEED_STEP = 0.01;
 
 
-/********************************************
-    GameModel Class
-*********************************************
-    @author Arthur  @date 26/03 - 21/05
-*********************************************/
+/**
+ * GameModel Class
+ * @author Arthur
+ * @date 26/03 - 21/05
+ */
 class GameModel : public Model
 {
 public:
@@ -75,11 +74,11 @@ public:
     void setTransitionStatus(bool status);
     void setTransitionPossibleStatus(bool status);
     void setSaveStatus(bool status);
-    void setCurrentZone(int number);
+    void setCurrentZone(Zone z);
 
     //=== METHODS
     virtual void nextStep() override;
-    void chooseInterdistance(int elementType);
+    void chooseTimeSpacing(int elementType);
     bool checkIfPositionFree(float x, float y) const;
     void moveMovableElement(MovableElement *element);
     void handleMovableElementsCreation();
@@ -96,13 +95,13 @@ private:
     bool m_isTransitionPossible;
     bool m_isSavePossible;
     float m_gameSpeed;
-    int m_currentZone;
-    int m_currentEnemyInterdistance;
-    int m_currentCoinInterdistance;
-    int m_currentBonusInterdistance;
-    int m_chosenEnemyInterdistance;
-    int m_chosenCoinInterdistance;
-    int m_chosenBonusInterdistance;
+    Zone m_currentZone;
+    int m_currentEnemyTimeSpacing;
+    int m_currentCoinTimeSpacing;
+    int m_currentBonusTimeSpacing;
+    int m_chosenEnemyTimeSpacing;
+    int m_chosenCoinTimeSpacing;
+    int m_chosenBonusTimeSpacing;
     std::chrono::system_clock::time_point m_lastTime;
     std::chrono::milliseconds m_bonusTimeout;
     Player *m_player;

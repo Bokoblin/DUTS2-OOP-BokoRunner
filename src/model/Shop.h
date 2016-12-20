@@ -13,17 +13,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef _SHOP_H
-#define _SHOP_H
+#ifndef SHOP_H
+#define SHOP_H
 
 #include "ShopItem.h"
 #include "DataBase.h"
 
-/********************************************
-    Shop Class
-*********************************************
-    @author Arthur  @date 11/05 - 16/05
-*********************************************/
+/**
+ * Shop Class
+ * @author Arthur
+ * @date 11/05 - 16/05
+ */
 class Shop
 {
 public:

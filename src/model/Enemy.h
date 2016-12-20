@@ -19,11 +19,11 @@ limitations under the License.
 #include "MovableElement.h"
 
 
-/********************************************
-    Enemy Class
-*********************************************
-    @author Arthur  @date 13/03 - 11/04
-*********************************************/
+/**
+ * Enemy Class
+ * @author Arthur
+ * @date 13/03 - 11/04
+ */
 class Enemy : public MovableElement
 {
 public:

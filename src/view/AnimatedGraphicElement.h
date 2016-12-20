@@ -13,25 +13,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef ANIMATEDGRAPHICELEMENT_H
-#define ANIMATEDGRAPHICELEMENT_H
+#ifndef ANIMATED_GRAPHIC_ELEMENT_H
+#define ANIMATED_GRAPHIC_ELEMENT_H
 
 #include "GraphicElement.h"
 #include <chrono>
 
 const int ANIM_DELAY = 200;
 
-/********************************************
-    AnimatedGraphicElement Class
-*********************************************
-    @author Arthur  @date 3/03 - 22/05
-*********************************************/
+/**
+ * AnimatedGraphicElement Class
+ * @author Arthur
+ * @date 3/03 - 22/05
+ */
 class AnimatedGraphicElement : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
     AnimatedGraphicElement(sf::Texture &image, float x, float y, float w, float h,
-            const std::vector<sf::IntRect> & clipRects);
+            const std::vector<sf::IntRect> &clipRect);
     AnimatedGraphicElement( const AnimatedGraphicElement& other);
     virtual ~AnimatedGraphicElement();
 
@@ -43,7 +43,7 @@ public:
 
 private:
     //=== ATTRIBUTES
-    std::vector<sf::IntRect> m_clipRectsArray;
+    std::vector<sf::IntRect> m_clipRectArray;
     unsigned int m_currentClipRect;
     std::chrono::system_clock::time_point m_lastAnimationTime;
 };

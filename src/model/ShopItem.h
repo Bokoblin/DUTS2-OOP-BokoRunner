@@ -13,16 +13,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef SHOPITEM_H
-#define SHOPITEM_H
+#ifndef SHOP_ITEM_H
+#define SHOP_ITEM_H
 
 #include <string>
 
-/********************************************
-    ShopItem Class
-*********************************************
-    @author Arthur  @date 11/05
-*********************************************/
+/**
+ * ShopItem Class
+ * @author Arthur
+ * @date 11/05
+ */
 class ShopItem
 {
     public:

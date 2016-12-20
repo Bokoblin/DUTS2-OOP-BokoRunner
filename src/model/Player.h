@@ -34,12 +34,11 @@ enum playerState
     OTHER
 };
 
-/********************************************
-    Player Class
-*********************************************
-    @author Arthur  @date 22/02 - 11/04
-    @author Florian @date 22/02 - 10/04
-*********************************************/
+/**
+ * Player Class
+ * @author Arthur, Florian
+ * @date 22/02 - 11/04
+ */
 class Player : public MovableElement
 {
 public:
@@ -57,9 +56,9 @@ public:
 
     //=== SETTERS
     void setLife(int new_life);
-    void setFlyingState(bool etat);
-    void setJumpState(bool etat);
-    void setDecelerationState(bool etat);
+    void setFlyingState(bool state);
+    void setJumpState(bool state);
+    void setDecelerationState(bool state);
 
     //=== METHODS
     virtual void move() override;

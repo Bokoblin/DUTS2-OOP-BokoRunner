@@ -13,20 +13,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef _MODEL_H
-#define _MODEL_H
+#ifndef MODEL_H
+#define MODEL_H
 
 #include "DataBase.h"
 
-#define NORMAL_DIFFICULTY 0
-#define MASTER_DIFFICULTY 2
+enum AppState
+{
+    INTRO,
+    MENU,
+    GAME,
+    RESET_GAME,
+    QUIT
+};
 
-/********************************************
-    Model Class
-*********************************************
-    @author Arthur  @date 21/02 - 21/05
-    @author Florian @date 21/02 - 2/03
-*********************************************/
+/**
+ * Model Class
+ * @author Arthur, Florian
+ * @date 21/02 - 20/12
+ */
 class Model
 {
 public:
@@ -37,19 +42,11 @@ public:
 
     //=== GETTERS
     DataBase *getDataBase() const;
-    int getDifficulty() const;
-    bool getIntroState() const;
-    bool getMenuState() const;
-    bool getGameState() const;
-    bool getResetGameState() const;
+    AppState getAppState() const;
 
     //=== SETTERS
     void setDataBase(DataBase *data);
-    void setDifficulty(int difficulty);
-    void setIntroState(bool state);
-    void setMenuState(bool state);
-    void setGameState(bool state);
-    void setResetGameState(bool state);
+    void setAppState(AppState state);
 
     //=== METHODS
     virtual void nextStep();
@@ -57,14 +54,10 @@ public:
 protected:
     //=== ATTRIBUTES
     int m_width, m_height;
-    int m_difficulty;
     DataBase *m_dataBase;
 
 private:
-    bool m_introState;
-    bool m_menuState;
-    bool m_gameState;
-    bool m_resetGameState;
+    AppState m_appState;
 };
 
 #endif

@@ -2,13 +2,12 @@
 
 using namespace std;
 
-/********************************************
-    Parameterized Constructor
-*********************************************
-    @author Arthur  @date 25/02 - 21/05
-    @author Florian @date 22/04 - 06/05
-*********************************************/
-MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
+/**
+ * Parameterized Constructor
+ * @author Arthur, Florian
+ * @date 25/02 - 21/05
+ */
+MenuView::MenuView(float w, float h, sf::RenderWindow *window, TextHandler * text):
     View(w, h, window,text), m_menuModel{nullptr}, m_leaderboardView{nullptr},
     m_settingsView{nullptr},  m_shopView{nullptr}
 {
@@ -23,7 +22,7 @@ MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
 
 	if (m_window->getSize().x != m_width )
 	{
-        m_window->create( sf::VideoMode(w, h, SCREEN_BPP), APP_TITLE, sf::Style::Close );
+        m_window->create(sf::VideoMode((unsigned int) w, (unsigned int) h, SCREEN_BPP), APP_TITLE, sf::Style::Close );
 		m_window->setFramerateLimit(FRAMERATE);
 		m_window->setPosition(ENVIRONMENT_CENTER);
 	}
@@ -32,11 +31,11 @@ MenuView::MenuView(float w, float h, sf::RenderWindow *window, Text * text):
 }
 
 
-/********************************************
-    Destructor
-*********************************************
-    @author Arthur  @date 26/02 - 21/05
-*********************************************/
+/**
+ * Destructor
+ * @author Arthur
+ * @date 26/02 - 21/05
+ */
 MenuView::~MenuView()
 {
 	delete m_farBackground;
@@ -50,22 +49,19 @@ MenuView::~MenuView()
 }
 
 
-/********************************************
-   Setters
-*********************************************
-    @author Arthur  @date 14/04
-*********************************************/
+//=== Setters
+
 void MenuView::setMenuModel(MenuModel *model)
 {
 	m_menuModel = model;
 }
 
 
-/********************************************
-    Image Loading
-*********************************************
-    @author Arthur  @date 26/03 - 16/05
-*********************************************/
+/**
+ * Image Loading
+ * @author Arthur
+ * @date 26/03 - 16/05
+ */
 void MenuView::loadImages()
 {
 	if (!m_farBackgroundTexture.loadFromFile(DEFAULT_FAR_HILL_BACKGROUND ))
@@ -101,17 +97,17 @@ void MenuView::loadImages()
 	{
         m_menuRectButtonsTexture.setSmooth(true);
 
-		vector<sf::IntRect> clip_rects_play;
-		clip_rects_play.push_back(sf::IntRect( 0, 0, 150, 80));
-		clip_rects_play.push_back(sf::IntRect(151, 0, 150, 80));
-		m_playRectButton = new Button(clip_rects_play, m_menuRectButtonsTexture,
-                                 m_width/2-75, m_height/1.5, 150, 80, false);
+		vector<sf::IntRect> clipRectPlay;
+		clipRectPlay.push_back(sf::IntRect( 0, 0, 150, 80));
+		clipRectPlay.push_back(sf::IntRect(151, 0, 150, 80));
+		m_playRectButton = new Button(clipRectPlay, m_menuRectButtonsTexture,
+                                 m_width/2-75, (float) (m_height / 1.5), 150, 80, false);
 
-		vector<sf::IntRect> clip_rects_quit;
-		clip_rects_quit.push_back(sf::IntRect( 0, 0, 150, 80));
-		clip_rects_quit.push_back(sf::IntRect(151, 0, 150, 80));
-		m_quitRectButton = new Button(clip_rects_quit, m_menuRectButtonsTexture,
-                                 m_width/2-75, m_height/1.2, 150, 80, false);
+		vector<sf::IntRect> clipRectQuit;
+		clipRectQuit.push_back(sf::IntRect( 0, 0, 150, 80));
+		clipRectQuit.push_back(sf::IntRect(151, 0, 150, 80));
+		m_quitRectButton = new Button(clipRectQuit, m_menuRectButtonsTexture,
+                                 m_width/2-75, (float) (m_height / 1.2), 150, 80, false);
     }
 
     //=== Initialize SETTINGS, LEADERBOARD and SHOP form buttons
@@ -122,38 +118,38 @@ void MenuView::loadImages()
 	{
 		m_menuFormButtonsTexture.setSmooth(true);
 
-		vector<sf::IntRect> clip_rects_settings;
-		clip_rects_settings.push_back(sf::IntRect( 0, 0, 50, 50));
-		clip_rects_settings.push_back(sf::IntRect( 51, 0, 50, 50));
-		m_settingsFormButton = new Button(clip_rects_settings,
+		vector<sf::IntRect> clipRectSettings;
+		clipRectSettings.push_back(sf::IntRect( 0, 0, 50, 50));
+		clipRectSettings.push_back(sf::IntRect( 51, 0, 50, 50));
+		m_settingsFormButton = new Button(clipRectSettings,
                                     m_menuFormButtonsTexture, 20, 530, 50, 50, false);
 
-        vector<sf::IntRect> clip_rects_lb;
-        clip_rects_lb.push_back(sf::IntRect( 0, 100, 50, 50));
-        clip_rects_lb.push_back(sf::IntRect( 51, 100, 50, 50));
-        m_leaderboardFormButton = new Button(clip_rects_lb,
+        vector<sf::IntRect> clipRectLeaderboard;
+        clipRectLeaderboard.push_back(sf::IntRect( 0, 100, 50, 50));
+        clipRectLeaderboard.push_back(sf::IntRect( 51, 100, 50, 50));
+        m_leaderboardFormButton = new Button(clipRectLeaderboard,
                                              m_menuFormButtonsTexture, 830, 530, 50, 50, false);
 
-        vector<sf::IntRect> clip_rects_shop;
-        clip_rects_shop.push_back(sf::IntRect( 0, 150, 50, 50));
-        clip_rects_shop.push_back(sf::IntRect( 51, 150, 50, 50));
-        m_shopFormButton = new Button(clip_rects_shop,
+        vector<sf::IntRect> clipRectShop;
+        clipRectShop.push_back(sf::IntRect( 0, 150, 50, 50));
+        clipRectShop.push_back(sf::IntRect( 51, 150, 50, 50));
+        m_shopFormButton = new Button(clipRectShop,
                                       m_menuFormButtonsTexture, 830, 10, 50, 50, false);
 	}
 }
 
 
-/********************************************
-    Synchronization function
-*********************************************
-    @author Arthur  @date 26/03 - 21/05
-*********************************************/
+/**
+ * Synchronization function
+ * @author Arthur
+ * @date 26/03 - 20/12
+ */
 void MenuView::synchronize()
 {
     if ( m_menuMusic.getPlayingOffset() >= sf::milliseconds(28840))
         m_menuMusic.setPlayingOffset( sf::milliseconds(4851));
 
-	if (m_menuModel->getHomeState())
+	if (m_menuModel->getMenuState() == HOME)
 	{
 		//=== Elements update
 		m_farBackground->sync();
@@ -164,34 +160,34 @@ void MenuView::synchronize()
         m_leaderboardFormButton->sync();
         m_shopFormButton->sync();
 
-		//=== Text update
+		//=== TextHandler update
 		m_text->syncMenuHomeText();
 	}
-    else if (m_menuModel->getLeaderboardState())
+    else if (m_menuModel->getMenuState() == LEADERBOARD)
         m_leaderboardView->synchronize();
 
-	else if (m_menuModel->getSettingsState())
+	else if (m_menuModel->getMenuState() == SETTINGS)
         m_settingsView->synchronize();
 
-    else if (m_menuModel->getShopState())
+    else if (m_menuModel->getMenuState() == SHOP)
         m_shopView->synchronize();
 
     //=== Delete leaderboardView if not anymore in leaderboardState
-    if ( !m_menuModel->getLeaderboardState() && m_leaderboardView != nullptr)
+    if ( m_menuModel->getMenuState() != LEADERBOARD && m_leaderboardView != nullptr)
     {
         delete m_leaderboardView;
         m_leaderboardView = nullptr;
     }
 
     //=== Delete settingsView if not anymore in shopState
-    if ( !m_menuModel->getSettingsState() && m_settingsView != nullptr)
+    if ( m_menuModel->getMenuState() != SETTINGS && m_settingsView != nullptr)
     {
         delete m_settingsView;
         m_settingsView = nullptr;
     }
 
     //=== Delete shopView if not anymore in shopState
-    if ( !m_menuModel->getShopState() && m_shopView != nullptr)
+    if ( m_menuModel->getMenuState() != SHOP && m_shopView != nullptr)
     {
         delete m_shopView;
         m_shopView = nullptr;
@@ -199,14 +195,14 @@ void MenuView::synchronize()
 }
 
 
-/********************************************
-    Menu View Drawing
-*********************************************
-    @author Arthur  @date 26/03 - 21/05
-*********************************************/
+/**
+ * Menu View Drawing
+ * @author Arthur
+ * @date 26/03 - 20/12
+ */
 void MenuView::draw() const
 {
-	if (m_menuModel->getHomeState())
+	if (m_menuModel->getMenuState() == HOME)
 	{
 		m_window->clear();
 
@@ -220,29 +216,28 @@ void MenuView::draw() const
         m_window->draw(*m_leaderboardFormButton);
         m_window->draw(*m_shopFormButton);
 
-		//=== Text Drawing
+		//=== TextHandler Drawing
 		m_text->drawMenuHomeText(m_window);
 
         m_window->display();
 	}
-	else if (m_menuModel->getSettingsState())
+	else if (m_menuModel->getMenuState() == SETTINGS)
         m_settingsView->draw();
 
-    else if (m_menuModel->getLeaderboardState())
+    else if (m_menuModel->getMenuState() == LEADERBOARD)
         m_leaderboardView->draw();
 
-    else if (m_menuModel->getShopState())
+    else if (m_menuModel->getMenuState() == SHOP)
         m_shopView->draw();
 
 }
 
 
-/********************************************
-    Events treating
-*********************************************
-    @author Arthur  @date 25/03 - 21/05
-    @author Florian @date 22/04 - 06/05
-*********************************************/
+/**
+ * Events treating
+ * @author Arthur, Florian
+ * @date 25/03 - 20/12
+ */
 bool MenuView::treatEvents()
 {
 	bool result = false;
@@ -256,14 +251,12 @@ bool MenuView::treatEvents()
 		{
 			if  (event.type == sf::Event::Closed)
 			{
-				m_model->setMenuState(false);
+				m_model->setAppState(QUIT);
 				m_window->close();
 				result = false;
 			}
 
-            //=== Home Events
-
-			if (m_menuModel->getHomeState())
+			if (m_menuModel->getMenuState() == HOME)
 			{
                 if (MOUSE_LEFT_PRESSED_EVENT)
 				{
@@ -295,8 +288,7 @@ bool MenuView::treatEvents()
 					{
                         if(m_menuMusic.getStatus() == sf::Music::Status::Playing )
                             m_menuMusic.stop();
-						m_model->setMenuState(false);
-						m_model->setGameState(true);
+						m_model->setAppState(GAME);
 						result = false;
 					}
 					else if ( m_quitRectButton->IS_POINTED )
@@ -322,33 +314,17 @@ bool MenuView::treatEvents()
                     }
 				}
 			}
-
-            //=== Leaderboard Events
-
-            //if treatEvents return true == if leaderboard is stopping
-            else if (m_menuModel->getLeaderboardState()
-                     && m_leaderboardView->treatEvents(event))
+            else if (m_menuModel->getMenuState() == LEADERBOARD && m_leaderboardView->treatEvents(event))
             {
-                m_menuModel->setLeaderboardState(false);
-                m_menuModel->setHomeState(true);
+                m_menuModel->setMenuState(HOME);
             }
-
-            //=== Settings Events
-
-            else if (m_menuModel->getSettingsState()
-                     && m_settingsView->treatEvents(event))
+            else if (m_menuModel->getMenuState() == SETTINGS && m_settingsView->treatEvents(event))
             {
-                m_menuModel->setSettingsState(false);
-                m_menuModel->setHomeState(true);
+                m_menuModel->setMenuState(HOME);
             }
-
-            //=== Shop Events
-
-            else if (m_menuModel->getShopState()
-                     && m_shopView->treatEvents(event))
+            else if (m_menuModel->getMenuState() == SHOP && m_shopView->treatEvents(event))
             {
-                m_menuModel->setShopState(false);
-                m_menuModel->setHomeState(true);
+                m_menuModel->setMenuState(HOME);
             }
 		}
 	}

@@ -27,12 +27,11 @@ const int INTRO_HEIGHT = 200;
 using namespace std;
 
 
-/********************************************
-    Main function
-*********************************************
-    @author Arthur  @date 21/02 - 06/05
-    @author Florian  @date 21/02
-*********************************************/
+/**
+ * Main function
+ * @author Arthur, Florian
+ * @date 21/02 - 20/12
+ */
 int main()
 {
     srand((unsigned int) time(NULL));
@@ -43,32 +42,29 @@ int main()
     DataBase data;
     Model model(SCREEN_WIDTH, SCREEN_HEIGHT);
     model.setDataBase(&data);
-    Text *text = new Text(&data, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-    //Allows to choose which screen will be launch at Run
-    model.setIntroState(true);
+    TextHandler *text = new TextHandler(&data, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     while(window->isOpen() )
     {
-        if  ( model.getIntroState() )
+        if  ( model.getAppState() == INTRO )
         {
             Intro intro(INTRO_WIDTH, INTRO_HEIGHT, window, text);
             intro.setModel(&model);
-            while( model.getIntroState() && intro.treatEvents() )
+            while( model.getAppState() == INTRO && intro.treatEvents() )
             {
                 intro.synchronize();
                 intro.draw();
             }
         }
 
-        if  ( model.getMenuState() )
+        if  ( model.getAppState() == MENU )
         {
             MenuModel mModel(model);
             mModel.setDataBase(&data);
             MenuView mView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
             mView.setModel(&model);
             mView.setMenuModel(&mModel);
-            while( model.getMenuState() && mView.treatEvents()  )
+            while( model.getAppState() == MENU && mView.treatEvents()  )
             {
                 mModel.nextStep();
                 mView.synchronize();
@@ -76,23 +72,22 @@ int main()
             }
         }
 
-        if  ( model.getGameState() )
+        if  ( model.getAppState() == GAME )
         {
             GameModel gModel(model);
             gModel.setDataBase(&data);
             GameView gView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
             gView.setModel(&model);
             gView.setGameModel(&gModel);
-            while( model.getGameState() && gView.treatEvents() )
+            while( model.getAppState() == GAME && gView.treatEvents() )
             {
                 gModel.nextStep();
                 gView.synchronize();
                 gView.draw();
             }
-            if ( model.getResetGameState() )
+            if ( model.getAppState() == RESET_GAME )
             {
-                model.setGameState(true);
-                model.setResetGameState(false);
+                model.setAppState(GAME);
             }
         }
     }

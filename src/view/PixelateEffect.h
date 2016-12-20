@@ -54,22 +54,23 @@ External libraries used by SFML
 * libflac is under the BSD license
 */
 
-#ifndef PIXELATEEFFECT_H
-#define PIXELATEEFFECT_H
+#ifndef PIXELATE_EFFECT_H
+#define PIXELATE_EFFECT_H
 
 #include "GraphicElement.h"
 
 
-/********************************************
-    PixelateEffect Class
-*********************************************
-    SFML shader example, from official SFML
-    github repository, Effect.cpp and Shader.cpp
-    altered and merged into this class, original
-    licence is included above
-*********************************************
-    @author Arthur  @date 26/04 - 29/04
-*********************************************/
+/**
+ * PixelateEffect Class
+ *
+ * SFML shader example, from official SFML
+ * github repository, Effect.cpp and Shader.cpp
+ * altered and merged into this class, original
+ * licence is included above
+ *
+ * @author Arthur
+ * @date 26/04 - 29/04
+ */
 class PixelateEffect : public sf::Drawable
 {
     public:

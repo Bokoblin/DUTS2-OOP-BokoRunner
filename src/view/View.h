@@ -13,12 +13,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef _VIEW_H
-#define _VIEW_H
+#ifndef VIEW_H
+#define VIEW_H
 
 #include "../Model/GameModel.h"
 #include "ImagesConstants.h"
-#include "Text.h"
+#include "TextHandler.h"
 #include "SlidingBackground.h"
 #include "AnimatedGraphicElement.h"
 #include "Button.h"
@@ -39,17 +39,16 @@ const std::string APP_TITLE = "Boko Runner";
 
 class Model;
 
-/********************************************
-    View Abstract Class
-*********************************************
-    @author Arthur  @date 21/02 - 23/10
-    @author Florian @date 21/02 - 3/03
-*********************************************/
+/**
+ * View Abstract Class
+ * @author Arthur, Florian
+ * @date 21/02 - 23/10
+ */
 class View
 {
     public:
         //=== CTORs / DTORs
-        View(float w, float h, sf::RenderWindow *window, Text *text );
+        View(float w, float h, sf::RenderWindow *window, TextHandler *text );
         View( const View& myView ) = delete;
         virtual ~View();
 
@@ -66,7 +65,7 @@ class View
         //=== ATTRIBUTES
         float m_width, m_height;
         sf::RenderWindow *m_window;
-        Text *m_text;
+        TextHandler *m_text;
         Model *m_model;
 };
 

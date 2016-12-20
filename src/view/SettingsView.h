@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef SETTINGSVIEW_H
-#define SETTINGSVIEW_H
+#ifndef SETTINGS_VIEW_H
+#define SETTINGS_VIEW_H
 
 #include "View.h"
 #include "../Model/Settings.h"
@@ -22,16 +22,16 @@ limitations under the License.
 #define RADIO_BUTTONS_SIZE 26,26
 #define INDICATOR_BUTTONS_SIZE 22,22
 
-/********************************************
-    SettingsView Class
-*********************************************
-    @author Arthur  @date 20/05
-*********************************************/
+/**
+ * SettingsView Class
+ * @author Arthur
+ * @date 20/05
+ */
 class SettingsView : public View
 {
 public:
     //=== CTORs / DTORs
-    SettingsView(float w, float h, sf::RenderWindow *window, Text * text);
+    SettingsView(float w, float h, sf::RenderWindow *window, TextHandler * text);
     virtual ~SettingsView();
 
     //=== SETTERS
@@ -62,8 +62,8 @@ private:
     Button *m_englishLangRadio;
     Button *m_frenchLangRadio;
     Button *m_spanishLangRadio;
-    Button *m_normalModeRadio;
-    Button *m_masterModeRadio;
+    Button *m_easyModeRadio;
+    Button *m_hardModeRadio;
     Button *m_defaultBallSkinRadio;
     Button *m_morphBallSkinRadio;
     Button *m_capsuleBallSkinRadio;

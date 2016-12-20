@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef _DATABASE_H
-#define _DATABASE_H
+#ifndef DATABASE_H
+#define DATABASE_H
 
 #include "../../Libs/pugixml-1.7/src/pugixml.hpp"
 #include <iostream>
@@ -23,6 +23,12 @@ limitations under the License.
 #include <vector>
 #include <set>
 #include <fstream>
+
+enum Difficulty
+{
+    EASY = 1,
+    HARD = 2
+};
 
 /********************************************
     Constant Variables
@@ -41,6 +47,7 @@ const std::string DEFAULT_CONFIG_CONTENT = "<?xml version=\"1.0\"?>\n"
         "<runner>\n"
         "\t<config>\n"
         "\t\t<configItem name=\"language\" value=\"en\"/>\n"
+        "\t\t<configItem name=\"difficulty\" value=\"2\"/>\n"
         "\t\t<configItem name=\"ball_skin\" value=\"default\"/>\n"
         "\t\t<configItem name=\"total_coins_collected\" value=\"0\"/>\n"
         "\t\t<configItem name=\"total_distance_travelled\" value=\"0\"/>\n"
@@ -49,9 +56,9 @@ const std::string DEFAULT_CONFIG_CONTENT = "<?xml version=\"1.0\"?>\n"
         "\t</config>\n"
         "\t<shop>\n"
         "\t\t<shopItem id=\"doubler\" name=\"Coin Doubler\" description=\"Double coins collected number\" price=\"1000\" boughtState=\"false\"/>\n"
-        "\t\t<shopItem id=\"shieldplus\" name=\"Increase Shield bonus\" description=\"Protect two times\" price=\"100\" boughtState=\"false\"/>\n"
-        "\t\t<shopItem id=\"megaplus\" name=\"Increase Mega bonus\" description=\"Increase bonus duration by 5s\" price=\"200\" boughtState=\"false\"/>\n"
-        "\t\t<shopItem id=\"flyplus\" name=\"Increase Fly bonus\" description=\"Increase bonus duration by 5s\" price=\"180\" boughtState=\"false\"/>\n"
+        "\t\t<shopItem id=\"shieldPlus\" name=\"Increase Shield bonus\" description=\"Protect two times\" price=\"100\" boughtState=\"false\"/>\n"
+        "\t\t<shopItem id=\"megaPlus\" name=\"Increase Mega bonus\" description=\"Increase bonus duration by 5s\" price=\"200\" boughtState=\"false\"/>\n"
+        "\t\t<shopItem id=\"flyPlus\" name=\"Increase Fly bonus\" description=\"Increase bonus duration by 5s\" price=\"180\" boughtState=\"false\"/>\n"
         "\t\t<shopItem id=\"morphing\" name=\"Morph ball skin\" description=\"Unlock ball's morph skin\" price=\"500\" boughtState=\"false\"/>\n"
         "\t\t<shopItem id=\"capsule\" name=\"Capsule ball skin\" description=\"Unlock ball's capsule skin\" price=\"60\" boughtState=\"false\"/>\n"
         "\t</shop>\n"
@@ -69,11 +76,11 @@ const std::string DEFAULT_CONFIG_CONTENT = "<?xml version=\"1.0\"?>\n"
         "\t</scores>\n"
         "</runner>";
 
-/********************************************
-    DataBase Class
-*********************************************
-    @author Arthur  @date 2/05 - 24/10
-*********************************************/
+/**
+ * DataBase Class
+ * @author Arthur
+ * @date 2/05 - 24/10
+ */
 class DataBase
 {
 public:
@@ -90,6 +97,7 @@ public:
     int getCurrentDistance() const;
     int getCurrentFlattenedEnemies() const;
     int getCurrentScore() const;
+    int getDifficulty() const;
     std::string getLanguage() const;
     std::string getBallSkin() const;
     const std::set<std::string>& getActivatedItemsArray() const;
@@ -97,12 +105,13 @@ public:
     //=== SETTERS
     void setTotalCoinsCollected(int number);
     void setCurrentCoinsCollected(int number);
-    void setCurrentDistance(int number);
+    void increaseCurrentDistance(int number);
     void setCurrentFlattenedEnemies(int number);
     void setCurrentScore(float speed);
+    void setDifficulty(int difficulty);
     void setLanguage(std::string lang);
-    void setBallSkin(std::string skin);
 
+    void setBallSkin(std::string skin);
     //=== METHODS
     void createFile();
     bool checkFileIntegrity();
@@ -115,8 +124,8 @@ public:
     void loadStringFromArray(std::string &scores_text);
     void saveCurrentGame();
     void resetCurrentGame();
-    void resetScore();
 
+    void resetScore();
 private:
     //=== ATTRIBUTES
     //Global App
@@ -124,6 +133,7 @@ private:
     int m_totalDistance;
     int m_totalFlattenedEnemies;
     int m_totalGamesPlayed;
+    int m_currentDifficulty;
     std::string m_currentLanguage;
     std::string m_currentBallSkin;
 
@@ -131,9 +141,10 @@ private:
     int m_currentCoinsNumber;
     int m_currentDistance;
     int m_currentFlattenedEnemies;
-    int m_currentScore;
 
+    int m_currentScore;
     std::set<int> m_scoresArray;
+
     std::set<std::string> m_activatedItemsArray;
 };
 

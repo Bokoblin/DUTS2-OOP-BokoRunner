@@ -19,11 +19,12 @@ limitations under the License.
 #include "MovableElement.h"
 
 
-/********************************************
-    Coin Class
-*********************************************
-    @author Arthur  @date 19/03
-*********************************************/
+/**
+ * Coin Class
+ *
+ * @author Arthur
+ * @date 19/03
+ */
 class Coin : public MovableElement
 {
 public:

@@ -18,11 +18,14 @@ limitations under the License.
 
 #include "MovableElement.h"
 
-/********************************************
-    Bonus Class ( PV+, MEGA, FLY, SLOWSPEED, SHIELD)
-*********************************************
-    @author Arthur  @date 11/04 - 12/04
-*********************************************/
+/**
+ * Bonus Class
+ * The following bonuses are possible :
+ * PV+, MEGA, FLY, SLOW_SPEED and SHIELD
+ *
+ * @author Arthur
+ * @date 11/04 - 12/04
+ */
 class Bonus : public MovableElement
 {
 public:

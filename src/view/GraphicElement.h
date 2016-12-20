@@ -13,17 +13,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef GRAPHICELEMENT_H
-#define GRAPHICELEMENT_H
+#ifndef GRAPHIC_ELEMENT_H
+#define GRAPHIC_ELEMENT_H
 
 #include <SFML/Graphics.hpp>
 
-/********************************************
-    GraphicElement Class
-*********************************************
-    @author Arthur  @date 21/02 - 6/04
-    @author Florian @date 21/02 - 2/03
-*********************************************/
+/**
+ * GraphicElement Class
+ * @author Arthur, Florian
+ * @date 21/02 - 6/04
+ */
 class GraphicElement : public sf::Sprite
 {
 public:

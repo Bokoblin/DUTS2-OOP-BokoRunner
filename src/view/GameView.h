@@ -41,17 +41,16 @@ const std::string ENEMIES_DESTRUCTED_MUSIC = "../res/audio/destroyed_enemies_sou
 const int TRANSITION_SPEED = 10;
 const int PAUSE_FORM_X = 30;
 
-/********************************************
-    GameView Class
-*********************************************
-    @author Arthur  @date 21/02 - 21/05
-    @author Florian @date 21/02 - 6/05
-*********************************************/
+/**
+ * GameView Class
+ * @author Arthur, Florian
+ * @date 21/02 - 21/05
+ */
 class GameView : public View
 {
 public:
 	//=== CTORs / DTORs
-	GameView(float w, float h, sf::RenderWindow *window, Text *text);
+	GameView(float w, float h, sf::RenderWindow *myWindow, TextHandler *text);
 	virtual ~GameView();
 
 	//=== SETTERS

@@ -1,11 +1,10 @@
 #include "SlidingBackground.h"
 
-/********************************************
-    Parameterized Constructor
-*********************************************
-    @author Arthur  @date 3/03 - 7/05
-    @author Florian  @date 3/03
-*********************************************/
+/**
+ * Parameterized Constructor
+ * @author Arthur, Florian
+ * @date 3/03 - 7/05
+ */
 SlidingBackground::SlidingBackground(sf::Texture &image, float w, float h, float speed):
     GraphicElement(w, h), m_speed{speed}, m_alpha{255}
 {
@@ -14,11 +13,11 @@ SlidingBackground::SlidingBackground(sf::Texture &image, float w, float h, float
 }
 
 
-/********************************************
-    Destructor
-*********************************************
-    @author Arthur  @date 5/03 - 15/04
-*********************************************/
+/**
+ * Destructor
+ * @author Arthur
+ * @date 5/03 - 15/04
+ */
 SlidingBackground::~SlidingBackground()
 {
     delete m_left;
@@ -26,11 +25,8 @@ SlidingBackground::~SlidingBackground()
 }
 
 
-/********************************************
-    Getters
-*********************************************
-    @author Arthur  @date 26/03 - 07/05
-*********************************************/
+//=== Getters
+
 int SlidingBackground::getAlpha() const { return m_alpha; }
 sf::Vector2f SlidingBackground::getPosition() const
 {
@@ -46,12 +42,8 @@ float SlidingBackground::getSeparationPositionX() const
 }
 
 
-/********************************************
-    Setters
-*********************************************
-    @author Arthur  @date 3/03 - 07/05
-    @author Florian @date 3/03
-*********************************************/
+//=== Setters
+
 void SlidingBackground::setSpeed(float speed) { m_speed = speed; }
 void SlidingBackground::setAlpha(sf::Uint8 alpha) { m_alpha = alpha; }
 void SlidingBackground::setPosition(float x, float y)
@@ -61,11 +53,11 @@ void SlidingBackground::setPosition(float x, float y)
 }
 
 
-/********************************************
-    Synchronization Function
-*********************************************
-    @author Arthur  @date 3/03 - 7/05
-*********************************************/
+/**
+ * Synchronization Function
+ * @author Arthur
+ * @date 3/03 - 7/05
+ */
 void SlidingBackground::sync()
 {
     m_left->setPosition(m_left->getPosition().x - m_speed, m_left->getPosition().y);
@@ -82,11 +74,11 @@ void SlidingBackground::sync()
 }
 
 
-/********************************************
-    Drawing Function
-*********************************************
-    @author Arthur  @date 3/03 - 03/04
-*********************************************/
+/**
+ * Drawing Function
+ * @author Arthur
+ * @date 3/03 - 03/04
+ */
 void SlidingBackground::draw(sf::RenderWindow *window) const
 {
     window->draw(*m_left);
@@ -94,11 +86,11 @@ void SlidingBackground::draw(sf::RenderWindow *window) const
 }
 
 
-/********************************************
-    Resizing function
-*********************************************
-    @author Arthur  @date 30/04
-*********************************************/
+/**
+ * Resizing function
+ * @author Arthur
+ * @date 30/04
+ */
 void SlidingBackground::resize(float w, float h)
 {
     m_left->resize(w, h);
@@ -106,11 +98,11 @@ void SlidingBackground::resize(float w, float h)
 }
 
 
-/********************************************
-    Decrease alpha function
-*********************************************
-    @author Arthur  @date 7/05
-*********************************************/
+/**
+ * Decrease alpha function
+ * @author Arthur
+ * @date 7/05
+ */
 void SlidingBackground::decreaseAlpha(int level)
 {
     if ( m_alpha >= 0+ level)
@@ -119,11 +111,11 @@ void SlidingBackground::decreaseAlpha(int level)
         m_alpha = 0;
 }
 
-/********************************************
-    Increase alpha function
-*********************************************
-    @author Arthur  @date 7/05
-*********************************************/
+/**
+ * Increase alpha function
+ * @author Arthur
+ * @date 7/05
+ */
 void SlidingBackground::increaseAlpha(int level)
 {
     if ( m_alpha <= 255-level)

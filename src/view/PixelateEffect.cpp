@@ -3,40 +3,40 @@
 using namespace std;
 
 
-/********************************************
-    Default Constructor
-*********************************************
-    @author Arthur  @date 28/04
-*********************************************/
+/**
+ * Default Constructor
+ * @author Arthur
+ * @date 28/04
+ */
 PixelateEffect::PixelateEffect() : m_isLoaded(false)
 { }
 
 
-/********************************************
-    Destructor
-*********************************************
-    @author Arthur  @date 28/04
-*********************************************/
+/**
+ * Destructor
+ * @author Arthur
+ * @date 28/04
+ */
 PixelateEffect::~PixelateEffect()
 { }
 
 
-/********************************************
-   Load if shader available
-*********************************************
-    @author Arthur  @date 28/04
-*********************************************/
+/**
+ * Load if shader available
+ * @author Arthur
+ * @date 28/04
+ */
 void PixelateEffect::load(string image)
 {
     m_isLoaded = sf::Shader::isAvailable() && onLoad(image);
 }
 
 
-/********************************************
-    Action linked to load
-*********************************************
-    @author Arthur  @date 28/04
-*********************************************/
+/**
+ * Action linked to load
+ * @author Arthur
+ * @date 28/04
+ */
 bool PixelateEffect::onLoad(std::string image)
 {
     if (!m_texture.loadFromFile(image))
@@ -52,11 +52,11 @@ bool PixelateEffect::onLoad(std::string image)
 }
 
 
-/********************************************
-   Effect update
-*********************************************
-    @author Arthur  @date 28/04
-*********************************************/
+/**
+ * Effect update
+ * @author Arthur
+ * @date 28/04
+ */
 void PixelateEffect::update(float x, float y)
 {
     if (m_isLoaded)
@@ -64,11 +64,11 @@ void PixelateEffect::update(float x, float y)
 }
 
 
-/********************************************
-    Draw function
-*********************************************
-    @author Arthur  @date 28/04
-*********************************************/
+/**
+ * Draw function
+ * @author Arthur
+ * @date 28/04
+ */
 void PixelateEffect::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     if (m_isLoaded)

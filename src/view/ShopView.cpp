@@ -2,12 +2,12 @@
 
 using namespace std;
 
-/********************************************
-    Parameterized Constructor
-*********************************************
-    @author Arthur  @date 16/05
-*********************************************/
-ShopView::ShopView(float w, float h, sf::RenderWindow *window, Text * text):
+/**
+ * Parameterized Constructor
+ * @author Arthur
+ * @date 16/05
+ */
+ShopView::ShopView(float w, float h, sf::RenderWindow *window, TextHandler * text):
 	View(w, h, window,text), m_shop{nullptr}, m_currentIndicator{0},
     m_totalIndicator{0}, m_buyDialog{nullptr}
 {
@@ -15,11 +15,11 @@ ShopView::ShopView(float w, float h, sf::RenderWindow *window, Text * text):
 }
 
 
-/********************************************
-    Destructor
-*********************************************
-    @author Arthur  @date 16/05
-*********************************************/
+/**
+ * Destructor
+ * @author Arthur
+ * @date 16/05
+ */
 ShopView::~ShopView()
 {
     delete m_coinSprite;
@@ -35,11 +35,8 @@ ShopView::~ShopView()
 }
 
 
-/********************************************
-   Setters
-*********************************************
-    @author Arthur  @date 11/05 - 16/05
-*********************************************/
+//=== Setters
+
 void ShopView::setShopModel(Shop *model)
 {
 	m_shop = model;
@@ -47,11 +44,11 @@ void ShopView::setShopModel(Shop *model)
 }
 
 
-/********************************************
-    Image Loading
-*********************************************
-    @author Arthur  @date 16/05
-*********************************************/
+/**
+ * Image Loading
+ * @author Arthur
+ * @date 16/05
+ */
 void ShopView::loadImages()
 {
     //=== Initialize COIN Sprite
@@ -73,10 +70,10 @@ void ShopView::loadImages()
     {
         m_menuFormButtonsTexture.setSmooth(true);
 
-        std::vector<sf::IntRect> clip_rects_home;
-        clip_rects_home.push_back(sf::IntRect( 0, 50, 50, 50));
-        clip_rects_home.push_back(sf::IntRect( 51, 50, 50, 50));
-        m_homeFormButton = new Button(clip_rects_home, m_menuFormButtonsTexture, 10, 10, 50, 50, false);
+        std::vector<sf::IntRect> clipRectHome;
+        clipRectHome.push_back(sf::IntRect( 0, 50, 50, 50));
+        clipRectHome.push_back(sf::IntRect( 51, 50, 50, 50));
+        m_homeFormButton = new Button(clipRectHome, m_menuFormButtonsTexture, 10, 10, 50, 50, false);
 
         //=== Initialize INDICATORS Buttons
 
@@ -86,24 +83,24 @@ void ShopView::loadImages()
         {
             m_pageIndicatorTexture.setSmooth(true);
 
-            vector<sf::IntRect> clip_rects;
-            clip_rects.push_back(sf::IntRect(  0,   0, 50, 50) );
-            clip_rects.push_back(sf::IntRect(50,   0, 50, 50) );
-            clip_rects.push_back(sf::IntRect(  0, 50, 50, 50) );
-            clip_rects.push_back(sf::IntRect(50, 50, 50, 50) );
-            clip_rects.push_back(sf::IntRect( 0, 0, 50, 50) );
-            clip_rects.push_back(sf::IntRect( 0, 50, 50, 50) );
+            vector<sf::IntRect> clipRect;
+            clipRect.push_back(sf::IntRect(  0,   0, 50, 50) );
+            clipRect.push_back(sf::IntRect(50,   0, 50, 50) );
+            clipRect.push_back(sf::IntRect(  0, 50, 50, 50) );
+            clipRect.push_back(sf::IntRect(50, 50, 50, 50) );
+            clipRect.push_back(sf::IntRect( 0, 0, 50, 50) );
+            clipRect.push_back(sf::IntRect( 0, 50, 50, 50) );
 
-            m_pageIndicatorButton  = new Button(clip_rects, m_pageIndicatorTexture, 0, 580, 15, 15, true);
+            m_pageIndicatorButton  = new Button(clipRect, m_pageIndicatorTexture, 0, 580, 15, 15, true);
         }
     }
 }
 
-/********************************************
-   Create Cards ans Indicators
-*********************************************
-    @author Arthur  @date 16/05
-*********************************************/
+/**
+ * Create Cards ans Indicators
+ * @author Arthur
+ * @date 16/05
+ */
 void ShopView::createCards()
 {
     //=== Create Item Cards
@@ -129,11 +126,11 @@ void ShopView::createCards()
 }
 
 
-/********************************************
-    Display current Cards function
-*********************************************
-    @author Arthur  @date 16/05
-*********************************************/
+/**
+ * Display current Cards function
+ * @author Arthur
+ * @date 16/05
+ */
 void ShopView::displayCards() const
 {
     //display only 3 cards linked to the current page indicator
@@ -150,11 +147,11 @@ void ShopView::displayCards() const
 }
 
 
-/********************************************
-    Synchronization function
-*********************************************
-    @author Arthur  @date 16/05
-*********************************************/
+/**
+ * Synchronization function
+ * @author Arthur
+ * @date 16/05
+ */
 void ShopView::synchronize()
 {
     m_homeFormButton->sync();
@@ -176,11 +173,11 @@ void ShopView::synchronize()
 }
 
 
-/********************************************
-    Menu View Drawing
-*********************************************
-    @author Arthur  @date 16/05
-*********************************************/
+/**
+ * Menu View Drawing
+ * @author Arthur
+ * @date 16/05
+ */
 void ShopView::draw() const
 {
     m_window->clear(GREY_BG_COLOR);
@@ -199,7 +196,7 @@ void ShopView::draw() const
             m_window->draw(*it.second);
     }
 
-    //=== Text Drawing
+    //=== TextHandler Drawing
 
     m_text->drawMenuShopText(m_window);
 
@@ -207,11 +204,11 @@ void ShopView::draw() const
 }
 
 
-/********************************************
-    Events treating
-*********************************************
-    @author Arthur  @date 16/05 - 18/05
-*********************************************/
+/**
+ * Events treating
+ * @author Arthur
+ * @date 16/05 - 18/05
+ */
 bool ShopView::treatEvents() { return false; }
 bool ShopView::treatEvents(sf::Event event)
 {
@@ -258,7 +255,7 @@ bool ShopView::treatEvents(sf::Event event)
             {
                 //Get dialog text from file
                 string title, content, negative_choice, positive_choice;
-                m_text->syncDialogText("askBying", title, content, negative_choice, positive_choice);
+                m_text->syncDialogText("askBuying", title, content, negative_choice, positive_choice);
                 content.insert(content.find(" : ")+3, card->getItem()->getName() + "\n\n" );
                 content.insert(content.find("\n")+11, to_string(card->getItem()->getPrice() ) );
 

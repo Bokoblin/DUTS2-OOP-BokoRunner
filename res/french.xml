@@ -30,12 +30,12 @@
    <string name="configLangFraLabel">Francais</string>
    <string name="configLangEspLabel">Espagnol</string>
    <string name="configDifficultyLabel">Difficulte</string>
-   <string name="configDifficultyNormalLabel">Normal</string>
-   <string name="configDifficultyMasterLabel">Master</string>
+   <string name="configEasyModeLabel">Facile</string>
+   <string name="configHardModeLabel">Difficile</string>
    <string name="configCustomTitleLabel">Customisation_de_la_balle</string>
-   <string name="configDefaultBallskinLabel">Apparence_par_defaut</string>
-   <string name="configMorphBallskinLabel">Apparence_"morphing"</string>
-   <string name="configCapsuleBallskinLabel">Apparence_"capsule"</string>
+   <string name="configDefaultBallSkinLabel">Apparence_par_defaut</string>
+   <string name="configMorphBallSkinLabel">Apparence_"morphing"</string>
+   <string name="configCapsuleBallSkinLabel">Apparence_"capsule"</string>
    <string name="statisticsTitleLabel">Statistiques</string>
    <string name="totalDistanceLabel">Distance_totale_parcourue</string>
    <string name="totalFlattenedEnemiesLabel">Total_d'ennemies_aplatis</string>
@@ -61,7 +61,7 @@
    <!--  Pause Screen strings -->
    <string name="pauseResumeLabel">Reprendre</string>
    <string name="pauseRestartLabel">Recommencer</string>
-   <string name="pauseGotoHomeLabel">Accueil</string>
+   <string name="pauseGoToHomeLabel">Accueil</string>
 
    <!--  End Screen strings -->
    <string name="endTitleLabel">Votre_score</string>

@@ -30,12 +30,12 @@
    <string name="configLangFraLabel">French</string>
    <string name="configLangEspLabel">Spanish</string>
    <string name="configDifficultyLabel">Difficulty</string>
-   <string name="configDifficultyNormalLabel">Normal</string>
-   <string name="configDifficultyMasterLabel">Master</string>
+   <string name="configEasyModeLabel">Easy</string>
+   <string name="configHardModeLabel">Hard</string>
    <string name="configCustomTitleLabel">Ball_customization</string>
-   <string name="configDefaultBallskinLabel">Default_skin</string>
-   <string name="configMorphBallskinLabel">Morph_skin</string>
-   <string name="configCapsuleBallskinLabel">Capsule_skin</string>
+   <string name="configDefaultBallSkinLabel">Default_skin</string>
+   <string name="configMorphBallSkinLabel">Morph_skin</string>
+   <string name="configCapsuleBallSkinLabel">Capsule_skin</string>
    <string name="statisticsTitleLabel">Stats</string>
    <string name="totalDistanceLabel">Overall_distance_travelled</string>
    <string name="totalFlattenedEnemiesLabel">Overall_flattened_enemies</string>
@@ -61,7 +61,7 @@
    <!--  Pause Screen strings -->
    <string name="pauseResumeLabel">Resume</string>
    <string name="pauseRestartLabel">Restart</string>
-   <string name="pauseGotoHomeLabel">Home</string>
+   <string name="pauseGoToHomeLabel">Home</string>
 
    <!--  End Screen strings -->
    <string name="endTitleLabel">Your_score</string>

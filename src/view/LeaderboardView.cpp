@@ -3,12 +3,12 @@
 using namespace std;
 
 
-/********************************************
-    Parameterized Constructor
-*********************************************
-    @author Arthur  @date 21/05
-*********************************************/
-LeaderboardView::LeaderboardView(float w, float h, sf::RenderWindow *window, Text * t):
+/**
+ * Parameterized Constructor
+ * @author Arthur
+ * @date 21/05
+ */
+LeaderboardView::LeaderboardView(float w, float h, sf::RenderWindow *window, TextHandler * t):
     View(w, h, window, t), m_leaderboard{nullptr}
 {
     loadImages();
@@ -16,11 +16,11 @@ LeaderboardView::LeaderboardView(float w, float h, sf::RenderWindow *window, Tex
 }
 
 
-/********************************************
-    Destructor
-*********************************************
-    @author Arthur  @date 21/05
-*********************************************/
+/**
+ * Destructor
+ * @author Arthur
+ * @date 21/05
+ */
 LeaderboardView::~LeaderboardView()
 {
     delete m_homeFormButton;
@@ -28,22 +28,19 @@ LeaderboardView::~LeaderboardView()
 }
 
 
-/********************************************
-   Setters
-*********************************************
-    @author Arthur  @date 20/05
-*********************************************/
+//=== Setters
+
 void LeaderboardView::setLeaderboardModel(Leaderboard *model)
 {
     m_leaderboard = model;
 }
 
 
-/********************************************
-    Image Loading
-*********************************************
-    @author Arthur  @date 20/05
-*********************************************/
+/**
+ * Image Loading
+ * @author Arthur
+ * @date 20/05
+ */
 void LeaderboardView::loadImages()
 {
     //=== Initialize CLEAR button
@@ -54,10 +51,10 @@ void LeaderboardView::loadImages()
 	{
         m_rectButtonsTexture.setSmooth(true);
 
-        vector<sf::IntRect> clip_rects;
-		clip_rects.push_back(sf::IntRect( 0, 100, 150, 40));
-		clip_rects.push_back(sf::IntRect(151, 100, 150, 40));
-        m_clearLbRectButton = new Button(clip_rects, m_rectButtonsTexture, m_width/2-75, 500, 150, 40, false);
+        vector<sf::IntRect> clipRect;
+		clipRect.push_back(sf::IntRect( 0, 100, 150, 40));
+		clipRect.push_back(sf::IntRect(151, 100, 150, 40));
+        m_clearLbRectButton = new Button(clipRect, m_rectButtonsTexture, m_width/2-75, 500, 150, 40, false);
     }
 
     //=== Initialize HOME form button
@@ -68,19 +65,19 @@ void LeaderboardView::loadImages()
     {
         m_menuButtonTexture.setSmooth(true);
 
-        std::vector<sf::IntRect> clip_rects;
-        clip_rects.push_back(sf::IntRect( 0, 50, 50, 50));
-        clip_rects.push_back(sf::IntRect( 51, 50, 50, 50));
-        m_homeFormButton = new Button(clip_rects, m_menuButtonTexture, 10, 10, 50, 50, false);
+        std::vector<sf::IntRect> clipRect;
+        clipRect.push_back(sf::IntRect( 0, 50, 50, 50));
+        clipRect.push_back(sf::IntRect( 51, 50, 50, 50));
+        m_homeFormButton = new Button(clipRect, m_menuButtonTexture, 10, 10, 50, 50, false);
      }
 }
 
 
-/********************************************
-    Synchronization function
-*********************************************
-    @author Arthur  @date 20/05 - 24/10
-*********************************************/
+/**
+ * Synchronization function
+ * @author Arthur
+ * @date 20/05 - 24/10
+ */
 void LeaderboardView::synchronize()
 {
     //=== Elements update
@@ -93,11 +90,11 @@ void LeaderboardView::synchronize()
 }
 
 
-/********************************************
-    LeaderboardView Drawing
-*********************************************
-    @author Arthur  @date 21/05
-*********************************************/
+/**
+ * LeaderboardView Drawing
+ * @author Arthur
+ * @date 21/05
+ */
 void LeaderboardView::draw() const
 {
     m_window->clear( GREY_BG_COLOR );
@@ -107,18 +104,18 @@ void LeaderboardView::draw() const
     m_window->draw(*m_homeFormButton);
     m_window->draw(*m_clearLbRectButton);
 
-    //=== Text Drawing
+    //=== TextHandler Drawing
 
     m_text->drawLeaderboardText(m_window);
     m_window->display();
 }
 
 
-/********************************************
-    Events treating
-*********************************************
-    @author Arthur  @date 21/05
-*********************************************/
+/**
+ * Events treating
+ * @author Arthur
+ * @date 21/05
+ */
 bool LeaderboardView::treatEvents() { return false; }
 bool LeaderboardView::treatEvents(sf::Event event)
 {

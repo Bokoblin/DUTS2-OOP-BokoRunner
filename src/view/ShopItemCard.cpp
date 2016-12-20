@@ -2,12 +2,12 @@
 
 using namespace std;
 
-/********************************************
-    Parameterized Constructor
-*********************************************
-    @author Arthur  @date 16/05 - 19/05
-*********************************************/
-ShopItemCard::ShopItemCard(int num, ShopItem *item, Text *t) :
+/**
+ * Parameterized Constructor
+ * @author Arthur
+ * @date 16/05 - 19/05
+ */
+ShopItemCard::ShopItemCard(int num, ShopItem *item, TextHandler *t) :
     m_id{num}, m_posY{150}, m_shownState{false}, m_item{item}, m_text{t}
 {
     if ( num%3 == 0)
@@ -39,11 +39,11 @@ ShopItemCard::ShopItemCard(int num, ShopItem *item, Text *t) :
 }
 
 
-/********************************************
-    Destructor
-*********************************************
-    @author Arthur  @date 16/05 - 18/05
-*********************************************/
+/**
+ * Destructor
+ * @author Arthur
+ * @date 16/05 - 18/05
+ */
 ShopItemCard::~ShopItemCard()
 {
     m_text = nullptr;
@@ -52,30 +52,24 @@ ShopItemCard::~ShopItemCard()
 }
 
 
-/********************************************
-   Getters
-*********************************************
-    @author Arthur  @date 16/05 - 17/05
-*********************************************/
+//=== Getters
+
 int ShopItemCard::getId() const { return m_id; }
 bool ShopItemCard::getShownState() const { return m_shownState; }
 Button *ShopItemCard::getBuyButton() const { return m_buyButton; }
 ShopItem *ShopItemCard::getItem() const { return m_item; }
 
 
-/********************************************
-   Setters
-*********************************************
-    @author Arthur  @date 16/05
-*********************************************/
+//=== Setters
+
 void ShopItemCard::setShownState(bool state) { m_shownState = state; }
 
 
-/********************************************
-    Image Loading
-*********************************************
-    @author Arthur  @date 16/05 - 17/05
-*********************************************/
+/**
+ * Image Loading
+ * @author Arthur
+ * @date 16/05 - 17/05
+ */
 void ShopItemCard::loadImages()
 {
     //=== Initialize BUY, BOUGHT Buttons
@@ -86,12 +80,12 @@ void ShopItemCard::loadImages()
 	{
         m_rectButtonsTexture.setSmooth(true);
 
-		vector<sf::IntRect> clip_rects;
-		clip_rects.push_back(RED_BUTTON_UP);
-		clip_rects.push_back(RED_BUTTON_UP);
-		clip_rects.push_back(GREEN_BUTTON_UP);
-		clip_rects.push_back(GREEN_BUTTON_DOWN);
-		m_buyButton = new Button(clip_rects, m_rectButtonsTexture, m_posX
+		vector<sf::IntRect> clipRect;
+		clipRect.push_back(RED_BUTTON_UP);
+		clipRect.push_back(RED_BUTTON_UP);
+		clipRect.push_back(GREEN_BUTTON_UP);
+		clipRect.push_back(GREEN_BUTTON_DOWN);
+		m_buyButton = new Button(clipRect, m_rectButtonsTexture, m_posX
                            + m_width/2 - 75, m_posY+250, 150, 80, true);
     }
 
@@ -107,11 +101,11 @@ void ShopItemCard::loadImages()
 }
 
 
-/********************************************
-    Sync function
-*********************************************
-    @author Arthur  @date 16/05 - 19/05
-*********************************************/
+/**
+ * Sync function
+ * @author Arthur
+ * @date 16/05 - 19/05
+ */
 void ShopItemCard::sync()
 {
     if (  m_item->getBoughtState() )
@@ -130,11 +124,11 @@ void ShopItemCard::sync()
 }
 
 
-/********************************************
-    Draw function
-*********************************************
-    @author Arthur  @date 16/05 - 19/05
-*********************************************/
+/**
+ * Draw function
+ * @author Arthur
+ * @date 16/05 - 19/05
+ */
 void ShopItemCard::draw(sf::RenderWindow *window) const
 {
     window->draw(*m_cardBackgroundSprite);

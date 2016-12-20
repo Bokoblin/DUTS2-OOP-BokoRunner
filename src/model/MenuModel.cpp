@@ -2,14 +2,13 @@
 
 using namespace std;
 
-/********************************************
-    Parameterized Constructor
-*********************************************
-    @author Arthur  @date 14/04 - 21/05
-*********************************************/
+/**
+ * Parameterized Constructor
+ * @author Arthur
+ * @date 14/04 - 20/12
+ */
 MenuModel::MenuModel(const Model& model) :
-    Model(model), m_homeState{true}, m_settingsState{false},
-    m_leaderboardState{false}, m_shopState{false}
+    Model(model), m_menuState{HOME}
 {
     m_settings = nullptr;
     m_shop = nullptr;
@@ -17,11 +16,11 @@ MenuModel::MenuModel(const Model& model) :
 }
 
 
-/********************************************
-    Destructor
-*********************************************
-    @author Arthur  @date 14/04 - 21/05
-*********************************************/
+/**
+ * Destructor
+ * @author Arthur
+ * @date 14/04 - 21/05
+ */
 MenuModel::~MenuModel()
 {
     delete m_leaderboard;
@@ -30,38 +29,22 @@ MenuModel::~MenuModel()
 }
 
 
-/********************************************
-    Getters
-*********************************************
-    @author Arthur  @date 14/04 - 21/05
-*********************************************/
-bool MenuModel::getHomeState() const { return m_homeState; }
-bool MenuModel::getSettingsState() const{ return m_settingsState;}
-bool MenuModel::getLeaderboardState() const{ return m_leaderboardState;}
-bool MenuModel::getShopState() const { return m_shopState; }
+//=== Getters & Setters
+
+MenuState MenuModel::getMenuState() const { return m_menuState; }
+void MenuModel::setMenuState(MenuState state){ m_menuState = state;}
 
 
-/********************************************
-    Setters
-*********************************************
-    @author Arthur  @date 14/04 - 14/05
-*********************************************/
-void MenuModel::setHomeState(bool state){ m_homeState = state;}
-void MenuModel::setSettingsState(bool state){ m_settingsState = state;}
-void MenuModel::setLeaderboardState(bool state){ m_leaderboardState = state;}
-void MenuModel::setShopState(bool state){ m_shopState = state;}
-
-
-/********************************************
-    Next Step
-*********************************************
-    @author Arthur  @date 14/04 - 21/05
-*********************************************/
+/**
+ * Next Step
+ * @author Arthur
+ * @date 14/04 - 21/05
+ */
 void MenuModel::nextStep()
 {
     //=== Delete leaderboard if not anymore in shopState
 
-    if (!m_leaderboardState && m_leaderboard != nullptr)
+    if (m_menuState != LEADERBOARD && m_leaderboard != nullptr)
     {
         delete m_leaderboard;
         m_leaderboard = nullptr;
@@ -69,7 +52,7 @@ void MenuModel::nextStep()
 
     //=== Delete shop if not anymore in shopState
 
-    if (!m_shopState && m_shop != nullptr)
+    if (m_menuState != SHOP && m_shop != nullptr)
     {
         delete m_shop;
         m_shop = nullptr;
@@ -77,7 +60,7 @@ void MenuModel::nextStep()
 
     //=== Delete settings if not anymore in shopState
 
-    if (!m_settingsState && m_settings != nullptr)
+    if (m_menuState != SETTINGS && m_settings != nullptr)
     {
         delete m_settings;
         m_settings = nullptr;
@@ -85,45 +68,39 @@ void MenuModel::nextStep()
 }
 
 
-/********************************************
-    Launch leaderboard function
-*********************************************
-    @author Arthur  @date 21/05
-*********************************************/
+/**
+ * Launch leaderboard function
+ * @author Arthur
+ * @date 21/05
+ */
 Leaderboard* MenuModel::launchLeaderboard()
 {
-    m_homeState = false;
-    m_leaderboardState = true;
-
+    m_menuState = LEADERBOARD;
     m_leaderboard = new Leaderboard(m_dataBase);
     return m_leaderboard;
 }
 
 
-/********************************************
-    Launch shop function
-*********************************************
-    @author Arthur  @date 14/05
-*********************************************/
+/**
+ * Launch shop function
+ * @author Arthur
+ * @date 14/05
+ */
 Shop* MenuModel::launchShop()
 {
-    m_homeState = false;
-    m_shopState = true;
-
+    m_menuState = SHOP;
     m_shop = new Shop(m_dataBase);
     return m_shop;
 }
 
-/********************************************
-    Launch settings function
-*********************************************
-    @author Arthur  @date 20/05
-*********************************************/
+/**
+ * Launch settings function
+ * @author Arthur
+ * @date 20/05
+ */
 Settings* MenuModel::launchSettings()
 {
-    m_homeState = false;
-    m_settingsState = true;
-
+    m_menuState = SETTINGS;
     m_settings = new Settings(m_dataBase);
     return m_settings;
 }

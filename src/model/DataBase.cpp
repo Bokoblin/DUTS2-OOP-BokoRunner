@@ -3,11 +3,11 @@
 using namespace std;
 
 
-/********************************************
-    Default Constructor
-*********************************************
-    @author Arthur  @date 2/05
-*********************************************/
+/**
+ * Default Constructor
+ * @author Arthur
+ * @date 2/05
+ */
 DataBase::DataBase() :
     m_currentCoinsNumber{0}, m_currentDistance{0},
     m_currentFlattenedEnemies{0}, m_currentScore{0}
@@ -17,11 +17,9 @@ DataBase::DataBase() :
     fetchConfigurationFromFile();
 }
 
-/*******************************************
-    Getters
-*********************************************
-    @author Arthur  @date 2/05 - 14/05
-*********************************************/
+
+//=== Getters
+
 int DataBase::getTotalCoinsNumber() const { return m_totalCoinsCollected; }
 int DataBase::getTotalDistance() const { return m_totalDistance; }
 int DataBase::getTotalFlattenedEnemies() const { return m_totalFlattenedEnemies; }
@@ -31,21 +29,20 @@ int DataBase::getCurrentDistance() const { return m_currentDistance; }
 int DataBase::getCurrentFlattenedEnemies() const { return m_currentFlattenedEnemies; }
 int DataBase::getCurrentScore() const { return m_currentScore; }
 string DataBase::getLanguage() const { return m_currentLanguage;}
+int DataBase::getDifficulty() const {return m_currentDifficulty;}
 string DataBase::getBallSkin() const { return m_currentBallSkin; }
 const set<string>& DataBase::getActivatedItemsArray() const { return m_activatedItemsArray; }
 
 
-/********************************************
-    Setters
-*********************************************
-    @author Arthur  @date 2/05 - 20/05
-*********************************************/
+//=== Setters
+
 void DataBase::setTotalCoinsCollected(int n) { m_totalCoinsCollected += n; }
 void DataBase::setCurrentCoinsCollected(int n) { m_currentCoinsNumber += n; }
-void DataBase::setCurrentDistance(int n) { m_currentDistance += n; }
+void DataBase::increaseCurrentDistance(int n) { m_currentDistance += n; }
 void DataBase::setCurrentFlattenedEnemies(int n) { m_currentFlattenedEnemies += n; }
 void DataBase::setLanguage(string lang) { m_currentLanguage = lang;}
 void DataBase::setBallSkin(string skin) { m_currentBallSkin = skin; }
+void DataBase::setDifficulty(int d) { m_currentDifficulty = d;}
 void DataBase::setCurrentScore(float speed)
 {
     m_currentScore = (int)(speed * m_currentDistance
@@ -53,11 +50,11 @@ void DataBase::setCurrentScore(float speed)
 }
 
 
-/********************************************
-    (Re)create files
-*********************************************
-    @author Arthur  @date 2/05 - 24/10
-*********************************************/
+/**
+ * (Re)create files
+ * @author Arthur
+ * @date 2/05 - 24/10
+ */
 void DataBase::createFile()
 {
     fstream f;
@@ -67,11 +64,11 @@ void DataBase::createFile()
 }
 
 
-/********************************************
-    Check if file data is OK
-*********************************************
-    @author Arthur  @date 2/05 - 24/10
-*********************************************/
+/**
+ * Check if file data is OK
+ * @author Arthur
+ * @date 2/05 - 20/12
+ */
 bool DataBase::checkFileIntegrity()
 {
     fstream f;
@@ -87,8 +84,8 @@ bool DataBase::checkFileIntegrity()
     bool isPresentConfig = false; //should be true
     bool isPresentShop = false; //should be true
     bool isPresentScore = false; //should be true
-    int nbLines = 0; //should be 31
-    int nbConfigChildren = 0; //should be 6
+    int nbLines = 0; //should be 32 or 33
+    int nbConfigChildren = 0; //should be 7
     int nbShopChildren = 0; //should be 6
     int nbScoreChildren = 0; //should be 10
     do {
@@ -121,16 +118,16 @@ bool DataBase::checkFileIntegrity()
     }
     while ( !f.eof() );
 
-    return !(!isPresentConfig || !isPresentShop || !isPresentScore || (nbLines != 31 && nbLines != 32)
-             || nbConfigChildren!=6 || nbShopChildren!=6 || nbScoreChildren!=10);
+    return !(!isPresentConfig || !isPresentShop || !isPresentScore || (nbLines != 32 && nbLines != 33)
+             || nbConfigChildren!=7 || nbShopChildren!=6 || nbScoreChildren!=10);
 }
 
 
-/********************************************
-    Fetch Configuration data from file
-*********************************************
-    @author Arthur  @date 2/05 - 24/10
-*********************************************/
+/**
+ * Fetch Configuration data from file
+ * @author Arthur
+ * @date 2/05 - 24/10
+ */
 void DataBase::fetchConfigurationFromFile()
 {
     updateConfigValues();
@@ -139,11 +136,11 @@ void DataBase::fetchConfigurationFromFile()
 }
 
 
-/********************************************
-    Update variable value from file
-*********************************************
-    @author Arthur  @date 24/10
-*********************************************/
+/**
+ * Update variable value from file
+ * @author Arthur
+ * @date 24/10
+ */
 void DataBase::updateConfigValues()
 {
     pugi::xml_document doc;
@@ -156,6 +153,8 @@ void DataBase::updateConfigValues()
     {
         if (string(configItem.attribute("name").value()) == "language")
             m_currentLanguage = configItem.attribute("value").value();
+        if (string(configItem.attribute("name").value()) == "difficulty")
+            m_currentDifficulty = atoi(configItem.attribute("value").value());
         else if (string(configItem.attribute("name").value()) == "ball_skin")
             m_currentBallSkin = configItem.attribute("value").value();
         else if (string(configItem.attribute("name").value()) == "total_coins_collected")
@@ -170,11 +169,11 @@ void DataBase::updateConfigValues()
 }
 
 
-/********************************************
-    Update score array
-*********************************************
-    @author Arthur  @date 23/10 - 24/10
-*********************************************/
+/**
+ * Update score array
+ * @author Arthur
+ * @date 23/10 - 24/10
+ */
 void DataBase::updateScoreArray()
 {
     pugi::xml_document doc;
@@ -192,11 +191,11 @@ void DataBase::updateScoreArray()
 }
 
 
-/********************************************
-    Update array of activated items
-*********************************************
-    @author Arthur  @date 14/05 - 24/10
-*********************************************/
+/**
+ * Update array of activated items
+ * @author Arthur
+ * @date 14/05 - 24/10
+ */
 void DataBase::updateActivatedItemsArray()
 {
     pugi::xml_document doc;
@@ -213,11 +212,11 @@ void DataBase::updateActivatedItemsArray()
 }
 
 
-/********************************************
-    Push Configuration data to file
-*********************************************
-    @author Arthur  @date 2/05 - 24/10
-*********************************************/
+/**
+ * Push Configuration data to file
+ * @author Arthur
+ * @date 2/05 - 24/10
+ */
 void DataBase::pushConfigurationToFile()
 {
     pugi::xml_document doc;
@@ -234,6 +233,11 @@ void DataBase::pushConfigurationToFile()
         {
             pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value(m_currentLanguage.c_str());
+        }
+        if ( string(configItem.attribute("name").value()) == "difficulty" )
+        {
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            nodeValue.set_value((to_string(m_currentDifficulty)).c_str());
         }
         else if ( string(configItem.attribute("name").value()) == "ball_skin" )
         {
@@ -283,11 +287,11 @@ void DataBase::pushConfigurationToFile()
 }
 
 
-/********************************************
-    Save Current Game
-*********************************************
-    @author Arthur  @date 2/05 - 23/10
-*********************************************/
+/**
+ * Save Current Game
+ * @author Arthur
+ * @date 2/05 - 23/10
+ */
 void DataBase::saveCurrentGame()
 {
     //add current game values to total values
@@ -297,11 +301,11 @@ void DataBase::saveCurrentGame()
     addEntryToScoreArray(m_currentScore);
 }
 
-/********************************************
-    Add a new score to the score array
-*********************************************
-    @author Arthur  @date 23/10
-*********************************************/
+/**
+ * Add a new score to the score array
+ * @author Arthur
+ * @date 23/10
+ */
 void DataBase::addEntryToScoreArray(int new_score)
 {
     m_scoresArray.insert(new_score);
@@ -309,11 +313,11 @@ void DataBase::addEntryToScoreArray(int new_score)
         m_scoresArray.erase(m_scoresArray.begin());
 }
 
-/********************************************
-    update string content from array
-*********************************************
-    @author Arthur  @date 23/10
-*********************************************/
+/**
+ * Update string content from array
+ * @author Arthur
+ * @date 23/10
+ */
 void DataBase::loadStringFromArray(std::string &scores_text)
 {
     if (!m_scoresArray.empty())
@@ -331,11 +335,11 @@ void DataBase::loadStringFromArray(std::string &scores_text)
     }
 }
 
-/********************************************
-    Reset Current Game
-*********************************************
-    @author Arthur  @date 2/05
-*********************************************/
+/**
+ * Reset Current Game
+ * @author Arthur
+ * @date 2/05
+ */
 void DataBase::resetCurrentGame()
 {
     //for launching a new game
@@ -346,11 +350,11 @@ void DataBase::resetCurrentGame()
     m_currentScore = 0;
 }
 
-/********************************************
-    Reset Score
-*********************************************
-    @author Arthur  @date 24/10
-*********************************************/
+/**
+ * Reset Score
+ * @author Arthur
+ * @date 24/10
+ */
 void DataBase::resetScore()
 {
     m_scoresArray.clear();

@@ -1,10 +1,10 @@
 #include "Bonus.h"
 
-/********************************************
-    Parameterized Constructor
-*********************************************
-    @author Arthur  @date 11/04
-*********************************************/
+/**
+ * Parameterized Constructor
+ * @author Arthur
+ * @date 11/04
+ */
 Bonus::Bonus(float x, float y, float w, float h, float mvX, float mvY) :
     MovableElement(x, y, w, h, mvX, mvY)
 {
@@ -12,51 +12,49 @@ Bonus::Bonus(float x, float y, float w, float h, float mvX, float mvY) :
 }
 
 
-/********************************************
-    Destructor
-*********************************************
-    @author Arthur  @date 11/04
-*********************************************/
-Bonus::~Bonus()
-{}
+/**
+ * Destructor
+ * @author Arthur
+ * @date 11/04
+ */
+Bonus::~Bonus() {}
 
 
-/********************************************
-    Bonus Moving
-*********************************************
-    @author Arthur  @date 11/04
-*********************************************/
+/**
+ * Bonus Moving
+ * @author Arthur
+ * @date 11/04
+ */
 void Bonus::move()
 {
     m_posX += m_moveX;
     m_posY += m_moveY;
 }
 
-/********************************************
-    Next Bonus Type Choosing
-*********************************************
-    @author Arthur  @date 11/04 - 21/05
-*********************************************/
+
+/**
+ * Next Bonus Choosing under the following probabilities : \n
+ *  1-30 : PV+    ~30% \n
+ * 31-50 : MEGA   ~20% \n
+ * 51-65 : FLY    ~15% \n
+ * 66-75 : SLOW   ~10% \n
+ * 76-100: SHIELD ~25%
+ *
+ * @author Arthur
+ * @date 11/04 - 21/05
+ */
 void Bonus::chooseBonusType()
 {
     int result = 1 + rand()%100;
 
     if (result <= 30)
-        m_elementType = PVPLUSBONUS;
+        m_elementType = PV_PLUS_BONUS;
     else if (result <= 50)
-        m_elementType = MEGABONUS;
+        m_elementType = MEGA_BONUS;
     else if ( result <= 65)
-        m_elementType = FLYBONUS;
+        m_elementType = FLY_BONUS;
     else if ( result <= 75)
-        m_elementType = SLOWSPEEDBONUS;
+        m_elementType = SLOW_SPEED_BONUS;
     else
-        m_elementType = SHIELDBONUS;
-
-    /** Bonus percentage : \n
-    *  1-30 : PV+    ~30% \n
-    * 31-50 : MEGA   ~20% \n
-    * 51-65 : FLY    ~15% \n
-    * 66-75 : SLOW   ~10% \n
-    * 76-100: SHIELD ~25%
-    */
+        m_elementType = SHIELD_BONUS;
 }

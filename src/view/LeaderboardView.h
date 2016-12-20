@@ -13,23 +13,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef LEADERBOARDVIEW_H
-#define LEADERBOARDVIEW_H
+#ifndef LEADERBOARD_VIEW_H
+#define LEADERBOARD_VIEW_H
 
 #include "View.h"
 #include "../Model/Leaderboard.h"
 
 
-/********************************************
-    LeaderboardView Class
-*********************************************
-    @author Arthur  @date 21/05
-*********************************************/
+/**
+ * LeaderboardView Class
+ * @author Arthur
+ * @date 21/05
+ */
 class LeaderboardView : public View
 {
     public:
         //=== CTORs / DTORs
-        LeaderboardView(float w, float h, sf::RenderWindow *window, Text * text);
+        LeaderboardView(float w, float h, sf::RenderWindow *window, TextHandler * text);
         virtual ~LeaderboardView();
 
         //=== SETTERS

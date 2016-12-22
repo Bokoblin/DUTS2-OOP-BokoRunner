@@ -15,60 +15,59 @@
 -->
 
 <resources>
-
    <!-- Menu & Leaderboard strings -->
-   <string name="playButtonLabel">JOUER</string>
-   <string name="quitButtonLabel">QUITTER</string>
-   <string name="clearButtonLabel">EFFACER</string>
-   <string name="leaderboardTitleLabel">Classement</string>
-   <string name="leaderboardLabel">Il_n'y_a_pas_encore_de_scores</string>
+   <string name="menu_play_button" value="JOUER" />
+   <string name="menu_quit_button" value="QUITTER" />
+   <string name="leaderboard_title" value="Classement" />
+   <string name="leaderboard_content" value="Il n'y a pas encore de scores" />
+   <string name="leaderboard_clear_button" value="EFFACER" />
 
    <!-- Settings strings -->
-   <string name="configTitleLabel">Configuration</string>
-   <string name="configLangTitleLabel">Langues</string>
-   <string name="configLangEngLabel">Anglais</string>
-   <string name="configLangFraLabel">Francais</string>
-   <string name="configLangEspLabel">Espagnol</string>
-   <string name="configDifficultyLabel">Difficulte</string>
-   <string name="configEasyModeLabel">Facile</string>
-   <string name="configHardModeLabel">Difficile</string>
-   <string name="configCustomTitleLabel">Customisation_de_la_balle</string>
-   <string name="configDefaultBallSkinLabel">Apparence_par_defaut</string>
-   <string name="configMorphBallSkinLabel">Apparence_"morphing"</string>
-   <string name="configCapsuleBallSkinLabel">Apparence_"capsule"</string>
-   <string name="statisticsTitleLabel">Statistiques</string>
-   <string name="totalDistanceLabel">Distance_totale_parcourue</string>
-   <string name="totalFlattenedEnemiesLabel">Total_d'ennemies_aplatis</string>
-   <string name="totalGamesPlayedLabel">Nombre_de_parties_lancees</string>
-   <string name="creditsTitleLabel">Credits</string>
-   <string name="creditsContentLabel">Ce_jeu_a_ete_developpe_en_tant_que_projet_de_POO_a_l'IUT_de_Bordeaux</string>
-   <string name="copyrightLabel">2016_Jolivet_Arthur_&_Laronze_Florian</string>
+   <string name="config_title" value="Configuration" />
+   <string name="config_lang_title" value="Langues" />
+   <string name="config_lang_english" value="Anglais" />
+   <string name="config_lang_french" value="Francais" />
+   <string name="config_lang_spanish" value="Espagnol" />
+   <string name="config_difficulty_title" value="Difficulte" />
+   <string name="config_easy_mode" value="Facile" />
+   <string name="config_hard_mode" value="Difficile" />
+   <string name="config_custom_title" value="Customisation de la balle" />
+   <string name="config_ball_default_skin" value="Apparence par defaut" />
+   <string name="config_ball_morph_skin" value="Apparence morphing" />
+   <string name="config_ball_capsule_skin" value="Apparence capsule" />
+   <string name="stats_title" value="Statistiques" />
+   <string name="stats_distance" value="Distance totale parcourue" />
+   <string name="stats_enemies" value="Total d'ennemies aplatis" />
+   <string name="stats_games_number" value="Nombre de parties lancees" />
+   <string name="credits_title" value="Credits" />
+   <string name="credits_content" value="Ce jeu a ete developpe en tant que projet de POO a l'IUT de Bordeaux" />
+   <string name="credits_copyright" value="2016 Jolivet Arthur &amp; Laronze Florian" />
 
    <!--  Shop strings -->
-   <string name="boughtLabel">Obtenu</string>
-   <string name="buyableLabel">Acheter</string>
-   <string name="shopDialogTitleLabel">Acheter_cet_objet_?</string>
-   <string name="shopDialogContentLabel">Nom_:_Prix___:__pieces</string>
-   <string name="shopDialogNegativeLabel">ANNULER</string>
-   <string name="shopDialogPositiveLabel">OK</string>
-   <string name="buySuccessContentLabel">Merci_pour_votre_achat.</string>
-   <string name="buyFailureContentLabel">L'achat_a_echoue.</string>
+   <string name="shop_bought" value="Obtenu" />
+   <string name="shop_purchasable" value="Acheter" />
+   <string name="shop_dialog_title" value="Acheter cet objet ?" />
+   <string name="shop_dialog_content" value="Nom : Prix   :  pieces" />
+   <string name="shop_dialog_cancel" value="ANNULER" />
+   <string name="shop_dialog_ok" value="OK" />
+   <string name="shop_dialog_success" value="Merci pour votre achat." />
+   <string name="shop_dialog_failure" value="L'achat a echoue." />
 
    <!--  Game strings -->
-   <string name="playerLifeLabel">Vie</string>
-   <string name="saveButtonLabel">SAUVER</string>
+   <string name="game_player_life" value="Vie" />
 
    <!--  Pause Screen strings -->
-   <string name="pauseResumeLabel">Reprendre</string>
-   <string name="pauseRestartLabel">Recommencer</string>
-   <string name="pauseGoToHomeLabel">Accueil</string>
+   <string name="pause_resume" value="Reprendre" />
+   <string name="pause_restart" value="Recommencer" />
+   <string name="pause_go_to_home" value="Accueil" />
 
    <!--  End Screen strings -->
-   <string name="endTitleLabel">Votre_score</string>
-   <string name="speedMultiplierLabel">Multiplicateur_vitesse</string>
-   <string name="currentDistanceLabel">Distance_parcourue</string>
-   <string name="coinsCollectedLabel">Pieces_collectees</string>
-   <string name="flattenedEnemiesLabel">Bonus_destruction_ennemies</string>
-   <string name="currentScoreLabel">Total</string>
+   <string name="end_title" value="Votre score" />
+   <string name="end_speed_multiplier" value="Multiplicateur vitesse" />
+   <string name="end_current_distance" value="Distance parcourue" />
+   <string name="end_coins_collected" value="Pieces collectees" />
+   <string name="end_enemies" value="Bonus destruction ennemies" />
+   <string name="end_score" value="Total" />
+   <string name="end_save_button" value="SAUVER" />
 
 </resources>

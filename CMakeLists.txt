@@ -71,7 +71,8 @@ set(SOURCE_FILES
         src/view/TextHandler.h
         src/view/View.cpp
         src/view/View.h
-        )
+        src/view/Text.cpp
+        src/view/Text.h)
 
 add_executable(runner ${SOURCE_FILES})
 

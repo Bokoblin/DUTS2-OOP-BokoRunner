@@ -13,14 +13,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef TEXT_H
-#define TEXT_H
+#ifndef TEXT_HANDLER_H
+#define TEXT_HANDLER_H
 
 #include "../Model/DataBase.h"
-#include "SFML/Graphics.hpp"
-#include <map>
+#include "Text.h"
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Font.hpp>
 
-#define HALF_WIDTH getGlobalBounds().width/2
 #define TITLE_TEXT_ROW m_height/12
 #define GOLD_COLOR sf::Color(255,204,0,255)
 #define ENEMY_BLUE_COLOR sf::Color(0,232,209,255)
@@ -47,7 +47,7 @@ const int CONTENT_CHARACTER_SIZE = 20;
 /**
  * Text Class
  * @author Arthur
- * @date 02/04 - 23/10
+ * @date 02/04 - 22/12
  */
 class TextHandler
 {
@@ -61,14 +61,14 @@ class TextHandler
     sf::Font *getRegularFont() const;
     sf::Font *getCondensedFont() const;
     sf::Font *getBoldFont() const;
-    sf::Text *getResumeText() const;
-    sf::Text *getRestartText() const;
-    sf::Text *getHomeText() const;
+    Text *getResumeText() const;
+    Text *getRestartText() const;
+    Text *getHomeText() const;
 
     //=== METHODS
     void loadText();
     void updateWholeText();
-    void updateString(std::string file, sf::Text *currentText, std::string currentName);
+    void updateString(std::string file, Text *currentText);
 
     void syncMenuHomeText();
     void syncSettingsText();
@@ -95,70 +95,70 @@ private:
     sf::Font *m_condensedFont;
     sf::Font *m_BoldFont;
     DataBase *m_dataBase;
-    std::map<sf::Text*, std::string> m_textMap;
+    std::vector<Text*> m_textList;
 
     //Menu and Leaderboard Labels -- loaded from file
-    sf::Text *m_playButtonLabel;
-    sf::Text *m_quitButtonLabel;
-    sf::Text *m_clearButtonLabel;
-    sf::Text *m_leaderboardTitleLabel;
+    Text *m_playButtonLabel;
+    Text *m_quitButtonLabel;
+    Text *m_clearButtonLabel;
+    Text *m_leaderboardTitleLabel;
 
     //Settings Labels
-    sf::Text *m_configTitleLabel;
-    sf::Text *m_configLangTitleLabel;
-    sf::Text *m_configLangEngLabel;
-    sf::Text *m_configLangFraLabel;
-    sf::Text *m_configLangEspLabel;
-    sf::Text *m_configDifficultyTitleLabel;
-    sf::Text *m_configEasyModeLabel;
-    sf::Text *m_configHardModeLabel;
-    sf::Text *m_configCustomTitleLabel;
-    sf::Text *m_configDefaultBallSkinLabel;
-    sf::Text *m_configMorphBallSkinLabel;
-    sf::Text *m_configCapsuleBallSkinLabel;
-    sf::Text *m_statisticsTitleLabel;
-    sf::Text *m_totalDistanceLabel;
-    sf::Text *m_totalFlattenedEnemiesLabel;
-    sf::Text *m_totalGamesPlayedLabel;
-    sf::Text *m_creditsTitleLabel;
-    sf::Text *m_creditsContentLabel;
-    sf::Text *m_copyrightLabel;
+    Text *m_configTitleLabel;
+    Text *m_configLangTitleLabel;
+    Text *m_configLangEngLabel;
+    Text *m_configLangFraLabel;
+    Text *m_configLangEspLabel;
+    Text *m_configDifficultyTitleLabel;
+    Text *m_configEasyModeLabel;
+    Text *m_configHardModeLabel;
+    Text *m_configCustomTitleLabel;
+    Text *m_configDefaultBallSkinLabel;
+    Text *m_configMorphBallSkinLabel;
+    Text *m_configCapsuleBallSkinLabel;
+    Text *m_statisticsTitleLabel;
+    Text *m_totalDistanceLabel;
+    Text *m_totalFlattenedEnemiesLabel;
+    Text *m_totalGamesPlayedLabel;
+    Text *m_creditsTitleLabel;
+    Text *m_creditsContentLabel;
+    Text *m_copyrightLabel;
 
     //Shop Labels
-    sf::Text *m_shopDialogTitleLabel;
-    sf::Text *m_shopDialogContentLabel;
-    sf::Text *m_shopDialogNegativeLabel;
-    sf::Text *m_shopDialogPositiveLabel;
-    sf::Text *m_buySuccessContentLabel;
-    sf::Text *m_buyFailureContentLabel;
+    Text *m_shopDialogTitleLabel;
+    Text *m_shopDialogContentLabel;
+    Text *m_shopDialogNegativeLabel;
+    Text *m_shopDialogPositiveLabel;
+    Text *m_buySuccessContentLabel;
+    Text *m_buyFailureContentLabel;
 
     //Game (Main, Pause & End) Labels
-    sf::Text *m_playerLifeLabel;
-    sf::Text *m_currentDistanceLabel;
-    sf::Text *m_coinsCollectedLabel;
-    sf::Text *m_pauseResumeLabel;
-    sf::Text *m_pauseRestartLabel;
-    sf::Text *m_pauseGoToHomeLabel;
-    sf::Text *m_endTitleLabel;
-    sf::Text *m_speedMultiplierLabel;
-    sf::Text *m_flattenedEnemiesLabel;
-    sf::Text *m_currentScoreLabel;
+    Text *m_playerLifeLabel;
+    Text *m_currentDistanceLabel;
+    Text *m_coinsCollectedLabel;
+    Text *m_pauseResumeLabel;
+    Text *m_pauseRestartLabel;
+    Text *m_pauseGoToHomeLabel;
+    Text *m_endTitleLabel;
+    Text *m_speedMultiplierLabel;
+    Text *m_flattenedEnemiesLabel;
+    Text *m_currentScoreLabel;
 
     //Settings and Leaderboard DataText -- loaded from parsed data
-    sf::Text *m_totalDistanceText;
-    sf::Text *m_totalFlattenedEnemiesText;
-    sf::Text *m_totalGamesPlayedText;
-    sf::Text *m_leaderboardContentText;
+    Text *m_totalDistanceText;
+    Text *m_totalFlattenedEnemiesText;
+    Text *m_totalGamesPlayedText;
+    Text *m_leaderboardContentText;
 
     //Game (Main, Pause & End) DataText
-    sf::Text *m_currentDistanceText;
-    sf::Text *m_bonusTimeoutText;
-    sf::Text *m_saveButtonText;
-    sf::Text *m_totalCoinsNbText;
-    sf::Text *m_currentCoinsNbText;
-    sf::Text *m_speedMultiplierText;
-    sf::Text *m_flattenedEnemiesText;
-    sf::Text *m_currentScoreText;
+    Text *m_currentDistanceText;
+    Text *m_bonusTimeoutText;
+    Text *m_saveButtonText;
+    Text *m_totalCoinsNbText;
+    Text *m_currentCoinsNbText;
+    Text *m_speedMultiplierText;
+    Text *m_flattenedEnemiesText;
+    Text *m_currentScoreText;
 };
 
 #endif

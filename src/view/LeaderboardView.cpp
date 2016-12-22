@@ -12,7 +12,7 @@ LeaderboardView::LeaderboardView(float w, float h, sf::RenderWindow *window, Tex
     View(w, h, window, t), m_leaderboard{nullptr}
 {
     loadImages();
-    m_text->syncMenuLeaderboardText();
+    m_textHandler->syncMenuLeaderboardText();
 }
 
 
@@ -105,7 +105,7 @@ void LeaderboardView::draw() const
 
     //=== TextHandler Drawing
 
-    m_text->drawLeaderboardText(m_window);
+    m_textHandler->drawLeaderboardText(m_window);
     m_window->display();
 }
 
@@ -145,7 +145,7 @@ bool LeaderboardView::treatEvents(sf::Event event)
         if ( m_clearLbRectButton->IS_POINTED )
         {
             m_leaderboard->getDataBase()->resetScore();
-            m_text->syncMenuLeaderboardText();
+            m_textHandler->syncMenuLeaderboardText();
         }
     }
     return stop_leaderboard;

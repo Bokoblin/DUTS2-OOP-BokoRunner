@@ -576,12 +576,12 @@ void GameView::synchronize()
         linkElements(); //Link new mElements with gElements
         deleteElements(); //Elements deleting if not used anymore
         updateElements(); //Elements update
-        m_text->syncGameText(m_gameModel->getBonusTimeout()); //TextHandler update
+        m_textHandler->syncGameText(m_gameModel->getBonusTimeout()); //TextHandler update
     }
     else if (m_gameModel->getPauseState()) //PAUSE
     {
         updateElements(); //Elements update
-        m_text->syncPauseText(); //TextHandler update
+        m_textHandler->syncPauseText(); //TextHandler update
         sf::sleep(sf::milliseconds(2*NEXT_STEP_DELAY)); //limit CPU usage
     }
     else if (m_gameModel->getEndState())//END
@@ -594,7 +594,7 @@ void GameView::synchronize()
         //=== Buttons & text update
 
         updateElements(); //Buttons update
-        m_text->syncEndText(m_gameModel->getSaveStatus(),
+        m_textHandler->syncEndText(m_gameModel->getSaveStatus(),
                             (int)m_gameModel->getGameSpeed()); //TextHandler update
 
     }
@@ -641,7 +641,7 @@ void GameView::draw() const
 
         //=== TextHandler drawing
 
-        m_text->drawGameText(m_window);
+        m_textHandler->drawGameText(m_window);
 
     }
     else if (m_gameModel->getPauseState()) //PAUSE
@@ -659,7 +659,7 @@ void GameView::draw() const
 
         //=== TextHandler drawing
 
-        m_text->drawPauseText(m_window);
+        m_textHandler->drawPauseText(m_window);
 
     }
     else if (m_gameModel->getEndState()) //END
@@ -675,7 +675,7 @@ void GameView::draw() const
 
         //=== TextHandler drawing
 
-        m_text->drawEndText(m_window);
+        m_textHandler->drawEndText(m_window);
 
     }
 
@@ -746,15 +746,15 @@ bool GameView::treatEvents()
             {
                 if (MOUSE_LEFT_PRESSED_EVENT)
                 {
-                    if ( m_resumeGameButton->IS_POINTED || m_text->getResumeText()->IS_POINTED )
+                    if ( m_resumeGameButton->IS_POINTED || m_textHandler->getResumeText()->IS_POINTED )
                     {
                         m_resumeGameButton->setPressedState(true);
                     }
-                    else if ( m_restartGameButton->IS_POINTED || m_text->getRestartText()->IS_POINTED )
+                    else if ( m_restartGameButton->IS_POINTED || m_textHandler->getRestartText()->IS_POINTED )
                     {
                         m_restartGameButton->setPressedState(true);
                     }
-                    else if ( m_goToHomeButton->IS_POINTED || m_text->getHomeText()->IS_POINTED )
+                    else if ( m_goToHomeButton->IS_POINTED || m_textHandler->getHomeText()->IS_POINTED )
                     {
                         m_goToHomeButton->setPressedState(true);
                     }
@@ -771,19 +771,19 @@ bool GameView::treatEvents()
                     m_goToHomeButton->setPressedState(false);
                     m_controlMusicButton->setPressedState(false);
 
-                    if ( m_resumeGameButton->IS_POINTED || m_text->getResumeText()->IS_POINTED )
+                    if ( m_resumeGameButton->IS_POINTED || m_textHandler->getResumeText()->IS_POINTED )
                     {
                         m_gameModel->setPauseState(false);
                         if(m_gameThemeMusic.getStatus() == sf::Music::Status::Paused)
                             m_gameThemeMusic.play();
                     }
-                    else if ( m_restartGameButton->IS_POINTED || m_text->getRestartText()->IS_POINTED )
+                    else if ( m_restartGameButton->IS_POINTED || m_textHandler->getRestartText()->IS_POINTED )
                     {
                         m_gameModel->setPauseState(false);
                         m_model->setAppState(RESET_GAME);
                         result = false;
                     }
-                    else if ( m_goToHomeButton->IS_POINTED || m_text->getHomeText()->IS_POINTED )
+                    else if ( m_goToHomeButton->IS_POINTED || m_textHandler->getHomeText()->IS_POINTED )
                     {
                         m_gameModel->setPauseState(false);
                         m_model->setAppState(MENU);
@@ -823,11 +823,11 @@ bool GameView::treatEvents()
             {
                 if (MOUSE_LEFT_PRESSED_EVENT)
                 {
-                    if ( m_restartGameButton->IS_POINTED || m_text->getRestartText()->IS_POINTED )
+                    if ( m_restartGameButton->IS_POINTED || m_textHandler->getRestartText()->IS_POINTED )
                     {
                         m_restartGameButton->setPressedState(true);
                     }
-                    else if ( m_goToHomeButton->IS_POINTED || m_text->getHomeText()->IS_POINTED )
+                    else if ( m_goToHomeButton->IS_POINTED || m_textHandler->getHomeText()->IS_POINTED )
                     {
                         m_goToHomeButton->setPressedState(true);
                     }
@@ -843,13 +843,13 @@ bool GameView::treatEvents()
                     m_goToHomeButton->setPressedState(false);
                     m_saveScoreButton->setPressedState(false);
 
-                    if ( m_restartGameButton->IS_POINTED || m_text->getRestartText()->IS_POINTED )
+                    if ( m_restartGameButton->IS_POINTED || m_textHandler->getRestartText()->IS_POINTED )
                     {
                         m_gameModel->setEndState(false);
                         m_model->setAppState(RESET_GAME);
                         result = false;
                     }
-                    else if ( m_goToHomeButton->IS_POINTED || m_text->getHomeText()->IS_POINTED )
+                    else if ( m_goToHomeButton->IS_POINTED || m_textHandler->getHomeText()->IS_POINTED )
                     {
                         m_gameModel->setEndState(false);
                         m_model->setAppState(MENU);

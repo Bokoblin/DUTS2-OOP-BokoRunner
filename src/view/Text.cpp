@@ -10,6 +10,13 @@ using namespace std;
 Text::Text(string description) : m_description{description}
 {
     setColor(sf::Color::White);
+    m_isVisible = true;
+}
+
+Text::Text(string description, bool isVisible) : m_description{description}
+{
+    setColor(sf::Color::White);
+    m_isVisible = isVisible;
 }
 
 //=== Getters
@@ -17,9 +24,11 @@ Text::Text(string description) : m_description{description}
 std::string Text::getDescription() const {
     return m_description;
 }
+bool Text::isVisible() const {
+    return m_isVisible;
+}
 
-
-//=== Getters
+//=== Setters
 
 void Text::setDescription(std::string description) {
     m_description = description;
@@ -30,5 +39,10 @@ void Text::setPositionSelfCentered(double x, double y) {
 void Text::setStringFromInt(int value) {
     setString(to_string(value));
 }
+void Text::setVisible(bool on) {
+    m_isVisible = on;
+}
+
+
 
 

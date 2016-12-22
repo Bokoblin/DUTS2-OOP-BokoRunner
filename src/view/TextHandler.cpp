@@ -52,13 +52,13 @@ Text* TextHandler::getHomeText() const { return m_pauseGoToHomeLabel; }
  * */
 void TextHandler::loadText()
 {
-    //Menu and Leaderboard
+    //=== Menu and Leaderboard
 
-    m_playButtonLabel = new Text("menu_play_button");
-    m_textList.push_back(m_playButtonLabel);
+    m_menuPlayButtonLabel = new Text("menu_play_button");
+    m_textList.push_back(m_menuPlayButtonLabel);
 
-    m_quitButtonLabel = new Text("menu_quit_button");
-    m_textList.push_back(m_quitButtonLabel);
+    m_menuQuitButtonLabel = new Text("menu_quit_button");
+    m_textList.push_back(m_menuQuitButtonLabel);
 
     m_leaderboardTitleLabel = new Text("leaderboard_title");
     m_textList.push_back(m_leaderboardTitleLabel);
@@ -66,10 +66,11 @@ void TextHandler::loadText()
     m_leaderboardContentText = new Text("leaderboard_content");
     m_textList.push_back(m_leaderboardContentText);
 
-    m_clearButtonLabel = new Text("leaderboard_clear_button");
-    m_textList.push_back(m_clearButtonLabel);
+    m_leaderboardClearButtonLabel = new Text("leaderboard_clear_button");
+    m_textList.push_back(m_leaderboardClearButtonLabel);
 
-    //Settings - configuration
+
+    //=== Settings - configuration
 
     m_configTitleLabel = new Text("config_title");
     m_textList.push_back(m_configTitleLabel);
@@ -107,44 +108,50 @@ void TextHandler::loadText()
     m_configCapsuleBallSkinLabel = new Text("config_ball_capsule_skin");
     m_textList.push_back(m_configCapsuleBallSkinLabel);
 
-    //Settings - stats
+    //=== Settings - stats
 
-    m_statisticsTitleLabel = new Text("stats_title");
-    m_textList.push_back(m_statisticsTitleLabel);
+    m_statsTitleLabel = new Text("stats_title");
+    m_textList.push_back(m_statsTitleLabel);
 
-    m_totalDistanceLabel = new Text("stats_distance");
-    m_textList.push_back(m_totalDistanceLabel);
+    m_statsTotalDistanceLabel = new Text("stats_distance");
+    m_textList.push_back(m_statsTotalDistanceLabel);
 
-    m_totalCoinsNbText = new Text("stats_coins_value");
-    m_textList.push_back(m_totalCoinsNbText);
+    m_statsTotalCoinsNbText = new Text("stats_coins_value");
+    m_textList.push_back(m_statsTotalCoinsNbText);
 
-    m_totalDistanceText = new Text("stats_distance");
-    m_textList.push_back(m_totalDistanceText);
+    m_statsTotalDistanceText = new Text("stats_distance");
+    m_textList.push_back(m_statsTotalDistanceText);
 
-    m_totalFlattenedEnemiesLabel = new Text("stats_enemies");
-    m_textList.push_back(m_totalFlattenedEnemiesLabel);
+    m_statsTotalEnemiesLabel = new Text("stats_enemies");
+    m_textList.push_back(m_statsTotalEnemiesLabel);
 
-    m_totalGamesPlayedLabel = new Text("stats_games_number");
-    m_textList.push_back(m_totalGamesPlayedLabel);
+    m_statsTotalGamesLabel = new Text("stats_games_number");
+    m_textList.push_back(m_statsTotalGamesLabel);
 
-    m_totalFlattenedEnemiesText = new Text("stats_enemies_value");
-    m_textList.push_back(m_totalFlattenedEnemiesText);
+    m_statsTotalEnemiesText = new Text("stats_enemies_value");
+    m_textList.push_back(m_statsTotalEnemiesText);
 
-    m_totalGamesPlayedText = new Text("stats_games_number_value");
-    m_textList.push_back(m_totalGamesPlayedText);
+    m_statsTotalGamesText = new Text("stats_games_number_value");
+    m_textList.push_back(m_statsTotalGamesText);
 
-    //Settings - credits
+    //=== Settings - about
 
-    m_creditsTitleLabel= new Text("credits_title");
-    m_textList.push_back(m_creditsTitleLabel);
+    m_aboutTitleLabel= new Text("about_title");
+    m_textList.push_back(m_aboutTitleLabel);
 
-    m_creditsContentLabel = new Text("credits_content");
-    m_textList.push_back(m_creditsContentLabel);
+    m_aboutDescriptionLabel = new Text("about_description");
+    m_textList.push_back(m_aboutDescriptionLabel);
 
-    m_copyrightLabel = new Text("credits_copyright");
-    m_textList.push_back(m_copyrightLabel);
+    m_aboutRepositoryLabel = new Text("about_repository");
+    m_textList.push_back(m_aboutRepositoryLabel);
 
-    //Shop
+    m_aboutEmailLabel = new Text("about_email");
+    m_textList.push_back(m_aboutEmailLabel);
+
+    m_aboutCopyrightLabel = new Text("about_copyright");
+    m_textList.push_back(m_aboutCopyrightLabel);
+
+    //=== Shop
 
     m_shopDialogTitleLabel = new Text("shop_dialog_title");
     m_textList.push_back(m_shopDialogTitleLabel);
@@ -158,27 +165,29 @@ void TextHandler::loadText()
     m_shopDialogPositiveLabel = new Text("shop_dialog_ok");
     m_textList.push_back(m_shopDialogPositiveLabel);
 
-    m_buySuccessContentLabel = new Text("shop_dialog_success");
-    m_textList.push_back(m_buySuccessContentLabel);
+    m_shopBuySuccessfulLabel = new Text("shop_dialog_success");
+    m_textList.push_back(m_shopBuySuccessfulLabel);
 
-    m_buyFailureContentLabel = new Text("shop_dialog_failure");
-    m_textList.push_back(m_buyFailureContentLabel);
+    m_shopBuyUnsuccessfulLabel = new Text("shop_dialog_failure");
+    m_textList.push_back(m_shopBuyUnsuccessfulLabel);
 
-    //Game
 
-    m_currentDistanceText = new Text("distanceText");
+    //=== Game
+
+    m_currentDistanceText = new Text("game_current_distance");
     m_textList.push_back(m_currentDistanceText);
 
     m_playerLifeLabel = new Text("game_player_life");
     m_textList.push_back(m_playerLifeLabel);
 
-    m_bonusTimeoutText = new Text("bonus_timeout_value");
+    m_bonusTimeoutText = new Text("game_bonus_timeout_value");
     m_textList.push_back(m_bonusTimeoutText);
 
-    m_currentCoinsNbText = new Text("coins_collected_value");
+    m_currentCoinsNbText = new Text("game_current_coins_value");
     m_textList.push_back(m_currentCoinsNbText);
 
-    //Pause
+
+    //=== Pause
 
     m_pauseResumeLabel = new Text("pause_resume");
     m_textList.push_back(m_pauseResumeLabel);
@@ -189,7 +198,8 @@ void TextHandler::loadText()
     m_pauseGoToHomeLabel = new Text("pause_go_to_home");
     m_textList.push_back(m_pauseGoToHomeLabel);
 
-    //End
+
+    //=== End
 
     m_endTitleLabel = new Text("end_title");
     m_textList.push_back(m_endTitleLabel);
@@ -234,7 +244,7 @@ void TextHandler::updateWholeText()
 {
     for ( Text* t : m_textList)
     {
-        t->setCharacterSize(DEFAULT_CHARACTER_SIZE);
+        t->setCharacterSize(DEFAULT_CHAR_SIZE);
         t->setFont(*m_condensedFont);
         t->setColor(sf::Color::White);
 
@@ -284,8 +294,8 @@ void TextHandler::updateString(string file, Text *text)
  */
 void TextHandler::syncMenuHomeText()
 {
-    m_playButtonLabel->setPositionSelfCentered( m_width/2, (m_height / 1.42));
-    m_quitButtonLabel->setPositionSelfCentered( m_width/2, (m_height / 1.15));
+    m_menuPlayButtonLabel->setPositionSelfCentered( m_width/2, m_height/1.42 );
+    m_menuQuitButtonLabel->setPositionSelfCentered( m_width/2, m_height/1.15 );
 }
 
 
@@ -294,48 +304,55 @@ void TextHandler::syncMenuHomeText()
  * @author Arthur
  * @date 14/04 - 22/12
  */
-void TextHandler::syncSettingsText()
+void TextHandler::syncSettingsText(int currentPage)
 {
-    //=== Configuration
+    if ( currentPage == CONFIG)
+    {
+        m_configTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
+        m_configLangTitleLabel->setPosition(40, 150);
+        m_configLangEngLabel->setPosition(RADIO_TEXT_X, 202);
+        m_configLangFraLabel->setPosition(RADIO_TEXT_X, 242);
+        m_configLangEspLabel->setPosition(RADIO_TEXT_X, 282);
+        m_configDifficultyTitleLabel->setPosition(40, 370);
+        m_configEasyModeLabel->setPosition(RADIO_TEXT_X, 417);
+        m_configHardModeLabel->setPosition(RADIO_TEXT_X, 457);
+        m_configCustomTitleLabel->setPosition(m_width/2 + 40, 150);
+        m_configDefaultBallSkinLabel->setPosition(m_width/2 + RADIO_TEXT_X, 202);
+        m_configMorphBallSkinLabel->setPosition(m_width/2 + RADIO_TEXT_X, 242);
+        m_configCapsuleBallSkinLabel->setPosition(m_width/2 + RADIO_TEXT_X, 282);
+    }
+    else if ( currentPage == STATS)
+    {
+        m_statsTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
+        m_statsTotalDistanceLabel->setPosition(RADIO_TEXT_X, 150);
+        m_statsTotalDistanceLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsTotalEnemiesLabel->setPosition(RADIO_TEXT_X, 190);
+        m_statsTotalEnemiesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsTotalGamesLabel->setPosition(RADIO_TEXT_X, 230);
+        m_statsTotalGamesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsTotalDistanceText->setPosition(m_width/2, 150);
+        m_statsTotalEnemiesText->setPosition(m_width/2, 190);
+        m_statsTotalGamesText->setPosition(m_width/2, 230);
 
-    m_configTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_ROW);
-    m_configLangTitleLabel->setPosition(40, 150);
-    m_configLangEngLabel->setPosition(RADIO_TEXT_X, 202);
-    m_configLangFraLabel->setPosition(RADIO_TEXT_X, 242);
-    m_configLangEspLabel->setPosition(RADIO_TEXT_X, 282);
-    m_configDifficultyTitleLabel->setPosition(40, 370);
-    m_configEasyModeLabel->setPosition(RADIO_TEXT_X, 417);
-    m_configHardModeLabel->setPosition(RADIO_TEXT_X, 457);
-    m_configCustomTitleLabel->setPosition(m_width/2+40, 150);
-    m_configDefaultBallSkinLabel->setPosition(m_width/2+RADIO_TEXT_X, 202);
-    m_configMorphBallSkinLabel->setPosition(m_width/2+RADIO_TEXT_X, 242);
-    m_configCapsuleBallSkinLabel->setPosition(m_width/2+RADIO_TEXT_X, 282);
-
-    //=== Statistics
-
-    m_statisticsTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_ROW);
-    m_totalDistanceLabel->setPosition(RADIO_TEXT_X, 150);
-    m_totalDistanceLabel->setCharacterSize(CONTENT_CHARACTER_SIZE);
-    m_totalFlattenedEnemiesLabel->setPosition(RADIO_TEXT_X, 190);
-    m_totalFlattenedEnemiesLabel->setCharacterSize(CONTENT_CHARACTER_SIZE);
-    m_totalGamesPlayedLabel->setPosition(RADIO_TEXT_X, 230);
-    m_totalGamesPlayedLabel->setCharacterSize(CONTENT_CHARACTER_SIZE);
-    m_totalDistanceText->setPosition(m_width/2, 150);
-    m_totalFlattenedEnemiesText->setPosition(m_width/2, 190);
-    m_totalGamesPlayedText->setPosition(m_width/2, 230);
-    m_creditsTitleLabel->setPositionSelfCentered(m_width/2, m_width/2);
-    m_creditsContentLabel->setPosition(RADIO_TEXT_X, 400);
-    m_creditsContentLabel->setCharacterSize(CONTENT_CHARACTER_SIZE);
-    m_copyrightLabel->setCharacterSize(CONTENT_CHARACTER_SIZE);
-    m_copyrightLabel->setPositionSelfCentered(m_width/2, 490);
-
-
-    m_totalDistanceText->setCharacterSize(CONTENT_CHARACTER_SIZE);
-    m_totalDistanceText->setString(to_string( m_dataBase->getTotalDistance() ) + " m" );
-    m_totalFlattenedEnemiesText->setCharacterSize(CONTENT_CHARACTER_SIZE);
-    m_totalFlattenedEnemiesText->setStringFromInt( m_dataBase->getTotalFlattenedEnemies() );
-    m_totalGamesPlayedText->setCharacterSize(CONTENT_CHARACTER_SIZE);
-    m_totalGamesPlayedText->setStringFromInt( m_dataBase->getTotalGamesPlayed() );
+        m_statsTotalDistanceText->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsTotalDistanceText->setString(to_string( m_dataBase->getTotalDistance() ) + " m" );
+        m_statsTotalEnemiesText->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsTotalEnemiesText->setStringFromInt( m_dataBase->getTotalFlattenedEnemies() );
+        m_statsTotalGamesText->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsTotalGamesText->setStringFromInt( m_dataBase->getTotalGamesPlayed() );
+    }
+    else //ABOUT
+    {
+        m_aboutTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
+        m_aboutDescriptionLabel->setPosition(70, 150);
+        m_aboutDescriptionLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_aboutRepositoryLabel->setPosition(70, 260);
+        m_aboutRepositoryLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_aboutEmailLabel->setPosition(70, 350);
+        m_aboutEmailLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_aboutCopyrightLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_aboutCopyrightLabel->setPositionSelfCentered(m_width/2, 490);
+    }
 }
 
 
@@ -363,10 +380,10 @@ void TextHandler::syncMenuLeaderboardText()
         m_leaderboardContentText->setPositionSelfCentered(m_width/2, 100);
     }
 
-    m_leaderboardTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_ROW);
+    m_leaderboardTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
 
-    m_clearButtonLabel->setCharacterSize(20);
-    m_clearButtonLabel->setPositionSelfCentered(m_width/2, 547);
+    m_leaderboardClearButtonLabel->setCharacterSize(20);
+    m_leaderboardClearButtonLabel->setPositionSelfCentered(m_width/2, 547);
 }
 
 
@@ -377,10 +394,10 @@ void TextHandler::syncMenuLeaderboardText()
  */
 void TextHandler::syncShopText()
 {
-    m_totalCoinsNbText->setPosition(m_width/2, TITLE_TEXT_ROW);
-    m_totalCoinsNbText->setColor(GOLD_COLOR);
+    m_statsTotalCoinsNbText->setPosition(m_width/2, TITLE_TEXT_X);
+    m_statsTotalCoinsNbText->setColor(GOLD_COLOR);
 
-    m_totalCoinsNbText->setString( to_string( m_dataBase->getTotalCoinsNumber() ));
+    m_statsTotalCoinsNbText->setString( to_string( m_dataBase->getTotalCoinsNumber() ));
 }
 
 
@@ -402,14 +419,14 @@ void TextHandler::syncDialogText(string context, string &title, string &content,
     else if  ( context == "success")
     {
         title = "";
-        content = m_buySuccessContentLabel->getString();
+        content = m_shopBuySuccessfulLabel->getString();
         neg_choice = "";
         pos_choice = m_shopDialogPositiveLabel->getString();
     }
     else if  ( context == "failure")
     {
         title = "";
-        content = m_buyFailureContentLabel->getString();
+        content = m_shopBuyUnsuccessfulLabel->getString();
         neg_choice = "";
         pos_choice = m_shopDialogPositiveLabel->getString();
     }
@@ -465,44 +482,52 @@ void TextHandler::syncPauseText()
 void TextHandler::syncEndText(bool isGameSaved, int gameSpeed)
 {
     //=== Score sub-total text
-    m_endTitleLabel->setPositionSelfCentered(m_width / 2, TITLE_TEXT_ROW);
+    m_endTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
     m_endTitleLabel->setFont(*m_BoldFont);
+
     m_speedMultiplierLabel->setPosition(SUBTOTAL_LABEL_X, 170);
     m_speedMultiplierText->setPosition(SUBTOTAL_VALUE_X, 170);
     m_speedMultiplierText->setColor(END_GREY_COLOR);
+    m_speedMultiplierText->setStringFromInt(gameSpeed);
+
     m_currentDistanceLabel->setPosition(SUBTOTAL_LABEL_X, 207);
     m_currentDistanceLabel->setColor(sf::Color::White);
     m_currentDistanceText->setPosition(SUBTOTAL_VALUE_X, 207);
     m_currentDistanceText->setColor(END_GREY_COLOR);
+    m_currentDistanceText->setString( to_string( m_dataBase->getCurrentDistance() ) + " m" );
+    m_currentCoinsNbText->setString( to_string( m_dataBase->getCurrentCoinsNumber() ) + "  X  20" );
+
     m_coinsCollectedLabel->setPosition(SUBTOTAL_LABEL_X, 245);
     m_currentCoinsNbText->setPosition(SUBTOTAL_VALUE_X, 245);
     m_currentCoinsNbText->setColor(END_GREY_COLOR);
+    m_statsTotalCoinsNbText->setStringFromInt( m_dataBase->getTotalCoinsNumber() );
+
     m_flattenedEnemiesLabel->setPosition(SUBTOTAL_LABEL_X, 290);
     m_flattenedEnemiesLabel->setColor(sf::Color::White);
     m_flattenedEnemiesText->setPosition(SUBTOTAL_VALUE_X, 290);
     m_flattenedEnemiesText->setColor(END_GREY_COLOR);
+    m_flattenedEnemiesText->setStringFromInt( m_dataBase->getCurrentFlattenedEnemies() );
+
     m_currentScoreLabel->setPosition(SUBTOTAL_LABEL_X,350);
     m_currentScoreLabel->setFont(*m_BoldFont);
     m_currentScoreText->setPosition(SUBTOTAL_VALUE_X,350);
     m_currentScoreText->setFont(*m_BoldFont);
+    m_currentScoreText->setStringFromInt( m_dataBase->getCurrentScore() );
+
     m_saveButtonText->setCharacterSize(20);
-    if (!isGameSaved)
-            m_saveButtonText->setPosition(-100, -100);
-    else
-        m_saveButtonText->setPositionSelfCentered(450, 437);
+    if (!isGameSaved)  //TODO : Button class with visibility
+    {
+        m_saveButtonText->setPosition(-100, -100);
+    }
+    else {
+        m_saveButtonText->setPositionSelfCentered(m_width/2, 437);
+    }
 
     //=== Bottom bar text
     m_pauseGoToHomeLabel->setPosition(80,535);
-    m_totalCoinsNbText->setPositionSelfCentered(450, 535);
-    m_totalCoinsNbText->setColor(GOLD_COLOR);
+    m_statsTotalCoinsNbText->setPositionSelfCentered(450, 535);
+    m_statsTotalCoinsNbText->setColor(GOLD_COLOR);
     m_pauseRestartLabel->setPositionSelfCentered(760, 535);
-
-    m_speedMultiplierText->setStringFromInt(gameSpeed);
-    m_currentDistanceText->setString( to_string( m_dataBase->getCurrentDistance() ) + " m" );
-    m_currentCoinsNbText->setString( to_string( m_dataBase->getCurrentCoinsNumber() ) + "  X  20" );
-    m_totalCoinsNbText->setStringFromInt( m_dataBase->getTotalCoinsNumber() );
-    m_flattenedEnemiesText->setStringFromInt( m_dataBase->getCurrentFlattenedEnemies() );
-    m_currentScoreText->setStringFromInt( m_dataBase->getCurrentScore() );
 }
 
 
@@ -513,19 +538,19 @@ void TextHandler::syncEndText(bool isGameSaved, int gameSpeed)
  */
 void TextHandler::drawMenuHomeText(sf::RenderWindow *window) const
 {
-    window->draw(*m_playButtonLabel);
-    window->draw(*m_quitButtonLabel);
+    window->draw(*m_menuPlayButtonLabel);
+    window->draw(*m_menuQuitButtonLabel);
 }
 
 
 /**
  * Settings Screen Drawing
  * @author Arthur
- * @date 14/04 - 20/05
+ * @date 14/04 - 22/12
  */
 void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const
 {
-    if ( currentPage == 0)
+    if ( currentPage == CONFIG)
     {
         window->draw(*m_configTitleLabel);
         window->draw(*m_configLangTitleLabel);
@@ -540,18 +565,23 @@ void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage
         window->draw(*m_configMorphBallSkinLabel);
         window->draw(*m_configCapsuleBallSkinLabel);
     }
-    else
+    else if ( currentPage == STATS)
     {
-        window->draw(*m_statisticsTitleLabel);
-        window->draw(*m_totalDistanceLabel);
-        window->draw(*m_totalFlattenedEnemiesLabel);
-        window->draw(*m_totalGamesPlayedLabel);
-        window->draw(*m_totalDistanceText);
-        window->draw(*m_totalFlattenedEnemiesText);
-        window->draw(*m_totalGamesPlayedText);
-        window->draw(*m_creditsTitleLabel);
-        window->draw(*m_creditsContentLabel);
-        window->draw(*m_copyrightLabel);
+        window->draw(*m_statsTitleLabel);
+        window->draw(*m_statsTotalDistanceLabel);
+        window->draw(*m_statsTotalEnemiesLabel);
+        window->draw(*m_statsTotalGamesLabel);
+        window->draw(*m_statsTotalDistanceText);
+        window->draw(*m_statsTotalEnemiesText);
+        window->draw(*m_statsTotalGamesText);
+    }
+    else //ABOUT
+    {
+        window->draw(*m_aboutTitleLabel);
+        window->draw(*m_aboutDescriptionLabel);
+        window->draw(*m_aboutRepositoryLabel);
+        window->draw(*m_aboutEmailLabel);
+        window->draw(*m_aboutCopyrightLabel);
     }
 }
 
@@ -565,7 +595,7 @@ void TextHandler::drawLeaderboardText(sf::RenderWindow *window) const
 {
     window->draw(*m_leaderboardTitleLabel);
     window->draw(*m_leaderboardContentText);
-    window->draw(*m_clearButtonLabel);
+    window->draw(*m_leaderboardClearButtonLabel);
 }
 
 
@@ -576,7 +606,7 @@ void TextHandler::drawLeaderboardText(sf::RenderWindow *window) const
  */
 void TextHandler::drawMenuShopText(sf::RenderWindow *window) const
 {
-    window->draw(*m_totalCoinsNbText);
+    window->draw(*m_statsTotalCoinsNbText);
 }
 
 
@@ -630,6 +660,6 @@ void TextHandler::drawEndText(sf::RenderWindow *window) const
     window->draw(*m_currentScoreText);
     window->draw(*m_saveButtonText);
     window->draw(*m_pauseGoToHomeLabel);
-    window->draw(*m_totalCoinsNbText);
+    window->draw(*m_statsTotalCoinsNbText);
     window->draw(*m_pauseRestartLabel);
 }

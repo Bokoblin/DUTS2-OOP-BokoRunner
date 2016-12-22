@@ -1,4 +1,4 @@
-# README : Boko Runner #
+# Boko Runner #
 
 
 ### Description ###
@@ -37,8 +37,8 @@ Please take a look at the following paragraphs for more details.
 
 Our code is licensed under Apache License Version 2.0.
 Our project include two libraries contained in /libs folder : 
-* PugiXML which is licensed by his creator under MIT Licence.
-* SFML which is licensed by his creators under zlib/png license.
+* PugiXML which is licensed by their creators under MIT Licence.
+* SFML which is licensed by their creators under zlib/png license.
 
 
 ##### Images #####

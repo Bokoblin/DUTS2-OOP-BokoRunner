@@ -6,12 +6,13 @@
 /**
  * Images Constants Container File
  * @author Arthur
- * @date 23/10 - 01/12
+ * @date 23/10 - 22/12
  */
 const std::string IMAGE_FOLDER = "../res/images/";
 const std::string INTRO_IMAGE = IMAGE_FOLDER + "intro.png";
 const std::string TITLE_IMAGE = IMAGE_FOLDER + "title.png";
 const std::string IUT_LOGO_IMAGE = IMAGE_FOLDER + "logo_iut.png";
+const std::string SFML_LOGO_IMAGE = IMAGE_FOLDER + "sfml-logo-small.png";
 
 //=== Background
 const std::string DEFAULT_FAR_HILL_BACKGROUND = IMAGE_FOLDER + "background/hill_far.png";

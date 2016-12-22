@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include "../../Libs/pugixml-1.7/src/pugixml.hpp"
+#include "../../Libs/pugixml-1.8/src/pugixml.hpp"
 #include <iostream>
 #include <sstream>
 #include <cassert>

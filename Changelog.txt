@@ -7,8 +7,17 @@ Current version : v1.8-dev
 
 v1.8-dev
 
+Important changes:
+- Settings enhancements
+    - Put About section in a separated page (in preparation for new content in stats)
+    - Added SFML logo and some information to About page
+
 - Added Text class inherited from sf::Text to enhance code
+
+Fixes and miscs:
 - Modified xml strings files and its handling
+- Updated PugiXML ( 1.7 -> 1.8)
+- Updated IUT logo
 
 
 ---------------------------------------------------------------------------------------------------

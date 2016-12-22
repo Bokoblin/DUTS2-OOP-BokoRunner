@@ -107,7 +107,7 @@ void ShopView::createCards()
     int i = 0;
     for ( ShopItem *item : m_shop->getShopItemsArray() )
     {
-        m_shopItemsCardArray.push_back( new ShopItemCard(i, item, m_text)  );
+        m_shopItemsCardArray.push_back( new ShopItemCard(i, item, m_textHandler)  );
         i++;
     }
 
@@ -157,7 +157,7 @@ void ShopView::synchronize()
     m_homeFormButton->sync();
     m_homeFormButton->resize(FORM_BUTTONS_SIZE);
 
-    m_text->syncShopText();
+    m_textHandler->syncShopText();
 
     for( ShopItemCard *card : m_shopItemsCardArray)
     {
@@ -198,7 +198,7 @@ void ShopView::draw() const
 
     //=== TextHandler Drawing
 
-    m_text->drawMenuShopText(m_window);
+    m_textHandler->drawMenuShopText(m_window);
 
     m_window->display();
 }
@@ -255,13 +255,13 @@ bool ShopView::treatEvents(sf::Event event)
             {
                 //Get dialog text from file
                 string title, content, negative_choice, positive_choice;
-                m_text->syncDialogText("askBuying", title, content, negative_choice, positive_choice);
+                m_textHandler->syncDialogText("askBuying", title, content, negative_choice, positive_choice);
                 content.insert(content.find(" : ")+3, card->getItem()->getName() + "\n\n" );
                 content.insert(content.find("\n")+11, to_string(card->getItem()->getPrice() ) );
 
                 //create buy dialog
                 m_buyDialog = new Dialog((int) (m_width / 2 - 125), (int) (m_height / 2 - 100),
-                                         card->getItem(), m_text, title, content, negative_choice, positive_choice);
+                                         card->getItem(), m_textHandler, title, content, negative_choice, positive_choice);
             }
 
         //Mouse up on negative button
@@ -280,12 +280,12 @@ bool ShopView::treatEvents(sf::Event event)
 
             string title, content, negative_choice, positive_choice;
             if ( result)
-                m_text->syncDialogText("success", title, content, negative_choice, positive_choice);
+                m_textHandler->syncDialogText("success", title, content, negative_choice, positive_choice);
             else
-                m_text->syncDialogText("failure", title, content, negative_choice, positive_choice);
+                m_textHandler->syncDialogText("failure", title, content, negative_choice, positive_choice);
 
             m_buyDialog = new Dialog((int) (m_width / 2 - 125), (int) (m_height / 2 - 100),
-                                     nullptr, m_text, title, content, negative_choice, positive_choice);
+                                     nullptr, m_textHandler, title, content, negative_choice, positive_choice);
         }
 
         //Mouse up on positive button as toast

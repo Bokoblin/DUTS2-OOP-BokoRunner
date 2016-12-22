@@ -55,6 +55,7 @@ private:
     sf::Texture m_radioButtonsTexture;
     sf::Texture m_pageIndicatorTexture;
     sf::Texture m_logoIUTTexture;
+    sf::Texture m_logoSFMLTexture;
 
     //Graphic Elements
     Button *m_homeFormButton;
@@ -68,6 +69,7 @@ private:
     Button *m_morphBallSkinRadio;
     Button *m_capsuleBallSkinRadio;
     GraphicElement *m_logoIUTSprite;
+    GraphicElement *m_logoSFMLSprite;
 
     std::map<int, Button *> m_pageIndicators;
 };

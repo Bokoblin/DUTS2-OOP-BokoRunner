@@ -9,8 +9,7 @@ using namespace std;
  * @date 20/05
  */
 SettingsView::SettingsView(float w, float h, sf::RenderWindow *window, TextHandler * t):
-    View(w, h, window, t), m_settings{nullptr}, m_currentIndicator{0},
-    m_nbIndicators{2}
+    View(w, h, window, t), m_settings{nullptr}, m_currentIndicator{CONFIG}, m_nbIndicators{3}
 {
 	    loadImages();
 
@@ -28,7 +27,7 @@ SettingsView::SettingsView(float w, float h, sf::RenderWindow *window, TextHandl
 /**
  * Destructor
  * @author Arthur
- * @date 20/05
+ * @date 20/05 - 22/12
  */
 SettingsView::~SettingsView()
 {
@@ -44,6 +43,7 @@ SettingsView::~SettingsView()
     delete m_morphBallSkinRadio;
     delete m_capsuleBallSkinRadio;
     delete m_logoIUTSprite;
+    delete m_logoSFMLSprite;
 
     //=== Page Indicators
 
@@ -65,7 +65,7 @@ void SettingsView::setSettingsModel(Settings *model)
 /**
  * Image Loading
  * @author Arthur
- * @date 20/05
+ * @date 20/05 - 22/12
  */
 void SettingsView::loadImages()
 {
@@ -128,15 +128,24 @@ void SettingsView::loadImages()
         m_pageIndicatorButton = new Button(clipRect, m_pageIndicatorTexture, 0, 580, 15, 15, true);
     }
 
-    //=== Initialize IUT Logo sprite
+    //=== Initialize Logo sprites
 
     if (!m_logoIUTTexture.loadFromFile(IUT_LOGO_IMAGE) )
         cerr << "ERROR when loading image file: " << IUT_LOGO_IMAGE << endl;
     else
     {
         m_logoIUTTexture.setSmooth(true);
-        m_logoIUTSprite = new GraphicElement( m_logoIUTTexture, 700, 350, 250, 210);
-        m_logoIUTSprite->resize(150, 110);
+        m_logoIUTSprite = new GraphicElement( m_logoIUTTexture, 700, 160, 245, 210);
+        m_logoIUTSprite->resize(150, 130);
+    }
+
+    if (!m_logoSFMLTexture.loadFromFile(SFML_LOGO_IMAGE) )
+        cerr << "ERROR when loading image file: " << IUT_LOGO_IMAGE << endl;
+    else
+    {
+        m_logoSFMLTexture.setSmooth(true);
+        m_logoSFMLSprite = new GraphicElement( m_logoSFMLTexture, 700, 350, 373, 113);
+        m_logoSFMLSprite->resize(150, 45);
     }
 }
 
@@ -144,10 +153,12 @@ void SettingsView::loadImages()
 /**
  * Synchronization function
  * @author Arthur
- * @date 20/05 - 21/05
+ * @date 20/05
  */
 void SettingsView::synchronize()
 {
+    //TODO : Add RESET APP
+
     //=== Update Status of Radio buttons
 
     m_englishLangRadio->setActivatedState(m_settings->getDataBase()->getLanguage() == "en");
@@ -181,8 +192,7 @@ void SettingsView::synchronize()
     for( auto it : m_pageIndicators)
     {
          (it.second)->sync();
-         it.first == m_currentIndicator ?
-         it.second->setActivatedState(true) : it.second->setActivatedState(false);
+         it.second->setActivatedState(it.first == m_currentIndicator);
     }
 
     //=== Resize Radio buttons
@@ -199,14 +209,14 @@ void SettingsView::synchronize()
 
     //=== TextHandler update
 
-    m_text->syncSettingsText();
+    m_textHandler->syncSettingsText(m_currentIndicator);
 }
 
 
 /**
  * Settings View Drawing
  * @author Arthur
- * @date 20/05
+ * @date 20/05 - 22/12
  */
 void SettingsView::draw() const
 {
@@ -216,7 +226,7 @@ void SettingsView::draw() const
 
     m_window->draw(*m_homeFormButton);
 
-    if ( m_currentIndicator == 0)
+    if ( m_currentIndicator == CONFIG)
     {
         m_window->draw(*m_englishLangRadio);
         m_window->draw(*m_frenchLangRadio);
@@ -226,15 +236,19 @@ void SettingsView::draw() const
         m_window->draw(*m_defaultBallSkinRadio);
         m_window->draw(*m_morphBallSkinRadio);
         m_window->draw(*m_capsuleBallSkinRadio);
+
+        m_textHandler->drawMenuSettingsText(m_window, CONFIG);
     }
-    else
+    else if ( m_currentIndicator == STATS)
+    {
+        m_textHandler->drawMenuSettingsText(m_window, STATS);
+    }
+    else //ABOUT
     {
         m_window->draw(*m_logoIUTSprite);
+        m_window->draw(*m_logoSFMLSprite);
+        m_textHandler->drawMenuSettingsText(m_window, ABOUT);
     }
-
-    //=== TextHandler Drawing
-
-    m_text->drawMenuSettingsText(m_window, m_currentIndicator);
 
     for( auto it : m_pageIndicators)
         m_window->draw(*it.second);
@@ -315,17 +329,17 @@ bool SettingsView::treatEvents(sf::Event event)
         else if ( m_englishLangRadio->IS_POINTED )
         {
             m_settings->changeLanguage("en");
-            m_text->updateWholeText();
+            m_textHandler->updateWholeText();
         }
         else if ( m_frenchLangRadio->IS_POINTED )
         {
             m_settings->changeLanguage("fr");
-            m_text->updateWholeText();
+            m_textHandler->updateWholeText();
         }
         else if ( m_spanishLangRadio->IS_POINTED )
         {
             m_settings->changeLanguage("es");
-            m_text->updateWholeText();
+            m_textHandler->updateWholeText();
         }
         else if ( m_easyModeRadio->IS_POINTED )
         {

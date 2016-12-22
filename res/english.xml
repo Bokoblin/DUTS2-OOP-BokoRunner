@@ -15,60 +15,59 @@
 -->
 
 <resources>
+    <!-- Menu & Leaderboard strings -->
+    <string name="menu_play_button" value="PLAY" />
+    <string name="menu_quit_button" value="QUIT" />
+    <string name="leaderboard_title" value="Leaderboard" />
+    <string name="leaderboard_content" value="There isn't any score yet" />
+    <string name="leaderboard_clear_button" value="CLEAR" />
 
-   <!-- Menu & Leaderboard strings -->
-   <string name="playButtonLabel">PLAY</string>
-   <string name="quitButtonLabel">QUIT</string>
-   <string name="clearButtonLabel">CLEAR</string>
-   <string name="leaderboardTitleLabel">Leaderboard</string>
-   <string name="leaderboardText">There_isn't_any_score_yet</string>
+    <!-- Settings strings -->
+    <string name="config_title" value="Configuration" />
+    <string name="config_lang_title" value="Languages" />
+    <string name="config_lang_english" value="English" />
+    <string name="config_lang_french" value="French" />
+    <string name="config_lang_spanish" value="Spanish" />
+    <string name="config_difficulty_title" value="Difficulty" />
+    <string name="config_easy_mode" value="Easy" />
+    <string name="config_hard_mode" value="Hard" />
+    <string name="config_custom_title" value="Ball customization" />
+    <string name="config_ball_default_skin" value="Default skin" />
+    <string name="config_ball_morph_skin" value="Morph skin" />
+    <string name="config_ball_capsule_skin" value="Capsule skin" />
+    <string name="stats_title" value="Stats" />
+    <string name="stats_distance" value="Overall distance travelled" />
+    <string name="stats_enemies" value="Overall flattened enemies" />
+    <string name="stats_games_number" value="Number of games played" />
+    <string name="credits_title" value="Credits" />
+    <string name="credits_content" value="This game has been developed as our OOP Project at IUT de Bordeaux" />
+    <string name="credits_copyright" value="2016 Jolivet Arthur &amp; Laronze Florian" />
 
-   <!-- Settings strings -->
-   <string name="configTitleLabel">Configuration</string>
-   <string name="configLangTitleLabel">Languages</string>
-   <string name="configLangEngLabel">English</string>
-   <string name="configLangFraLabel">French</string>
-   <string name="configLangEspLabel">Spanish</string>
-   <string name="configDifficultyLabel">Difficulty</string>
-   <string name="configEasyModeLabel">Easy</string>
-   <string name="configHardModeLabel">Hard</string>
-   <string name="configCustomTitleLabel">Ball_customization</string>
-   <string name="configDefaultBallSkinLabel">Default_skin</string>
-   <string name="configMorphBallSkinLabel">Morph_skin</string>
-   <string name="configCapsuleBallSkinLabel">Capsule_skin</string>
-   <string name="statisticsTitleLabel">Stats</string>
-   <string name="totalDistanceLabel">Overall_distance_travelled</string>
-   <string name="totalFlattenedEnemiesLabel">Overall_flattened_enemies</string>
-   <string name="totalGamesPlayedLabel">Number_of_games_played</string>
-   <string name="creditsTitleLabel">Credits</string>
-   <string name="creditsContentLabel">This_game_has_been_developed_as_our_OOP_Project_at_IUT_de_Bordeaux</string>
-   <string name="copyrightLabel">2016_Jolivet_Arthur_&_Laronze_Florian</string>
+    <!--  Shop strings -->
+    <string name="shop_bought" value="Bought" />
+    <string name="shop_purchasable" value="Buy" />
+    <string name="shop_dialog_title" value="Buy this item ?" />
+    <string name="shop_dialog_content" value="Name : Price  :  coins" />
+    <string name="shop_dialog_cancel" value="CANCEL" />
+    <string name="shop_dialog_ok" value="OK" />
+    <string name="shop_dialog_success" value="Thank you for your purchase." />
+    <string name="shop_dialog_failure" value="Something went wrong." />
 
-   <!--  Shop strings -->
-   <string name="boughtLabel">Bought</string>
-   <string name="buyableLabel">Buy</string>
-   <string name="shopDialogTitleLabel">Buy_this_item_?</string>
-   <string name="shopDialogContentLabel">Name_:_Price__:__coins</string>
-   <string name="shopDialogNegativeLabel">CANCEL</string>
-   <string name="shopDialogPositiveLabel">OK</string>
-   <string name="buySuccessContentLabel">Thank_you_for_your_purchase.</string>
-   <string name="buyFailureContentLabel">Something_went_wrong.</string>
+    <!--  Game strings -->
+    <string name="game_player_life" value="Life" />
 
-   <!--  Game strings -->
-   <string name="playerLifeLabel">Life</string>
-   <string name="saveButtonLabel">SAVE</string>
+    <!--  Pause Screen strings -->
+    <string name="pause_resume" value="Resume" />
+    <string name="pause_restart" value="Restart" />
+    <string name="pause_go_to_home" value="Home" />
 
-   <!--  Pause Screen strings -->
-   <string name="pauseResumeLabel">Resume</string>
-   <string name="pauseRestartLabel">Restart</string>
-   <string name="pauseGoToHomeLabel">Home</string>
-
-   <!--  End Screen strings -->
-   <string name="endTitleLabel">Your_score</string>
-   <string name="speedMultiplierLabel">Speed_multiplicator</string>
-   <string name="currentDistanceLabel">Distance_travelled</string>
-   <string name="coinsCollectedLabel">Coins_collected</string>
-   <string name="flattenedEnemiesLabel">Enemies_destructed_bonus</string>
-   <string name="currentScoreLabel">Total</string>
+    <!--  End Screen strings -->
+    <string name="end_title" value="Your score" />
+    <string name="end_speed_multiplier" value="Speed multiplier" />
+    <string name="end_current_distance" value="Distance travelled" />
+    <string name="end_coins_collected" value="Coins collected" />
+    <string name="end_enemies" value="Enemies destructed bonus" />
+    <string name="end_score" value="Total" />
+    <string name="end_save_button" value="SAVE" />
 
 </resources>

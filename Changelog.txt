@@ -1,9 +1,17 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.7.5
+Current version : v1.8-dev
 
 ======================================================================================
+
+v1.8-dev
+
+- Added Text class inherited from sf::Text to enhance code
+- Modified xml strings files and its handling
+
+
+---------------------------------------------------------------------------------------------------
 
 v1.7.5 (20/12/16)
 

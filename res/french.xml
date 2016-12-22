@@ -39,9 +39,14 @@
    <string name="stats_distance" value="Distance totale parcourue" />
    <string name="stats_enemies" value="Total d'ennemies aplatis" />
    <string name="stats_games_number" value="Nombre de parties lancees" />
-   <string name="credits_title" value="Credits" />
-   <string name="credits_content" value="Ce jeu a ete developpe en tant que projet de POO a l'IUT de Bordeaux" />
-   <string name="credits_copyright" value="2016 Jolivet Arthur &amp; Laronze Florian" />
+   <string name="about_title" value="A propos" />
+   <string name="about_description" value=" Boko Runner est un projet C++ que nous avons realise en tant que projet
+&#xA; de programmation du deuxieme semestre de notre DUT. Le but etait de &#xA; mettre en pratique les notions de
+POO que nous avons apprises au cours&#xA; du S2 et de developper avec celles-ci un jeu utilisant la bibliotheque SFML."/>
+    <string name="about_repository" value=" Le code de source du jeu est disponible sur Github a l'adresse : &#xA;
+ https://github.com/Bokoblin/DUTS2-POO-ProjetRunner.&#xA; Pour signaler des bugs, allez dans la section ''Issues''."/>
+   <string name="about_email" value=" Contactez-nous a l'adresse e-mail : pro.jolivetarthur@gmail.com." />
+   <string name="about_copyright" value="2016 Jolivet Arthur &amp; Laronze Florian" />
 
    <!--  Shop strings -->
    <string name="shop_bought" value="Obtenu" />

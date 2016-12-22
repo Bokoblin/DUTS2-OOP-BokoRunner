@@ -161,7 +161,7 @@ void MenuView::synchronize()
         m_shopFormButton->sync();
 
 		//=== TextHandler update
-		m_text->syncMenuHomeText();
+		m_textHandler->syncMenuHomeText();
 	}
     else if (m_menuModel->getMenuState() == LEADERBOARD)
         m_leaderboardView->synchronize();
@@ -217,7 +217,7 @@ void MenuView::draw() const
         m_window->draw(*m_shopFormButton);
 
 		//=== TextHandler Drawing
-		m_text->drawMenuHomeText(m_window);
+		m_textHandler->drawMenuHomeText(m_window);
 
         m_window->display();
 	}
@@ -298,18 +298,18 @@ bool MenuView::treatEvents()
 					}
                     else if ( m_leaderboardFormButton->IS_POINTED )
                     {
-                        m_leaderboardView = new LeaderboardView(m_width, m_height, m_window, m_text);
+                        m_leaderboardView = new LeaderboardView(m_width, m_height, m_window, m_textHandler);
                         m_leaderboardView->setLeaderboardModel( m_menuModel->launchLeaderboard() );
                     }
 					else if ( m_settingsFormButton->IS_POINTED )
 					{
-                        m_settingsView = new SettingsView(m_width, m_height, m_window, m_text);
+                        m_settingsView = new SettingsView(m_width, m_height, m_window, m_textHandler);
                         m_settingsView->setModel(m_model);
                         m_settingsView->setSettingsModel( m_menuModel->launchSettings() );
 					}
                     else if ( m_shopFormButton->IS_POINTED )
                     {
-                        m_shopView = new ShopView(m_width, m_height, m_window, m_text);
+                        m_shopView = new ShopView(m_width, m_height, m_window, m_textHandler);
                         m_shopView->setShopModel( m_menuModel->launchShop() );
                     }
 				}

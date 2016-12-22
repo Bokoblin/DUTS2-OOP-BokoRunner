@@ -11,8 +11,8 @@ set(SFML_ROOT "${PROJECT_SOURCE_DIR}/libs/SFML-2.3.2")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${SFML_ROOT}/cmake/Modules/")
 
 set(SOURCE_FILES
-        libs/pugixml-1.7/src/pugixml.hpp
-        libs/pugixml-1.7/src/pugixml.cpp
+        libs/pugixml-1.8/src/pugixml.hpp
+        libs/pugixml-1.8/src/pugixml.cpp
         src/view/AnimatedGraphicElement.cpp
         src/view/AnimatedGraphicElement.h
         src/model/Bonus.cpp

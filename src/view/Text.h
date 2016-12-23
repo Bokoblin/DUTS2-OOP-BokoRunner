@@ -26,6 +26,7 @@ limitations under the License.
 class Text : public sf::Text {
 public:
     //=== CTORs / DTORs
+    Text();
     Text(std::string description);
     Text(std::string description, bool isVisible);
 
@@ -38,6 +39,9 @@ public:
     void setPositionSelfCentered(double, double);
     void setStringFromInt(int value);
     void setVisible(bool on);
+
+    //=== METHODS
+    bool contains(float posX, float posY) const;
 
 private:
     //=== ATTRIBUTES

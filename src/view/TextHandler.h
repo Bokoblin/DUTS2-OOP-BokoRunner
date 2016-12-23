@@ -18,6 +18,7 @@ limitations under the License.
 
 #include "../Model/DataBase.h"
 #include "Text.h"
+#include "../model/Settings.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Font.hpp>
 
@@ -26,23 +27,14 @@ limitations under the License.
 #define ENEMY_BLUE_COLOR sf::Color(0,232,209,255)
 #define END_GREY_COLOR sf::Color(86,103,97,255)
 
-#define CONFIG 0
-#define STATS 1
-#define ABOUT 2
-
 /********************************************
     Constant Variables
 ********************************************/
-const std::string RESOURCES_FOLDER = "../res/";
-
 const std::string ROBOTO_REGULAR_FONT = RESOURCES_FOLDER + "Roboto_Regular.ttf";
 const std::string ROBOTO_CONDENSED_FONT = RESOURCES_FOLDER + "Roboto_Condensed.ttf";
 const std::string ROBOTO_BOLD_FONT = RESOURCES_FOLDER + "Roboto_Bold.ttf";
-const std::string ENGLISH_STRINGS = RESOURCES_FOLDER + "english.xml";
-const std::string FRENCH_STRINGS = RESOURCES_FOLDER + "french.xml";
-const std::string SPANISH_STRINGS = RESOURCES_FOLDER + "spanish.xml";
-const int PAUSE_TEXT_X = 80;
 
+const int PAUSE_TEXT_X = 80;
 const int RADIO_TEXT_X = 100;
 const int SUBTOTAL_LABEL_X = 220;
 const int SUBTOTAL_VALUE_X = 580;
@@ -50,15 +42,19 @@ const int DEFAULT_CHAR_SIZE = 24;
 const int CONTENT_CHAR_SIZE = 20;
 
 /**
- * Text Class
+ * TextHandler Class
+ *
+ * Text objects branded as "label" are loaded from string files
+ * Text objects branded as "Text" are loaded from parsed data
+ *
  * @author Arthur
- * @date 02/04 - 22/12
+ * @date 02/04 - 23/12
  */
 class TextHandler
 {
     public:
     //=== CTORs / DTORs
-    TextHandler(DataBase *data, const int width, const int height);
+    TextHandler(DataBase *dataBase, const int width, const int height);
     TextHandler(const TextHandler& myText) = delete;
     ~TextHandler();
 
@@ -66,9 +62,6 @@ class TextHandler
     sf::Font *getRegularFont() const;
     sf::Font *getCondensedFont() const;
     sf::Font *getBoldFont() const;
-    Text *getResumeText() const;
-    Text *getRestartText() const;
-    Text *getHomeText() const;
 
     //=== METHODS
     void loadText();
@@ -83,7 +76,7 @@ class TextHandler
                                      std::string &neg_choice, std::string &pos_choices);
     void syncGameText(int bonusTimeout);
     void syncPauseText();
-    void syncEndText(bool saveStatus, int gameSpeed);
+    void syncEndText(int gameSpeed);
 
     void drawMenuHomeText(sf::RenderWindow *window) const;
     void drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const;
@@ -102,29 +95,19 @@ private:
     DataBase *m_dataBase;
     std::vector<Text*> m_textList;
 
-    //Menu and Leaderboard Labels -- loaded from file
-    Text *m_menuPlayButtonLabel;
-    Text *m_menuQuitButtonLabel;
-    Text *m_leaderboardClearButtonLabel;
+    //Leaderboard Labels
     Text *m_leaderboardTitleLabel;
 
     //Settings Labels
     Text *m_configTitleLabel;
     Text *m_configLangTitleLabel;
-    Text *m_configLangEngLabel;
-    Text *m_configLangFraLabel;
-    Text *m_configLangEspLabel;
     Text *m_configDifficultyTitleLabel;
-    Text *m_configEasyModeLabel;
-    Text *m_configHardModeLabel;
     Text *m_configCustomTitleLabel;
-    Text *m_configDefaultBallSkinLabel;
-    Text *m_configMorphBallSkinLabel;
-    Text *m_configCapsuleBallSkinLabel;
     Text *m_statsTitleLabel;
     Text *m_statsTotalDistanceLabel;
     Text *m_statsTotalEnemiesLabel;
     Text *m_statsTotalGamesLabel;
+    Text *m_statsTotalCoinsLabel;
     Text *m_aboutTitleLabel;
     Text *m_aboutDescriptionLabel;
     Text *m_aboutRepositoryLabel;
@@ -143,15 +126,12 @@ private:
     Text *m_playerLifeLabel;
     Text *m_currentDistanceLabel;
     Text *m_coinsCollectedLabel;
-    Text *m_pauseResumeLabel;
-    Text *m_pauseRestartLabel;
-    Text *m_pauseGoToHomeLabel;
     Text *m_endTitleLabel;
     Text *m_speedMultiplierLabel;
     Text *m_flattenedEnemiesLabel;
     Text *m_currentScoreLabel;
 
-    //Settings and Leaderboard DataText -- loaded from parsed data
+    //Settings and Leaderboard DataText
     Text *m_statsTotalDistanceText;
     Text *m_statsTotalEnemiesText;
     Text *m_statsTotalGamesText;
@@ -160,7 +140,6 @@ private:
     //Game (Main, Pause & End) DataText
     Text *m_currentDistanceText;
     Text *m_bonusTimeoutText;
-    Text *m_saveButtonText;
     Text *m_statsTotalCoinsNbText;
     Text *m_currentCoinsNbText;
     Text *m_speedMultiplierText;

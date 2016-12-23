@@ -60,8 +60,8 @@ Dialog::~Dialog()
 
 //=== Getters
 
-const sf::Text& Dialog::getNegativeButton() const { return m_negativeButton; }
-const sf::Text& Dialog::getPositiveButton() const { return m_positiveButton; }
+const Text& Dialog::getNegativeButton() const { return m_negativeButton; }
+const Text& Dialog::getPositiveButton() const { return m_positiveButton; }
 ShopItem *Dialog::getItemLinked() const {return m_itemLinked; }
 
 

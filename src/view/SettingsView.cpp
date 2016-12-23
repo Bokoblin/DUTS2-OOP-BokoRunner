@@ -9,48 +9,48 @@ using namespace std;
  * @date 20/05
  */
 SettingsView::SettingsView(float w, float h, sf::RenderWindow *window, TextHandler * t):
-    View(w, h, window, t), m_settings{nullptr}, m_currentIndicator{CONFIG}, m_nbIndicators{3}
+        View(w, h, window, t), m_settings{nullptr}
 {
-	    loadImages();
+    loadImages();
 
-        //=== Create Pages Indicator
+    //=== Create Pages Indicator
 
-        for (int i=0; i < m_nbIndicators; i++)
-        {
-            m_pageIndicators[i] = new Button(*m_pageIndicatorButton);
-            m_pageIndicators[i]->setPosition( m_width/2 - 12*m_nbIndicators + 24*i, 550 );
-            m_pageIndicators[i]->resize(INDICATOR_BUTTONS_SIZE);
-        }
+    for (int i=0; i < PAGE_NUMBER; i++)
+    {
+        m_pageIndicators[i] = new RadioButton(*m_pageIndicatorButton);
+        m_pageIndicators[i]->setPosition( m_width/2 - 12*PAGE_NUMBER + 24*i, 550 );
+        m_pageIndicators[i]->resize(INDICATOR_BUTTONS_SIZE);
+    }
+
+    //=== Fill button list
+
+    m_buttonList.push_back(m_homeFormButton);
+    m_buttonList.push_back(m_englishLangRadio);
+    m_buttonList.push_back(m_frenchLangRadio);
+    m_buttonList.push_back(m_spanishLangRadio);
+    m_buttonList.push_back(m_easyModeRadio);
+    m_buttonList.push_back(m_hardModeRadio);
+    m_buttonList.push_back(m_defaultBallSkinRadio);
+    m_buttonList.push_back(m_morphBallSkinRadio);
+    m_buttonList.push_back(m_capsuleBallSkinRadio);
+    m_buttonList.push_back(m_resetRectButton);
 }
 
 
 /**
  * Destructor
  * @author Arthur
- * @date 20/05 - 22/12
+ * @date 20/05 - 23/12
  */
 SettingsView::~SettingsView()
 {
-    //=== Graphic Elements
-
-    delete m_homeFormButton;
-    delete m_englishLangRadio;
-    delete m_frenchLangRadio;
-    delete m_spanishLangRadio;
-    delete m_easyModeRadio;
-    delete m_hardModeRadio;
-    delete m_defaultBallSkinRadio;
-    delete m_morphBallSkinRadio;
-    delete m_capsuleBallSkinRadio;
-    delete m_logoIUTSprite;
-    delete m_logoSFMLSprite;
-
-    //=== Page Indicators
-
-    delete m_pageIndicatorButton;
+    for ( auto button : m_buttonList)
+        delete button;
 
     for ( auto it : m_pageIndicators)
         delete it.second;
+
+    delete m_pageIndicatorButton;
 }
 
 
@@ -65,7 +65,7 @@ void SettingsView::setSettingsModel(Settings *model)
 /**
  * Image Loading
  * @author Arthur
- * @date 20/05 - 22/12
+ * @date 20/05 - 23/12
  */
 void SettingsView::loadImages()
 {
@@ -85,14 +85,14 @@ void SettingsView::loadImages()
         clipRect.push_back(sf::IntRect( 0, 100, 50, 50) );
         clipRect.push_back(sf::IntRect( 0, 150, 50, 50) );
 
-        m_englishLangRadio = new Button(clipRect, m_radioButtonsTexture, 50, 205, 50, 50, true);
-        m_frenchLangRadio = new Button(clipRect, m_radioButtonsTexture, 50, 245, 50, 50, true);
-        m_spanishLangRadio = new Button(clipRect, m_radioButtonsTexture, 50, 285, 50, 50, true);
-        m_easyModeRadio = new Button(clipRect, m_radioButtonsTexture, 50, 420, 50, 50, true);
-        m_hardModeRadio = new Button(clipRect, m_radioButtonsTexture, 50, 460, 50, 50, true);
-        m_defaultBallSkinRadio = new Button(clipRect, m_radioButtonsTexture, m_width/2+50, 205, 50, 50, true);
-        m_morphBallSkinRadio = new Button(clipRect, m_radioButtonsTexture, m_width/2+50, 245, 50, 50, true);
-        m_capsuleBallSkinRadio = new Button(clipRect, m_radioButtonsTexture, m_width/2+50, 285, 50, 50, true);
+        m_englishLangRadio = new RadioButton(clipRect, m_radioButtonsTexture, 50, 205, 50, 50, "config_lang_english");
+        m_frenchLangRadio = new RadioButton(clipRect, m_radioButtonsTexture,  50, 245, 50, 50, "config_lang_french");
+        m_spanishLangRadio = new RadioButton(clipRect, m_radioButtonsTexture,50, 285, 50, 50, "config_lang_spanish");
+        m_easyModeRadio = new RadioButton(clipRect, m_radioButtonsTexture,50, 420, 50, 50, "config_easy_mode");
+        m_hardModeRadio = new RadioButton(clipRect, m_radioButtonsTexture,50, 460, 50, 50, "config_hard_mode");
+        m_defaultBallSkinRadio = new RadioButton(clipRect, m_radioButtonsTexture,m_width/2+50, 205, 50, 50, "config_ball_default_skin");
+        m_morphBallSkinRadio = new RadioButton(clipRect, m_radioButtonsTexture,m_width/2+50, 245, 50, 50, "config_ball_morph_skin");
+        m_capsuleBallSkinRadio = new RadioButton(clipRect, m_radioButtonsTexture,m_width/2+50, 285, 50, 50, "config_ball_capsule_skin");
     }
 
     //=== Initialize HOME form button
@@ -106,8 +106,8 @@ void SettingsView::loadImages()
         std::vector<sf::IntRect> clipRect;
         clipRect.push_back(sf::IntRect( 0, 50, 50, 50));
         clipRect.push_back(sf::IntRect( 51, 50, 50, 50));
-        m_homeFormButton = new Button(clipRect, m_menuButtonTexture, 10, 10, 50, 50, false);
-     }
+        m_homeFormButton = new Button(clipRect, m_menuButtonTexture, 10, 10, 50, 50);
+    }
 
     //=== Initialize INDICATORS buttons
 
@@ -125,8 +125,24 @@ void SettingsView::loadImages()
         clipRect.push_back(sf::IntRect( 0, 0, 50, 50) );
         clipRect.push_back(sf::IntRect( 0, 50, 50, 50) );
 
-        m_pageIndicatorButton = new Button(clipRect, m_pageIndicatorTexture, 0, 580, 15, 15, true);
+        m_pageIndicatorButton = new RadioButton(clipRect, m_pageIndicatorTexture,0, 580, 15, 15);
     }
+
+
+    //=== Initialize RESET button
+
+    if (!m_rectButtonsTexture.loadFromFile(MENU_RECT_BUTTONS_IMAGE) )
+        cerr << "ERROR when loading image file: " << MENU_RECT_BUTTONS_IMAGE << endl;
+    else
+    {
+        m_rectButtonsTexture.setSmooth(true);
+
+        vector<sf::IntRect> clipRect;
+        clipRect.push_back(sf::IntRect( 0, 100, 150, 40));
+        clipRect.push_back(sf::IntRect(151, 100, 150, 40));
+        m_resetRectButton = new Button(clipRect, m_rectButtonsTexture, m_width/2-75, 450, 150, 40, "stats_app_reset");
+    }
+
 
     //=== Initialize Logo sprites
 
@@ -153,46 +169,40 @@ void SettingsView::loadImages()
 /**
  * Synchronization function
  * @author Arthur
- * @date 20/05
+ * @date 20/05 - 23/12
  */
 void SettingsView::synchronize()
 {
-    //TODO : Add RESET APP
-
     //=== Update Status of Radio buttons
 
-    m_englishLangRadio->setActivatedState(m_settings->getDataBase()->getLanguage() == "en");
-    m_frenchLangRadio->setActivatedState(m_settings->getDataBase()->getLanguage() == "fr");
-    m_spanishLangRadio->setActivatedState(m_settings->getDataBase()->getLanguage() == "es");
-    m_easyModeRadio->setActivatedState(m_model->getDataBase()->getDifficulty() == EASY);
-    m_hardModeRadio->setActivatedState(m_model->getDataBase()->getDifficulty() == HARD);
-    m_defaultBallSkinRadio->setActivatedState(m_settings->getDataBase()->getBallSkin() == "default");
-    m_morphBallSkinRadio->setActivatedState(m_settings->getDataBase()->getBallSkin() == "morphing");
-    m_capsuleBallSkinRadio->setActivatedState(m_settings->getDataBase()->getBallSkin() == "capsule");
+    m_englishLangRadio->setActivated(m_settings->getDataBase()->getLanguage() == "en");
+    m_frenchLangRadio->setActivated(m_settings->getDataBase()->getLanguage() == "fr");
+    m_spanishLangRadio->setActivated(m_settings->getDataBase()->getLanguage() == "es");
+    m_easyModeRadio->setActivated(m_model->getDataBase()->getDifficulty() == EASY);
+    m_hardModeRadio->setActivated(m_model->getDataBase()->getDifficulty() == HARD);
+    m_defaultBallSkinRadio->setActivated(m_settings->getDataBase()->getBallSkin() == "default");
+    m_morphBallSkinRadio->setActivated(m_settings->getDataBase()->getBallSkin() == "morphing");
+    m_capsuleBallSkinRadio->setActivated(m_settings->getDataBase()->getBallSkin() == "capsule");
 
-    m_morphBallSkinRadio->setDisabledState(!m_settings->getMorphSkinAvailability());
-    m_capsuleBallSkinRadio->setDisabledState(!m_settings->getCapsuleSkinAvailability());
-    m_defaultBallSkinRadio->setDisabledState(!m_settings->getMorphSkinAvailability()
-                                             && !m_settings->getCapsuleSkinAvailability());
+    m_morphBallSkinRadio->setDisabled(!m_settings->getMorphSkinAvailability());
+    m_capsuleBallSkinRadio->setDisabled(!m_settings->getCapsuleSkinAvailability());
+    m_defaultBallSkinRadio->setDisabled(!m_settings->getMorphSkinAvailability()
+                                        && !m_settings->getCapsuleSkinAvailability());
 
-    //=== Sync Radio buttons
 
-    m_homeFormButton->sync();
-    m_englishLangRadio->sync();
-    m_frenchLangRadio->sync();
-    m_spanishLangRadio->sync();
-    m_easyModeRadio->sync();
-    m_hardModeRadio->sync();
-    m_defaultBallSkinRadio->sync();
-    m_morphBallSkinRadio->sync();
-    m_capsuleBallSkinRadio->sync();
+    //=== Sync buttons
+
+    for ( Button *button : m_buttonList)
+        button->sync(m_settings->getDataBase());
+
 
     //=== Update and sync indicators
 
+    //TODO : ISSUE
     for( auto it : m_pageIndicators)
     {
-         (it.second)->sync();
-         it.second->setActivatedState(it.first == m_currentIndicator);
+        (it.second)->sync();
+        it.second->setActivated(it.first == m_settings->getCurrentPage());
     }
 
     //=== Resize Radio buttons
@@ -209,38 +219,39 @@ void SettingsView::synchronize()
 
     //=== TextHandler update
 
-    m_textHandler->syncSettingsText(m_currentIndicator);
+    m_textHandler->syncSettingsText(m_settings->getCurrentPage());
 }
 
 
 /**
  * Settings View Drawing
  * @author Arthur
- * @date 20/05 - 22/12
+ * @date 20/05 - 23/12
  */
 void SettingsView::draw() const
 {
-    m_window->clear(GREY_BG_COLOR);
+    m_window->clear(MINE_GREY_COLOR);
 
     //=== Graphic Elements drawing
 
     m_window->draw(*m_homeFormButton);
 
-    if ( m_currentIndicator == CONFIG)
+    if ( m_settings->getCurrentPage() == CONFIG)
     {
-        m_window->draw(*m_englishLangRadio);
-        m_window->draw(*m_frenchLangRadio);
-        m_window->draw(*m_spanishLangRadio);
-        m_window->draw(*m_easyModeRadio);
-        m_window->draw(*m_hardModeRadio);
-        m_window->draw(*m_defaultBallSkinRadio);
-        m_window->draw(*m_morphBallSkinRadio);
-        m_window->draw(*m_capsuleBallSkinRadio);
+        m_englishLangRadio->draw(m_window);
+        m_frenchLangRadio->draw(m_window);
+        m_spanishLangRadio->draw(m_window);
+        m_easyModeRadio->draw(m_window);
+        m_hardModeRadio->draw(m_window);
+        m_defaultBallSkinRadio->draw(m_window);
+        m_morphBallSkinRadio->draw(m_window);
+        m_capsuleBallSkinRadio->draw(m_window);
 
         m_textHandler->drawMenuSettingsText(m_window, CONFIG);
     }
-    else if ( m_currentIndicator == STATS)
+    else if ( m_settings->getCurrentPage() == STATS)
     {
+        m_resetRectButton->draw(m_window);
         m_textHandler->drawMenuSettingsText(m_window, STATS);
     }
     else //ABOUT
@@ -251,7 +262,7 @@ void SettingsView::draw() const
     }
 
     for( auto it : m_pageIndicators)
-        m_window->draw(*it.second);
+        it.second->draw(m_window);
 
     m_window->display();
 }
@@ -260,114 +271,88 @@ void SettingsView::draw() const
 /**
  * Events treating
  * @author Arthur
- * @date 20/05
+ * @date 20/05 - 22/12
  */
 bool SettingsView::treatEvents() { return false; }
 bool SettingsView::treatEvents(sf::Event event)
 {
     bool stop_settings = false;
 
-    if (MOUSE_LEFT_PRESSED_EVENT)
-    {
-        if ( m_homeFormButton->IS_POINTED )
-            m_homeFormButton->setPressedState(true);
+    if (MOUSE_LEFT_PRESSED_EVENT) {
+        for (Button *button : m_buttonList) {
+            if (button->contains(MOUSE_POSITION)) {
+                button->setPressed(true);
+                break;
+            }
+        }
 
-        else if ( m_englishLangRadio->IS_POINTED )
-            m_englishLangRadio->setPressedState(true);
-
-        else if ( m_frenchLangRadio->IS_POINTED )
-            m_frenchLangRadio->setPressedState(true);
-
-        else if ( m_spanishLangRadio->IS_POINTED )
-            m_spanishLangRadio->setPressedState(true);
-
-        else if ( m_easyModeRadio->IS_POINTED )
-            m_easyModeRadio->setPressedState(true);
-
-        else if ( m_hardModeRadio->IS_POINTED )
-            m_hardModeRadio->setPressedState(true);
-
-        else if ( m_defaultBallSkinRadio->IS_POINTED
-                 && !m_defaultBallSkinRadio->getDisabledState() )
-            m_defaultBallSkinRadio->setPressedState(true);
-
-        else if ( m_morphBallSkinRadio->IS_POINTED
-                 && !m_morphBallSkinRadio->getDisabledState() )
-            m_morphBallSkinRadio->setPressedState(true);
-
-        else if ( m_capsuleBallSkinRadio->IS_POINTED
-                 && !m_capsuleBallSkinRadio->getDisabledState() )
-            m_capsuleBallSkinRadio->setPressedState(true);
-
-        for( auto it : m_pageIndicators)
-            if ( it.second->IS_POINTED )
-                it.second->setPressedState(true);
-
+        for (auto it : m_pageIndicators) {
+            if (it.second->contains(MOUSE_POSITION)) {
+                it.second->setPressed(true);
+                break;
+            }
+        }
     }
 
     if (event.type == sf::Event::MouseButtonReleased)
     {
         //=== Reset buttons
 
-        m_homeFormButton->setPressedState(false);
-        m_englishLangRadio->setPressedState(false);
-        m_frenchLangRadio->setPressedState(false);
-        m_spanishLangRadio->setPressedState(false);
-        m_easyModeRadio->setPressedState(false);
-        m_hardModeRadio->setPressedState(false);
-        m_defaultBallSkinRadio->setPressedState(false);
-        m_morphBallSkinRadio->setPressedState(false);
-        m_capsuleBallSkinRadio->setPressedState(false);
+        for ( Button *button : m_buttonList)
+            button->setPressed(false);
         for( auto it : m_pageIndicators)
-            it.second->setPressedState(false);
+            it.second->setPressed(false);
 
 
         //=== handle mouse up on a button
 
-        if ( m_homeFormButton->IS_POINTED )
+        if (m_homeFormButton->contains(MOUSE_POSITION) )
             stop_settings = true;
-        else if ( m_englishLangRadio->IS_POINTED )
+        else if (m_englishLangRadio->contains(MOUSE_POSITION) )
         {
             m_settings->changeLanguage("en");
             m_textHandler->updateWholeText();
         }
-        else if ( m_frenchLangRadio->IS_POINTED )
+        else if (m_frenchLangRadio->contains(MOUSE_POSITION) )
         {
             m_settings->changeLanguage("fr");
             m_textHandler->updateWholeText();
         }
-        else if ( m_spanishLangRadio->IS_POINTED )
+        else if (m_spanishLangRadio->contains(MOUSE_POSITION) )
         {
             m_settings->changeLanguage("es");
             m_textHandler->updateWholeText();
         }
-        else if ( m_easyModeRadio->IS_POINTED )
+        else if (m_easyModeRadio->contains(MOUSE_POSITION) )
         {
             m_model->getDataBase()->setDifficulty(EASY);
         }
-        else if ( m_hardModeRadio->IS_POINTED )
+        else if (m_hardModeRadio->contains(MOUSE_POSITION) )
         {
             m_model->getDataBase()->setDifficulty(HARD);
         }
-        else if ( m_defaultBallSkinRadio->IS_POINTED
-                 && !m_defaultBallSkinRadio->getDisabledState() )
+        else if (m_defaultBallSkinRadio->contains(MOUSE_POSITION) )
         {
             m_settings->changeBallSkin("default");
         }
-        else if ( m_morphBallSkinRadio->IS_POINTED
-                 && !m_morphBallSkinRadio->getDisabledState() )
+        else if (m_morphBallSkinRadio->contains(MOUSE_POSITION) )
         {
             m_settings->changeBallSkin("morphing");
         }
-        else if ( m_capsuleBallSkinRadio->IS_POINTED
-                 && !m_capsuleBallSkinRadio->getDisabledState() )
+        else if (m_capsuleBallSkinRadio->contains(MOUSE_POSITION) )
         {
             m_settings->changeBallSkin("capsule");
         }
+        else if (m_resetRectButton->contains(MOUSE_POSITION) )
+        {
+            m_settings->getDataBase()->resetWholeApp();
+            m_textHandler->syncSettingsText(m_settings->getCurrentPage());
+            m_settings->checkItemsAvailability();
+        }
 
         for( auto it : m_pageIndicators)
-            if ( it.second->IS_POINTED )
-                m_currentIndicator = it.first;
+            if (it.second->contains(MOUSE_POSITION) )
+                m_settings->setCurrentPage(it.first);
     }
     return stop_settings;
 }

@@ -359,3 +359,15 @@ void DataBase::resetScore()
 {
     m_scoresArray.clear();
 }
+
+/**
+ * Reset Whole app
+ * @author Arthur
+ * @date 22/12
+ */
+void DataBase::resetWholeApp()
+{
+    createFile();
+    fetchConfigurationFromFile();
+    m_activatedItemsArray.clear();
+}

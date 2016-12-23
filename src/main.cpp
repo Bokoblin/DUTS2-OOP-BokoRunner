@@ -42,13 +42,13 @@ int main()
     DataBase data;
     Model model(SCREEN_WIDTH, SCREEN_HEIGHT);
     model.setDataBase(&data);
-    TextHandler *text = new TextHandler(&data, SCREEN_WIDTH, SCREEN_HEIGHT);
+    TextHandler *textHandler = new TextHandler(&data, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     while(window->isOpen() )
     {
         if  ( model.getAppState() == INTRO )
         {
-            Intro intro(INTRO_WIDTH, INTRO_HEIGHT, window, text);
+            Intro intro(INTRO_WIDTH, INTRO_HEIGHT, window, textHandler);
             intro.setModel(&model);
             while( model.getAppState() == INTRO && intro.treatEvents() )
             {
@@ -61,7 +61,7 @@ int main()
         {
             MenuModel mModel(model);
             mModel.setDataBase(&data);
-            MenuView mView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
+            MenuView mView(SCREEN_WIDTH, SCREEN_HEIGHT, window, textHandler);
             mView.setModel(&model);
             mView.setMenuModel(&mModel);
             while( model.getAppState() == MENU && mView.treatEvents()  )
@@ -76,7 +76,7 @@ int main()
         {
             GameModel gModel(model);
             gModel.setDataBase(&data);
-            GameView gView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
+            GameView gView(SCREEN_WIDTH, SCREEN_HEIGHT, window, textHandler);
             gView.setModel(&model);
             gView.setGameModel(&gModel);
             while( model.getAppState() == GAME && gView.treatEvents() )
@@ -94,7 +94,7 @@ int main()
 
     data.pushConfigurationToFile();
 
-    delete text;
+    delete textHandler;
     delete window;
 
     return EXIT_SUCCESS;

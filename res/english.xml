@@ -39,6 +39,8 @@
     <string name="stats_distance" value="Overall distance travelled" />
     <string name="stats_enemies" value="Overall flattened enemies" />
     <string name="stats_games_number" value="Number of games played" />
+    <string name="stats_coins" value="Overall coins collected" />
+    <string name="stats_app_reset" value="CLEAR DATA" />
     <string name="about_title" value="About" />
     <string name="about_description" value=" Boko Runner is a C++ project we've done as our DUT 2nd semester's &#xA; programming
 project. Its goal was to put into practice the OOP notions &#xA; we learnt in S2 and develop agame with the SFML library."/>

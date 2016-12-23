@@ -9,8 +9,7 @@ using namespace std;
  */
 GameModel::GameModel(const Model& model) :
     Model(model), m_pauseState{false}, m_endState{false}, m_inTransition{false},
-    m_isTransitionPossible{false}, m_isSavePossible{true},
-    m_gameSpeed{DEFAULT_SPEED}, m_currentZone{HILL},
+    m_isTransitionPossible{false}, m_gameSpeed{DEFAULT_SPEED}, m_currentZone{HILL},
     m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},
     m_lastTime{chrono::system_clock::now()},  m_bonusTimeout{0}
 {
@@ -47,7 +46,6 @@ bool GameModel::getPauseState() const { return m_pauseState; }
 bool GameModel::getEndState() const { return m_endState; }
 bool GameModel::getTransitionStatus() const { return m_inTransition; }
 bool GameModel::getTransitionPossibleStatus() const { return m_isTransitionPossible; }
-bool GameModel::getSaveStatus() const { return m_isSavePossible; }
 float GameModel::getGameSpeed() const { return m_gameSpeed; }
 int GameModel::getBonusTimeout() const { return (int) (m_bonusTimeout.count() / 1000); } // return seconds
 int GameModel::getCurrentZone() const { return m_currentZone; }
@@ -60,7 +58,6 @@ void GameModel::setPauseState(bool state) { m_pauseState = state; }
 void GameModel::setEndState(bool state) { m_endState = state;}
 void GameModel::setTransitionStatus(bool status) { m_inTransition = status; }
 void GameModel::setTransitionPossibleStatus(bool status) { m_isTransitionPossible = status; }
-void GameModel::setSaveStatus(bool status) { m_isSavePossible = status; }
 void GameModel::setCurrentZone(Zone z) { m_currentZone = z; }
 
 

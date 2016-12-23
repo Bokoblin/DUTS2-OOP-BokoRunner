@@ -109,7 +109,7 @@ void GameView::setGameModel(GameModel *model)
 /**
  * Image Loading
  * @author Arthur
- * @date 26/03 - 27/04
+ * @date 26/03 - 23/12
  */
 void GameView::loadImages()
 {
@@ -254,29 +254,29 @@ void GameView::loadImages()
         std::vector<sf::IntRect> clipRect_resume;
         clipRect_resume.push_back(sf::IntRect(0, 0, 50, 50));
         clipRect_resume.push_back(sf::IntRect(50, 0, 50, 50));
-        m_resumeGameButton = new Button(clipRect_resume,
-                m_gameButtonsTexture, PAUSE_FORM_X, 355, 20, 20, false);
+        m_resumeGameButton = new Button(clipRect_resume, m_gameButtonsTexture, PAUSE_FORM_X, 355, 20, 20, "pause_resume");
         m_resumeGameButton->resize(20,20);
+        m_resumeGameButton->setLabelPosition(RIGHT);
 
         std::vector<sf::IntRect> clipRect_restart;
         clipRect_restart.push_back(sf::IntRect(0, 50, 50, 50));
         clipRect_restart.push_back(sf::IntRect(50, 50, 50, 50));
-        m_restartGameButton = new Button(clipRect_restart,
-                m_gameButtonsTexture, PAUSE_FORM_X, 405, 20, 20, false);
+        m_restartGameButton = new Button(clipRect_restart, m_gameButtonsTexture, PAUSE_FORM_X, 405, 20, 20, "pause_restart");
         m_restartGameButton->resize(20,20);
+        m_restartGameButton->setLabelPosition(RIGHT);
+
 
         std::vector<sf::IntRect> clipRect_home;
         clipRect_home.push_back(sf::IntRect(0, 100, 50, 50));
         clipRect_home.push_back(sf::IntRect(50, 100, 50, 50));
-        m_goToHomeButton = new Button(clipRect_home,
-                m_gameButtonsTexture, PAUSE_FORM_X, 455, 20, 20, false);
+        m_goToHomeButton = new Button(clipRect_home, m_gameButtonsTexture, PAUSE_FORM_X, 455, 20, 20, "pause_go_to_home");
         m_goToHomeButton->resize(20,20);
+        m_goToHomeButton->setLabelPosition(RIGHT);
 
         std::vector<sf::IntRect> clipRect_music;
         clipRect_music.push_back(sf::IntRect(0, 200, 50, 50));
         clipRect_music.push_back(sf::IntRect(50, 200, 50, 50));
-        m_controlMusicButton = new Button(clipRect_music,
-                m_gameButtonsTexture, PAUSE_FORM_X, 535, 20, 20, false);
+        m_controlMusicButton = new Button(clipRect_music, m_gameButtonsTexture, PAUSE_FORM_X, 535, 20, 20);
         m_controlMusicButton->resize(20,20);
     }
 
@@ -289,8 +289,8 @@ void GameView::loadImages()
         std::vector<sf::IntRect> clipRect_save;
         clipRect_save.push_back(sf::IntRect(0, 179, 150, 40));
         clipRect_save.push_back(sf::IntRect(151, 179, 150, 40));
-        m_saveScoreButton = new Button(clipRect_save,
-                    m_gameRectButtonTexture, 730, 350, m_width/2-75, 430, false);
+        m_saveScoreButton = new Button(clipRect_save,m_gameRectButtonTexture,
+                                   730, 350, m_width/2-75, 430, "end_save_button");
     }
 
 
@@ -499,9 +499,10 @@ void GameView::updateElements()
             else
                 m_pauseBackgroundTexture.loadFromFile(PAUSE_PLAIN_BACKGROUND);
 
-        m_resumeGameButton->sync();
-        m_restartGameButton->sync();
-        m_goToHomeButton->sync();
+        m_resumeGameButton->sync(m_gameModel->getDataBase());
+        m_restartGameButton->sync(m_gameModel->getDataBase());
+        m_restartGameButton->setLabelPosition(RIGHT);
+        m_goToHomeButton->sync(m_gameModel->getDataBase());
         m_controlMusicButton->sync();
         m_coinAnimSprite->sync();
         m_coinAnimSprite->resize(20,20);
@@ -510,23 +511,20 @@ void GameView::updateElements()
     }
     else if ( m_gameModel->getEndState() )
     {
-        m_goToHomeButton->sync();
+        m_goToHomeButton->sync(m_gameModel->getDataBase());
         m_goToHomeButton->resize(30,30);
         m_goToHomeButton->setPosition(30, 535);
 
         m_coinAnimSprite->resize(25,25);
-        m_coinAnimSprite->setPosition( (float)(m_width / 2.4), 563);
+        m_coinAnimSprite->setPosition( (float)(m_width / 2.4), 565);
 
-        m_restartGameButton->sync();
+        m_restartGameButton->sync(m_gameModel->getDataBase());
         m_restartGameButton->resize(30,30);
         m_restartGameButton->setPosition(840, 535);
+        m_restartGameButton->setLabelPosition(LEFT);
 
-        m_saveScoreButton->sync();
-        if (!m_gameModel->getSaveStatus())
-            m_saveScoreButton->setPosition(m_width+5, m_height+5);
-        else
-            m_saveScoreButton->setPosition(m_width/2 -
-                m_saveScoreButton->getGlobalBounds().width/2, 430);
+        m_saveScoreButton->sync(m_gameModel->getDataBase());
+        m_saveScoreButton->setPositionSelfCentered(m_width/2, 430);
     }
 }
 
@@ -594,8 +592,7 @@ void GameView::synchronize()
         //=== Buttons & text update
 
         updateElements(); //Buttons update
-        m_textHandler->syncEndText(m_gameModel->getSaveStatus(),
-                            (int)m_gameModel->getGameSpeed()); //TextHandler update
+        m_textHandler->syncEndText((int)m_gameModel->getGameSpeed()); //TextHandler update
 
     }
 }
@@ -652,10 +649,10 @@ void GameView::draw() const
         m_window->draw(*m_distanceIconSprite);
         m_window->draw(*m_coinAnimSprite);
         m_window->draw(*m_stdEnemyAnimSprite);
-        m_window->draw(*m_resumeGameButton);
-        m_window->draw(*m_restartGameButton);
-        m_window->draw(*m_goToHomeButton);
         m_window->draw(*m_controlMusicButton);
+        m_resumeGameButton->draw(m_window);
+        m_restartGameButton->draw(m_window);
+        m_goToHomeButton->draw(m_window);
 
         //=== TextHandler drawing
 
@@ -667,11 +664,10 @@ void GameView::draw() const
         //=== Background drawing & Buttons drawing
 
         m_window->draw(*m_endBackgroundSprite);
-        m_window->draw(*m_restartGameButton);
         m_window->draw(*m_coinAnimSprite);
-        m_window->draw(*m_goToHomeButton);
-        if (m_gameModel->getSaveStatus())
-            m_window->draw(*m_saveScoreButton);
+        m_restartGameButton->draw(m_window);
+        m_goToHomeButton->draw(m_window);
+        m_saveScoreButton->draw(m_window);
 
         //=== TextHandler drawing
 
@@ -686,7 +682,7 @@ void GameView::draw() const
 /**
  * Events treating
  * @author Arthur, Florian
- * @date 21/02 - 20/12
+ * @date 21/02 - 23/12
  */
 bool GameView::treatEvents()
 {
@@ -700,18 +696,14 @@ bool GameView::treatEvents()
         {
             //=== Player Controls in Game Screen
 
-            if ( KEYBOARD_LEFT )
-            {
+            if (KEYBOARD_LEFT)
                 m_gameModel->getPlayer()->controlPlayerMovements(MOVE_LEFT);
-            }
-            else if ( KEYBOARD_RIGHT )
-            {
+
+            else if (KEYBOARD_RIGHT)
                 m_gameModel->getPlayer()->controlPlayerMovements(MOVE_RIGHT);
-            }
-            if ( KEYBOARD_JUMP )
-            {
+
+            if (KEYBOARD_JUMP)
                 m_gameModel->getPlayer()->setJumpState(true);
-            }
         }
 
         sf::Event event;
@@ -724,7 +716,7 @@ bool GameView::treatEvents()
                 result = false;
             }
 
-            //=== Handle open /quit pause
+            //=== Handle open/quit pause
 
             if (!m_gameModel->getEndState() && event.type == sf::Event::KeyPressed
                 && event.key.code == sf::Keyboard::Escape)
@@ -746,52 +738,49 @@ bool GameView::treatEvents()
             {
                 if (MOUSE_LEFT_PRESSED_EVENT)
                 {
-                    if ( m_resumeGameButton->IS_POINTED || m_textHandler->getResumeText()->IS_POINTED )
-                    {
-                        m_resumeGameButton->setPressedState(true);
-                    }
-                    else if ( m_restartGameButton->IS_POINTED || m_textHandler->getRestartText()->IS_POINTED )
-                    {
-                        m_restartGameButton->setPressedState(true);
-                    }
-                    else if ( m_goToHomeButton->IS_POINTED || m_textHandler->getHomeText()->IS_POINTED )
-                    {
-                        m_goToHomeButton->setPressedState(true);
-                    }
-                    else if ( m_controlMusicButton->IS_POINTED )
-                    {
-                        m_controlMusicButton->setPressedState(true);
-                    }
+                    if (m_resumeGameButton->contains(MOUSE_POSITION) )
+                        m_resumeGameButton->setPressed(true);
+
+                    else if (m_restartGameButton->contains(MOUSE_POSITION) )
+                        m_restartGameButton->setPressed(true);
+
+                    else if (m_goToHomeButton->contains(MOUSE_POSITION) )
+                        m_goToHomeButton->setPressed(true);
+
+                    else if (m_controlMusicButton->contains(MOUSE_POSITION) )
+                        m_controlMusicButton->setPressed(true);
+
                 }
 
                 if (event.type == sf::Event::MouseButtonReleased)
                 {
-                    m_resumeGameButton->setPressedState(false);
-                    m_restartGameButton->setPressedState(false);
-                    m_goToHomeButton->setPressedState(false);
-                    m_controlMusicButton->setPressedState(false);
+                    m_resumeGameButton->setPressed(false);
+                    m_restartGameButton->setPressed(false);
+                    m_goToHomeButton->setPressed(false);
+                    m_controlMusicButton->setPressed(false);
 
-                    if ( m_resumeGameButton->IS_POINTED || m_textHandler->getResumeText()->IS_POINTED )
+                    if (m_resumeGameButton->contains(MOUSE_POSITION) )
                     {
                         m_gameModel->setPauseState(false);
                         if(m_gameThemeMusic.getStatus() == sf::Music::Status::Paused)
                             m_gameThemeMusic.play();
                     }
-                    else if ( m_restartGameButton->IS_POINTED || m_textHandler->getRestartText()->IS_POINTED )
+                    else if (m_restartGameButton->contains(MOUSE_POSITION) )
                     {
                         m_gameModel->setPauseState(false);
                         m_model->setAppState(RESET_GAME);
                         result = false;
                     }
-                    else if ( m_goToHomeButton->IS_POINTED || m_textHandler->getHomeText()->IS_POINTED )
+                    else if (m_goToHomeButton->contains(MOUSE_POSITION) )
                     {
                         m_gameModel->setPauseState(false);
                         m_model->setAppState(MENU);
                         result = false;
                     }
-                    else if ( m_controlMusicButton->IS_POINTED )
+                    else if (m_controlMusicButton->contains(MOUSE_POSITION) )
                     {
                         m_isMusicEnabled = !m_isMusicEnabled;
+
                         //change music volume
                         if (m_isMusicEnabled)
                         {
@@ -823,41 +812,37 @@ bool GameView::treatEvents()
             {
                 if (MOUSE_LEFT_PRESSED_EVENT)
                 {
-                    if ( m_restartGameButton->IS_POINTED || m_textHandler->getRestartText()->IS_POINTED )
-                    {
-                        m_restartGameButton->setPressedState(true);
-                    }
-                    else if ( m_goToHomeButton->IS_POINTED || m_textHandler->getHomeText()->IS_POINTED )
-                    {
-                        m_goToHomeButton->setPressedState(true);
-                    }
-                    else if ( m_saveScoreButton->IS_POINTED )
-                    {
-                        m_saveScoreButton->setPressedState(true);
-                    }
+                    if (m_restartGameButton->contains(MOUSE_POSITION) )
+                        m_restartGameButton->setPressed(true);
+
+                    else if (m_goToHomeButton->contains(MOUSE_POSITION) )
+                        m_goToHomeButton->setPressed(true);
+
+                    else if (m_saveScoreButton->contains(MOUSE_POSITION) )
+                        m_saveScoreButton->setPressed(true);
                 }
 
                 if (event.type == sf::Event::MouseButtonReleased)
                 {
-                    m_restartGameButton->setPressedState(false);
-                    m_goToHomeButton->setPressedState(false);
-                    m_saveScoreButton->setPressedState(false);
+                    m_restartGameButton->setPressed(false);
+                    m_goToHomeButton->setPressed(false);
+                    m_saveScoreButton->setPressed(false);
 
-                    if ( m_restartGameButton->IS_POINTED || m_textHandler->getRestartText()->IS_POINTED )
+                    if (m_restartGameButton->contains(MOUSE_POSITION) )
                     {
                         m_gameModel->setEndState(false);
                         m_model->setAppState(RESET_GAME);
                         result = false;
                     }
-                    else if ( m_goToHomeButton->IS_POINTED || m_textHandler->getHomeText()->IS_POINTED )
+                    else if (m_goToHomeButton->contains(MOUSE_POSITION) )
                     {
                         m_gameModel->setEndState(false);
                         m_model->setAppState(MENU);
                         result = false;
                     }
-                    else if ( m_saveScoreButton->IS_POINTED )
+                    else if (m_saveScoreButton->contains(MOUSE_POSITION) )
                     {
-                        m_gameModel->setSaveStatus(false);
+                        m_saveScoreButton->setVisible(false);
                         m_model->getDataBase()->saveCurrentGame();
                     }
                 }

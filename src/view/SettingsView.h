@@ -18,6 +18,7 @@ limitations under the License.
 
 #include "View.h"
 #include "../Model/Settings.h"
+#include "RadioButton.h"
 
 #define RADIO_BUTTONS_SIZE 26,26
 #define INDICATOR_BUTTONS_SIZE 22,22
@@ -25,7 +26,7 @@ limitations under the License.
 /**
  * SettingsView Class
  * @author Arthur
- * @date 20/05
+ * @date 20/05 - 23/12
  */
 class SettingsView : public View
 {
@@ -47,19 +48,18 @@ public:
 private:
     //=== ATTRIBUTES
     Settings *m_settings;
-    int m_currentIndicator;
-    int m_nbIndicators;
 
     //Textures
     sf::Texture m_menuButtonTexture;
     sf::Texture m_radioButtonsTexture;
     sf::Texture m_pageIndicatorTexture;
+    sf::Texture m_rectButtonsTexture;
     sf::Texture m_logoIUTTexture;
     sf::Texture m_logoSFMLTexture;
 
     //Graphic Elements
     Button *m_homeFormButton;
-    Button *m_pageIndicatorButton;
+    RadioButton *m_pageIndicatorButton;
     Button *m_englishLangRadio;
     Button *m_frenchLangRadio;
     Button *m_spanishLangRadio;
@@ -68,10 +68,12 @@ private:
     Button *m_defaultBallSkinRadio;
     Button *m_morphBallSkinRadio;
     Button *m_capsuleBallSkinRadio;
+    Button *m_resetRectButton;
     GraphicElement *m_logoIUTSprite;
     GraphicElement *m_logoSFMLSprite;
 
-    std::map<int, Button *> m_pageIndicators;
+    std::map<int, RadioButton *> m_pageIndicators;
+    std::vector<Button*> m_buttonList;
 };
 
 

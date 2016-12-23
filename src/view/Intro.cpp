@@ -11,7 +11,7 @@ Intro::Intro(float w, float h, sf::RenderWindow *window, TextHandler *text): Vie
 {
     m_window->create(sf::VideoMode((unsigned int) w, (unsigned int) h, SCREEN_BPP), APP_TITLE, sf::Style::None );
     m_window->setFramerateLimit(30);
-    m_window->setPosition(ENVIRONMENT_CENTER);
+    m_window->setPosition(ENV_CENTERED);
 
     loadImages();
 }

@@ -21,7 +21,6 @@ limitations under the License.
 #include "../Model/ShopItem.h"
 #include "TextHandler.h"
 
-#define HALF_WIDTH getGlobalBounds().width/2
 #define RED_BUTTON_UP sf::IntRect( 0, 100, 150, 40)
 #define GREEN_BUTTON_UP sf::IntRect(0, 178, 150, 43)
 #define GREEN_BUTTON_DOWN sf::IntRect(151, 179, 150, 40)
@@ -30,13 +29,13 @@ limitations under the License.
 /**
  * ShopItemCard Class
  * @author Arthur
- * @date 16/05 - 18/05
+ * @date 16/05 - 23/12
  */
 class ShopItemCard
 {
     public:
         //=== CTORs / DTORs
-        ShopItemCard(int id, ShopItem *item, TextHandler *t);
+        ShopItemCard(DataBase *dataBase, int id, ShopItem *item, TextHandler *t);
         ~ShopItemCard();
 
         //=== GETTERS
@@ -55,6 +54,7 @@ class ShopItemCard
 
     private:
         //=== ATTRIBUTES
+        DataBase *m_dataBase;
         int m_id;
         int m_posX, m_posY;
         int m_width = 200;
@@ -63,15 +63,15 @@ class ShopItemCard
 
         ShopItem *m_item;
         TextHandler *m_text;
-        sf::Text m_name;
-        sf::Text m_desc;
-        sf::Text m_buyButtonContent;
+        Text m_name;
+        Text m_desc;
 
         sf::Texture m_cardBackgroundTexture;
         sf::Texture m_rectButtonsTexture;
 
         GraphicElement *m_cardBackgroundSprite;
         Button *m_buyButton;
+        Button *m_boughtButton;
 };
 
 #endif

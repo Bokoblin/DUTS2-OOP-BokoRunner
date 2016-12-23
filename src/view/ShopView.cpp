@@ -1,4 +1,5 @@
 #include "ShopView.h"
+#include "RadioButton.h"
 
 using namespace std;
 
@@ -73,7 +74,7 @@ void ShopView::loadImages()
         std::vector<sf::IntRect> clipRectHome;
         clipRectHome.push_back(sf::IntRect( 0, 50, 50, 50));
         clipRectHome.push_back(sf::IntRect( 51, 50, 50, 50));
-        m_homeFormButton = new Button(clipRectHome, m_menuFormButtonsTexture, 10, 10, 50, 50, false);
+        m_homeFormButton = new Button(clipRectHome, m_menuFormButtonsTexture, 10, 10, 50, 50);
 
         //=== Initialize INDICATORS Buttons
 
@@ -91,7 +92,7 @@ void ShopView::loadImages()
             clipRect.push_back(sf::IntRect( 0, 0, 50, 50) );
             clipRect.push_back(sf::IntRect( 0, 50, 50, 50) );
 
-            m_pageIndicatorButton  = new Button(clipRect, m_pageIndicatorTexture, 0, 580, 15, 15, true);
+            m_pageIndicatorButton  = new RadioButton(clipRect, m_pageIndicatorTexture,0, 580, 15, 15, "indicator");
         }
     }
 }
@@ -107,7 +108,7 @@ void ShopView::createCards()
     int i = 0;
     for ( ShopItem *item : m_shop->getShopItemsArray() )
     {
-        m_shopItemsCardArray.push_back( new ShopItemCard(i, item, m_textHandler)  );
+        m_shopItemsCardArray.push_back( new ShopItemCard(m_shop->getDataBase(), i, item, m_textHandler)  );
         i++;
     }
 
@@ -168,7 +169,7 @@ void ShopView::synchronize()
     {
          (it.second)->sync();
          it.first == m_currentIndicator ?
-         it.second->setActivatedState(true) : it.second->setActivatedState(false);
+         it.second->setActivated(true) : it.second->setActivated(false);
     }
 }
 
@@ -180,7 +181,7 @@ void ShopView::synchronize()
  */
 void ShopView::draw() const
 {
-    m_window->clear(GREY_BG_COLOR);
+    m_window->clear(MINE_GREY_COLOR);
 
     //=== Graphic Elements drawing
 
@@ -216,41 +217,41 @@ bool ShopView::treatEvents(sf::Event event)
 
     if (MOUSE_LEFT_PRESSED_EVENT)
     {
-        if ( m_homeFormButton->IS_POINTED )
-            m_homeFormButton->setPressedState(true);
+        if ( m_homeFormButton->contains(MOUSE_POSITION) )
+            m_homeFormButton->setPressed(true);
 
         for( auto it : m_pageIndicators)
-            if ( it.second->IS_POINTED )
-                it.second->setPressedState(true);
+            if ( it.second->contains(MOUSE_POSITION) )
+                it.second->setPressed(true);
 
         for ( auto card : m_shopItemsCardArray )
-            if ( card->getBuyButton()->IS_POINTED
+            if ( card->getBuyButton()->contains(MOUSE_POSITION)
                     && card->getShownState() && m_buyDialog == nullptr)
-                card->getBuyButton()->setPressedState(true);
+                card->getBuyButton()->setPressed(true);
     }
 
     if (event.type == sf::Event::MouseButtonReleased)
     {
         //=== Reset buttons
 
-        m_homeFormButton->setPressedState(false);
+        m_homeFormButton->setPressed(false);
         for( auto it : m_pageIndicators)
-            it.second->setPressedState(false);
+            it.second->setPressed(false);
 
         for ( auto card : m_shopItemsCardArray )
-            card->getBuyButton()->setPressedState(false);
+            card->getBuyButton()->setPressed(false);
 
         //=== handle mouse up on a button
 
-        if ( m_homeFormButton->IS_POINTED )
+        if ( m_homeFormButton->contains(MOUSE_POSITION) )
             stop_shop = true;
 
         for( auto it : m_pageIndicators)
-            if ( it.second->IS_POINTED )
+            if ( it.second->contains(MOUSE_POSITION) )
                 m_currentIndicator = it.first;
 
         for ( auto card : m_shopItemsCardArray )
-            if ( card->getBuyButton()->IS_POINTED && card->getShownState()
+            if ( card->getBuyButton()->contains(MOUSE_POSITION) && card->getShownState()
                     && !card->getItem()->getBoughtState() && m_buyDialog == nullptr)
             {
                 //Get dialog text from file
@@ -265,13 +266,13 @@ bool ShopView::treatEvents(sf::Event event)
             }
 
         //Mouse up on negative button
-        if ( m_buyDialog != nullptr && m_buyDialog->getNegativeButton().IS_POINTED )
+        if ( m_buyDialog != nullptr && m_buyDialog->getNegativeButton().contains(MOUSE_POSITION) )
         {
             delete m_buyDialog;
             m_buyDialog = nullptr;
         }
         //Mouse up on positive button as dialog
-        else if ( m_buyDialog != nullptr && m_buyDialog->getPositiveButton().IS_POINTED
+        else if ( m_buyDialog != nullptr && m_buyDialog->getPositiveButton().contains(MOUSE_POSITION)
                   &&  m_buyDialog->getNegativeButton().getString() != "")
         {
             bool result = m_shop->buyItem(m_buyDialog->getItemLinked() );
@@ -289,7 +290,7 @@ bool ShopView::treatEvents(sf::Event event)
         }
 
         //Mouse up on positive button as toast
-        else if ( m_buyDialog != nullptr && m_buyDialog->getPositiveButton().IS_POINTED
+        else if ( m_buyDialog != nullptr && m_buyDialog->getPositiveButton().contains(MOUSE_POSITION)
                   &&  m_buyDialog->getNegativeButton().getString() == "")
         {
             delete m_buyDialog;

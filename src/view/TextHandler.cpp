@@ -7,8 +7,8 @@ using namespace std;
  * @author Arthur
  * @date 02/04 - 6/05
  */
-TextHandler::TextHandler(DataBase *dataModel, const int width, const int height)
-        : m_dataBase{dataModel}, m_width{width}, m_height{height}
+TextHandler::TextHandler(DataBase *dataBase, const int width, const int height)
+        : m_dataBase{dataBase}, m_width{width}, m_height{height}
 {
     m_regularFont = new sf::Font();
     m_regularFont->loadFromFile(ROBOTO_REGULAR_FONT);
@@ -41,33 +41,21 @@ TextHandler::~TextHandler()
 sf::Font* TextHandler::getRegularFont() const { return m_regularFont; }
 sf::Font* TextHandler::getCondensedFont() const { return m_condensedFont; }
 sf::Font* TextHandler::getBoldFont() const { return m_BoldFont; }
-Text* TextHandler::getResumeText() const { return m_pauseResumeLabel; }
-Text* TextHandler::getRestartText() const { return m_pauseRestartLabel; }
-Text* TextHandler::getHomeText() const { return m_pauseGoToHomeLabel; }
 
 /**
  * Text Loading
  * @author Arthur
- * @date 02/04 - 22/12
+ * @date 02/04 - 23/12
  * */
 void TextHandler::loadText()
 {
-    //=== Menu and Leaderboard
-
-    m_menuPlayButtonLabel = new Text("menu_play_button");
-    m_textList.push_back(m_menuPlayButtonLabel);
-
-    m_menuQuitButtonLabel = new Text("menu_quit_button");
-    m_textList.push_back(m_menuQuitButtonLabel);
+    //=== Leaderboard
 
     m_leaderboardTitleLabel = new Text("leaderboard_title");
     m_textList.push_back(m_leaderboardTitleLabel);
 
     m_leaderboardContentText = new Text("leaderboard_content");
     m_textList.push_back(m_leaderboardContentText);
-
-    m_leaderboardClearButtonLabel = new Text("leaderboard_clear_button");
-    m_textList.push_back(m_leaderboardClearButtonLabel);
 
 
     //=== Settings - configuration
@@ -78,35 +66,11 @@ void TextHandler::loadText()
     m_configLangTitleLabel = new Text("config_lang_title");
     m_textList.push_back(m_configLangTitleLabel);
 
-    m_configLangEngLabel = new Text("config_lang_english");
-    m_textList.push_back(m_configLangEngLabel);
-
-    m_configLangFraLabel = new Text("config_lang_french");
-    m_textList.push_back(m_configLangFraLabel);
-
-    m_configLangEspLabel = new Text("config_lang_spanish");
-    m_textList.push_back(m_configLangEspLabel);
-
     m_configDifficultyTitleLabel = new Text("config_difficulty_title");
     m_textList.push_back(m_configDifficultyTitleLabel);
 
-    m_configEasyModeLabel = new Text("config_easy_mode");
-    m_textList.push_back(m_configEasyModeLabel);
-
-    m_configHardModeLabel = new Text("config_hard_mode");
-    m_textList.push_back(m_configHardModeLabel);
-
     m_configCustomTitleLabel = new Text("config_custom_title");
     m_textList.push_back(m_configCustomTitleLabel);
-
-    m_configDefaultBallSkinLabel = new Text("config_ball_default_skin");
-    m_textList.push_back(m_configDefaultBallSkinLabel);
-
-    m_configMorphBallSkinLabel = new Text("config_ball_morph_skin");
-    m_textList.push_back(m_configMorphBallSkinLabel);
-
-    m_configCapsuleBallSkinLabel = new Text("config_ball_capsule_skin");
-    m_textList.push_back(m_configCapsuleBallSkinLabel);
 
     //=== Settings - stats
 
@@ -131,8 +95,12 @@ void TextHandler::loadText()
     m_statsTotalEnemiesText = new Text("stats_enemies_value");
     m_textList.push_back(m_statsTotalEnemiesText);
 
+    m_statsTotalCoinsLabel = new Text("stats_coins");
+    m_textList.push_back(m_statsTotalCoinsLabel);
+
     m_statsTotalGamesText = new Text("stats_games_number_value");
     m_textList.push_back(m_statsTotalGamesText);
+
 
     //=== Settings - about
 
@@ -187,19 +155,7 @@ void TextHandler::loadText()
     m_textList.push_back(m_currentCoinsNbText);
 
 
-    //=== Pause
-
-    m_pauseResumeLabel = new Text("pause_resume");
-    m_textList.push_back(m_pauseResumeLabel);
-
-    m_pauseRestartLabel = new Text("pause_restart");
-    m_textList.push_back(m_pauseRestartLabel);
-
-    m_pauseGoToHomeLabel = new Text("pause_go_to_home");
-    m_textList.push_back(m_pauseGoToHomeLabel);
-
-
-    //=== End
+    //=== Game End
 
     m_endTitleLabel = new Text("end_title");
     m_textList.push_back(m_endTitleLabel);
@@ -227,9 +183,6 @@ void TextHandler::loadText()
 
     m_currentScoreText = new Text("end_score_value");
     m_textList.push_back(m_currentScoreText);
-
-    m_saveButtonText = new Text("end_save_button");
-    m_textList.push_back(m_saveButtonText);
 
     updateWholeText();
 }
@@ -290,19 +243,16 @@ void TextHandler::updateString(string file, Text *text)
 /**
  * Menu Home Text Syncing
  * @author Arthur
- * @date 02/04 - 22/12
+ * @date 02/04 - 23/12
  */
 void TextHandler::syncMenuHomeText()
-{
-    m_menuPlayButtonLabel->setPositionSelfCentered( m_width/2, m_height/1.42 );
-    m_menuQuitButtonLabel->setPositionSelfCentered( m_width/2, m_height/1.15 );
-}
+{}
 
 
 /**
  * Menu Settings Text Syncing
  * @author Arthur
- * @date 14/04 - 22/12
+ * @date 14/04 - 23/12
  */
 void TextHandler::syncSettingsText(int currentPage)
 {
@@ -310,34 +260,35 @@ void TextHandler::syncSettingsText(int currentPage)
     {
         m_configTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
         m_configLangTitleLabel->setPosition(40, 150);
-        m_configLangEngLabel->setPosition(RADIO_TEXT_X, 202);
-        m_configLangFraLabel->setPosition(RADIO_TEXT_X, 242);
-        m_configLangEspLabel->setPosition(RADIO_TEXT_X, 282);
         m_configDifficultyTitleLabel->setPosition(40, 370);
-        m_configEasyModeLabel->setPosition(RADIO_TEXT_X, 417);
-        m_configHardModeLabel->setPosition(RADIO_TEXT_X, 457);
         m_configCustomTitleLabel->setPosition(m_width/2 + 40, 150);
-        m_configDefaultBallSkinLabel->setPosition(m_width/2 + RADIO_TEXT_X, 202);
-        m_configMorphBallSkinLabel->setPosition(m_width/2 + RADIO_TEXT_X, 242);
-        m_configCapsuleBallSkinLabel->setPosition(m_width/2 + RADIO_TEXT_X, 282);
     }
     else if ( currentPage == STATS)
     {
         m_statsTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
+
         m_statsTotalDistanceLabel->setPosition(RADIO_TEXT_X, 150);
         m_statsTotalDistanceLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalEnemiesLabel->setPosition(RADIO_TEXT_X, 190);
-        m_statsTotalEnemiesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalGamesLabel->setPosition(RADIO_TEXT_X, 230);
-        m_statsTotalGamesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalDistanceText->setPosition(m_width/2, 150);
-        m_statsTotalEnemiesText->setPosition(m_width/2, 190);
-        m_statsTotalGamesText->setPosition(m_width/2, 230);
-
         m_statsTotalDistanceText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalDistanceText->setString(to_string( m_dataBase->getTotalDistance() ) + " m" );
+
+        m_statsTotalEnemiesLabel->setPosition(RADIO_TEXT_X, 190);
+        m_statsTotalEnemiesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsTotalEnemiesText->setPosition(m_width/2, 190);
         m_statsTotalEnemiesText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalEnemiesText->setStringFromInt( m_dataBase->getTotalFlattenedEnemies() );
+
+        m_statsTotalCoinsLabel->setPosition(RADIO_TEXT_X, 230);
+        m_statsTotalCoinsLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsTotalCoinsNbText->setPosition(m_width/2, 230);
+        m_statsTotalCoinsNbText->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsTotalCoinsNbText->setColor(sf::Color::White);
+        m_statsTotalCoinsNbText->setStringFromInt( m_dataBase->getTotalCoinsNumber() );
+
+        m_statsTotalGamesLabel->setPosition(RADIO_TEXT_X, 270);
+        m_statsTotalGamesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsTotalGamesText->setPosition(m_width/2, 270);
         m_statsTotalGamesText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalGamesText->setStringFromInt( m_dataBase->getTotalGamesPlayed() );
     }
@@ -377,27 +328,24 @@ void TextHandler::syncMenuLeaderboardText()
         m_leaderboardContentText->setDescription("leaderboard_content");
         m_leaderboardContentText->setString(scores);
         m_leaderboardContentText->setCharacterSize(30);
-        m_leaderboardContentText->setPositionSelfCentered(m_width/2, 100);
+        m_leaderboardContentText->setPositionSelfCentered(m_width/2, 200);
     }
 
     m_leaderboardTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
-
-    m_leaderboardClearButtonLabel->setCharacterSize(20);
-    m_leaderboardClearButtonLabel->setPositionSelfCentered(m_width/2, 547);
 }
 
 
 /**
  * Menu Shop Text Syncing
  * @author Arthur
- * @date 16/05
+ * @date 16/05 - 23/12
  */
 void TextHandler::syncShopText()
 {
     m_statsTotalCoinsNbText->setPosition(m_width/2, TITLE_TEXT_X);
+    m_statsTotalCoinsNbText->setCharacterSize(DEFAULT_CHAR_SIZE);
     m_statsTotalCoinsNbText->setColor(GOLD_COLOR);
-
-    m_statsTotalCoinsNbText->setString( to_string( m_dataBase->getTotalCoinsNumber() ));
+    m_statsTotalCoinsNbText->setStringFromInt( m_dataBase->getTotalCoinsNumber() );
 }
 
 
@@ -436,7 +384,7 @@ void TextHandler::syncDialogText(string context, string &title, string &content,
 /**
  * Game Screen Syncing
  * @author Arthur
- * @date 02/04 - 17/04
+ * @date 02/04 - 23/12
  */
 void TextHandler::syncGameText(int bonusTimeout)
 {
@@ -447,39 +395,38 @@ void TextHandler::syncGameText(int bonusTimeout)
     m_currentDistanceText->setString( to_string(
             m_dataBase->getCurrentDistance() ) + " m" );
     m_bonusTimeoutText->setPosition(840,545);
-    if ( bonusTimeout > 0)
+    if ( bonusTimeout > 0) {
         m_bonusTimeoutText->setStringFromInt(bonusTimeout);
+        m_bonusTimeoutText->setVisible(true);
+    }
     else
-        m_bonusTimeoutText->setString("");
+        m_bonusTimeoutText->setVisible(false);
 }
 
 
 /**
  * Game Pause Screen Syncing
  * @author Arthur
- * @date 02/04 - 7/05
+ * @date 02/04 - 23/12
  */
 void TextHandler::syncPauseText()
 {
     m_currentDistanceText->setPosition(PAUSE_TEXT_X, 30);
     m_currentCoinsNbText->setPosition(PAUSE_TEXT_X, 70);
     m_currentCoinsNbText->setColor(GOLD_COLOR);
+    m_currentCoinsNbText->setStringFromInt(m_dataBase->getCurrentCoinsNumber() );
+
     m_flattenedEnemiesText->setPosition(PAUSE_TEXT_X, 110);
     m_flattenedEnemiesText->setColor(ENEMY_BLUE_COLOR);
-    m_pauseResumeLabel->setPosition(PAUSE_TEXT_X, 350);
-    m_pauseRestartLabel->setPosition(PAUSE_TEXT_X, 400);
-    m_pauseGoToHomeLabel->setPosition(PAUSE_TEXT_X, 450);
-
-    m_currentCoinsNbText->setStringFromInt(m_dataBase->getCurrentCoinsNumber() );
     m_flattenedEnemiesText->setStringFromInt(m_dataBase->getCurrentFlattenedEnemies() );
 }
 
 /**
  * Game End Screen Syncing
  * @author Arthur
- * @date 02/04 - 22/12
+ * @date 02/04 - 23/12
  */
-void TextHandler::syncEndText(bool isGameSaved, int gameSpeed)
+void TextHandler::syncEndText(int gameSpeed)
 {
     //=== Score sub-total text
     m_endTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
@@ -514,39 +461,27 @@ void TextHandler::syncEndText(bool isGameSaved, int gameSpeed)
     m_currentScoreText->setFont(*m_BoldFont);
     m_currentScoreText->setStringFromInt( m_dataBase->getCurrentScore() );
 
-    m_saveButtonText->setCharacterSize(20);
-    if (!isGameSaved)  //TODO : Button class with visibility
-    {
-        m_saveButtonText->setPosition(-100, -100);
-    }
-    else {
-        m_saveButtonText->setPositionSelfCentered(m_width/2, 437);
-    }
 
     //=== Bottom bar text
-    m_pauseGoToHomeLabel->setPosition(80,535);
-    m_statsTotalCoinsNbText->setPositionSelfCentered(450, 535);
+    m_statsTotalCoinsNbText->setCharacterSize(DEFAULT_CHAR_SIZE);
+    m_statsTotalCoinsNbText->setPosition(450, 535);
     m_statsTotalCoinsNbText->setColor(GOLD_COLOR);
-    m_pauseRestartLabel->setPositionSelfCentered(760, 535);
 }
 
 
 /**
  * Menu Home Screen Drawing
  * @author Arthur
- * @date 02/04 - 13/04
+ * @date 02/04 - 23/12
  */
 void TextHandler::drawMenuHomeText(sf::RenderWindow *window) const
-{
-    window->draw(*m_menuPlayButtonLabel);
-    window->draw(*m_menuQuitButtonLabel);
-}
+{}
 
 
 /**
  * Settings Screen Drawing
  * @author Arthur
- * @date 14/04 - 22/12
+ * @date 14/04 - 23/12
  */
 void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const
 {
@@ -554,16 +489,8 @@ void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage
     {
         window->draw(*m_configTitleLabel);
         window->draw(*m_configLangTitleLabel);
-        window->draw(*m_configLangEngLabel);
-        window->draw(*m_configLangFraLabel);
-        window->draw(*m_configLangEspLabel);
         window->draw(*m_configDifficultyTitleLabel);
-        window->draw(*m_configEasyModeLabel);
-        window->draw(*m_configHardModeLabel);
         window->draw(*m_configCustomTitleLabel);
-        window->draw(*m_configDefaultBallSkinLabel);
-        window->draw(*m_configMorphBallSkinLabel);
-        window->draw(*m_configCapsuleBallSkinLabel);
     }
     else if ( currentPage == STATS)
     {
@@ -573,6 +500,8 @@ void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage
         window->draw(*m_statsTotalGamesLabel);
         window->draw(*m_statsTotalDistanceText);
         window->draw(*m_statsTotalEnemiesText);
+        window->draw(*m_statsTotalCoinsLabel);
+        window->draw(*m_statsTotalCoinsNbText);
         window->draw(*m_statsTotalGamesText);
     }
     else //ABOUT
@@ -589,13 +518,12 @@ void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage
 /**
  * Leaderboard Screen Drawing
  * @author Arthur
- * @date 19/04 - 20/04
+ * @date 19/04 - 23/12
  */
 void TextHandler::drawLeaderboardText(sf::RenderWindow *window) const
 {
     window->draw(*m_leaderboardTitleLabel);
     window->draw(*m_leaderboardContentText);
-    window->draw(*m_leaderboardClearButtonLabel);
 }
 
 
@@ -627,23 +555,20 @@ void TextHandler::drawGameText(sf::RenderWindow *window) const
 /**
  * Pause Screen Drawing
  * @author Arthur
- * @date 02/04 - 17/04
+ * @date 02/04 - 23/12
  */
 void TextHandler::drawPauseText(sf::RenderWindow *window) const
 {
     window->draw(*m_currentDistanceText);
     window->draw(*m_currentCoinsNbText);
     window->draw(*m_flattenedEnemiesText);
-    window->draw(*m_pauseResumeLabel);
-    window->draw(*m_pauseRestartLabel);
-    window->draw(*m_pauseGoToHomeLabel);
 }
 
 
 /**
  * End Screen Drawing
  * @author Arthur
- * @date 02/04 - 3/05
+ * @date 02/04 - 23/12
  */
 void TextHandler::drawEndText(sf::RenderWindow *window) const
 {
@@ -658,8 +583,5 @@ void TextHandler::drawEndText(sf::RenderWindow *window) const
     window->draw(*m_flattenedEnemiesText);
     window->draw(*m_currentScoreLabel);
     window->draw(*m_currentScoreText);
-    window->draw(*m_saveButtonText);
-    window->draw(*m_pauseGoToHomeLabel);
     window->draw(*m_statsTotalCoinsNbText);
-    window->draw(*m_pauseRestartLabel);
 }

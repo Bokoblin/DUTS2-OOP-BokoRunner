@@ -5,10 +5,10 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 16/05 - 19/05
+ * @date 16/05 - 23/12
  */
-ShopItemCard::ShopItemCard(int num, ShopItem *item, TextHandler *t) :
-    m_id{num}, m_posY{150}, m_shownState{false}, m_item{item}, m_text{t}
+ShopItemCard::ShopItemCard(DataBase *dataBase, int num, ShopItem *item, TextHandler *t) :
+    m_dataBase{dataBase}, m_id{num}, m_posY{150}, m_shownState{false}, m_item{item}, m_text{t}
 {
     if ( num%3 == 0)
         m_posX = 100;
@@ -23,32 +23,27 @@ ShopItemCard::ShopItemCard(int num, ShopItem *item, TextHandler *t) :
     m_name.setFont( *m_text->getCondensedFont() );
     m_name.setColor(sf::Color::White);
     m_name.setString( item->getName() );
-    m_name.setPosition( m_posX + m_width/2
-                    - (int)m_name.HALF_WIDTH, m_posY+15);
+    m_name.setPositionSelfCentered( m_posX + m_width/2, m_posY+15);
 
     m_desc.setCharacterSize(16);
     m_desc.setFont( *m_text->getCondensedFont() );
     m_desc.setColor(sf::Color::White);
     m_desc.setString( item->getDescription() );
-    m_desc.setPosition( m_posX + m_width/2
-                    - (int)m_desc.HALF_WIDTH, m_posY+200);
-
-    m_buyButtonContent.setCharacterSize(20);
-    m_buyButtonContent.setFont( *m_text->getCondensedFont() );
-    m_buyButtonContent.setColor(sf::Color::White);
+    m_desc.setPositionSelfCentered( m_posX + m_width/2, m_posY+200);
 }
 
 
 /**
  * Destructor
  * @author Arthur
- * @date 16/05 - 18/05
+ * @date 16/05 - 23/12
  */
 ShopItemCard::~ShopItemCard()
 {
     m_text = nullptr;
     delete m_cardBackgroundSprite;
     delete m_buyButton;
+    delete m_boughtButton;
 }
 
 
@@ -68,7 +63,7 @@ void ShopItemCard::setShownState(bool state) { m_shownState = state; }
 /**
  * Image Loading
  * @author Arthur
- * @date 16/05 - 17/05
+ * @date 16/05 - 23/12
  */
 void ShopItemCard::loadImages()
 {
@@ -80,14 +75,22 @@ void ShopItemCard::loadImages()
 	{
         m_rectButtonsTexture.setSmooth(true);
 
-		vector<sf::IntRect> clipRect;
-		clipRect.push_back(RED_BUTTON_UP);
-		clipRect.push_back(RED_BUTTON_UP);
-		clipRect.push_back(GREEN_BUTTON_UP);
-		clipRect.push_back(GREEN_BUTTON_DOWN);
-		m_buyButton = new Button(clipRect, m_rectButtonsTexture, m_posX
-                           + m_width/2 - 75, m_posY+250, 150, 80, true);
+		vector<sf::IntRect> clipRectGreen;
+        clipRectGreen.push_back(GREEN_BUTTON_UP);
+        clipRectGreen.push_back(GREEN_BUTTON_DOWN);
+		m_buyButton = new Button(clipRectGreen, m_rectButtonsTexture, m_posX + m_width/2 - 75,
+                                 m_posY+250, 150, 80, "shop_purchasable");
+
+        m_rectButtonsTexture.setSmooth(true);
+
+        vector<sf::IntRect> clipRectRed;
+        clipRectRed.push_back(RED_BUTTON_UP);
+        clipRectRed.push_back(RED_BUTTON_UP);
+        m_boughtButton = new Button(clipRectRed, m_rectButtonsTexture, m_posX + m_width/2 - 75,
+                                 m_posY+250, 150, 80, "shop_bought");
+        m_boughtButton->setActivated(false);
     }
+
 
 	//=== Initialize CARD Sprite
 
@@ -104,36 +107,35 @@ void ShopItemCard::loadImages()
 /**
  * Sync function
  * @author Arthur
- * @date 16/05 - 19/05
+ * @date 16/05 - 23/12
  */
 void ShopItemCard::sync()
 {
     if (  m_item->getBoughtState() )
     {
-        m_buyButton->setActivatedState(true);
-        m_buyButtonContent.setString( "Bought" );
+        m_buyButton->setVisible(false);
+        m_boughtButton->setVisible(true);
+        m_boughtButton->sync(m_dataBase);
     }
     else
     {
-        m_buyButton->setActivatedState(false);
-        m_buyButtonContent.setString( "Buy" );
+        m_boughtButton->setVisible(false);
+        m_buyButton->setVisible(true);
+        m_buyButton->sync(m_dataBase);
     }
-    m_buyButtonContent.setPosition( m_posX + m_width/2
-                    - (int)m_buyButtonContent.HALF_WIDTH, m_posY+258);
-    m_buyButton->sync();
 }
 
 
 /**
  * Draw function
  * @author Arthur
- * @date 16/05 - 19/05
+ * @date 16/05 - 23/12
  */
 void ShopItemCard::draw(sf::RenderWindow *window) const
 {
     window->draw(*m_cardBackgroundSprite);
     window->draw(m_name);
     window->draw(m_desc);
-    window->draw(*m_buyButton);
-    window->draw(m_buyButtonContent);
+    m_buyButton->draw(window);
+    m_boughtButton->draw(window);
 }

@@ -24,12 +24,14 @@ limitations under the License.
 #include "Button.h"
 #include <SFML/Audio.hpp>
 
-#define ENVIRONMENT_CENTER sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2, \
+#define ENV_CENTERED sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2, \
 				(sf::VideoMode::getDesktopMode().height - m_height)/2 )
-#define GREY_BG_COLOR sf::Color(51, 51, 51, 255)
+#define MINE_GREY_COLOR sf::Color(51, 51, 51, 255)
 #define FORM_BUTTONS_SIZE 30,30
-#define MOUSE_LEFT_PRESSED_EVENT event.type == sf::Event::MouseButtonPressed &&           event.mouseButton.button == sf::Mouse::Left
-#define IS_POINTED getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))
+#define MOUSE_LEFT_PRESSED_EVENT event.type == sf::Event::MouseButtonPressed \
+                && event.mouseButton.button == sf::Mouse::Left
+#define MOUSE_POSITION event.mouseButton.x, event.mouseButton.y
+
 
 /********************************************
     Constant Variables

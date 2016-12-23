@@ -72,7 +72,9 @@ set(SOURCE_FILES
         src/view/View.cpp
         src/view/View.h
         src/view/Text.cpp
-        src/view/Text.h)
+        src/view/Text.h
+        src/view/RadioButton.cpp
+        src/view/RadioButton.h)
 
 add_executable(runner ${SOURCE_FILES})
 

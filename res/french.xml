@@ -39,6 +39,8 @@
    <string name="stats_distance" value="Distance totale parcourue" />
    <string name="stats_enemies" value="Total d'ennemies aplatis" />
    <string name="stats_games_number" value="Nombre de parties lancees" />
+   <string name="stats_coins" value="Total de pieces collectees" />
+   <string name="stats_app_reset" value="REINITIALISER" />
    <string name="about_title" value="A propos" />
    <string name="about_description" value=" Boko Runner est un projet C++ que nous avons realise en tant que projet
 &#xA; de programmation du deuxieme semestre de notre DUT. Le but etait de &#xA; mettre en pratique les notions de

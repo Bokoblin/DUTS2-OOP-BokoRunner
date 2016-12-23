@@ -32,6 +32,7 @@ public:
     ~Shop();
 
     //=== GETTERS
+    DataBase* getDataBase() const;
     std::vector<ShopItem*> getShopItemsArray() const;
 
     //=== METHODS

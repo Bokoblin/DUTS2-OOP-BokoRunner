@@ -61,7 +61,6 @@ public:
     bool getEndState() const;
     bool getTransitionStatus() const;
     bool getTransitionPossibleStatus() const;
-    bool getSaveStatus() const;
     Player* getPlayer() const;
     float getGameSpeed() const;
     int getCurrentZone() const;
@@ -73,7 +72,7 @@ public:
     void setEndState(bool state);
     void setTransitionStatus(bool status);
     void setTransitionPossibleStatus(bool status);
-    void setSaveStatus(bool status);
+
     void setCurrentZone(Zone z);
 
     //=== METHODS

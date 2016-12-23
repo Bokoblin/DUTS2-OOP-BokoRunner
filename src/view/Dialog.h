@@ -21,7 +21,6 @@ limitations under the License.
 #include "../Model/ShopItem.h"
 #include "ImagesConstants.h"
 
-#define HALF_WIDTH getGlobalBounds().width/2
 #define MATERIAL_TEAL_COLOR sf::Color(0, 150, 136, 255)
 
 
@@ -39,8 +38,8 @@ class Dialog
         ~Dialog();
 
         //=== GETTERS
-        const sf::Text& getNegativeButton() const;
-        const sf::Text& getPositiveButton() const;
+        const Text& getNegativeButton() const;
+        const Text& getPositiveButton() const;
         ShopItem *getItemLinked() const;
 
         //=== METHODS
@@ -57,10 +56,10 @@ class Dialog
         GraphicElement *m_dialogSprite;
 
         TextHandler *m_text;
-        sf::Text m_dialogTitleLabel;
-        sf::Text m_dialogContent;
-        sf::Text m_negativeButton;
-        sf::Text m_positiveButton;
+        Text m_dialogTitleLabel;
+        Text m_dialogContent;
+        Text m_negativeButton;
+        Text m_positiveButton;
 };
 
 #endif

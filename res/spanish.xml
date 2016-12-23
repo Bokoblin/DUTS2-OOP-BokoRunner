@@ -38,6 +38,8 @@
     <string name="stats_title" value="Estadisticas" />
     <string name="stats_distance" value="Total distancia recorrida" />
     <string name="stats_enemies" value="Total destrucciones enemigos" />
+    <string name="stats_coins" value="Total monedas recogidas" />
+    <string name="stats_app_reset" value="REINICIAR" />
     <string name="stats_games_number" value="Juegos lanzados" />
     <string name="about_title" value="Credits" />
     <string name="about_description" value="Boko Runner es un proyecto C++ que hemos realizado como proyecto &#xA;

@@ -34,13 +34,13 @@ const std::string MENU_MUSIC = "../res/audio/menu_sound.ogg";
 /**
  * MenuView Class
  * @author Arthur, Florian
- * @date 26/03 - 21/05
+ * @date 26/03 - 23/12
  */
 class MenuView : public View
 {
 public:
     //=== CTORs / DTORs
-    MenuView(float w, float h, sf::RenderWindow *window, TextHandler * text);
+    MenuView(float w, float h, sf::RenderWindow *window, TextHandler *textHandler);
     virtual ~MenuView();
 
     //=== SETTERS

@@ -33,12 +33,15 @@ enum Difficulty
 /********************************************
     Constant Variables
 ********************************************/
-
+const std::string RESOURCES_FOLDER = "../res/";
+const std::string ENGLISH_STRINGS = RESOURCES_FOLDER + "english.xml";
+const std::string FRENCH_STRINGS = RESOURCES_FOLDER + "french.xml";
+const std::string SPANISH_STRINGS = RESOURCES_FOLDER + "spanish.xml";
 const int COIN_MULTIPLIER = 20;
 const int MAX_SCORES = 10;
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-const std::string CONFIG_FILE = "../res/config.xml";
+const std::string CONFIG_FILE = RESOURCES_FOLDER + "config.xml";
 #else
 const std::string CONFIG_FILE = "~/.config/runner/config.xml";
 #endif
@@ -124,8 +127,9 @@ public:
     void loadStringFromArray(std::string &scores_text);
     void saveCurrentGame();
     void resetCurrentGame();
-
     void resetScore();
+    void resetWholeApp();
+
 private:
     //=== ATTRIBUTES
     //Global App

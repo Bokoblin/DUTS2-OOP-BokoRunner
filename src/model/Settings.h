@@ -18,6 +18,17 @@ limitations under the License.
 
 #include "DataBase.h"
 
+/********************************************
+    Constant Variables
+********************************************/
+const int PAGE_NUMBER = 3;
+
+enum Page {
+    CONFIG = 0,
+    STATS = 1,
+    ABOUT = 2
+};
+
 /**
  * Settings Class
  * @author Arthur
@@ -34,6 +45,10 @@ public:
     DataBase *getDataBase() const;
     bool getMorphSkinAvailability() const;
     bool getCapsuleSkinAvailability() const;
+    int getCurrentPage() const;
+
+    //=== SETTERS
+    void setCurrentPage(int page);
 
     //=== METHODS
     void changeLanguage(std::string lang);
@@ -43,6 +58,7 @@ public:
 private:
     //=== ATTRIBUTES
     DataBase *m_dataBase; //to not delete in dtor
+    int m_currentPage;
     bool m_morphSkinIsAvailable;
     bool m_capsuleSkinIsAvailable;
 };

@@ -25,7 +25,7 @@ Shop::~Shop()
 
 
 //=== Getters
-
+DataBase* Shop::getDataBase() const { return m_dataBase; }
 vector<ShopItem*> Shop::getShopItemsArray() const { return m_shopItemsArray; }
 
 

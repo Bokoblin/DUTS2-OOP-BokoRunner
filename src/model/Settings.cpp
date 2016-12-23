@@ -5,9 +5,10 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 20/05
+ * @date 20/05 - 22/12
  */
-Settings::Settings(DataBase *data) :  m_dataBase{data}
+Settings::Settings(DataBase *data) :
+        m_dataBase{data}, m_currentPage{CONFIG}
 {
     m_dataBase->updateActivatedItemsArray();
     checkItemsAvailability();
@@ -23,11 +24,15 @@ Settings::~Settings()
 { }
 
 
-//=== Getters
+//=== Getters & Setters
 
 DataBase *Settings::getDataBase() const { return m_dataBase; }
 bool Settings::getMorphSkinAvailability() const { return m_morphSkinIsAvailable; }
 bool Settings::getCapsuleSkinAvailability() const { return m_capsuleSkinIsAvailable; }
+int Settings::getCurrentPage() const { return m_currentPage; }
+
+void Settings::setCurrentPage(int page) { m_currentPage = page; }
+
 
 /**
  * Change app language
@@ -73,3 +78,5 @@ void Settings::checkItemsAvailability()
                                      == m_dataBase->getActivatedItemsArray().end());
     }
 }
+
+

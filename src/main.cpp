@@ -30,11 +30,10 @@ using namespace std;
 /**
  * Main function
  * @author Arthur, Florian
- * @date 21/02 - 20/12
+ * @date 21/02 - 24/12
  */
 int main()
 {
-    srand((unsigned int) time(NULL));
     sf::RenderWindow *window = new sf::RenderWindow( sf::VideoMode(SCREEN_WIDTH,
             SCREEN_HEIGHT, SCREEN_BPP), APP_TITLE, sf::Style::None );
     window->setFramerateLimit(FRAMERATE);

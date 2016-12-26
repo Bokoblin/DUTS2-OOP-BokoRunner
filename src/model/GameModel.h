@@ -24,30 +24,38 @@ limitations under the License.
 #include <chrono>
 
 #define ELEMENT_MOVE_X getGameSpeed()*(-1)
-#define ELEMENT_MOVE_Y 0
 
 enum Zone {
     HILL,
     PLAIN
 };
 
+enum GameState
+{
+    RUNNING,
+    RUNNING_SLOWLY,
+    PAUSED,
+    OVER
+};
+
 /********************************************
     Constant Variables
 ********************************************/
 const int DEFAULT_PLAYER_X = 50;
-const int SPEED_LIMIT = 18;
+const int ELEMENT_MOVE_Y = 0;
+const int SPEED_LIMIT = 20;
 const int NEXT_STEP_DELAY = 100;
 const int ZONE_CHANGING_DISTANCE = 500;
 const int BONUS_ROW = GAME_FLOOR-100;
 const int SHIELD_TIMEOUT = -581374;
 const float DEFAULT_SPEED = 5.0;
-const float SPEED_STEP = 0.01;
+const float SPEED_STEP = 0.02;
 
 
 /**
  * GameModel Class
  * @author Arthur
- * @date 26/03 - 21/05
+ * @date 26/03 - 26/12
  */
 class GameModel : public Model
 {
@@ -57,8 +65,7 @@ public:
     ~GameModel();
 
     //=== GETTERS
-    bool getPauseState() const;
-    bool getEndState() const;
+    GameState getGameState() const;
     bool getTransitionStatus() const;
     bool getTransitionPossibleStatus() const;
     bool getSaveStatus() const;
@@ -69,8 +76,7 @@ public:
     int getBonusTimeout() const;
 
     //=== SETTERS
-    void setPauseState(bool state);
-    void setEndState(bool state);
+    void setGameState(GameState state);
     void setTransitionStatus(bool status);
     void setTransitionPossibleStatus(bool status);
     void setSaveStatus(bool status);
@@ -89,12 +95,12 @@ public:
 
 private:
     //=== ATTRIBUTES
-    bool m_pauseState;
-    bool m_endState;
+    GameState m_gameState;
     bool m_inTransition;
     bool m_isTransitionPossible;
     bool m_isSavePossible;
     float m_gameSpeed;
+    float m_gameSlowSpeed;
     Zone m_currentZone;
     int m_currentEnemyTimeSpacing;
     int m_currentCoinTimeSpacing;

@@ -30,8 +30,7 @@ enum playerState
     NORMAL,
     MEGA,
     FLY,
-    SHIELD,
-    OTHER
+    SHIELD
 };
 
 /**

@@ -1,9 +1,21 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.7.5
+Current version : v1.7.6
 
-======================================================================================
+==================================================================================================
+
+v1.7.6 (26/12/16)
+
+- Improvements and fixes to game execution
+    - Replaced game states booleans by an enum
+    - Fixed distance increasing stopped at speed limit and with certain bonuses
+    - Fixed incorrect pause background
+    - Current distance now depends only of game speed
+- Updated online documentation to current version
+
+
+---------------------------------------------------------------------------------------------------
 
 v1.7.5 (20/12/16)
 

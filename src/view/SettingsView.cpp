@@ -199,7 +199,7 @@ void SettingsView::synchronize()
 
     //=== TextHandler update
 
-    m_text->syncSettingsText();
+    m_textHandler->syncSettingsText();
 }
 
 
@@ -234,7 +234,7 @@ void SettingsView::draw() const
 
     //=== TextHandler Drawing
 
-    m_text->drawMenuSettingsText(m_window, m_currentIndicator);
+    m_textHandler->drawMenuSettingsText(m_window, m_currentIndicator);
 
     for( auto it : m_pageIndicators)
         m_window->draw(*it.second);
@@ -315,17 +315,17 @@ bool SettingsView::treatEvents(sf::Event event)
         else if ( m_englishLangRadio->IS_POINTED )
         {
             m_settings->changeLanguage("en");
-            m_text->updateWholeText();
+            m_textHandler->updateWholeText();
         }
         else if ( m_frenchLangRadio->IS_POINTED )
         {
             m_settings->changeLanguage("fr");
-            m_text->updateWholeText();
+            m_textHandler->updateWholeText();
         }
         else if ( m_spanishLangRadio->IS_POINTED )
         {
             m_settings->changeLanguage("es");
-            m_text->updateWholeText();
+            m_textHandler->updateWholeText();
         }
         else if ( m_easyModeRadio->IS_POINTED )
         {

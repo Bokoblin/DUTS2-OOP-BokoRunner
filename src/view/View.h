@@ -65,7 +65,7 @@ class View
         //=== ATTRIBUTES
         float m_width, m_height;
         sf::RenderWindow *m_window;
-        TextHandler *m_text;
+        TextHandler *m_textHandler;
         Model *m_model;
 };
 

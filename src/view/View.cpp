@@ -8,7 +8,7 @@ using namespace std;
  * @date 21/02 - 14/03
  */
 View::View(float w, float h, sf::RenderWindow *window, TextHandler *text):
-    m_width(w), m_height(h), m_window{window}, m_text{text}, m_model{nullptr}
+    m_width(w), m_height(h), m_window{window}, m_textHandler{text}, m_model{nullptr}
 {}
 
 

@@ -44,7 +44,7 @@ bool PixelateEffect::onLoad(std::string image)
     m_sprite.setTexture(m_texture);
 
     // Load the shader
-    if (!m_shader.loadFromFile("Resources/pixelate.frag", sf::Shader::Fragment))
+    if (!m_shader.loadFromFile("../res/pixelate.frag", sf::Shader::Fragment))
         return false;
     m_shader.setParameter("texture", sf::Shader::CurrentTexture);
 

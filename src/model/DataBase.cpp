@@ -6,11 +6,12 @@ using namespace std;
 /**
  * Default Constructor
  * @author Arthur
- * @date 2/05
+ * @date 2/05 - 26/12
  */
 DataBase::DataBase() :
     m_currentCoinsNumber{0}, m_currentDistance{0},
-    m_currentFlattenedEnemies{0}, m_currentScore{0}
+    m_currentFlattenedEnemies{0}, m_currentScore{0},
+    m_appState{INTRO}
 {
     if (!checkFileIntegrity())
         createFile();
@@ -20,6 +21,7 @@ DataBase::DataBase() :
 
 //=== Getters
 
+AppState DataBase::getAppState() const {return m_appState;}
 int DataBase::getTotalCoinsNumber() const { return m_totalCoinsCollected; }
 int DataBase::getTotalDistance() const { return m_totalDistance; }
 int DataBase::getTotalFlattenedEnemies() const { return m_totalFlattenedEnemies; }
@@ -36,6 +38,7 @@ const set<string>& DataBase::getActivatedItemsArray() const { return m_activated
 
 //=== Setters
 
+void DataBase::setAppState(AppState state) { m_appState = state;}
 void DataBase::setTotalCoinsCollected(int n) { m_totalCoinsCollected += n; }
 void DataBase::setCurrentCoinsCollected(int n) { m_currentCoinsNumber += n; }
 void DataBase::increaseCurrentDistance(float n) { m_currentDistance += n; }
@@ -53,7 +56,7 @@ void DataBase::setCurrentScore(float speed)
 /**
  * (Re)create files
  * @author Arthur
- * @date 2/05 - 24/10
+ * @date 2/05 - 26/12
  */
 void DataBase::createFile()
 {
@@ -61,6 +64,8 @@ void DataBase::createFile()
     f.open( CONFIG_FILE.c_str(), ios::out);
     f << DEFAULT_CONFIG_CONTENT;
     f.close();
+
+    fetchConfigurationFromFile();
 }
 
 

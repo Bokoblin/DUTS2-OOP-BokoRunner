@@ -5,10 +5,10 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 14/04 - 20/12
+ * @date 14/04 - 26/12
  */
-MenuModel::MenuModel(const Model& model) :
-    Model(model), m_menuState{HOME}
+MenuModel::MenuModel(DataBase *dataBase) :
+    AbstractModel(dataBase), m_menuState{HOME}
 {
     m_settings = nullptr;
     m_shop = nullptr;
@@ -43,6 +43,11 @@ void MenuModel::setMenuState(MenuState state){ m_menuState = state;}
 void MenuModel::nextStep()
 {
     //=== Delete leaderboard if not anymore in shopState
+
+    if (m_menuState == LEADERBOARD)
+    {
+        m_leaderboard->nextStep();
+    }
 
     if (m_menuState != LEADERBOARD && m_leaderboard != nullptr)
     {
@@ -104,3 +109,4 @@ Settings* MenuModel::launchSettings()
     m_settings = new Settings(m_dataBase);
     return m_settings;
 }
+

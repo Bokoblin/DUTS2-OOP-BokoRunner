@@ -13,10 +13,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef VIEW_H
-#define VIEW_H
+#ifndef ABSTRACT_VIEW_H
+#define ABSTRACT_VIEW_H
 
-#include "../Model/GameModel.h"
 #include "ImagesConstants.h"
 #include "TextHandler.h"
 #include "SlidingBackground.h"
@@ -37,23 +36,24 @@ limitations under the License.
 const int SCREEN_BPP = 32;
 const std::string APP_TITLE = "Boko Runner";
 
-class Model;
+class AbstractModel;
 
 /**
- * View Abstract Class
+ * The AbstractView class provides common
+ * attributes and methods that will be used
+ * by its inherited classes.
+ *
  * @author Arthur, Florian
- * @date 21/02 - 23/10
+ * @date 21/02 - 26/12
  */
-class View
+class AbstractView
 {
     public:
         //=== CTORs / DTORs
-        View(float w, float h, sf::RenderWindow *window, TextHandler *text );
-        View( const View& myView ) = delete;
-        virtual ~View();
-
-        //=== SETTERS
-        void setModel(Model *model);
+        AbstractView(int w, int h, sf::RenderWindow *window, TextHandler *text );
+        AbstractView(int w, int h, sf::RenderWindow *window, TextHandler *text, AbstractModel *model);
+        AbstractView( const AbstractView& myView ) = delete;
+        virtual ~AbstractView();
 
         //=== METHODS
         virtual void loadImages()=0;
@@ -63,10 +63,9 @@ class View
 
     protected:
         //=== ATTRIBUTES
-        float m_width, m_height;
+        int m_width, m_height;
         sf::RenderWindow *m_window;
         TextHandler *m_textHandler;
-        Model *m_model;
 };
 
 #endif

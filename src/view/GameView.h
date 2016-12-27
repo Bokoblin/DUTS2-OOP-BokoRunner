@@ -17,7 +17,8 @@ limitations under the License.
 #define GAME_VIEW_H
 
 #include "PixelateEffect.h"
-#include "View.h"
+#include "AbstractView.h"
+#include "../model/GameModel.h"
 
 #define KEYBOARD_LEFT    (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) \
                        || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
@@ -46,15 +47,13 @@ const int PAUSE_FORM_X = 30;
  * @author Arthur, Florian
  * @date 21/02 - 21/05
  */
-class GameView : public View
+class GameView : public AbstractView
 {
 public:
 	//=== CTORs / DTORs
-	GameView(float w, float h, sf::RenderWindow *myWindow, TextHandler *text);
+	GameView(int width, int height, sf::RenderWindow *myWindow,
+			 TextHandler *textHandler, GameModel *gameModel);
 	virtual ~GameView();
-
-	//=== SETTERS
-	void setGameModel(GameModel *model);
 
 	//=== METHODS
 	virtual void loadImages() override;
@@ -69,7 +68,7 @@ public:
 
 private:
     //=== ATTRIBUTES
-    GameModel *m_gameModel; //to not delete in dtor
+    GameModel *m_game; //to not delete in dtor
     PixelateEffect *m_pixelShader;
 
     float m_xPixelIntensity;

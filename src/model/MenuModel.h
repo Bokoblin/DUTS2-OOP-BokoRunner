@@ -16,7 +16,6 @@ limitations under the License.
 #ifndef MENU_MODEL_H
 #define MENU_MODEL_H
 
-#include "Model.h"
 #include "Leaderboard.h"
 #include "Settings.h"
 #include "Shop.h"
@@ -32,13 +31,13 @@ enum MenuState
 /**
  * MenuModel Class
  * @author Arthur
- * @date 14/04 - 20/12
+ * @date 14/04 - 26/12
  */
-class MenuModel : public Model
+class MenuModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    MenuModel(const Model& model);
+    MenuModel(DataBase *dataBase);
     virtual ~MenuModel();
 
     //=== GETTERS

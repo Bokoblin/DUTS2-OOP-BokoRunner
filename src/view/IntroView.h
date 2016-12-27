@@ -13,37 +13,37 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef INTRO_H
+#define INTRO_H
 
-#include "AbstractModel.h"
+#include "AbstractView.h"
+#include "../model/IntroModel.h"
 
 /**
- * Settings Class
+ * The IntroView class displays
+ * a little banner at app startup
  * @author Arthur
- * @date 20/05 - 27/12
+ * @date 27/03 - 26/12
  */
-class Settings : public AbstractModel
+class IntroView : public AbstractView
 {
-public:
+    public:
     //=== CTORs / DTORs
-    Settings(DataBase *dataBase);
-    ~Settings();
-
-    //=== GETTERS
-    bool getMorphSkinAvailability() const;
-    bool getCapsuleSkinAvailability() const;
+    IntroView(int width, int height, sf::RenderWindow *window,
+              TextHandler *textHandler, IntroModel *introModel);
+    virtual ~IntroView();
 
     //=== METHODS
-    void changeLanguage(std::string lang);
-    void changeBallSkin(std::string skin);
-    void checkItemsAvailability();
-    virtual void nextStep() override;
+    virtual void synchronize() override;
+    virtual void draw() const override;
+    virtual void loadImages() override;
+    virtual bool treatEvents() override;
 
 private:
     //=== ATTRIBUTES
-    bool m_morphSkinIsAvailable;
-    bool m_capsuleSkinIsAvailable;
+    IntroModel *m_intro;
+    sf::Texture m_introTexture;
+    GraphicElement *m_introGraphic;
 };
 
 #endif

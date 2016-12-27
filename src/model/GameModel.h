@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef GAME_MODEL_H
 #define GAME_MODEL_H
 
-#include "Model.h"
+#include "AbstractModel.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Coin.h"
@@ -57,11 +57,11 @@ const float SPEED_STEP = 0.02;
  * @author Arthur
  * @date 26/03 - 26/12
  */
-class GameModel : public Model
+class GameModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    GameModel(const Model& model);
+    GameModel(int width, int height, DataBase *dataBase);
     ~GameModel();
 
     //=== GETTERS
@@ -95,6 +95,7 @@ public:
 
 private:
     //=== ATTRIBUTES
+    int m_width, m_height;
     GameState m_gameState;
     bool m_inTransition;
     bool m_isTransitionPossible;

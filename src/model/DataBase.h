@@ -30,6 +30,15 @@ enum Difficulty
     HARD = 2
 };
 
+enum AppState
+{
+    INTRO,
+    MENU,
+    GAME,
+    RESET_GAME,
+    QUIT
+};
+
 /********************************************
     Constant Variables
 ********************************************/
@@ -89,6 +98,7 @@ public:
     DataBase(const DataBase& d)=delete;
 
     //=== GETTERS
+    AppState getAppState() const;
     int getTotalCoinsNumber() const;
     int getTotalDistance() const;
     int getTotalFlattenedEnemies() const;
@@ -103,6 +113,7 @@ public:
     const std::set<std::string>& getActivatedItemsArray() const;
 
     //=== SETTERS
+    void setAppState(AppState state);
     void setTotalCoinsCollected(int number);
     void setCurrentCoinsCollected(int number);
     void increaseCurrentDistance(float number);
@@ -129,6 +140,7 @@ public:
 private:
     //=== ATTRIBUTES
     //Global App
+    AppState m_appState;
     int m_totalCoinsCollected;
     int m_totalDistance;
     int m_totalFlattenedEnemies;

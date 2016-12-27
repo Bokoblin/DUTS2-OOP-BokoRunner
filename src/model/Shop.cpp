@@ -4,9 +4,10 @@ using namespace std;
 
 /**
  * Parameterized Constructor
- * @author Arthur  @date 11/05 - 16/05
+ * @author Arthur
+ * @date 11/05 - 27/12
  */
-Shop::Shop(DataBase *data) :  m_dataBase{data}
+Shop::Shop(DataBase *dataBase) :  AbstractModel(dataBase)
 {
     fetchBuyableItemsFromFile();
 }
@@ -68,27 +69,12 @@ bool Shop::buyItem(ShopItem *my_item)
 
 
 /**
- * String cast function
- * @author Arthur
- * @date 14/05
- */
-string Shop::toString() const
-{
-    string result = "== Shop content ==\n";
-    result += " There are " + to_string(m_shopItemsArray.size() ) + " items :\n\n";
-    for ( ShopItem *bi : m_shopItemsArray )
-    {
-        result += bi->toString();
-    }
-
-    return result;
-}
-
-/**
  * Fetch Shop Items from file
- * @author Arthur  @date 11/05 - 24/10
+ * @author Arthur
+ * @date 11/05 - 24/10
  */
-void Shop::fetchBuyableItemsFromFile() {
+void Shop::fetchBuyableItemsFromFile()
+{
     string result_value = "";
     string name = "";
     string desc = "";
@@ -117,3 +103,11 @@ void Shop::fetchBuyableItemsFromFile() {
         m_shopItemsArray.push_back( new ShopItem(name, desc, price, state) );
     }
 }
+
+/**
+ * Next Step
+ * @author Arthur
+ * @date 27/12
+ */
+void Shop::nextStep()
+{}

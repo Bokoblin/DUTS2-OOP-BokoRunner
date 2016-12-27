@@ -34,8 +34,8 @@ set(SOURCE_FILES
         src/view/GraphicElement.cpp
         src/view/GraphicElement.h
         src/view/ImagesConstants.h
-        src/view/Intro.cpp
-        src/view/Intro.h
+        src/view/IntroView.cpp
+        src/view/IntroView.h
         src/model/Leaderboard.cpp
         src/model/Leaderboard.h
         src/view/LeaderboardView.cpp
@@ -45,8 +45,8 @@ set(SOURCE_FILES
         src/model/MenuModel.h
         src/view/MenuView.cpp
         src/view/MenuView.h
-        src/model/Model.cpp
-        src/model/Model.h
+        src/model/AbstractModel.cpp
+        src/model/AbstractModel.h
         src/model/MovableElement.cpp
         src/model/MovableElement.h
         src/view/PixelateEffect.cpp
@@ -69,9 +69,9 @@ set(SOURCE_FILES
         src/view/SlidingBackground.h
         src/view/TextHandler.cpp
         src/view/TextHandler.h
-        src/view/View.cpp
-        src/view/View.h
-        )
+        src/view/AbstractView.cpp
+        src/view/AbstractView.h
+        src/model/IntroModel.cpp src/model/IntroModel.h)
 
 add_executable(runner ${SOURCE_FILES})
 

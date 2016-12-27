@@ -6,13 +6,12 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 21/05
+ * @date 26/12
  */
 LeaderboardView::LeaderboardView(float w, float h, sf::RenderWindow *window, TextHandler * t):
-    View(w, h, window, t), m_leaderboard{nullptr}
+    AbstractView(w, h, window, t), m_leaderboard{nullptr}
 {
     loadImages();
-    m_textHandler->syncMenuLeaderboardText();
 }
 
 
@@ -76,17 +75,17 @@ void LeaderboardView::loadImages()
 /**
  * Synchronization function
  * @author Arthur
- * @date 20/05 - 24/10
+ * @date 20/05 - 26/12
  */
 void LeaderboardView::synchronize()
 {
-    //=== Elements update
-
     m_homeFormButton->sync();
     m_clearLbRectButton->sync();
     m_clearLbRectButton->setPosition(m_width/2 -
     m_clearLbRectButton->HALF_WIDTH, 540);
     m_homeFormButton->resize(FORM_BUTTONS_SIZE);
+
+    m_textHandler->syncMenuLeaderboardText();
 }
 
 
@@ -108,6 +107,8 @@ void LeaderboardView::draw() const
 
     m_textHandler->drawLeaderboardText(m_window);
     m_window->display();
+
+    sf::sleep(sf::milliseconds(100)); //limit CPU usage
 }
 
 

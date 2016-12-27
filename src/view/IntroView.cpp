@@ -1,15 +1,21 @@
-#include "Intro.h"
+#include "IntroView.h"
 
-using namespace std;
+/********************************************
+    Constant Variables
+********************************************/
+const int INTRO_WIDTH = 400;
+const int INTRO_HEIGHT = 200;
 
 /**
  * Parameterized Constructor
  * @author Arthur
  * @date 27/03 - 11/04
  */
-Intro::Intro(float w, float h, sf::RenderWindow *window, TextHandler *text): View(w, h, window, text)
+IntroView::IntroView(int width, int height, sf::RenderWindow *window,
+                     TextHandler *textHandler, IntroModel *introModel) :
+        AbstractView(width, height, window, textHandler), m_intro{introModel}
 {
-    m_window->create(sf::VideoMode((unsigned int) w, (unsigned int) h, SCREEN_BPP), APP_TITLE, sf::Style::None );
+    m_window->create(sf::VideoMode((unsigned int) width, (unsigned int) height, SCREEN_BPP), APP_TITLE, sf::Style::None );
     m_window->setFramerateLimit(30);
     m_window->setPosition(ENVIRONMENT_CENTER);
 
@@ -22,7 +28,7 @@ Intro::Intro(float w, float h, sf::RenderWindow *window, TextHandler *text): Vie
  * @author Arthur
  * @date 27/03
  */
-Intro::~Intro()
+IntroView::~IntroView()
 {
     delete m_introGraphic;
 }
@@ -33,10 +39,10 @@ Intro::~Intro()
  * @author Arthur
  * @date 27/03
  */
-void Intro::loadImages()
+void IntroView::loadImages()
 {
     if (!m_introTexture.loadFromFile(INTRO_IMAGE))
-        cerr << "ERROR when loading image file: " << INTRO_IMAGE << endl;
+        std::cerr << "ERROR when loading image file: " << INTRO_IMAGE << std::endl;
     else
     {
         m_introTexture.setSmooth(true);
@@ -50,7 +56,7 @@ void Intro::loadImages()
  * @author Arthur
  * @date 27/03
  */
-void Intro::synchronize()
+void IntroView::synchronize()
 { }
 
 
@@ -59,7 +65,7 @@ void Intro::synchronize()
  * @author Arthur
  * @date 27/03
  */
-void Intro::draw() const
+void IntroView::draw() const
 {
     m_window->clear();
     m_window->draw(*m_introGraphic);
@@ -72,7 +78,7 @@ void Intro::draw() const
  * @author Arthur
  * @date 27/03
  */
-bool Intro::treatEvents()
+bool IntroView::treatEvents()
 {
     bool result = false;
 
@@ -83,9 +89,9 @@ bool Intro::treatEvents()
         sf::Event event;
         while (m_window->pollEvent(event))
         {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_model->getAppState() == INTRO)
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
             {
-                m_model->setAppState(MENU);
+                m_intro->getDataBase()->setAppState(MENU);
             }
         }
     }

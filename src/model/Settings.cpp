@@ -5,9 +5,9 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 20/05
+ * @date 20/05 - 27/12
  */
-Settings::Settings(DataBase *data) :  m_dataBase{data}
+Settings::Settings(DataBase *dataBase) :  AbstractModel(dataBase)
 {
     m_dataBase->updateActivatedItemsArray();
     checkItemsAvailability();
@@ -25,7 +25,6 @@ Settings::~Settings()
 
 //=== Getters
 
-DataBase *Settings::getDataBase() const { return m_dataBase; }
 bool Settings::getMorphSkinAvailability() const { return m_morphSkinIsAvailable; }
 bool Settings::getCapsuleSkinAvailability() const { return m_capsuleSkinIsAvailable; }
 
@@ -73,3 +72,11 @@ void Settings::checkItemsAvailability()
                                      == m_dataBase->getActivatedItemsArray().end());
     }
 }
+
+/**
+ * Next Step
+ * @author Arthur
+ * @date 27/12
+ */
+void Settings::nextStep()
+{}

@@ -5,9 +5,10 @@ using namespace std;
 /**
  * Default Constructor
  * @author Arthur
- * @date 19/04 - 24/10
+ * @date 19/04 - 26/12
  */
-Leaderboard::Leaderboard(DataBase *data) :  m_dataBase{data}
+Leaderboard::Leaderboard(DataBase *dataBase) :
+        AbstractModel(dataBase)
 {}
 
 /**
@@ -17,7 +18,13 @@ Leaderboard::Leaderboard(DataBase *data) :  m_dataBase{data}
  */
 Leaderboard::~Leaderboard() {}
 
-
-//=== Getters
-
-DataBase *Leaderboard::getDataBase() const { return m_dataBase; }
+/**
+ * Next Step
+ * @author Arthur
+ * @date 27/12
+ */
+void Leaderboard::nextStep()
+{
+    if (!m_dataBase->checkFileIntegrity())
+        m_dataBase->createFile();
+}

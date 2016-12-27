@@ -7,8 +7,9 @@ using namespace std;
  * @author Arthur
  * @date 26/03 - 26/12
  */
-GameModel::GameModel(const Model& model) :
-    Model(model), m_gameState{RUNNING}, m_inTransition{false},
+GameModel::GameModel(int width, int height, DataBase *dataBase) :
+    AbstractModel(dataBase), m_width{width}, m_height{height},
+    m_gameState{RUNNING}, m_inTransition{false},
     m_isTransitionPossible{false}, m_isSavePossible{true},
     m_currentZone{HILL}, m_currentEnemyTimeSpacing{0},
     m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},

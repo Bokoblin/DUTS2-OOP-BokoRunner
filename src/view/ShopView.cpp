@@ -8,7 +8,7 @@ using namespace std;
  * @date 16/05
  */
 ShopView::ShopView(float w, float h, sf::RenderWindow *window, TextHandler * text):
-	View(w, h, window,text), m_shop{nullptr}, m_currentIndicator{0},
+	AbstractView(w, h, window,text), m_shop{nullptr}, m_currentIndicator{0},
     m_totalIndicator{0}, m_buyDialog{nullptr}
 {
 	    loadImages();

@@ -9,7 +9,7 @@ using namespace std;
  * @date 20/05
  */
 SettingsView::SettingsView(float w, float h, sf::RenderWindow *window, TextHandler * t):
-    View(w, h, window, t), m_settings{nullptr}, m_currentIndicator{0},
+    AbstractView(w, h, window, t), m_settings{nullptr}, m_currentIndicator{0},
     m_nbIndicators{2}
 {
 	    loadImages();
@@ -153,8 +153,8 @@ void SettingsView::synchronize()
     m_englishLangRadio->setActivatedState(m_settings->getDataBase()->getLanguage() == "en");
     m_frenchLangRadio->setActivatedState(m_settings->getDataBase()->getLanguage() == "fr");
     m_spanishLangRadio->setActivatedState(m_settings->getDataBase()->getLanguage() == "es");
-    m_easyModeRadio->setActivatedState(m_model->getDataBase()->getDifficulty() == EASY);
-    m_hardModeRadio->setActivatedState(m_model->getDataBase()->getDifficulty() == HARD);
+    m_easyModeRadio->setActivatedState(m_settings->getDataBase()->getDifficulty() == EASY);
+    m_hardModeRadio->setActivatedState(m_settings->getDataBase()->getDifficulty() == HARD);
     m_defaultBallSkinRadio->setActivatedState(m_settings->getDataBase()->getBallSkin() == "default");
     m_morphBallSkinRadio->setActivatedState(m_settings->getDataBase()->getBallSkin() == "morphing");
     m_capsuleBallSkinRadio->setActivatedState(m_settings->getDataBase()->getBallSkin() == "capsule");
@@ -329,11 +329,11 @@ bool SettingsView::treatEvents(sf::Event event)
         }
         else if ( m_easyModeRadio->IS_POINTED )
         {
-            m_model->getDataBase()->setDifficulty(EASY);
+            m_settings->getDataBase()->setDifficulty(EASY);
         }
         else if ( m_hardModeRadio->IS_POINTED )
         {
-            m_model->getDataBase()->setDifficulty(HARD);
+            m_settings->getDataBase()->setDifficulty(HARD);
         }
         else if ( m_defaultBallSkinRadio->IS_POINTED
                  && !m_defaultBallSkinRadio->getDisabledState() )

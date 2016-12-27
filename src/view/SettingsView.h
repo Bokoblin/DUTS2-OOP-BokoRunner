@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef SETTINGS_VIEW_H
 #define SETTINGS_VIEW_H
 
-#include "View.h"
+#include "AbstractView.h"
 #include "../Model/Settings.h"
 
 #define RADIO_BUTTONS_SIZE 26,26
@@ -27,7 +27,7 @@ limitations under the License.
  * @author Arthur
  * @date 20/05
  */
-class SettingsView : public View
+class SettingsView : public AbstractView
 {
 public:
     //=== CTORs / DTORs

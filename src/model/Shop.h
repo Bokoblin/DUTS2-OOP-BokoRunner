@@ -17,18 +17,18 @@ limitations under the License.
 #define SHOP_H
 
 #include "ShopItem.h"
-#include "DataBase.h"
+#include "AbstractModel.h"
 
 /**
  * Shop Class
  * @author Arthur
- * @date 11/05 - 16/05
+ * @date 11/05 - 27/12
  */
-class Shop
+class Shop : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    Shop(DataBase *data);
+    Shop(DataBase *dataBase);
     ~Shop();
 
     //=== GETTERS
@@ -36,14 +36,13 @@ public:
 
     //=== METHODS
     bool buyItem(ShopItem *item);
-    std::string toString() const;
+    virtual void nextStep() override;
 
 private:
     //=== ATTRIBUTES
-    DataBase *m_dataBase;
-
     std::vector<ShopItem*> m_shopItemsArray;
 
+    //=== METHODS
     void fetchBuyableItemsFromFile();
 };
 

@@ -13,9 +13,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "View/Intro.h"
-#include "View/MenuView.h"
-#include "View/GameView.h"
+#include "view/IntroView.h"
+#include "view/MenuView.h"
+#include "view/GameView.h"
 
 
 /********************************************
@@ -24,77 +24,66 @@ limitations under the License.
 const int INTRO_WIDTH = 400;
 const int INTRO_HEIGHT = 200;
 
-using namespace std;
-
 
 /**
  * Main function
  * @author Arthur, Florian
- * @date 21/02 - 24/12
+ * @date 21/02 - 26/12
  */
 int main()
 {
-    sf::RenderWindow *window = new sf::RenderWindow( sf::VideoMode(SCREEN_WIDTH,
-            SCREEN_HEIGHT, SCREEN_BPP), APP_TITLE, sf::Style::None );
-    window->setFramerateLimit(FRAMERATE);
+    sf::RenderWindow window( sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP), APP_TITLE, sf::Style::None );
+    window.setFramerateLimit(FRAMERATE);
 
-    DataBase data;
-    Model model(SCREEN_WIDTH, SCREEN_HEIGHT);
-    model.setDataBase(&data);
-    TextHandler *text = new TextHandler(&data, SCREEN_WIDTH, SCREEN_HEIGHT);
+    DataBase dataBase;
+    TextHandler textHandler(&dataBase, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    while(window->isOpen() )
+    while(window.isOpen() )
     {
-        if  ( model.getAppState() == INTRO )
+        if  ( dataBase.getAppState() == INTRO )
         {
-            Intro intro(INTRO_WIDTH, INTRO_HEIGHT, window, text);
-            intro.setModel(&model);
-            while( model.getAppState() == INTRO && intro.treatEvents() )
+            IntroModel introModel(&dataBase);
+            IntroView introView(INTRO_WIDTH, INTRO_HEIGHT, &window, &textHandler, &introModel);
+
+            while( dataBase.getAppState() == INTRO && introView.treatEvents() )
             {
-                intro.synchronize();
-                intro.draw();
+                introView.synchronize();
+                introView.draw();
             }
         }
 
-        if  ( model.getAppState() == MENU )
+        if  ( dataBase.getAppState() == MENU )
         {
-            MenuModel mModel(model);
-            mModel.setDataBase(&data);
-            MenuView mView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
-            mView.setModel(&model);
-            mView.setMenuModel(&mModel);
-            while( model.getAppState() == MENU && mView.treatEvents()  )
+            MenuModel menuModel(&dataBase);
+            MenuView menuView(SCREEN_WIDTH, SCREEN_HEIGHT, &window, &textHandler, &menuModel);
+
+            while( dataBase.getAppState() == MENU && menuView.treatEvents()  )
             {
-                mModel.nextStep();
-                mView.synchronize();
-                mView.draw();
+                menuModel.nextStep();
+                menuView.synchronize();
+                menuView.draw();
             }
         }
 
-        if  ( model.getAppState() == GAME )
+        if  ( dataBase.getAppState() == GAME )
         {
-            GameModel gModel(model);
-            gModel.setDataBase(&data);
-            GameView gView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
-            gView.setModel(&model);
-            gView.setGameModel(&gModel);
-            while( model.getAppState() == GAME && gView.treatEvents() )
+            GameModel gameModel(SCREEN_WIDTH, SCREEN_HEIGHT, &dataBase);
+            GameView gameView(SCREEN_WIDTH, SCREEN_HEIGHT, &window, &textHandler, &gameModel);
+
+            while( dataBase.getAppState() == GAME && gameView.treatEvents() )
             {
-                gModel.nextStep();
-                gView.synchronize();
-                gView.draw();
+                gameModel.nextStep();
+                gameView.synchronize();
+                gameView.draw();
             }
-            if ( model.getAppState() == RESET_GAME )
+            if ( dataBase.getAppState() == RESET_GAME )
             {
-                model.setAppState(GAME);
+                dataBase.setAppState(GAME);
             }
         }
     }
 
-    data.pushConfigurationToFile();
-
-    delete text;
-    delete window;
+    dataBase.pushConfigurationToFile();
 
     return EXIT_SUCCESS;
 }

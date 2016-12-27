@@ -16,26 +16,22 @@ limitations under the License.
 #ifndef LEADERBOARD_H
 #define LEADERBOARD_H
 
-#include "DataBase.h"
+#include "AbstractModel.h"
 
 /**
  * Leaderboard Class
  * @author Arthur
- * @date  19/04 - 24/10
+ * @date  19/04 - 27/12
  */
-class Leaderboard
+class Leaderboard : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    Leaderboard(DataBase *data);
+    Leaderboard(DataBase *dataBase);
     ~Leaderboard();
 
-    //=== GETTERS
-    DataBase *getDataBase() const;
-
-private:
-    //=== ATTRIBUTES
-    DataBase *m_dataBase; //to not delete in dtor
+    //=== Methods
+    virtual void nextStep() override;
 };
 
 #endif

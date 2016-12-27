@@ -16,7 +16,6 @@ limitations under the License.
 #ifndef MENU_VIEW_H
 #define MENU_VIEW_H
 
-#include "View.h"
 #include "../Model/MenuModel.h"
 #include "LeaderboardView.h"
 #include "SettingsView.h"
@@ -34,17 +33,15 @@ const std::string MENU_MUSIC = "../res/audio/menu_sound.ogg";
 /**
  * MenuView Class
  * @author Arthur, Florian
- * @date 26/03 - 21/05
+ * @date 26/03 - 26/12
  */
-class MenuView : public View
+class MenuView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    MenuView(float w, float h, sf::RenderWindow *window, TextHandler * text);
+    MenuView(int width, int height, sf::RenderWindow *window,
+             TextHandler *textHandler, MenuModel *menuModel);
     virtual ~MenuView();
-
-    //=== SETTERS
-	void setMenuModel(MenuModel *model);
 
     //=== METHODS
     virtual void synchronize() override;
@@ -54,7 +51,7 @@ public:
 
 private:
     //=== ATTRIBUTES
-    MenuModel *m_menuModel;
+    MenuModel *m_menu;
     LeaderboardView *m_leaderboardView;
     SettingsView *m_settingsView;
     ShopView *m_shopView;

@@ -13,33 +13,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef INTRO_H
-#define INTRO_H
+#ifndef INTRO_MODEL_H
+#define INTRO_MODEL_H
 
-#include "View.h"
+#include "AbstractModel.h"
+
 
 /**
- * Intro Class
+ * IntroModel Class
  * @author Arthur
- * @date 27/03 - 14/04
+ * @date 26/12
  */
-class Intro : public View
+class IntroModel : public AbstractModel
 {
-    public:
+public:
     //=== CTORs / DTORs
-    Intro(float w, float h, sf::RenderWindow *window, TextHandler *text);
-    virtual ~Intro();
+    IntroModel(DataBase *dataBase);
+    virtual ~IntroModel();
 
     //=== METHODS
-    virtual void synchronize() override;
-    virtual void draw() const override;
-    virtual void loadImages() override;
-    virtual bool treatEvents() override;
-
-private:
-    //=== ATTRIBUTES
-    sf::Texture m_introTexture;
-    GraphicElement *m_introGraphic;
+    virtual void nextStep() override;
 };
 
 #endif

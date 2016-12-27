@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef SHOP_VIEW_H
 #define SHOP_VIEW_H
 
-#include "View.h"
+#include "AbstractView.h"
 #include "../Model/Shop.h"
 #include "ShopItemCard.h"
 #include "Dialog.h"
@@ -27,7 +27,7 @@ limitations under the License.
  * @author Arthur
  * @date 11/05 - 18/05
  */
-class ShopView : public View
+class ShopView : public AbstractView
 {
 public:
     //=== CTORs / DTORs

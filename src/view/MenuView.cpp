@@ -7,9 +7,10 @@ using namespace std;
  * @author Arthur, Florian
  * @date 25/02 - 21/05
  */
-MenuView::MenuView(float w, float h, sf::RenderWindow *window, TextHandler * text):
-    View(w, h, window,text), m_menuModel{nullptr}, m_leaderboardView{nullptr},
-    m_settingsView{nullptr},  m_shopView{nullptr}
+MenuView::MenuView(int width, int height, sf::RenderWindow *window,
+				   TextHandler *textHandler, MenuModel *menuModel) :
+    AbstractView(width, height, window, textHandler), m_menu{menuModel},
+    m_leaderboardView{nullptr}, m_settingsView{nullptr},  m_shopView{nullptr}
 {
     if (!m_menuMusic.openFromFile(MENU_MUSIC))
         cerr << "ERROR when loading music file: " << MENU_MUSIC << endl;
@@ -22,8 +23,9 @@ MenuView::MenuView(float w, float h, sf::RenderWindow *window, TextHandler * tex
 
 	if (m_window->getSize().x != m_width )
 	{
-        m_window->create(sf::VideoMode((unsigned int) w, (unsigned int) h, SCREEN_BPP), APP_TITLE, sf::Style::Close );
-		m_window->setFramerateLimit(FRAMERATE);
+        m_window->create(sf::VideoMode((unsigned int) m_width, (unsigned int) m_height, SCREEN_BPP),
+                         APP_TITLE, sf::Style::Close );
+		m_window->setFramerateLimit(30);
 		m_window->setPosition(ENVIRONMENT_CENTER);
 	}
 
@@ -50,12 +52,12 @@ MenuView::~MenuView()
 
 
 //=== Setters
-
+/*
 void MenuView::setMenuModel(MenuModel *model)
 {
-	m_menuModel = model;
+	m_intro = model;
 }
-
+*/
 
 /**
  * Image Loading
@@ -149,7 +151,7 @@ void MenuView::synchronize()
     if ( m_menuMusic.getPlayingOffset() >= sf::milliseconds(28840))
         m_menuMusic.setPlayingOffset( sf::milliseconds(4851));
 
-	if (m_menuModel->getMenuState() == HOME)
+	if (m_menu->getMenuState() == HOME)
 	{
 		//=== Elements update
 		m_farBackground->sync();
@@ -163,31 +165,31 @@ void MenuView::synchronize()
 		//=== TextHandler update
 		m_textHandler->syncMenuHomeText();
 	}
-    else if (m_menuModel->getMenuState() == LEADERBOARD)
+    else if (m_menu->getMenuState() == LEADERBOARD)
         m_leaderboardView->synchronize();
 
-	else if (m_menuModel->getMenuState() == SETTINGS)
+	else if (m_menu->getMenuState() == SETTINGS)
         m_settingsView->synchronize();
 
-    else if (m_menuModel->getMenuState() == SHOP)
+    else if (m_menu->getMenuState() == SHOP)
         m_shopView->synchronize();
 
     //=== Delete leaderboardView if not anymore in leaderboardState
-    if ( m_menuModel->getMenuState() != LEADERBOARD && m_leaderboardView != nullptr)
+    if ( m_menu->getMenuState() != LEADERBOARD && m_leaderboardView != nullptr)
     {
         delete m_leaderboardView;
         m_leaderboardView = nullptr;
     }
 
     //=== Delete settingsView if not anymore in shopState
-    if ( m_menuModel->getMenuState() != SETTINGS && m_settingsView != nullptr)
+    if ( m_menu->getMenuState() != SETTINGS && m_settingsView != nullptr)
     {
         delete m_settingsView;
         m_settingsView = nullptr;
     }
 
     //=== Delete shopView if not anymore in shopState
-    if ( m_menuModel->getMenuState() != SHOP && m_shopView != nullptr)
+    if ( m_menu->getMenuState() != SHOP && m_shopView != nullptr)
     {
         delete m_shopView;
         m_shopView = nullptr;
@@ -202,7 +204,7 @@ void MenuView::synchronize()
  */
 void MenuView::draw() const
 {
-	if (m_menuModel->getMenuState() == HOME)
+	if (m_menu->getMenuState() == HOME)
 	{
 		m_window->clear();
 
@@ -221,13 +223,13 @@ void MenuView::draw() const
 
         m_window->display();
 	}
-	else if (m_menuModel->getMenuState() == SETTINGS)
+	else if (m_menu->getMenuState() == SETTINGS)
         m_settingsView->draw();
 
-    else if (m_menuModel->getMenuState() == LEADERBOARD)
+    else if (m_menu->getMenuState() == LEADERBOARD)
         m_leaderboardView->draw();
 
-    else if (m_menuModel->getMenuState() == SHOP)
+    else if (m_menu->getMenuState() == SHOP)
         m_shopView->draw();
 
 }
@@ -251,12 +253,12 @@ bool MenuView::treatEvents()
 		{
 			if  (event.type == sf::Event::Closed)
 			{
-				m_model->setAppState(QUIT);
+				m_menu->getDataBase()->setAppState(QUIT);
 				m_window->close();
 				result = false;
 			}
 
-			if (m_menuModel->getMenuState() == HOME)
+			if (m_menu->getMenuState() == HOME)
 			{
                 if (MOUSE_LEFT_PRESSED_EVENT)
 				{
@@ -288,7 +290,7 @@ bool MenuView::treatEvents()
 					{
                         if(m_menuMusic.getStatus() == sf::Music::Status::Playing )
                             m_menuMusic.stop();
-						m_model->setAppState(GAME);
+						m_menu->getDataBase()->setAppState(GAME);
 						result = false;
 					}
 					else if ( m_quitRectButton->IS_POINTED )
@@ -299,32 +301,31 @@ bool MenuView::treatEvents()
                     else if ( m_leaderboardFormButton->IS_POINTED )
                     {
                         m_leaderboardView = new LeaderboardView(m_width, m_height, m_window, m_textHandler);
-                        m_leaderboardView->setLeaderboardModel( m_menuModel->launchLeaderboard() );
+                        m_leaderboardView->setLeaderboardModel( m_menu->launchLeaderboard() );
                     }
 					else if ( m_settingsFormButton->IS_POINTED )
 					{
                         m_settingsView = new SettingsView(m_width, m_height, m_window, m_textHandler);
-                        m_settingsView->setModel(m_model);
-                        m_settingsView->setSettingsModel( m_menuModel->launchSettings() );
+                        m_settingsView->setSettingsModel( m_menu->launchSettings() );
 					}
                     else if ( m_shopFormButton->IS_POINTED )
                     {
                         m_shopView = new ShopView(m_width, m_height, m_window, m_textHandler);
-                        m_shopView->setShopModel( m_menuModel->launchShop() );
+                        m_shopView->setShopModel( m_menu->launchShop() );
                     }
 				}
 			}
-            else if (m_menuModel->getMenuState() == LEADERBOARD && m_leaderboardView->treatEvents(event))
+            else if (m_menu->getMenuState() == LEADERBOARD && m_leaderboardView->treatEvents(event))
             {
-                m_menuModel->setMenuState(HOME);
+                m_menu->setMenuState(HOME);
             }
-            else if (m_menuModel->getMenuState() == SETTINGS && m_settingsView->treatEvents(event))
+            else if (m_menu->getMenuState() == SETTINGS && m_settingsView->treatEvents(event))
             {
-                m_menuModel->setMenuState(HOME);
+                m_menu->setMenuState(HOME);
             }
-            else if (m_menuModel->getMenuState() == SHOP && m_shopView->treatEvents(event))
+            else if (m_menu->getMenuState() == SHOP && m_shopView->treatEvents(event))
             {
-                m_menuModel->setMenuState(HOME);
+                m_menu->setMenuState(HOME);
             }
 		}
 	}

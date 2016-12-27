@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef LEADERBOARD_VIEW_H
 #define LEADERBOARD_VIEW_H
 
-#include "View.h"
+#include "AbstractView.h"
 #include "../Model/Leaderboard.h"
 
 
@@ -25,7 +25,7 @@ limitations under the License.
  * @author Arthur
  * @date 21/05
  */
-class LeaderboardView : public View
+class LeaderboardView : public AbstractView
 {
     public:
         //=== CTORs / DTORs

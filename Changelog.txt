@@ -1,9 +1,20 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.7.6
+Current version : 2.0-test
 
 ==================================================================================================
+
+2.0-test (27/12)
+
+- Structure refactoring (working draft based on 1.7.7) :
+  - AbstractModel and AbstractView
+  - More classes inherits from AbstractModel
+  - No pointer in main
+- Fixed pixel transition file loading failure
+
+
+---------------------------------------------------------------------------------------------------
 
 v1.7.6 (26/12/16)
 
@@ -257,7 +268,7 @@ Contains v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 - v0.6.0-alpha.1/2 (01/04/16 - 06/04/16):
 	- End Screen added with final score calculated and displayed, and 2 buttons (restart,menu)
 	- TextHandler class created to store all texts from menu, game, pause and end
-	- Abstract classes added (View && MovableElement)
+	- Abstract classes added (AbstractView && MovableElement)
 	- Button class added
 	- Collision method added in MovableElement instead of using GameView
 	- Some "int" moved to "unsigned int" if they shouldn't have negative values

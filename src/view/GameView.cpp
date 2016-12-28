@@ -453,11 +453,12 @@ void GameView::handleZonesTransition()
 /**
  * Update gElements
  * @author Arthur
- * @date 6/03 - 22/05
+ * @date 6/03 - 24/12
  */
 void GameView::updateElements()
 {
-     if (!m_gameModel->getPauseState() && !m_gameModel->getEndState())
+     if (m_gameModel->getGameState() == RUNNING ||
+         m_gameModel->getGameState() == RUNNING_SLOWLY)
      {
          //=== Handle Transitions between zones
 
@@ -492,9 +493,9 @@ void GameView::updateElements()
         m_shieldAnimSprite->resize(40,40);
 
     }
-    else if ( m_gameModel->getPauseState() )
+    else if ( m_gameModel->getGameState() == PAUSED )
     {
-        if (m_gameModel->getCurrentZone() == 1)
+        if (m_gameModel->getCurrentZone() == HILL)
                 m_pauseBackgroundTexture.loadFromFile(PAUSE_HILL_BACKGROUND);
             else
                 m_pauseBackgroundTexture.loadFromFile(PAUSE_PLAIN_BACKGROUND);
@@ -509,7 +510,7 @@ void GameView::updateElements()
         m_stdEnemyAnimSprite->sync();
         m_stdEnemyAnimSprite->resize(20,20);
     }
-    else if ( m_gameModel->getEndState() )
+    else //GAME OVER
     {
         m_goToHomeButton->sync(m_gameModel->getDataBase());
         m_goToHomeButton->resize(30,30);
@@ -564,25 +565,26 @@ void GameView::deleteElements()
 /**
  * Synchronization function
  * @author Arthur
- * @date 26/03 - 03/05
+ * @date 26/03 - 24/12
  */
 void GameView::synchronize()
 {
 
-    if (!m_gameModel->getPauseState()&& !m_gameModel->getEndState()) //GAME
+    if (m_gameModel->getGameState() == RUNNING ||
+        m_gameModel->getGameState() == RUNNING_SLOWLY)
     {
-        linkElements(); //Link new mElements with gElements
-        deleteElements(); //Elements deleting if not used anymore
-        updateElements(); //Elements update
-        m_textHandler->syncGameText(m_gameModel->getBonusTimeout()); //TextHandler update
+        linkElements();
+        deleteElements();
+        updateElements();
+        m_textHandler->syncGameText(m_gameModel->getBonusTimeout());
     }
-    else if (m_gameModel->getPauseState()) //PAUSE
+    else if (m_gameModel->getGameState() == PAUSED)
     {
-        updateElements(); //Elements update
-        m_textHandler->syncPauseText(); //TextHandler update
+        updateElements();
+        m_textHandler->syncPauseText();
         sf::sleep(sf::milliseconds(2*NEXT_STEP_DELAY)); //limit CPU usage
     }
-    else if (m_gameModel->getEndState())//END
+    else //GAME OVER
     {
         //=== audio ending
 
@@ -591,8 +593,8 @@ void GameView::synchronize()
 
         //=== Buttons & text update
 
-        updateElements(); //Buttons update
-        m_textHandler->syncEndText((int)m_gameModel->getGameSpeed()); //TextHandler update
+        updateElements();
+        m_textHandler->syncEndText((int)m_gameModel->getGameSpeed());
 
     }
 }
@@ -601,13 +603,14 @@ void GameView::synchronize()
 /**
  * GameView Drawing
  * @author Arthur
- * @date 26/03 - 22/05
+ * @date 26/03 - 24/12
  */
 void GameView::draw() const
 {
     m_window->clear();
 
-    if (!m_gameModel->getPauseState() && !m_gameModel->getEndState() ) //GAME
+    if (m_gameModel->getGameState() == RUNNING ||
+            m_gameModel->getGameState() == RUNNING_SLOWLY)
     {
         //=== Standalone GraphicElements drawing
 
@@ -639,9 +642,8 @@ void GameView::draw() const
         //=== TextHandler drawing
 
         m_textHandler->drawGameText(m_window);
-
     }
-    else if (m_gameModel->getPauseState()) //PAUSE
+    else if (m_gameModel->getGameState() == PAUSED)
     {
         //=== Background drawing & GraphicElements drawing
 
@@ -657,9 +659,8 @@ void GameView::draw() const
         //=== TextHandler drawing
 
         m_textHandler->drawPauseText(m_window);
-
     }
-    else if (m_gameModel->getEndState()) //END
+    else //GAME OVER
     {
         //=== Background drawing & Buttons drawing
 
@@ -672,7 +673,6 @@ void GameView::draw() const
         //=== TextHandler drawing
 
         m_textHandler->drawEndText(m_window);
-
     }
 
     m_window->display();
@@ -682,7 +682,7 @@ void GameView::draw() const
 /**
  * Events treating
  * @author Arthur, Florian
- * @date 21/02 - 23/12
+ * @date 21/02 - 24/12
  */
 bool GameView::treatEvents()
 {
@@ -692,7 +692,8 @@ bool GameView::treatEvents()
     {
         result = true;
 
-        if (!m_gameModel->getPauseState())
+        if (m_gameModel->getGameState() == RUNNING ||
+            m_gameModel->getGameState() == RUNNING_SLOWLY)
         {
             //=== Player Controls in Game Screen
 
@@ -718,23 +719,28 @@ bool GameView::treatEvents()
 
             //=== Handle open/quit pause
 
-            if (!m_gameModel->getEndState() && event.type == sf::Event::KeyPressed
+            if (m_gameModel->getGameState() != OVER && event.type == sf::Event::KeyPressed
                 && event.key.code == sf::Keyboard::Escape)
             {
-                m_gameModel->setPauseState(!m_gameModel->getPauseState() );
-
-                //Change audio status
-                if(m_gameThemeMusic.getStatus() == sf::Music::Status::Playing )
+                if (m_gameModel->getGameState() == RUNNING ||
+                    m_gameModel->getGameState() == RUNNING_SLOWLY)
+                {
+                    m_gameModel->setGameState(PAUSED);
                     m_gameThemeMusic.pause();
-                else if(m_gameThemeMusic.getStatus() == sf::Music::Status::Paused)
+                }
+                else
+                {
+                    m_gameModel->setGameState(RUNNING_SLOWLY);
                     m_gameThemeMusic.play();
+                }
             }
+
             if (event.type == sf::Event::KeyReleased)
                 m_gameModel->getPlayer()->setDecelerationState(true);
 
             //=== Pause Screen
 
-            if (m_gameModel->getPauseState())
+            if (m_gameModel->getGameState() == PAUSED)
             {
                 if (MOUSE_LEFT_PRESSED_EVENT)
                 {
@@ -761,19 +767,17 @@ bool GameView::treatEvents()
 
                     if (m_resumeGameButton->contains(MOUSE_POSITION) )
                     {
-                        m_gameModel->setPauseState(false);
+                        m_gameModel->setGameState(RUNNING_SLOWLY);
                         if(m_gameThemeMusic.getStatus() == sf::Music::Status::Paused)
                             m_gameThemeMusic.play();
                     }
                     else if (m_restartGameButton->contains(MOUSE_POSITION) )
                     {
-                        m_gameModel->setPauseState(false);
                         m_model->setAppState(RESET_GAME);
                         result = false;
                     }
                     else if (m_goToHomeButton->contains(MOUSE_POSITION) )
                     {
-                        m_gameModel->setPauseState(false);
                         m_model->setAppState(MENU);
                         result = false;
                     }
@@ -808,7 +812,7 @@ bool GameView::treatEvents()
 
             //=== End Screen
 
-            else if (m_gameModel->getEndState())
+            else if (m_gameModel->getGameState() == OVER)
             {
                 if (MOUSE_LEFT_PRESSED_EVENT)
                 {
@@ -830,13 +834,11 @@ bool GameView::treatEvents()
 
                     if (m_restartGameButton->contains(MOUSE_POSITION) )
                     {
-                        m_gameModel->setEndState(false);
                         m_model->setAppState(RESET_GAME);
                         result = false;
                     }
                     else if (m_goToHomeButton->contains(MOUSE_POSITION) )
                     {
-                        m_gameModel->setEndState(false);
                         m_model->setAppState(MENU);
                         result = false;
                     }

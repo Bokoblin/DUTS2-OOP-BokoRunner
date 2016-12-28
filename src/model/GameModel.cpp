@@ -5,24 +5,33 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 26/03 - 30/04
+ * @date 26/03 - 26/12
  */
 GameModel::GameModel(const Model& model) :
-    Model(model), m_pauseState{false}, m_endState{false}, m_inTransition{false},
-    m_isTransitionPossible{false}, m_gameSpeed{DEFAULT_SPEED}, m_currentZone{HILL},
+    Model(model), m_gameState{RUNNING}, m_inTransition{false},
+    m_isTransitionPossible{false}, m_currentZone{HILL},
     m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},
     m_lastTime{chrono::system_clock::now()},  m_bonusTimeout{0}
 {
     srand((unsigned int) time(NULL));
-    //initial time-spacing for elements
+
+    //=== Initialize new game
+
+    m_dataBase->launchNewGame();
+    m_dataBase->updateActivatedItemsArray();
+
+    addANewMovableElement(DEFAULT_PLAYER_X, GAME_FLOOR, PLAYER);
+
+    if ( m_dataBase->getDifficulty() == EASY)
+        m_gameSpeed = DEFAULT_SPEED;
+    else
+        m_gameSpeed = 2*DEFAULT_SPEED;
+
+    //=== Initialize elements apparition time-spacing
+
     m_chosenEnemyTimeSpacing = 10 +rand()%11;  //10 to 20 m
     m_chosenCoinTimeSpacing = rand()%11; //0 to 10m
     m_chosenBonusTimeSpacing = 100 + rand()%51; //100 to 150 m
-    //create player
-    addANewMovableElement(DEFAULT_PLAYER_X, GAME_FLOOR, PLAYER);
-
-    m_dataBase->resetCurrentGame();
-    m_dataBase->updateActivatedItemsArray();
 }
 
 
@@ -42,8 +51,7 @@ GameModel::~GameModel()
 
 //=== Getters
 
-bool GameModel::getPauseState() const { return m_pauseState; }
-bool GameModel::getEndState() const { return m_endState; }
+GameState GameModel::getGameState() const { return m_gameState; }
 bool GameModel::getTransitionStatus() const { return m_inTransition; }
 bool GameModel::getTransitionPossibleStatus() const { return m_isTransitionPossible; }
 float GameModel::getGameSpeed() const { return m_gameSpeed; }
@@ -54,8 +62,7 @@ const set<MovableElement*>& GameModel::getNewMElementsArray() const { return m_n
 
 //=== Setters
 
-void GameModel::setPauseState(bool state) { m_pauseState = state; }
-void GameModel::setEndState(bool state) { m_endState = state;}
+void GameModel::setGameState(GameState state) { m_gameState = state; }
 void GameModel::setTransitionStatus(bool status) { m_inTransition = status; }
 void GameModel::setTransitionPossibleStatus(bool status) { m_isTransitionPossible = status; }
 void GameModel::setCurrentZone(Zone z) { m_currentZone = z; }
@@ -64,13 +71,13 @@ void GameModel::setCurrentZone(Zone z) { m_currentZone = z; }
 /**
  * Next Step
  * @author Arthur
- * @date 21/02 - 24/05
+ * @date 21/02 - 26/12
  */
 void GameModel::nextStep()
 {
     chrono::system_clock::duration currentNextStepDelay = chrono::system_clock::now() - m_lastTime;
 
-	if (!m_pauseState && !m_endState)
+	if (m_gameState == RUNNING || m_gameState == RUNNING_SLOWLY)
 	{
 	    //=== Handle Movable Elements Collisions
 
@@ -81,20 +88,13 @@ void GameModel::nextStep()
 		{
             //=== Update distance and gameSpeed
 
-		    if ( m_dataBase->getDifficulty() == EASY && m_gameSpeed < SPEED_LIMIT
-                     && ( m_player->getState() == OTHER || m_bonusTimeout <= chrono::milliseconds(0)) )
+            if (m_gameSpeed < SPEED_LIMIT && m_gameState != RUNNING_SLOWLY)
             {
                 m_gameSpeed += SPEED_STEP;
-                m_dataBase->increaseCurrentDistance(1);
             }
-            else if ( m_dataBase->getDifficulty() == HARD && m_gameSpeed < SPEED_LIMIT
-                     && ( m_player->getState() == OTHER || m_bonusTimeout <= chrono::milliseconds(0)) )
-            {
-                if (m_gameSpeed == DEFAULT_SPEED)
-                    m_gameSpeed = 2*DEFAULT_SPEED;
-                m_gameSpeed += 2*SPEED_STEP;
-                m_dataBase->increaseCurrentDistance(3);
-            }
+
+            m_dataBase->increaseCurrentDistance(m_gameSpeed/5);
+
 
 			//=== Handle Movable Elements Creation & Deletion
 
@@ -110,33 +110,36 @@ void GameModel::nextStep()
                 m_bonusTimeout -= chrono::milliseconds( NEXT_STEP_DELAY );
 
             if ( m_bonusTimeout <= chrono::milliseconds(0)
-                && m_player->getState() != SHIELD)
+                 && m_player->getState() != SHIELD)
             {
-                if ( m_player->getState() == OTHER)
-                    m_gameSpeed *=2;
                 m_player->changeState(NORMAL);
+            }
+
+            if ( m_bonusTimeout <= chrono::milliseconds(0)
+                 && m_gameState == RUNNING_SLOWLY)
+            {
+                m_gameState = RUNNING;
+                if ( m_gameSpeed == m_gameSlowSpeed)
+                    m_gameSpeed *= 1.5;
             }
 
 
             //=== Handle transition status
 
-            if ( m_dataBase->getCurrentDistance() !=0 && m_dataBase->getDifficulty() == EASY
+            if ( m_dataBase->getCurrentDistance() != 0
                 && m_dataBase->getCurrentDistance()%ZONE_CHANGING_DISTANCE == 0)
                 m_isTransitionPossible = true;
-            if ( m_dataBase->getCurrentDistance() !=0 && m_dataBase->getDifficulty() == HARD
-                && m_dataBase->getCurrentDistance()%(4*ZONE_CHANGING_DISTANCE) == 0)
-                m_isTransitionPossible = true;
 
 
-            //=== Handle Game's end
+            //=== Go to Game Over
 
             if (m_player->getLife() == 0)
-                m_endState = true;
+                m_gameState = OVER;
 
             m_lastTime = chrono::system_clock::now();
         }
     }
-    else if (m_endState)
+    else if (m_gameState == OVER)
     {
         m_dataBase->setCurrentScore(m_gameSpeed);
     }
@@ -443,10 +446,10 @@ void GameModel::handleMovableElementsCollisions()
 
             case SLOW_SPEED_BONUS:
             {
+                m_gameState = RUNNING_SLOWLY;
                 int slowSpeed_bonus_timeout = 20000;
-                //stop SlowDown bonus effect in 20s
                 m_gameSpeed = m_gameSpeed/2;
-                m_player->changeState(OTHER);
+                m_gameSlowSpeed = m_gameSpeed;
                 m_bonusTimeout = chrono::milliseconds(slowSpeed_bonus_timeout);
             }
                 break;

@@ -25,7 +25,7 @@ int DataBase::getTotalDistance() const { return m_totalDistance; }
 int DataBase::getTotalFlattenedEnemies() const { return m_totalFlattenedEnemies; }
 int DataBase::getTotalGamesPlayed() const { return m_totalGamesPlayed; }
 int DataBase::getCurrentCoinsNumber() const { return m_currentCoinsNumber; }
-int DataBase::getCurrentDistance() const { return m_currentDistance; }
+int DataBase::getCurrentDistance() const { return (int)m_currentDistance; }
 int DataBase::getCurrentFlattenedEnemies() const { return m_currentFlattenedEnemies; }
 int DataBase::getCurrentScore() const { return m_currentScore; }
 string DataBase::getLanguage() const { return m_currentLanguage;}
@@ -38,7 +38,7 @@ const set<string>& DataBase::getActivatedItemsArray() const { return m_activated
 
 void DataBase::setTotalCoinsCollected(int n) { m_totalCoinsCollected += n; }
 void DataBase::setCurrentCoinsCollected(int n) { m_currentCoinsNumber += n; }
-void DataBase::increaseCurrentDistance(int n) { m_currentDistance += n; }
+void DataBase::increaseCurrentDistance(float n) { m_currentDistance += n; }
 void DataBase::setCurrentFlattenedEnemies(int n) { m_currentFlattenedEnemies += n; }
 void DataBase::setLanguage(string lang) { m_currentLanguage = lang;}
 void DataBase::setBallSkin(string skin) { m_currentBallSkin = skin; }
@@ -290,13 +290,13 @@ void DataBase::pushConfigurationToFile()
 /**
  * Save Current Game
  * @author Arthur
- * @date 2/05 - 23/10
+ * @date 2/05 - 26/12
  */
 void DataBase::saveCurrentGame()
 {
     //add current game values to total values
     m_totalCoinsCollected += m_currentCoinsNumber;
-    m_totalDistance += m_currentDistance;
+    m_totalDistance += (int)m_currentDistance;
     m_totalFlattenedEnemies += m_currentFlattenedEnemies;
     addEntryToScoreArray(m_currentScore);
 }
@@ -340,7 +340,7 @@ void DataBase::loadStringFromArray(std::string &scores_text)
  * @author Arthur
  * @date 2/05
  */
-void DataBase::resetCurrentGame()
+void DataBase::launchNewGame()
 {
     //for launching a new game
     m_totalGamesPlayed += 1;

@@ -108,7 +108,7 @@ public:
     //=== SETTERS
     void setTotalCoinsCollected(int number);
     void setCurrentCoinsCollected(int number);
-    void increaseCurrentDistance(int number);
+    void increaseCurrentDistance(float number);
     void setCurrentFlattenedEnemies(int number);
     void setCurrentScore(float speed);
     void setDifficulty(int difficulty);
@@ -126,7 +126,7 @@ public:
     void addEntryToScoreArray(int new_score);
     void loadStringFromArray(std::string &scores_text);
     void saveCurrentGame();
-    void resetCurrentGame();
+    void launchNewGame();
     void resetScore();
     void resetWholeApp();
 
@@ -143,7 +143,7 @@ private:
 
     //Current Game
     int m_currentCoinsNumber;
-    int m_currentDistance;
+    float m_currentDistance;
     int m_currentFlattenedEnemies;
 
     int m_currentScore;

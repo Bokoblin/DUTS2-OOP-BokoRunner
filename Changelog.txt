@@ -3,7 +3,7 @@ Developers   : Arthur JOLIVET et Florian LARONZE
 
 Current version : v1.8-dev
 
-======================================================================================
+==================================================================================================
 
 v1.8-dev
 
@@ -23,9 +23,22 @@ Fixes and misc:
 - Updated PugiXML ( 1.7 -> 1.8)
 - Updated IUT logo
 - Moved settings page handling from SettingsView to Settings model class
+- Fixed pixel transition file loading failure
 
 Issues :
 - weak memory leak caused by non-deletable button's label pointer (SEG_FAULT)
+
+
+---------------------------------------------------------------------------------------------------
+
+v1.7.6 (26/12/16)
+
+- Improvements and fixes to game execution
+    - Replaced game states booleans by an enum
+    - Fixed distance increasing stopped at speed limit and with certain bonuses
+    - Fixed incorrect pause background
+    - Current distance now depends only of game speed
+- Updated online documentation to current version
 
 
 ---------------------------------------------------------------------------------------------------

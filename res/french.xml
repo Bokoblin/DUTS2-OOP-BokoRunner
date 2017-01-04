@@ -54,11 +54,25 @@ POO que nous avons apprises au cours&#xA; du S2 et de developper avec celles-ci 
    <string name="shop_bought" value="Obtenu" />
    <string name="shop_purchasable" value="Acheter" />
    <string name="shop_dialog_title" value="Acheter cet objet ?" />
-   <string name="shop_dialog_content" value="Nom : Prix   :  pieces" />
+   <string name="shop_dialog_content" value="Nom : $NAME &#xA;&#xA;Prix : $PRICE pieces" />
    <string name="shop_dialog_cancel" value="ANNULER" />
    <string name="shop_dialog_ok" value="OK" />
    <string name="shop_dialog_success" value="Merci pour votre achat." />
    <string name="shop_dialog_failure" value="L'achat a echoue." />
+
+   <!--  ShopItems strings -->
+   <string name="shop_doubler_name" value="Doubleur de piece" />
+   <string name="shop_doubler_desc" value="Double le nombre &#xA;de pieces collectees" />
+   <string name="shop_shieldPlus_name" value="Bouclier+" />
+   <string name="shop_shieldPlus_desc" value="Protege le joueur d'une &#xA;collision supplementaire" />
+   <string name="shop_megaPlus_name" value="Mega+" />
+   <string name="shop_megaPlus_desc" value="Augmente la duree du &#xA;bonus de 5 secondes" />
+   <string name="shop_flyPlus_name" value="Vol+" />
+   <string name="shop_flyPlus_desc" value="Augmente la duree du &#xA;bonus de 5 secondes" />
+   <string name="shop_morphing_name" value="Balle morphing" />
+   <string name="shop_morphing_desc" value="Debloque l'apparence &#xA;morphing de la balle" />
+   <string name="shop_capsule_name" value="Balle capsule" />
+   <string name="shop_capsule_desc" value="Debloque l'apparence &#xA;capsule de la balle" />
 
    <!--  Game strings -->
    <string name="game_player_life" value="Vie" />

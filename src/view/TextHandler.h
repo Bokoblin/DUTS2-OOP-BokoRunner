@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -42,13 +42,14 @@ const int DEFAULT_CHAR_SIZE = 24;
 const int CONTENT_CHAR_SIZE = 20;
 
 /**
- * TextHandler Class
+ * The TextHandler Class groups app's standalone texts
+ * and handles them
  *
  * Text objects branded as "label" are loaded from string files
  * Text objects branded as "Text" are loaded from parsed data
  *
  * @author Arthur
- * @date 02/04 - 23/12
+ * @date 02/04/16 - 04/01/17
  */
 class TextHandler
 {
@@ -66,19 +67,15 @@ class TextHandler
     //=== METHODS
     void loadText();
     void updateWholeText();
-    void updateString(std::string file, Text *currentText);
+    void updateString(Text *currentText);
 
     void syncMenuHomeText();
     void syncSettingsText(int currentPage);
     void syncMenuLeaderboardText();
     void syncShopText();
-    void syncDialogText(std::string context, std::string &title, std::string &content,
-                                     std::string &neg_choice, std::string &pos_choices);
     void syncGameText(int bonusTimeout);
     void syncPauseText();
     void syncEndText(int gameSpeed);
-
-    void drawMenuHomeText(sf::RenderWindow *window) const;
     void drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const;
     void drawLeaderboardText(sf::RenderWindow *window) const;
     void drawMenuShopText(sf::RenderWindow *window) const;
@@ -98,6 +95,9 @@ private:
     //Leaderboard Labels
     Text *m_leaderboardTitleLabel;
 
+    //Shop Labels
+    Text *m_walletText;
+
     //Settings Labels
     Text *m_configTitleLabel;
     Text *m_configLangTitleLabel;
@@ -108,19 +108,12 @@ private:
     Text *m_statsTotalEnemiesLabel;
     Text *m_statsTotalGamesLabel;
     Text *m_statsTotalCoinsLabel;
+    Text *m_statsTotalCoinsNbText;
     Text *m_aboutTitleLabel;
     Text *m_aboutDescriptionLabel;
     Text *m_aboutRepositoryLabel;
     Text *m_aboutEmailLabel;
     Text *m_aboutCopyrightLabel;
-
-    //Shop Labels
-    Text *m_shopDialogTitleLabel;
-    Text *m_shopDialogContentLabel;
-    Text *m_shopDialogNegativeLabel;
-    Text *m_shopDialogPositiveLabel;
-    Text *m_shopBuySuccessfulLabel;
-    Text *m_shopBuyUnsuccessfulLabel;
 
     //Game (Main, Pause & End) Labels
     Text *m_playerLifeLabel;
@@ -140,7 +133,6 @@ private:
     //Game (Main, Pause & End) DataText
     Text *m_currentDistanceText;
     Text *m_bonusTimeoutText;
-    Text *m_statsTotalCoinsNbText;
     Text *m_currentCoinsNbText;
     Text *m_speedMultiplierText;
     Text *m_flattenedEnemiesText;

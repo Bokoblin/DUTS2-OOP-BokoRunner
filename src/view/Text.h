@@ -17,6 +17,9 @@ limitations under the License.
 #define TEXT_H
 
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+
 
 /**
  * Text Class inherited from sf::Text
@@ -41,10 +44,12 @@ public:
     void setVisible(bool on);
 
     //=== METHODS
+    void draw(sf::RenderWindow *window) const;
     bool contains(float posX, float posY) const;
 
 private:
     //=== ATTRIBUTES
+    sf::Font m_font;
     std::string m_description;
     bool m_isVisible;
 };

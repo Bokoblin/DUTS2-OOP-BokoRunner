@@ -6,7 +6,7 @@ using namespace std;
 /**
  * Default Constructor
  * @author Arthur
- * @date 2/05
+ * @date 2/05/16
  */
 DataBase::DataBase() :
     m_currentCoinsNumber{0}, m_currentDistance{0},
@@ -28,18 +28,30 @@ int DataBase::getCurrentCoinsNumber() const { return m_currentCoinsNumber; }
 int DataBase::getCurrentDistance() const { return (int)m_currentDistance; }
 int DataBase::getCurrentFlattenedEnemies() const { return m_currentFlattenedEnemies; }
 int DataBase::getCurrentScore() const { return m_currentScore; }
-string DataBase::getLanguage() const { return m_currentLanguage;}
 int DataBase::getDifficulty() const {return m_currentDifficulty;}
+int DataBase::getWallet() const {return m_wallet;}
+string DataBase::getLanguage() const { return m_currentLanguage;}
 string DataBase::getBallSkin() const { return m_currentBallSkin; }
 const set<string>& DataBase::getActivatedItemsArray() const { return m_activatedItemsArray; }
+string DataBase::getLanguageFile() const
+{
+    if (m_currentLanguage == "en")
+        return ENGLISH_STRINGS;
+    else if (m_currentLanguage == "fr")
+        return FRENCH_STRINGS;
+    else if (m_currentLanguage == "es")
+        return SPANISH_STRINGS;
+    else
+        return "null";
+}
 
 
 //=== Setters
 
-void DataBase::setTotalCoinsCollected(int n) { m_totalCoinsCollected += n; }
-void DataBase::setCurrentCoinsCollected(int n) { m_currentCoinsNumber += n; }
-void DataBase::increaseCurrentDistance(float n) { m_currentDistance += n; }
-void DataBase::setCurrentFlattenedEnemies(int n) { m_currentFlattenedEnemies += n; }
+void DataBase::decreaseWallet(int amount) { m_wallet -= amount; }
+void DataBase::increaseCurrentCoinsCollected(int amount) { m_currentCoinsNumber += amount; }
+void DataBase::increaseCurrentDistance(float amount) { m_currentDistance += amount; }
+void DataBase::increaseCurrentFlattenedEnemies(int amount) { m_currentFlattenedEnemies += amount; }
 void DataBase::setLanguage(string lang) { m_currentLanguage = lang;}
 void DataBase::setBallSkin(string skin) { m_currentBallSkin = skin; }
 void DataBase::setDifficulty(int d) { m_currentDifficulty = d;}
@@ -53,7 +65,7 @@ void DataBase::setCurrentScore(float speed)
 /**
  * (Re)create files
  * @author Arthur
- * @date 2/05 - 24/10
+ * @date 2/05/16 - 24/10/16
  */
 void DataBase::createFile()
 {
@@ -67,7 +79,7 @@ void DataBase::createFile()
 /**
  * Check if file data is OK
  * @author Arthur
- * @date 2/05 - 20/12
+ * @date 2/05/16 - 04/01/17
  */
 bool DataBase::checkFileIntegrity()
 {
@@ -84,8 +96,8 @@ bool DataBase::checkFileIntegrity()
     bool isPresentConfig = false; //should be true
     bool isPresentShop = false; //should be true
     bool isPresentScore = false; //should be true
-    int nbLines = 0; //should be 32 or 33
-    int nbConfigChildren = 0; //should be 7
+    int nbLines = 0; //should be 33 or 34
+    int nbConfigChildren = 0; //should be 8
     int nbShopChildren = 0; //should be 6
     int nbScoreChildren = 0; //should be 10
     do {
@@ -118,15 +130,15 @@ bool DataBase::checkFileIntegrity()
     }
     while ( !f.eof() );
 
-    return !(!isPresentConfig || !isPresentShop || !isPresentScore || (nbLines != 32 && nbLines != 33)
-             || nbConfigChildren!=7 || nbShopChildren!=6 || nbScoreChildren!=10);
+    return !(!isPresentConfig || !isPresentShop || !isPresentScore || (nbLines != 33 && nbLines != 34)
+             || nbConfigChildren!=8 || nbShopChildren!=6 || nbScoreChildren!=10);
 }
 
 
 /**
  * Fetch Configuration data from file
  * @author Arthur
- * @date 2/05 - 24/10
+ * @date 2/05/16 - 24/10/16
  */
 void DataBase::fetchConfigurationFromFile()
 {
@@ -139,7 +151,7 @@ void DataBase::fetchConfigurationFromFile()
 /**
  * Update variable value from file
  * @author Arthur
- * @date 24/10
+ * @date 24/10/16 - 04/01/17
  */
 void DataBase::updateConfigValues()
 {
@@ -165,6 +177,8 @@ void DataBase::updateConfigValues()
             m_totalFlattenedEnemies = atoi(configItem.attribute("value").value());
         else if (string(configItem.attribute("name").value()) == "total_games_played")
             m_totalGamesPlayed = atoi(configItem.attribute("value").value());
+        else if (string(configItem.attribute("name").value()) == "wallet")
+            m_wallet = atoi(configItem.attribute("value").value());
     }
 }
 
@@ -172,7 +186,7 @@ void DataBase::updateConfigValues()
 /**
  * Update score array
  * @author Arthur
- * @date 23/10 - 24/10
+ * @date 23/10/16 - 24/10/16
  */
 void DataBase::updateScoreArray()
 {
@@ -194,7 +208,7 @@ void DataBase::updateScoreArray()
 /**
  * Update array of activated items
  * @author Arthur
- * @date 14/05 - 24/10
+ * @date 14/05/16 - 24/10/16
  */
 void DataBase::updateActivatedItemsArray()
 {
@@ -206,7 +220,7 @@ void DataBase::updateActivatedItemsArray()
 
     for (pugi::xml_node shopItem: shop.children("shopItem"))
     {
-        if ( string(shopItem.attribute("boughtState").value()) == "true")
+        if ( string(shopItem.attribute("bought").value()) == "true")
             m_activatedItemsArray.insert( shopItem.attribute("id").value() );
     }
 }
@@ -215,7 +229,7 @@ void DataBase::updateActivatedItemsArray()
 /**
  * Push Configuration data to file
  * @author Arthur
- * @date 2/05 - 24/10
+ * @date 2/05/16 - 04/01/17
  */
 void DataBase::pushConfigurationToFile()
 {
@@ -264,6 +278,11 @@ void DataBase::pushConfigurationToFile()
             pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value((to_string(m_totalGamesPlayed)).c_str());
         }
+        else if ( string(configItem.attribute("name").value()) == "wallet" )
+        {
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            nodeValue.set_value((to_string(m_wallet)).c_str());
+        }
     }
 
     //Save score
@@ -290,12 +309,13 @@ void DataBase::pushConfigurationToFile()
 /**
  * Save Current Game
  * @author Arthur
- * @date 2/05 - 26/12
+ * @date 2/05/16 - 04/01/17
  */
 void DataBase::saveCurrentGame()
 {
     //add current game values to total values
     m_totalCoinsCollected += m_currentCoinsNumber;
+    m_wallet += m_currentCoinsNumber;
     m_totalDistance += (int)m_currentDistance;
     m_totalFlattenedEnemies += m_currentFlattenedEnemies;
     addEntryToScoreArray(m_currentScore);
@@ -304,7 +324,7 @@ void DataBase::saveCurrentGame()
 /**
  * Add a new score to the score array
  * @author Arthur
- * @date 23/10
+ * @date 23/10/16
  */
 void DataBase::addEntryToScoreArray(int new_score)
 {
@@ -316,7 +336,7 @@ void DataBase::addEntryToScoreArray(int new_score)
 /**
  * Update string content from array
  * @author Arthur
- * @date 23/10
+ * @date 23/10/16
  */
 void DataBase::loadStringFromArray(std::string &scores_text)
 {
@@ -338,7 +358,7 @@ void DataBase::loadStringFromArray(std::string &scores_text)
 /**
  * Reset Current Game
  * @author Arthur
- * @date 2/05
+ * @date 2/05/16
  */
 void DataBase::launchNewGame()
 {
@@ -353,7 +373,7 @@ void DataBase::launchNewGame()
 /**
  * Reset Score
  * @author Arthur
- * @date 24/10
+ * @date 24/10/16
  */
 void DataBase::resetScore()
 {
@@ -361,13 +381,14 @@ void DataBase::resetScore()
 }
 
 /**
- * Reset Whole app
+ * Clears app's all data
  * @author Arthur
- * @date 22/12
+ * @date 22/12/16
  */
-void DataBase::resetWholeApp()
+void DataBase::clearAppData()
 {
     createFile();
     fetchConfigurationFromFile();
     m_activatedItemsArray.clear();
 }
+

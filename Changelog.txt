@@ -17,6 +17,10 @@ Important changes:
 - Added RadioButton class inherited from Button
 - Added Button's label that can be positioned at TOP, RIGHT, BOTTOM, LEFT, CENTER
 - Removed standalone texts that are now a button's label
+- Rewritten GraphicElement texture handling (allows class-specific rectangle clips)
+- Rewritten Dialog and ShopItemCard that are now inherited from GraphicElement
+- Shop screen is now fully multilingual
+- Centralized all global constants in one file
 
 Fixes and misc:
 - Modified xml strings files and its handling
@@ -24,6 +28,9 @@ Fixes and misc:
 - Updated IUT logo
 - Moved settings page handling from SettingsView to Settings model class
 - Fixed pixel transition file loading failure
+- updated edited classes copyright to include 2017
+- Added showing capability to GraphicElement class
+- Other minor fixes and improvements
 
 Issues :
 - weak memory leak caused by non-deletable button's label pointer (SEG_FAULT)

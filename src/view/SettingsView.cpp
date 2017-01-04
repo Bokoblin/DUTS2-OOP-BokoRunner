@@ -17,7 +17,7 @@ SettingsView::SettingsView(float w, float h, sf::RenderWindow *window, TextHandl
 
     for (int i=0; i < PAGE_NUMBER; i++)
     {
-        m_pageIndicators[i] = new RadioButton(*m_pageIndicatorButton);
+        m_pageIndicators[i] = new RadioButton(0, 580, 15, 15, "indicator");
         m_pageIndicators[i]->setPosition( m_width/2 - 12*PAGE_NUMBER + 24*i, 550 );
         m_pageIndicators[i]->resize(INDICATOR_BUTTONS_SIZE);
     }
@@ -40,7 +40,7 @@ SettingsView::SettingsView(float w, float h, sf::RenderWindow *window, TextHandl
 /**
  * Destructor
  * @author Arthur
- * @date 20/05 - 23/12
+ * @date 20/05/16 - 02/01/17
  */
 SettingsView::~SettingsView()
 {
@@ -49,8 +49,6 @@ SettingsView::~SettingsView()
 
     for ( auto it : m_pageIndicators)
         delete it.second;
-
-    delete m_pageIndicatorButton;
 }
 
 
@@ -69,100 +67,42 @@ void SettingsView::setSettingsModel(Settings *model)
  */
 void SettingsView::loadImages()
 {
-    //=== Initialize settings radio buttons
+    //=== Initialize RADIOS and PAGE INDICATORS buttons
 
-    if (!m_radioButtonsTexture.loadFromFile(RADIO_BUTTONS_IMAGE) )
-        cerr << "ERROR when loading image file: " << RADIO_BUTTONS_IMAGE << endl;
-    else
-    {
-        m_radioButtonsTexture.setSmooth(true);
-
-        vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect( 0, 0, 50, 50) );
-        clipRect.push_back(sf::IntRect( 50, 0, 50, 50) );
-        clipRect.push_back(sf::IntRect( 0, 50, 50, 50) );
-        clipRect.push_back(sf::IntRect( 50, 50, 50, 50) );
-        clipRect.push_back(sf::IntRect( 0, 100, 50, 50) );
-        clipRect.push_back(sf::IntRect( 0, 150, 50, 50) );
-
-        m_englishLangRadio = new RadioButton(clipRect, m_radioButtonsTexture, 50, 205, 50, 50, "config_lang_english");
-        m_frenchLangRadio = new RadioButton(clipRect, m_radioButtonsTexture,  50, 245, 50, 50, "config_lang_french");
-        m_spanishLangRadio = new RadioButton(clipRect, m_radioButtonsTexture,50, 285, 50, 50, "config_lang_spanish");
-        m_easyModeRadio = new RadioButton(clipRect, m_radioButtonsTexture,50, 420, 50, 50, "config_easy_mode");
-        m_hardModeRadio = new RadioButton(clipRect, m_radioButtonsTexture,50, 460, 50, 50, "config_hard_mode");
-        m_defaultBallSkinRadio = new RadioButton(clipRect, m_radioButtonsTexture,m_width/2+50, 205, 50, 50, "config_ball_default_skin");
-        m_morphBallSkinRadio = new RadioButton(clipRect, m_radioButtonsTexture,m_width/2+50, 245, 50, 50, "config_ball_morph_skin");
-        m_capsuleBallSkinRadio = new RadioButton(clipRect, m_radioButtonsTexture,m_width/2+50, 285, 50, 50, "config_ball_capsule_skin");
-    }
+    m_englishLangRadio = new RadioButton(RADIO_BUTTONS_MARGIN, 205, 50, 50, "config_lang_english");
+    m_frenchLangRadio = new RadioButton(RADIO_BUTTONS_MARGIN, 245, 50, 50, "config_lang_french");
+    m_spanishLangRadio = new RadioButton(RADIO_BUTTONS_MARGIN, 285, 50, 50, "config_lang_spanish");
+    m_easyModeRadio = new RadioButton(RADIO_BUTTONS_MARGIN, 420, 50, 50, "config_easy_mode");
+    m_hardModeRadio = new RadioButton(RADIO_BUTTONS_MARGIN, 460, 50, 50, "config_hard_mode");
+    m_defaultBallSkinRadio = new RadioButton(m_width/2+RADIO_BUTTONS_MARGIN, 205, 50, 50, "config_ball_default_skin");
+    m_morphBallSkinRadio = new RadioButton(m_width/2+RADIO_BUTTONS_MARGIN, 245, 50, 50, "config_ball_morph_skin");
+    m_capsuleBallSkinRadio = new RadioButton(m_width/2+RADIO_BUTTONS_MARGIN, 285, 50, 50, "config_ball_capsule_skin");
 
     //=== Initialize HOME form button
 
-    if (!m_menuButtonTexture.loadFromFile(FORM_BUTTONS_IMAGE) )
-        cerr << "ERROR when loading image file: " << FORM_BUTTONS_IMAGE << endl;
-    else
-    {
-        m_menuButtonTexture.setSmooth(true);
-
-        std::vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect( 0, 50, 50, 50));
-        clipRect.push_back(sf::IntRect( 51, 50, 50, 50));
-        m_homeFormButton = new Button(clipRect, m_menuButtonTexture, 10, 10, 50, 50);
-    }
-
-    //=== Initialize INDICATORS buttons
-
-    if (!m_pageIndicatorTexture.loadFromFile(INDICATOR_IMAGE) )
-        cerr << "ERROR when loading image file: " << INDICATOR_IMAGE << endl;
-    else
-    {
-        m_pageIndicatorTexture.setSmooth(true);
-
-        vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect( 0, 0, 50, 50) );
-        clipRect.push_back(sf::IntRect( 50, 0, 50, 50) );
-        clipRect.push_back(sf::IntRect( 0, 50, 50, 50) );
-        clipRect.push_back(sf::IntRect( 50, 50, 50, 50) );
-        clipRect.push_back(sf::IntRect( 0, 0, 50, 50) );
-        clipRect.push_back(sf::IntRect( 0, 50, 50, 50) );
-
-        m_pageIndicatorButton = new RadioButton(clipRect, m_pageIndicatorTexture,0, 580, 15, 15);
-    }
+    std::vector<sf::IntRect> clipRectHome;
+    clipRectHome.push_back(sf::IntRect( 0, 50, 50, 50));
+    clipRectHome.push_back(sf::IntRect( 51, 50, 50, 50));
+    m_homeFormButton = new Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
 
 
     //=== Initialize RESET button
 
-    if (!m_rectButtonsTexture.loadFromFile(MENU_RECT_BUTTONS_IMAGE) )
-        cerr << "ERROR when loading image file: " << MENU_RECT_BUTTONS_IMAGE << endl;
-    else
-    {
-        m_rectButtonsTexture.setSmooth(true);
-
-        vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect( 0, 100, 150, 40));
-        clipRect.push_back(sf::IntRect(151, 100, 150, 40));
-        m_resetRectButton = new Button(clipRect, m_rectButtonsTexture, m_width/2-75, 450, 150, 40, "stats_app_reset");
-    }
+    vector<sf::IntRect> clipRectReset;
+    clipRectReset.push_back(sf::IntRect( 0, 100, 150, 40));
+    clipRectReset.push_back(sf::IntRect(151, 100, 150, 40));
+    m_resetRectButton = new Button(m_width/2-75, 450, 150, 40, "stats_app_reset", RECT_BUTTONS_IMAGE, clipRectReset);
 
 
     //=== Initialize Logo sprites
 
-    if (!m_logoIUTTexture.loadFromFile(IUT_LOGO_IMAGE) )
-        cerr << "ERROR when loading image file: " << IUT_LOGO_IMAGE << endl;
-    else
-    {
-        m_logoIUTTexture.setSmooth(true);
-        m_logoIUTSprite = new GraphicElement( m_logoIUTTexture, 700, 160, 245, 210);
-        m_logoIUTSprite->resize(150, 130);
-    }
+    m_logoIUTSprite = new GraphicElement(700, 160, 245, 210);
+    m_logoIUTSprite->setTextureFromImage(IUT_LOGO_IMAGE);
+    m_logoIUTSprite->resize(150, 130);
 
-    if (!m_logoSFMLTexture.loadFromFile(SFML_LOGO_IMAGE) )
-        cerr << "ERROR when loading image file: " << IUT_LOGO_IMAGE << endl;
-    else
-    {
-        m_logoSFMLTexture.setSmooth(true);
-        m_logoSFMLSprite = new GraphicElement( m_logoSFMLTexture, 700, 350, 373, 113);
-        m_logoSFMLSprite->resize(150, 45);
-    }
+    m_logoSFMLSprite = new GraphicElement(700, 350, 373, 113);
+    m_logoSFMLSprite->setTextureFromImage(SFML_LOGO_IMAGE);
+    m_logoSFMLSprite->resize(150, 45);
 }
 
 
@@ -198,7 +138,6 @@ void SettingsView::synchronize()
 
     //=== Update and sync indicators
 
-    //TODO : ISSUE
     for( auto it : m_pageIndicators)
     {
         (it.second)->sync();
@@ -345,7 +284,7 @@ bool SettingsView::treatEvents(sf::Event event)
         }
         else if (m_resetRectButton->contains(MOUSE_POSITION) )
         {
-            m_settings->getDataBase()->resetWholeApp();
+            m_settings->getDataBase()->clearAppData();
             m_textHandler->syncSettingsText(m_settings->getCurrentPage());
             m_settings->checkItemsAvailability();
         }

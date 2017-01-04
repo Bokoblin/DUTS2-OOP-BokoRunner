@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,20 +17,12 @@ limitations under the License.
 #include "View/MenuView.h"
 #include "View/GameView.h"
 
-
-/********************************************
-    Constant Variables
-********************************************/
-const int INTRO_WIDTH = 400;
-const int INTRO_HEIGHT = 200;
-
 using namespace std;
-
 
 /**
  * Main function
  * @author Arthur, Florian
- * @date 21/02 - 24/12
+ * @date 21/02/16 - 24/12/16
  */
 int main()
 {

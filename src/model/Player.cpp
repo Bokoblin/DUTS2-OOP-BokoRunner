@@ -5,7 +5,7 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur, Florian
- * @date 22/02 - 15/04
+ * @date 22/02/16 - 15/04/16
  */
 Player::Player(float x, float y, float w, float h, float mvX, float mvY):
     MovableElement(x, y, w, h, mvX, mvY), m_state{0}, m_gravitation{20.0},
@@ -20,7 +20,7 @@ Player::Player(float x, float y, float w, float h, float mvX, float mvY):
 /**
  * Destructor
  * @author Arthur, Florian
- * @date 22/02
+ * @date 22/02/16
  */
 Player::~Player()
 {}
@@ -52,7 +52,7 @@ void Player::setLife(int new_life)
 /**
  * Player Move Function
  * @author Florian
- * @date  12/03 - 15/04
+ * @date  12/03/16 - 15/04/16
  */
 void Player::move()
 {
@@ -120,7 +120,7 @@ void Player::move()
 /**
  * Change player's state
  * @author Arthur
- * @date  11/04 - 21/05
+ * @date  11/04/16 - 21/05/16
  */
 void Player::changeState(int state)
 {
@@ -163,15 +163,15 @@ void Player::changeState(int state)
 /**
  * Player Control Function
  * Arthur, Florian
- * @date  22/03 - 10/04
+ * @date  22/03/16 - 04/01/17
  */
-void Player::controlPlayerMovements(bool left)
+void Player::controlPlayerMovements(MoveDirections direction)
 {
     m_inDeceleration = false;
 
-    if (left && m_vectorBall.first > -10)
+    if (direction && m_vectorBall.first > -10)
         m_vectorBall.first -= m_moveX*m_acceleration/FRAMERATE;
-    else if (!left && m_vectorBall.first < 10)
+    else if (!direction && m_vectorBall.first < 10)
         m_vectorBall.first += m_moveX*m_acceleration/FRAMERATE;
 }
 

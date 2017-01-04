@@ -18,7 +18,7 @@
     <!-- Menu & Leaderboard strings -->
     <string name="menu_play_button" value="JUGAR" />
     <string name="menu_quit_button" value="DEJAR" />
-    <string name="leaderboard_title" value="Tabla de posiciones" />
+    <string name="leaderboard_title" value="Clasificacion" />
     <string name="leaderboard_content" value="No hay ninguna puntuacion" />
     <string name="leaderboard_clear_button" value="BORRAR" />
 
@@ -54,11 +54,25 @@ https://github.com/Bokoblin/DUTS2-POO-ProjetRunner.&#xA;Para rellenar reportes d
     <string name="shop_bought" value="Comprado" />
     <string name="shop_purchasable" value="Comprar" />
     <string name="shop_dialog_title" value="Comprar este item ?" />
-    <string name="shop_dialog_content" value="Nombre : Precio :  monedas" />
+    <string name="shop_dialog_content" value="Nombre : $NAME &#xA;&#xA;Precio : $PRICE  monedas" />
     <string name="shop_dialog_cancel" value="CANCELAR" />
     <string name="shop_dialog_ok" value="OK" />
     <string name="shop_dialog_success" value="Gracias por su compra." />
     <string name="shop_dialog_failure" value="Algo salio mal." />
+
+    <!--  ShopItems strings -->
+    <string name="shop_doubler_name" value="Doblador de la moneda" />
+    <string name="shop_doubler_desc" value="Duplica el numero &#xA;de monedas recogidas" />
+    <string name="shop_shieldPlus_name" value="Blindar" />
+    <string name="shop_shieldPlus_desc" value="Protege al jugador de &#xA;una colision adicional" />
+    <string name="shop_megaPlus_name" value="Mega+" />
+    <string name="shop_megaPlus_desc" value="Aumenta la duracion de &#xA;bonificacion de 5 segundos" />
+    <string name="shop_flyPlus_name" value="Vuelo+" />
+    <string name="shop_flyPlus_desc" value="Aumenta la duracion de &#xA;bonificacion de 5 segundos" />
+    <string name="shop_morphing_name" value="Bala morphing" />
+    <string name="shop_morphing_desc" value="Desbloquea la apariencia &#xA;morphing de la bala" />
+    <string name="shop_capsule_name" value="Bala capsule" />
+    <string name="shop_capsule_desc" value="Desbloquea la apariencia &#xA;capsule de la bala" />
 
     <!--  Game strings -->
     <string name="game_player_life" value="Vida" />

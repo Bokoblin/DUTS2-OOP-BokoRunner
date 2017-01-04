@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ enum LabelPosition {
 };
 
 /**
- * The Button Class adds to a Graphic element
+ * The Button class adds to a Graphic element
  * multiple clips from texture for them to change on events
  * and states to react differently when pressed,
  * activated, disabled or visible.
@@ -38,31 +38,28 @@ enum LabelPosition {
  * a string file thanks to its description
  *
  * @author Arthur
- * @date 6/04 - 23/12
+ * @date 6/04/16 - 02/01/17
  */
 class Button : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
-    Button(const std::vector<sf::IntRect> & clipRect,
-           sf::Texture &image, float x, float y, float w, float h);
-
-    Button(const std::vector<sf::IntRect> & clipRect,
-           sf::Texture &image, float x, float y, float w, float h, std::string labelDescription);
+    Button(float x, float y, float w, float h);
+    Button(float x, float y, float w, float h, std::string description);
+    Button(float x, float y, float w, float h, std::string image, const std::vector<sf::IntRect> &clipRect);
+    Button(float x, float y, float w, float h, std::string description,
+           std::string image, const std::vector<sf::IntRect> &clipRect);
     Button(Button const& elementACopier);
-    virtual ~Button();
 
-    //TODO : LABEL POSITION
+    virtual ~Button();
 
     //=== GETTERS
     bool isDisabled() const;
-    bool isVisible() const;
 
     //=== SETTERS
     void setPressed(bool on);
     void setActivated(bool on);
     void setDisabled(bool on);
-    void setVisible(bool on);
     void setClipRectArray(std::vector<sf::IntRect> array);
     void setPositionSelfCentered(double, double);
     void setLabelPosition(LabelPosition labelPosition);
@@ -71,7 +68,7 @@ public:
     virtual void sync() override;
     virtual void sync(DataBase *dataBase);
     virtual void draw(sf::RenderWindow *window)const;
-    bool contains(float posX, float posY) const;
+    bool contains(float x, float y) const;
 
 protected:
     //=== ATTRIBUTES
@@ -80,7 +77,6 @@ protected:
     bool m_isPressed;
     bool m_isActive;
     bool m_isDisabled;
-    bool m_isVisible;
     sf::Font m_font;
     Text *m_label;
     LabelPosition m_labelPosition;

@@ -17,7 +17,6 @@ limitations under the License.
 #define VIEW_H
 
 #include "../Model/GameModel.h"
-#include "ImagesConstants.h"
 #include "TextHandler.h"
 #include "SlidingBackground.h"
 #include "AnimatedGraphicElement.h"
@@ -33,18 +32,10 @@ limitations under the License.
 #define MOUSE_POSITION event.mouseButton.x, event.mouseButton.y
 
 
-/********************************************
-    Constant Variables
-********************************************/
-const int SCREEN_BPP = 32;
-const std::string APP_TITLE = "Boko Runner";
-
-class Model;
-
 /**
  * View Abstract Class
  * @author Arthur, Florian
- * @date 21/02 - 23/10
+ * @date 21/02/16 - 23/10/16
  */
 class View
 {

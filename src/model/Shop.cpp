@@ -4,9 +4,9 @@ using namespace std;
 
 /**
  * Parameterized Constructor
- * @author Arthur  @date 11/05 - 16/05
+ * @author Arthur  @date 11/05/16 - 16/05/16
  */
-Shop::Shop(DataBase *data) :  m_dataBase{data}
+Shop::Shop(DataBase *dataBase) :  m_dataBase{dataBase}
 {
     fetchBuyableItemsFromFile();
 }
@@ -15,12 +15,12 @@ Shop::Shop(DataBase *data) :  m_dataBase{data}
 /**
  * Destructor
  * @author Arthur
- * @date 11/05 - 18/05
+ * @date 11/05/16 - 18/05/16
  */
 Shop::~Shop()
 {
-    for (ShopItem *si: m_shopItemsArray)
-        delete si;
+    for (ShopItem *shopItem: m_shopItemsArray)
+        delete shopItem;
 }
 
 
@@ -32,16 +32,16 @@ vector<ShopItem*> Shop::getShopItemsArray() const { return m_shopItemsArray; }
 /**
  * Buy items
  * @author Arthur
- * @date 11/05 - 24/10
+ * @date 11/05/16 - 04/01/17
  */
-bool Shop::buyItem(ShopItem *my_item)
+bool Shop::buyItem(ShopItem *item)
 {
-    if ( !my_item->getBoughtState() && my_item->getPrice() <= m_dataBase->getTotalCoinsNumber() )
+    if ( !item->isBought() && item->getPrice() <= m_dataBase->getWallet() )
     {
         //=== update objects
 
-        m_dataBase->setTotalCoinsCollected( -my_item->getPrice() );
-        my_item->setBoughtState(true);
+        m_dataBase->decreaseWallet(item->getPrice());
+        item->buy();
 
         //=== update config files
 
@@ -53,10 +53,9 @@ bool Shop::buyItem(ShopItem *my_item)
 
         for (pugi::xml_node shopItem: shop.children("shopItem"))
         {
-            if ( string(shopItem.attribute("name").value()) == my_item->getName()  )
+            if ( string(shopItem.attribute("id").value()) == item->getId()  )
             {
-                pugi::xml_attribute state = shopItem.attribute("boughtState");
-                state.set_value(true);
+                shopItem.attribute("bought").set_value(true);
                 doc.save_file(CONFIG_FILE.c_str());
             }
         }
@@ -68,33 +67,13 @@ bool Shop::buyItem(ShopItem *my_item)
 
 
 /**
- * String cast function
- * @author Arthur
- * @date 14/05
- */
-string Shop::toString() const
-{
-    string result = "== Shop content ==\n";
-    result += " There are " + to_string(m_shopItemsArray.size() ) + " items :\n\n";
-    for ( ShopItem *bi : m_shopItemsArray )
-    {
-        result += bi->toString();
-    }
-
-    return result;
-}
-
-/**
  * Fetch Shop Items from file
- * @author Arthur  @date 11/05 - 24/10
+ * @author Arthur
+ * @date 11/05/16 - 04/01/17
  */
-void Shop::fetchBuyableItemsFromFile() {
-    string result_value = "";
-    string name = "";
-    string desc = "";
-    int price = 0;
-
-    //open file with pugi library and init nodes
+void Shop::fetchBuyableItemsFromFile()
+{
+    //Opens config file with pugiXML library
     pugi::xml_document doc;
     doc.load_file(CONFIG_FILE.c_str());
 
@@ -102,18 +81,39 @@ void Shop::fetchBuyableItemsFromFile() {
 
     for (pugi::xml_node shopItem: shop.children("shopItem"))
     {
-        //update item's attributes
-        bool state = false;
-        std::stringstream ss;
-        name = shopItem.attribute("name").value();
-        desc = shopItem.attribute("description").value();
-        result_value = shopItem.attribute("price").value();
-        ss << result_value;
-        ss >> price;
-        result_value = shopItem.attribute("boughtState").value();
-        if (result_value == "true" ) state=true;
+        //Updates item's attributes
+        bool isBought = false;
+        string id = shopItem.attribute("id").value();
+        string name = getStringFromLangFile(id + "_name");
+        string desc = getStringFromLangFile(id + "_desc");
+        int price = atoi(shopItem.attribute("price").value());
+        string result = shopItem.attribute("bought").value();
+        if (result == "true" ) isBought=true;
 
-        //add item to array
-        m_shopItemsArray.push_back( new ShopItem(name, desc, price, state) );
+        //Adds item to array
+        m_shopItemsArray.push_back( new ShopItem(name, desc, price, isBought) );
     }
+}
+
+
+/**
+ * Get language-adapted name and description
+ * from language string file with item
+ * @author Arthur
+ * @date 04/01/17
+ */
+string Shop::getStringFromLangFile(string name)
+{
+    pugi::xml_document doc;
+    doc.load_file(m_dataBase->getLanguageFile().c_str());
+
+    pugi::xml_node resources = doc.child("resources");
+
+    for (pugi::xml_node item: resources.children("string")) {
+        if (string(item.attribute("name").value()) == name)
+        {
+            return item.attribute("value").value();
+        }
+    }
+    return "unknown";
 }

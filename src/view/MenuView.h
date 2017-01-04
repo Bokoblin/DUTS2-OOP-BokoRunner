@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,18 +23,10 @@ limitations under the License.
 #include "ShopView.h"
 
 
-/********************************************
-    Constant Variables
-********************************************/
-const int SCREEN_WIDTH = 900;
-const int SCREEN_HEIGHT = 600;
-
-const std::string MENU_MUSIC = "../res/audio/menu_sound.ogg";
-
 /**
  * MenuView Class
  * @author Arthur, Florian
- * @date 26/03 - 23/12
+ * @date 26/03/16 - 02/01/17
  */
 class MenuView : public View
 {
@@ -59,13 +51,6 @@ private:
     SettingsView *m_settingsView;
     ShopView *m_shopView;
 
-    //Textures
-    sf::Texture m_farBackgroundTexture;
-    sf::Texture m_nearBackgroundTexture;
-    sf::Texture m_titleImageTexture;
-    sf::Texture m_menuRectButtonsTexture;
-    sf::Texture m_menuFormButtonsTexture;
-
     //Graphic Elements
     SlidingBackground *m_farBackground;
     SlidingBackground *m_nearBackground;
@@ -76,7 +61,7 @@ private:
     Button *m_leaderboardFormButton;
     Button *m_shopFormButton;
 
-    //audio
+    //Audio
     sf::Music m_menuMusic;
 };
 

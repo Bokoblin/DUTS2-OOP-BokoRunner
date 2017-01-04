@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,13 +20,14 @@ limitations under the License.
 #include "../Model/Settings.h"
 #include "RadioButton.h"
 
+#define RADIO_BUTTONS_MARGIN 50
 #define RADIO_BUTTONS_SIZE 26,26
 #define INDICATOR_BUTTONS_SIZE 22,22
 
 /**
  * SettingsView Class
  * @author Arthur
- * @date 20/05 - 23/12
+ * @date 20/05/16 - 02/01/17
  */
 class SettingsView : public View
 {
@@ -49,17 +50,8 @@ private:
     //=== ATTRIBUTES
     Settings *m_settings;
 
-    //Textures
-    sf::Texture m_menuButtonTexture;
-    sf::Texture m_radioButtonsTexture;
-    sf::Texture m_pageIndicatorTexture;
-    sf::Texture m_rectButtonsTexture;
-    sf::Texture m_logoIUTTexture;
-    sf::Texture m_logoSFMLTexture;
-
     //Graphic Elements
     Button *m_homeFormButton;
-    RadioButton *m_pageIndicatorButton;
     Button *m_englishLangRadio;
     Button *m_frenchLangRadio;
     Button *m_spanishLangRadio;
@@ -72,6 +64,7 @@ private:
     GraphicElement *m_logoIUTSprite;
     GraphicElement *m_logoSFMLSprite;
 
+    //Containers
     std::map<int, RadioButton *> m_pageIndicators;
     std::vector<Button*> m_buttonList;
 };

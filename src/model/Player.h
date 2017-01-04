@@ -33,10 +33,15 @@ enum playerState
     SHIELD
 };
 
+enum MoveDirections {
+    MOVE_LEFT = true,
+    MOVE_RIGHT = false
+};
+
 /**
  * Player Class
  * @author Arthur, Florian
- * @date 22/02 - 11/04
+ * @date 22/02/16 - 04/01/17
  */
 class Player : public MovableElement
 {
@@ -62,7 +67,7 @@ public:
     //=== METHODS
     virtual void move() override;
     void changeState(int state);
-    void controlPlayerMovements(bool left);
+    void controlPlayerMovements(MoveDirections direction);
 
 
 private:

@@ -13,12 +13,16 @@ Text::Text() : m_description{""}
  */
 Text::Text(string description) : m_description{description}
 {
+    m_font.loadFromFile("../res/Roboto_Regular.ttf");
+    setFont(m_font);
     setColor(sf::Color::White);
     m_isVisible = true;
 }
 
 Text::Text(string description, bool isVisible) : m_description{description}
 {
+    m_font.loadFromFile("../res/Roboto_Regular.ttf");
+    setFont(m_font);
     setColor(sf::Color::White);
     m_isVisible = isVisible;
 }
@@ -48,4 +52,17 @@ void Text::setStringFromInt(int value) {
 bool Text::contains(float posX, float posY) const
 {
     return getGlobalBounds().contains(sf::Vector2f(posX, posY));
+}
+
+/**
+ * Draws text on the window
+ * @author Arthur
+ * @date 02/01/17
+ */
+void Text::draw(sf::RenderWindow *window) const
+{
+    if ( isVisible() )
+    {
+        window->draw(*this);
+    }
 }

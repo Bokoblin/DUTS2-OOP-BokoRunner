@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,22 +22,15 @@ limitations under the License.
 /**
  * SlidingBackground Class
  * @author Arthur, Florian
- * @date 3/03 - 7/05
+ * @date 3/03/16 - 7/05/16
  */
 class SlidingBackground : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
-    SlidingBackground(sf::Texture &image, float w, float h, float speed);
+    SlidingBackground(float w, float h, float speed, std::string image);
     SlidingBackground(SlidingBackground const& element) = delete;
     virtual ~SlidingBackground();
-
-    //=== METHODS
-    virtual void sync() override;
-    virtual void draw(sf::RenderWindow *window) const override;
-    virtual void resize(float w, float h) override;
-    void decreaseAlpha(int level);
-    void increaseAlpha(int level);
 
     //=== GETTERS
     int getAlpha() const;
@@ -48,6 +41,14 @@ public:
     void setSpeed(float speed);
     void setPosition(float x, float y);
     void setAlpha(sf::Uint8 alpha);
+
+    //=== METHODS
+    virtual void sync() override;
+    virtual void draw(sf::RenderWindow *window) const override;
+    virtual void resize(float w, float h) override;
+    void decreaseAlpha(int level);
+    void increaseAlpha(int level);
+    virtual void setTextureFromImage(std::string image);
 
 private:
     //=== ATTRIBUTES

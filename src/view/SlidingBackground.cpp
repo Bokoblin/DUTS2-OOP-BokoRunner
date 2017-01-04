@@ -3,20 +3,22 @@
 /**
  * Parameterized Constructor
  * @author Arthur, Florian
- * @date 3/03 - 7/05
+ * @date 3/03/16 - 02/01/17
  */
-SlidingBackground::SlidingBackground(sf::Texture &image, float w, float h, float speed):
+SlidingBackground::SlidingBackground(float w, float h, float speed, std::string image) :
     GraphicElement(w, h), m_speed{speed}, m_alpha{255}
 {
-    m_left = new GraphicElement(image, 0, 0, w, h);
-    m_right = new GraphicElement(image, w, 0, w, h);
+    m_left = new GraphicElement(0, 0, w, h);
+    m_left->setTextureFromImage(image);
+    m_right = new GraphicElement(w, 0, w, h);
+    m_right->setTextureFromImage(image);
 }
 
 
 /**
  * Destructor
  * @author Arthur
- * @date 5/03 - 15/04
+ * @date 5/03/16 - 15/04/16
  */
 SlidingBackground::~SlidingBackground()
 {
@@ -56,7 +58,7 @@ void SlidingBackground::setPosition(float x, float y)
 /**
  * Synchronization Function
  * @author Arthur
- * @date 3/03 - 7/05
+ * @date 3/03/16 - 7/05/16
  */
 void SlidingBackground::sync()
 {
@@ -77,7 +79,7 @@ void SlidingBackground::sync()
 /**
  * Drawing Function
  * @author Arthur
- * @date 3/03 - 03/04
+ * @date 3/03/16 - 03/04/16
  */
 void SlidingBackground::draw(sf::RenderWindow *window) const
 {
@@ -89,7 +91,7 @@ void SlidingBackground::draw(sf::RenderWindow *window) const
 /**
  * Resizing function
  * @author Arthur
- * @date 30/04
+ * @date 30/04/16
  */
 void SlidingBackground::resize(float w, float h)
 {
@@ -101,7 +103,7 @@ void SlidingBackground::resize(float w, float h)
 /**
  * Decrease alpha function
  * @author Arthur
- * @date 7/05
+ * @date 7/05/16
  */
 void SlidingBackground::decreaseAlpha(int level)
 {
@@ -114,7 +116,7 @@ void SlidingBackground::decreaseAlpha(int level)
 /**
  * Increase alpha function
  * @author Arthur
- * @date 7/05
+ * @date 7/05/16
  */
 void SlidingBackground::increaseAlpha(int level)
 {
@@ -122,6 +124,18 @@ void SlidingBackground::increaseAlpha(int level)
         m_alpha += level;
     else
         m_alpha = 255;
+}
+
+
+/**
+ * Sets the SlidingBackground's texture from an image
+ * @author Arthur
+ * @date 02/01/17
+ */
+void SlidingBackground::setTextureFromImage(std::string image)
+{
+    m_left->setTextureFromImage(image);
+    m_right->setTextureFromImage(image);
 }
 
 

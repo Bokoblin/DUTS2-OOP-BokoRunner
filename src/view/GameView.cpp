@@ -5,27 +5,27 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 26/03 - 22/05
+ * @date 26/03/16 - 22/05/16
  */
 GameView::GameView(float w, float h, sf::RenderWindow *myWindow, TextHandler *text):
-    View(w, h, myWindow, text), m_gameModel{nullptr},
-    m_xPixelIntensity{1}, m_yPixelIntensity{1}, m_isMusicEnabled{true}
+        View(w, h, myWindow, text), m_gameModel{nullptr},
+        m_xPixelIntensity{1}, m_yPixelIntensity{1}, m_isMusicEnabled{true}
 {
     loadImages();
     m_pixelShader = new PixelateEffect();
 
     if (!m_coinMusic.openFromFile(COINS_COLLECTED_MUSIC))
-            cerr << "ERROR when loading music file: " << COINS_COLLECTED_MUSIC << endl;
+        cerr << "ERROR when loading music file: " << COINS_COLLECTED_MUSIC << endl;
 
     if (!m_destructedEnemiesMusic.openFromFile(ENEMIES_DESTRUCTED_MUSIC))
-            cerr << "ERROR when loading music file: " << ENEMIES_DESTRUCTED_MUSIC << endl;
+        cerr << "ERROR when loading music file: " << ENEMIES_DESTRUCTED_MUSIC << endl;
 }
 
 
 /**
  * Destructor
  * @author Arthur
- * @date 26/03 - 21/05
+ * @date 26/03/16 - 21/05/16
  */
 GameView::~GameView()
 {
@@ -50,7 +50,7 @@ GameView::~GameView()
     delete m_pixelShader;
     for (auto it = m_MovableToGraphicElementMap.begin();
          it!=m_MovableToGraphicElementMap.end(); ++it )
-            delete it->second;
+        delete it->second;
 
     //=== Delete Pause and End Elements
 
@@ -109,224 +109,144 @@ void GameView::setGameModel(GameModel *model)
 /**
  * Image Loading
  * @author Arthur
- * @date 26/03 - 23/12
+ * @date 26/03/16 - 02/01/17
  */
 void GameView::loadImages()
 {
-    if (!m_farBackgroundTexture.loadFromFile(DEFAULT_FAR_HILL_BACKGROUND))
-        cerr << "ERROR when loading image file: " << DEFAULT_FAR_HILL_BACKGROUND << endl;
-    else
-    {
-        m_farBackgroundTexture.setSmooth(true);
-        m_farSlBackground = new SlidingBackground(m_farBackgroundTexture, 1200, m_height, 1);
-    }
+    //=== Initialize backgrounds
 
-    if (!m_farBgTransitionTexture.loadFromFile(DEFAULT_FAR_T1_BACKGROUND))
-        cerr << "ERROR when loading image file: " << DEFAULT_FAR_T1_BACKGROUND << endl;
-    else
-    {
-        m_farBgTransitionTexture.setSmooth(true);
-        m_farBgTransitionSprite = new GraphicElement(m_farBgTransitionTexture, 900, m_height, m_width, m_height);
-    }
+    m_farSlBackground = new SlidingBackground(1200, m_height, 1, DEFAULT_FAR_HILL_BACKGROUND);
+    m_nearSlBackground = new SlidingBackground(1200, m_height, 2, DEFAULT_NEAR_HILL_BACKGROUND);
 
-    if (!m_nearBackgroundTexture.loadFromFile(DEFAULT_NEAR_HILL_BACKGROUND))
-        cerr << "ERROR when loading image file: " << DEFAULT_NEAR_HILL_BACKGROUND << endl;
-    else
-    {
-        m_nearBackgroundTexture.setSmooth(true);
-        m_nearSlBackground = new SlidingBackground(m_nearBackgroundTexture, 1200, m_height, 2);
-    }
+    m_farBgTransitionSprite = new GraphicElement(900, m_height, m_width, m_height, DEFAULT_FAR_T1_BACKGROUND);
+    m_bottomBarSprite = new GraphicElement(0, 520, 1200, m_height, BOTTOM_BAR_IMAGE);
 
-    if (!m_bottomBarTexture.loadFromFile(BOTTOM_BAR_IMAGE))
-        cerr << "ERROR when loading image file: " << BOTTOM_BAR_IMAGE << endl;
-    else
-    {
-        m_bottomBarTexture.setSmooth(true);
-        m_bottomBarSprite = new GraphicElement(m_bottomBarTexture, 0, 520, 1200, m_height);
-    }
-
-    if (!m_lifeBoxTexture.loadFromFile(LIFE_BOX_IMAGE))
-        cerr << "ERROR when loading image file: " << LIFE_BOX_IMAGE << endl;
-    else
-    {
-        m_lifeBoxTexture.setSmooth(true);
-        m_lifeBoxSprite = new GraphicElement(m_lifeBoxTexture, 105, 535, 200, 100);
-    }
-
-    if (!m_remainingLifeTexture.loadFromFile(LIFE_BOX_IMAGE))
-        cerr << "ERROR when loading image file: " << LIFE_BOX_IMAGE << endl;
-    else
-    {
-        m_remainingLifeTexture.setSmooth(true);
-        m_remainingLifeSprite = new GraphicElement(m_remainingLifeTexture, 107, 535, 300, 50);
-    }
-
-    if (!m_playerTexture.loadFromFile(BALL_IMAGE) )
-        cerr << "ERROR when loading image file: " << BALL_IMAGE << endl;
-    else
-    {
-        std::vector<sf::IntRect> clipRect;
-        for (int i=0; i<8; i++)
-            clipRect.push_back(sf::IntRect(50*i,0,50,50));
-
-        m_playerTexture.setSmooth(true);
-        m_playerAnimSprite = new AnimatedGraphicElement(m_playerTexture, 50, GAME_FLOOR, 30, 30, clipRect);
-        m_playerAnimSprite->setOrigin(0,50);
-    }
-
-    if (!m_enemyTexture.loadFromFile(ENEMIES_IMAGE))
-        cerr << "ERROR when loading image file: " << ENEMIES_IMAGE << endl;
-    else
-    {
-        m_enemyTexture.setSmooth(true);
-
-        std::vector<sf::IntRect> clipRectStdEnemy;
-        for (int i=0; i<2; i++) clipRectStdEnemy.push_back(sf::IntRect(50*i,0,50,50));
-        m_stdEnemyAnimSprite = new AnimatedGraphicElement(m_enemyTexture, 30, 135,30,30, clipRectStdEnemy);
-        m_stdEnemyAnimSprite->setOrigin(0,50);
-
-        std::vector<sf::IntRect> clipRectTotemEnemy;
-        for (int i=0; i<2; i++) clipRectTotemEnemy.push_back(sf::IntRect(50*i,0,50,150));
-        m_totemEnemyAnimSprite = new AnimatedGraphicElement(m_enemyTexture,
-                                                            m_width, GAME_FLOOR,30,90, clipRectTotemEnemy);
-        m_totemEnemyAnimSprite->setOrigin(0,150);
-
-        std::vector<sf::IntRect> clipRectBlockEnemy;
-        for (int i=0; i<2; i++) clipRectBlockEnemy.push_back(sf::IntRect(50*i,150,50,50));
-        m_blockEnemyAnimSprite = new AnimatedGraphicElement(m_enemyTexture, 50, 95,50,50, clipRectBlockEnemy);
-        m_blockEnemyAnimSprite->setOrigin(0,50);
-    }
-
-    if (!m_shieldTexture.loadFromFile(SHIELD_IMAGE))
-        cerr << "ERROR when loading image file: " << SHIELD_IMAGE << endl;
-    else
-    {
-        m_shieldTexture.setSmooth(true);
-        m_shieldAnimSprite = new GraphicElement(m_shieldTexture, 50, GAME_FLOOR, 40, 40);
-        m_shieldAnimSprite->setOrigin(0,50);
-    }
-
-    if (!m_bonusTexture.loadFromFile(BONUS_IMAGE))
-        cerr << "ERROR when loading image file: " << BONUS_IMAGE << endl;
-    else
-    {
-        m_bonusTexture.setSmooth(true);
-
-        std::vector<sf::IntRect> clipRect_coin;
-        for (int i=0; i<5; i++) clipRect_coin.push_back(sf::IntRect(50*i,0,50,50));
-        m_coinAnimSprite = new AnimatedGraphicElement(m_bonusTexture, 30, 95, 25, 25, clipRect_coin);
-        m_coinAnimSprite->setOrigin(0,50);
-
-        std::vector<sf::IntRect> clipRect_pv;
-        for (int i=0; i<5; i++)clipRect_pv.push_back(sf::IntRect(50*i,50,50,50));
-        m_PVPlusBonusAnimSprite = new AnimatedGraphicElement(m_bonusTexture,
-                                                             m_width, GAME_FLOOR, 25, 25, clipRect_pv);
-        m_PVPlusBonusAnimSprite->setOrigin(0,50);
-
-        std::vector<sf::IntRect> clipRect_mega;
-        for (int i=0; i<5; i++) clipRect_mega.push_back(sf::IntRect(50*i,100,50,50));
-        m_megaBonusAnimSprite = new AnimatedGraphicElement(m_bonusTexture, 100, 50, 25, 25, clipRect_mega);
-        m_megaBonusAnimSprite->setOrigin(0,50);
-
-        std::vector<sf::IntRect> clipRect_fly;
-        for (int i=0; i<5; i++) clipRect_fly.push_back(sf::IntRect(50*i,150,50,50));
-        m_flyBonusAnimSprite = new AnimatedGraphicElement(m_bonusTexture, 100, 50, 25, 25, clipRect_fly);
-        m_flyBonusAnimSprite->setOrigin(0,50);
-
-        std::vector<sf::IntRect> clipRect_slow;
-        for (int i=0; i<5; i++) clipRect_slow.push_back(sf::IntRect(50*i,200,50,50));
-        m_slowSpeedBonusAnimSprite = new AnimatedGraphicElement(m_bonusTexture, 100, 50, 25, 25, clipRect_slow);
-        m_slowSpeedBonusAnimSprite->setOrigin(0,50);
-
-        std::vector<sf::IntRect> clipRect_shield;
-        for (int i=0; i<5; i++) clipRect_shield.push_back(sf::IntRect(50*i,250,50,50));
-        m_shieldBonusAnimSprite = new AnimatedGraphicElement(m_bonusTexture, 100, 50, 25, 25, clipRect_shield);
-        m_shieldBonusAnimSprite->setOrigin(0,50);
-    }
+    m_pauseBackgroundSprite = new GraphicElement(0, 0, m_width, m_height, PAUSE_HILL_BACKGROUND);
+    m_endBackgroundSprite = new GraphicElement(0, 0, m_width, m_height, END_SCREEN_BACKGROUND);
 
 
-    if (!m_gameButtonsTexture.loadFromFile(GAME_BUTTONS_IMAGE) )
-        cerr << "ERROR when loading image file: " << GAME_BUTTONS_IMAGE << endl;
-    else
-    {
-        m_gameButtonsTexture.setSmooth(true);
+    //=== Initialize UI elements
 
-        std::vector<sf::IntRect> clipRect_resume;
-        clipRect_resume.push_back(sf::IntRect(0, 0, 50, 50));
-        clipRect_resume.push_back(sf::IntRect(50, 0, 50, 50));
-        m_resumeGameButton = new Button(clipRect_resume, m_gameButtonsTexture, PAUSE_FORM_X, 355, 20, 20, "pause_resume");
-        m_resumeGameButton->resize(20,20);
-        m_resumeGameButton->setLabelPosition(RIGHT);
+    m_lifeBoxSprite = new GraphicElement(105, 535, 200, 100);
+    m_lifeBoxSprite->setTextureFromImage(LIFE_BOX_IMAGE, sf::IntRect(0,0,300,50));
 
-        std::vector<sf::IntRect> clipRect_restart;
-        clipRect_restart.push_back(sf::IntRect(0, 50, 50, 50));
-        clipRect_restart.push_back(sf::IntRect(50, 50, 50, 50));
-        m_restartGameButton = new Button(clipRect_restart, m_gameButtonsTexture, PAUSE_FORM_X, 405, 20, 20, "pause_restart");
-        m_restartGameButton->resize(20,20);
-        m_restartGameButton->setLabelPosition(RIGHT);
+    m_remainingLifeSprite = new GraphicElement(107, 535, 300, 50);
+    m_remainingLifeSprite->setTextureFromImage(LIFE_BOX_IMAGE, sf::IntRect(0,51,300,50));
+
+    m_distanceIconSprite = new GraphicElement(30, 35, 20, 20);
+    m_distanceIconSprite->setTextureFromImage(GAME_BUTTONS_IMAGE, sf::IntRect(0,150,50,50));
+    m_distanceIconSprite->resize(20,20);
 
 
-        std::vector<sf::IntRect> clipRect_home;
-        clipRect_home.push_back(sf::IntRect(0, 100, 50, 50));
-        clipRect_home.push_back(sf::IntRect(50, 100, 50, 50));
-        m_goToHomeButton = new Button(clipRect_home, m_gameButtonsTexture, PAUSE_FORM_X, 455, 20, 20, "pause_go_to_home");
-        m_goToHomeButton->resize(20,20);
-        m_goToHomeButton->setLabelPosition(RIGHT);
+    //=== Initialize PLAYER
 
-        std::vector<sf::IntRect> clipRect_music;
-        clipRect_music.push_back(sf::IntRect(0, 200, 50, 50));
-        clipRect_music.push_back(sf::IntRect(50, 200, 50, 50));
-        m_controlMusicButton = new Button(clipRect_music, m_gameButtonsTexture, PAUSE_FORM_X, 535, 20, 20);
-        m_controlMusicButton->resize(20,20);
-    }
-
-    if (!m_gameRectButtonTexture.loadFromFile(RECT_BUTTONS_IMAGE) )
-        cerr << "ERROR when loading image file: " << RECT_BUTTONS_IMAGE << endl;
-    else
-    {
-        m_gameRectButtonTexture.setSmooth(true);
-
-        std::vector<sf::IntRect> clipRect_save;
-        clipRect_save.push_back(sf::IntRect(0, 179, 150, 40));
-        clipRect_save.push_back(sf::IntRect(151, 179, 150, 40));
-        m_saveScoreButton = new Button(clipRect_save,m_gameRectButtonTexture,
-                                   730, 350, m_width/2-75, 430, "end_save_button");
-    }
+    std::vector<sf::IntRect> clipRect;
+    for (int i=0; i<8; i++)
+        clipRect.push_back(sf::IntRect(50*i,0,50,50));
+    m_playerAnimSprite = new AnimatedGraphicElement(50, GAME_FLOOR, 30, 30, BALL_IMAGE, clipRect);
+    m_playerAnimSprite->setOrigin(0,50);
 
 
-    if (!m_distanceIconTexture.loadFromFile(GAME_BUTTONS_IMAGE, sf::IntRect(0,150,50,50)) )
-        cerr << "ERROR when loading image file: " << GAME_BUTTONS_IMAGE << endl;
-    else
-    {
-        m_distanceIconTexture.setSmooth(true);
-        m_distanceIconSprite = new GraphicElement(m_distanceIconTexture, 30, 35, 20, 20);
-        m_distanceIconSprite->resize(20,20);
-    }
+    //=== Initialize ENEMIES
+
+    std::vector<sf::IntRect> clipRectStdEnemy;
+    for (int i=0; i<2; i++) clipRectStdEnemy.push_back(sf::IntRect(50*i,0,50,50));
+    m_stdEnemyAnimSprite = new AnimatedGraphicElement(30, 135, 30, 30, ENEMIES_IMAGE, clipRectStdEnemy);
+    m_stdEnemyAnimSprite->setOrigin(0,50);
+
+    std::vector<sf::IntRect> clipRectTotemEnemy;
+    for (int i=0; i<2; i++) clipRectTotemEnemy.push_back(sf::IntRect(50*i,0,50,150));
+    m_totemEnemyAnimSprite = new AnimatedGraphicElement(m_width, GAME_FLOOR, 30, 90, ENEMIES_IMAGE,
+                                                        clipRectTotemEnemy);
+    m_totemEnemyAnimSprite->setOrigin(0,150);
+
+    std::vector<sf::IntRect> clipRectBlockEnemy;
+    for (int i=0; i<2; i++) clipRectBlockEnemy.push_back(sf::IntRect(50*i,150,50,50));
+    m_blockEnemyAnimSprite = new AnimatedGraphicElement(50, 95, 50, 50, ENEMIES_IMAGE, clipRectBlockEnemy);
+    m_blockEnemyAnimSprite->setOrigin(0,50);
 
 
-    if (!m_pauseBackgroundTexture.loadFromFile(PAUSE_HILL_BACKGROUND))
-        cerr << "ERROR when loading image file: " << PAUSE_PLAIN_BACKGROUND << endl;
-    else
-    {
-        m_pauseBackgroundTexture.setSmooth(true);
-        m_pauseBackgroundSprite = new GraphicElement(m_pauseBackgroundTexture, 0, 0, m_width, m_height);
-    }
+    //=== Initialize COINS & BONUSES
+
+    m_shieldAnimSprite = new GraphicElement(50, GAME_FLOOR, 40, 40);
+    m_shieldAnimSprite->setTextureFromImage(SHIELD_IMAGE);
+    m_shieldAnimSprite->setOrigin(0,50);
+
+    std::vector<sf::IntRect> clipRect_coin;
+    for (int i=0; i<5; i++) clipRect_coin.push_back(sf::IntRect(50*i,0,50,50));
+    m_coinAnimSprite = new AnimatedGraphicElement(30, 95, 25, 25, BONUS_IMAGE, clipRect_coin);
+    m_coinAnimSprite->setOrigin(0,50);
+
+    std::vector<sf::IntRect> clipRect_pv;
+    for (int i=0; i<5; i++)clipRect_pv.push_back(sf::IntRect(50*i,50,50,50));
+    m_PVPlusBonusAnimSprite = new AnimatedGraphicElement(m_width, GAME_FLOOR, 25, 25, BONUS_IMAGE, clipRect_pv);
+    m_PVPlusBonusAnimSprite->setOrigin(0,50);
+
+    std::vector<sf::IntRect> clipRect_mega;
+    for (int i=0; i<5; i++) clipRect_mega.push_back(sf::IntRect(50*i,100,50,50));
+    m_megaBonusAnimSprite = new AnimatedGraphicElement(100, 50, 25, 25, BONUS_IMAGE, clipRect_mega);
+    m_megaBonusAnimSprite->setOrigin(0,50);
+
+    std::vector<sf::IntRect> clipRect_fly;
+    for (int i=0; i<5; i++) clipRect_fly.push_back(sf::IntRect(50*i,150,50,50));
+    m_flyBonusAnimSprite = new AnimatedGraphicElement(100, 50, 25, 25, BONUS_IMAGE, clipRect_fly);
+    m_flyBonusAnimSprite->setOrigin(0,50);
+
+    std::vector<sf::IntRect> clipRect_slow;
+    for (int i=0; i<5; i++) clipRect_slow.push_back(sf::IntRect(50*i,200,50,50));
+    m_slowSpeedBonusAnimSprite = new AnimatedGraphicElement(100, 50, 25, 25, BONUS_IMAGE, clipRect_slow);
+    m_slowSpeedBonusAnimSprite->setOrigin(0,50);
+
+    std::vector<sf::IntRect> clipRect_shield;
+    for (int i=0; i<5; i++) clipRect_shield.push_back(sf::IntRect(50*i,250,50,50));
+    m_shieldBonusAnimSprite = new AnimatedGraphicElement(100, 50, 25, 25, BONUS_IMAGE, clipRect_shield);
+    m_shieldBonusAnimSprite->setOrigin(0,50);
 
 
-    if (!m_endBackgroundTexture.loadFromFile(END_SCREEN_BACKGROUND))
-        cerr << "ERROR when loading image file: " << END_SCREEN_BACKGROUND << endl;
-    else
-    {
-        m_endBackgroundTexture.setSmooth(true);
-        m_endBackgroundSprite = new GraphicElement(m_endBackgroundTexture, 0, 0, m_width, m_height);
-    }
+    //=== Initialize buttons
+
+    std::vector<sf::IntRect> clipRect_resume;
+    clipRect_resume.push_back(sf::IntRect(0, 0, 50, 50));
+    clipRect_resume.push_back(sf::IntRect(50, 0, 50, 50));
+    m_resumeGameButton = new Button(PAUSE_FORM_X, 355, 20, 20, "pause_resume", GAME_BUTTONS_IMAGE,
+                                    clipRect_resume);
+    m_resumeGameButton->resize(20,20);
+    m_resumeGameButton->setLabelPosition(RIGHT);
+
+    std::vector<sf::IntRect> clipRect_restart;
+    clipRect_restart.push_back(sf::IntRect(0, 50, 50, 50));
+    clipRect_restart.push_back(sf::IntRect(50, 50, 50, 50));
+    m_restartGameButton = new Button(PAUSE_FORM_X, 405, 20, 20, "pause_restart", GAME_BUTTONS_IMAGE,
+                                     clipRect_restart);
+    m_restartGameButton->resize(20,20);
+    m_restartGameButton->setLabelPosition(RIGHT);
+
+
+    std::vector<sf::IntRect> clipRect_home;
+    clipRect_home.push_back(sf::IntRect(0, 100, 50, 50));
+    clipRect_home.push_back(sf::IntRect(50, 100, 50, 50));
+    m_goToHomeButton = new Button(PAUSE_FORM_X, 455, 20, 20, "pause_go_to_home", GAME_BUTTONS_IMAGE,
+                                  clipRect_home);
+    m_goToHomeButton->resize(20,20);
+    m_goToHomeButton->setLabelPosition(RIGHT);
+
+    std::vector<sf::IntRect> clipRect_music;
+    clipRect_music.push_back(sf::IntRect(0, 200, 50, 50));
+    clipRect_music.push_back(sf::IntRect(50, 200, 50, 50));
+    m_controlMusicButton = new Button(PAUSE_FORM_X, 535, 20, 20, GAME_BUTTONS_IMAGE, clipRect_music);
+    m_controlMusicButton->resize(20,20);
+
+    std::vector<sf::IntRect> clipRect_save;
+    clipRect_save.push_back(sf::IntRect(0, 179, 150, 40));
+    clipRect_save.push_back(sf::IntRect(151, 179, 150, 40));
+    m_saveScoreButton = new Button(730, 350, m_width / 2 - 75, 430, "end_save_button", RECT_BUTTONS_IMAGE, clipRect_save);
 }
 
 
 /**
  * Link mElements with gElements
  * @author Arthur
- * @date 18/03 - 21/05
+ * @date 18/03/16 - 21/05/16
  */
 void GameView::linkElements()
 {
@@ -364,7 +284,7 @@ void GameView::linkElements()
 /**
  * Create seamless transition between zones
  * @author Arthur
- * @date 25/04 - 07/05
+ * @date 25/04/16 - 02/01/17
  */
 void GameView::handleZonesTransition()
 {
@@ -385,13 +305,13 @@ void GameView::handleZonesTransition()
         {
             if (m_gameModel->getCurrentZone() == HILL)
             {
-                m_farBackgroundTexture.loadFromFile(DEFAULT_FAR_PLAIN_BACKGROUND);
-                m_nearBackgroundTexture.loadFromFile(DEFAULT_NEAR_PLAIN_BACKGROUND);
+                m_farSlBackground->setTextureFromImage(DEFAULT_FAR_PLAIN_BACKGROUND);
+                m_nearSlBackground->setTextureFromImage(DEFAULT_NEAR_PLAIN_BACKGROUND);
             }
             else
             {
-                m_farBackgroundTexture.loadFromFile(DEFAULT_FAR_HILL_BACKGROUND);
-                m_nearBackgroundTexture.loadFromFile(DEFAULT_NEAR_HILL_BACKGROUND);
+                m_farSlBackground->setTextureFromImage(DEFAULT_FAR_HILL_BACKGROUND);
+                m_nearSlBackground->setTextureFromImage(DEFAULT_NEAR_HILL_BACKGROUND);
             }
 
             m_farSlBackground->setPosition(-300, 0);
@@ -438,12 +358,12 @@ void GameView::handleZonesTransition()
             if (m_gameModel->getCurrentZone() == HILL)
             {
                 m_pixelShader->load(DEFAULT_NEAR_T1_BACKGROUND);
-                m_farBgTransitionTexture.loadFromFile(DEFAULT_FAR_T1_BACKGROUND);
+                m_farBgTransitionSprite->setTextureFromImage(DEFAULT_FAR_T1_BACKGROUND);
             }
             else
             {
                 m_pixelShader->load(DEFAULT_NEAR_T2_BACKGROUND);
-                m_farBgTransitionTexture.loadFromFile(DEFAULT_FAR_T2_BACKGROUND);
+                m_farBgTransitionSprite->setTextureFromImage(DEFAULT_FAR_T2_BACKGROUND);
             }
         }
     }
@@ -453,24 +373,23 @@ void GameView::handleZonesTransition()
 /**
  * Update gElements
  * @author Arthur
- * @date 6/03 - 24/12
+ * @date 6/03/16 - 02/01/17
  */
 void GameView::updateElements()
 {
-     if (m_gameModel->getGameState() == RUNNING ||
-         m_gameModel->getGameState() == RUNNING_SLOWLY)
-     {
-         //=== Handle Transitions between zones
+    if (m_gameModel->getGameState() == RUNNING ||
+        m_gameModel->getGameState() == RUNNING_SLOWLY)
+    {
+        //=== Handle Transitions between zones
 
-         handleZonesTransition();
+        handleZonesTransition();
 
         //=== Update Game Elements
 
         m_farSlBackground->sync();
         m_nearSlBackground->sync();
 
-        m_remainingLifeTexture.loadFromFile( REMAINING_LIFE,
-        sf::IntRect( 3*( 100-m_gameModel->getPlayer()->getLife() ), 0, 300, 50 ) );
+        m_remainingLifeSprite->resize(3*m_gameModel->getPlayer()->getLife(), 50);
 
         std::map<MovableElement*, GraphicElement*>::iterator it;
         for(it = m_MovableToGraphicElementMap.begin() ; it != m_MovableToGraphicElementMap.end() ; ++it)
@@ -496,9 +415,9 @@ void GameView::updateElements()
     else if ( m_gameModel->getGameState() == PAUSED )
     {
         if (m_gameModel->getCurrentZone() == HILL)
-                m_pauseBackgroundTexture.loadFromFile(PAUSE_HILL_BACKGROUND);
-            else
-                m_pauseBackgroundTexture.loadFromFile(PAUSE_PLAIN_BACKGROUND);
+            m_pauseBackgroundSprite->setTextureFromImage(PAUSE_HILL_BACKGROUND);
+        else
+            m_pauseBackgroundSprite->setTextureFromImage(PAUSE_PLAIN_BACKGROUND);
 
         m_resumeGameButton->sync(m_gameModel->getDataBase());
         m_restartGameButton->sync(m_gameModel->getDataBase());
@@ -533,12 +452,12 @@ void GameView::updateElements()
 /**
  * Delete gElement
  * @author Arthur
- * @date 12/03 - 20/03
+ * @date 12/03/16 - 20/03/16
  */
 void GameView::deleteElements()
 {
     std::map<MovableElement *, GraphicElement *>::iterator it =
-                m_MovableToGraphicElementMap.begin();
+            m_MovableToGraphicElementMap.begin();
     bool found = false;
     while (!found && it!=m_MovableToGraphicElementMap.end() )
     {
@@ -565,7 +484,7 @@ void GameView::deleteElements()
 /**
  * Synchronization function
  * @author Arthur
- * @date 26/03 - 24/12
+ * @date 26/03/16 - 24/12/16
  */
 void GameView::synchronize()
 {
@@ -603,14 +522,14 @@ void GameView::synchronize()
 /**
  * GameView Drawing
  * @author Arthur
- * @date 26/03 - 24/12
+ * @date 26/03/16 - 24/12/16
  */
 void GameView::draw() const
 {
     m_window->clear();
 
     if (m_gameModel->getGameState() == RUNNING ||
-            m_gameModel->getGameState() == RUNNING_SLOWLY)
+        m_gameModel->getGameState() == RUNNING_SLOWLY)
     {
         //=== Standalone GraphicElements drawing
 
@@ -631,7 +550,7 @@ void GameView::draw() const
         //=== Array's GraphicElements drawing
 
         for(auto it = m_MovableToGraphicElementMap.begin() ;
-                    it != m_MovableToGraphicElementMap.end() ; ++it)
+            it != m_MovableToGraphicElementMap.end() ; ++it)
         {
             it->second->draw(m_window);
         }
@@ -682,7 +601,7 @@ void GameView::draw() const
 /**
  * Events treating
  * @author Arthur, Florian
- * @date 21/02 - 24/12
+ * @date 21/02/16 - 24/12/16
  */
 bool GameView::treatEvents()
 {
@@ -809,9 +728,6 @@ bool GameView::treatEvents()
                     }
                 }
             }
-
-            //=== End Screen
-
             else if (m_gameModel->getGameState() == OVER)
             {
                 if (MOUSE_LEFT_PRESSED_EVENT)
@@ -844,7 +760,7 @@ bool GameView::treatEvents()
                     }
                     else if (m_saveScoreButton->contains(MOUSE_POSITION) )
                     {
-                        m_saveScoreButton->setVisible(false);
+                        m_saveScoreButton->hide();
                         m_model->getDataBase()->saveCurrentGame();
                     }
                 }

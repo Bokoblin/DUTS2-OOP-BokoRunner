@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,29 +17,31 @@ limitations under the License.
 #define RADIO_BUTTON_H
 
 #include "Button.h"
-#include "ImagesConstants.h"
 
 /**
  * The RadioButton Class inherited from Button class
  * adds different syncing behaviours
+ * a pre-configured texture with its clip rectangles
  * and a different label location than other buttons
  *
  * @author Arthur
- * @date 23/12
+ * @date 23/12/16 - 02/01/17
  */
 class RadioButton : public Button
 {
 public:
     //=== CTORs / DTORs
-    RadioButton(const std::vector<sf::IntRect> & clipRect,
-                sf::Texture &image, float x, float y, float w, float h);
-    RadioButton(const std::vector<sf::IntRect> & clipRect,
-                sf::Texture &image, float x, float y, float w, float h, std::string label);
+    RadioButton(float x, float y, float w, float h);
+    RadioButton(float x, float y, float w, float h, std::string label);
+    RadioButton(const RadioButton& other);
     virtual ~RadioButton() override;
 
     //=== METHODS
     virtual void sync() override;
     virtual void sync(DataBase *dataBase) override;
+
+private:
+    void setRadioClipRect();
 };
 
 #endif

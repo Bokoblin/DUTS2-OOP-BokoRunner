@@ -1,35 +1,35 @@
 #include "ShopView.h"
-#include "RadioButton.h"
 
 using namespace std;
 
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 16/05
+ * @date 16/05/16
  */
 ShopView::ShopView(float w, float h, sf::RenderWindow *window, TextHandler * text):
-	View(w, h, window,text), m_shop{nullptr}, m_currentIndicator{0},
-    m_totalIndicator{0}, m_buyDialog{nullptr}
+        View(w, h, window,text), m_shop{nullptr}, m_currentIndicator{0},
+        m_totalIndicator{0}, m_buyDialog{nullptr}
 {
-	    loadImages();
+    loadImages();
+
+    m_buyDialog = new Dialog();
 }
 
 
 /**
  * Destructor
  * @author Arthur
- * @date 16/05
+ * @date 16/05/16 - 02/01/17
  */
 ShopView::~ShopView()
 {
     delete m_coinSprite;
     delete m_homeFormButton;
-    delete m_pageIndicatorButton;
     delete m_buyDialog;
 
-    for ( auto c : m_shopItemsCardArray)
-        delete c;
+    for ( auto shopItemCard : m_shopItemCardsArray)
+        delete shopItemCard;
 
     for ( auto it : m_pageIndicators)
         delete it.second;
@@ -40,67 +40,36 @@ ShopView::~ShopView()
 
 void ShopView::setShopModel(Shop *model)
 {
-	m_shop = model;
-	createCards();
+    m_shop = model;
+    createCards();
 }
 
 
 /**
  * Image Loading
  * @author Arthur
- * @date 16/05
+ * @date 16/05/16 - 02/01/17
  */
 void ShopView::loadImages()
 {
     //=== Initialize COIN Sprite
 
-    if (!m_coinTexture.loadFromFile(BONUS_IMAGE, sf::IntRect(0,0,50,50)))
-        cerr << "ERROR when loading image file: " << BONUS_IMAGE << endl;
-    else
-    {
-        m_coinTexture.setSmooth(true);
-        m_coinSprite = new GraphicElement(m_coinTexture, m_width/2-60, 53, 25, 25);
-        m_coinSprite->resize(25, 25);
-    }
+    m_coinSprite = new GraphicElement(m_width/2-60, 53, 25, 25);
+    m_coinSprite->setTextureFromImage(BONUS_IMAGE, sf::IntRect(0,0,50,50));
+    m_coinSprite->resize(25, 25);
 
     //=== Initialize HOME form buttons
 
-    if (!m_menuFormButtonsTexture.loadFromFile(FORM_BUTTONS_IMAGE) )
-        cerr << "ERROR when loading image file: " << FORM_BUTTONS_IMAGE << endl;
-    else
-    {
-        m_menuFormButtonsTexture.setSmooth(true);
-
-        std::vector<sf::IntRect> clipRectHome;
-        clipRectHome.push_back(sf::IntRect( 0, 50, 50, 50));
-        clipRectHome.push_back(sf::IntRect( 51, 50, 50, 50));
-        m_homeFormButton = new Button(clipRectHome, m_menuFormButtonsTexture, 10, 10, 50, 50);
-
-        //=== Initialize INDICATORS Buttons
-
-        if (!m_pageIndicatorTexture.loadFromFile(INDICATOR_IMAGE) )
-            cerr << "ERROR when loading image file: " << INDICATOR_IMAGE << endl;
-        else
-        {
-            m_pageIndicatorTexture.setSmooth(true);
-
-            vector<sf::IntRect> clipRect;
-            clipRect.push_back(sf::IntRect(  0,   0, 50, 50) );
-            clipRect.push_back(sf::IntRect(50,   0, 50, 50) );
-            clipRect.push_back(sf::IntRect(  0, 50, 50, 50) );
-            clipRect.push_back(sf::IntRect(50, 50, 50, 50) );
-            clipRect.push_back(sf::IntRect( 0, 0, 50, 50) );
-            clipRect.push_back(sf::IntRect( 0, 50, 50, 50) );
-
-            m_pageIndicatorButton  = new RadioButton(clipRect, m_pageIndicatorTexture,0, 580, 15, 15, "indicator");
-        }
-    }
+    std::vector<sf::IntRect> clipRectHome;
+    clipRectHome.push_back(sf::IntRect( 0, 50, 50, 50));
+    clipRectHome.push_back(sf::IntRect( 51, 50, 50, 50));
+    m_homeFormButton = new Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
 }
 
 /**
  * Create Cards ans Indicators
  * @author Arthur
- * @date 16/05
+ * @date 16/05/16 - 02/01/17
  */
 void ShopView::createCards()
 {
@@ -108,7 +77,7 @@ void ShopView::createCards()
     int i = 0;
     for ( ShopItem *item : m_shop->getShopItemsArray() )
     {
-        m_shopItemsCardArray.push_back( new ShopItemCard(m_shop->getDataBase(), i, item, m_textHandler)  );
+        m_shopItemCardsArray.push_back(new ShopItemCard(i, item, m_textHandler));
         i++;
     }
 
@@ -120,7 +89,7 @@ void ShopView::createCards()
 
     for (int j=0; j < m_totalIndicator; j++)
     {
-        m_pageIndicators[j] = new Button(*m_pageIndicatorButton);
+        m_pageIndicators[j] = new RadioButton(0, 580, 15, 15, "indicator");
         m_pageIndicators[j]->setPosition( m_width/2 - 10*m_totalIndicator + 20*j, 550 );
         m_pageIndicators[j]->resize(22, 22);
     }
@@ -128,30 +97,33 @@ void ShopView::createCards()
 
 
 /**
- * Display current Cards function
+ * sync cards and Shows/hides them
+ * depending on the current page
  * @author Arthur
- * @date 16/05
+ * @date 16/05/16 - 02/01/17
  */
-void ShopView::displayCards() const
+void ShopView::syncCards() const
 {
     //display only 3 cards linked to the current page indicator
-    for( ShopItemCard *card : m_shopItemsCardArray)
+    for( ShopItemCard *card : m_shopItemCardsArray)
+    {
+        card->sync(m_shop->getDataBase());
         if( card->getId() == 0 + 3*m_currentIndicator
             || card->getId() == 1 + 3*m_currentIndicator
             || card->getId() == 2 + 3*m_currentIndicator )
-            {
-                card->setShownState(true);
-                card->draw(m_window);
-            }
-            else
-                card->setShownState(false);
+        {
+            card->show();
+        }
+        else
+            card->hide();
+    }
 }
 
 
 /**
  * Synchronization function
  * @author Arthur
- * @date 16/05
+ * @date 16/05/16 - 02/01/17
  */
 void ShopView::synchronize()
 {
@@ -160,16 +132,13 @@ void ShopView::synchronize()
 
     m_textHandler->syncShopText();
 
-    for( ShopItemCard *card : m_shopItemsCardArray)
-    {
-        card->sync();
-    }
+    syncCards();
 
     for( auto it : m_pageIndicators)
     {
-         (it.second)->sync();
-         it.first == m_currentIndicator ?
-         it.second->setActivated(true) : it.second->setActivated(false);
+        (it.second)->sync();
+        it.first == m_currentIndicator ?
+        it.second->setActivated(true) : it.second->setActivated(false);
     }
 }
 
@@ -177,7 +146,7 @@ void ShopView::synchronize()
 /**
  * Menu View Drawing
  * @author Arthur
- * @date 16/05
+ * @date 16/05/16 - 02/01/17
  */
 void ShopView::draw() const
 {
@@ -185,17 +154,17 @@ void ShopView::draw() const
 
     //=== Graphic Elements drawing
 
-    m_window->draw(*m_homeFormButton);
-    m_window->draw(*m_coinSprite);
-    displayCards();
+    for( ShopItemCard *card : m_shopItemCardsArray)
+        card->draw(m_window);
 
-    if ( m_buyDialog != nullptr)
-        m_buyDialog->draw(m_window);
-    else
+    if ( !m_buyDialog->isShowing())
     {
         for( auto it : m_pageIndicators)
             m_window->draw(*it.second);
     }
+    m_window->draw(*m_homeFormButton);
+    m_window->draw(*m_coinSprite);
+    m_buyDialog->draw(m_window);
 
     //=== TextHandler Drawing
 
@@ -208,7 +177,7 @@ void ShopView::draw() const
 /**
  * Events treating
  * @author Arthur
- * @date 16/05 - 18/05
+ * @date 16/05/16 - 18/05/16
  */
 bool ShopView::treatEvents() { return false; }
 bool ShopView::treatEvents(sf::Event event)
@@ -224,9 +193,9 @@ bool ShopView::treatEvents(sf::Event event)
             if ( it.second->contains(MOUSE_POSITION) )
                 it.second->setPressed(true);
 
-        for ( auto card : m_shopItemsCardArray )
+        for ( auto card : m_shopItemCardsArray )
             if ( card->getBuyButton()->contains(MOUSE_POSITION)
-                    && card->getShownState() && m_buyDialog == nullptr)
+                 && card->isShowing() && !m_buyDialog->isShowing())
                 card->getBuyButton()->setPressed(true);
     }
 
@@ -238,7 +207,7 @@ bool ShopView::treatEvents(sf::Event event)
         for( auto it : m_pageIndicators)
             it.second->setPressed(false);
 
-        for ( auto card : m_shopItemsCardArray )
+        for ( auto card : m_shopItemCardsArray )
             card->getBuyButton()->setPressed(false);
 
         //=== handle mouse up on a button
@@ -250,51 +219,39 @@ bool ShopView::treatEvents(sf::Event event)
             if ( it.second->contains(MOUSE_POSITION) )
                 m_currentIndicator = it.first;
 
-        for ( auto card : m_shopItemsCardArray )
-            if ( card->getBuyButton()->contains(MOUSE_POSITION) && card->getShownState()
-                    && !card->getItem()->getBoughtState() && m_buyDialog == nullptr)
+        for ( auto card : m_shopItemCardsArray )
+            if ( card->getBuyButton()->contains(MOUSE_POSITION) && card->isShowing()
+                 && !card->getItem()->isBought() && !m_buyDialog->isShowing() )
             {
-                //Get dialog text from file
-                string title, content, negative_choice, positive_choice;
-                m_textHandler->syncDialogText("askBuying", title, content, negative_choice, positive_choice);
-                content.insert(content.find(" : ")+3, card->getItem()->getName() + "\n\n" );
-                content.insert(content.find("\n")+11, to_string(card->getItem()->getPrice() ) );
-
-                //create buy dialog
-                m_buyDialog = new Dialog((int) (m_width / 2 - 125), (int) (m_height / 2 - 100),
-                                         card->getItem(), m_textHandler, title, content, negative_choice, positive_choice);
+                delete m_buyDialog;
+                m_buyDialog = new Dialog(m_width/2-125, m_height/2-100, 250, 200,  card->getItem(), m_textHandler, "shopAskDialog");
+                m_buyDialog->sync(m_shop->getDataBase());
+                m_buyDialog->show();
             }
 
-        //Mouse up on negative button
-        if ( m_buyDialog != nullptr && m_buyDialog->getNegativeButton().contains(MOUSE_POSITION) )
+        if ( m_buyDialog->isShowing() && m_buyDialog->getCancelButtonText().contains(MOUSE_POSITION) )
         {
-            delete m_buyDialog;
-            m_buyDialog = nullptr;
+            m_buyDialog->hide();
         }
-        //Mouse up on positive button as dialog
-        else if ( m_buyDialog != nullptr && m_buyDialog->getPositiveButton().contains(MOUSE_POSITION)
-                  &&  m_buyDialog->getNegativeButton().getString() != "")
+        else if ( m_buyDialog->isShowing() && m_buyDialog->getOkButtonText().contains(MOUSE_POSITION) )
         {
-            bool result = m_shop->buyItem(m_buyDialog->getItemLinked() );
-            delete m_buyDialog;
-            m_buyDialog = nullptr;
-
-            string title, content, negative_choice, positive_choice;
-            if ( result)
-                m_textHandler->syncDialogText("success", title, content, negative_choice, positive_choice);
+            if (m_buyDialog->getId() == "shopAskDialog" )
+            {
+                if (m_shop->buyItem(m_buyDialog->getLinkedShopItem() ))
+                {
+                    delete m_buyDialog;
+                    m_buyDialog = new Dialog(m_width/2-125, m_height/2-50, 250, 100, m_textHandler, "shopSuccess");
+                    m_buyDialog->sync(m_shop->getDataBase());
+                }
+                else
+                {
+                    delete m_buyDialog;
+                    m_buyDialog = new Dialog(m_width/2-125, m_height/2-50, 250, 100, m_textHandler, "shopFailure");
+                    m_buyDialog->sync(m_shop->getDataBase());
+                }
+            }
             else
-                m_textHandler->syncDialogText("failure", title, content, negative_choice, positive_choice);
-
-            m_buyDialog = new Dialog((int) (m_width / 2 - 125), (int) (m_height / 2 - 100),
-                                     nullptr, m_textHandler, title, content, negative_choice, positive_choice);
-        }
-
-        //Mouse up on positive button as toast
-        else if ( m_buyDialog != nullptr && m_buyDialog->getPositiveButton().contains(MOUSE_POSITION)
-                  &&  m_buyDialog->getNegativeButton().getString() == "")
-        {
-            delete m_buyDialog;
-            m_buyDialog = nullptr;
+                m_buyDialog->hide();
         }
     }
 

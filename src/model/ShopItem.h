@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,9 +19,12 @@ limitations under the License.
 #include <string>
 
 /**
- * ShopItem Class
+ * The ShopItem class
+ * contains information on buyable items from shop.
+ * Each item has a name, a description, a price
+ * and a state to check if it has already been bought
  * @author Arthur
- * @date 11/05
+ * @date 11/05/16 - 04/01/17
  */
 class ShopItem
 {
@@ -31,19 +34,18 @@ class ShopItem
         ~ShopItem();
 
         //=== GETTERS
+        std::string getId() const;
         std::string getName() const;
         std::string getDescription() const;
         int getPrice() const;
-        bool getBoughtState() const;
+        bool isBought() const;
 
         //=== SETTERS
-        void setBoughtState(bool state);
+        void buy();
 
-        //=== METHODS
-        std::string toString() const;
-
-    private:
+private:
         //=== ATTRIBUTES
+        std::string m_id;
         std::string m_name;
         std::string m_description;
         int m_price;

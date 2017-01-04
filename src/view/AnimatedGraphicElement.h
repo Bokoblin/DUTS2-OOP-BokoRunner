@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,24 +19,25 @@ limitations under the License.
 #include "GraphicElement.h"
 #include <chrono>
 
-const int ANIM_DELAY = 200;
-
 /**
- * AnimatedGraphicElement Class
+ * The AnimatedGraphicElement class adds to a Graphic element
+ * multiple clips from texture for them to change on events,
+ * a timePoint of the last time the animation has changed
+ * and an animation delay
  * @author Arthur
- * @date 3/03 - 22/05
+ * @date 3/03/16 - 02/01/17
  */
 class AnimatedGraphicElement : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
-    AnimatedGraphicElement(sf::Texture &image, float x, float y, float w, float h,
-            const std::vector<sf::IntRect> &clipRect);
+    AnimatedGraphicElement(float x, float y, float w, float h, std::string image,
+                           const std::vector<sf::IntRect> &clipRect);
     AnimatedGraphicElement( const AnimatedGraphicElement& other);
     virtual ~AnimatedGraphicElement();
 
     //=== SETTERS
-    void setClipRectArray(std::vector<sf::IntRect> array);
+    void setClipRectArray(std::vector<sf::IntRect> clipRectsArray);
 
     //=== METHODS
     virtual void sync() override;
@@ -46,6 +47,7 @@ private:
     std::vector<sf::IntRect> m_clipRectArray;
     unsigned int m_currentClipRect;
     std::chrono::system_clock::time_point m_lastAnimationTime;
+    const int ANIM_DELAY = 200;
 };
 
 #endif

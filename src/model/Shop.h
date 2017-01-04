@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,19 +16,20 @@ limitations under the License.
 #ifndef SHOP_H
 #define SHOP_H
 
+#include <vector>
 #include "ShopItem.h"
 #include "DataBase.h"
 
 /**
  * Shop Class
  * @author Arthur
- * @date 11/05 - 16/05
+ * @date 11/05/16 - 04/01/17
  */
 class Shop
 {
 public:
     //=== CTORs / DTORs
-    Shop(DataBase *data);
+    Shop(DataBase *dataBase);
     ~Shop();
 
     //=== GETTERS
@@ -37,15 +38,14 @@ public:
 
     //=== METHODS
     bool buyItem(ShopItem *item);
-    std::string toString() const;
 
 private:
     //=== ATTRIBUTES
     DataBase *m_dataBase;
-
     std::vector<ShopItem*> m_shopItemsArray;
 
     void fetchBuyableItemsFromFile();
+    std::string getStringFromLangFile(std::string name);
 };
 
 #endif

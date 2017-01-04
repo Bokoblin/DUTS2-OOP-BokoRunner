@@ -5,7 +5,7 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 26/03 - 26/12
+ * @date 26/03/16 - 26/12/16
  */
 GameModel::GameModel(const Model& model) :
     Model(model), m_gameState{RUNNING}, m_inTransition{false},
@@ -38,7 +38,7 @@ GameModel::GameModel(const Model& model) :
 /**
  * Destructor
  * @author Arthur
- * @date 26/03 - 24/05
+ * @date 26/03/16 - 24/05/16
  */
 GameModel::~GameModel()
 {
@@ -71,7 +71,7 @@ void GameModel::setCurrentZone(Zone z) { m_currentZone = z; }
 /**
  * Next Step
  * @author Arthur
- * @date 21/02 - 26/12
+ * @date 21/02/16 - 26/12/16
  */
 void GameModel::nextStep()
 {
@@ -147,9 +147,9 @@ void GameModel::nextStep()
 
 
 /**
- * choose the time-spacing between elements
+ * Chooses the time-spacing between elements
  * @author Arthur
- * @date  12/03 - 24/05
+ * @date  12/03/16 - 24/05/16
  */
 void GameModel::chooseTimeSpacing(int elementType)
 {
@@ -191,9 +191,9 @@ void GameModel::chooseTimeSpacing(int elementType)
 
 
 /**
-    check if a position is free to use
-****
- * @author Arthur  @date  8/03 - 30/04
+ * Checks if a position is free to use
+ * @author Arthur
+ * @date  08/03/16 - 30/04/16
  */
 bool GameModel::checkIfPositionFree(float x, float y) const
 {
@@ -215,7 +215,7 @@ bool GameModel::checkIfPositionFree(float x, float y) const
 /**
  * NewMovableElement vector cleaning
  * @author Arthur, Florian
- * @date 2/03
+ * @date 02/03/16
  */
 void GameModel::clearNewMovableElementList()
 {
@@ -226,7 +226,7 @@ void GameModel::clearNewMovableElementList()
 /**
  * Elements Moving (enemies, bonus, ...)
  * @author Arthur
- * @date 6/03 - 26/03
+ * @date 06/03/16 - 26/03/16
  */
 void GameModel::moveMovableElement(MovableElement *currentElement)
 {
@@ -240,9 +240,9 @@ void GameModel::moveMovableElement(MovableElement *currentElement)
 }
 
 /**
- * Handle Elements Creation
+ * Handles Elements Creation
  * @author Arthur
- * @date 12/04 - 24/05
+ * @date 12/04/16 - 24/05/16
  */
 void GameModel::handleMovableElementsCreation()
 {
@@ -287,7 +287,7 @@ void GameModel::handleMovableElementsCreation()
 /**
  * New MovableElement adding
  * @author Arthur, Florian
- * @date 25/02 - 18/05
+ * @date 25/02/16 - 18/05/16
  */
 void GameModel::addANewMovableElement(float posX, float posY, int type)
 {
@@ -320,9 +320,9 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
 
 
 /**
- * Handle Movable Elements Collisions
+ * Handles Movable Elements Collisions
  * @author Arthur
- * @date 12/03 - 20/05
+ * @date 12/03/16 - 20/05/16
  */
 void GameModel::handleMovableElementsCollisions()
 {
@@ -339,7 +339,7 @@ void GameModel::handleMovableElementsCollisions()
             case STANDARD_ENEMY:
                 if ( m_player->getState() == MEGA ) {
                     //add 100 to number of flattened enemies
-                    m_dataBase->setCurrentFlattenedEnemies(100);
+                    m_dataBase->increaseCurrentFlattenedEnemies(100);
                 }
                 else if (m_player->getState() == SHIELD
                          && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
@@ -363,7 +363,7 @@ void GameModel::handleMovableElementsCollisions()
             case TOTEM_ENEMY:
                  if ( m_player->getState() == MEGA ) {
                     //add 100 to number of flattened enemies
-                    m_dataBase->setCurrentFlattenedEnemies(300);
+                     m_dataBase->increaseCurrentFlattenedEnemies(300);
                 }
                 else if (m_player->getState() == SHIELD
                          && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
@@ -387,7 +387,7 @@ void GameModel::handleMovableElementsCollisions()
             case BLOCK_ENEMY:
                  if ( m_player->getState() == MEGA ) {
                     //add 100 to number of flattened enemies
-                    m_dataBase->setCurrentFlattenedEnemies(500);
+                     m_dataBase->increaseCurrentFlattenedEnemies(500);
                 }
                 else if (m_player->getState() == SHIELD
                          && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
@@ -411,9 +411,9 @@ void GameModel::handleMovableElementsCollisions()
             case COIN:
                 if ( m_dataBase->getActivatedItemsArray().find("doubler")
                      == m_dataBase->getActivatedItemsArray().end() )
-                    m_dataBase->setCurrentCoinsCollected(1); //1-increment coins number
+                    m_dataBase->increaseCurrentCoinsCollected(1); //1-increment coins number
                 else
-                    m_dataBase->setCurrentCoinsCollected(2);
+                    m_dataBase->increaseCurrentCoinsCollected(2);
                 break;
 
             case PV_PLUS_BONUS:
@@ -469,10 +469,10 @@ void GameModel::handleMovableElementsCollisions()
 
 /**
  * Handle Movable Elements Deletion \n
- * Pointers will only be deleted in Dtor
+ * Note : Pointers will only be deleted in Dtor
  *
  * @author Arthur
- * @date 12/03 - 11/04
+ * @date 12/03/16 - 11/04/16
  */
 void GameModel::handleMovableElementsDeletion()
 {

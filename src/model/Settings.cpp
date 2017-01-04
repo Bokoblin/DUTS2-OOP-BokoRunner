@@ -71,10 +71,10 @@ void Settings::checkItemsAvailability()
     else
     {
         //check in array if a bought item is present and update the variable value
-        m_morphSkinIsAvailable = !(m_dataBase->getActivatedItemsArray().find("morphing")
+        m_morphSkinIsAvailable = !(m_dataBase->getActivatedItemsArray().find("shop_morphing")
                                    == m_dataBase->getActivatedItemsArray().end());
 
-        m_capsuleSkinIsAvailable = !(m_dataBase->getActivatedItemsArray().find("capsule")
+        m_capsuleSkinIsAvailable = !(m_dataBase->getActivatedItemsArray().find("shop_capsule")
                                      == m_dataBase->getActivatedItemsArray().end());
     }
 }

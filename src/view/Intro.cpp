@@ -5,7 +5,7 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 27/03 - 11/04
+ * @date 27/03/16 - 11/04/16
  */
 Intro::Intro(float w, float h, sf::RenderWindow *window, TextHandler *text): View(w, h, window, text)
 {
@@ -20,7 +20,7 @@ Intro::Intro(float w, float h, sf::RenderWindow *window, TextHandler *text): Vie
 /**
  * Destructor
  * @author Arthur
- * @date 27/03
+ * @date 27/03/16
  */
 Intro::~Intro()
 {
@@ -31,24 +31,19 @@ Intro::~Intro()
 /**
  * Image Loading
  * @author Arthur
- * @date 27/03
+ * @date 27/03 - 02/01/17
  */
 void Intro::loadImages()
 {
-    if (!m_introTexture.loadFromFile(INTRO_IMAGE))
-        cerr << "ERROR when loading image file: " << INTRO_IMAGE << endl;
-    else
-    {
-        m_introTexture.setSmooth(true);
-        m_introGraphic = new GraphicElement(m_introTexture, 0,0, 400, 200);
-    }
+    m_introGraphic = new GraphicElement(0, 0, 400, 200);
+    m_introGraphic->setTextureFromImage(INTRO_IMAGE);
 }
 
 
 /**
  * Synchronization function
  * @author Arthur
- * @date 27/03
+ * @date 27/03/16
  */
 void Intro::synchronize()
 { }
@@ -57,7 +52,7 @@ void Intro::synchronize()
 /**
  * View Drawing
  * @author Arthur
- * @date 27/03
+ * @date 27/03/16
  */
 void Intro::draw() const
 {
@@ -70,7 +65,7 @@ void Intro::draw() const
 /**
  * Events treating
  * @author Arthur
- * @date 27/03
+ * @date 27/03/16
  */
 bool Intro::treatEvents()
 {

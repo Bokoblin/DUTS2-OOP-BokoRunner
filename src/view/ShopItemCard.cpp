@@ -5,43 +5,43 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 16/05 - 23/12
+ * @date 16/05/16 - 04/01/17
  */
-ShopItemCard::ShopItemCard(DataBase *dataBase, int num, ShopItem *item, TextHandler *t) :
-    m_dataBase{dataBase}, m_id{num}, m_posY{150}, m_shownState{false}, m_item{item}, m_text{t}
+ShopItemCard::ShopItemCard(int num, ShopItem *item, TextHandler *textHandler) :
+        GraphicElement(0, 150, 200, 300), m_id{num}, m_item{item}
 {
     if ( num%3 == 0)
-        m_posX = 100;
+        setPosition(100, 150);
     else if ( num%3 == 1)
-        m_posX = 350;
+        setPosition(350, 150);
     else if ( num%3 == 2)
-        m_posX = 600;
+        setPosition(600, 150);
 
     loadImages();
 
-    m_name.setCharacterSize(20);
-    m_name.setFont( *m_text->getCondensedFont() );
-    m_name.setColor(sf::Color::White);
-    m_name.setString( item->getName() );
-    m_name.setPositionSelfCentered( m_posX + m_width/2, m_posY+15);
+    m_title.setCharacterSize(20);
+    m_title.setFont( *textHandler->getCondensedFont() );
+    m_title.setColor(sf::Color::White);
+    m_title.setString(item->getName());
+    m_title.setPositionSelfCentered( getPosition().x + m_width/2 , getPosition().y + 20);
 
-    m_desc.setCharacterSize(16);
-    m_desc.setFont( *m_text->getCondensedFont() );
-    m_desc.setColor(sf::Color::White);
-    m_desc.setString( item->getDescription() );
-    m_desc.setPositionSelfCentered( m_posX + m_width/2, m_posY+200);
+    m_content.setCharacterSize(16);
+    m_content.setFont( *textHandler->getCondensedFont() );
+    m_content.setColor(sf::Color::White);
+    m_content.setString(item->getDescription());
+    m_content.setPosition( getPosition().x + 30, getPosition().y + 190);
+
+    hide();
 }
 
 
 /**
  * Destructor
  * @author Arthur
- * @date 16/05 - 23/12
+ * @date 16/05/16 - 04/01/17
  */
 ShopItemCard::~ShopItemCard()
 {
-    m_text = nullptr;
-    delete m_cardBackgroundSprite;
     delete m_buyButton;
     delete m_boughtButton;
 }
@@ -50,78 +50,54 @@ ShopItemCard::~ShopItemCard()
 //=== Getters
 
 int ShopItemCard::getId() const { return m_id; }
-bool ShopItemCard::getShownState() const { return m_shownState; }
 Button *ShopItemCard::getBuyButton() const { return m_buyButton; }
 ShopItem *ShopItemCard::getItem() const { return m_item; }
-
-
-//=== Setters
-
-void ShopItemCard::setShownState(bool state) { m_shownState = state; }
 
 
 /**
  * Image Loading
  * @author Arthur
- * @date 16/05 - 23/12
+ * @date 16/05/16 - 02/01/17
  */
 void ShopItemCard::loadImages()
 {
     //=== Initialize BUY, BOUGHT Buttons
 
-	if (!m_rectButtonsTexture.loadFromFile(RECT_BUTTONS_IMAGE) )
-		cerr << "ERROR when loading image file: " << RECT_BUTTONS_IMAGE << endl;
-	else
-	{
-        m_rectButtonsTexture.setSmooth(true);
+    vector<sf::IntRect> clipRectGreen;
+    clipRectGreen.push_back(GREEN_BUTTON_UP);
+    clipRectGreen.push_back(GREEN_BUTTON_DOWN);
+    m_buyButton = new Button(getPosition().x + m_width/2-75, getPosition().y + 250, 150, 80, "shop_purchasable",
+                             RECT_BUTTONS_IMAGE, clipRectGreen);
 
-		vector<sf::IntRect> clipRectGreen;
-        clipRectGreen.push_back(GREEN_BUTTON_UP);
-        clipRectGreen.push_back(GREEN_BUTTON_DOWN);
-		m_buyButton = new Button(clipRectGreen, m_rectButtonsTexture, m_posX + m_width/2 - 75,
-                                 m_posY+250, 150, 80, "shop_purchasable");
+    vector<sf::IntRect> clipRectRed;
+    clipRectRed.push_back(RED_BUTTON_UP);
+    clipRectRed.push_back(RED_BUTTON_UP);
+    m_boughtButton = new Button(getPosition().x + m_width/2-75, getPosition().y + 250, 150, 80, "shop_bought",
+                                RECT_BUTTONS_IMAGE, clipRectRed);
+    m_boughtButton->setActivated(false);
 
-        m_rectButtonsTexture.setSmooth(true);
-
-        vector<sf::IntRect> clipRectRed;
-        clipRectRed.push_back(RED_BUTTON_UP);
-        clipRectRed.push_back(RED_BUTTON_UP);
-        m_boughtButton = new Button(clipRectRed, m_rectButtonsTexture, m_posX + m_width/2 - 75,
-                                 m_posY+250, 150, 80, "shop_bought");
-        m_boughtButton->setActivated(false);
-    }
-
-
-	//=== Initialize CARD Sprite
-
-	if (!m_cardBackgroundTexture.loadFromFile(CARD_IMAGE) )
-        cerr << "ERROR when loading image file: " << CARD_IMAGE << endl;
-    else
-    {
-        m_cardBackgroundTexture.setSmooth(true);
-        m_cardBackgroundSprite = new GraphicElement(m_cardBackgroundTexture, m_posX, m_posY, m_width, m_height);
-    }
+    setTextureFromImage(CARD_IMAGE);
 }
 
 
 /**
  * Sync function
  * @author Arthur
- * @date 16/05 - 23/12
+ * @date 16/05/16 - 04/01/17
  */
-void ShopItemCard::sync()
+void ShopItemCard::sync(DataBase *dataBase)
 {
-    if (  m_item->getBoughtState() )
+    if (m_item->isBought() )
     {
-        m_buyButton->setVisible(false);
-        m_boughtButton->setVisible(true);
-        m_boughtButton->sync(m_dataBase);
+        m_buyButton->hide();
+        m_boughtButton->show();
+        m_boughtButton->sync(dataBase);
     }
     else
     {
-        m_boughtButton->setVisible(false);
-        m_buyButton->setVisible(true);
-        m_buyButton->sync(m_dataBase);
+        m_boughtButton->hide();
+        m_buyButton->show();
+        m_buyButton->sync(dataBase);
     }
 }
 
@@ -129,13 +105,16 @@ void ShopItemCard::sync()
 /**
  * Draw function
  * @author Arthur
- * @date 16/05 - 23/12
+ * @date 16/05/16 - 02/01/17
  */
 void ShopItemCard::draw(sf::RenderWindow *window) const
 {
-    window->draw(*m_cardBackgroundSprite);
-    window->draw(m_name);
-    window->draw(m_desc);
-    m_buyButton->draw(window);
-    m_boughtButton->draw(window);
+    if (isShowing())
+    {
+        window->draw(*this);
+        window->draw(m_title);
+        window->draw(m_content);
+        m_buyButton->draw(window);
+        m_boughtButton->draw(window);
+    }
 }

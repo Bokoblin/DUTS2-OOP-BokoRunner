@@ -36,10 +36,15 @@
     <string name="config_ball_morph_skin" value="Morph skin" />
     <string name="config_ball_capsule_skin" value="Capsule skin" />
     <string name="stats_title" value="Stats" />
+    <string name="stats_overall_title" value="Total stats" />
     <string name="stats_distance" value="Overall distance travelled" />
     <string name="stats_enemies" value="Overall flattened enemies" />
-    <string name="stats_games_number" value="Number of games played" />
     <string name="stats_coins" value="Overall coins collected" />
+    <string name="stats_games_number" value="Number of games played" />
+    <string name="stats_per_game_title" value="Per game stats" />
+    <string name="stats_per_game_distance" value="Highest distance travelled" />
+    <string name="stats_per_game_enemies" value="Highest number of flattened enemies" />
+    <string name="stats_per_game_coins" value="Highest number of coins collected" />
     <string name="stats_app_reset" value="CLEAR DATA" />
     <string name="about_title" value="About" />
     <string name="about_description" value=" Boko Runner is a C++ project we've done as our DUT 2nd semester's &#xA; programming
@@ -53,11 +58,25 @@ https://github.com/Bokoblin/DUTS2-POO-ProjetRunner. &#xA;To fill bug reports ple
     <string name="shop_bought" value="Bought" />
     <string name="shop_purchasable" value="Buy" />
     <string name="shop_dialog_title" value="Buy this item ?" />
-    <string name="shop_dialog_content" value="Name : Price  :  coins" />
+    <string name="shop_dialog_content" value="Name : $NAME &#xA;&#xA;Price : $PRICE coins" />
     <string name="shop_dialog_cancel" value="CANCEL" />
     <string name="shop_dialog_ok" value="OK" />
     <string name="shop_dialog_success" value="Thank you for your purchase." />
     <string name="shop_dialog_failure" value="Something went wrong." />
+
+    <!--  ShopItems strings -->
+    <string name="shop_doubler_name" value="Coin Doubler" />
+    <string name="shop_doubler_desc" value="Double the number &#xA;of coins collected" />
+    <string name="shop_shieldPlus_name" value="Shield+" />
+    <string name="shop_shieldPlus_desc" value="Protects the player &#xA;from another collision" />
+    <string name="shop_megaPlus_name" value="Mega+" />
+    <string name="shop_megaPlus_desc" value="Increase bonus duration &#xA;by 5 more seconds" />
+    <string name="shop_flyPlus_name" value="Fly+" />
+    <string name="shop_flyPlus_desc" value="Increase bonus duration &#xA;by 5 more seconds" />
+    <string name="shop_morphing_name" value="Ball - Morph skin" />
+    <string name="shop_morphing_desc" value="Unlock ball's morph skin" />
+    <string name="shop_capsule_name" value="Ball - Capsule skin" />
+    <string name="shop_capsule_desc" value="Unlock ball's capsule skin" />
 
     <!--  Game strings -->
     <string name="game_player_life" value="Life" />

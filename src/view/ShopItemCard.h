@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef SHOP_ITEM_CARD_H
 #define SHOP_ITEM_CARD_H
 
-#include "../Model/ShopItem.h"
+#include "../model/ShopItem.h"
 #include "Button.h"
 #include "TextHandler.h"
 

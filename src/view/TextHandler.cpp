@@ -6,17 +6,14 @@ using namespace std;
  * Constructs a text handler with
  * app's database and size
  * @author Arthur
- * @date 02/04/16 - 6/05/16
+ * @date 02/04/16 - 07/01/17
  */
 TextHandler::TextHandler(DataBase *dataBase, const int width, const int height)
         : m_dataBase{dataBase}, m_width{width}, m_height{height}
 {
-    m_regularFont = new sf::Font();
-    m_regularFont->loadFromFile(ROBOTO_REGULAR_FONT);
-    m_condensedFont = new sf::Font();
-    m_condensedFont->loadFromFile(ROBOTO_CONDENSED_FONT);
-    m_BoldFont = new sf::Font();
-    m_BoldFont->loadFromFile(ROBOTO_BOLD_FONT);
+    m_regularFont.loadFromFile(ROBOTO_REGULAR_FONT);
+    m_condensedFont.loadFromFile(ROBOTO_CONDENSED_FONT);
+    m_BoldFont.loadFromFile(ROBOTO_BOLD_FONT);
 
     loadText();
 }
@@ -25,23 +22,20 @@ TextHandler::TextHandler(DataBase *dataBase, const int width, const int height)
 /**
  * Destructor
  * @author Arthur
- * @date 2/04/16 - 22/12/16
+ * @date 2/04/16 - 07/01/17
  */
 TextHandler::~TextHandler()
 {
-    for ( Text *t : m_textList) delete t;
-
-    delete m_regularFont;
-    delete m_condensedFont;
-    delete m_BoldFont;
+    for ( Text *t : m_textList)
+        delete t;
 }
 
 
 //=== Getters
 
-sf::Font* TextHandler::getRegularFont() const { return m_regularFont; }
-sf::Font* TextHandler::getCondensedFont() const { return m_condensedFont; }
-sf::Font* TextHandler::getBoldFont() const { return m_BoldFont; }
+const sf::Font& TextHandler::getRegularFont() const { return m_regularFont; }
+const sf::Font& TextHandler::getCondensedFont() const { return m_condensedFont; }
+const sf::Font& TextHandler::getBoldFont() const { return m_BoldFont; }
 
 /**
  * Text Loading
@@ -177,39 +171,16 @@ void TextHandler::loadText()
 /**
  * Changes Language
  * @author Arthur
- * @date 13/04/16 - 04/01/17
+ * @date 13/04/16 - 07/01/17
  */
 void TextHandler::updateWholeText()
 {
     for ( Text* t : m_textList)
     {
         t->setCharacterSize(DEFAULT_CHAR_SIZE);
-        t->setFont(*m_condensedFont);
+        t->setFont(m_condensedFont);
         t->setColor(sf::Color::White);
-        updateString(t);
-    }
-}
-
-
-/**
- * Updates text string
- * @author Arthur
- * @date 13/04/16 - 04/01/17
- */
-void TextHandler::updateString(Text *text)
-{
-    pugi::xml_document doc;
-    doc.load_file(m_dataBase->getLanguageFile().c_str());
-
-    pugi::xml_node resources = doc.child("resources");
-
-    for (pugi::xml_node item: resources.children("string"))
-    {
-        if (string(item.attribute("name").value()) == text->getDescription())
-        {
-            text->setString(item.attribute("value").value());
-            break;
-        }
+        t->setString(m_dataBase->getStringFromFile(t->getDescription()));
     }
 }
 
@@ -312,13 +283,12 @@ void TextHandler::syncMenuLeaderboardText()
 /**
  * Menu Shop Text Syncing
  * @author Arthur
- * @date 16/05/16 - 04/01/17
+ * @date 16/05/16 - 07/01/17
  */
 void TextHandler::syncShopText()
 {
     m_walletText->setPosition(m_width/2, TITLE_TEXT_X);
-    m_walletText->setCharacterSize(DEFAULT_CHAR_SIZE);
-    m_walletText->setColor(GOLD_COLOR);
+    m_walletText->setTextFont(m_condensedFont, DEFAULT_CHAR_SIZE, GOLD_COLOR);
     m_walletText->setStringFromInt( m_dataBase->getWallet() );
 }
 
@@ -367,12 +337,12 @@ void TextHandler::syncPauseText()
 /**
  * Game End Screen Syncing
  * @author Arthur
- * @date 02/04/16 - 04/01/17
+ * @date 02/04/16 - 07/01/17
  */
 void TextHandler::syncEndText(int gameSpeed)
 {
     m_endTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
-    m_endTitleLabel->setFont(*m_BoldFont);
+    m_endTitleLabel->setFont(m_BoldFont);
 
     m_speedMultiplierLabel->setPosition(SUBTOTAL_LABEL_X, 170);
     m_speedMultiplierText->setPosition(SUBTOTAL_VALUE_X, 170);
@@ -398,14 +368,13 @@ void TextHandler::syncEndText(int gameSpeed)
     m_flattenedEnemiesText->setStringFromInt( m_dataBase->getCurrentFlattenedEnemies() );
 
     m_currentScoreLabel->setPosition(SUBTOTAL_LABEL_X,350);
-    m_currentScoreLabel->setFont(*m_BoldFont);
+    m_currentScoreLabel->setFont(m_BoldFont);
     m_currentScoreText->setPosition(SUBTOTAL_VALUE_X,350);
-    m_currentScoreText->setFont(*m_BoldFont);
+    m_currentScoreText->setFont(m_BoldFont);
     m_currentScoreText->setStringFromInt( m_dataBase->getCurrentScore() );
 
-    m_walletText->setCharacterSize(DEFAULT_CHAR_SIZE);
+    m_walletText->setTextFont(m_condensedFont, DEFAULT_CHAR_SIZE, GOLD_COLOR);
     m_walletText->setPosition(450, 535);
-    m_walletText->setColor(GOLD_COLOR);
     m_walletText->setStringFromInt( m_dataBase->getWallet() );
 }
 

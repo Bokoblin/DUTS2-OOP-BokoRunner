@@ -17,7 +17,7 @@ limitations under the License.
 #define SETTINGS_VIEW_H
 
 #include "View.h"
-#include "../Model/Settings.h"
+#include "../model/Settings.h"
 #include "RadioButton.h"
 
 #define RADIO_BUTTONS_MARGIN 50

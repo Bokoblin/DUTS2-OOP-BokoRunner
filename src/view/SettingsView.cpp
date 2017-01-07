@@ -40,7 +40,7 @@ SettingsView::SettingsView(float w, float h, sf::RenderWindow *window, TextHandl
 /**
  * Destructor
  * @author Arthur
- * @date 20/05/16 - 02/01/17
+ * @date 20/05/16 - 07/01/17
  */
 SettingsView::~SettingsView()
 {
@@ -49,6 +49,9 @@ SettingsView::~SettingsView()
 
     for ( auto it : m_pageIndicators)
         delete it.second;
+
+    delete m_logoIUTSprite;
+    delete m_logoSFMLSprite;
 }
 
 

@@ -17,7 +17,7 @@ limitations under the License.
 #define MENU_VIEW_H
 
 #include "View.h"
-#include "../Model/MenuModel.h"
+#include "../model/MenuModel.h"
 #include "LeaderboardView.h"
 #include "SettingsView.h"
 #include "ShopView.h"

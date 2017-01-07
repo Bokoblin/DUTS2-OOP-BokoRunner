@@ -39,6 +39,7 @@ public:
 
     //=== SETTERS
     void setDescription(std::string description);
+    void setTextFont(const sf::Font &font, unsigned int charSize, sf::Color color);
     void setPositionSelfCentered(double, double);
     void setStringFromInt(int value);
     void setVisible(bool on);

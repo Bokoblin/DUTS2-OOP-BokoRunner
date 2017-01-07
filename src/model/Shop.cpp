@@ -69,7 +69,7 @@ bool Shop::buyItem(ShopItem *item)
 /**
  * Fetch Shop Items from file
  * @author Arthur
- * @date 11/05/16 - 04/01/17
+ * @date 11/05/16 - 07/01/17
  */
 void Shop::fetchBuyableItemsFromFile()
 {
@@ -84,8 +84,8 @@ void Shop::fetchBuyableItemsFromFile()
         //Updates item's attributes
         bool isBought = false;
         string id = shopItem.attribute("id").value();
-        string name = getStringFromLangFile(id + "_name");
-        string desc = getStringFromLangFile(id + "_desc");
+        string name = m_dataBase->getStringFromFile(id + "_name");
+        string desc = m_dataBase->getStringFromFile(id + "_desc");
         int price = atoi(shopItem.attribute("price").value());
         string result = shopItem.attribute("bought").value();
         if (result == "true" ) isBought=true;
@@ -93,27 +93,4 @@ void Shop::fetchBuyableItemsFromFile()
         //Adds item to array
         m_shopItemsArray.push_back( new ShopItem(name, desc, price, isBought) );
     }
-}
-
-
-/**
- * Get language-adapted name and description
- * from language string file with item
- * @author Arthur
- * @date 04/01/17
- */
-string Shop::getStringFromLangFile(string name)
-{
-    pugi::xml_document doc;
-    doc.load_file(m_dataBase->getLanguageFile().c_str());
-
-    pugi::xml_node resources = doc.child("resources");
-
-    for (pugi::xml_node item: resources.children("string")) {
-        if (string(item.attribute("name").value()) == name)
-        {
-            return item.attribute("value").value();
-        }
-    }
-    return "unknown";
 }

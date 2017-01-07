@@ -33,13 +33,7 @@ const std::string AUDIO_FOLDER = "../res/audio/";
 const std::string ENGLISH_STRINGS = RESOURCES_FOLDER + "english.xml";
 const std::string FRENCH_STRINGS = RESOURCES_FOLDER + "french.xml";
 const std::string SPANISH_STRINGS = RESOURCES_FOLDER + "spanish.xml";
-
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 const std::string CONFIG_FILE = RESOURCES_FOLDER + "config.xml";
-#else
-const std::string CONFIG_FILE = "~/.config/runner/config.xml";
-#endif
-
 const std::string DEFAULT_CONFIG_CONTENT = "<?xml version=\"1.0\"?>\n"
         "<runner>\n"
         "\t<config>\n"
@@ -81,6 +75,11 @@ const int SCREEN_HEIGHT = 600;
 const int SCREEN_BPP = 32;
 const int INTRO_WIDTH = 400;
 const int INTRO_HEIGHT = 200;
+
+//=== Fonts
+const std::string ROBOTO_REGULAR_FONT = RESOURCES_FOLDER + "Roboto_Regular.ttf";
+const std::string ROBOTO_CONDENSED_FONT = RESOURCES_FOLDER + "Roboto_Condensed.ttf";
+const std::string ROBOTO_BOLD_FONT = RESOURCES_FOLDER + "Roboto_Bold.ttf";
 
 //=== Backgrounds
 const std::string DEFAULT_FAR_HILL_BACKGROUND = IMAGE_FOLDER + "backgrounds/hill_far.png";

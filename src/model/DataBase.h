@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include "../../Libs/pugixml-1.8/src/pugixml.hpp"
+#include "../../libs/pugixml-1.8/src/pugixml.hpp"
 #include <iostream>
 #include <cassert>
 #include <set>
@@ -33,7 +33,7 @@ enum Difficulty
 /**
  * DataBase Class
  * @author Arthur
- * @date 2/05/16 - 04/01/17
+ * @date 2/05/16 - 07/01/17
  */
 class DataBase
 {
@@ -72,6 +72,7 @@ public:
     void createFile();
     bool checkFileIntegrity();
     void fetchConfigurationFromFile();
+    std::string getStringFromFile(std::string description);
     void updateConfigValues();
     void updateActivatedItemsArray();
     void updateScoreArray();

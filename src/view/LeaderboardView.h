@@ -17,7 +17,7 @@ limitations under the License.
 #define LEADERBOARD_VIEW_H
 
 #include "View.h"
-#include "../Model/Leaderboard.h"
+#include "../model/Leaderboard.h"
 
 
 /**

@@ -13,9 +13,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "View/Intro.h"
-#include "View/MenuView.h"
-#include "View/GameView.h"
+#include "view/Intro.h"
+#include "view/MenuView.h"
+#include "view/GameView.h"
 
 using namespace std;
 

@@ -32,9 +32,6 @@ Fixes and misc:
 - Added showing capability to GraphicElement class
 - Other minor fixes and improvements
 
-Issues :
-- weak memory leak caused by non-deletable button's label pointer (SEG_FAULT)
-
 
 ---------------------------------------------------------------------------------------------------
 

@@ -23,7 +23,7 @@ limitations under the License.
 /**
  * Shop Class
  * @author Arthur
- * @date 11/05/16 - 04/01/17
+ * @date 11/05/16 - 07/01/17
  */
 class Shop
 {
@@ -45,7 +45,6 @@ private:
     std::vector<ShopItem*> m_shopItemsArray;
 
     void fetchBuyableItemsFromFile();
-    std::string getStringFromLangFile(std::string name);
 };
 
 #endif

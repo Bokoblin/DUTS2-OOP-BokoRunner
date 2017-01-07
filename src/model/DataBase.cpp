@@ -4,7 +4,9 @@ using namespace std;
 
 
 /**
- * Default Constructor
+ * Constructs the app's database
+ * by initializing all the data
+ * from config (backup) file
  * @author Arthur
  * @date 2/05/16
  */
@@ -145,6 +147,34 @@ void DataBase::fetchConfigurationFromFile()
     updateConfigValues();
     updateScoreArray();
     updateActivatedItemsArray();
+}
+
+
+/**
+ * Get language-adapted string
+ * from language string file
+ * to affect to a Text object
+ * @author Arthur
+ * @date 04/01/17
+ *
+ * @param description to fetch corresponding content
+ * @return text string
+ */
+string DataBase::getStringFromFile(string description)
+{
+    pugi::xml_document doc;
+    doc.load_file(getLanguageFile().c_str());
+
+    pugi::xml_node resources = doc.child("resources");
+
+    for (pugi::xml_node item: resources.children("string"))
+    {
+        if (string(item.attribute("name").value()) == description)
+        {
+            return item.attribute("value").value();
+        }
+    }
+    return "unknown";
 }
 
 
@@ -325,6 +355,8 @@ void DataBase::saveCurrentGame()
  * Add a new score to the score array
  * @author Arthur
  * @date 23/10/16
+ *
+ * @param new_score to add to the score array
  */
 void DataBase::addEntryToScoreArray(int new_score)
 {
@@ -337,6 +369,8 @@ void DataBase::addEntryToScoreArray(int new_score)
  * Update string content from array
  * @author Arthur
  * @date 23/10/16
+ *
+ * @param scores_text that will contain string content
  */
 void DataBase::loadStringFromArray(std::string &scores_text)
 {

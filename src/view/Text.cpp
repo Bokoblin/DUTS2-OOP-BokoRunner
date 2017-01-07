@@ -1,4 +1,5 @@
 #include "Text.h"
+#include "../constants.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ Text::Text() : m_description{""}
  */
 Text::Text(string description) : m_description{description}
 {
-    m_font.loadFromFile("../res/Roboto_Regular.ttf");
+    m_font.loadFromFile(ROBOTO_REGULAR_FONT);
     setFont(m_font);
     setColor(sf::Color::White);
     m_isVisible = true;
@@ -21,7 +22,7 @@ Text::Text(string description) : m_description{description}
 
 Text::Text(string description, bool isVisible) : m_description{description}
 {
-    m_font.loadFromFile("../res/Roboto_Regular.ttf");
+    m_font.loadFromFile(ROBOTO_REGULAR_FONT);
     setFont(m_font);
     setColor(sf::Color::White);
     m_isVisible = isVisible;
@@ -35,6 +36,12 @@ bool Text::isVisible() const { return m_isVisible; }
 //=== Setters
 
 void Text::setDescription(std::string description) { m_description = description; }
+void Text::setTextFont(const sf::Font &font, unsigned int charSize, sf::Color color)
+{
+    sf::Text::setFont(font);
+    sf::Text::setCharacterSize(charSize);
+    sf::Text::setColor(color);
+}
 void Text::setVisible(bool on) { m_isVisible = on; }
 void Text::setPositionSelfCentered(double x, double y) {
     setPosition( (float)(x-getGlobalBounds().width/2), (float)(y-getGlobalBounds().height/2) );

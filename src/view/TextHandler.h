@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef TEXT_HANDLER_H
 #define TEXT_HANDLER_H
 
-#include "../Model/DataBase.h"
+#include "../model/DataBase.h"
 #include "Text.h"
 #include "../model/Settings.h"
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -27,19 +27,6 @@ limitations under the License.
 #define ENEMY_BLUE_COLOR sf::Color(0,232,209,255)
 #define END_GREY_COLOR sf::Color(86,103,97,255)
 
-/********************************************
-    Constant Variables
-********************************************/
-const std::string ROBOTO_REGULAR_FONT = RESOURCES_FOLDER + "Roboto_Regular.ttf";
-const std::string ROBOTO_CONDENSED_FONT = RESOURCES_FOLDER + "Roboto_Condensed.ttf";
-const std::string ROBOTO_BOLD_FONT = RESOURCES_FOLDER + "Roboto_Bold.ttf";
-
-const int PAUSE_TEXT_X = 80;
-const int RADIO_TEXT_X = 100;
-const int SUBTOTAL_LABEL_X = 220;
-const int SUBTOTAL_VALUE_X = 580;
-const int DEFAULT_CHAR_SIZE = 24;
-const int CONTENT_CHAR_SIZE = 20;
 
 /**
  * The TextHandler Class groups app's standalone texts
@@ -49,7 +36,7 @@ const int CONTENT_CHAR_SIZE = 20;
  * Text objects branded as "Text" are loaded from parsed data
  *
  * @author Arthur
- * @date 02/04/16 - 04/01/17
+ * @date 02/04/16 - 07/01/17
  */
 class TextHandler
 {
@@ -60,14 +47,13 @@ class TextHandler
     ~TextHandler();
 
     //=== GETTERS
-    sf::Font *getRegularFont() const;
-    sf::Font *getCondensedFont() const;
-    sf::Font *getBoldFont() const;
+    const sf::Font& getRegularFont() const;
+    const sf::Font& getCondensedFont() const;
+    const sf::Font& getBoldFont() const;
 
     //=== METHODS
     void loadText();
     void updateWholeText();
-    void updateString(Text *currentText);
 
     void syncMenuHomeText();
     void syncSettingsText(int currentPage);
@@ -86,9 +72,9 @@ class TextHandler
 private:
     //=== ATTRIBUTES
     const int m_width, m_height;
-    sf::Font *m_regularFont;
-    sf::Font *m_condensedFont;
-    sf::Font *m_BoldFont;
+    sf::Font m_regularFont;
+    sf::Font m_condensedFont;
+    sf::Font m_BoldFont;
     DataBase *m_dataBase;
     std::vector<Text*> m_textList;
 
@@ -137,6 +123,14 @@ private:
     Text *m_speedMultiplierText;
     Text *m_flattenedEnemiesText;
     Text *m_currentScoreText;
+
+    //Constants
+    const int PAUSE_TEXT_X = 80;
+    const int RADIO_TEXT_X = 100;
+    const int SUBTOTAL_LABEL_X = 220;
+    const int SUBTOTAL_VALUE_X = 580;
+    const unsigned int DEFAULT_CHAR_SIZE = 24;
+    const unsigned int CONTENT_CHAR_SIZE = 20;
 };
 
 #endif

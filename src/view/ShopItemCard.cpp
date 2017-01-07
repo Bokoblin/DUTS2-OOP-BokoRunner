@@ -5,7 +5,7 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 16/05/16 - 04/01/17
+ * @date 16/05/16 - 07/01/17
  */
 ShopItemCard::ShopItemCard(int num, ShopItem *item, TextHandler *textHandler) :
         GraphicElement(0, 150, 200, 300), m_id{num}, m_item{item}
@@ -19,15 +19,11 @@ ShopItemCard::ShopItemCard(int num, ShopItem *item, TextHandler *textHandler) :
 
     loadImages();
 
-    m_title.setCharacterSize(20);
-    m_title.setFont( *textHandler->getCondensedFont() );
-    m_title.setColor(sf::Color::White);
+    m_title.setTextFont( textHandler->getCondensedFont(), 20, sf::Color::White );
     m_title.setString(item->getName());
     m_title.setPositionSelfCentered( getPosition().x + m_width/2 , getPosition().y + 20);
 
-    m_content.setCharacterSize(16);
-    m_content.setFont( *textHandler->getCondensedFont() );
-    m_content.setColor(sf::Color::White);
+    m_content.setTextFont( textHandler->getCondensedFont(), 16, sf::Color::White );
     m_content.setString(item->getDescription());
     m_content.setPosition( getPosition().x + 30, getPosition().y + 190);
 

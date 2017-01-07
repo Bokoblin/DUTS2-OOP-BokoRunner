@@ -17,7 +17,7 @@ limitations under the License.
 #define SHOP_VIEW_H
 
 #include "View.h"
-#include "../Model/Shop.h"
+#include "../model/Shop.h"
 #include "ShopItemCard.h"
 #include "Dialog.h"
 #include "RadioButton.h"

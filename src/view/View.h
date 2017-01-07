@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef VIEW_H
 #define VIEW_H
 
-#include "../Model/GameModel.h"
+#include "../model/GameModel.h"
 #include "TextHandler.h"
 #include "SlidingBackground.h"
 #include "AnimatedGraphicElement.h"

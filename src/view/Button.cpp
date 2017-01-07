@@ -110,10 +110,12 @@ Button::Button(Button const& other) :
 /**
  * Destructor
  * @author Arthur
- * @date 6/04/16 - 23/12/16
+ * @date 6/04/16 - 07/01/17
  */
 Button::~Button()
-{}
+{
+    delete m_label;
+}
 
 
 //=== Getters
@@ -158,19 +160,7 @@ void Button::sync(DataBase *dataBase)
 
     if ( m_label->getDescription() != "")
     {
-        pugi::xml_document doc;
-        doc.load_file(dataBase->getLanguageFile().c_str());
-
-        pugi::xml_node resources = doc.child("resources");
-
-        for (pugi::xml_node item: resources.children("string"))
-        {
-            if (std::string(item.attribute("name").value()) == m_label->getDescription())
-            {
-                m_label->setString(item.attribute("value").value());
-                break;
-            }
-        }
+        m_label->setString(dataBase->getStringFromFile(m_label->getDescription()));
 
         switch (m_labelPosition) {
             case TOP:

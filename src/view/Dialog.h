@@ -18,7 +18,6 @@ limitations under the License.
 
 #include "GraphicElement.h"
 #include "TextHandler.h"
-#include "../Model/ShopItem.h"
 #include "../model/ShopItem.h"
 
 #define MATERIAL_TEAL_COLOR sf::Color(0, 150, 136, 255)

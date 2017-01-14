@@ -40,7 +40,7 @@ const sf::Font& TextHandler::getBoldFont() const { return m_BoldFont; }
 /**
  * Text Loading
  * @author Arthur
- * @date 02/04/16 - 23/12/16
+ * @date 02/04/16 - 14/01/17
  * */
 void TextHandler::loadText()
 {
@@ -77,6 +77,12 @@ void TextHandler::loadText()
     m_statsTitleLabel = new Text("stats_title");
     m_textList.push_back(m_statsTitleLabel);
 
+    m_statsOverallTitleLabel = new Text("stats_overall_title");
+    m_textList.push_back(m_statsOverallTitleLabel);
+
+    m_statsPerGameTitleLabel = new Text("stats_per_game_title");
+    m_textList.push_back(m_statsPerGameTitleLabel);
+
     m_statsTotalDistanceLabel = new Text("stats_distance");
     m_textList.push_back(m_statsTotalDistanceLabel);
 
@@ -101,6 +107,23 @@ void TextHandler::loadText()
     m_statsTotalGamesText = new Text("stats_games_number_value");
     m_textList.push_back(m_statsTotalGamesText);
 
+    m_statsPerGameCoinsLabel = new Text("stats_per_game_coins");
+    m_textList.push_back(m_statsPerGameCoinsLabel);
+
+    m_statsPerGameCoinsText = new Text("stats_per_game_coins");
+    m_textList.push_back(m_statsPerGameCoinsText);
+
+    m_statsPerGameDistanceLabel = new Text("stats_per_game_distance");
+    m_textList.push_back(m_statsPerGameDistanceLabel);
+
+    m_statsPerGameDistanceText = new Text("stats_per_game_distance");
+    m_textList.push_back(m_statsPerGameDistanceText);
+
+    m_statsPerGameEnemiesLabel= new Text("stats_per_game_enemies");
+    m_textList.push_back(m_statsPerGameEnemiesLabel);
+
+    m_statsPerGameEnemiesText = new Text("stats_per_game_enemies");
+    m_textList.push_back(m_statsPerGameEnemiesText);
 
     //=== Settings - about
 
@@ -197,7 +220,7 @@ void TextHandler::syncMenuHomeText()
 /**
  * Menu Settings Text Syncing
  * @author Arthur
- * @date 14/04/16 - 23/12/16
+ * @date 14/04/16 - 14/01/17
  */
 void TextHandler::syncSettingsText(int currentPage)
 {
@@ -208,34 +231,54 @@ void TextHandler::syncSettingsText(int currentPage)
         m_configDifficultyTitleLabel->setPosition(40, 370);
         m_configCustomTitleLabel->setPosition(m_width/2 + 40, 150);
     }
-    else if ( currentPage == STATS) //TODO : stat per game
+    else if ( currentPage == STATS)
     {
         m_statsTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
+        m_statsOverallTitleLabel->setPosition(40, 130);
+        m_statsPerGameTitleLabel->setPosition(m_width/2 + 40, 130);
 
-        m_statsTotalDistanceLabel->setPosition(RADIO_TEXT_X, 150);
+        m_statsTotalDistanceLabel->setPosition(STAT_LABEL_X, 190);
         m_statsTotalDistanceLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalDistanceText->setPosition(m_width/2, 150);
+        m_statsTotalDistanceText->setPosition(STAT_LABEL_X+250, 190);
         m_statsTotalDistanceText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalDistanceText->setString(to_string( m_dataBase->getTotalDistance() ) + " m" );
 
-        m_statsTotalEnemiesLabel->setPosition(RADIO_TEXT_X, 190);
+        m_statsTotalEnemiesLabel->setPosition(STAT_LABEL_X, 230);
         m_statsTotalEnemiesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalEnemiesText->setPosition(m_width/2, 190);
+        m_statsTotalEnemiesText->setPosition(STAT_LABEL_X+250, 230);
         m_statsTotalEnemiesText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalEnemiesText->setStringFromInt( m_dataBase->getTotalFlattenedEnemies() );
 
-        m_statsTotalCoinsLabel->setPosition(RADIO_TEXT_X, 230);
+        m_statsTotalCoinsLabel->setPosition(STAT_LABEL_X, 270);
         m_statsTotalCoinsLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalCoinsNbText->setPosition(m_width/2, 230);
+        m_statsTotalCoinsNbText->setPosition(STAT_LABEL_X+250, 270);
         m_statsTotalCoinsNbText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalCoinsNbText->setColor(sf::Color::White);
         m_statsTotalCoinsNbText->setStringFromInt( m_dataBase->getTotalCoinsNumber() );
 
-        m_statsTotalGamesLabel->setPosition(RADIO_TEXT_X, 270);
+        m_statsTotalGamesLabel->setPosition(STAT_LABEL_X, 310);
         m_statsTotalGamesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalGamesText->setPosition(m_width/2, 270);
+        m_statsTotalGamesText->setPosition(STAT_LABEL_X+250, 310);
         m_statsTotalGamesText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalGamesText->setStringFromInt( m_dataBase->getTotalGamesPlayed() );
+
+        m_statsPerGameDistanceLabel->setPosition(m_width/2+STAT_LABEL_X, 190);
+        m_statsPerGameDistanceLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsPerGameDistanceText->setPosition(m_width-2*STAT_LABEL_X, 190);
+        m_statsPerGameDistanceText->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsPerGameDistanceText->setString(to_string( m_dataBase->getPerGameDistance() ) + " m" );
+
+        m_statsPerGameEnemiesLabel->setPosition(m_width/2+STAT_LABEL_X, 230);
+        m_statsPerGameEnemiesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsPerGameEnemiesText->setPosition(m_width-2*STAT_LABEL_X, 230);
+        m_statsPerGameEnemiesText->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsPerGameEnemiesText->setStringFromInt( m_dataBase->getPerGameFlattenedEnemies() );
+
+        m_statsPerGameCoinsLabel->setPosition(m_width/2+STAT_LABEL_X, 270);
+        m_statsPerGameCoinsLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsPerGameCoinsText->setPosition(m_width-2*STAT_LABEL_X, 270);
+        m_statsPerGameCoinsText->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_statsPerGameCoinsText->setStringFromInt( m_dataBase->getPerGameCoinsNumber() );
     }
     else //ABOUT
     {
@@ -383,7 +426,7 @@ void TextHandler::syncEndText(int gameSpeed)
 /**
  * Settings Screen Drawing
  * @author Arthur
- * @date 14/04/16 - 02/01/17
+ * @date 14/04/16 - 14/01/17
  */
 void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const
 {
@@ -397,6 +440,8 @@ void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage
     else if ( currentPage == STATS)
     {
         m_statsTitleLabel->draw(window);
+        m_statsOverallTitleLabel->draw(window);
+        m_statsPerGameTitleLabel->draw(window);
         m_statsTotalDistanceLabel->draw(window);
         m_statsTotalEnemiesLabel->draw(window);
         m_statsTotalGamesLabel->draw(window);
@@ -405,6 +450,12 @@ void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage
         m_statsTotalCoinsLabel->draw(window);
         m_statsTotalCoinsNbText->draw(window);
         m_statsTotalGamesText->draw(window);
+        m_statsPerGameCoinsLabel->draw(window);
+        m_statsPerGameCoinsText->draw(window);
+        m_statsPerGameDistanceLabel->draw(window);
+        m_statsPerGameDistanceText->draw(window);
+        m_statsPerGameEnemiesLabel->draw(window);
+        m_statsPerGameEnemiesText->draw(window);
     }
     else //ABOUT
     {

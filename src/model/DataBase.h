@@ -33,7 +33,7 @@ enum Difficulty
 /**
  * DataBase Class
  * @author Arthur
- * @date 2/05/16 - 07/01/17
+ * @date 2/05/16 - 14/01/17
  */
 class DataBase
 {
@@ -46,6 +46,9 @@ public:
     int getTotalCoinsNumber() const;
     int getTotalDistance() const;
     int getTotalFlattenedEnemies() const;
+    int getPerGameCoinsNumber() const;
+    int getPerGameDistance() const;
+    int getPerGameFlattenedEnemies() const;
     int getTotalGamesPlayed() const;
     int getCurrentCoinsNumber() const;
     int getCurrentDistance() const;
@@ -91,6 +94,9 @@ private:
     int m_totalDistance;
     int m_totalFlattenedEnemies;
     int m_totalGamesPlayed;
+    int m_perGameCoinsCollected;
+    int m_perGameDistance;
+    int m_perGameFlattenedEnemies;
     int m_wallet;
     int m_currentDifficulty;
     std::string m_currentLanguage;

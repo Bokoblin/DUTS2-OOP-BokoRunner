@@ -21,7 +21,7 @@ limitations under the License.
 /**
  * Provides constants to model and view classes
  * @author Arthur
- * @date 23/10/16 - 04/01/17
+ * @date 23/10/16 - 14/01/17
  */
 
 //=== RES Folders
@@ -40,12 +40,17 @@ const std::string DEFAULT_CONFIG_CONTENT = "<?xml version=\"1.0\"?>\n"
         "\t\t<configItem name=\"language\" value=\"en\"/>\n"
         "\t\t<configItem name=\"difficulty\" value=\"2\"/>\n"
         "\t\t<configItem name=\"ball_skin\" value=\"default\"/>\n"
-        "\t\t<configItem name=\"total_coins_collected\" value=\"0\"/>\n"
-        "\t\t<configItem name=\"total_distance_travelled\" value=\"0\"/>\n"
-        "\t\t<configItem name=\"total_enemies_destroyed\" value=\"0\"/>\n"
-        "\t\t<configItem name=\"total_games_played\" value=\"0\"/>\n"
         "\t\t<configItem name=\"wallet\" value=\"0\"/>\n"
         "\t</config>\n"
+        "\t<stats>\n"
+        "\t\t<statItem name=\"total_distance_travelled\" value=\"0\"/>\n"
+        "\t\t<statItem name=\"total_enemies_destroyed\" value=\"0\"/>\n"
+        "\t\t<statItem name=\"total_coins_collected\" value=\"0\"/>\n"
+        "\t\t<statItem name=\"total_games_played\" value=\"0\"/>\n"
+        "\t\t<statItem name=\"per_game_distance_travelled\" value=\"0\"/>\n"
+        "\t\t<statItem name=\"per_game_enemies_destroyed\" value=\"0\"/>\n"
+        "\t\t<statItem name=\"per_game_coins_collected\" value=\"0\"/>\n"
+        "\t</stats>\n"
         "\t<shop>\n"
         "\t\t<shopItem id=\"shop_doubler\" price=\"1000\" bought=\"false\"/>\n"
         "\t\t<shopItem id=\"shop_shieldPlus\" price=\"100\" bought=\"false\"/>\n"

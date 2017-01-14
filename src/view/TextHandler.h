@@ -36,7 +36,7 @@ limitations under the License.
  * Text objects branded as "Text" are loaded from parsed data
  *
  * @author Arthur
- * @date 02/04/16 - 07/01/17
+ * @date 02/04/16 - 14/01/17
  */
 class TextHandler
 {
@@ -81,20 +81,21 @@ private:
     //Leaderboard Labels
     Text *m_leaderboardTitleLabel;
 
-    //Shop Labels
-    Text *m_walletText;
-
     //Settings Labels
     Text *m_configTitleLabel;
     Text *m_configLangTitleLabel;
     Text *m_configDifficultyTitleLabel;
     Text *m_configCustomTitleLabel;
     Text *m_statsTitleLabel;
+    Text *m_statsOverallTitleLabel;
+    Text *m_statsPerGameTitleLabel;
     Text *m_statsTotalDistanceLabel;
     Text *m_statsTotalEnemiesLabel;
-    Text *m_statsTotalGamesLabel;
     Text *m_statsTotalCoinsLabel;
-    Text *m_statsTotalCoinsNbText;
+    Text *m_statsTotalGamesLabel;
+    Text *m_statsPerGameDistanceLabel;
+    Text *m_statsPerGameEnemiesLabel;
+    Text *m_statsPerGameCoinsLabel;
     Text *m_aboutTitleLabel;
     Text *m_aboutDescriptionLabel;
     Text *m_aboutRepositoryLabel;
@@ -110,13 +111,18 @@ private:
     Text *m_flattenedEnemiesLabel;
     Text *m_currentScoreLabel;
 
-    //Settings and Leaderboard DataText
+    //Menu data-texts
     Text *m_statsTotalDistanceText;
     Text *m_statsTotalEnemiesText;
     Text *m_statsTotalGamesText;
+    Text *m_statsTotalCoinsNbText;
+    Text *m_statsPerGameDistanceText;
+    Text *m_statsPerGameEnemiesText;
+    Text *m_statsPerGameCoinsText;
     Text *m_leaderboardContentText;
+    Text *m_walletText;
 
-    //Game (Main, Pause & End) DataText
+    //In-Game data-texts
     Text *m_currentDistanceText;
     Text *m_bonusTimeoutText;
     Text *m_currentCoinsNbText;
@@ -126,7 +132,7 @@ private:
 
     //Constants
     const int PAUSE_TEXT_X = 80;
-    const int RADIO_TEXT_X = 100;
+    const int STAT_LABEL_X = 60;
     const int SUBTOTAL_LABEL_X = 220;
     const int SUBTOTAL_VALUE_X = 580;
     const unsigned int DEFAULT_CHAR_SIZE = 24;

@@ -7,19 +7,20 @@ Current version : v1.8-dev
 
 v1.8-dev
 
-Important changes:
+Major visible changes:
 - Settings enhancements
-    - Added "clear data" button to Stats section
-    - Put About section in a separated page (in preparation for new content in stats)
+    - Split "Stats" and "Credit" (now About) in two different pages
+    - Added per-game stats and "clear data" button to Stats page
     - Added SFML logo and some information to About page
+- Shop screen is now fully multilingual
 
+Major coding changes:
 - Added Text class inherited from sf::Text
 - Added RadioButton class inherited from Button
 - Added Button's label that can be positioned at TOP, RIGHT, BOTTOM, LEFT, CENTER
 - Removed standalone texts that are now a button's label
 - Rewritten GraphicElement texture handling (allows class-specific rectangle clips)
 - Rewritten Dialog and ShopItemCard that are now inherited from GraphicElement
-- Shop screen is now fully multilingual
 - Centralized all global constants in one file
 
 Fixes and misc:

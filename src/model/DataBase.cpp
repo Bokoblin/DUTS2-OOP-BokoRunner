@@ -26,6 +26,9 @@ int DataBase::getTotalCoinsNumber() const { return m_totalCoinsCollected; }
 int DataBase::getTotalDistance() const { return m_totalDistance; }
 int DataBase::getTotalFlattenedEnemies() const { return m_totalFlattenedEnemies; }
 int DataBase::getTotalGamesPlayed() const { return m_totalGamesPlayed; }
+int DataBase::getPerGameCoinsNumber() const { return m_perGameCoinsCollected; }
+int DataBase::getPerGameDistance() const { return m_perGameDistance; }
+int DataBase::getPerGameFlattenedEnemies() const { return m_perGameFlattenedEnemies; }
 int DataBase::getCurrentCoinsNumber() const { return m_currentCoinsNumber; }
 int DataBase::getCurrentDistance() const { return (int)m_currentDistance; }
 int DataBase::getCurrentFlattenedEnemies() const { return m_currentFlattenedEnemies; }
@@ -79,9 +82,10 @@ void DataBase::createFile()
 
 
 /**
- * Check if file data is OK
+ * Checks if config file has been corrupted
+ * by verifying file number of lines, number of each item
  * @author Arthur
- * @date 2/05/16 - 04/01/17
+ * @date 2/05/16 - 14/01/17
  */
 bool DataBase::checkFileIntegrity()
 {
@@ -96,10 +100,12 @@ bool DataBase::checkFileIntegrity()
 
     //=== Count lines / elements test
     bool isPresentConfig = false; //should be true
+    bool isPresentStats = false; //should be true
     bool isPresentShop = false; //should be true
     bool isPresentScore = false; //should be true
-    int nbLines = 0; //should be 33 or 34
-    int nbConfigChildren = 0; //should be 8
+    int nbLines = 0; //should be 38 or 39
+    int nbConfigChildren = 0; //should be 4
+    int nbStatsChildren = 0; //should be 7
     int nbShopChildren = 0; //should be 6
     int nbScoreChildren = 0; //should be 10
     do {
@@ -109,6 +115,10 @@ bool DataBase::checkFileIntegrity()
         unsigned long long int found = line.find("<config>");
         if ( found != string::npos)
             isPresentConfig = true;
+
+        found = line.find("<stats>");
+        if ( found != string::npos)
+            isPresentStats = true;
 
         found = line.find("<shop>");
         if ( found != string::npos)
@@ -122,6 +132,10 @@ bool DataBase::checkFileIntegrity()
         if ( found != string::npos)
             nbConfigChildren++;
 
+        found = line.find("<statItem");
+        if ( found != string::npos)
+            nbStatsChildren++;
+
         found = line.find("<shopItem");
         if ( found != string::npos)
             nbShopChildren++;
@@ -132,8 +146,8 @@ bool DataBase::checkFileIntegrity()
     }
     while ( !f.eof() );
 
-    return !(!isPresentConfig || !isPresentShop || !isPresentScore || (nbLines != 33 && nbLines != 34)
-             || nbConfigChildren!=8 || nbShopChildren!=6 || nbScoreChildren!=10);
+    return !(!isPresentConfig || !isPresentStats || !isPresentShop || !isPresentScore || (nbLines != 38 && nbLines != 39)
+             || nbConfigChildren!=4 || nbStatsChildren!=7 || nbShopChildren!=6 || nbScoreChildren!=10);
 }
 
 
@@ -181,7 +195,7 @@ string DataBase::getStringFromFile(string description)
 /**
  * Update variable value from file
  * @author Arthur
- * @date 24/10/16 - 04/01/17
+ * @date 24/10/16 - 14/01/17
  */
 void DataBase::updateConfigValues()
 {
@@ -190,6 +204,7 @@ void DataBase::updateConfigValues()
 
     pugi::xml_node runner = doc.child("runner");
     pugi::xml_node config = runner.child("config");
+    pugi::xml_node stats = runner.child("stats");
 
     for (pugi::xml_node configItem: config.children("configItem"))
     {
@@ -199,16 +214,26 @@ void DataBase::updateConfigValues()
             m_currentDifficulty = atoi(configItem.attribute("value").value());
         else if (string(configItem.attribute("name").value()) == "ball_skin")
             m_currentBallSkin = configItem.attribute("value").value();
-        else if (string(configItem.attribute("name").value()) == "total_coins_collected")
-            m_totalCoinsCollected = atoi(configItem.attribute("value").value());
-        else if (string(configItem.attribute("name").value()) == "total_distance_travelled")
-            m_totalDistance = atoi(configItem.attribute("value").value());
-        else if (string(configItem.attribute("name").value()) == "total_enemies_destroyed")
-            m_totalFlattenedEnemies = atoi(configItem.attribute("value").value());
-        else if (string(configItem.attribute("name").value()) == "total_games_played")
-            m_totalGamesPlayed = atoi(configItem.attribute("value").value());
         else if (string(configItem.attribute("name").value()) == "wallet")
             m_wallet = atoi(configItem.attribute("value").value());
+    }
+
+    for (pugi::xml_node statItem: stats.children("statItem"))
+    {
+        if (string(statItem.attribute("name").value()) == "total_coins_collected")
+            m_totalCoinsCollected = atoi(statItem.attribute("value").value());
+        else if (string(statItem.attribute("name").value()) == "total_distance_travelled")
+            m_totalDistance = atoi(statItem.attribute("value").value());
+        else if (string(statItem.attribute("name").value()) == "total_enemies_destroyed")
+            m_totalFlattenedEnemies = atoi(statItem.attribute("value").value());
+        else if (string(statItem.attribute("name").value()) == "per_game_coins_collected")
+            m_perGameCoinsCollected = atoi(statItem.attribute("value").value());
+        else if (string(statItem.attribute("name").value()) == "per_game_distance_travelled")
+            m_perGameDistance = atoi(statItem.attribute("value").value());
+        else if (string(statItem.attribute("name").value()) == "per_game_enemies_destroyed")
+            m_perGameFlattenedEnemies = atoi(statItem.attribute("value").value());
+        else if (string(statItem.attribute("name").value()) == "total_games_played")
+            m_totalGamesPlayed = atoi(statItem.attribute("value").value());
     }
 }
 
@@ -259,7 +284,7 @@ void DataBase::updateActivatedItemsArray()
 /**
  * Push Configuration data to file
  * @author Arthur
- * @date 2/05/16 - 04/01/17
+ * @date 2/05/16 - 14/01/17
  */
 void DataBase::pushConfigurationToFile()
 {
@@ -303,6 +328,21 @@ void DataBase::pushConfigurationToFile()
             pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value((to_string(m_totalFlattenedEnemies)).c_str());
         }
+        else if ( string(configItem.attribute("name").value()) == "per_game_coins_collected" )
+        {
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            nodeValue.set_value((to_string(m_perGameCoinsCollected)).c_str());
+        }
+        else if ( string(configItem.attribute("name").value()) == "per_game_distance_travelled" )
+        {
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            nodeValue.set_value((to_string(m_perGameDistance)).c_str());
+        }
+        else if ( string(configItem.attribute("name").value()) == "per_game_enemies_destroyed" )
+        {
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            nodeValue.set_value((to_string(m_perGameFlattenedEnemies)).c_str());
+        }
         else if ( string(configItem.attribute("name").value()) == "total_games_played" )
         {
             pugi::xml_attribute nodeValue = configItem.attribute("value");
@@ -339,7 +379,7 @@ void DataBase::pushConfigurationToFile()
 /**
  * Save Current Game
  * @author Arthur
- * @date 2/05/16 - 04/01/17
+ * @date 2/05/16 - 14/01/17
  */
 void DataBase::saveCurrentGame()
 {
@@ -349,6 +389,14 @@ void DataBase::saveCurrentGame()
     m_totalDistance += (int)m_currentDistance;
     m_totalFlattenedEnemies += m_currentFlattenedEnemies;
     addEntryToScoreArray(m_currentScore);
+
+    //update per game stats if better
+    if (m_currentCoinsNumber > m_perGameCoinsCollected)
+        m_perGameCoinsCollected = m_currentCoinsNumber;
+    if (m_currentDistance > m_perGameDistance)
+        m_perGameDistance = (int)m_currentDistance;
+    if (m_currentFlattenedEnemies > m_perGameFlattenedEnemies)
+        m_perGameFlattenedEnemies = m_currentFlattenedEnemies;
 }
 
 /**

@@ -36,11 +36,16 @@
     <string name="config_ball_morph_skin" value="Apariencia morphing" />
     <string name="config_ball_capsule_skin" value="Apariencia capsule" />
     <string name="stats_title" value="Estadisticas" />
+    <string name="stats_overall_title" value="Estadisticas cumulados" />
+    <string name="stats_per_game_title" value="Estadisticas per parte" />
     <string name="stats_distance" value="Total distancia recorrida" />
     <string name="stats_enemies" value="Total destrucciones enemigos" />
     <string name="stats_coins" value="Total monedas recogidas" />
-    <string name="stats_app_reset" value="REINICIAR" />
     <string name="stats_games_number" value="Juegos lanzados" />
+    <string name="stats_per_game_distance" value="Mejor distancia recorrida" />
+    <string name="stats_per_game_enemies" value="Mejor destrucciones enemigos" />
+    <string name="stats_per_game_coins" value="Mejor monedas recogidas" />
+    <string name="stats_app_reset" value="REINICIAR" />
     <string name="about_title" value="Credits" />
     <string name="about_description" value="Boko Runner es un proyecto C++ que hemos realizado como proyecto &#xA;
 de programacion de nuestro segundo semestre de DUT. Su objetivo era &#xA;poner en practica las nociones de OOP

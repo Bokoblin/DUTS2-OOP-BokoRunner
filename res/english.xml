@@ -36,15 +36,15 @@
     <string name="config_ball_morph_skin" value="Morph skin" />
     <string name="config_ball_capsule_skin" value="Capsule skin" />
     <string name="stats_title" value="Stats" />
-    <string name="stats_overall_title" value="Total stats" />
+    <string name="stats_overall_title" value="Cumulative stats" />
+    <string name="stats_per_game_title" value="Per game stats" />
     <string name="stats_distance" value="Overall distance travelled" />
     <string name="stats_enemies" value="Overall flattened enemies" />
     <string name="stats_coins" value="Overall coins collected" />
     <string name="stats_games_number" value="Number of games played" />
-    <string name="stats_per_game_title" value="Per game stats" />
-    <string name="stats_per_game_distance" value="Highest distance travelled" />
-    <string name="stats_per_game_enemies" value="Highest number of flattened enemies" />
-    <string name="stats_per_game_coins" value="Highest number of coins collected" />
+    <string name="stats_per_game_distance" value="Best distance travelled" />
+    <string name="stats_per_game_enemies" value="Best flattened enemies" />
+    <string name="stats_per_game_coins" value="Best coins collected" />
     <string name="stats_app_reset" value="CLEAR DATA" />
     <string name="about_title" value="About" />
     <string name="about_description" value=" Boko Runner is a C++ project we've done as our DUT 2nd semester's &#xA; programming

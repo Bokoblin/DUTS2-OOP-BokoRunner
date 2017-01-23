@@ -36,7 +36,7 @@ limitations under the License.
  * Text objects branded as "Text" are loaded from parsed data
  *
  * @author Arthur
- * @date 02/04/16 - 14/01/17
+ * @date 02/04/16 - 23/01/17
  */
 class TextHandler
 {
@@ -119,7 +119,8 @@ private:
     Text *m_statsPerGameDistanceText;
     Text *m_statsPerGameEnemiesText;
     Text *m_statsPerGameCoinsText;
-    Text *m_leaderboardContentText;
+    Text *m_leaderboardContentEasyText;
+    Text *m_leaderboardContentHardText;
     Text *m_walletText;
 
     //In-Game data-texts

@@ -19,7 +19,7 @@
    <string name="menu_play_button" value="JOUER" />
    <string name="menu_quit_button" value="QUITTER" />
    <string name="leaderboard_title" value="Classement" />
-   <string name="leaderboard_content" value="Il n'y a pas encore de scores" />
+   <string name="leaderboard_content" value="Pas de scores" />
    <string name="leaderboard_clear_button" value="EFFACER" />
 
    <!-- Settings strings -->

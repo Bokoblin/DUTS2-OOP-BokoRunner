@@ -85,7 +85,7 @@ void DataBase::createFile()
  * Checks if config file has been corrupted
  * by verifying file number of lines, number of each item
  * @author Arthur
- * @date 2/05/16 - 14/01/17
+ * @date 2/05/16 - 23/01/17
  */
 bool DataBase::checkFileIntegrity()
 {
@@ -102,12 +102,13 @@ bool DataBase::checkFileIntegrity()
     bool isPresentConfig = false; //should be true
     bool isPresentStats = false; //should be true
     bool isPresentShop = false; //should be true
-    bool isPresentScore = false; //should be true
-    int nbLines = 0; //should be 38 or 39
+    bool isPresentScoreEasy = false; //should be true
+    bool isPresentScoreHard = false; //should be true
+    int nbLines = 0; //should be 50 or 51
     int nbConfigChildren = 0; //should be 4
     int nbStatsChildren = 0; //should be 7
     int nbShopChildren = 0; //should be 6
-    int nbScoreChildren = 0; //should be 10
+    int nbScoreChildren = 0; //should be 20
     do {
         getline(f, line, '\n');
         nbLines++;
@@ -124,9 +125,13 @@ bool DataBase::checkFileIntegrity()
         if ( found != string::npos)
             isPresentShop = true;
 
-        found = line.find("<scores>");
+        found = line.find("<scoresEasy>");
         if ( found != string::npos)
-            isPresentScore = true;
+            isPresentScoreEasy = true;
+
+        found = line.find("<scoresHard>");
+        if ( found != string::npos)
+            isPresentScoreHard = true;
 
         found = line.find("<configItem");
         if ( found != string::npos)
@@ -146,8 +151,9 @@ bool DataBase::checkFileIntegrity()
     }
     while ( !f.eof() );
 
-    return !(!isPresentConfig || !isPresentStats || !isPresentShop || !isPresentScore || (nbLines != 38 && nbLines != 39)
-             || nbConfigChildren!=4 || nbStatsChildren!=7 || nbShopChildren!=6 || nbScoreChildren!=10);
+    return !(!isPresentConfig || !isPresentStats || !isPresentShop || !isPresentScoreEasy || !isPresentScoreHard
+             || (nbLines != 50 && nbLines != 51)
+             || nbConfigChildren!=4 || nbStatsChildren!=7 || nbShopChildren!=6 || nbScoreChildren!=20);
 }
 
 
@@ -159,7 +165,7 @@ bool DataBase::checkFileIntegrity()
 void DataBase::fetchConfigurationFromFile()
 {
     updateConfigValues();
-    updateScoreArray();
+    updateScoreArrays();
     updateActivatedItemsArray();
 }
 
@@ -241,21 +247,28 @@ void DataBase::updateConfigValues()
 /**
  * Update score array
  * @author Arthur
- * @date 23/10/16 - 24/10/16
+ * @date 23/10/16 - 23/01/17
  */
-void DataBase::updateScoreArray()
+void DataBase::updateScoreArrays()
 {
     pugi::xml_document doc;
     doc.load_file(CONFIG_FILE.c_str());
 
     pugi::xml_node runner = doc.child("runner");
-    pugi::xml_node scores = runner.child("scores");
+    pugi::xml_node scoresEasy = runner.child("scoresEasy");
+    pugi::xml_node scoresHard = runner.child("scoresHard");
 
-    m_scoresArray.clear();
-    for (pugi::xml_node scoreItem: scores.children("scoreItem"))
+    m_scoresEasyArray.clear();
+    m_scoresHardArray.clear();
+    for (pugi::xml_node scoreItem: scoresEasy.children("scoreItem"))
     {
         if (string(scoreItem.attribute("value").value()) != "0")
-            m_scoresArray.insert(atoi(scoreItem.attribute("value").value()));
+            m_scoresEasyArray.insert(atoi(scoreItem.attribute("value").value()));
+    }
+    for (pugi::xml_node scoreItem: scoresHard.children("scoreItem"))
+    {
+        if (string(scoreItem.attribute("value").value()) != "0")
+            m_scoresHardArray.insert(atoi(scoreItem.attribute("value").value()));
     }
 }
 
@@ -284,7 +297,7 @@ void DataBase::updateActivatedItemsArray()
 /**
  * Push Configuration data to file
  * @author Arthur
- * @date 2/05/16 - 14/01/17
+ * @date 2/05/16 - 23/01/17
  */
 void DataBase::pushConfigurationToFile()
 {
@@ -293,73 +306,96 @@ void DataBase::pushConfigurationToFile()
 
     pugi::xml_node runner = doc.child("runner");
     pugi::xml_node config = runner.child("config");
-    pugi::xml_node scores = runner.child("scores");
+    pugi::xml_node stats = runner.child("stats");
+    pugi::xml_node scoresEasy = runner.child("scoresEasy");
+    pugi::xml_node scoresHard = runner.child("scoresHard");
 
     //Save config
-    for (pugi::xml_node configItem: config.children("configItem"))
+    for (pugi::xml_node statItem: config.children("statItem"))
     {
-        if ( string(configItem.attribute("name").value()) == "language" )
+        if ( string(config.attribute("name").value()) == "language" )
         {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            pugi::xml_attribute nodeValue = config.attribute("value");
             nodeValue.set_value(m_currentLanguage.c_str());
         }
-        if ( string(configItem.attribute("name").value()) == "difficulty" )
+        if ( string(config.attribute("name").value()) == "difficulty" )
         {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            pugi::xml_attribute nodeValue = config.attribute("value");
             nodeValue.set_value((to_string(m_currentDifficulty)).c_str());
         }
-        else if ( string(configItem.attribute("name").value()) == "ball_skin" )
+        else if ( string(config.attribute("name").value()) == "ball_skin" )
         {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            pugi::xml_attribute nodeValue = config.attribute("value");
             nodeValue.set_value(m_currentBallSkin.c_str());
         }
-        else if ( string(configItem.attribute("name").value()) == "total_coins_collected" )
+    }
+
+    //Save stats
+    for (pugi::xml_node statItem: stats.children("statItem"))
+    {
+        if ( string(statItem.attribute("name").value()) == "total_coins_collected" )
         {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_totalCoinsCollected)).c_str());
         }
-        else if ( string(configItem.attribute("name").value()) == "total_distance_travelled" )
+        else if ( string(statItem.attribute("name").value()) == "total_distance_travelled" )
         {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_totalDistance)).c_str());
         }
-        else if ( string(configItem.attribute("name").value()) == "total_enemies_destroyed" )
+        else if ( string(statItem.attribute("name").value()) == "total_enemies_destroyed" )
         {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_totalFlattenedEnemies)).c_str());
         }
-        else if ( string(configItem.attribute("name").value()) == "per_game_coins_collected" )
+        else if ( string(statItem.attribute("name").value()) == "per_game_coins_collected" )
         {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_perGameCoinsCollected)).c_str());
         }
-        else if ( string(configItem.attribute("name").value()) == "per_game_distance_travelled" )
+        else if ( string(statItem.attribute("name").value()) == "per_game_distance_travelled" )
         {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_perGameDistance)).c_str());
         }
-        else if ( string(configItem.attribute("name").value()) == "per_game_enemies_destroyed" )
+        else if ( string(statItem.attribute("name").value()) == "per_game_enemies_destroyed" )
         {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_perGameFlattenedEnemies)).c_str());
         }
-        else if ( string(configItem.attribute("name").value()) == "total_games_played" )
+        else if ( string(statItem.attribute("name").value()) == "total_games_played" )
         {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_totalGamesPlayed)).c_str());
         }
-        else if ( string(configItem.attribute("name").value()) == "wallet" )
+        else if ( string(statItem.attribute("name").value()) == "wallet" )
         {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_wallet)).c_str());
         }
     }
 
     //Save score
-    set<int>::iterator it = m_scoresArray.begin();
-    for (pugi::xml_node scoreItem: scores.children("scoreItem"))
+    set<int>::iterator it = m_scoresEasyArray.begin();
+    for (pugi::xml_node scoreItem: scoresEasy.children("scoreItem"))
     {
-        if ( it!=m_scoresArray.end())
+        if ( it!=m_scoresEasyArray.end())
+        {
+            pugi::xml_attribute nodeValue = scoreItem.attribute("value");
+            nodeValue.set_value((to_string(*it)).c_str());
+            ++it;
+        }
+        else
+        {
+            pugi::xml_attribute nodeValue = scoreItem.attribute("value");
+            nodeValue.set_value("0");
+        }
+    }
+
+    it = m_scoresHardArray.begin();
+    for (pugi::xml_node scoreItem: scoresHard.children("scoreItem"))
+    {
+        if ( it!=m_scoresHardArray.end())
         {
             pugi::xml_attribute nodeValue = scoreItem.attribute("value");
             nodeValue.set_value((to_string(*it)).c_str());
@@ -400,33 +436,57 @@ void DataBase::saveCurrentGame()
 }
 
 /**
- * Add a new score to the score array
+ * Add a new score to the corresponding score array
  * @author Arthur
- * @date 23/10/16
+ * @date 23/10/16 - 23/01/17
  *
  * @param new_score to add to the score array
  */
 void DataBase::addEntryToScoreArray(int new_score)
 {
-    m_scoresArray.insert(new_score);
-    while (m_scoresArray.size() > MAX_SCORES)
-        m_scoresArray.erase(m_scoresArray.begin());
+    if ( m_currentDifficulty == EASY)
+    {
+        m_scoresEasyArray.insert(new_score);
+        while (m_scoresEasyArray.size() > MAX_SCORES)
+            m_scoresEasyArray.erase(m_scoresEasyArray.begin());
+    }
+    else
+    {
+        m_scoresHardArray.insert(new_score);
+        while (m_scoresHardArray.size() > MAX_SCORES)
+            m_scoresHardArray.erase(m_scoresHardArray.begin());
+    }
+
 }
 
 /**
  * Update string content from array
  * @author Arthur
- * @date 23/10/16
+ * @date 23/10/16 - 23/01/17
  *
  * @param scores_text that will contain string content
  */
-void DataBase::loadStringFromArray(std::string &scores_text)
+void DataBase::loadStringFromArray(Difficulty difficulty, std::string &scores_text)
 {
-    if (!m_scoresArray.empty())
+    int i = 1;
+
+    if ( difficulty == EASY && !m_scoresEasyArray.empty() )
     {
+        scores_text = "EASY :\n";
         //add each case content in string
-        int i = 1;
-        for (set<int>::reverse_iterator it = m_scoresArray.rbegin(); it!=m_scoresArray.rend(); ++it)
+        for (set<int>::reverse_iterator it = m_scoresEasyArray.rbegin(); it!=m_scoresEasyArray.rend(); ++it)
+        {
+            if ( i != 10)
+                scores_text += "\n" + to_string(i) + ".   " + to_string(*it);
+            else
+                scores_text += "\n" + to_string(i) + ". " + to_string(*it);
+            i++;
+        }
+    }
+    else if (difficulty == HARD &&!m_scoresHardArray.empty() )
+    {
+        scores_text = "HARD :\n";
+        for (set<int>::reverse_iterator it = m_scoresHardArray.rbegin(); it!=m_scoresHardArray.rend(); ++it)
         {
             if ( i != 10)
                 scores_text += "\n" + to_string(i) + ".   " + to_string(*it);
@@ -459,7 +519,7 @@ void DataBase::launchNewGame()
  */
 void DataBase::resetScore()
 {
-    m_scoresArray.clear();
+    m_scoresHardArray.clear();
 }
 
 /**

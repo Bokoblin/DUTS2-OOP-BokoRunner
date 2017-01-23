@@ -21,7 +21,7 @@ limitations under the License.
 /**
  * Provides constants to model and view classes
  * @author Arthur
- * @date 23/10/16 - 14/01/17
+ * @date 23/10/16 - 23/01/17
  */
 
 //=== RES Folders
@@ -59,7 +59,7 @@ const std::string DEFAULT_CONFIG_CONTENT = "<?xml version=\"1.0\"?>\n"
         "\t\t<shopItem id=\"shop_morphing\" price=\"500\" bought=\"false\"/>\n"
         "\t\t<shopItem id=\"shop_capsule\" price=\"60\" bought=\"false\"/>\n"
         "\t</shop>\n"
-        "\t<scores>\n"
+        "\t<scoresEasy>\n"
         "\t\t<scoreItem value=\"0\"/>\n"
         "\t\t<scoreItem value=\"0\"/>\n"
         "\t\t<scoreItem value=\"0\"/>\n"
@@ -70,7 +70,19 @@ const std::string DEFAULT_CONFIG_CONTENT = "<?xml version=\"1.0\"?>\n"
         "\t\t<scoreItem value=\"0\"/>\n"
         "\t\t<scoreItem value=\"0\"/>\n"
         "\t\t<scoreItem value=\"0\"/>\n"
-        "\t</scores>\n"
+        "\t</scoresEasy>\n"
+        "\t<scoresHard>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t\t<scoreItem value=\"0\"/>\n"
+        "\t</scoresHard>\n"
         "</runner>";
 
 //=== App

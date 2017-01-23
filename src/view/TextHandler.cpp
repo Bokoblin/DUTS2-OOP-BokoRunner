@@ -49,8 +49,11 @@ void TextHandler::loadText()
     m_leaderboardTitleLabel = new Text("leaderboard_title");
     m_textList.push_back(m_leaderboardTitleLabel);
 
-    m_leaderboardContentText = new Text("leaderboard_content");
-    m_textList.push_back(m_leaderboardContentText);
+    m_leaderboardContentEasyText = new Text("leaderboard_content");
+    m_textList.push_back(m_leaderboardContentEasyText);
+
+    m_leaderboardContentHardText = new Text("leaderboard_content");
+    m_textList.push_back(m_leaderboardContentHardText);
 
     //=== Shop
 
@@ -298,25 +301,37 @@ void TextHandler::syncSettingsText(int currentPage)
 /**
  * Menu Leaderboard Text Syncing
  * @author Arthur
- * @date 19/04/16 - 02/01/17
+ * @date 19/04/16 - 23/01/17
  */
 void TextHandler::syncMenuLeaderboardText()
 {
-    string scores = "";
-    m_dataBase->loadStringFromArray(scores);
+    string scoresEasy = "";
+    string scoresHard = "";
+    m_dataBase->loadStringFromArray(EASY, scoresEasy);
+    m_dataBase->loadStringFromArray(HARD, scoresHard);
 
-    if ( scores.empty() )
+    if ( scoresEasy.empty() )
     {
-        m_leaderboardContentText->setDescription("leaderboard_content");
         updateWholeText();
-        m_leaderboardContentText->setPositionSelfCentered(m_width/2, m_height/2);
+        m_leaderboardContentEasyText->setPositionSelfCentered(m_width/4, m_height/2);
     }
     else
     {
-        m_leaderboardContentText->setDescription("leaderboard_content");
-        m_leaderboardContentText->setString(scores);
-        m_leaderboardContentText->setCharacterSize(26);
-        m_leaderboardContentText->setPositionSelfCentered(m_width/2, 250);
+        m_leaderboardContentEasyText->setString(scoresEasy);
+        m_leaderboardContentEasyText->setCharacterSize(26);
+        m_leaderboardContentEasyText->setPositionSelfCentered(m_width/4, 300);
+    }
+
+    if ( scoresHard.empty() )
+    {
+        updateWholeText();
+        m_leaderboardContentHardText->setPositionSelfCentered(m_width/2+m_width/4, m_height/2);
+    }
+    else
+    {
+        m_leaderboardContentHardText->setString(scoresHard);
+        m_leaderboardContentHardText->setCharacterSize(26);
+        m_leaderboardContentHardText->setPositionSelfCentered(m_width/2+m_width/4, 300);
     }
 
     m_leaderboardTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
@@ -471,12 +486,13 @@ void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage
 /**
  * Leaderboard Screen Drawing
  * @author Arthur
- * @date 19/04/16 - 02/01/17
+ * @date 19/04/16 - 23/01/17
  */
 void TextHandler::drawLeaderboardText(sf::RenderWindow *window) const
 {
     m_leaderboardTitleLabel->draw(window);
-    m_leaderboardContentText->draw(window);
+    m_leaderboardContentEasyText->draw(window);
+    m_leaderboardContentHardText->draw(window);
 }
 
 

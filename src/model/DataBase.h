@@ -33,7 +33,7 @@ enum Difficulty
 /**
  * DataBase Class
  * @author Arthur
- * @date 2/05/16 - 14/01/17
+ * @date 2/05/16 - 23/01/17
  */
 class DataBase
 {
@@ -78,10 +78,10 @@ public:
     std::string getStringFromFile(std::string description);
     void updateConfigValues();
     void updateActivatedItemsArray();
-    void updateScoreArray();
+    void updateScoreArrays();
     void pushConfigurationToFile();
     void addEntryToScoreArray(int new_score);
-    void loadStringFromArray(std::string &scores_text);
+    void loadStringFromArray(Difficulty difficulty, std::string &scores_text);
     void saveCurrentGame();
     void launchNewGame();
     void resetScore();
@@ -111,7 +111,8 @@ private:
     int m_currentScore;
 
     //Containers
-    std::set<int> m_scoresArray;
+    std::set<int> m_scoresEasyArray;
+    std::set<int> m_scoresHardArray;
     std::set<std::string> m_activatedItemsArray;
 };
 

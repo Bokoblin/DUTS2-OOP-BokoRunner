@@ -13,6 +13,7 @@ Major visible changes:
     - Added per-game stats and "clear data" button to Stats page
     - Added SFML logo and some information to About page
 - Shop screen is now fully multilingual
+- Leaderboard score is split between Easy and Hard modes
 
 Major coding changes:
 - Added Text class inherited from sf::Text

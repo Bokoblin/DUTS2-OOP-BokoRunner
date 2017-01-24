@@ -21,7 +21,7 @@ limitations under the License.
 /**
  * Provides constants to model and view classes
  * @author Arthur
- * @date 23/10/16 - 23/01/17
+ * @date 23/10/16 - 24/01/17
  */
 
 //=== RES Folders
@@ -133,6 +133,9 @@ const std::string INTRO_IMAGE = IMAGE_FOLDER + "intro.png";
 const std::string TITLE_IMAGE = IMAGE_FOLDER + "title.png";
 const std::string IUT_LOGO_IMAGE = IMAGE_FOLDER + "logo_iut.png";
 const std::string SFML_LOGO_IMAGE = IMAGE_FOLDER + "sfml-logo-small.png";
+const std::string COMMAND_EN_IMAGE = IMAGE_FOLDER + "command_en.png";
+const std::string COMMAND_FR_IMAGE = IMAGE_FOLDER + "command_fr.png";
+const std::string COMMAND_ES_IMAGE = IMAGE_FOLDER + "command_es.png";
 
 //=== MUSICS
 const std::string MENU_MUSIC = AUDIO_FOLDER + "menu_sound.ogg";

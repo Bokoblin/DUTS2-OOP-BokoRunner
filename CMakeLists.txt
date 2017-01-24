@@ -17,6 +17,8 @@ set(SOURCE_FILES
         src/model/Bonus.h
         src/model/Coin.cpp
         src/model/Coin.h
+        src/model/Commands.cpp
+        src/model/Commands.h
         src/model/DataBase.cpp
         src/model/DataBase.h
         src/model/Enemy.cpp
@@ -44,6 +46,8 @@ set(SOURCE_FILES
         src/constants.h
         src/view/Button.cpp
         src/view/Button.h
+        src/view/CommandsView.cpp
+        src/view/CommandsView.h
         src/view/Dialog.cpp
         src/view/Dialog.h
         src/view/GameView.cpp

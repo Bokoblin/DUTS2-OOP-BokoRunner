@@ -20,12 +20,12 @@ limitations under the License.
 #include "View.h"
 
 //TODO : handle differently with "command screen" v1.8 feature
-#define KEYBOARD_LEFT  (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) \
+#define KEYBOARD_LEFT  (sf::Keyboard::isKeyPressed(sf::Keyboard::A) \
                        || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
 #define KEYBOARD_RIGHT (sf::Keyboard::isKeyPressed(sf::Keyboard::D) \
                        || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) )
 #define KEYBOARD_JUMP  (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) \
-                       || sf::Keyboard::isKeyPressed(sf::Keyboard::Space ) )
+                       || sf::Keyboard::isKeyPressed(sf::Keyboard::W ) )
 
 
 /**

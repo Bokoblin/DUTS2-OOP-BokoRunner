@@ -18,6 +18,7 @@ limitations under the License.
 
 #include "View.h"
 #include "../model/MenuModel.h"
+#include "CommandsView.h"
 #include "LeaderboardView.h"
 #include "SettingsView.h"
 #include "ShopView.h"
@@ -26,7 +27,7 @@ limitations under the License.
 /**
  * MenuView Class
  * @author Arthur, Florian
- * @date 26/03/16 - 02/01/17
+ * @date 26/03/16 - 24/01/17
  */
 class MenuView : public View
 {
@@ -47,6 +48,7 @@ public:
 private:
     //=== ATTRIBUTES
     MenuModel *m_menuModel;
+    CommandsView *m_commandsView;
     LeaderboardView *m_leaderboardView;
     SettingsView *m_settingsView;
     ShopView *m_shopView;
@@ -57,6 +59,7 @@ private:
     GraphicElement *m_titleGraphic;
     Button *m_playRectButton;
     Button *m_quitRectButton;
+    Button *m_commandsFormButton;
     Button *m_settingsFormButton;
     Button *m_leaderboardFormButton;
     Button *m_shopFormButton;

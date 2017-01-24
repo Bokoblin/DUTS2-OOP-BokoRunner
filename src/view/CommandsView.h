@@ -13,56 +13,44 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef MENU_MODEL_H
-#define MENU_MODEL_H
+#ifndef COMMANDS_VIEW_H
+#define COMMANDS_VIEW_H
 
-#include "Model.h"
-#include "Commands.h"
-#include "Leaderboard.h"
-#include "Settings.h"
-#include "Shop.h"
+#include "View.h"
+#include "../model/Commands.h"
 
-enum MenuState
-{
-    HOME,
-    COMMANDS,
-    SETTINGS,
-    LEADERBOARD,
-    SHOP
-};
 
 /**
- * MenuModel Class
+ * The CommandsView class displays
+ * game's command
  * @author Arthur
- * @date 14/04/16 - 24/01/17
+ * @date 24/01/17
  */
-class MenuModel : public Model
+class CommandsView : public View
 {
 public:
     //=== CTORs / DTORs
-    MenuModel(const Model& model);
-    virtual ~MenuModel();
-
-    //=== GETTERS
-    MenuState getMenuState() const;
+    CommandsView(float w, float h, sf::RenderWindow *window, TextHandler * text);
+    virtual ~CommandsView();
 
     //=== SETTERS
-    void setMenuState(MenuState state);
+    void setCommandsModel(Commands *model);
 
     //=== METHODS
-    virtual void nextStep() override;
-    Commands* launchCommands();
-    Leaderboard* launchLeaderboard();
-    Shop* launchShop();
-    Settings* launchSettings();
+    virtual void synchronize() override;
+    virtual void draw() const override;
+    virtual void loadImages() override;
+    virtual bool treatEvents() override;
+    bool treatEvents( sf::Event event );
 
 private:
     //=== ATTRIBUTES
-    MenuState m_menuState;
     Commands *m_commands;
-    Leaderboard *m_leaderboard;
-    Settings *m_settings;
-    Shop *m_shop;
+
+    //Graphic Elements
+    GraphicElement *m_commandSprite;
+    Button *m_homeFormButton;
 };
+
 
 #endif

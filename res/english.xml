@@ -47,22 +47,29 @@
     <string name="stats_per_game_coins" value="Best coins collected" />
     <string name="stats_app_reset" value="CLEAR DATA" />
     <string name="about_title" value="About" />
-    <string name="about_description" value=" Boko Runner is a C++ project we've done as our DUT 2nd semester's &#xA; programming
-project. Its goal was to put into practice the OOP notions &#xA; we learnt in S2 and develop agame with the SFML library."/>
-    <string name="about_repository" value="The source code of this game is available on Github at the address : &#xA;
-https://github.com/Bokoblin/DUTS2-POO-ProjetRunner. &#xA;To fill bug reports please go to the ''Issues'' section." />
+    <string name="about_description" value=" Boko Runner is a C++ project we've done as our DUT 2nd semester's
+                  &#xA; programming project. Its goal was to put into practice the OOP notions
+                  &#xA; we learnt in S2 and develop a game with the SFML library."/>
+    <string name="about_repository" value="The source code of this game is available on Github at the address :
+                  &#xA; https://github.com/Bokoblin/DUTS2-POO-ProjetRunner.
+                  &#xA;To fill bug reports please go to the ''Issues'' section." />
     <string name="about_email" value="Please send us an email at : pro.jolivetarthur@gmail.com." />
-    <string name="about_copyright" value="2016 Jolivet Arthur &amp; Laronze Florian" />
+    <string name="about_copyright" value="2016-2017 Jolivet Arthur &amp; Laronze Florian" />
 
     <!--  Shop strings -->
     <string name="shop_bought" value="Bought" />
     <string name="shop_purchasable" value="Buy" />
     <string name="shop_dialog_title" value="Buy this item ?" />
     <string name="shop_dialog_content" value="Name : $NAME &#xA;&#xA;Price : $PRICE coins" />
-    <string name="shop_dialog_cancel" value="CANCEL" />
-    <string name="shop_dialog_ok" value="OK" />
     <string name="shop_dialog_success" value="Thank you for your purchase." />
     <string name="shop_dialog_failure" value="Something went wrong." />
+
+    <!-- Dialog strings -->
+    <string name="dialog_cancel" value="CANCEL" />
+    <string name="dialog_ok" value="OK" />
+    <string name="confirm_dialog_title" value="Delete app data ?" />
+    <string name="confirm_dialog_content" value="All this app's data will be deleted&#xA;permanently. This includes
+&#xA;settings, stats, scores, etc." />
 
     <!--  ShopItems strings -->
     <string name="shop_doubler_name" value="Coin Doubler" />

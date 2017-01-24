@@ -10,7 +10,7 @@ Button::Button(float x, float y, float w, float h) :
         m_isPressed{false}, m_isActive{false}, m_isDisabled{false}
 {
     m_font.loadFromFile(RESOURCES_FOLDER + "Roboto_Condensed.ttf");
-    m_label = new Text();
+    m_label = new Text("");
     m_label->setFont(m_font);
     m_label->setColor(sf::Color::White);
     m_label->setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
@@ -58,7 +58,7 @@ Button::Button(float x, float y, float w, float h,
     this->setTextureRect(m_clipRectArray[m_currentClipRect]);
 
     m_font.loadFromFile(RESOURCES_FOLDER + "Roboto_Condensed.ttf");
-    m_label = new Text();
+    m_label = new Text("");
     m_label->setFont(m_font);
     m_label->setColor(sf::Color::White);
     m_label->setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,

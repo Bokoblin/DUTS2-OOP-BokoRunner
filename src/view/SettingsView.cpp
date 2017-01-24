@@ -6,10 +6,10 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 20/05
+ * @date 20/05/16 - 24/01/17
  */
 SettingsView::SettingsView(float w, float h, sf::RenderWindow *window, TextHandler * t):
-        View(w, h, window, t), m_settings{nullptr}
+        View(w, h, window, t), m_settings{nullptr}, m_confirmDialog{nullptr}
 {
     loadImages();
 
@@ -34,13 +34,16 @@ SettingsView::SettingsView(float w, float h, sf::RenderWindow *window, TextHandl
     m_buttonList.push_back(m_morphBallSkinRadio);
     m_buttonList.push_back(m_capsuleBallSkinRadio);
     m_buttonList.push_back(m_resetRectButton);
+
+    m_confirmDialog = new Dialog(m_width/2-140, m_height/2-120, 280, 200, t, "confirm");
+    m_confirmDialog->hide();
 }
 
 
 /**
  * Destructor
  * @author Arthur
- * @date 20/05/16 - 07/01/17
+ * @date 20/05/16 - 24/01/17
  */
 SettingsView::~SettingsView()
 {
@@ -52,6 +55,7 @@ SettingsView::~SettingsView()
 
     delete m_logoIUTSprite;
     delete m_logoSFMLSprite;
+    delete m_confirmDialog;
 }
 
 
@@ -66,7 +70,7 @@ void SettingsView::setSettingsModel(Settings *model)
 /**
  * Image Loading
  * @author Arthur
- * @date 20/05 - 23/12
+ * @date 20/05/16 - 23/12/16
  */
 void SettingsView::loadImages()
 {
@@ -95,6 +99,7 @@ void SettingsView::loadImages()
     clipRectReset.push_back(sf::IntRect( 0, 100, 150, 40));
     clipRectReset.push_back(sf::IntRect(151, 100, 150, 40));
     m_resetRectButton = new Button(m_width/2-75, 450, 150, 40, "stats_app_reset", RECT_BUTTONS_IMAGE, clipRectReset);
+    m_resetRectButton->resize(170,45);
 
 
     //=== Initialize Logo sprites
@@ -139,6 +144,9 @@ void SettingsView::synchronize()
         button->sync(m_settings->getDataBase());
 
 
+    m_confirmDialog->sync(m_settings->getDataBase());
+
+
     //=== Update and sync indicators
 
     for( auto it : m_pageIndicators)
@@ -168,7 +176,7 @@ void SettingsView::synchronize()
 /**
  * Settings View Drawing
  * @author Arthur
- * @date 20/05 - 23/12
+ * @date 20/05/16 - 24/01/17
  */
 void SettingsView::draw() const
 {
@@ -193,8 +201,9 @@ void SettingsView::draw() const
     }
     else if ( m_settings->getCurrentPage() == STATS)
     {
-        m_resetRectButton->draw(m_window);
         m_textHandler->drawMenuSettingsText(m_window, STATS);
+        m_resetRectButton->draw(m_window);
+        m_confirmDialog->draw(m_window);
     }
     else //ABOUT
     {
@@ -213,25 +222,28 @@ void SettingsView::draw() const
 /**
  * Events treating
  * @author Arthur
- * @date 20/05 - 22/12
+ * @date 20/05/16 - 24/01/17
  */
 bool SettingsView::treatEvents() { return false; }
 bool SettingsView::treatEvents(sf::Event event)
 {
     bool stop_settings = false;
 
-    if (MOUSE_LEFT_PRESSED_EVENT) {
-        for (Button *button : m_buttonList) {
-            if (button->contains(MOUSE_POSITION)) {
-                button->setPressed(true);
-                break;
+    if (!m_confirmDialog->isShowing() )
+    {
+        if (MOUSE_LEFT_PRESSED_EVENT) {
+            for (Button *button : m_buttonList) {
+                if (button->contains(MOUSE_POSITION)) {
+                    button->setPressed(true);
+                    break;
+                }
             }
-        }
 
-        for (auto it : m_pageIndicators) {
-            if (it.second->contains(MOUSE_POSITION)) {
-                it.second->setPressed(true);
-                break;
+            for (auto it : m_pageIndicators) {
+                if (it.second->contains(MOUSE_POSITION)) {
+                    it.second->setPressed(true);
+                    break;
+                }
             }
         }
     }
@@ -248,53 +260,79 @@ bool SettingsView::treatEvents(sf::Event event)
 
         //=== handle mouse up on a button
 
-        if (m_homeFormButton->contains(MOUSE_POSITION) )
-            stop_settings = true;
-        else if (m_englishLangRadio->contains(MOUSE_POSITION) )
+        if ( m_settings->getCurrentPage() == CONFIG)
         {
-            m_settings->changeLanguage("en");
-            m_textHandler->updateWholeText();
+            if (m_englishLangRadio->contains(MOUSE_POSITION) )
+            {
+                m_settings->changeLanguage("en");
+                m_textHandler->updateWholeText();
+            }
+            else if (m_frenchLangRadio->contains(MOUSE_POSITION) )
+            {
+                m_settings->changeLanguage("fr");
+                m_textHandler->updateWholeText();
+            }
+            else if (m_spanishLangRadio->contains(MOUSE_POSITION) )
+            {
+                m_settings->changeLanguage("es");
+                m_textHandler->updateWholeText();
+            }
+            else if (m_easyModeRadio->contains(MOUSE_POSITION) )
+            {
+                m_model->getDataBase()->setDifficulty(EASY);
+            }
+            else if (m_hardModeRadio->contains(MOUSE_POSITION) )
+            {
+                m_model->getDataBase()->setDifficulty(HARD);
+            }
+            else if (m_defaultBallSkinRadio->contains(MOUSE_POSITION) )
+            {
+                m_settings->changeBallSkin("default");
+            }
+            else if (m_morphBallSkinRadio->contains(MOUSE_POSITION) )
+            {
+                m_settings->changeBallSkin("morphing");
+            }
+            else if (m_capsuleBallSkinRadio->contains(MOUSE_POSITION) )
+            {
+                m_settings->changeBallSkin("capsule");
+            }
         }
-        else if (m_frenchLangRadio->contains(MOUSE_POSITION) )
+        else
         {
-            m_settings->changeLanguage("fr");
-            m_textHandler->updateWholeText();
-        }
-        else if (m_spanishLangRadio->contains(MOUSE_POSITION) )
-        {
-            m_settings->changeLanguage("es");
-            m_textHandler->updateWholeText();
-        }
-        else if (m_easyModeRadio->contains(MOUSE_POSITION) )
-        {
-            m_model->getDataBase()->setDifficulty(EASY);
-        }
-        else if (m_hardModeRadio->contains(MOUSE_POSITION) )
-        {
-            m_model->getDataBase()->setDifficulty(HARD);
-        }
-        else if (m_defaultBallSkinRadio->contains(MOUSE_POSITION) )
-        {
-            m_settings->changeBallSkin("default");
-        }
-        else if (m_morphBallSkinRadio->contains(MOUSE_POSITION) )
-        {
-            m_settings->changeBallSkin("morphing");
-        }
-        else if (m_capsuleBallSkinRadio->contains(MOUSE_POSITION) )
-        {
-            m_settings->changeBallSkin("capsule");
-        }
-        else if (m_resetRectButton->contains(MOUSE_POSITION) )
-        {
-            m_settings->getDataBase()->clearAppData();
-            m_textHandler->syncSettingsText(m_settings->getCurrentPage());
-            m_settings->checkItemsAvailability();
+            if (!m_confirmDialog->isShowing() )
+            {
+                if (m_resetRectButton->contains(MOUSE_POSITION) )
+                {
+                    m_confirmDialog->show();
+                }
+            }
+            else
+            {
+                if ( m_confirmDialog->getOkButtonText().contains(MOUSE_POSITION) )
+                {
+                    m_confirmDialog->hide();
+                    m_settings->getDataBase()->clearAppData();
+                    m_textHandler->syncSettingsText(m_settings->getCurrentPage());
+                    m_settings->checkItemsAvailability();
+                }
+                else if ( m_confirmDialog->getCancelButtonText().contains(MOUSE_POSITION)
+                     || !m_confirmDialog->contains(MOUSE_POSITION))
+                {
+                    m_confirmDialog->hide();
+                }
+            }
         }
 
-        for( auto it : m_pageIndicators)
-            if (it.second->contains(MOUSE_POSITION) )
-                m_settings->setCurrentPage(it.first);
+        if (!m_confirmDialog->isShowing() )
+        {
+            if (m_homeFormButton->contains(MOUSE_POSITION) )
+                stop_settings = true;
+
+            for (auto it : m_pageIndicators)
+                if (it.second->contains(MOUSE_POSITION))
+                    m_settings->setCurrentPage(it.first);
+        }
     }
     return stop_settings;
 }

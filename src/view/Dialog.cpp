@@ -3,7 +3,8 @@
 using namespace std;
 
 
-Dialog::Dialog() : GraphicElement(0, 0)
+Dialog::Dialog() : GraphicElement(0, 0), m_title{""}, m_content{""},
+                   m_cancelButtonText{""}, m_okButtonText{""}
 {
     hide();
 }
@@ -16,7 +17,8 @@ Dialog::Dialog() : GraphicElement(0, 0)
  * @date 02/01/2017 - 07/01/17
  */
 Dialog::Dialog(float x, float y, float w, float h, TextHandler *textHandler, string id)  :
-        GraphicElement(x, y, w, h), m_id{id}
+        GraphicElement(x, y, w, h), m_id{id}, m_title{""}, m_content{""},
+        m_cancelButtonText{""}, m_okButtonText{""}
 {
     setTextureFromImage(DIALOG_IMAGE);
     setPosition(x, y);
@@ -45,7 +47,8 @@ Dialog::Dialog(float x, float y, float w, float h, TextHandler *textHandler, str
  * @date 01/01/2017 - 07/01/17
  */
 Dialog::Dialog(float x, float y, float w, float h, ShopItem *item, TextHandler *textHandler, string description)  :
-        GraphicElement(x, y, w, h), m_shopItem{item}, m_id{description}
+        GraphicElement(x, y, w, h), m_shopItem{item}, m_id{description},
+        m_title{""}, m_content{""}, m_cancelButtonText{""}, m_okButtonText{""}
 {
     setTextureFromImage(DIALOG_IMAGE);
     setPosition(x, y);
@@ -87,7 +90,7 @@ ShopItem *Dialog::getLinkedShopItem() const {return m_shopItem; }
  * Synchronization Function :
  * sync dialog's labels
  * @author Arthur
- * @date 23/12/16 - 07/01/17
+ * @date 23/12/16 - 24/01/17
  */
 void Dialog::sync(DataBase *dataBase)
 {
@@ -98,22 +101,29 @@ void Dialog::sync(DataBase *dataBase)
         content.replace(content.find("$NAME"), 5, m_shopItem->getName());
         content.replace(content.find("$PRICE"), 6, to_string(m_shopItem->getPrice()));
         m_content.setString(content);
-        m_cancelButtonText.setString(dataBase->getStringFromFile("shop_dialog_cancel"));
-        m_okButtonText.setString(dataBase->getStringFromFile("shop_dialog_ok"));
+        m_cancelButtonText.setString(dataBase->getStringFromFile("dialog_cancel"));
+        m_okButtonText.setString(dataBase->getStringFromFile("dialog_ok"));
     }
     else if ( m_id == "shopSuccess")
     {
         m_title.setString("");
         m_content.setString(dataBase->getStringFromFile("shop_dialog_success"));
         m_cancelButtonText.setString("");
-        m_okButtonText.setString(dataBase->getStringFromFile("shop_dialog_ok"));
+        m_okButtonText.setString(dataBase->getStringFromFile("dialog_ok"));
     }
     else if ( m_id == "shopFailure")
     {
         m_title.setString("");
         m_content.setString(dataBase->getStringFromFile("shop_dialog_failure"));
         m_cancelButtonText.setString("");
-        m_okButtonText.setString(dataBase->getStringFromFile("shop_dialog_ok"));
+        m_okButtonText.setString(dataBase->getStringFromFile("dialog_ok"));
+    }
+    else if ( m_id == "confirm")
+    {
+        m_title.setString(dataBase->getStringFromFile("confirm_dialog_title"));
+        m_content.setString(dataBase->getStringFromFile("confirm_dialog_content"));
+        m_cancelButtonText.setString(dataBase->getStringFromFile("dialog_cancel"));
+        m_okButtonText.setString(dataBase->getStringFromFile("dialog_ok"));
     }
     else
     {

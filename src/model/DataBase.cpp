@@ -63,7 +63,7 @@ void DataBase::setDifficulty(int d) { m_currentDifficulty = d;}
 void DataBase::setCurrentScore(float speed)
 {
     m_currentScore = (int)(speed * m_currentDistance
-                            + COIN_MULTIPLIER*m_currentCoinsNumber + m_currentFlattenedEnemies );
+                     + COIN_MULTIPLIER*m_currentCoinsNumber + m_currentFlattenedEnemies );
 }
 
 
@@ -245,7 +245,8 @@ void DataBase::updateConfigValues()
 
 
 /**
- * Update score array
+ * Update each score array
+ * with values from config file
  * @author Arthur
  * @date 23/10/16 - 23/01/17
  */
@@ -297,7 +298,7 @@ void DataBase::updateActivatedItemsArray()
 /**
  * Push Configuration data to file
  * @author Arthur
- * @date 2/05/16 - 23/01/17
+ * @date 2/05/16 - 24/01/17
  */
 void DataBase::pushConfigurationToFile()
 {
@@ -311,21 +312,21 @@ void DataBase::pushConfigurationToFile()
     pugi::xml_node scoresHard = runner.child("scoresHard");
 
     //Save config
-    for (pugi::xml_node statItem: config.children("statItem"))
+    for (pugi::xml_node configItem: config.children("configItem"))
     {
-        if ( string(config.attribute("name").value()) == "language" )
+        if ( string(configItem.attribute("name").value()) == "language" )
         {
-            pugi::xml_attribute nodeValue = config.attribute("value");
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value(m_currentLanguage.c_str());
         }
-        if ( string(config.attribute("name").value()) == "difficulty" )
+        if ( string(configItem.attribute("name").value()) == "difficulty" )
         {
-            pugi::xml_attribute nodeValue = config.attribute("value");
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value((to_string(m_currentDifficulty)).c_str());
         }
-        else if ( string(config.attribute("name").value()) == "ball_skin" )
+        else if ( string(configItem.attribute("name").value()) == "ball_skin" )
         {
-            pugi::xml_attribute nodeValue = config.attribute("value");
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value(m_currentBallSkin.c_str());
         }
     }
@@ -464,6 +465,7 @@ void DataBase::addEntryToScoreArray(int new_score)
  * @author Arthur
  * @date 23/10/16 - 23/01/17
  *
+ * @param difficulty for the difficulty related scores
  * @param scores_text that will contain string content
  */
 void DataBase::loadStringFromArray(Difficulty difficulty, std::string &scores_text)
@@ -515,10 +517,11 @@ void DataBase::launchNewGame()
 /**
  * Reset Score
  * @author Arthur
- * @date 24/10/16
+ * @date 24/10/16 - 24/01/17
  */
 void DataBase::resetScore()
 {
+    m_scoresEasyArray.clear();
     m_scoresHardArray.clear();
 }
 

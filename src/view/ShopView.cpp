@@ -146,7 +146,7 @@ void ShopView::synchronize()
 /**
  * Menu View Drawing
  * @author Arthur
- * @date 16/05/16 - 02/01/17
+ * @date 16/05/16 - 24/01/17
  */
 void ShopView::draw() const
 {
@@ -157,11 +157,8 @@ void ShopView::draw() const
     for( ShopItemCard *card : m_shopItemCardsArray)
         card->draw(m_window);
 
-    if ( !m_buyDialog->isShowing())
-    {
-        for( auto it : m_pageIndicators)
+    for( auto it : m_pageIndicators)
             m_window->draw(*it.second);
-    }
     m_window->draw(*m_homeFormButton);
     m_window->draw(*m_coinSprite);
     m_buyDialog->draw(m_window);
@@ -177,26 +174,28 @@ void ShopView::draw() const
 /**
  * Events treating
  * @author Arthur
- * @date 16/05/16 - 18/05/16
+ * @date 16/05/16 - 24/01/17
  */
 bool ShopView::treatEvents() { return false; }
 bool ShopView::treatEvents(sf::Event event)
 {
     bool stop_shop = false;
 
-    if (MOUSE_LEFT_PRESSED_EVENT)
+    if (!m_buyDialog->isShowing() )
     {
-        if ( m_homeFormButton->contains(MOUSE_POSITION) )
-            m_homeFormButton->setPressed(true);
+        if (MOUSE_LEFT_PRESSED_EVENT) {
+            if (m_homeFormButton->contains(MOUSE_POSITION))
+                m_homeFormButton->setPressed(true);
 
-        for( auto it : m_pageIndicators)
-            if ( it.second->contains(MOUSE_POSITION) )
-                it.second->setPressed(true);
+            for (auto it : m_pageIndicators)
+                if (it.second->contains(MOUSE_POSITION))
+                    it.second->setPressed(true);
 
-        for ( auto card : m_shopItemCardsArray )
-            if ( card->getBuyButton()->contains(MOUSE_POSITION)
-                 && card->isShowing() && !m_buyDialog->isShowing())
-                card->getBuyButton()->setPressed(true);
+            for (auto card : m_shopItemCardsArray)
+                if (card->getBuyButton()->contains(MOUSE_POSITION)
+                    && card->isShowing() && !m_buyDialog->isShowing())
+                    card->getBuyButton()->setPressed(true);
+        }
     }
 
     if (event.type == sf::Event::MouseButtonReleased)
@@ -204,54 +203,61 @@ bool ShopView::treatEvents(sf::Event event)
         //=== Reset buttons
 
         m_homeFormButton->setPressed(false);
+        for ( auto card : m_shopItemCardsArray )
+            card->getBuyButton()->setPressed(false);
         for( auto it : m_pageIndicators)
             it.second->setPressed(false);
 
-        for ( auto card : m_shopItemCardsArray )
-            card->getBuyButton()->setPressed(false);
 
         //=== handle mouse up on a button
 
-        if ( m_homeFormButton->contains(MOUSE_POSITION) )
-            stop_shop = true;
-
-        for( auto it : m_pageIndicators)
-            if ( it.second->contains(MOUSE_POSITION) )
-                m_currentIndicator = it.first;
-
-        for ( auto card : m_shopItemCardsArray )
-            if ( card->getBuyButton()->contains(MOUSE_POSITION) && card->isShowing()
-                 && !card->getItem()->isBought() && !m_buyDialog->isShowing() )
-            {
-                delete m_buyDialog;
-                m_buyDialog = new Dialog(m_width/2-125, m_height/2-100, 250, 200,  card->getItem(), m_textHandler, "shopAskDialog");
-                m_buyDialog->sync(m_shop->getDataBase());
-                m_buyDialog->show();
-            }
-
-        if ( m_buyDialog->isShowing() && m_buyDialog->getCancelButtonText().contains(MOUSE_POSITION) )
+        if (!m_buyDialog->isShowing() )
         {
-            m_buyDialog->hide();
-        }
-        else if ( m_buyDialog->isShowing() && m_buyDialog->getOkButtonText().contains(MOUSE_POSITION) )
-        {
-            if (m_buyDialog->getId() == "shopAskDialog" )
-            {
-                if (m_shop->buyItem(m_buyDialog->getLinkedShopItem() ))
+            if ( m_homeFormButton->contains(MOUSE_POSITION) )
+                stop_shop = true;
+
+            for( auto it : m_pageIndicators)
+                if ( it.second->contains(MOUSE_POSITION) )
+                    m_currentIndicator = it.first;
+
+            for ( auto card : m_shopItemCardsArray )
+                if ( card->getBuyButton()->contains(MOUSE_POSITION)
+                     && card->isShowing() && !card->getItem()->isBought() )
                 {
                     delete m_buyDialog;
-                    m_buyDialog = new Dialog(m_width/2-125, m_height/2-50, 250, 100, m_textHandler, "shopSuccess");
+                    m_buyDialog = new Dialog(m_width/2-125, m_height/2-100, 250, 200,  card->getItem(), m_textHandler, "shopAskDialog");
                     m_buyDialog->sync(m_shop->getDataBase());
+                    m_buyDialog->show();
+                }
+        }
+        else
+        {
+            if ( m_buyDialog->getOkButtonText().contains(MOUSE_POSITION) )
+            {
+                if (m_buyDialog->getId() == "shopAskDialog" )
+                {
+                    if (m_shop->buyItem(m_buyDialog->getLinkedShopItem() ))
+                    {
+                        delete m_buyDialog;
+                        m_buyDialog = new Dialog(m_width/2-125, m_height/2-50, 250, 100, m_textHandler, "shopSuccess");
+                        m_buyDialog->sync(m_shop->getDataBase());
+                    }
+                    else
+                    {
+                        delete m_buyDialog;
+                        m_buyDialog = new Dialog(m_width/2-125, m_height/2-50, 250, 100, m_textHandler, "shopFailure");
+                        m_buyDialog->sync(m_shop->getDataBase());
+                    }
                 }
                 else
-                {
-                    delete m_buyDialog;
-                    m_buyDialog = new Dialog(m_width/2-125, m_height/2-50, 250, 100, m_textHandler, "shopFailure");
-                    m_buyDialog->sync(m_shop->getDataBase());
-                }
+                    m_buyDialog->hide();
             }
-            else
+
+            else if ( m_buyDialog->getCancelButtonText().contains(MOUSE_POSITION)
+                 || !m_buyDialog->contains(MOUSE_POSITION))
+            {
                 m_buyDialog->hide();
+            }
         }
     }
 

@@ -139,3 +139,14 @@ void GraphicElement::setTextureFromImage(std::string image, sf::IntRect intRect)
         setTexture(m_texture);
     }
 }
+
+
+/**
+ * Checks if a point of given coordinates is contained
+ * inside this element
+ * @author Arthur
+ * @date 24/01/16
+ */
+bool GraphicElement::contains(float x, float y) const {
+    return isShowing() && getGlobalBounds().contains(sf::Vector2f(x, y));
+}

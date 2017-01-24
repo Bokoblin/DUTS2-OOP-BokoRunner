@@ -8,7 +8,7 @@ using namespace std;
  * @date 16/05/16 - 07/01/17
  */
 ShopItemCard::ShopItemCard(int num, ShopItem *item, TextHandler *textHandler) :
-        GraphicElement(0, 150, 200, 300), m_id{num}, m_item{item}
+        GraphicElement(0, 150, 200, 300), m_id{num}, m_item{item}, m_title{""}, m_content{""}
 {
     if ( num%3 == 0)
         setPosition(100, 150);

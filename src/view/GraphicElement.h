@@ -22,7 +22,7 @@ limitations under the License.
 /**
  * GraphicElement Class
  * @author Arthur, Florian
- * @date 21/02/16 - 02/01/17
+ * @date 21/02/16 - 24/01/17
  */
 class GraphicElement : public sf::Sprite
 {
@@ -46,6 +46,7 @@ public:
     virtual void draw(sf::RenderWindow *window)const;
     virtual void resize(float w, float h);
     virtual void setTextureFromImage(std::string image);
+    virtual bool contains(float x, float y) const;
     void setTextureFromImage(std::string image, sf::IntRect intRect);
 
 protected:

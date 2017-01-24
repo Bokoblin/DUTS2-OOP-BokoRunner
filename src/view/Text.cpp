@@ -4,13 +4,10 @@
 using namespace std;
 
 
-Text::Text() : m_description{""}
-{}
-
 /**
- * Parameterized Constructor
+ * Parameterized Constructors
  * @author Arthur
- * @date 21/12
+ * @date 21/12/16
  */
 Text::Text(string description) : m_description{description}
 {
@@ -54,7 +51,7 @@ void Text::setStringFromInt(int value) {
  * Checks if a point of given coordinates
  * is contained in the text
  * @author Arthur
- * @date 23/12
+ * @date 23/12/16
  */
 bool Text::contains(float posX, float posY) const
 {

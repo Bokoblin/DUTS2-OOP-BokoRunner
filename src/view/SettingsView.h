@@ -19,6 +19,7 @@ limitations under the License.
 #include "View.h"
 #include "../model/Settings.h"
 #include "RadioButton.h"
+#include "Dialog.h"
 
 #define RADIO_BUTTONS_MARGIN 50
 #define RADIO_BUTTONS_SIZE 26,26
@@ -49,6 +50,7 @@ public:
 private:
     //=== ATTRIBUTES
     Settings *m_settings;
+    Dialog *m_confirmDialog;
 
     //Graphic Elements
     Button *m_homeFormButton;

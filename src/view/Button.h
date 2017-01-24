@@ -68,7 +68,7 @@ public:
     virtual void sync() override;
     virtual void sync(DataBase *dataBase);
     virtual void draw(sf::RenderWindow *window)const;
-    bool contains(float x, float y) const;
+    virtual bool contains(float x, float y) const override;
 
 protected:
     //=== ATTRIBUTES

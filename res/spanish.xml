@@ -18,29 +18,29 @@
     <!-- Menu & Leaderboard strings -->
     <string name="menu_play_button" value="JUGAR" />
     <string name="menu_quit_button" value="DEJAR" />
-    <string name="leaderboard_title" value="Clasificacion" />
-    <string name="leaderboard_content" value="No hay ninguna puntuacion" />
+    <string name="leaderboard_title" value="Clasificación" />
+    <string name="leaderboard_content" value="No hay ninguna puntuación" />
     <string name="leaderboard_clear_button" value="BORRAR" />
 
     <!-- Settings strings -->
-    <string name="config_title" value="Configuracion" />
+    <string name="config_title" value="Configuración" />
     <string name="config_lang_title" value="Idiomas" />
-    <string name="config_lang_english" value="Ingles" />
+    <string name="config_lang_english" value="Inglés" />
     <string name="config_lang_french" value="Frances" />
-    <string name="config_lang_spanish" value="Espanol" />
-    <string name="config_difficulty_title" value="Difficultad" />
-    <string name="config_easy_mode" value="Facil" />
-    <string name="config_hard_mode" value="Difficultado" />
-    <string name="config_custom_title" value="Personalizacion de la bala" />
+    <string name="config_lang_spanish" value="Español" />
+    <string name="config_difficulty_title" value="Dificultad" />
+    <string name="config_easy_mode" value="Facile" />
+    <string name="config_hard_mode" value="Dificultado" />
+    <string name="config_custom_title" value="Personalization de la bala" />
     <string name="config_ball_default_skin" value="Apariencia predeterminada" />
     <string name="config_ball_morph_skin" value="Apariencia morphing" />
     <string name="config_ball_capsule_skin" value="Apariencia capsule" />
     <string name="config_music_title" value="Musica" />
     <string name="config_music_menu" value="Menu" />
     <string name="config_music_game" value="Juego" />
-    <string name="stats_title" value="Estadisticas" />
-    <string name="stats_overall_title" value="Estadisticas cumulados" />
-    <string name="stats_per_game_title" value="Estadisticas per parte" />
+    <string name="stats_title" value="Estadísticas" />
+    <string name="stats_overall_title" value="Estadísticas cumulados" />
+    <string name="stats_per_game_title" value="Estadísticas per parte" />
     <string name="stats_distance" value="Total distancia recorrida" />
     <string name="stats_enemies" value="Total destrucciones enemigos" />
     <string name="stats_coins" value="Total monedas recogidas" />
@@ -51,13 +51,13 @@
     <string name="stats_app_reset" value="BORRAR DATOS" />
     <string name="about_title" value="Credits" />
     <string name="about_description" value="Boko Runner es un proyecto C++ que hemos realizado como proyecto
-                  &#xA;de programacion de nuestro segundo semestre de DUT. Su objetivo era
+                  &#xA;de programación de nuestro segundo semestre de DUT. Su objetivo era
                   &#xA;poner en practica las nociones de OOP que aprendimos en S2 y crear un
                   &#xA;juego con la biblioteca de SFML." />
-    <string name="about_repository" value="El codigo de este juego esta disponible en Github en la direccion :
+    <string name="about_repository" value="El código de este juego esta disponible en Github en la dirección :
                   &#xA; https://github.com/Bokoblin/DUTS2-POO-ProjetRunner.
-                  &#xA;Para rellenar reportes de fallos, vaya a la seccion ''Issues''."/>
-    <string name="about_email" value="Envienos un correo electronico a : pro.jolivetarthur@gmail.com." />
+                  &#xA;Para rellenar reportes de fallos, vaya a la sección ''Issues''."/>
+    <string name="about_email" value="Envíenos un correo electrónico a : pro.jolivetarthur@gmail.com." />
     <string name="about_copyright" value="2016-2017 Jolivet Arthur &amp; Laronze Florian" />
 
     <!--  Shop strings -->
@@ -66,26 +66,26 @@
     <string name="shop_dialog_title" value="Comprar este item ?" />
     <string name="shop_dialog_content" value="Nombre : $NAME &#xA;&#xA;Precio : $PRICE  monedas" />
     <string name="shop_dialog_success" value="Gracias por su compra." />
-    <string name="shop_dialog_failure" value="Algo salio mal." />
+    <string name="shop_dialog_failure" value="Algo salió mal." />
 
     <!-- Dialog strings -->
     <string name="dialog_cancel" value="CANCELAR" />
     <string name="dialog_ok" value="OK" />
     <string name="confirm_dialog_title" value="Eliminar los datos ?" />
-    <string name="confirm_dialog_content" value="Todos los datos de esta aplicacion
+    <string name="confirm_dialog_content" value="Todos los datos de esta aplicación
                   &#xA;se eliminaran de forma permanente.
                   &#xA;Esto incluye todos los ajustes,
-                  &#xA;estadisticas, clasificacion,etc." />
+                  &#xA;estadísticas, clasificación,etc." />
 
     <!--  ShopItems strings -->
     <string name="shop_doubler_name" value="Doblador de la moneda" />
     <string name="shop_doubler_desc" value="Duplica el numero &#xA;de monedas recogidas" />
     <string name="shop_shieldPlus_name" value="Blindar" />
-    <string name="shop_shieldPlus_desc" value="Protege al jugador de &#xA;una colision adicional" />
+    <string name="shop_shieldPlus_desc" value="Protege al jugador de &#xA;una colisión adicional" />
     <string name="shop_megaPlus_name" value="Mega+" />
-    <string name="shop_megaPlus_desc" value="Aumenta la duracion de &#xA;bonificacion de 5 segundos" />
+    <string name="shop_megaPlus_desc" value="Aumenta la duración de &#xA;bonificación de 5 segundos" />
     <string name="shop_flyPlus_name" value="Vuelo+" />
-    <string name="shop_flyPlus_desc" value="Aumenta la duracion de &#xA;bonificacion de 5 segundos" />
+    <string name="shop_flyPlus_desc" value="Aumenta la duración de &#xA;bonificación de 5 segundos" />
     <string name="shop_morphing_name" value="Bala morphing" />
     <string name="shop_morphing_desc" value="Desbloquea la apariencia &#xA;morphing de la bala" />
     <string name="shop_capsule_name" value="Bala capsule" />
@@ -101,11 +101,11 @@
     <string name="pause_music" value="Musica" />
 
     <!--  End Screen strings -->
-    <string name="end_title" value="Tu puntuacion" />
-    <string name="end_speed_multiplier" value="Velocidad multiplicator" />
+    <string name="end_title" value="Tu puntuación" />
+    <string name="end_speed_multiplier" value="Velocidad multiplicador" />
     <string name="end_current_distance" value="Distancia recorrida" />
     <string name="end_coins_collected" value="Monedas recogidas" />
-    <string name="end_enemies" value="Prima destruccion enemigos" />
+    <string name="end_enemies" value="Prima destrucción enemigos" />
     <string name="end_score" value="Total" />
     <string name="end_save_button" value="SALVAR" />
 

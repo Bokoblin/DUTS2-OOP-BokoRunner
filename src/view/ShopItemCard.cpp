@@ -70,7 +70,7 @@ void ShopItemCard::loadImages()
     clipRectRed.push_back(RED_BUTTON_UP);
     m_boughtButton = new Button(getPosition().x + m_width/2-75, getPosition().y + 250, 150, 80, "shop_bought",
                                 RECT_BUTTONS_IMAGE, clipRectRed);
-    m_boughtButton->setActivated(false);
+    m_boughtButton->setDisabled(true);
 
     setTextureFromImage(CARD_IMAGE);
 }

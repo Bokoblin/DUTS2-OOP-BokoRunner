@@ -36,7 +36,7 @@ limitations under the License.
  * Text objects branded as "Text" are loaded from parsed data
  *
  * @author Arthur
- * @date 02/04/16 - 23/01/17
+ * @date 02/04/16 - 25/01/17
  */
 class TextHandler
 {
@@ -86,6 +86,7 @@ private:
     Text *m_configLangTitleLabel;
     Text *m_configDifficultyTitleLabel;
     Text *m_configCustomTitleLabel;
+    Text *m_configMusicTitleLabel;
     Text *m_statsTitleLabel;
     Text *m_statsOverallTitleLabel;
     Text *m_statsPerGameTitleLabel;

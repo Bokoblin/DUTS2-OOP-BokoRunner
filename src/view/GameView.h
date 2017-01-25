@@ -31,7 +31,7 @@ limitations under the License.
 /**
  * GameView Class
  * @author Arthur, Florian
- * @date 21/02/16 - 04/01/17
+ * @date 21/02/16 - 25/01/17
  */
 class GameView : public View
 {
@@ -52,6 +52,7 @@ public:
     virtual void updateElements();
     virtual void deleteElements();
     void handleZonesTransition();
+    void handleMusic();
 
 
 private:
@@ -60,7 +61,6 @@ private:
     PixelateEffect *m_pixelShader;
     float m_xPixelIntensity;
     float m_yPixelIntensity;
-    bool m_isMusicEnabled;
     const int TRANSITION_SPEED = 10;
     const int PAUSE_FORM_X = 30;
 

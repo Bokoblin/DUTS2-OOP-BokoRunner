@@ -6,7 +6,7 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 20/05/16 - 24/01/17
+ * @date 20/05/16 - 25/01/17
  */
 SettingsView::SettingsView(float w, float h, sf::RenderWindow *window, TextHandler * t):
         View(w, h, window, t), m_settings{nullptr}, m_confirmDialog{nullptr}
@@ -34,6 +34,8 @@ SettingsView::SettingsView(float w, float h, sf::RenderWindow *window, TextHandl
     m_buttonList.push_back(m_morphBallSkinRadio);
     m_buttonList.push_back(m_capsuleBallSkinRadio);
     m_buttonList.push_back(m_resetRectButton);
+    m_buttonList.push_back(m_menuMusicButton);
+    m_buttonList.push_back(m_gameMusicButton);
 
     m_confirmDialog = new Dialog(m_width/2-140, m_height/2-120, 280, 200, t, "confirm");
     m_confirmDialog->hide();
@@ -64,6 +66,7 @@ SettingsView::~SettingsView()
 void SettingsView::setSettingsModel(Settings *model)
 {
     m_settings = model;
+    handleMusic();
 }
 
 
@@ -74,7 +77,7 @@ void SettingsView::setSettingsModel(Settings *model)
  */
 void SettingsView::loadImages()
 {
-    //=== Initialize RADIOS and PAGE INDICATORS buttons
+    //=== Initialize RADIOS buttons
 
     m_englishLangRadio = new RadioButton(RADIO_BUTTONS_MARGIN, 205, 50, 50, "config_lang_english");
     m_frenchLangRadio = new RadioButton(RADIO_BUTTONS_MARGIN, 245, 50, 50, "config_lang_french");
@@ -84,6 +87,24 @@ void SettingsView::loadImages()
     m_defaultBallSkinRadio = new RadioButton(m_width/2+RADIO_BUTTONS_MARGIN, 205, 50, 50, "config_ball_default_skin");
     m_morphBallSkinRadio = new RadioButton(m_width/2+RADIO_BUTTONS_MARGIN, 245, 50, 50, "config_ball_morph_skin");
     m_capsuleBallSkinRadio = new RadioButton(m_width/2+RADIO_BUTTONS_MARGIN, 285, 50, 50, "config_ball_capsule_skin");
+
+
+    //=== Initialize Music controls
+
+    std::vector<sf::IntRect> clipRect_music;
+    clipRect_music.push_back(sf::IntRect(0, 200, 50, 50));
+    clipRect_music.push_back(sf::IntRect(50, 200, 50, 50));
+
+    m_menuMusicButton = new Button(m_width/2+RADIO_BUTTONS_MARGIN, 420, 25, 25, "config_music_menu",
+                                   GAME_BUTTONS_IMAGE, clipRect_music);
+    m_menuMusicButton->resize(25,25);
+    m_menuMusicButton->setLabelPosition(RIGHT);
+
+    m_gameMusicButton = new Button(m_width/2+RADIO_BUTTONS_MARGIN, 460, 25, 25, "config_music_game",
+                                   GAME_BUTTONS_IMAGE, clipRect_music);
+    m_gameMusicButton->resize(25,25);
+    m_gameMusicButton->setLabelPosition(RIGHT);
+
 
     //=== Initialize HOME form button
 
@@ -176,7 +197,7 @@ void SettingsView::synchronize()
 /**
  * Settings View Drawing
  * @author Arthur
- * @date 20/05/16 - 24/01/17
+ * @date 20/05/16 - 25/01/17
  */
 void SettingsView::draw() const
 {
@@ -196,6 +217,8 @@ void SettingsView::draw() const
         m_defaultBallSkinRadio->draw(m_window);
         m_morphBallSkinRadio->draw(m_window);
         m_capsuleBallSkinRadio->draw(m_window);
+        m_menuMusicButton->draw(m_window);
+        m_gameMusicButton->draw(m_window);
 
         m_textHandler->drawMenuSettingsText(m_window, CONFIG);
     }
@@ -297,6 +320,16 @@ bool SettingsView::treatEvents(sf::Event event)
             {
                 m_settings->changeBallSkin("capsule");
             }
+            else if (m_menuMusicButton->contains(MOUSE_POSITION) )
+            {
+                m_settings->getDataBase()->setMenuMusic(!m_settings->getDataBase()->isMenuMusicEnabled());
+                handleMusic();
+            }
+            else if (m_gameMusicButton->contains(MOUSE_POSITION) )
+            {
+                m_settings->getDataBase()->setGameMusic(!m_settings->getDataBase()->isGameMusicEnabled());
+                handleMusic();
+            }
         }
         else
         {
@@ -335,4 +368,46 @@ bool SettingsView::treatEvents(sf::Event event)
         }
     }
     return stop_settings;
+}
+
+/**
+ * Handles music settings
+ * @author Arthur
+ * @date 25/01/17
+ */
+void SettingsView::handleMusic()
+{
+    //=== Change menu music volume
+
+    if (m_settings->getDataBase()->isMenuMusicEnabled())
+    {
+        std::vector<sf::IntRect> clipRect;
+        clipRect.push_back(sf::IntRect(0,200,50,50));
+        clipRect.push_back(sf::IntRect(50,200,50,50));
+        m_menuMusicButton->setClipRectArray(clipRect);
+    }
+    else
+    {
+        std::vector<sf::IntRect> clipRect;
+        clipRect.push_back(sf::IntRect(0,250,50,50));
+        clipRect.push_back(sf::IntRect(50,250,50,50));
+        m_menuMusicButton->setClipRectArray(clipRect);
+    }
+
+    //=== Change game music volume
+
+    if (m_settings->getDataBase()->isGameMusicEnabled())
+    {
+        std::vector<sf::IntRect> clipRect;
+        clipRect.push_back(sf::IntRect(0,200,50,50));
+        clipRect.push_back(sf::IntRect(50,200,50,50));
+        m_gameMusicButton->setClipRectArray(clipRect);
+    }
+    else
+    {
+        std::vector<sf::IntRect> clipRect;
+        clipRect.push_back(sf::IntRect(0,250,50,50));
+        clipRect.push_back(sf::IntRect(50,250,50,50));
+        m_gameMusicButton->setClipRectArray(clipRect);
+    }
 }

@@ -46,7 +46,7 @@ Our project include two libraries contained in /libs folder :
 All images are licensed under Apache Licence Version 2.0.
 Most of them were created by ourselves or were given by our teachers.
 Some of them were made using provided one or were inspired by Material Design (e.g. radios).
-The file "menu_buttons.png" incorporates AOSP Settings icon which is also licensed under Apache License Version 2.0.
+The file "shape_buttons.png" incorporates some AOSP icon which are also licensed under Apache License Version 2.0.
 
 
 ##### Audio #####

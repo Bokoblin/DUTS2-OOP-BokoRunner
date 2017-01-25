@@ -9,6 +9,7 @@ v1.8-dev
 
 Major visible changes:
 - Settings enhancements
+    - Added music controls to disable menu/game music
     - Split "Stats" and "Credit" (now About) in two different pages
     - Added per-game stats and "clear data" button with confirm dialog to Stats page
     - Added SFML logo and some information to About page

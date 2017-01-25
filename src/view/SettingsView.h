@@ -28,7 +28,7 @@ limitations under the License.
 /**
  * SettingsView Class
  * @author Arthur
- * @date 20/05/16 - 02/01/17
+ * @date 20/05/16 - 25/01/17
  */
 class SettingsView : public View
 {
@@ -46,6 +46,7 @@ public:
     virtual void loadImages() override;
     virtual bool treatEvents() override;
     bool treatEvents( sf::Event event );
+    void handleMusic();
 
 private:
     //=== ATTRIBUTES
@@ -63,6 +64,8 @@ private:
     Button *m_morphBallSkinRadio;
     Button *m_capsuleBallSkinRadio;
     Button *m_resetRectButton;
+    Button *m_menuMusicButton;
+    Button *m_gameMusicButton;
     GraphicElement *m_logoIUTSprite;
     GraphicElement *m_logoSFMLSprite;
 

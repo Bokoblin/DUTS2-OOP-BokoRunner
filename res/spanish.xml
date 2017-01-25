@@ -35,6 +35,9 @@
     <string name="config_ball_default_skin" value="Apariencia predeterminada" />
     <string name="config_ball_morph_skin" value="Apariencia morphing" />
     <string name="config_ball_capsule_skin" value="Apariencia capsule" />
+    <string name="config_music_title" value="Musica" />
+    <string name="config_music_menu" value="Menu" />
+    <string name="config_music_game" value="Juego" />
     <string name="stats_title" value="Estadisticas" />
     <string name="stats_overall_title" value="Estadisticas cumulados" />
     <string name="stats_per_game_title" value="Estadisticas per parte" />
@@ -95,6 +98,7 @@
     <string name="pause_resume" value="Reanudar" />
     <string name="pause_restart" value="Reiniciar" />
     <string name="pause_go_to_home" value="Menu" />
+    <string name="pause_music" value="Musica" />
 
     <!--  End Screen strings -->
     <string name="end_title" value="Tu puntuacion" />

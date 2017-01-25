@@ -40,7 +40,7 @@ const sf::Font& TextHandler::getBoldFont() const { return m_BoldFont; }
 /**
  * Text Loading
  * @author Arthur
- * @date 02/04/16 - 14/01/17
+ * @date 02/04/16 - 25/01/17
  * */
 void TextHandler::loadText()
 {
@@ -74,6 +74,9 @@ void TextHandler::loadText()
 
     m_configCustomTitleLabel = new Text("config_custom_title");
     m_textList.push_back(m_configCustomTitleLabel);
+
+    m_configMusicTitleLabel = new Text("config_music_title");
+    m_textList.push_back(m_configMusicTitleLabel);
 
     //=== Settings - stats
 
@@ -223,7 +226,7 @@ void TextHandler::syncMenuHomeText()
 /**
  * Menu Settings Text Syncing
  * @author Arthur
- * @date 14/04/16 - 14/01/17
+ * @date 14/04/16 - 25/01/17
  */
 void TextHandler::syncSettingsText(int currentPage)
 {
@@ -232,7 +235,8 @@ void TextHandler::syncSettingsText(int currentPage)
         m_configTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
         m_configLangTitleLabel->setPosition(40, 150);
         m_configDifficultyTitleLabel->setPosition(40, 370);
-        m_configCustomTitleLabel->setPosition(m_width/2 + 40, 150);
+        m_configCustomTitleLabel->setPosition(m_width/2+40, 150);
+        m_configMusicTitleLabel->setPosition(m_width/2 +40, 370);
     }
     else if ( currentPage == STATS)
     {
@@ -441,7 +445,7 @@ void TextHandler::syncEndText(int gameSpeed)
 /**
  * Settings Screen Drawing
  * @author Arthur
- * @date 14/04/16 - 14/01/17
+ * @date 14/04/16 - 25/01/17
  */
 void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const
 {
@@ -451,6 +455,7 @@ void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage
         m_configLangTitleLabel->draw(window);
         m_configDifficultyTitleLabel->draw(window);
         m_configCustomTitleLabel->draw(window);
+        m_configMusicTitleLabel->draw(window);
     }
     else if ( currentPage == STATS)
     {

@@ -11,15 +11,6 @@ MenuView::MenuView(float w, float h, sf::RenderWindow *window, TextHandler * tex
         View(w, h, window,textHandler), m_menuModel{nullptr}, m_commandsView{nullptr},
         m_leaderboardView{nullptr}, m_settingsView{nullptr},  m_shopView{nullptr}
 {
-    if (!m_menuMusic.openFromFile(MENU_MUSIC))
-        cerr << "ERROR when loading music file: " << MENU_MUSIC << endl;
-    else
-    {
-        m_menuMusic.play();
-        m_menuMusic.setLoop(true);
-        m_menuMusic.setAttenuation(50);
-    }
-
     if (m_window->getSize().x != m_width )
     {
         m_window->create(sf::VideoMode((unsigned int) w, (unsigned int) h, SCREEN_BPP), APP_TITLE, sf::Style::Close );
@@ -34,7 +25,7 @@ MenuView::MenuView(float w, float h, sf::RenderWindow *window, TextHandler * tex
 /**
  * Destructor
  * @author Arthur
- * @date 26/02/16 - 21/05/17
+ * @date 26/02/16 - 21/05/16
  */
 MenuView::~MenuView()
 {
@@ -55,6 +46,19 @@ MenuView::~MenuView()
 void MenuView::setMenuModel(MenuModel *model)
 {
     m_menuModel = model;
+
+    if (!m_menuMusic.openFromFile(MENU_MUSIC))
+        cerr << "ERROR when loading music file: " << MENU_MUSIC << endl;
+    else
+    {
+        if (m_menuModel->getDataBase()->isMenuMusicEnabled())
+            m_menuMusic.setVolume(100);
+        else
+            m_menuMusic.setVolume(0);
+        m_menuMusic.play();
+        m_menuMusic.setLoop(true);
+        m_menuMusic.setAttenuation(50);
+    }
 }
 
 
@@ -117,6 +121,11 @@ void MenuView::loadImages()
  */
 void MenuView::synchronize()
 {
+    if (m_menuModel->getDataBase()->isMenuMusicEnabled())
+        m_menuMusic.setVolume(100);
+    else
+        m_menuMusic.setVolume(0);
+
     if ( m_menuMusic.getPlayingOffset() >= sf::milliseconds(28840))
         m_menuMusic.setPlayingOffset( sf::milliseconds(4851));
 

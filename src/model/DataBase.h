@@ -33,7 +33,7 @@ enum Difficulty
 /**
  * DataBase Class
  * @author Arthur
- * @date 2/05/16 - 23/01/17
+ * @date 2/05/16 - 25/01/17
  */
 class DataBase
 {
@@ -56,6 +56,8 @@ public:
     int getCurrentScore() const;
     int getWallet() const;
     int getDifficulty() const;
+    bool isMenuMusicEnabled() const;
+    bool isGameMusicEnabled() const;
     std::string getLanguage() const;
     std::string getBallSkin() const;
     const std::set<std::string>& getActivatedItemsArray() const;
@@ -70,6 +72,8 @@ public:
     void setDifficulty(int difficulty);
     void setLanguage(std::string lang);
     void setBallSkin(std::string skin);
+    void setMenuMusic(bool on);
+    void setGameMusic(bool on);
 
     //=== METHODS
     void createFile();
@@ -99,6 +103,8 @@ private:
     int m_perGameFlattenedEnemies;
     int m_wallet;
     int m_currentDifficulty;
+    bool m_isMenuMusicEnabled;
+    bool m_isGameMusicEnabled;
     std::string m_currentLanguage;
     std::string m_currentBallSkin;
     const int COIN_MULTIPLIER = 20;

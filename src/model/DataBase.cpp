@@ -8,11 +8,11 @@ using namespace std;
  * by initializing all the data
  * from config (backup) file
  * @author Arthur
- * @date 2/05/16
+ * @date 2/05/16 - 25/01/17
  */
 DataBase::DataBase() :
-    m_currentCoinsNumber{0}, m_currentDistance{0},
-    m_currentFlattenedEnemies{0}, m_currentScore{0}
+    m_currentCoinsNumber{0}, m_currentDistance{0}, m_currentFlattenedEnemies{0},
+    m_currentScore{0}, m_isMenuMusicEnabled{false}, m_isGameMusicEnabled{false}
 {
     if (!checkFileIntegrity())
         createFile();
@@ -35,6 +35,8 @@ int DataBase::getCurrentFlattenedEnemies() const { return m_currentFlattenedEnem
 int DataBase::getCurrentScore() const { return m_currentScore; }
 int DataBase::getDifficulty() const {return m_currentDifficulty;}
 int DataBase::getWallet() const {return m_wallet;}
+bool DataBase::isMenuMusicEnabled() const {return m_isMenuMusicEnabled;}
+bool DataBase::isGameMusicEnabled() const {return m_isGameMusicEnabled;}
 string DataBase::getLanguage() const { return m_currentLanguage;}
 string DataBase::getBallSkin() const { return m_currentBallSkin; }
 const set<string>& DataBase::getActivatedItemsArray() const { return m_activatedItemsArray; }
@@ -60,6 +62,8 @@ void DataBase::increaseCurrentFlattenedEnemies(int amount) { m_currentFlattenedE
 void DataBase::setLanguage(string lang) { m_currentLanguage = lang;}
 void DataBase::setBallSkin(string skin) { m_currentBallSkin = skin; }
 void DataBase::setDifficulty(int d) { m_currentDifficulty = d;}
+void DataBase::setMenuMusic(bool on) { m_isMenuMusicEnabled = on; }
+void DataBase::setGameMusic(bool on) { m_isGameMusicEnabled = on;}
 void DataBase::setCurrentScore(float speed)
 {
     m_currentScore = (int)(speed * m_currentDistance
@@ -85,7 +89,7 @@ void DataBase::createFile()
  * Checks if config file has been corrupted
  * by verifying file number of lines, number of each item
  * @author Arthur
- * @date 2/05/16 - 23/01/17
+ * @date 2/05/16 - 25/01/17
  */
 bool DataBase::checkFileIntegrity()
 {
@@ -104,8 +108,8 @@ bool DataBase::checkFileIntegrity()
     bool isPresentShop = false; //should be true
     bool isPresentScoreEasy = false; //should be true
     bool isPresentScoreHard = false; //should be true
-    int nbLines = 0; //should be 50 or 51
-    int nbConfigChildren = 0; //should be 4
+    int nbLines = 0; //should be 52 or 53
+    int nbConfigChildren = 0; //should be 6
     int nbStatsChildren = 0; //should be 7
     int nbShopChildren = 0; //should be 6
     int nbScoreChildren = 0; //should be 20
@@ -152,8 +156,8 @@ bool DataBase::checkFileIntegrity()
     while ( !f.eof() );
 
     return !(!isPresentConfig || !isPresentStats || !isPresentShop || !isPresentScoreEasy || !isPresentScoreHard
-             || (nbLines != 50 && nbLines != 51)
-             || nbConfigChildren!=4 || nbStatsChildren!=7 || nbShopChildren!=6 || nbScoreChildren!=20);
+             || (nbLines != 52 && nbLines != 53)
+             || nbConfigChildren!=6 || nbStatsChildren!=7 || nbShopChildren!=6 || nbScoreChildren!=20);
 }
 
 
@@ -201,7 +205,7 @@ string DataBase::getStringFromFile(string description)
 /**
  * Update variable value from file
  * @author Arthur
- * @date 24/10/16 - 14/01/17
+ * @date 24/10/16 - 25/01/17
  */
 void DataBase::updateConfigValues()
 {
@@ -222,6 +226,16 @@ void DataBase::updateConfigValues()
             m_currentBallSkin = configItem.attribute("value").value();
         else if (string(configItem.attribute("name").value()) == "wallet")
             m_wallet = atoi(configItem.attribute("value").value());
+        else if (string(configItem.attribute("name").value()) == "menu_music")
+        {
+            string result = configItem.attribute("value").value();
+            if (result == "true" ) m_isMenuMusicEnabled=true;
+        }
+        else if (string(configItem.attribute("name").value()) == "game_music")
+        {
+            string result = configItem.attribute("value").value();
+            if (result == "true" ) m_isGameMusicEnabled=true;
+        }
     }
 
     for (pugi::xml_node statItem: stats.children("statItem"))
@@ -319,7 +333,7 @@ void DataBase::pushConfigurationToFile()
             pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value(m_currentLanguage.c_str());
         }
-        if ( string(configItem.attribute("name").value()) == "difficulty" )
+        else if ( string(configItem.attribute("name").value()) == "difficulty" )
         {
             pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value((to_string(m_currentDifficulty)).c_str());
@@ -328,6 +342,27 @@ void DataBase::pushConfigurationToFile()
         {
             pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value(m_currentBallSkin.c_str());
+        }
+        else if ( string(configItem.attribute("name").value()) == "wallet" )
+        {
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            nodeValue.set_value((to_string(m_wallet)).c_str());
+        }
+        else if ( string(configItem.attribute("name").value()) == "menu_music" )
+        {
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            if ( m_isMenuMusicEnabled )
+                nodeValue.set_value(true);
+            else
+                nodeValue.set_value(false);
+        }
+        else if ( string(configItem.attribute("name").value()) == "game_music" )
+        {
+            pugi::xml_attribute nodeValue = configItem.attribute("value");
+            if ( m_isGameMusicEnabled )
+                nodeValue.set_value(true);
+            else
+                nodeValue.set_value(false);
         }
     }
 
@@ -368,11 +403,6 @@ void DataBase::pushConfigurationToFile()
         {
             pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_totalGamesPlayed)).c_str());
-        }
-        else if ( string(statItem.attribute("name").value()) == "wallet" )
-        {
-            pugi::xml_attribute nodeValue = statItem.attribute("value");
-            nodeValue.set_value((to_string(m_wallet)).c_str());
         }
     }
 

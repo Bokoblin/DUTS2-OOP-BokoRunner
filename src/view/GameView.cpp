@@ -5,11 +5,11 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 26/03/16 - 22/05/16
+ * @date 26/03/16 - 25/01/17
  */
 GameView::GameView(float w, float h, sf::RenderWindow *myWindow, TextHandler *text):
         View(w, h, myWindow, text), m_gameModel{nullptr},
-        m_xPixelIntensity{1}, m_yPixelIntensity{1}, m_isMusicEnabled{true}
+        m_xPixelIntensity{1}, m_yPixelIntensity{1}
 {
     loadImages();
     m_pixelShader = new PixelateEffect();
@@ -83,6 +83,7 @@ void GameView::setGameModel(GameModel *model)
         cerr << "ERROR when loading music file: " << game_music << endl;
     else
     {
+        handleMusic();
         m_gameThemeMusic.play();
         m_gameThemeMusic.setLoop(true);
     }
@@ -109,7 +110,7 @@ void GameView::setGameModel(GameModel *model)
 /**
  * Image Loading
  * @author Arthur
- * @date 26/03/16 - 02/01/17
+ * @date 26/03/16 - 25/01/17
  */
 void GameView::loadImages()
 {
@@ -133,9 +134,9 @@ void GameView::loadImages()
     m_remainingLifeSprite = new GraphicElement(107, 535, 300, 50);
     m_remainingLifeSprite->setTextureFromImage(LIFE_BOX_IMAGE, sf::IntRect(0,51,300,50));
 
-    m_distanceIconSprite = new GraphicElement(30, 35, 20, 20);
+    m_distanceIconSprite = new GraphicElement(30, 35, 25, 25);
     m_distanceIconSprite->setTextureFromImage(GAME_BUTTONS_IMAGE, sf::IntRect(0,150,50,50));
-    m_distanceIconSprite->resize(20,20);
+    m_distanceIconSprite->resize(25,25);
 
 
     //=== Initialize PLAYER
@@ -208,38 +209,41 @@ void GameView::loadImages()
     std::vector<sf::IntRect> clipRect_resume;
     clipRect_resume.push_back(sf::IntRect(0, 0, 50, 50));
     clipRect_resume.push_back(sf::IntRect(50, 0, 50, 50));
-    m_resumeGameButton = new Button(PAUSE_FORM_X, 355, 20, 20, "pause_resume", GAME_BUTTONS_IMAGE,
-                                    clipRect_resume);
-    m_resumeGameButton->resize(20,20);
+    m_resumeGameButton = new Button(PAUSE_FORM_X, 355, 25, 25, "pause_resume",
+                                    GAME_BUTTONS_IMAGE, clipRect_resume);
+    m_resumeGameButton->resize(25,25);
     m_resumeGameButton->setLabelPosition(RIGHT);
 
     std::vector<sf::IntRect> clipRect_restart;
     clipRect_restart.push_back(sf::IntRect(0, 50, 50, 50));
     clipRect_restart.push_back(sf::IntRect(50, 50, 50, 50));
-    m_restartGameButton = new Button(PAUSE_FORM_X, 405, 20, 20, "pause_restart", GAME_BUTTONS_IMAGE,
-                                     clipRect_restart);
-    m_restartGameButton->resize(20,20);
+    m_restartGameButton = new Button(PAUSE_FORM_X, 405, 25, 25, "pause_restart",
+                                     GAME_BUTTONS_IMAGE, clipRect_restart);
+    m_restartGameButton->resize(25,25);
     m_restartGameButton->setLabelPosition(RIGHT);
 
 
     std::vector<sf::IntRect> clipRect_home;
     clipRect_home.push_back(sf::IntRect(0, 100, 50, 50));
     clipRect_home.push_back(sf::IntRect(50, 100, 50, 50));
-    m_goToHomeButton = new Button(PAUSE_FORM_X, 455, 20, 20, "pause_go_to_home", GAME_BUTTONS_IMAGE,
-                                  clipRect_home);
-    m_goToHomeButton->resize(20,20);
+    m_goToHomeButton = new Button(PAUSE_FORM_X, 455, 25, 25, "pause_go_to_home",
+                                  GAME_BUTTONS_IMAGE, clipRect_home);
+    m_goToHomeButton->resize(25,25);
     m_goToHomeButton->setLabelPosition(RIGHT);
 
     std::vector<sf::IntRect> clipRect_music;
     clipRect_music.push_back(sf::IntRect(0, 200, 50, 50));
     clipRect_music.push_back(sf::IntRect(50, 200, 50, 50));
-    m_controlMusicButton = new Button(PAUSE_FORM_X, 535, 20, 20, GAME_BUTTONS_IMAGE, clipRect_music);
-    m_controlMusicButton->resize(20,20);
+    m_controlMusicButton = new Button(PAUSE_FORM_X, 535, 25, 25, "pause_music",
+                                      GAME_BUTTONS_IMAGE, clipRect_music);
+    m_controlMusicButton->resize(25,25);
+    m_controlMusicButton->setLabelPosition(RIGHT);
 
     std::vector<sf::IntRect> clipRect_save;
     clipRect_save.push_back(sf::IntRect(0, 179, 150, 40));
     clipRect_save.push_back(sf::IntRect(151, 179, 150, 40));
-    m_saveScoreButton = new Button(730, 350, m_width / 2 - 75, 430, "end_save_button", RECT_BUTTONS_IMAGE, clipRect_save);
+    m_saveScoreButton = new Button(730, 350, m_width / 2 - 75, 430, "end_save_button",
+                                   RECT_BUTTONS_IMAGE, clipRect_save);
 }
 
 
@@ -373,7 +377,7 @@ void GameView::handleZonesTransition()
 /**
  * Update gElements
  * @author Arthur
- * @date 6/03/16 - 02/01/17
+ * @date 6/03/16 - 25/01/17
  */
 void GameView::updateElements()
 {
@@ -423,7 +427,7 @@ void GameView::updateElements()
         m_restartGameButton->sync(m_gameModel->getDataBase());
         m_restartGameButton->setLabelPosition(RIGHT);
         m_goToHomeButton->sync(m_gameModel->getDataBase());
-        m_controlMusicButton->sync();
+        m_controlMusicButton->sync(m_gameModel->getDataBase());
         m_coinAnimSprite->sync();
         m_coinAnimSprite->resize(20,20);
         m_stdEnemyAnimSprite->sync();
@@ -484,7 +488,7 @@ void GameView::deleteElements()
 /**
  * Synchronization function
  * @author Arthur
- * @date 26/03/16 - 24/12/16
+ * @date 26/03/16 - 25/12/16
  */
 void GameView::synchronize()
 {
@@ -501,7 +505,7 @@ void GameView::synchronize()
     {
         updateElements();
         m_textHandler->syncPauseText();
-        sf::sleep(sf::milliseconds(2*NEXT_STEP_DELAY)); //limit CPU usage
+        sf::sleep(sf::milliseconds((sf::Int32) (1.8*NEXT_STEP_DELAY))); //limit CPU usage
     }
     else //GAME OVER
     {
@@ -520,9 +524,40 @@ void GameView::synchronize()
 
 
 /**
+ * Handles music settings
+ * @author Arthur
+ * @date 25/01/17
+ */
+void GameView::handleMusic()
+{
+    //change music volume
+    if (m_gameModel->getDataBase()->isGameMusicEnabled())
+    {
+        std::vector<sf::IntRect> clipRect;
+        clipRect.push_back(sf::IntRect(0,200,50,50));
+        clipRect.push_back(sf::IntRect(50,200,50,50));
+        m_controlMusicButton->setClipRectArray(clipRect);
+        m_gameThemeMusic.setVolume(100);
+        m_coinMusic.setVolume(100);
+        m_destructedEnemiesMusic.setVolume(100);
+    }
+    else
+    {
+        std::vector<sf::IntRect> clipRect;
+        clipRect.push_back(sf::IntRect(0,250,50,50));
+        clipRect.push_back(sf::IntRect(50,250,50,50));
+        m_controlMusicButton->setClipRectArray(clipRect);
+        m_gameThemeMusic.setVolume(0);
+        m_coinMusic.setVolume(0);
+        m_destructedEnemiesMusic.setVolume(0);
+    }
+}
+
+
+/**
  * GameView Drawing
  * @author Arthur
- * @date 26/03/16 - 24/12/16
+ * @date 26/03/16 - 25/12/16
  */
 void GameView::draw() const
 {
@@ -570,10 +605,10 @@ void GameView::draw() const
         m_window->draw(*m_distanceIconSprite);
         m_window->draw(*m_coinAnimSprite);
         m_window->draw(*m_stdEnemyAnimSprite);
-        m_window->draw(*m_controlMusicButton);
         m_resumeGameButton->draw(m_window);
         m_restartGameButton->draw(m_window);
         m_goToHomeButton->draw(m_window);
+        m_controlMusicButton->draw(m_window);
 
         //=== TextHandler drawing
 
@@ -601,7 +636,7 @@ void GameView::draw() const
 /**
  * Events treating
  * @author Arthur, Florian
- * @date 21/02/16 - 24/12/16
+ * @date 21/02/16 - 25/12/16
  */
 bool GameView::treatEvents()
 {
@@ -702,29 +737,8 @@ bool GameView::treatEvents()
                     }
                     else if (m_controlMusicButton->contains(MOUSE_POSITION) )
                     {
-                        m_isMusicEnabled = !m_isMusicEnabled;
-
-                        //change music volume
-                        if (m_isMusicEnabled)
-                        {
-                            std::vector<sf::IntRect> clipRect;
-                            clipRect.push_back(sf::IntRect(0,200,50,50));
-                            clipRect.push_back(sf::IntRect(50,200,50,50));
-                            m_controlMusicButton->setClipRectArray(clipRect);
-                            m_gameThemeMusic.setVolume(100);
-                            m_coinMusic.setVolume(100);
-                            m_destructedEnemiesMusic.setVolume(100);
-                        }
-                        else
-                        {
-                            std::vector<sf::IntRect> clipRect;
-                            clipRect.push_back(sf::IntRect(0,250,50,50));
-                            clipRect.push_back(sf::IntRect(50,250,50,50));
-                            m_controlMusicButton->setClipRectArray(clipRect);
-                            m_gameThemeMusic.setVolume(0);
-                            m_coinMusic.setVolume(0);
-                            m_destructedEnemiesMusic.setVolume(0);
-                        }
+                        m_gameModel->getDataBase()->setGameMusic(!m_gameModel->getDataBase()->isGameMusicEnabled());
+                        handleMusic();
                     }
                 }
             }

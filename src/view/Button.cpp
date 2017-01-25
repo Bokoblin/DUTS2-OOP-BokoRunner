@@ -150,7 +150,7 @@ void Button::sync()
  * Changes animation depending on pressed state
  * sync button's label
  * @author Arthur
- * @date 23/12/16
+ * @date 23/12/16 - 25/01/17
  */
 void Button::sync(DataBase *dataBase)
 {
@@ -170,7 +170,7 @@ void Button::sync(DataBase *dataBase)
                 break;
             case RIGHT:
                 m_label->setPosition(getPosition().x + getGlobalBounds().width + 30,
-                                     getPosition().y + getGlobalBounds().height/2 - 5);
+                                     getPosition().y + getGlobalBounds().height/2 - 7);
                 m_label->setOrigin(0, m_label->getGlobalBounds().height/2);
                 break;
             case BOTTOM:
@@ -180,7 +180,7 @@ void Button::sync(DataBase *dataBase)
                 break;
             case LEFT:
                 m_label->setPosition((getPosition().x - 30),
-                                     getPosition().y+getGlobalBounds().height/2 - 5);
+                                     getPosition().y+getGlobalBounds().height/2 - 7);
                 m_label->setOrigin(m_label->getGlobalBounds().width, m_label->getGlobalBounds().height/2);
                 break;
             case CENTER:

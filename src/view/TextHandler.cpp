@@ -200,7 +200,7 @@ void TextHandler::loadText()
 /**
  * Changes Language
  * @author Arthur
- * @date 13/04/16 - 07/01/17
+ * @date 13/04/16 - 25/01/17
  */
 void TextHandler::updateWholeText()
 {
@@ -209,7 +209,8 @@ void TextHandler::updateWholeText()
         t->setCharacterSize(DEFAULT_CHAR_SIZE);
         t->setFont(m_condensedFont);
         t->setColor(sf::Color::White);
-        t->setString(m_dataBase->getStringFromFile(t->getDescription()));
+        std::string utf8_string = m_dataBase->getStringFromFile(t->getDescription());
+        t->setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
     }
 }
 

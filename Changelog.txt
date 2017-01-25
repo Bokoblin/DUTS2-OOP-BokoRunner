@@ -34,6 +34,7 @@ Fixes and misc:
 - Fixed pixel transition file loading failure
 - updated edited classes copyright to include 2017
 - Added showing capability to GraphicElement class
+- Added support to UTF-8 characters thanks to Laurent Gomila (SFML main developer)
 - Other minor fixes and improvements
 
 

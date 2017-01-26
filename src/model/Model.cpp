@@ -3,9 +3,12 @@
 using namespace std;
 
 /**
- * Parameterized Constructor
+ * Constructs a model with app's size
  * @author Arthur, Florian
- * @date 21/02 - 20/12
+ * @date 21/02/16 - 20/12/16
+ *
+ * @param w the app width
+ * @param h the app height
  */
 Model::Model(int w, int h)  :
     m_width(w), m_height(h),
@@ -16,7 +19,7 @@ Model::Model(int w, int h)  :
 /**
  * Copy Constructor
  * @author Arthur
- * @date 14/04 - 20/12
+ * @date 14/04/16 - 20/12/16
  */
 Model::Model(const Model& model) :
     m_width(model.m_width), m_height(model.m_height),
@@ -26,7 +29,7 @@ Model::Model(const Model& model) :
 /**
  * Destructor
  * @author Arthur, Florian
- * @date 21/02 - 26/03
+ * @date 21/02/16 - 26/03/16
  */
 Model::~Model() {}
 
@@ -45,6 +48,6 @@ void Model::setAppState(AppState state) { m_appState = state;}
 /**
  * Next Step
  * @author Arthur
- * @date 21/02 - 27/03
+ * @date 21/02/16 - 27/03/16
  */
 void Model::nextStep() {}

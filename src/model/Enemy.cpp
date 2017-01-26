@@ -1,9 +1,17 @@
 #include "Enemy.h"
 
 /**
- * Parameterized Constructor
+ * Constructs an enemy with
+ * coordinates, a size, a moving vector
  * @author Arthur
- * @date 13/03
+ * @date 13/03/16
+ *
+ * @param x the x position
+ * @param y the y position
+ * @param w the width
+ * @param h the height
+ * @param mvX the x moving direction
+ * @param mvY the y moving direction
  */
 Enemy::Enemy(float x, float y, float w, float h, float mvX, float mvY) :
         MovableElement(x, y, w, h, mvX, mvY)
@@ -15,7 +23,7 @@ Enemy::Enemy(float x, float y, float w, float h, float mvX, float mvY) :
 /**
  * Destructor
  * @author Arthur
- * @date 13/03
+ * @date 13/03/16
  */
 Enemy::~Enemy() {}
 
@@ -23,7 +31,7 @@ Enemy::~Enemy() {}
 /**
  * Enemy Moving
  * @author Arthur
- * @date 13/03
+ * @date 13/03/16
  */
 void Enemy::move()
 {
@@ -37,7 +45,7 @@ void Enemy::move()
  *   56-80 : TOTEM     ~25% \n
  *  81-100 : BLOCK     ~20%
  * @author Arthur
- * @date 13/03 - 05/04
+ * @date 13/03/16 - 05/04/16
  */
 void Enemy::chooseEnemyType()
 {

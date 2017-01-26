@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,8 +22,6 @@ limitations under the License.
 
 const int GAME_FLOOR = 480;
 const int FRAMERATE = 30;
-const int JUMP_LIMIT = 380;
-const float PRECISION = 1.0;
 
 enum playerState
 {
@@ -33,10 +31,16 @@ enum playerState
     SHIELD
 };
 
+enum MoveDirections {
+    MOVE_LEFT = true,
+    MOVE_RIGHT = false
+};
+
 /**
- * Player Class
+ * The Player class inherited from MovableElements
+ * contains player's logic and behaviours
  * @author Arthur, Florian
- * @date 22/02 - 11/04
+ * @date 22/02/16 - 04/01/17
  */
 class Player : public MovableElement
 {
@@ -62,7 +66,7 @@ public:
     //=== METHODS
     virtual void move() override;
     void changeState(int state);
-    void controlPlayerMovements(bool left);
+    void controlPlayerMovements(MoveDirections direction);
 
 
 private:
@@ -74,6 +78,10 @@ private:
     bool m_flying;
     bool m_inDeceleration;
     std::pair<float,float> m_vectorBall;
+
+    //Constants
+    const int JUMP_LIMIT = 380;
+    const float PRECISION = 1.0;
 };
 
 #endif

@@ -1,4 +1,4 @@
-﻿/* Copyright 2016 Jolivet Arthur & Laronze Florian
+﻿/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -38,24 +38,16 @@ enum GameState
     OVER
 };
 
-/********************************************
-    Constant Variables
-********************************************/
-const int DEFAULT_PLAYER_X = 50;
-const int ELEMENT_MOVE_Y = 0;
-const int SPEED_LIMIT = 20;
-const int NEXT_STEP_DELAY = 100;
-const int ZONE_CHANGING_DISTANCE = 500;
-const int BONUS_ROW = GAME_FLOOR-100;
-const int SHIELD_TIMEOUT = -581374;
-const float DEFAULT_SPEED = 5.0;
-const float SPEED_STEP = 0.02;
-
 
 /**
- * GameModel Class
+ * The GameModel class handles the game's logic
+ * by handling MovableElements creation, behaviours,
+ * and deletion, handling game mode changing,
+ * handling events like zone changing,
+ * calculating final score, etc.
+ *
  * @author Arthur
- * @date 26/03 - 26/12
+ * @date 26/03/16 - 26/12/16
  */
 class GameModel : public Model
 {
@@ -68,7 +60,6 @@ public:
     GameState getGameState() const;
     bool getTransitionStatus() const;
     bool getTransitionPossibleStatus() const;
-    bool getSaveStatus() const;
     Player* getPlayer() const;
     float getGameSpeed() const;
     int getCurrentZone() const;
@@ -79,7 +70,7 @@ public:
     void setGameState(GameState state);
     void setTransitionStatus(bool status);
     void setTransitionPossibleStatus(bool status);
-    void setSaveStatus(bool status);
+
     void setCurrentZone(Zone z);
 
     //=== METHODS
@@ -98,7 +89,6 @@ private:
     GameState m_gameState;
     bool m_inTransition;
     bool m_isTransitionPossible;
-    bool m_isSavePossible;
     float m_gameSpeed;
     float m_gameSlowSpeed;
     Zone m_currentZone;
@@ -115,6 +105,17 @@ private:
     //Containers
     std::set<MovableElement*> m_movableElementsArray;
     std::set<MovableElement*> m_newMovableElementsArray;
+
+    //Constant Variables
+    const int DEFAULT_PLAYER_X = 50;
+    const int ELEMENT_MOVE_Y = 0;
+    const int SPEED_LIMIT = 20;
+    const int NEXT_STEP_DELAY = 100;
+    const int ZONE_CHANGING_DISTANCE = 500;
+    const int BONUS_ROW = GAME_FLOOR-100;
+    const int SHIELD_TIMEOUT = -581374;
+    const float DEFAULT_SPEED = 5.0;
+    const float SPEED_STEP = 0.02;
 };
 
 #endif

@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,10 +20,11 @@ limitations under the License.
 
 
 /**
- * Coin Class
+ * The Coin class inherited from MovableElement
+ * provides a moving behaviour for coins
  *
  * @author Arthur
- * @date 19/03
+ * @date 19/03/16
  */
 class Coin : public MovableElement
 {

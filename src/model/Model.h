@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,9 +28,11 @@ enum AppState
 };
 
 /**
- * Model Class
+ * The Model class provides common
+ * attributes and methods to other model classes
+ * and contains App's current state
  * @author Arthur, Florian
- * @date 21/02 - 20/12
+ * @date 21/02/16 - 20/12/16
  */
 class Model
 {

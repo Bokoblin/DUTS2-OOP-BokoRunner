@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,12 +16,10 @@ limitations under the License.
 #ifndef SHOP_ITEM_CARD_H
 #define SHOP_ITEM_CARD_H
 
-#include "ImagesConstants.h"
+#include "../model/ShopItem.h"
 #include "Button.h"
-#include "../Model/ShopItem.h"
 #include "TextHandler.h"
 
-#define HALF_WIDTH getGlobalBounds().width/2
 #define RED_BUTTON_UP sf::IntRect( 0, 100, 150, 40)
 #define GREEN_BUTTON_UP sf::IntRect(0, 178, 150, 43)
 #define GREEN_BUTTON_DOWN sf::IntRect(151, 179, 150, 40)
@@ -30,48 +28,33 @@ limitations under the License.
 /**
  * ShopItemCard Class
  * @author Arthur
- * @date 16/05 - 18/05
+ * @date 16/05/16 - 02/01/17
  */
-class ShopItemCard
+class ShopItemCard : public GraphicElement
 {
     public:
         //=== CTORs / DTORs
-        ShopItemCard(int id, ShopItem *item, TextHandler *t);
+        ShopItemCard(int id, ShopItem *item, TextHandler *textHandler);
         ~ShopItemCard();
 
         //=== GETTERS
         int getId() const;
-        bool getShownState() const;
         Button *getBuyButton() const;
         ShopItem *getItem() const;
 
-        //== SETTERS
-        void setShownState( bool state);
-
         //=== METHODS
         void loadImages();
-        void sync();
+        void sync(DataBase *dataBase);
         void draw(sf::RenderWindow *window) const;
 
     private:
         //=== ATTRIBUTES
         int m_id;
-        int m_posX, m_posY;
-        int m_width = 200;
-        int m_height = 300;
-        bool m_shownState;
-
         ShopItem *m_item;
-        TextHandler *m_text;
-        sf::Text m_name;
-        sf::Text m_desc;
-        sf::Text m_buyButtonContent;
-
-        sf::Texture m_cardBackgroundTexture;
-        sf::Texture m_rectButtonsTexture;
-
-        GraphicElement *m_cardBackgroundSprite;
+        Text m_title;
+        Text m_content;
         Button *m_buyButton;
+        Button *m_boughtButton;
 };
 
 #endif

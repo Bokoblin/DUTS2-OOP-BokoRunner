@@ -11,56 +11,59 @@ set(SFML_ROOT "${PROJECT_SOURCE_DIR}/libs/SFML-2.3.2")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${SFML_ROOT}/cmake/Modules/")
 
 set(SOURCE_FILES
-        libs/pugixml-1.7/src/pugixml.hpp
-        libs/pugixml-1.7/src/pugixml.cpp
-        src/view/AnimatedGraphicElement.cpp
-        src/view/AnimatedGraphicElement.h
+        libs/pugixml-1.8/src/pugixml.hpp
+        libs/pugixml-1.8/src/pugixml.cpp
         src/model/Bonus.cpp
         src/model/Bonus.h
-        src/view/Button.cpp
-        src/view/Button.h
         src/model/Coin.cpp
         src/model/Coin.h
+        src/model/Commands.cpp
+        src/model/Commands.h
         src/model/DataBase.cpp
         src/model/DataBase.h
-        src/view/Dialog.cpp
-        src/view/Dialog.h
         src/model/Enemy.cpp
         src/model/Enemy.h
         src/model/GameModel.cpp
         src/model/GameModel.h
-        src/view/GameView.cpp
-        src/view/GameView.h
-        src/view/GraphicElement.cpp
-        src/view/GraphicElement.h
-        src/view/ImagesConstants.h
-        src/view/Intro.cpp
-        src/view/Intro.h
         src/model/Leaderboard.cpp
         src/model/Leaderboard.h
-        src/view/LeaderboardView.cpp
-        src/view/LeaderboardView.h
-        src/main.cpp
         src/model/MenuModel.cpp
         src/model/MenuModel.h
-        src/view/MenuView.cpp
-        src/view/MenuView.h
         src/model/Model.cpp
         src/model/Model.h
         src/model/MovableElement.cpp
         src/model/MovableElement.h
-        src/view/PixelateEffect.cpp
-        src/view/PixelateEffect.h
         src/model/Player.cpp
         src/model/Player.h
         src/model/Settings.cpp
         src/model/Settings.h
-        src/view/SettingsView.cpp
-        src/view/SettingsView.h
         src/model/Shop.cpp
         src/model/Shop.h
         src/model/ShopItem.cpp
         src/model/ShopItem.h
+        src/view/AnimatedGraphicElement.cpp
+        src/view/AnimatedGraphicElement.h
+        src/constants.h
+        src/view/Button.cpp
+        src/view/Button.h
+        src/view/CommandsView.cpp
+        src/view/CommandsView.h
+        src/view/Dialog.cpp
+        src/view/Dialog.h
+        src/view/GameView.cpp
+        src/view/GameView.h
+        src/view/GraphicElement.cpp
+        src/view/GraphicElement.h
+        src/view/Intro.cpp
+        src/view/Intro.h
+        src/view/LeaderboardView.cpp
+        src/view/LeaderboardView.h
+        src/view/MenuView.cpp
+        src/view/MenuView.h
+        src/view/PixelateEffect.cpp
+        src/view/PixelateEffect.h
+        src/view/SettingsView.cpp
+        src/view/SettingsView.h
         src/view/ShopItemCard.cpp
         src/view/ShopItemCard.h
         src/view/ShopView.cpp
@@ -71,7 +74,11 @@ set(SOURCE_FILES
         src/view/TextHandler.h
         src/view/View.cpp
         src/view/View.h
-        )
+        src/view/Text.cpp
+        src/view/Text.h
+        src/view/RadioButton.cpp
+        src/view/RadioButton.h
+        src/main.cpp)
 
 add_executable(runner ${SOURCE_FILES})
 

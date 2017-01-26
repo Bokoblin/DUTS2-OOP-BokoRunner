@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ limitations under the License.
 /**
  * Intro Class
  * @author Arthur
- * @date 27/03 - 14/04
+ * @date 27/03/16 - 14/04/16
  */
 class Intro : public View
 {
@@ -38,7 +38,6 @@ class Intro : public View
 
 private:
     //=== ATTRIBUTES
-    sf::Texture m_introTexture;
     GraphicElement *m_introGraphic;
 };
 

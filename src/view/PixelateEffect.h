@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -69,7 +69,7 @@ External libraries used by SFML
  * licence is included above
  *
  * @author Arthur
- * @date 26/04 - 29/04
+ * @date 26/04/16 - 29/04/16
  */
 class PixelateEffect : public sf::Drawable
 {

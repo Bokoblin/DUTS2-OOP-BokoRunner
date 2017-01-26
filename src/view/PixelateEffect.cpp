@@ -6,7 +6,7 @@ using namespace std;
 /**
  * Default Constructor
  * @author Arthur
- * @date 28/04
+ * @date 28/04/16
  */
 PixelateEffect::PixelateEffect() : m_isLoaded(false)
 { }
@@ -15,7 +15,7 @@ PixelateEffect::PixelateEffect() : m_isLoaded(false)
 /**
  * Destructor
  * @author Arthur
- * @date 28/04
+ * @date 28/04/16
  */
 PixelateEffect::~PixelateEffect()
 { }
@@ -24,7 +24,7 @@ PixelateEffect::~PixelateEffect()
 /**
  * Load if shader available
  * @author Arthur
- * @date 28/04
+ * @date 28/04/16
  */
 void PixelateEffect::load(string image)
 {
@@ -35,7 +35,7 @@ void PixelateEffect::load(string image)
 /**
  * Action linked to load
  * @author Arthur
- * @date 28/04
+ * @date 28/04/16
  */
 bool PixelateEffect::onLoad(std::string image)
 {
@@ -44,7 +44,7 @@ bool PixelateEffect::onLoad(std::string image)
     m_sprite.setTexture(m_texture);
 
     // Load the shader
-    if (!m_shader.loadFromFile("Resources/pixelate.frag", sf::Shader::Fragment))
+    if (!m_shader.loadFromFile("../res/pixelate.frag", sf::Shader::Fragment))
         return false;
     m_shader.setParameter("texture", sf::Shader::CurrentTexture);
 
@@ -55,7 +55,7 @@ bool PixelateEffect::onLoad(std::string image)
 /**
  * Effect update
  * @author Arthur
- * @date 28/04
+ * @date 28/04/16
  */
 void PixelateEffect::update(float x, float y)
 {
@@ -67,7 +67,7 @@ void PixelateEffect::update(float x, float y)
 /**
  * Draw function
  * @author Arthur
- * @date 28/04
+ * @date 28/04/16
  */
 void PixelateEffect::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

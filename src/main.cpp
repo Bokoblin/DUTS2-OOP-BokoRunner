@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,41 +13,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "View/Intro.h"
-#include "View/MenuView.h"
-#include "View/GameView.h"
-
-
-/********************************************
-    Constant Variables
-********************************************/
-const int INTRO_WIDTH = 400;
-const int INTRO_HEIGHT = 200;
-
-using namespace std;
-
+#include "view/Intro.h"
+#include "view/MenuView.h"
+#include "view/GameView.h"
 
 /**
- * Main function
+ * The main function initializes the application
  * @author Arthur, Florian
- * @date 21/02 - 24/12
+ * @date 21/02/16 - 25/01/17
  */
 int main()
 {
-    sf::RenderWindow *window = new sf::RenderWindow( sf::VideoMode(SCREEN_WIDTH,
+    sf::RenderWindow window( sf::VideoMode(SCREEN_WIDTH,
             SCREEN_HEIGHT, SCREEN_BPP), APP_TITLE, sf::Style::None );
-    window->setFramerateLimit(FRAMERATE);
+    window.setFramerateLimit(FRAMERATE);
 
     DataBase data;
     Model model(SCREEN_WIDTH, SCREEN_HEIGHT);
     model.setDataBase(&data);
-    TextHandler *text = new TextHandler(&data, SCREEN_WIDTH, SCREEN_HEIGHT);
+    TextHandler textHandler(&data, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    while(window->isOpen() )
+    while(window.isOpen() )
     {
         if  ( model.getAppState() == INTRO )
         {
-            Intro intro(INTRO_WIDTH, INTRO_HEIGHT, window, text);
+            Intro intro(INTRO_WIDTH, INTRO_HEIGHT, &window, &textHandler);
             intro.setModel(&model);
             while( model.getAppState() == INTRO && intro.treatEvents() )
             {
@@ -60,7 +50,7 @@ int main()
         {
             MenuModel mModel(model);
             mModel.setDataBase(&data);
-            MenuView mView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
+            MenuView mView(SCREEN_WIDTH, SCREEN_HEIGHT, &window, &textHandler);
             mView.setModel(&model);
             mView.setMenuModel(&mModel);
             while( model.getAppState() == MENU && mView.treatEvents()  )
@@ -75,7 +65,7 @@ int main()
         {
             GameModel gModel(model);
             gModel.setDataBase(&data);
-            GameView gView(SCREEN_WIDTH, SCREEN_HEIGHT, window, text);
+            GameView gView(SCREEN_WIDTH, SCREEN_HEIGHT, &window, &textHandler);
             gView.setModel(&model);
             gView.setGameModel(&gModel);
             while( model.getAppState() == GAME && gView.treatEvents() )
@@ -92,9 +82,6 @@ int main()
     }
 
     data.pushConfigurationToFile();
-
-    delete text;
-    delete window;
 
     return EXIT_SUCCESS;
 }

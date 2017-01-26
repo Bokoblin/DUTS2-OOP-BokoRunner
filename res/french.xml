@@ -15,60 +15,97 @@
 -->
 
 <resources>
+    <!-- Menu & Leaderboard strings -->
+    <string name="menu_play_button" value="JOUER" />
+    <string name="menu_quit_button" value="QUITTER" />
+    <string name="leaderboard_title" value="Classement" />
+    <string name="leaderboard_content" value="Pas de scores" />
+    <string name="leaderboard_clear_button" value="EFFACER" />
 
-   <!-- Menu & Leaderboard strings -->
-   <string name="playButtonLabel">JOUER</string>
-   <string name="quitButtonLabel">QUITTER</string>
-   <string name="clearButtonLabel">EFFACER</string>
-   <string name="leaderboardTitleLabel">Classement</string>
-   <string name="leaderboardLabel">Il_n'y_a_pas_encore_de_scores</string>
+    <!-- Settings strings -->
+    <string name="config_title" value="Configuration" />
+    <string name="config_lang_title" value="Langues" />
+    <string name="config_lang_english" value="Anglais" />
+    <string name="config_lang_french" value="Français" />
+    <string name="config_lang_spanish" value="Espagnol" />
+    <string name="config_difficulty_title" value="Difficulté" />
+    <string name="config_easy_mode" value="Facile" />
+    <string name="config_hard_mode" value="Difficile" />
+    <string name="config_custom_title" value="Customisation de la balle" />
+    <string name="config_ball_default_skin" value="Apparence par défaut" />
+    <string name="config_ball_morph_skin" value="Apparence morphing" />
+    <string name="config_ball_capsule_skin" value="Apparence capsule" />
+    <string name="config_music_title" value="Musique" />
+    <string name="config_music_menu" value="Menu" />
+    <string name="config_music_game" value="Jeu" />
+    <string name="stats_title" value="Statistiques" />
+    <string name="stats_overall_title" value="Statistiques cumulés" />
+    <string name="stats_per_game_title" value="Statistiques par partie" />
+    <string name="stats_distance" value="Distance totale parcourue" />
+    <string name="stats_enemies" value="Total d'ennemies aplatis" />
+    <string name="stats_coins" value="Total de pieces collectées" />
+    <string name="stats_games_number" value="Nombre de parties lancées" />
+    <string name="stats_per_game_distance" value="Meilleure distance parcourue" />
+    <string name="stats_per_game_enemies" value="Meilleures ennemies aplatis" />
+    <string name="stats_per_game_coins" value="Meilleurs ramassage de pieces" />
+    <string name="stats_app_reset" value="RÉINITIALISER" />
+    <string name="about_title" value="A propos" />
+    <string name="about_description" value=" Boko Runner est un projet C++ que nous avons realise en tant que projet
+                  &#xA; de programmation du deuxième semestre de notre DUT. Le but était de
+                  &#xA; mettre en pratique les notions de POO que nous avons apprises au cours
+                  &#xA; du S2 et de développer avec celles-ci un jeu utilisant la bibliothèque SFML."/>
+    <string name="about_repository" value=" Le code de source du jeu est disponible sur Github a l'adresse :
+                  &#xA; https://github.com/Bokoblin/DUTS2-POO-ProjetRunner.
+                  &#xA; Pour signaler des bugs, allez dans la section ''Issues''."/>
+    <string name="about_email" value=" Contactez-nous a l'adresse e-mail : pro.jolivetarthur@gmail.com." />
+    <string name="about_copyright" value="2016-2017 Jolivet Arthur &amp; Laronze Florian" />
 
-   <!-- Settings strings -->
-   <string name="configTitleLabel">Configuration</string>
-   <string name="configLangTitleLabel">Langues</string>
-   <string name="configLangEngLabel">Anglais</string>
-   <string name="configLangFraLabel">Francais</string>
-   <string name="configLangEspLabel">Espagnol</string>
-   <string name="configDifficultyLabel">Difficulte</string>
-   <string name="configEasyModeLabel">Facile</string>
-   <string name="configHardModeLabel">Difficile</string>
-   <string name="configCustomTitleLabel">Customisation_de_la_balle</string>
-   <string name="configDefaultBallSkinLabel">Apparence_par_defaut</string>
-   <string name="configMorphBallSkinLabel">Apparence_"morphing"</string>
-   <string name="configCapsuleBallSkinLabel">Apparence_"capsule"</string>
-   <string name="statisticsTitleLabel">Statistiques</string>
-   <string name="totalDistanceLabel">Distance_totale_parcourue</string>
-   <string name="totalFlattenedEnemiesLabel">Total_d'ennemies_aplatis</string>
-   <string name="totalGamesPlayedLabel">Nombre_de_parties_lancees</string>
-   <string name="creditsTitleLabel">Credits</string>
-   <string name="creditsContentLabel">Ce_jeu_a_ete_developpe_en_tant_que_projet_de_POO_a_l'IUT_de_Bordeaux</string>
-   <string name="copyrightLabel">2016_Jolivet_Arthur_&_Laronze_Florian</string>
+    <!--  Shop strings -->
+    <string name="shop_bought" value="Obtenu" />
+    <string name="shop_purchasable" value="Acheter" />
+    <string name="shop_dialog_title" value="Acheter cet objet ?" />
+    <string name="shop_dialog_content" value="Nom : $NAME &#xA;&#xA;Prix : $PRICE pieces" />
+    <string name="shop_dialog_success" value="Merci pour votre achat." />
+    <string name="shop_dialog_failure" value="L'achat a échoué." />
 
-   <!--  Shop strings -->
-   <string name="boughtLabel">Obtenu</string>
-   <string name="buyableLabel">Acheter</string>
-   <string name="shopDialogTitleLabel">Acheter_cet_objet_?</string>
-   <string name="shopDialogContentLabel">Nom_:_Prix___:__pieces</string>
-   <string name="shopDialogNegativeLabel">ANNULER</string>
-   <string name="shopDialogPositiveLabel">OK</string>
-   <string name="buySuccessContentLabel">Merci_pour_votre_achat.</string>
-   <string name="buyFailureContentLabel">L'achat_a_echoue.</string>
+    <!-- Dialog strings -->
+    <string name="dialog_cancel" value="ANNULER" />
+    <string name="dialog_ok" value="OK" />
+    <string name="confirm_dialog_title" value="Supprimer les données ?" />
+    <string name="confirm_dialog_content" value="Les données de cette application
+                  &#xA;(paramètres, stats, scores, etc.)
+                  &#xA;seront définitivement supprimées." />
 
-   <!--  Game strings -->
-   <string name="playerLifeLabel">Vie</string>
-   <string name="saveButtonLabel">SAUVER</string>
+    <!--  ShopItems strings -->
+    <string name="shop_doubler_name" value="Doubleur de piece" />
+    <string name="shop_doubler_desc" value="Double le nombre &#xA;de pieces collectées" />
+    <string name="shop_shieldPlus_name" value="Bouclier+" />
+    <string name="shop_shieldPlus_desc" value="Protege le joueur d'une &#xA;collision supplémentaire" />
+    <string name="shop_megaPlus_name" value="Mega+" />
+    <string name="shop_megaPlus_desc" value="Augmente la durée du &#xA;bonus de 5 secondes" />
+    <string name="shop_flyPlus_name" value="Vol+" />
+    <string name="shop_flyPlus_desc" value="Augmente la durée du &#xA;bonus de 5 secondes" />
+    <string name="shop_morphing_name" value="Balle morphing" />
+    <string name="shop_morphing_desc" value="Débloque l'apparence &#xA;morphing de la balle" />
+    <string name="shop_capsule_name" value="Balle capsule" />
+    <string name="shop_capsule_desc" value="Débloque l'apparence &#xA;capsule de la balle" />
 
-   <!--  Pause Screen strings -->
-   <string name="pauseResumeLabel">Reprendre</string>
-   <string name="pauseRestartLabel">Recommencer</string>
-   <string name="pauseGoToHomeLabel">Accueil</string>
+    <!--  Game strings -->
+    <string name="game_player_life" value="Vie" />
 
-   <!--  End Screen strings -->
-   <string name="endTitleLabel">Votre_score</string>
-   <string name="speedMultiplierLabel">Multiplicateur_vitesse</string>
-   <string name="currentDistanceLabel">Distance_parcourue</string>
-   <string name="coinsCollectedLabel">Pieces_collectees</string>
-   <string name="flattenedEnemiesLabel">Bonus_destruction_ennemies</string>
-   <string name="currentScoreLabel">Total</string>
+    <!--  Pause Screen strings -->
+    <string name="pause_resume" value="Reprendre" />
+    <string name="pause_restart" value="Recommencer" />
+    <string name="pause_go_to_home" value="Accueil" />
+    <string name="pause_music" value="Musique" />
+
+    <!--  End Screen strings -->
+    <string name="end_title" value="Votre score" />
+    <string name="end_speed_multiplier" value="Multiplicateur vitesse" />
+    <string name="end_current_distance" value="Distance parcourue" />
+    <string name="end_coins_collected" value="Pieces collectées" />
+    <string name="end_enemies" value="Bonus destruction ennemies" />
+    <string name="end_score" value="Total" />
+    <string name="end_save_button" value="SAUVER" />
 
 </resources>

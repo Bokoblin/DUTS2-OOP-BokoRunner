@@ -3,13 +3,16 @@
 using namespace std;
 
 /**
- * Parameterized Constructor
+ * Constructs a MenuModel with the app common model
  * @author Arthur
- * @date 14/04 - 20/12
+ * @date 14/04/16 - 24/01/17
+ *
+ * @param model the app model
  */
 MenuModel::MenuModel(const Model& model) :
     Model(model), m_menuState{HOME}
 {
+    m_commands = nullptr;
     m_settings = nullptr;
     m_shop = nullptr;
     m_leaderboard = nullptr;
@@ -19,10 +22,11 @@ MenuModel::MenuModel(const Model& model) :
 /**
  * Destructor
  * @author Arthur
- * @date 14/04 - 21/05
+ * @date 14/04/16 - 24/01/17
  */
 MenuModel::~MenuModel()
 {
+    delete m_commands;
     delete m_leaderboard;
     delete m_settings;
     delete m_shop;
@@ -38,11 +42,19 @@ void MenuModel::setMenuState(MenuState state){ m_menuState = state;}
 /**
  * Next Step
  * @author Arthur
- * @date 14/04 - 21/05
+ * @date 14/04/16 - 24/01/17
  */
 void MenuModel::nextStep()
 {
-    //=== Delete leaderboard if not anymore in shopState
+    //=== Delete commands if not anymore current menu state
+
+    if (m_menuState != COMMANDS && m_commands != nullptr)
+    {
+        delete m_commands;
+        m_commands = nullptr;
+    }
+
+    //=== Delete leaderboard if not anymore current menu state
 
     if (m_menuState != LEADERBOARD && m_leaderboard != nullptr)
     {
@@ -50,7 +62,7 @@ void MenuModel::nextStep()
         m_leaderboard = nullptr;
     }
 
-    //=== Delete shop if not anymore in shopState
+    //=== Delete shop if not anymore current menu state
 
     if (m_menuState != SHOP && m_shop != nullptr)
     {
@@ -58,7 +70,7 @@ void MenuModel::nextStep()
         m_shop = nullptr;
     }
 
-    //=== Delete settings if not anymore in shopState
+    //=== Delete settings if not anymore current menu state
 
     if (m_menuState != SETTINGS && m_settings != nullptr)
     {
@@ -69,9 +81,22 @@ void MenuModel::nextStep()
 
 
 /**
- * Launch leaderboard function
+ * Launches commands function
  * @author Arthur
- * @date 21/05
+ * @date 24/01/17
+ */
+Commands* MenuModel::launchCommands()
+{
+    m_menuState = COMMANDS;
+    m_commands = new Commands(m_dataBase);
+    return m_commands;
+}
+
+
+/**
+ * Launches leaderboard function
+ * @author Arthur
+ * @date 21/05/16
  */
 Leaderboard* MenuModel::launchLeaderboard()
 {
@@ -82,9 +107,9 @@ Leaderboard* MenuModel::launchLeaderboard()
 
 
 /**
- * Launch shop function
+ * Launches shop function
  * @author Arthur
- * @date 14/05
+ * @date 14/05/16
  */
 Shop* MenuModel::launchShop()
 {
@@ -94,9 +119,9 @@ Shop* MenuModel::launchShop()
 }
 
 /**
- * Launch settings function
+ * Launches settings function
  * @author Arthur
- * @date 20/05
+ * @date 20/05/16
  */
 Settings* MenuModel::launchSettings()
 {

@@ -1,4 +1,4 @@
-﻿/* Copyright 2016 Jolivet Arthur & Laronze Florian
+﻿/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,13 +16,12 @@ limitations under the License.
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include "../../Libs/pugixml-1.7/src/pugixml.hpp"
+#include "../../libs/pugixml-1.8/src/pugixml.hpp"
 #include <iostream>
-#include <sstream>
 #include <cassert>
-#include <vector>
 #include <set>
 #include <fstream>
+#include "../constants.h"
 
 enum Difficulty
 {
@@ -30,56 +29,14 @@ enum Difficulty
     HARD = 2
 };
 
-/********************************************
-    Constant Variables
-********************************************/
-
-const int COIN_MULTIPLIER = 20;
-const int MAX_SCORES = 10;
-
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-const std::string CONFIG_FILE = "../res/config.xml";
-#else
-const std::string CONFIG_FILE = "~/.config/runner/config.xml";
-#endif
-
-const std::string DEFAULT_CONFIG_CONTENT = "<?xml version=\"1.0\"?>\n"
-        "<runner>\n"
-        "\t<config>\n"
-        "\t\t<configItem name=\"language\" value=\"en\"/>\n"
-        "\t\t<configItem name=\"difficulty\" value=\"2\"/>\n"
-        "\t\t<configItem name=\"ball_skin\" value=\"default\"/>\n"
-        "\t\t<configItem name=\"total_coins_collected\" value=\"0\"/>\n"
-        "\t\t<configItem name=\"total_distance_travelled\" value=\"0\"/>\n"
-        "\t\t<configItem name=\"total_enemies_destroyed\" value=\"0\"/>\n"
-        "\t\t<configItem name=\"total_games_played\" value=\"0\"/>\n"
-        "\t</config>\n"
-        "\t<shop>\n"
-        "\t\t<shopItem id=\"doubler\" name=\"Coin Doubler\" description=\"Double coins collected number\" price=\"1000\" boughtState=\"false\"/>\n"
-        "\t\t<shopItem id=\"shieldPlus\" name=\"Increase Shield bonus\" description=\"Protect two times\" price=\"100\" boughtState=\"false\"/>\n"
-        "\t\t<shopItem id=\"megaPlus\" name=\"Increase Mega bonus\" description=\"Increase bonus duration by 5s\" price=\"200\" boughtState=\"false\"/>\n"
-        "\t\t<shopItem id=\"flyPlus\" name=\"Increase Fly bonus\" description=\"Increase bonus duration by 5s\" price=\"180\" boughtState=\"false\"/>\n"
-        "\t\t<shopItem id=\"morphing\" name=\"Morph ball skin\" description=\"Unlock ball's morph skin\" price=\"500\" boughtState=\"false\"/>\n"
-        "\t\t<shopItem id=\"capsule\" name=\"Capsule ball skin\" description=\"Unlock ball's capsule skin\" price=\"60\" boughtState=\"false\"/>\n"
-        "\t</shop>\n"
-        "\t<scores>\n"
-        "\t\t<scoreItem value=\"0\"/>\n"
-        "\t\t<scoreItem value=\"0\"/>\n"
-        "\t\t<scoreItem value=\"0\"/>\n"
-        "\t\t<scoreItem value=\"0\"/>\n"
-        "\t\t<scoreItem value=\"0\"/>\n"
-        "\t\t<scoreItem value=\"0\"/>\n"
-        "\t\t<scoreItem value=\"0\"/>\n"
-        "\t\t<scoreItem value=\"0\"/>\n"
-        "\t\t<scoreItem value=\"0\"/>\n"
-        "\t\t<scoreItem value=\"0\"/>\n"
-        "\t</scores>\n"
-        "</runner>";
 
 /**
- * DataBase Class
+ * The DataBase class concentrates
+ * all the app's data for configuration,
+ * statistics, buyable items, scores,
+ * current game's values, etc.
  * @author Arthur
- * @date 2/05 - 24/10
+ * @date 02/05/16 - 25/01/17
  */
 class DataBase
 {
@@ -92,40 +49,51 @@ public:
     int getTotalCoinsNumber() const;
     int getTotalDistance() const;
     int getTotalFlattenedEnemies() const;
+    int getPerGameCoinsNumber() const;
+    int getPerGameDistance() const;
+    int getPerGameFlattenedEnemies() const;
     int getTotalGamesPlayed() const;
     int getCurrentCoinsNumber() const;
     int getCurrentDistance() const;
     int getCurrentFlattenedEnemies() const;
     int getCurrentScore() const;
+    int getWallet() const;
     int getDifficulty() const;
+    bool isMenuMusicEnabled() const;
+    bool isGameMusicEnabled() const;
     std::string getLanguage() const;
     std::string getBallSkin() const;
     const std::set<std::string>& getActivatedItemsArray() const;
+    std::string getLanguageFile() const;
 
     //=== SETTERS
-    void setTotalCoinsCollected(int number);
-    void setCurrentCoinsCollected(int number);
-    void increaseCurrentDistance(float number);
-    void setCurrentFlattenedEnemies(int number);
+    void decreaseWallet(int amount);
+    void increaseCurrentCoinsCollected(int amount);
+    void increaseCurrentDistance(float amount);
+    void increaseCurrentFlattenedEnemies(int amount);
     void setCurrentScore(float speed);
     void setDifficulty(int difficulty);
     void setLanguage(std::string lang);
-
     void setBallSkin(std::string skin);
+    void setMenuMusic(bool on);
+    void setGameMusic(bool on);
+
     //=== METHODS
-    void createFile();
-    bool checkFileIntegrity();
+    void createConfigFile();
+    bool checkConfigFileIntegrity();
     void fetchConfigurationFromFile();
-    void updateConfigValues();
-    void updateActivatedItemsArray();
-    void updateScoreArray();
+    std::string getTextValueFromStringsFile(std::string description);
+    void fetchConfig();
+    void fetchActivatedShopItems();
+    void fetchScore();
     void pushConfigurationToFile();
-    void addEntryToScoreArray(int new_score);
-    void loadStringFromArray(std::string &scores_text);
+    void addNewScore(int score);
+    void loadLeaderboardStringFromArray(Difficulty difficulty, std::string &scores_text);
     void saveCurrentGame();
     void launchNewGame();
+    void clearLeaderboard();
+    void clearAppData();
 
-    void resetScore();
 private:
     //=== ATTRIBUTES
     //Global App
@@ -133,18 +101,27 @@ private:
     int m_totalDistance;
     int m_totalFlattenedEnemies;
     int m_totalGamesPlayed;
+    int m_perGameCoinsCollected;
+    int m_perGameDistance;
+    int m_perGameFlattenedEnemies;
+    int m_wallet;
     int m_currentDifficulty;
+    bool m_isMenuMusicEnabled;
+    bool m_isGameMusicEnabled;
     std::string m_currentLanguage;
     std::string m_currentBallSkin;
+    const int COIN_MULTIPLIER = 20;
+    const int MAX_SCORES = 10;
 
     //Current Game
     int m_currentCoinsNumber;
     float m_currentDistance;
     int m_currentFlattenedEnemies;
-
     int m_currentScore;
-    std::set<int> m_scoresArray;
 
+    //Containers
+    std::set<int> m_scoresEasyArray;
+    std::set<int> m_scoresHardArray;
     std::set<std::string> m_activatedItemsArray;
 };
 

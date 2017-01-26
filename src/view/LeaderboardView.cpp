@@ -6,7 +6,7 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 21/05
+ * @date 21/05/16
  */
 LeaderboardView::LeaderboardView(float w, float h, sf::RenderWindow *window, TextHandler * t):
     View(w, h, window, t), m_leaderboard{nullptr}
@@ -19,7 +19,7 @@ LeaderboardView::LeaderboardView(float w, float h, sf::RenderWindow *window, Tex
 /**
  * Destructor
  * @author Arthur
- * @date 21/05
+ * @date 21/05/16
  */
 LeaderboardView::~LeaderboardView()
 {
@@ -39,70 +39,55 @@ void LeaderboardView::setLeaderboardModel(Leaderboard *model)
 /**
  * Image Loading
  * @author Arthur
- * @date 20/05
+ * @date 20/05/16 - 02/01/17
  */
 void LeaderboardView::loadImages()
 {
     //=== Initialize CLEAR button
 
-	if (!m_rectButtonsTexture.loadFromFile(MENU_RECT_BUTTONS_IMAGE) )
-		cerr << "ERROR when loading image file: " << MENU_RECT_BUTTONS_IMAGE << endl;
-	else
-	{
-        m_rectButtonsTexture.setSmooth(true);
-
-        vector<sf::IntRect> clipRect;
-		clipRect.push_back(sf::IntRect( 0, 100, 150, 40));
-		clipRect.push_back(sf::IntRect(151, 100, 150, 40));
-        m_clearLbRectButton = new Button(clipRect, m_rectButtonsTexture, m_width/2-75, 500, 150, 40, false);
-    }
+    vector<sf::IntRect> clipRect_clear;
+    clipRect_clear.push_back(sf::IntRect( 0, 100, 150, 40));
+    clipRect_clear.push_back(sf::IntRect(151, 100, 150, 40));
+    m_clearLbRectButton = new Button(m_width / 2 - 75, 540, 150, 40, "leaderboard_clear_button",
+                                     RECT_BUTTONS_IMAGE, clipRect_clear);
 
     //=== Initialize HOME form button
 
-    if (!m_menuButtonTexture.loadFromFile(FORM_BUTTONS_IMAGE) )
-        cerr << "ERROR when loading image file: " << FORM_BUTTONS_IMAGE << endl;
-    else
-    {
-        m_menuButtonTexture.setSmooth(true);
-
-        std::vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect( 0, 50, 50, 50));
-        clipRect.push_back(sf::IntRect( 51, 50, 50, 50));
-        m_homeFormButton = new Button(clipRect, m_menuButtonTexture, 10, 10, 50, 50, false);
-     }
+    std::vector<sf::IntRect> clipRect_home;
+    clipRect_home.push_back(sf::IntRect( 0, 50, 50, 50));
+    clipRect_home.push_back(sf::IntRect( 51, 50, 50, 50));
+    m_homeFormButton = new Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRect_home);
 }
 
 
 /**
  * Synchronization function
  * @author Arthur
- * @date 20/05 - 24/10
+ * @date 20/05/16 - 24/10/16
  */
 void LeaderboardView::synchronize()
 {
     //=== Elements update
 
     m_homeFormButton->sync();
-    m_clearLbRectButton->sync();
-    m_clearLbRectButton->setPosition(m_width/2 -
-    m_clearLbRectButton->HALF_WIDTH, 540);
     m_homeFormButton->resize(FORM_BUTTONS_SIZE);
+    m_clearLbRectButton->sync(m_leaderboard->getDataBase());
 }
 
 
 /**
  * LeaderboardView Drawing
  * @author Arthur
- * @date 21/05
+ * @date 21/05/16 - 23/12/16
  */
 void LeaderboardView::draw() const
 {
-    m_window->clear( GREY_BG_COLOR );
+    m_window->clear( MINE_GREY_COLOR );
 
     //=== Graphic Elements drawing
 
     m_window->draw(*m_homeFormButton);
-    m_window->draw(*m_clearLbRectButton);
+    m_clearLbRectButton->draw(m_window);
 
     //=== TextHandler Drawing
 
@@ -114,7 +99,7 @@ void LeaderboardView::draw() const
 /**
  * Events treating
  * @author Arthur
- * @date 21/05
+ * @date 21/05/16 - 23/12/16
  */
 bool LeaderboardView::treatEvents() { return false; }
 bool LeaderboardView::treatEvents(sf::Event event)
@@ -123,29 +108,29 @@ bool LeaderboardView::treatEvents(sf::Event event)
 
     if (MOUSE_LEFT_PRESSED_EVENT)
     {
-        if ( m_homeFormButton->IS_POINTED )
-            m_homeFormButton->setPressedState(true);
+        if (m_homeFormButton->contains(MOUSE_POSITION) )
+            m_homeFormButton->setPressed(true);
 
-        if ( m_clearLbRectButton->IS_POINTED )
-            m_clearLbRectButton->setPressedState(true);
+        if (m_clearLbRectButton->contains(MOUSE_POSITION) )
+            m_clearLbRectButton->setPressed(true);
     }
 
     if (event.type == sf::Event::MouseButtonReleased)
     {
         //=== Reset buttons
 
-        m_homeFormButton->setPressedState(false);
-        m_clearLbRectButton->setPressedState(false);
+        m_homeFormButton->setPressed(false);
+        m_clearLbRectButton->setPressed(false);
 
         //=== handle mouse up on a button
 
-        if ( m_homeFormButton->IS_POINTED )
+        if (m_homeFormButton->contains(MOUSE_POSITION) )
         {
             stop_leaderboard = true;
         }
-        if ( m_clearLbRectButton->IS_POINTED )
+        if (m_clearLbRectButton->contains(MOUSE_POSITION) )
         {
-            m_leaderboard->getDataBase()->resetScore();
+            m_leaderboard->getDataBase()->clearLeaderboard();
             m_textHandler->syncMenuLeaderboardText();
         }
     }

@@ -3,20 +3,28 @@
 using namespace std;
 
 /**
- * Parameterized Constructor
+ * Constructs from an inherited class with
+ * coordinates, a size, a moving vector
  * @author Arthur, Florian
- * @date 23/02 - 09/04
+ * @date 23/02/16 - 09/04/16
+ *
+ * @param x the x position
+ * @param y the y position
+ * @param w the width
+ * @param h the height
+ * @param mvX the x moving direction
+ * @param mvY the y moving direction
  */
 MovableElement::MovableElement(float x, float y, float w, float h, float mvX, float mvY) :
     m_posX{x}, m_posY{y}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY},
-    m_collisionState{false}, m_elementType{-1}
+    m_isColliding{false}, m_elementType{-1}
 {}
 
 
 /**
  * Destructor
  * @author Arthur
- * @date 23/02
+ * @date 23/02/16
  */
 MovableElement::~MovableElement() {}
 
@@ -28,20 +36,24 @@ float MovableElement::getPosY()  const { return m_posY;  }
 float MovableElement::getWidth() const { return m_width; }
 float MovableElement::getHeight()const { return m_height;}
 int MovableElement::getType() const { return m_elementType; }
-bool MovableElement::getCollisionState() const { return m_collisionState; }
+bool MovableElement::isColliding() const { return m_isColliding; }
 
 
 //=== Setters
 
 void MovableElement::setMoveX(float mvX) { m_moveX = mvX;}
 void MovableElement::setMoveY(float mvY) { m_moveY = mvY;}
-void MovableElement::setCollisionState(bool state) { m_collisionState = state;}
+void MovableElement::setColliding(bool on) { m_isColliding = on;}
 
 
 /**
- * Check if a position belongs to an element
+ * Checks if a position belongs to an element
  * @author Arthur
- * @date 08/03 - 09/04
+ * @date 08/03/16 - 09/04/16
+ *
+ * @param posX the other element x-position
+ * @param posY the other element y-position
+ * @return a boolean indicating if position is in element
  */
 bool MovableElement::contains( float posX, float posY) const
 {
@@ -53,12 +65,15 @@ bool MovableElement::contains( float posX, float posY) const
 
 
 /**
- * Determine if elements are colliding
+ * Determines if elements are colliding
  *
  * Note : element's origin corresponds to left-bottom point
  *
  * @author Arthur
- * @date 02/04 - 20/12
+ * @date 02/04/16 - 20/12/16
+ *
+ * @param other the other element
+ * @return a boolean indicating if elements are colliding
  */
 bool MovableElement::collision( const MovableElement& other) const
 {

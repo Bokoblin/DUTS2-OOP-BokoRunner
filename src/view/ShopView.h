@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,15 +17,16 @@ limitations under the License.
 #define SHOP_VIEW_H
 
 #include "View.h"
-#include "../Model/Shop.h"
+#include "../model/Shop.h"
 #include "ShopItemCard.h"
 #include "Dialog.h"
+#include "RadioButton.h"
 
 
 /**
  * ShopView Class
  * @author Arthur
- * @date 11/05 - 18/05
+ * @date 11/05/16 - 02/01/17
  */
 class ShopView : public View
 {
@@ -43,7 +44,7 @@ public:
     virtual void loadImages() override;
     virtual bool treatEvents() override;
     bool treatEvents( sf::Event event );
-    void displayCards() const;
+    void syncCards() const;
     void createCards();
 
 private:
@@ -52,19 +53,14 @@ private:
     int m_currentIndicator;
     int m_totalIndicator;
 
-    //Textures
-    sf::Texture m_menuFormButtonsTexture;
-    sf::Texture m_coinTexture;
-    sf::Texture m_pageIndicatorTexture;
-
     //Graphic Elements
     GraphicElement *m_coinSprite;
     Button *m_homeFormButton;
-    Button *m_pageIndicatorButton;
     Dialog *m_buyDialog;
 
-    std::vector<ShopItemCard *> m_shopItemsCardArray;
-    std::map<int, Button *> m_pageIndicators;
+    //Containers
+    std::vector<ShopItemCard *> m_shopItemCardsArray;
+    std::map<int, RadioButton *> m_pageIndicators;
 };
 
 

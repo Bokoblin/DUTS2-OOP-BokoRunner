@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@ limitations under the License.
 #define LEADERBOARD_VIEW_H
 
 #include "View.h"
-#include "../Model/Leaderboard.h"
+#include "../model/Leaderboard.h"
 
 
 /**
  * LeaderboardView Class
  * @author Arthur
- * @date 21/05
+ * @date 21/05/16 - 02/01/17
  */
 class LeaderboardView : public View
 {
@@ -45,12 +45,6 @@ class LeaderboardView : public View
     private:
         //=== ATTRIBUTES
         Leaderboard *m_leaderboard;
-
-        //Textures
-        sf::Texture m_menuButtonTexture;
-        sf::Texture m_rectButtonsTexture;
-
-        //Graphic Elements
         Button *m_homeFormButton;
         Button *m_clearLbRectButton;
 };

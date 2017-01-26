@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,49 +18,45 @@ limitations under the License.
 
 #include "GraphicElement.h"
 #include "TextHandler.h"
-#include "../Model/ShopItem.h"
-#include "ImagesConstants.h"
+#include "../model/ShopItem.h"
 
-#define HALF_WIDTH getGlobalBounds().width/2
 #define MATERIAL_TEAL_COLOR sf::Color(0, 150, 136, 255)
 
 
 /**
- * Dialog Class
+ * The dialog class allows to create dialogs
+ * with a title, a content and up to two buttons
  * @author Arthur
- * @date 16/05 - 20/05
+ * @date 16/05/16 - 04/01/17
  */
-class Dialog
+class Dialog : public GraphicElement
 {
-    public:
-        //=== CTORs / DTORs
-        Dialog(int x, int y, ShopItem *item, TextHandler *t,  std::string title, std::string content, std::string negAnswer, std::string posAnswer);
-        Dialog(const Dialog& d)=delete;
-        ~Dialog();
+public:
+    //=== CTORs / DTORs
+    Dialog();
+    Dialog(float x, float y, float w, float h, ShopItem *item, TextHandler *textHandler, std::string description);
+    Dialog(float x, float y, float w, float h, TextHandler *textHandler, std::string id);
+    Dialog(const Dialog& d)=delete;
+    ~Dialog();
 
-        //=== GETTERS
-        const sf::Text& getNegativeButton() const;
-        const sf::Text& getPositiveButton() const;
-        ShopItem *getItemLinked() const;
+    //=== GETTERS
+    std::string getId() const;
+    const Text& getCancelButtonText() const;
+    const Text& getOkButtonText() const;
+    ShopItem *getLinkedShopItem() const;
 
-        //=== METHODS
-        void draw(sf::RenderWindow *window) const;
+    //=== METHODS
+    void sync(DataBase *dataBase);
+    void draw(sf::RenderWindow *window) const;
 
-    private:
-        //=== ATTRIBUTES
-        int m_posX, m_posY;
-        int m_width = 250;
-        int m_height = 200;
-        ShopItem *m_itemLinked;
-
-        sf::Texture m_dialogTexture;
-        GraphicElement *m_dialogSprite;
-
-        TextHandler *m_text;
-        sf::Text m_dialogTitleLabel;
-        sf::Text m_dialogContent;
-        sf::Text m_negativeButton;
-        sf::Text m_positiveButton;
+private:
+    //=== ATTRIBUTES
+    std::string m_id;
+    Text m_title;
+    Text m_content;
+    Text m_cancelButtonText;
+    Text m_okButtonText;
+    ShopItem *m_shopItem;
 };
 
 #endif

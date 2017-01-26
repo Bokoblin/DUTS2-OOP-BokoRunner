@@ -1,9 +1,17 @@
 #include "Bonus.h"
 
 /**
- * Parameterized Constructor
+ * Constructs a bonus with
+ * coordinates, a size, a moving vector
  * @author Arthur
- * @date 11/04
+ * @date 11/04/16
+ *
+ * @param x the x position
+ * @param y the y position
+ * @param w the width
+ * @param h the height
+ * @param mvX the x moving direction
+ * @param mvY the y moving direction
  */
 Bonus::Bonus(float x, float y, float w, float h, float mvX, float mvY) :
     MovableElement(x, y, w, h, mvX, mvY)
@@ -15,7 +23,7 @@ Bonus::Bonus(float x, float y, float w, float h, float mvX, float mvY) :
 /**
  * Destructor
  * @author Arthur
- * @date 11/04
+ * @date 11/04/16
  */
 Bonus::~Bonus() {}
 
@@ -23,7 +31,7 @@ Bonus::~Bonus() {}
 /**
  * Bonus Moving
  * @author Arthur
- * @date 11/04
+ * @date 11/04/16
  */
 void Bonus::move()
 {
@@ -41,7 +49,7 @@ void Bonus::move()
  * 76-100: SHIELD ~25%
  *
  * @author Arthur
- * @date 11/04 - 21/05
+ * @date 11/04/16 - 21/05/16
  */
 void Bonus::chooseBonusType()
 {

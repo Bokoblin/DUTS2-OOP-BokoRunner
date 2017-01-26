@@ -5,11 +5,11 @@ using namespace std::chrono;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 3/03 - 22/05
+ * @date 03/03/16 - 22/05/16
  */
-AnimatedGraphicElement::AnimatedGraphicElement(sf::Texture &image, float x,
-        float y, float w, float h, const std::vector<sf::IntRect> & clipRect):
-    GraphicElement(image, x, y, w, h), m_clipRectArray{clipRect},
+AnimatedGraphicElement::AnimatedGraphicElement(
+        float x, float y, float w, float h, std::string image, const std::vector<sf::IntRect> &clipRect) :
+    GraphicElement(x, y, w, h, image), m_clipRectArray{clipRect},
     m_currentClipRect{0}, m_lastAnimationTime{system_clock::now() }
 {
     this->setTextureRect(m_clipRectArray[m_currentClipRect]);
@@ -19,7 +19,7 @@ AnimatedGraphicElement::AnimatedGraphicElement(sf::Texture &image, float x,
 /**
  * Copy Constructor
  * @author Arthur
- * @date 19/03 - 22/05
+ * @date 19/03/16 - 22/05/16
  */
 AnimatedGraphicElement::AnimatedGraphicElement(const AnimatedGraphicElement& other) :
     GraphicElement(other), m_clipRectArray{other.m_clipRectArray},
@@ -32,7 +32,7 @@ AnimatedGraphicElement::AnimatedGraphicElement(const AnimatedGraphicElement& oth
 /**
  * Destructor
  * @author Arthur
- * @date 5/03
+ * @date 05/03/16
  */
 AnimatedGraphicElement::~AnimatedGraphicElement()
 {}
@@ -40,16 +40,16 @@ AnimatedGraphicElement::~AnimatedGraphicElement()
 
 //=== Setters
 
-void AnimatedGraphicElement::setClipRectArray(std::vector<sf::IntRect> crA)
+void AnimatedGraphicElement::setClipRectArray(std::vector<sf::IntRect> clipRectsArray)
 {
-    m_clipRectArray = crA;
+    m_clipRectArray = clipRectsArray;
 }
 
 
 /**
  * Synchronization Function : change animation
  * @author Arthur
- * @date 3/03 - 22/05
+ * @date 03/03/16 - 22/05/16
  */
 void AnimatedGraphicElement::sync()
 {

@@ -3,17 +3,19 @@
 using namespace std;
 
 /**
- * Default Constructor
+ * Constructs a Leaderboard model with database
  * @author Arthur
- * @date 19/04 - 24/10
+ * @date 19/04/16 - 24/10/16
+ *
+ * @param dataBase the common app's dataBase
  */
-Leaderboard::Leaderboard(DataBase *data) :  m_dataBase{data}
+Leaderboard::Leaderboard(DataBase *dataBase) :  m_dataBase{dataBase}
 {}
 
 /**
  * Destructor
  * @author Arthur
- * @date 19/04
+ * @date 19/04/16
  */
 Leaderboard::~Leaderboard() {}
 

@@ -1,4 +1,4 @@
-# README : Boko Runner #
+# Boko Runner #
 
 
 ### Description ###
@@ -8,17 +8,23 @@ It consists in creating a "runner" game (an auto-scrolling platform game) where 
 has to dodge each obstacles and collect bonuses to increase its score. The game ends when the player's life bar is empty.
 The project allowed us to put into practice the Object Oriented Programming notions that we learnt in S2.
 
+Initially made to be based on a Model-View architecture as requested, the project can be considered as 
+a Three-Tier Architecture with a DataBase, Models and Views. 
+
+Despite being initially a scholar project ended in May 2016, it is still receiving new features 
+and "under the hood" improvements from the repository's owner : Arthur Jolivet.
+
 
 ### Tools used ###
 
 * IDEs : Code::Blocks, QT Creator, CLion(current)
-* Language : C++
+* Language : C++11
 * Libraries : SFML & PugiXML
 
 
-### Developers ###
+### Authors ###
 
-* Arthur Jolivet
+* Arthur Jolivet - main developer
 * Florian Laronze
 
 
@@ -37,8 +43,8 @@ Please take a look at the following paragraphs for more details.
 
 Our code is licensed under Apache License Version 2.0.
 Our project include two libraries contained in /libs folder : 
-* PugiXML which is licensed by his creator under MIT Licence.
-* SFML which is licensed by his creators under zlib/png license.
+* PugiXML which is licensed by their creators under MIT Licence.
+* SFML which is licensed by their creators under zlib/png license.
 
 
 ##### Images #####
@@ -46,7 +52,7 @@ Our project include two libraries contained in /libs folder :
 All images are licensed under Apache Licence Version 2.0.
 Most of them were created by ourselves or were given by our teachers.
 Some of them were made using provided one or were inspired by Material Design (e.g. radios).
-The file "menu_buttons.png" incorporates AOSP Settings icon which is also licensed under Apache License Version 2.0.
+The file "shape_buttons.png" incorporates some AOSP icon which are also licensed under Apache License Version 2.0.
 
 
 ##### Audio #####

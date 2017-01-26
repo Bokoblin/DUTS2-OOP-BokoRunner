@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -34,9 +34,11 @@ enum Element
 
 
 /**
- * MovableElement Class
+ * The MovableElement class is an abstract class
+ * providing common attributes and methods
+ * to inherited Movable Elements
  * @author Arthur, Florian
- * @date 23/02 - 18/05
+ * @date 23/02/16 - 18/05/16
  */
 class MovableElement
 {
@@ -55,13 +57,13 @@ public:
     float getPosY() const;
     float getWidth() const;
     float getHeight() const;
-    bool getCollisionState() const;
+    bool isColliding() const;
     virtual int getType() const;
 
     //=== SETTERS
     void setMoveX(float mvX);
     void setMoveY(float mvY);
-    void setCollisionState(bool collisionState);
+    void setColliding(bool on);
 
 
 protected:
@@ -72,7 +74,7 @@ protected:
     float m_height;
     float m_moveX;
     float m_moveY;
-    bool m_collisionState;
+    bool m_isColliding;
     int m_elementType;
 };
 

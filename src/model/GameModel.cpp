@@ -3,15 +3,16 @@
 using namespace std;
 
 /**
- * Parameterized Constructor
+ * Constructs a GameModel with the app common model
  * @author Arthur
- * @date 26/03 - 26/12
+ * @date 26/03/16 - 26/12/16
+ *
+ * @param model the app model
  */
 GameModel::GameModel(const Model& model) :
     Model(model), m_gameState{RUNNING}, m_inTransition{false},
-    m_isTransitionPossible{false}, m_isSavePossible{true},
-    m_currentZone{HILL}, m_currentEnemyTimeSpacing{0},
-    m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},
+    m_isTransitionPossible{false}, m_currentZone{HILL},
+    m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},
     m_lastTime{chrono::system_clock::now()},  m_bonusTimeout{0}
 {
     srand((unsigned int) time(NULL));
@@ -19,7 +20,7 @@ GameModel::GameModel(const Model& model) :
     //=== Initialize new game
 
     m_dataBase->launchNewGame();
-    m_dataBase->updateActivatedItemsArray();
+    m_dataBase->fetchActivatedShopItems();
 
     addANewMovableElement(DEFAULT_PLAYER_X, GAME_FLOOR, PLAYER);
 
@@ -39,7 +40,7 @@ GameModel::GameModel(const Model& model) :
 /**
  * Destructor
  * @author Arthur
- * @date 26/03 - 24/05
+ * @date 26/03/16 - 24/05/16
  */
 GameModel::~GameModel()
 {
@@ -55,7 +56,6 @@ GameModel::~GameModel()
 GameState GameModel::getGameState() const { return m_gameState; }
 bool GameModel::getTransitionStatus() const { return m_inTransition; }
 bool GameModel::getTransitionPossibleStatus() const { return m_isTransitionPossible; }
-bool GameModel::getSaveStatus() const { return m_isSavePossible; }
 float GameModel::getGameSpeed() const { return m_gameSpeed; }
 int GameModel::getBonusTimeout() const { return (int) (m_bonusTimeout.count() / 1000); } // return seconds
 int GameModel::getCurrentZone() const { return m_currentZone; }
@@ -67,14 +67,15 @@ const set<MovableElement*>& GameModel::getNewMElementsArray() const { return m_n
 void GameModel::setGameState(GameState state) { m_gameState = state; }
 void GameModel::setTransitionStatus(bool status) { m_inTransition = status; }
 void GameModel::setTransitionPossibleStatus(bool status) { m_isTransitionPossible = status; }
-void GameModel::setSaveStatus(bool status) { m_isSavePossible = status; }
 void GameModel::setCurrentZone(Zone z) { m_currentZone = z; }
 
 
 /**
- * Next Step
+ * Handles game's evolution
+ * (elements apparition, behaviours, deletion)
+ * and game mode changing
  * @author Arthur
- * @date 21/02 - 26/12
+ * @date 21/02/16 - 26/12/16
  */
 void GameModel::nextStep()
 {
@@ -150,9 +151,11 @@ void GameModel::nextStep()
 
 
 /**
- * choose the time-spacing between elements
+ * Chooses the time-spacing between elements
  * @author Arthur
- * @date  12/03 - 24/05
+ * @date 12/03/16 - 24/05/16
+ *
+ * @param elementType the type of element that was just created
  */
 void GameModel::chooseTimeSpacing(int elementType)
 {
@@ -194,9 +197,12 @@ void GameModel::chooseTimeSpacing(int elementType)
 
 
 /**
-    check if a position is free to use
-****
- * @author Arthur  @date  8/03 - 30/04
+ * Checks if a position is free to use
+ * @author Arthur
+ * @date 08/03/16 - 30/04/16
+ *
+ * @param x element x-position
+ * @param y element y-position
  */
 bool GameModel::checkIfPositionFree(float x, float y) const
 {
@@ -218,7 +224,7 @@ bool GameModel::checkIfPositionFree(float x, float y) const
 /**
  * NewMovableElement vector cleaning
  * @author Arthur, Florian
- * @date 2/03
+ * @date 02/03/16
  */
 void GameModel::clearNewMovableElementList()
 {
@@ -229,7 +235,9 @@ void GameModel::clearNewMovableElementList()
 /**
  * Elements Moving (enemies, bonus, ...)
  * @author Arthur
- * @date 6/03 - 26/03
+ * @date 06/03/16 - 26/03/16
+ *
+ * @param currentElement the element to move
  */
 void GameModel::moveMovableElement(MovableElement *currentElement)
 {
@@ -243,9 +251,9 @@ void GameModel::moveMovableElement(MovableElement *currentElement)
 }
 
 /**
- * Handle Elements Creation
+ * Handles Elements Creation
  * @author Arthur
- * @date 12/04 - 24/05
+ * @date 12/04/16 - 24/05/16
  */
 void GameModel::handleMovableElementsCreation()
 {
@@ -290,7 +298,11 @@ void GameModel::handleMovableElementsCreation()
 /**
  * New MovableElement adding
  * @author Arthur, Florian
- * @date 25/02 - 18/05
+ * @date 25/02/16 - 18/05/16
+ *
+ * @param posX the initial x-position of the new element
+ * @param posY the initial y-position of the new element
+ * @param type the type of the new element
  */
 void GameModel::addANewMovableElement(float posX, float posY, int type)
 {
@@ -323,17 +335,17 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
 
 
 /**
- * Handle Movable Elements Collisions
+ * Handles Movable Elements Collisions
  * @author Arthur
- * @date 12/03 - 20/05
+ * @date 12/03/16 - 20/05/16
  */
 void GameModel::handleMovableElementsCollisions()
 {
     for ( MovableElement* element : m_movableElementsArray )
     {
-        if ( !element->getCollisionState() && element->getType() != PLAYER && m_player->collision(*element))
+        if ( !element->isColliding() && element->getType() != PLAYER && m_player->collision(*element))
         {
-            element->setCollisionState(true);
+            element->setColliding(true);
 
             //=== Different behaviours following element type
 
@@ -342,7 +354,7 @@ void GameModel::handleMovableElementsCollisions()
             case STANDARD_ENEMY:
                 if ( m_player->getState() == MEGA ) {
                     //add 100 to number of flattened enemies
-                    m_dataBase->setCurrentFlattenedEnemies(100);
+                    m_dataBase->increaseCurrentFlattenedEnemies(100);
                 }
                 else if (m_player->getState() == SHIELD
                          && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
@@ -366,7 +378,7 @@ void GameModel::handleMovableElementsCollisions()
             case TOTEM_ENEMY:
                  if ( m_player->getState() == MEGA ) {
                     //add 100 to number of flattened enemies
-                    m_dataBase->setCurrentFlattenedEnemies(300);
+                     m_dataBase->increaseCurrentFlattenedEnemies(300);
                 }
                 else if (m_player->getState() == SHIELD
                          && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
@@ -390,7 +402,7 @@ void GameModel::handleMovableElementsCollisions()
             case BLOCK_ENEMY:
                  if ( m_player->getState() == MEGA ) {
                     //add 100 to number of flattened enemies
-                    m_dataBase->setCurrentFlattenedEnemies(500);
+                     m_dataBase->increaseCurrentFlattenedEnemies(500);
                 }
                 else if (m_player->getState() == SHIELD
                          && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
@@ -414,9 +426,9 @@ void GameModel::handleMovableElementsCollisions()
             case COIN:
                 if ( m_dataBase->getActivatedItemsArray().find("doubler")
                      == m_dataBase->getActivatedItemsArray().end() )
-                    m_dataBase->setCurrentCoinsCollected(1); //1-increment coins number
+                    m_dataBase->increaseCurrentCoinsCollected(1); //1-increment coins number
                 else
-                    m_dataBase->setCurrentCoinsCollected(2);
+                    m_dataBase->increaseCurrentCoinsCollected(2);
                 break;
 
             case PV_PLUS_BONUS:
@@ -471,11 +483,11 @@ void GameModel::handleMovableElementsCollisions()
 }
 
 /**
- * Handle Movable Elements Deletion \n
- * Pointers will only be deleted in Dtor
+ * Handles Movable Elements Deletion \n
+ * Note : Pointers will only be deleted in Dtor
  *
  * @author Arthur
- * @date 12/03 - 11/04
+ * @date 12/03/16 - 11/04/16
  */
 void GameModel::handleMovableElementsDeletion()
 {
@@ -483,7 +495,7 @@ void GameModel::handleMovableElementsDeletion()
     while( it!=m_movableElementsArray.end() )
     {
         if ( ( (*it)->getPosX() + (*it)->getWidth() ) < 0
-             || (*it)->getCollisionState())
+             || (*it)->isColliding())
         {
             m_movableElementsArray.erase(it);
             it = m_movableElementsArray.end();

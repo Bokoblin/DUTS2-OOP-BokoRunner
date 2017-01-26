@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,80 +19,50 @@ limitations under the License.
 #include "PixelateEffect.h"
 #include "View.h"
 
-#define KEYBOARD_LEFT    (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) \
+//TODO : handle differently with "command screen" v1.8 feature
+#define KEYBOARD_LEFT  (sf::Keyboard::isKeyPressed(sf::Keyboard::A) \
                        || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
-#define KEYBOARD_RIGHT  (sf::Keyboard::isKeyPressed(sf::Keyboard::D) \
+#define KEYBOARD_RIGHT (sf::Keyboard::isKeyPressed(sf::Keyboard::D) \
                        || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) )
 #define KEYBOARD_JUMP  (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) \
-                       || sf::Keyboard::isKeyPressed(sf::Keyboard::Space ) )
+                       || sf::Keyboard::isKeyPressed(sf::Keyboard::W ) )
 
-#define MOVE_LEFT true
-#define MOVE_RIGHT false
-
-/********************************************
-    Constant Variables
-********************************************/
-//MUSIC
-const std::string GAME_NORMAL_THEME_MUSIC = "../res/audio/game_normal_sound.ogg";
-const std::string GAME_MASTER_THEME_MUSIC = "../res/audio/game_master_sound.ogg";
-const std::string COINS_COLLECTED_MUSIC = "../res/audio/coin_collected_sound.ogg";
-const std::string ENEMIES_DESTRUCTED_MUSIC = "../res/audio/destroyed_enemies_sound.ogg";
-
-const int TRANSITION_SPEED = 10;
-const int PAUSE_FORM_X = 30;
 
 /**
  * GameView Class
  * @author Arthur, Florian
- * @date 21/02 - 21/05
+ * @date 21/02/16 - 25/01/17
  */
 class GameView : public View
 {
 public:
-	//=== CTORs / DTORs
-	GameView(float w, float h, sf::RenderWindow *myWindow, TextHandler *text);
-	virtual ~GameView();
+    //=== CTORs / DTORs
+    GameView(float w, float h, sf::RenderWindow *myWindow, TextHandler *text);
+    virtual ~GameView();
 
-	//=== SETTERS
-	void setGameModel(GameModel *model);
+    //=== SETTERS
+    void setGameModel(GameModel *model);
 
-	//=== METHODS
-	virtual void loadImages() override;
-	virtual void synchronize() override;
-	virtual void draw() const override;
-	virtual bool treatEvents() override;
-	virtual void linkElements();
-	virtual void updateElements();
-	virtual void deleteElements();
-	void handleZonesTransition();
+    //=== METHODS
+    virtual void loadImages() override;
+    virtual void synchronize() override;
+    virtual void draw() const override;
+    virtual bool treatEvents() override;
+    virtual void linkElements();
+    virtual void updateElements();
+    virtual void deleteElements();
+    void handleZonesTransition();
+    void handleMusic();
 
 
 private:
     //=== ATTRIBUTES
     GameModel *m_gameModel; //to not delete in dtor
     PixelateEffect *m_pixelShader;
-
     float m_xPixelIntensity;
     float m_yPixelIntensity;
-    bool m_isMusicEnabled;
-
-    //Game Textures
-    sf::Texture m_farBackgroundTexture;
-    sf::Texture m_farBgTransitionTexture;
-    sf::Texture m_nearBackgroundTexture;
-    sf::Texture m_bottomBarTexture;
-    sf::Texture m_lifeBoxTexture;
-    sf::Texture m_remainingLifeTexture;
-    sf::Texture m_playerTexture;
-    sf::Texture m_enemyTexture;
-    sf::Texture m_shieldTexture;
-    sf::Texture m_bonusTexture;
-    //Pause and End Textures
-    sf::Texture m_gameButtonsTexture;
-    sf::Texture m_gameRectButtonTexture;
-    sf::Texture m_distanceIconTexture;
-    sf::Texture m_pauseBackgroundTexture;
-    sf::Texture m_endBackgroundTexture;
+    const int TRANSITION_SPEED = 10;
+    const int PAUSE_FORM_X = 30;
 
     //Game Graphic Elements
     SlidingBackground *m_farSlBackground;
@@ -123,7 +93,7 @@ private:
     Button *m_controlMusicButton;
     Button *m_saveScoreButton;
 
-    //audio
+    //Audio
     sf::Music m_gameThemeMusic;
     sf::Music m_coinMusic;
     sf::Music m_destructedEnemiesMusic;

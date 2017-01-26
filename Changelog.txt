@@ -1,9 +1,43 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.7.6
+Current version : v1.8.0
 
 ==================================================================================================
+
+v1.8.0 (26/01/16)
+
+Major visible changes:
+- Settings enhancements
+    - Added music controls to disable menu/game music
+    - Split "Stats" and "Credit" (now About) in two different pages
+    - Added per-game stats and "clear data" button with confirm dialog to Stats page
+    - Added SFML logo and some information to About page
+- Shop screen is now fully multilingual
+- Leaderboard score is split between Easy and Hard modes
+- New Commands screen to see the game's keyboard commands
+
+Major coding changes:
+- Added Text class inherited from sf::Text
+- Added RadioButton class inherited from Button
+- Added Button's label that can be positioned at TOP, RIGHT, BOTTOM, LEFT, CENTER
+- Removed standalone texts that are now a button's label
+- Rewritten GraphicElement texture handling (allows class-specific rectangle clips)
+- Rewritten Dialog and ShopItemCard that are now inherited from GraphicElement
+- Centralized all global constants in one file
+
+Fixes and misc:
+- Modified xml strings files and its handling
+- Updated PugiXML ( 1.7 -> 1.8)
+- Updated IUT logo
+- updated copyright to include 2017
+- Added showing capability to GraphicElement class
+- Added support to UTF-8 characters thanks to Laurent Gomila (SFML main developer)
+- Other minor fixes and improvements
+- Updated online documentation to current version
+
+
+---------------------------------------------------------------------------------------------------
 
 v1.7.6 (26/12/16)
 
@@ -11,7 +45,7 @@ v1.7.6 (26/12/16)
     - Replaced game states booleans by an enum
     - Fixed distance increasing stopped at speed limit and with certain bonuses
     - Fixed incorrect pause background
-    - Current distance now depends only of game speed
+    - Current distance now depends only on game speed
 - Updated online documentation to current version
 
 
@@ -49,7 +83,7 @@ Important changes:
 - rewritten Leaderboard storage system into Database class
 - removed second config file to check manual modifications
 
-Fixes and miscs:
+Fixes and misc:
 - moved all images path strings to a dedicated file
 - code enhancement (ex. simplified if statements, made some function const)
 - removed unused code
@@ -64,7 +98,7 @@ Features :
 - added buying results (success/failure)
 - added half-random y position for coins, lowered time-spacing
 
-Fixes and miscs:
+Fixes and misc:
 - fixed again images on linux
 - shield image and element changes
 - code enhancement
@@ -78,7 +112,7 @@ v1.7.1 (22/05/16)
 Features :
 - added a mute button in pause that allows to mute/un-mute game sound
 
-Fixes and miscs:
+Fixes and misc:
 - fixed music relaunching on resume pressed instead of release
 - fixed indicators drawing
 - removed unused texture separator for animated sprites
@@ -102,11 +136,11 @@ Features :
 		- Configuration, to toggle radio (with 3 new ones for ball configuration)
 		- Stats and Credits
 - Added a shield bonus
-Fixes and miscs:
+Fixes and misc:
 - fixed bonus timeout not suspending at pause state
 - added enums for better reading (elements, player states & bonus)
 - removed some unused variables
-- added lots of defines and constantes to avoid hard coded values
+- added lots of defines and constants to avoid hard coded values
 - added master music (rapider than normal mode one)
 - added lots of comments
 - documentation updated
@@ -126,13 +160,13 @@ Features :
 	- save and load last chosen language,
 	- allows to save and load other data for future features such as shop,
 
-Fixes and miscs:
+Fixes and misc:
 - fixed zone transition rendering and fading effect added
 - new pause background added for zone 2
 - updated save button
 - fixed menu music loop
 - accelerated apparition of enemies and increased enemies damage in Master mode
-- text class strings refactored for consistency and more lisibility
+- text class strings refactored for consistency and more readability
 - documentation updated
 
 
@@ -191,8 +225,8 @@ v1.2.0 (16/04/16):
 - added Settings screen in menu with :
 	- multilingual support : allows to change global language to English, French or Spanish
 				via 3 radios buttons,
-	- difficulty changement support : allows to change difficulty to normal or master,
-					  in master gamespeed is higher and damages are doubled
+	- difficulty change support : allows to change difficulty to normal or master,
+					  in master gameSpeed is higher and damages are doubled
 - class destructors cleaned-up
 - documentation updated
 
@@ -207,7 +241,7 @@ v1.1.0 (15/04/16):
 		It works during 10 seconds.
 	- FLY : allows the player to jump higher and going down slowly following user control.
 		It works during 15 seconds.
-	- SLOWGAME : slow down game speed (background and elements). It works during 20 seconds.
+	- SLOW_GAME : slow down game speed (background and elements). It works during 20 seconds.
 
 
 ---------------------------------------------------------------------------------------------------
@@ -224,7 +258,7 @@ v1.0.0 (11/04/16):
 - first stable version : all minimal features are working properly
 - documentation generated with doxygen
 - licence changed for "Apache License Version 2.0"
-- classes and files inclusion clean-up thanks to Doxygen and Graphviz
+- classes and files inclusion clean-up thanks to Doxygen and GraphViz
 
 
 ===================================================================================================
@@ -323,7 +357,7 @@ v0.1.4-beta.1 (5/03/16):
 
 v0.1.3-beta.1 (3/03/16):
 
-- Paralax-Sliding Background added
+- Sliding Background added
 
 
 ---------------------------------------------------------------------------------------------------
@@ -347,7 +381,7 @@ v0.1.2-beta.1 (25/02/16) :
 
 v0.1.1-beta.1 (25/02/16) :
 
-- Atelier 2 and 3 are finished until fixing issues in "TD Projet" next week
+- Atelier 2 and 3 are finished until fixing issues in "TD POO" next week
 
 
 ---------------------------------------------------------------------------------------------------

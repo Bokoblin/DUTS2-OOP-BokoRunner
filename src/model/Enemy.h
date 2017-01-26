@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,9 +20,12 @@ limitations under the License.
 
 
 /**
- * Enemy Class
+ * The Enemy class inherited from MovableElement
+ * provides a moving behaviour and types of enemies among :
+ * STANDARD, TOTEM and BLOCK
+ *
  * @author Arthur
- * @date 13/03 - 11/04
+ * @date 13/03/16 - 11/04/16
  */
 class Enemy : public MovableElement
 {

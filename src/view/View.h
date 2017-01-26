@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,33 +16,26 @@ limitations under the License.
 #ifndef VIEW_H
 #define VIEW_H
 
-#include "../Model/GameModel.h"
-#include "ImagesConstants.h"
+#include "../model/GameModel.h"
 #include "TextHandler.h"
 #include "SlidingBackground.h"
 #include "AnimatedGraphicElement.h"
 #include "Button.h"
 #include <SFML/Audio.hpp>
 
-#define ENVIRONMENT_CENTER sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2, \
+#define ENV_CENTERED sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2, \
 				(sf::VideoMode::getDesktopMode().height - m_height)/2 )
-#define GREY_BG_COLOR sf::Color(51, 51, 51, 255)
+#define MINE_GREY_COLOR sf::Color(51, 51, 51, 255)
 #define FORM_BUTTONS_SIZE 30,30
-#define MOUSE_LEFT_PRESSED_EVENT event.type == sf::Event::MouseButtonPressed &&           event.mouseButton.button == sf::Mouse::Left
-#define IS_POINTED getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))
+#define MOUSE_LEFT_PRESSED_EVENT event.type == sf::Event::MouseButtonPressed \
+                && event.mouseButton.button == sf::Mouse::Left
+#define MOUSE_POSITION event.mouseButton.x, event.mouseButton.y
 
-/********************************************
-    Constant Variables
-********************************************/
-const int SCREEN_BPP = 32;
-const std::string APP_TITLE = "Boko Runner";
-
-class Model;
 
 /**
  * View Abstract Class
  * @author Arthur, Florian
- * @date 21/02 - 23/10
+ * @date 21/02/16 - 23/10/16
  */
 class View
 {

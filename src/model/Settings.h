@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,30 +19,45 @@ limitations under the License.
 #include "DataBase.h"
 
 /**
- * Settings Class
+ * The Settings class is the model of SettingsView class
+ * It controls page changing and checks item's availability for config changing
  * @author Arthur
- * @date 20/05 - 21/05
+ * @date 20/05/16 - 21/05/16
  */
 class Settings
 {
 public:
     //=== CTORs / DTORs
-    Settings(DataBase *data);
+    Settings(DataBase *dataBase);
     ~Settings();
 
     //=== GETTERS
     DataBase *getDataBase() const;
     bool getMorphSkinAvailability() const;
     bool getCapsuleSkinAvailability() const;
+    int getCurrentPage() const;
+
+    //=== SETTERS
+    void setCurrentPage(int page);
 
     //=== METHODS
     void changeLanguage(std::string lang);
     void changeBallSkin(std::string skin);
     void checkItemsAvailability();
 
+    //=== ATTRIBUTES
+    static const int PAGE_NUMBER = 3;
+
+    enum Page {
+        CONFIG = 0,
+        STATS = 1,
+        ABOUT = 2
+    };
+
 private:
     //=== ATTRIBUTES
     DataBase *m_dataBase; //to not delete in dtor
+    int m_currentPage;
     bool m_morphSkinIsAvailable;
     bool m_capsuleSkinIsAvailable;
 };

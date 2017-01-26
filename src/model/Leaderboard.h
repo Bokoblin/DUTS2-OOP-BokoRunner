@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,15 +19,15 @@ limitations under the License.
 #include "DataBase.h"
 
 /**
- * Leaderboard Class
+ * The Leaderboard class is the model of LeaderboardView class
  * @author Arthur
- * @date  19/04 - 24/10
+ * @date  19/04/16 - 24/10/16
  */
 class Leaderboard
 {
 public:
     //=== CTORs / DTORs
-    Leaderboard(DataBase *data);
+    Leaderboard(DataBase *dataBase);
     ~Leaderboard();
 
     //=== GETTERS

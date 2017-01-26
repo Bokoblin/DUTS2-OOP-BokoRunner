@@ -1,4 +1,4 @@
-/* Copyright 2016 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ limitations under the License.
 #define MENU_MODEL_H
 
 #include "Model.h"
+#include "Commands.h"
 #include "Leaderboard.h"
 #include "Settings.h"
 #include "Shop.h"
@@ -24,15 +25,16 @@ limitations under the License.
 enum MenuState
 {
     HOME,
+    COMMANDS,
     SETTINGS,
     LEADERBOARD,
     SHOP
 };
 
 /**
- * MenuModel Class
+ * The MenuModel class handles the menu's logic
  * @author Arthur
- * @date 14/04 - 20/12
+ * @date 14/04/16 - 24/01/17
  */
 class MenuModel : public Model
 {
@@ -49,6 +51,7 @@ public:
 
     //=== METHODS
     virtual void nextStep() override;
+    Commands* launchCommands();
     Leaderboard* launchLeaderboard();
     Shop* launchShop();
     Settings* launchSettings();
@@ -56,6 +59,7 @@ public:
 private:
     //=== ATTRIBUTES
     MenuState m_menuState;
+    Commands *m_commands;
     Leaderboard *m_leaderboard;
     Settings *m_settings;
     Shop *m_shop;

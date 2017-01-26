@@ -1,28 +1,50 @@
 #include "GraphicElement.h"
 
+
 /**
- * Parameterized Constructors
- * @author Arthur, Florian
- * @date 21/02 - 03/04
+ * Constructs a GraphicElement with a size
+ * @author Arthur
+ * @date 21/02/16
  */
-GraphicElement::GraphicElement(sf::Texture &image, float x, float y,
-            float w, float h) : m_width{w}, m_height{h}
+GraphicElement::GraphicElement( float w, float h) :
+        m_width{w}, m_height{h}, m_isShowing{true}
+{}
+
+
+/**
+ * Constructs a GraphicElement with
+ * a position and a size
+ * @author Arthur
+ * @date 02/01/17
+ */
+GraphicElement::GraphicElement( float x, float y, float w, float h) :
+        m_width{w}, m_height{h}, m_isShowing{true}
 {
-    this->setTexture(image);
     this->setPosition(x, y);
 }
 
-GraphicElement::GraphicElement( float w, float h) : m_width{w}, m_height{h}
-{}
+
+/**
+ * Constructs a GraphicElement with
+ * a position, a size and an image
+ * @author Arthur, Florian
+ * @date 21/02/16 - 02/01/17
+ */
+GraphicElement::GraphicElement(float x, float y, float w, float h, std::string image) :
+        m_width{w}, m_height{h}, m_isShowing{true}
+{
+    this->setPosition(x, y);
+    setTextureFromImage(image);
+}
 
 
 /**
  * Copy Constructor
  * @author Arthur, Florian
- * @date 25/02 - 20/03
+ * @date 25/02/16 - 02/01/17
  */
 GraphicElement::GraphicElement(GraphicElement const& element) :
-    Sprite(), m_width(element.m_width), m_height(element.m_height)
+    Sprite(), m_width(element.m_width), m_height(element.m_height), m_isShowing{element.m_isShowing}
 {
     this->setPosition( element.getPosition() );
     this->setTexture( *element.getTexture(), true );
@@ -33,16 +55,24 @@ GraphicElement::GraphicElement(GraphicElement const& element) :
 /**
  * Destructor
  * @author Arthur, Florian
- * @date 21/02
+ * @date 21/02/16
  */
 GraphicElement::~GraphicElement()
 {}
 
 
+//=== Getters
+bool GraphicElement::isShowing() const { return m_isShowing; }
+
+//=== Setters
+void GraphicElement::show() { m_isShowing = true; }
+void GraphicElement::hide() { m_isShowing = false; }
+
+
 /**
  * Synchronization function
  * @author Arthur
- * @date 03/04
+ * @date 03/04/16
  */
 void GraphicElement::sync()
 {}
@@ -51,18 +81,21 @@ void GraphicElement::sync()
 /**
  * Drawing function
  * @author Arthur
- * @date 30/03
+ * @date 30/03/16
  */
 void GraphicElement::draw(sf::RenderWindow *window) const
 {
-    window->draw(*this);
+    if (isShowing())
+    {
+        window->draw(*this);
+    }
 }
 
 
 /**
  * Resizing function
  * @author Arthur
- * @date 22/02 - 25/02
+ * @date 22/02/16 - 25/02/16
  */
 void GraphicElement::resize(float width, float height)
 {
@@ -74,3 +107,46 @@ void GraphicElement::resize(float width, float height)
     this->m_height = height;
 }
 
+
+/**
+ * Sets the GraphicElement's texture from an image
+ * @author Arthur
+ * @date 02/01/17
+ */
+void GraphicElement::setTextureFromImage(std::string image)
+{
+    if (!m_texture.loadFromFile(image) )
+        std::cerr << "ERROR when loading image file: " << image << std::endl;
+    else
+    {
+        m_texture.setSmooth(true);
+        setTexture(m_texture);
+    }
+}
+
+/**
+ * Sets the GraphicElement's texture from
+ * a portion of an image
+ * @author Arthur
+ * @date 02/01/17
+ */
+void GraphicElement::setTextureFromImage(std::string image, sf::IntRect intRect) {
+    if (!m_texture.loadFromFile(image, intRect) )
+        std::cerr << "ERROR when loading image file: " << image << std::endl;
+    else
+    {
+        m_texture.setSmooth(true);
+        setTexture(m_texture);
+    }
+}
+
+
+/**
+ * Checks if a point of given coordinates is contained
+ * inside this element
+ * @author Arthur
+ * @date 24/01/16
+ */
+bool GraphicElement::contains(float x, float y) const {
+    return isShowing() && getGlobalBounds().contains(sf::Vector2f(x, y));
+}

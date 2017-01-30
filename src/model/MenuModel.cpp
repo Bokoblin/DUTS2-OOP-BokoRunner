@@ -5,12 +5,12 @@ using namespace std;
 /**
  * Constructs a MenuModel with the app common model
  * @author Arthur
- * @date 14/04/16 - 24/01/17
+ * @date 14/04/16 - 29/01/17
  *
- * @param model the app model
+ * @param dataBase the app dataBase
  */
-MenuModel::MenuModel(const Model& model) :
-    Model(model), m_menuState{HOME}
+MenuModel::MenuModel(DataBase *dataBase) :
+    AbstractModel(dataBase), m_menuState{HOME}
 {
     m_commands = nullptr;
     m_settings = nullptr;
@@ -46,36 +46,42 @@ void MenuModel::setMenuState(MenuState state){ m_menuState = state;}
  */
 void MenuModel::nextStep()
 {
-    //=== Delete commands if not anymore current menu state
+    chrono::system_clock::duration currentNextStepDelay = chrono::system_clock::now() - m_lastTime;
 
-    if (m_menuState != COMMANDS && m_commands != nullptr)
+    if ( currentNextStepDelay > chrono::milliseconds(1500) )
     {
-        delete m_commands;
-        m_commands = nullptr;
-    }
 
-    //=== Delete leaderboard if not anymore current menu state
+        //=== Delete commands if not anymore current menu state
 
-    if (m_menuState != LEADERBOARD && m_leaderboard != nullptr)
-    {
-        delete m_leaderboard;
-        m_leaderboard = nullptr;
-    }
+        if (m_menuState != COMMANDS && m_commands != nullptr)
+        {
+            delete m_commands;
+            m_commands = nullptr;
+        }
 
-    //=== Delete shop if not anymore current menu state
+        //=== Delete leaderboard if not anymore current menu state
 
-    if (m_menuState != SHOP && m_shop != nullptr)
-    {
-        delete m_shop;
-        m_shop = nullptr;
-    }
+        if (m_menuState != LEADERBOARD && m_leaderboard != nullptr)
+        {
+            delete m_leaderboard;
+            m_leaderboard = nullptr;
+        }
 
-    //=== Delete settings if not anymore current menu state
+        //=== Delete shop if not anymore current menu state
 
-    if (m_menuState != SETTINGS && m_settings != nullptr)
-    {
-        delete m_settings;
-        m_settings = nullptr;
+        if (m_menuState != SHOP && m_shop != nullptr)
+        {
+            delete m_shop;
+            m_shop = nullptr;
+        }
+
+        //=== Delete settings if not anymore current menu state
+
+        if (m_menuState != SETTINGS && m_settings != nullptr)
+        {
+            delete m_settings;
+            m_settings = nullptr;
+        }
     }
 }
 

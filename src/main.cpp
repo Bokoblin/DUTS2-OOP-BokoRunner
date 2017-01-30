@@ -13,14 +13,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "view/Intro.h"
+#include "view/IntroView.h"
 #include "view/MenuView.h"
 #include "view/GameView.h"
 
 /**
  * The main function initializes the application
  * @author Arthur, Florian
- * @date 21/02/16 - 25/01/17
+ * @date 21/02/16 - 30/01/17
  */
 int main()
 {
@@ -28,60 +28,56 @@ int main()
             SCREEN_HEIGHT, SCREEN_BPP), APP_TITLE, sf::Style::None );
     window.setFramerateLimit(FRAMERATE);
 
-    DataBase data;
-    Model model(SCREEN_WIDTH, SCREEN_HEIGHT);
-    model.setDataBase(&data);
-    TextHandler textHandler(&data, SCREEN_WIDTH, SCREEN_HEIGHT);
+    DataBase dataBase;
+    TextHandler textHandler(&dataBase, SCREEN_WIDTH, SCREEN_HEIGHT);
+    sf::Event event = sf::Event();
 
     while(window.isOpen() )
     {
-        if  ( model.getAppState() == INTRO )
+        if  ( dataBase.getAppState() == INTRO )
         {
-            Intro intro(INTRO_WIDTH, INTRO_HEIGHT, &window, &textHandler);
-            intro.setModel(&model);
-            while( model.getAppState() == INTRO && intro.treatEvents() )
+            IntroModel introModel(&dataBase);
+            IntroView introView(INTRO_WIDTH, INTRO_HEIGHT, &window, &textHandler, &introModel);
+
+            while( dataBase.getAppState() == INTRO && introView.treatEvents(event) )
             {
-                intro.synchronize();
-                intro.draw();
+                introView.synchronize();
+                introView.draw();
             }
         }
 
-        if  ( model.getAppState() == MENU )
+        if  ( dataBase.getAppState() == MENU )
         {
-            MenuModel mModel(model);
-            mModel.setDataBase(&data);
-            MenuView mView(SCREEN_WIDTH, SCREEN_HEIGHT, &window, &textHandler);
-            mView.setModel(&model);
-            mView.setMenuModel(&mModel);
-            while( model.getAppState() == MENU && mView.treatEvents()  )
+            MenuModel menuModel(&dataBase);
+            MenuView menuView(SCREEN_WIDTH, SCREEN_HEIGHT, &window, &textHandler, &menuModel);
+
+            while( dataBase.getAppState() == MENU && menuView.treatEvents(event)  )
             {
-                mModel.nextStep();
-                mView.synchronize();
-                mView.draw();
+                menuModel.nextStep();
+                menuView.synchronize();
+                menuView.draw();
             }
         }
 
-        if  ( model.getAppState() == GAME )
+        if  ( dataBase.getAppState() == GAME )
         {
-            GameModel gModel(model);
-            gModel.setDataBase(&data);
-            GameView gView(SCREEN_WIDTH, SCREEN_HEIGHT, &window, &textHandler);
-            gView.setModel(&model);
-            gView.setGameModel(&gModel);
-            while( model.getAppState() == GAME && gView.treatEvents() )
+            GameModel gameModel(SCREEN_WIDTH, SCREEN_HEIGHT, &dataBase);
+            GameView gameView(&window, &textHandler, &gameModel);
+
+            while( dataBase.getAppState() == GAME && gameView.treatEvents(event) )
             {
-                gModel.nextStep();
-                gView.synchronize();
-                gView.draw();
+                gameModel.nextStep();
+                gameView.synchronize();
+                gameView.draw();
             }
-            if ( model.getAppState() == RESET_GAME )
+            if ( dataBase.getAppState() == RESET_GAME )
             {
-                model.setAppState(GAME);
+                dataBase.setAppState(GAME);
             }
         }
     }
 
-    data.pushConfigurationToFile();
+    dataBase.pushConfigurationToFile();
 
     return EXIT_SUCCESS;
 }

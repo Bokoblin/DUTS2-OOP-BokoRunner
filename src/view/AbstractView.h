@@ -13,17 +13,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef VIEW_H
-#define VIEW_H
+#ifndef ABSTRACT_VIEW_H
+#define ABSTRACT_VIEW_H
 
-#include "../model/GameModel.h"
 #include "TextHandler.h"
 #include "SlidingBackground.h"
 #include "AnimatedGraphicElement.h"
 #include "Button.h"
 #include <SFML/Audio.hpp>
 
-#define ENV_CENTERED sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2, \
+#define ENVIRONMENT_CENTER sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2, \
 				(sf::VideoMode::getDesktopMode().height - m_height)/2 )
 #define MINE_GREY_COLOR sf::Color(51, 51, 51, 255)
 #define FORM_BUTTONS_SIZE 30,30
@@ -33,33 +32,33 @@ limitations under the License.
 
 
 /**
- * View Abstract Class
+ * The AbstractView class provides common
+ * attributes and methods that will be used
+ * by its inherited classes.
+ *
  * @author Arthur, Florian
- * @date 21/02/16 - 23/10/16
+ * @date 21/02/16 - 30/01/17
  */
-class View
+class AbstractView
 {
     public:
         //=== CTORs / DTORs
-        View(float w, float h, sf::RenderWindow *window, TextHandler *text );
-        View( const View& myView ) = delete;
-        virtual ~View();
-
-        //=== SETTERS
-        void setModel(Model *model);
+        AbstractView(sf::RenderWindow *window, TextHandler *textHandler);
+        AbstractView(float width, float height, sf::RenderWindow *window, TextHandler *textHandler);
+        AbstractView( const AbstractView& myView ) = delete;
+        virtual ~AbstractView();
 
         //=== METHODS
         virtual void loadImages()=0;
         virtual void synchronize()=0;
         virtual void draw() const =0;
-        virtual bool treatEvents()=0;
+        virtual bool treatEvents(sf::Event event)=0;
 
     protected:
         //=== ATTRIBUTES
         float m_width, m_height;
         sf::RenderWindow *m_window;
         TextHandler *m_textHandler;
-        Model *m_model;
 };
 
 #endif

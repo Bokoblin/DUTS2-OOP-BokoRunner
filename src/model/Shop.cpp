@@ -5,11 +5,11 @@ using namespace std;
 /**
  * Constructs a Settings model with database
  * @author Arthur
- * @date 11/05/16 - 16/05/16
+ * @date 11/05/16 - 29/01/16
  *
  * @param dataBase the common app's dataBase
  */
-Shop::Shop(DataBase *dataBase) :  m_dataBase{dataBase}
+Shop::Shop(DataBase *dataBase) :  AbstractModel(dataBase)
 {
     fetchBuyableItemsFromFile();
 }
@@ -28,7 +28,6 @@ Shop::~Shop()
 
 
 //=== Getters
-DataBase* Shop::getDataBase() const { return m_dataBase; }
 vector<ShopItem*> Shop::getShopItemsArray() const { return m_shopItemsArray; }
 
 
@@ -99,3 +98,11 @@ void Shop::fetchBuyableItemsFromFile()
         m_shopItemsArray.push_back( new ShopItem(name, desc, price, isBought) );
     }
 }
+
+/**
+ * Next Step
+ * @author Arthur
+ * @date 29/01/17
+ */
+void Shop::nextStep()
+{}

@@ -6,13 +6,12 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 21/05/16
+ * @date 21/05/16 - 29/01/17
  */
-LeaderboardView::LeaderboardView(float w, float h, sf::RenderWindow *window, TextHandler * t):
-    View(w, h, window, t), m_leaderboard{nullptr}
+LeaderboardView::LeaderboardView(sf::RenderWindow *window, TextHandler *textHandler, Leaderboard *leaderboardModel) :
+        AbstractView(window, textHandler), m_leaderboard{leaderboardModel}
 {
     loadImages();
-    m_textHandler->syncMenuLeaderboardText();
 }
 
 
@@ -25,14 +24,6 @@ LeaderboardView::~LeaderboardView()
 {
     delete m_homeFormButton;
     delete m_clearLbRectButton;
-}
-
-
-//=== Setters
-
-void LeaderboardView::setLeaderboardModel(Leaderboard *model)
-{
-    m_leaderboard = model;
 }
 
 
@@ -63,15 +54,15 @@ void LeaderboardView::loadImages()
 /**
  * Synchronization function
  * @author Arthur
- * @date 20/05/16 - 24/10/16
+ * @date 20/05/16 - 29/01/17
  */
 void LeaderboardView::synchronize()
 {
-    //=== Elements update
-
     m_homeFormButton->sync();
     m_homeFormButton->resize(FORM_BUTTONS_SIZE);
     m_clearLbRectButton->sync(m_leaderboard->getDataBase());
+
+    m_textHandler->syncMenuLeaderboardText();
 }
 
 
@@ -101,7 +92,6 @@ void LeaderboardView::draw() const
  * @author Arthur
  * @date 21/05/16 - 23/12/16
  */
-bool LeaderboardView::treatEvents() { return false; }
 bool LeaderboardView::treatEvents(sf::Event event)
 {
     bool stop_leaderboard = false;

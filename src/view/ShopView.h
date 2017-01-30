@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef SHOP_VIEW_H
 #define SHOP_VIEW_H
 
-#include "View.h"
+#include "AbstractView.h"
 #include "../model/Shop.h"
 #include "ShopItemCard.h"
 #include "Dialog.h"
@@ -28,22 +28,18 @@ limitations under the License.
  * @author Arthur
  * @date 11/05/16 - 02/01/17
  */
-class ShopView : public View
+class ShopView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    ShopView(float w, float h, sf::RenderWindow *window, TextHandler * text);
+    ShopView(sf::RenderWindow *window, TextHandler *textHandler, Shop *shopModel);
     virtual ~ShopView();
-
-    //=== SETTERS
-    void setShopModel(Shop *model);
 
     //=== METHODS
     virtual void synchronize() override;
     virtual void draw() const override;
     virtual void loadImages() override;
-    virtual bool treatEvents() override;
-    bool treatEvents( sf::Event event );
+    virtual bool treatEvents(sf::Event event) override;
     void syncCards() const;
     void createCards();
 

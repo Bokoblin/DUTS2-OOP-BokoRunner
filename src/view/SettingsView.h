@@ -16,12 +16,12 @@ limitations under the License.
 #ifndef SETTINGS_VIEW_H
 #define SETTINGS_VIEW_H
 
-#include "View.h"
+#include "AbstractView.h"
 #include "../model/Settings.h"
 #include "RadioButton.h"
 #include "Dialog.h"
 
-#define RADIO_BUTTONS_MARGIN 50
+#define RADIOS_MARGIN 50
 #define RADIO_BUTTONS_SIZE 26,26
 #define INDICATOR_BUTTONS_SIZE 22,22
 
@@ -30,22 +30,18 @@ limitations under the License.
  * @author Arthur
  * @date 20/05/16 - 25/01/17
  */
-class SettingsView : public View
+class SettingsView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    SettingsView(float w, float h, sf::RenderWindow *window, TextHandler * text);
+    SettingsView(sf::RenderWindow *window, TextHandler *textHandler, Settings *settingsModel);
     virtual ~SettingsView();
-
-    //=== SETTERS
-    void setSettingsModel(Settings *model);
 
     //=== METHODS
     virtual void synchronize() override;
     virtual void draw() const override;
     virtual void loadImages() override;
-    virtual bool treatEvents() override;
-    bool treatEvents( sf::Event event );
+    virtual bool treatEvents(sf::Event event) override;
     void handleMusic();
 
 private:

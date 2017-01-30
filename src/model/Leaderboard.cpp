@@ -5,12 +5,19 @@ using namespace std;
 /**
  * Constructs a Leaderboard model with database
  * @author Arthur
- * @date 19/04/16 - 24/10/16
+ * @date 19/04/16 - 29/01/17
  *
  * @param dataBase the common app's dataBase
  */
-Leaderboard::Leaderboard(DataBase *dataBase) :  m_dataBase{dataBase}
-{}
+Leaderboard::Leaderboard(DataBase *dataBase) :
+        AbstractModel(dataBase)
+{
+    if (!m_dataBase->checkConfigFileIntegrity())
+    {
+        m_dataBase->createConfigFile();
+        m_dataBase->fetchConfigurationFromFile();
+    }
+}
 
 /**
  * Destructor
@@ -19,7 +26,10 @@ Leaderboard::Leaderboard(DataBase *dataBase) :  m_dataBase{dataBase}
  */
 Leaderboard::~Leaderboard() {}
 
-
-//=== Getters
-
-DataBase *Leaderboard::getDataBase() const { return m_dataBase; }
+/**
+ * Next Step
+ * @author Arthur
+ * @date 29/01/17
+ */
+void Leaderboard::nextStep()
+{}

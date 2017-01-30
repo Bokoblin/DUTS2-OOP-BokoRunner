@@ -7,11 +7,12 @@ using namespace std;
  * Constructs the app's database by initializing
  * all the data from config (backup) file
  * @author Arthur
- * @date 02/05/16 - 25/01/17
+ * @date 02/05/16 - 29/01/17
  */
 DataBase::DataBase() :
     m_currentCoinsNumber{0}, m_currentDistance{0}, m_currentFlattenedEnemies{0},
-    m_currentScore{0}, m_isMenuMusicEnabled{false}, m_isGameMusicEnabled{false}
+    m_currentScore{0}, m_isMenuMusicEnabled{false}, m_isGameMusicEnabled{false},
+    m_appState{INTRO}
 {
     if (!checkConfigFileIntegrity())
         createConfigFile();
@@ -21,6 +22,7 @@ DataBase::DataBase() :
 
 //=== Getters
 
+AppState DataBase::getAppState() const {return m_appState;}
 int DataBase::getTotalCoinsNumber() const { return m_totalCoinsCollected; }
 int DataBase::getTotalDistance() const { return m_totalDistance; }
 int DataBase::getTotalFlattenedEnemies() const { return m_totalFlattenedEnemies; }
@@ -48,16 +50,20 @@ string DataBase::getLanguageFile() const
     else if (m_currentLanguage == "es")
         return SPANISH_STRINGS;
     else
-        return "null";
+        return "null"; //TODO: Throw exception
 }
 
 
 //=== Setters
 
+void DataBase::setAppState(AppState state) { m_appState = state;}
 void DataBase::decreaseWallet(int amount) { m_wallet -= amount; }
 void DataBase::increaseCurrentCoinsCollected(int amount) { m_currentCoinsNumber += amount; }
 void DataBase::increaseCurrentDistance(float amount) { m_currentDistance += amount; }
-void DataBase::increaseCurrentFlattenedEnemies(int amount) { m_currentFlattenedEnemies += amount; }
+void DataBase::increaseCurrentFlattenedEnemies(int amount) {
+    m_scoreBonusFlattenedEnemies += amount;
+    m_currentFlattenedEnemies += 1;
+}
 void DataBase::setLanguage(string lang) { m_currentLanguage = lang;}
 void DataBase::setBallSkin(string skin) { m_currentBallSkin = skin; }
 void DataBase::setDifficulty(int d) { m_currentDifficulty = d;}
@@ -66,7 +72,7 @@ void DataBase::setGameMusic(bool on) { m_isGameMusicEnabled = on;}
 void DataBase::setCurrentScore(float speed)
 {
     m_currentScore = (int)(speed * m_currentDistance
-                     + COIN_MULTIPLIER*m_currentCoinsNumber + m_currentFlattenedEnemies );
+                     + COIN_MULTIPLIER*m_currentCoinsNumber + m_scoreBonusFlattenedEnemies );
 }
 
 
@@ -92,7 +98,7 @@ void DataBase::createConfigFile()
  *
  * @return a boolean indicating if file is corrupted
  */
-bool DataBase::checkConfigFileIntegrity()
+bool DataBase::checkConfigFileIntegrity() const
 {
     fstream f;
     string line;
@@ -172,34 +178,6 @@ void DataBase::fetchConfigurationFromFile()
     fetchConfig();
     fetchScore();
     fetchActivatedShopItems();
-}
-
-
-/**
- * Gets language-adapted string
- * from language string file
- * to affect to a Text object
- * @author Arthur
- * @date 04/01/17
- *
- * @param description to fetch corresponding content
- * @return text string
- */
-string DataBase::getTextValueFromStringsFile(string description)
-{
-    pugi::xml_document doc;
-    doc.load_file(getLanguageFile().c_str());
-
-    pugi::xml_node resources = doc.child("resources");
-
-    for (pugi::xml_node item: resources.children("string"))
-    {
-        if (string(item.attribute("name").value()) == description)
-        {
-            return item.attribute("value").value();
-        }
-    }
-    return "unknown";
 }
 
 
@@ -315,7 +293,7 @@ void DataBase::fetchActivatedShopItems()
  * @author Arthur
  * @date 02/05/16 - 24/01/17
  */
-void DataBase::pushConfigurationToFile()
+void DataBase::pushConfigurationToFile() const
 {
     pugi::xml_document doc;
     doc.load_file(CONFIG_FILE.c_str());
@@ -485,44 +463,6 @@ void DataBase::addNewScore(int score)
 
 }
 
-/**
- * Updates string content from array
- * @author Arthur
- * @date 23/10/16 - 23/01/17
- *
- * @param difficulty for the difficulty related scores
- * @param scores_text that will contain string content
- */
-void DataBase::loadLeaderboardStringFromArray(Difficulty difficulty, std::string &scores_text)
-{
-    int i = 1;
-
-    if ( difficulty == EASY && !m_scoresEasyArray.empty() )
-    {
-        scores_text = "EASY :\n";
-        //add each case content in string
-        for (set<int>::reverse_iterator it = m_scoresEasyArray.rbegin(); it!=m_scoresEasyArray.rend(); ++it)
-        {
-            if ( i != 10)
-                scores_text += "\n" + to_string(i) + ".   " + to_string(*it);
-            else
-                scores_text += "\n" + to_string(i) + ". " + to_string(*it);
-            i++;
-        }
-    }
-    else if (difficulty == HARD &&!m_scoresHardArray.empty() )
-    {
-        scores_text = "HARD :\n";
-        for (set<int>::reverse_iterator it = m_scoresHardArray.rbegin(); it!=m_scoresHardArray.rend(); ++it)
-        {
-            if ( i != 10)
-                scores_text += "\n" + to_string(i) + ".   " + to_string(*it);
-            else
-                scores_text += "\n" + to_string(i) + ". " + to_string(*it);
-            i++;
-        }
-    }
-}
 
 /**
  * Resets Current Game to create a new one
@@ -562,3 +502,72 @@ void DataBase::clearAppData()
     m_activatedItemsArray.clear();
 }
 
+
+/**
+ * Gets language-adapted string
+ * from language string file
+ * to affect to a Text object
+ * @author Arthur
+ * @date 04/01/17
+ *
+ * @param description to fetch corresponding content
+ * @return text string
+ */
+string DataBase::getTextValueFromStringsFile(string description) const
+{
+    pugi::xml_document doc;
+    doc.load_file(getLanguageFile().c_str());
+
+    pugi::xml_node resources = doc.child("resources");
+
+    for (pugi::xml_node item: resources.children("string"))
+    {
+        if (string(item.attribute("name").value()) == description)
+        {
+            return item.attribute("value").value();
+        }
+    }
+    return "unknown";
+}
+
+
+/**
+ * Updates string content from array
+ * @author Arthur
+ * @date 23/10/16 - 23/01/17
+ *
+ * @param difficulty for the difficulty related scores
+ * @return a string containing scores of a given difficulty
+ */
+string DataBase::loadLeaderboardStringFromArray(Difficulty difficulty) const
+{
+    int i = 1;
+    string result = "";
+
+    if ( difficulty == EASY && !m_scoresEasyArray.empty() )
+    {
+        result = getTextValueFromStringsFile("config_easy_mode") + " :\n";
+        //add each case content in string
+        for (set<int>::reverse_iterator it = m_scoresEasyArray.rbegin(); it!=m_scoresEasyArray.rend(); ++it)
+        {
+            if ( i != 10)
+                result += "\n" + to_string(i) + ".   " + to_string(*it);
+            else
+                result += "\n" + to_string(i) + ". " + to_string(*it);
+            i++;
+        }
+    }
+    else if (difficulty == HARD &&!m_scoresHardArray.empty() )
+    {
+        result = getTextValueFromStringsFile("config_hard_mode") + " :\n";
+        for (set<int>::reverse_iterator it = m_scoresHardArray.rbegin(); it!=m_scoresHardArray.rend(); ++it)
+        {
+            if ( i != 10)
+                result += "\n" + to_string(i) + ".   " + to_string(*it);
+            else
+                result += "\n" + to_string(i) + ". " + to_string(*it);
+            i++;
+        }
+    }
+    return result;
+}

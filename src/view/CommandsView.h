@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef COMMANDS_VIEW_H
 #define COMMANDS_VIEW_H
 
-#include "View.h"
+#include "AbstractView.h"
 #include "../model/Commands.h"
 
 
@@ -24,30 +24,24 @@ limitations under the License.
  * The CommandsView class displays
  * game's command
  * @author Arthur
- * @date 24/01/17
+ * @date 24/01/17 - 29/01/17
  */
-class CommandsView : public View
+class CommandsView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    CommandsView(float w, float h, sf::RenderWindow *window, TextHandler * text);
+    CommandsView(sf::RenderWindow *window, TextHandler *textHandler, Commands *commandsModel);
     virtual ~CommandsView();
-
-    //=== SETTERS
-    void setCommandsModel(Commands *model);
 
     //=== METHODS
     virtual void synchronize() override;
     virtual void draw() const override;
     virtual void loadImages() override;
-    virtual bool treatEvents() override;
-    bool treatEvents( sf::Event event );
+    virtual bool treatEvents(sf::Event event) override;
 
 private:
     //=== ATTRIBUTES
     Commands *m_commands;
-
-    //Graphic Elements
     GraphicElement *m_commandSprite;
     Button *m_homeFormButton;
 };

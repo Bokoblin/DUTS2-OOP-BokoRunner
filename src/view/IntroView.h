@@ -13,39 +13,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef SHOP_H
-#define SHOP_H
+#ifndef INTRO_H
+#define INTRO_H
 
-#include <vector>
-#include "ShopItem.h"
-#include "AbstractModel.h"
+#include "AbstractView.h"
+#include "../model/IntroModel.h"
 
 /**
- * The Shop class is the model of ShopView class
- * It fetches the list of available to buy items
+ * The IntroView class displays
+ * a little banner at app startup
  * @author Arthur
- * @date 11/05/16 - 29/01/17
+ * @date 27/03/16 - 29/01/17
  */
-class Shop : public AbstractModel
+class IntroView : public AbstractView
 {
-public:
+    public:
     //=== CTORs / DTORs
-    Shop(DataBase *dataBase);
-    ~Shop();
-
-    //=== GETTERS
-    std::vector<ShopItem*> getShopItemsArray() const;
+    IntroView(float width, float height, sf::RenderWindow *window,
+              TextHandler *textHandler, IntroModel *introModel);
+    virtual ~IntroView();
 
     //=== METHODS
-    bool buyItem(ShopItem *item);
-    virtual void nextStep() override;
+    virtual void synchronize() override;
+    virtual void draw() const override;
+    virtual void loadImages() override;
+    virtual bool treatEvents(sf::Event event) override;
 
 private:
     //=== ATTRIBUTES
-    std::vector<ShopItem*> m_shopItemsArray;
-
-    //=== METHODS
-    void fetchBuyableItemsFromFile();
+    IntroModel *m_intro;
+    GraphicElement *m_introGraphic;
 };
 
 #endif

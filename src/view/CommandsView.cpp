@@ -5,11 +5,12 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 24/01/17
+ * @date 24/01/17 - 29/01/17
  */
-CommandsView::CommandsView(float w, float h, sf::RenderWindow *window, TextHandler * text):
-        View(w, h, window,text), m_commands{nullptr}
+CommandsView::CommandsView(sf::RenderWindow *window, TextHandler *textHandler, Commands *commandsModel) :
+        AbstractView(window, textHandler), m_commands{commandsModel}
 {
+    loadImages();
 }
 
 
@@ -22,15 +23,6 @@ CommandsView::~CommandsView()
 {
     delete m_commandSprite;
     delete m_homeFormButton;
-}
-
-
-//=== Setters
-
-void CommandsView::setCommandsModel(Commands *model)
-{
-    m_commands = model;
-    loadImages();
 }
 
 
@@ -99,7 +91,6 @@ void CommandsView::draw() const
  * @author Arthur
  * @date 24/01/17
  */
-bool CommandsView::treatEvents() { return false; }
 bool CommandsView::treatEvents(sf::Event event)
 {
     bool stop_command = false;

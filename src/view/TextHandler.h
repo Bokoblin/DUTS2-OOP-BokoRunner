@@ -40,7 +40,7 @@ class TextHandler
 {
     public:
     //=== CTORs / DTORs
-    TextHandler(DataBase *dataBase, const int width, const int height);
+    TextHandler(DataBase *dataBase, float width, float height);
     TextHandler(const TextHandler& myText) = delete;
     ~TextHandler();
 
@@ -69,7 +69,7 @@ class TextHandler
 
 private:
     //=== ATTRIBUTES
-    const int m_width, m_height;
+    float m_width, m_height;
     sf::Font m_regularFont;
     sf::Font m_condensedFont;
     sf::Font m_BoldFont;

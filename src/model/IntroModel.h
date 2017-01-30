@@ -13,39 +13,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef SHOP_H
-#define SHOP_H
+#ifndef INTRO_MODEL_H
+#define INTRO_MODEL_H
 
-#include <vector>
-#include "ShopItem.h"
 #include "AbstractModel.h"
 
+
 /**
- * The Shop class is the model of ShopView class
- * It fetches the list of available to buy items
+ * IntroModel Class
  * @author Arthur
- * @date 11/05/16 - 29/01/17
+ * @date 29/01/17
  */
-class Shop : public AbstractModel
+class IntroModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    Shop(DataBase *dataBase);
-    ~Shop();
-
-    //=== GETTERS
-    std::vector<ShopItem*> getShopItemsArray() const;
+    IntroModel(DataBase *dataBase);
+    virtual ~IntroModel();
 
     //=== METHODS
-    bool buyItem(ShopItem *item);
     virtual void nextStep() override;
-
-private:
-    //=== ATTRIBUTES
-    std::vector<ShopItem*> m_shopItemsArray;
-
-    //=== METHODS
-    void fetchBuyableItemsFromFile();
 };
 
 #endif

@@ -16,15 +16,16 @@ limitations under the License.
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include "DataBase.h"
+#include "AbstractModel.h"
+#include "../enum/SettingsPage.h"
 
 /**
  * The Settings class is the model of SettingsView class
  * It controls page changing and checks item's availability for config changing
  * @author Arthur
- * @date 20/05/16 - 21/05/16
+ * @date 20/05/16 - 30/01/17
  */
-class Settings
+class Settings : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
@@ -32,7 +33,6 @@ public:
     ~Settings();
 
     //=== GETTERS
-    DataBase *getDataBase() const;
     bool getMorphSkinAvailability() const;
     bool getCapsuleSkinAvailability() const;
     int getCurrentPage() const;
@@ -44,19 +44,13 @@ public:
     void changeLanguage(std::string lang);
     void changeBallSkin(std::string skin);
     void checkItemsAvailability();
+    virtual void nextStep() override;
 
     //=== ATTRIBUTES
     static const int PAGE_NUMBER = 3;
 
-    enum Page {
-        CONFIG = 0,
-        STATS = 1,
-        ABOUT = 2
-    };
-
 private:
     //=== ATTRIBUTES
-    DataBase *m_dataBase; //to not delete in dtor
     int m_currentPage;
     bool m_morphSkinIsAvailable;
     bool m_capsuleSkinIsAvailable;

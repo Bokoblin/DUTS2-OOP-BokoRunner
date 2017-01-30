@@ -16,8 +16,8 @@ limitations under the License.
 #ifndef MENU_VIEW_H
 #define MENU_VIEW_H
 
-#include "View.h"
 #include "../model/MenuModel.h"
+#include "AbstractView.h"
 #include "CommandsView.h"
 #include "LeaderboardView.h"
 #include "SettingsView.h"
@@ -27,27 +27,25 @@ limitations under the License.
 /**
  * MenuView Class
  * @author Arthur, Florian
- * @date 26/03/16 - 24/01/17
+ * @date 26/03/16 - 29/01/17
  */
-class MenuView : public View
+class MenuView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    MenuView(float w, float h, sf::RenderWindow *window, TextHandler *textHandler);
+    MenuView(float width, float height, sf::RenderWindow *window,
+             TextHandler *textHandler, MenuModel *menuModel);
     virtual ~MenuView();
-
-    //=== SETTERS
-	void setMenuModel(MenuModel *model);
 
     //=== METHODS
     virtual void synchronize() override;
     virtual void draw() const override;
     virtual void loadImages() override;
-    virtual bool treatEvents() override;
+    virtual bool treatEvents(sf::Event event) override;
 
 private:
     //=== ATTRIBUTES
-    MenuModel *m_menuModel;
+    MenuModel *m_menu;
     CommandsView *m_commandsView;
     LeaderboardView *m_leaderboardView;
     SettingsView *m_settingsView;

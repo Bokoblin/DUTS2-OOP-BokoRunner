@@ -13,25 +13,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef LEADERBOARD_H
-#define LEADERBOARD_H
-
-#include "AbstractModel.h"
+#ifndef MOVABLE_ELEMENT_TYPE_H
+#define MOVABLE_ELEMENT_TYPE_H
 
 /**
- * The Leaderboard class is the model of LeaderboardView class
+ * The MovableElementType enum defines the different
+ * types of MovableElement available in the game.
  * @author Arthur
- * @date  19/04/16 - 29/01/17
+ * @date 30/01/17
  */
-class Leaderboard : public AbstractModel
+enum MovableElementType
 {
-public:
-    //=== CTORs / DTORs
-    Leaderboard(DataBase *dataBase);
-    ~Leaderboard();
-
-    //=== Methods
-    virtual void nextStep() override;
+    PLAYER,
+    STANDARD_ENEMY,
+    TOTEM_ENEMY,
+    BLOCK_ENEMY,
+    COIN,
+    PV_PLUS_BONUS,
+    MEGA_BONUS,
+    FLY_BONUS,
+    SLOW_SPEED_BONUS,
+    SHIELD_BONUS
 };
 
 #endif

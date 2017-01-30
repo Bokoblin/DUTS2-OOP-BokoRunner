@@ -13,25 +13,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef LEADERBOARD_H
-#define LEADERBOARD_H
-
-#include "AbstractModel.h"
+#ifndef LABEL_POSITION_H
+#define LABEL_POSITION_H
 
 /**
- * The Leaderboard class is the model of LeaderboardView class
+ * The LabelPosition enum defines the different
+ * position that are settable for button's label.
  * @author Arthur
- * @date  19/04/16 - 29/01/17
+ * @date 30/01/17
  */
-class Leaderboard : public AbstractModel
-{
-public:
-    //=== CTORs / DTORs
-    Leaderboard(DataBase *dataBase);
-    ~Leaderboard();
-
-    //=== Methods
-    virtual void nextStep() override;
+enum LabelPosition {
+    TOP,
+    RIGHT,
+    BOTTOM,
+    LEFT,
+    CENTER
 };
 
 #endif

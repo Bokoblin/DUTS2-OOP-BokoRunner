@@ -13,32 +13,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef INTRO_H
-#define INTRO_H
-
-#include "View.h"
+#ifndef MENU_STATE_H
+#define MENU_STATE_H
 
 /**
- * Intro Class
+ * The MenuState enum defines the different
+ * states that the menu can take while running.
  * @author Arthur
- * @date 27/03/16 - 14/04/16
+ * @date 30/01/17
  */
-class Intro : public View
+enum MenuState
 {
-    public:
-    //=== CTORs / DTORs
-    Intro(float w, float h, sf::RenderWindow *window, TextHandler *text);
-    virtual ~Intro();
-
-    //=== METHODS
-    virtual void synchronize() override;
-    virtual void draw() const override;
-    virtual void loadImages() override;
-    virtual bool treatEvents() override;
-
-private:
-    //=== ATTRIBUTES
-    GraphicElement *m_introGraphic;
+    HOME,
+    COMMANDS,
+    SETTINGS,
+    LEADERBOARD,
+    SHOP
 };
 
 #endif

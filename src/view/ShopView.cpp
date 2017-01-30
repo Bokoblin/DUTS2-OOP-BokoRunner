@@ -1,18 +1,16 @@
 #include "ShopView.h"
 
-using namespace std;
-
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 16/05/16
+ * @date 16/05/16 - 29/01/17
  */
-ShopView::ShopView(float w, float h, sf::RenderWindow *window, TextHandler * text):
-        View(w, h, window,text), m_shop{nullptr}, m_currentIndicator{0},
-        m_totalIndicator{0}, m_buyDialog{nullptr}
+ShopView::ShopView(sf::RenderWindow *window, TextHandler *textHandler, Shop *shopModel) :
+        AbstractView(window, textHandler),
+    m_shop{shopModel}, m_currentIndicator{0}, m_totalIndicator{0}, m_buyDialog{nullptr}
 {
     loadImages();
-
+    createCards();
     m_buyDialog = new Dialog();
 }
 
@@ -33,15 +31,6 @@ ShopView::~ShopView()
 
     for ( auto it : m_pageIndicators)
         delete it.second;
-}
-
-
-//=== Setters
-
-void ShopView::setShopModel(Shop *model)
-{
-    m_shop = model;
-    createCards();
 }
 
 
@@ -176,7 +165,6 @@ void ShopView::draw() const
  * @author Arthur
  * @date 16/05/16 - 24/01/17
  */
-bool ShopView::treatEvents() { return false; }
 bool ShopView::treatEvents(sf::Event event)
 {
     bool stop_shop = false;

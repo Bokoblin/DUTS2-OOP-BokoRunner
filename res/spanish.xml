@@ -29,17 +29,17 @@
     <string name="config_lang_french" value="Frances" />
     <string name="config_lang_spanish" value="Español" />
     <string name="config_difficulty_title" value="Dificultad" />
-    <string name="config_easy_mode" value="Facile" />
-    <string name="config_hard_mode" value="Dificultado" />
+    <string name="config_easy_mode" value="Fácil" />
+    <string name="config_hard_mode" value="Difícil" />
     <string name="config_custom_title" value="Personalization de la bala" />
     <string name="config_ball_default_skin" value="Apariencia predeterminada" />
     <string name="config_ball_morph_skin" value="Apariencia morphing" />
     <string name="config_ball_capsule_skin" value="Apariencia capsule" />
-    <string name="config_music_title" value="Musica" />
+    <string name="config_music_title" value="Música" />
     <string name="config_music_menu" value="Menu" />
     <string name="config_music_game" value="Juego" />
     <string name="stats_title" value="Estadísticas" />
-    <string name="stats_overall_title" value="Estadísticas cumulados" />
+    <string name="stats_overall_title" value="Estadísticas acumulados" />
     <string name="stats_per_game_title" value="Estadísticas per parte" />
     <string name="stats_distance" value="Total distancia recorrida" />
     <string name="stats_enemies" value="Total destrucciones enemigos" />
@@ -87,9 +87,9 @@
     <string name="shop_flyPlus_name" value="Vuelo+" />
     <string name="shop_flyPlus_desc" value="Aumenta la duración de &#xA;bonificación de 5 segundos" />
     <string name="shop_morphing_name" value="Bala morphing" />
-    <string name="shop_morphing_desc" value="Desbloquea la apariencia &#xA;morphing de la bala" />
+    <string name="shop_morphing_desc" value="Libera la apariencia &#xA;morphing de la bala" />
     <string name="shop_capsule_name" value="Bala capsule" />
-    <string name="shop_capsule_desc" value="Desbloquea la apariencia &#xA;capsule de la bala" />
+    <string name="shop_capsule_desc" value="Libera la apariencia &#xA;capsule de la bala" />
 
     <!--  Game strings -->
     <string name="game_player_life" value="Vida" />
@@ -98,7 +98,7 @@
     <string name="pause_resume" value="Reanudar" />
     <string name="pause_restart" value="Reiniciar" />
     <string name="pause_go_to_home" value="Menu" />
-    <string name="pause_music" value="Musica" />
+    <string name="pause_music" value="Música" />
 
     <!--  End Screen strings -->
     <string name="end_title" value="Tu puntuación" />

@@ -17,9 +17,9 @@ limitations under the License.
 #define GAME_VIEW_H
 
 #include "PixelateEffect.h"
-#include "View.h"
+#include "AbstractView.h"
+#include "../model/GameModel.h"
 
-//TODO : handle differently with "command screen" v1.8 feature
 #define KEYBOARD_LEFT  (sf::Keyboard::isKeyPressed(sf::Keyboard::A) \
                        || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
 #define KEYBOARD_RIGHT (sf::Keyboard::isKeyPressed(sf::Keyboard::D) \
@@ -31,23 +31,20 @@ limitations under the License.
 /**
  * GameView Class
  * @author Arthur, Florian
- * @date 21/02/16 - 25/01/17
+ * @date 21/02/16 - 29/01/17
  */
-class GameView : public View
+class GameView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    GameView(float w, float h, sf::RenderWindow *myWindow, TextHandler *text);
+    GameView(sf::RenderWindow *myWindow, TextHandler *textHandler, GameModel *gameModel);
     virtual ~GameView();
-
-    //=== SETTERS
-    void setGameModel(GameModel *model);
 
     //=== METHODS
     virtual void loadImages() override;
     virtual void synchronize() override;
     virtual void draw() const override;
-    virtual bool treatEvents() override;
+    virtual bool treatEvents(sf::Event event) override;
     virtual void linkElements();
     virtual void updateElements();
     virtual void deleteElements();
@@ -57,7 +54,7 @@ public:
 
 private:
     //=== ATTRIBUTES
-    GameModel *m_gameModel; //to not delete in dtor
+    GameModel *m_game; //to not delete in dtor
     PixelateEffect *m_pixelShader;
     float m_xPixelIntensity;
     float m_yPixelIntensity;

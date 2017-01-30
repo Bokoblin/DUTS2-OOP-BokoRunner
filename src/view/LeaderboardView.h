@@ -16,31 +16,28 @@ limitations under the License.
 #ifndef LEADERBOARD_VIEW_H
 #define LEADERBOARD_VIEW_H
 
-#include "View.h"
-#include "../model/Leaderboard.h"
+#include "AbstractView.h"
+#include "../Model/Leaderboard.h"
 
 
 /**
  * LeaderboardView Class
  * @author Arthur
- * @date 21/05/16 - 02/01/17
+ * @date 21/05/16 - 29/01/17
  */
-class LeaderboardView : public View
+class LeaderboardView : public AbstractView
 {
     public:
         //=== CTORs / DTORs
-        LeaderboardView(float w, float h, sf::RenderWindow *window, TextHandler * text);
+        LeaderboardView(sf::RenderWindow *window, TextHandler *textHandler, Leaderboard *leaderboardModel);
         virtual ~LeaderboardView();
 
-        //=== SETTERS
-        void setLeaderboardModel(Leaderboard *model);
 
         //=== METHODS
         virtual void synchronize() override;
         virtual void draw() const override;
         virtual void loadImages() override;
-        virtual bool treatEvents() override;
-        bool treatEvents( sf::Event event );
+        virtual bool treatEvents(sf::Event event) override;
 
     private:
         //=== ATTRIBUTES

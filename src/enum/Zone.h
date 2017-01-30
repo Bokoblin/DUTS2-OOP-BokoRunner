@@ -13,25 +13,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef LEADERBOARD_H
-#define LEADERBOARD_H
-
-#include "AbstractModel.h"
+#ifndef ZONE_H
+#define ZONE_H
 
 /**
- * The Leaderboard class is the model of LeaderboardView class
+ * The Zone enum defines the different
+ * zone available in the game.
  * @author Arthur
- * @date  19/04/16 - 29/01/17
+ * @date 30/01/17
  */
-class Leaderboard : public AbstractModel
+enum Zone
 {
-public:
-    //=== CTORs / DTORs
-    Leaderboard(DataBase *dataBase);
-    ~Leaderboard();
-
-    //=== Methods
-    virtual void nextStep() override;
+    HILL,
+    PLAIN
 };
 
 #endif

@@ -3,22 +3,44 @@
 using namespace std;
 
 /**
- * Parameterized Constructor
+ * Constructs a Menu view with app's size for menu and game,
+ * app's window, a text handler and menu's model
  * @author Arthur, Florian
  * @date 25/02/16 - 24/01/17
+ *
+ * @param width the app's width
+ * @param height the app's height
+ * @param window the app's window
+ * @param textHandler a text handler to display standalone text
+ * @param menuModel the menu's model part
  */
-MenuView::MenuView(float w, float h, sf::RenderWindow *window, TextHandler * textHandler):
-        View(w, h, window,textHandler), m_menuModel{nullptr}, m_commandsView{nullptr},
-        m_leaderboardView{nullptr}, m_settingsView{nullptr},  m_shopView{nullptr}
+MenuView::MenuView(float width, float height, sf::RenderWindow *window,
+                   TextHandler *textHandler, MenuModel *menuModel) :
+        AbstractView(width, height, window, textHandler), m_menu{menuModel},
+        m_commandsView{nullptr}, m_leaderboardView{nullptr}, m_settingsView{nullptr}, m_shopView{nullptr}
 {
-    if (m_window->getSize().x != m_width )
+    if (!m_menuMusic.openFromFile(MENU_MUSIC))
+        cerr << "ERROR when loading music file: " << MENU_MUSIC << endl;
+    else
     {
-        m_window->create(sf::VideoMode((unsigned int) w, (unsigned int) h, SCREEN_BPP), APP_TITLE, sf::Style::Close );
-        m_window->setFramerateLimit(FRAMERATE);
-        m_window->setPosition(ENV_CENTERED);
+        if (m_menu->getDataBase()->isMenuMusicEnabled())
+            m_menuMusic.setVolume(100);
+        else
+            m_menuMusic.setVolume(0);
+        m_menuMusic.play();
+        m_menuMusic.setLoop(true);
+        m_menuMusic.setAttenuation(50);
     }
 
     loadImages();
+
+    if (m_window->getSize().x != m_width )
+    {
+        m_window->create(sf::VideoMode((unsigned int) m_width, (unsigned int) m_height, SCREEN_BPP),
+                         APP_TITLE, sf::Style::Close );
+        m_window->setFramerateLimit(30);
+        m_window->setPosition(ENVIRONMENT_CENTER);
+    }
 }
 
 
@@ -38,27 +60,6 @@ MenuView::~MenuView()
     delete m_settingsFormButton;
     delete m_leaderboardFormButton;
     delete m_shopFormButton;
-}
-
-
-//=== Setters
-
-void MenuView::setMenuModel(MenuModel *model)
-{
-    m_menuModel = model;
-
-    if (!m_menuMusic.openFromFile(MENU_MUSIC))
-        cerr << "ERROR when loading music file: " << MENU_MUSIC << endl;
-    else
-    {
-        if (m_menuModel->getDataBase()->isMenuMusicEnabled())
-            m_menuMusic.setVolume(100);
-        else
-            m_menuMusic.setVolume(0);
-        m_menuMusic.play();
-        m_menuMusic.setLoop(true);
-        m_menuMusic.setAttenuation(50);
-    }
 }
 
 
@@ -117,11 +118,11 @@ void MenuView::loadImages()
 /**
  * Synchronization function
  * @author Arthur
- * @date 26/03/16 - 24/01/17
+ * @date 26/03/16 - 30/01/17
  */
 void MenuView::synchronize()
 {
-    if (m_menuModel->getDataBase()->isMenuMusicEnabled())
+    if (m_menu->getDataBase()->isMenuMusicEnabled())
         m_menuMusic.setVolume(100);
     else
         m_menuMusic.setVolume(0);
@@ -129,56 +130,64 @@ void MenuView::synchronize()
     if ( m_menuMusic.getPlayingOffset() >= sf::milliseconds(28840))
         m_menuMusic.setPlayingOffset( sf::milliseconds(4851));
 
-    if (m_menuModel->getMenuState() == HOME)
+    switch (m_menu->getMenuState())
     {
-        //=== Elements update
-        m_farBackground->sync();
-        m_nearBackground->sync();
-        m_playRectButton->sync(m_menuModel->getDataBase());
-        m_quitRectButton->sync(m_menuModel->getDataBase());
-        m_commandsFormButton->sync();
-        m_settingsFormButton->sync();
-        m_leaderboardFormButton->sync();
-        m_shopFormButton->sync();
+        case HOME:
+            m_farBackground->sync();
+            m_nearBackground->sync();
+            m_playRectButton->sync(m_menu->getDataBase());
+            m_quitRectButton->sync(m_menu->getDataBase());
+            m_commandsFormButton->sync();
+            m_settingsFormButton->sync();
+            m_leaderboardFormButton->sync();
+            m_shopFormButton->sync();
+            m_textHandler->syncMenuHomeText();
+            break;
 
-        //=== TextHandler update
-        m_textHandler->syncMenuHomeText();
+        case COMMANDS:
+            m_commandsView->synchronize();
+            break;
+
+        case LEADERBOARD:
+            m_leaderboardView->synchronize();
+            break;
+
+        case SETTINGS:
+            m_settingsView->synchronize();
+            break;
+
+        case SHOP:
+            m_shopView->synchronize();
+            break;
+
+        default:
+            break;
     }
-    else if (m_menuModel->getMenuState() == COMMANDS)
-        m_commandsView->synchronize();
 
-    else if (m_menuModel->getMenuState() == LEADERBOARD)
-        m_leaderboardView->synchronize();
-
-    else if (m_menuModel->getMenuState() == SETTINGS)
-        m_settingsView->synchronize();
-
-    else if (m_menuModel->getMenuState() == SHOP)
-        m_shopView->synchronize();
 
     //=== Delete commandsView if not anymore current menu state
-    if ( m_menuModel->getMenuState() != COMMANDS && m_commandsView != nullptr)
+    if ( m_menu->getMenuState() != COMMANDS && m_commandsView != nullptr)
     {
         delete m_commandsView;
         m_commandsView = nullptr;
     }
 
     //=== Delete leaderboardView if not anymore current menu state
-    if ( m_menuModel->getMenuState() != LEADERBOARD && m_leaderboardView != nullptr)
+    if ( m_menu->getMenuState() != LEADERBOARD && m_leaderboardView != nullptr)
     {
         delete m_leaderboardView;
         m_leaderboardView = nullptr;
     }
 
     //=== Delete settingsView if not anymore current menu state
-    if ( m_menuModel->getMenuState() != SETTINGS && m_settingsView != nullptr)
+    if ( m_menu->getMenuState() != SETTINGS && m_settingsView != nullptr)
     {
         delete m_settingsView;
         m_settingsView = nullptr;
     }
 
     //=== Delete shopView if not anymore current menu state
-    if ( m_menuModel->getMenuState() != SHOP && m_shopView != nullptr)
+    if ( m_menu->getMenuState() != SHOP && m_shopView != nullptr)
     {
         delete m_shopView;
         m_shopView = nullptr;
@@ -193,7 +202,7 @@ void MenuView::synchronize()
  */
 void MenuView::draw() const
 {
-    if (m_menuModel->getMenuState() == HOME)
+    if (m_menu->getMenuState() == HOME)
     {
         m_window->clear();
 
@@ -209,16 +218,16 @@ void MenuView::draw() const
 
         m_window->display();
     }
-    else if (m_menuModel->getMenuState() == COMMANDS)
+    else if (m_menu->getMenuState() == COMMANDS)
         m_commandsView->draw();
 
-    else if (m_menuModel->getMenuState() == SETTINGS)
+    else if (m_menu->getMenuState() == SETTINGS)
         m_settingsView->draw();
 
-    else if (m_menuModel->getMenuState() == LEADERBOARD)
+    else if (m_menu->getMenuState() == LEADERBOARD)
         m_leaderboardView->draw();
 
-    else if (m_menuModel->getMenuState() == SHOP)
+    else if (m_menu->getMenuState() == SHOP)
         m_shopView->draw();
 
 }
@@ -227,9 +236,9 @@ void MenuView::draw() const
 /**
  * Events treating
  * @author Arthur, Florian
- * @date 25/03/16 - 24/01/17
+ * @date 25/03/16 - 29/01/17
  */
-bool MenuView::treatEvents()
+bool MenuView::treatEvents(sf::Event event)
 {
     bool result = false;
 
@@ -237,17 +246,16 @@ bool MenuView::treatEvents()
     {
         result = true;
 
-        sf::Event event;
         while (m_window->pollEvent(event))
         {
             if  (event.type == sf::Event::Closed)
             {
-                m_model->setAppState(QUIT);
+                m_menu->getDataBase()->setAppState(QUIT);
                 m_window->close();
                 result = false;
             }
 
-            if (m_menuModel->getMenuState() == HOME)
+            if (m_menu->getMenuState() == HOME)
             {
                 if (MOUSE_LEFT_PRESSED_EVENT)
                 {
@@ -283,7 +291,7 @@ bool MenuView::treatEvents()
                     {
                         if(m_menuMusic.getStatus() == sf::Music::Status::Playing )
                             m_menuMusic.stop();
-                        m_model->setAppState(GAME);
+                        m_menu->getDataBase()->setAppState(GAME);
                         result = false;
                     }
                     else if ( m_quitRectButton->contains(MOUSE_POSITION) )
@@ -293,34 +301,29 @@ bool MenuView::treatEvents()
                     }
                     else if ( m_commandsFormButton->contains(MOUSE_POSITION) )
                     {
-                        m_commandsView = new CommandsView(m_width, m_height, m_window, m_textHandler);
-                        m_commandsView->setCommandsModel(m_menuModel->launchCommands());
+                        m_commandsView = new CommandsView(m_window, m_textHandler, m_menu->launchCommands());
                     }
                     else if ( m_leaderboardFormButton->contains(MOUSE_POSITION) )
                     {
-                        m_leaderboardView = new LeaderboardView(m_width, m_height, m_window, m_textHandler);
-                        m_leaderboardView->setLeaderboardModel( m_menuModel->launchLeaderboard() );
+                        m_leaderboardView = new LeaderboardView(m_window, m_textHandler, m_menu->launchLeaderboard());
                     }
                     else if ( m_settingsFormButton->contains(MOUSE_POSITION) )
                     {
-                        m_settingsView = new SettingsView(m_width, m_height, m_window, m_textHandler);
-                        m_settingsView->setModel(m_model);
-                        m_settingsView->setSettingsModel( m_menuModel->launchSettings() );
+                        m_settingsView = new SettingsView(m_window, m_textHandler, m_menu->launchSettings());
                     }
                     else if ( m_shopFormButton->contains(MOUSE_POSITION) )
                     {
-                        m_shopView = new ShopView(m_width, m_height, m_window, m_textHandler);
-                        m_shopView->setShopModel( m_menuModel->launchShop() );
+                        m_shopView = new ShopView(m_window, m_textHandler, m_menu->launchShop());
                     }
                 }
             }
-            else if ( (m_menuModel->getMenuState() == COMMANDS && m_commandsView->treatEvents(event))
-                    ||(m_menuModel->getMenuState() == LEADERBOARD && m_leaderboardView->treatEvents(event) )
-                    ||(m_menuModel->getMenuState() == SETTINGS && m_settingsView->treatEvents(event))
-                    ||(m_menuModel->getMenuState() == SHOP && m_shopView->treatEvents(event) )
+            else if ( (m_menu->getMenuState() == COMMANDS && m_commandsView->treatEvents(event))
+                      ||(m_menu->getMenuState() == LEADERBOARD && m_leaderboardView->treatEvents(event) )
+                      ||(m_menu->getMenuState() == SETTINGS && m_settingsView->treatEvents(event))
+                      ||(m_menu->getMenuState() == SHOP && m_shopView->treatEvents(event) )
                     )
             {
-                m_menuModel->setMenuState(HOME);
+                m_menu->setMenuState(HOME);
             }
         }
     }

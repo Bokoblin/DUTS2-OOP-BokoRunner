@@ -16,27 +16,16 @@ limitations under the License.
 #ifndef GAME_MODEL_H
 #define GAME_MODEL_H
 
-#include "Model.h"
+#include "AbstractModel.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Coin.h"
 #include "Bonus.h"
+#include "../enum/GameState.h"
+#include "../enum/Zone.h"
 #include <chrono>
 
 #define ELEMENT_MOVE_X getGameSpeed()*(-1)
-
-enum Zone {
-    HILL,
-    PLAIN
-};
-
-enum GameState
-{
-    RUNNING,
-    RUNNING_SLOWLY,
-    PAUSED,
-    OVER
-};
 
 
 /**
@@ -47,13 +36,13 @@ enum GameState
  * calculating final score, etc.
  *
  * @author Arthur
- * @date 26/03/16 - 26/12/16
+ * @date 26/03/16 - 30/01/17
  */
-class GameModel : public Model
+class GameModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    GameModel(const Model& model);
+    GameModel(float width, float height, DataBase *dataBase);
     ~GameModel();
 
     //=== GETTERS
@@ -62,7 +51,7 @@ public:
     bool getTransitionPossibleStatus() const;
     Player* getPlayer() const;
     float getGameSpeed() const;
-    int getCurrentZone() const;
+    Zone getCurrentZone() const;
     const std::set<MovableElement*>& getNewMElementsArray() const;
     int getBonusTimeout() const;
 
@@ -70,7 +59,6 @@ public:
     void setGameState(GameState state);
     void setTransitionStatus(bool status);
     void setTransitionPossibleStatus(bool status);
-
     void setCurrentZone(Zone z);
 
     //=== METHODS
@@ -86,6 +74,7 @@ public:
 
 private:
     //=== ATTRIBUTES
+    float m_width, m_height;
     GameState m_gameState;
     bool m_inTransition;
     bool m_isTransitionPossible;

@@ -13,25 +13,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef LEADERBOARD_H
-#define LEADERBOARD_H
-
-#include "AbstractModel.h"
+#ifndef GAME_STATE_H
+#define GAME_STATE_H
 
 /**
- * The Leaderboard class is the model of LeaderboardView class
+ * The GameState enum defines the different
+ * states that the game can take while running.
  * @author Arthur
- * @date  19/04/16 - 29/01/17
+ * @date 30/01/17
  */
-class Leaderboard : public AbstractModel
+enum GameState
 {
-public:
-    //=== CTORs / DTORs
-    Leaderboard(DataBase *dataBase);
-    ~Leaderboard();
-
-    //=== Methods
-    virtual void nextStep() override;
+    RUNNING,
+    RUNNING_SLOWLY,
+    PAUSED,
+    OVER
 };
 
 #endif

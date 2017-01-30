@@ -173,17 +173,17 @@ void Player::changeState(int state)
 /**
  * Player's control Function
  * Arthur, Florian
- * @date  22/03/16 - 04/01/17
+ * @date  22/03/16 - 30/01/17
  *
  * @param direction the new direction
  */
-void Player::controlPlayerMovements(MoveDirections direction)
+void Player::controlPlayerMovements(MovingDirection direction)
 {
     m_inDeceleration = false;
 
-    if (direction && m_vectorBall.first > -10)
+    if (direction == MOVE_LEFT && m_vectorBall.first > -10)
         m_vectorBall.first -= m_moveX*m_acceleration/FRAMERATE;
-    else if (!direction && m_vectorBall.first < 10)
+    else if (direction == MOVE_RIGHT && m_vectorBall.first < 10)
         m_vectorBall.first += m_moveX*m_acceleration/FRAMERATE;
 }
 

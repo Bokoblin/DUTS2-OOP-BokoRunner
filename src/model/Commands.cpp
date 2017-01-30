@@ -1,15 +1,14 @@
 #include "Commands.h"
 
-using namespace std;
-
 /**
  * Constructs a Commands model with database
  * @author Arthur
- * @date 24/01/17
+ * @date 24/01/17 - 30/01/17
  *
  * @param dataBase the common app's dataBase
  */
-Commands::Commands(DataBase *dataBase) :  m_dataBase{dataBase}
+Commands::Commands(DataBase *dataBase) :
+        AbstractModel{dataBase}
 {}
 
 
@@ -21,6 +20,10 @@ Commands::Commands(DataBase *dataBase) :  m_dataBase{dataBase}
 Commands::~Commands()
 {}
 
-
-//=== Getters
-DataBase* Commands::getDataBase() const { return m_dataBase; }
+/**
+ * Next Step
+ * @author Arthur
+ * @date 30/01/17
+ */
+void Commands::nextStep()
+{}

@@ -13,25 +13,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef LEADERBOARD_H
-#define LEADERBOARD_H
-
-#include "AbstractModel.h"
+#ifndef SETTINGS_PAGE_H
+#define SETTINGS_PAGE_H
 
 /**
- * The Leaderboard class is the model of LeaderboardView class
+ * The SettingsPage enum defines the different
+ * pages composing the settings.
  * @author Arthur
- * @date  19/04/16 - 29/01/17
+ * @date 30/01/17
  */
-class Leaderboard : public AbstractModel
+enum SettingsPage
 {
-public:
-    //=== CTORs / DTORs
-    Leaderboard(DataBase *dataBase);
-    ~Leaderboard();
-
-    //=== Methods
-    virtual void nextStep() override;
+    CONFIG = 0,
+    STATS = 1,
+    ABOUT = 2
 };
 
 #endif

@@ -16,18 +16,11 @@ limitations under the License.
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#include "../../libs/pugixml-1.8/src/pugixml.hpp"
+#include "../enum/LabelPosition.h"
 #include "../model/DataBase.h"
 #include "GraphicElement.h"
 #include "Text.h"
 
-enum LabelPosition {
-    TOP,
-    RIGHT,
-    BOTTOM,
-    LEFT,
-    CENTER
-};
 
 /**
  * The Button class adds to a Graphic element
@@ -38,7 +31,7 @@ enum LabelPosition {
  * a string file thanks to its description
  *
  * @author Arthur
- * @date 06/04/16 - 25/01/17
+ * @date 06/04/16 - 30/01/17
  */
 class Button : public GraphicElement
 {

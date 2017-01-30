@@ -17,24 +17,14 @@ limitations under the License.
 #define PLAYER_H
 
 #include "MovableElement.h"
+#include "../enum/MovingDirection.h"
+#include "../enum/PlayerState.h"
 #include <cmath>
 #include <utility>
 
 const int GAME_FLOOR = 480;
 const int FRAMERATE = 30;
 
-enum playerState
-{
-    NORMAL,
-    MEGA,
-    FLY,
-    SHIELD
-};
-
-enum MoveDirections {
-    MOVE_LEFT = true,
-    MOVE_RIGHT = false
-};
 
 /**
  * The Player class inherited from MovableElements
@@ -66,7 +56,7 @@ public:
     //=== METHODS
     virtual void move() override;
     void changeState(int state);
-    void controlPlayerMovements(MoveDirections direction);
+    void controlPlayerMovements(MovingDirection direction);
 
 
 private:

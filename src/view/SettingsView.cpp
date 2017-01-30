@@ -4,12 +4,18 @@ using namespace std;
 
 
 /**
- * Parameterized Constructor
+ * Constructs a Settings view with
+ * the window, a text handler and Settings model
  * @author Arthur
- * @date 20/05/16 - 25/01/17
+ * @date 20/05/16 - 30/01/17
+ *
+ * @param window the current window which displays a settings view
+ * @param textHandler the text handler to display standalone texts
+ * @param settingsModel the settings model
  */
-SettingsView::SettingsView(float w, float h, sf::RenderWindow *window, TextHandler * t):
-        View(w, h, window, t), m_settings{nullptr}, m_confirmDialog{nullptr}
+SettingsView::SettingsView(sf::RenderWindow *window, TextHandler *textHandler, Settings *settingsModel) :
+        AbstractView(window, textHandler),
+    m_settings{settingsModel}, m_confirmDialog{nullptr}
 {
     loadImages();
 
@@ -37,8 +43,10 @@ SettingsView::SettingsView(float w, float h, sf::RenderWindow *window, TextHandl
     m_buttonList.push_back(m_menuMusicButton);
     m_buttonList.push_back(m_gameMusicButton);
 
-    m_confirmDialog = new Dialog(m_width/2-140, m_height/2-120, 280, 200, t, "confirm");
+    m_confirmDialog = new Dialog(m_width/2-140, m_height/2-120, 280, 200, textHandler, "confirm");
     m_confirmDialog->hide();
+
+    handleMusic();
 }
 
 
@@ -61,15 +69,6 @@ SettingsView::~SettingsView()
 }
 
 
-//=== Setters
-
-void SettingsView::setSettingsModel(Settings *model)
-{
-    m_settings = model;
-    handleMusic();
-}
-
-
 /**
  * Image Loading
  * @author Arthur
@@ -79,14 +78,14 @@ void SettingsView::loadImages()
 {
     //=== Initialize RADIOS buttons
 
-    m_englishLangRadio = new RadioButton(RADIO_BUTTONS_MARGIN, 205, 50, 50, "config_lang_english");
-    m_frenchLangRadio = new RadioButton(RADIO_BUTTONS_MARGIN, 245, 50, 50, "config_lang_french");
-    m_spanishLangRadio = new RadioButton(RADIO_BUTTONS_MARGIN, 285, 50, 50, "config_lang_spanish");
-    m_easyModeRadio = new RadioButton(RADIO_BUTTONS_MARGIN, 420, 50, 50, "config_easy_mode");
-    m_hardModeRadio = new RadioButton(RADIO_BUTTONS_MARGIN, 460, 50, 50, "config_hard_mode");
-    m_defaultBallSkinRadio = new RadioButton(m_width/2+RADIO_BUTTONS_MARGIN, 205, 50, 50, "config_ball_default_skin");
-    m_morphBallSkinRadio = new RadioButton(m_width/2+RADIO_BUTTONS_MARGIN, 245, 50, 50, "config_ball_morph_skin");
-    m_capsuleBallSkinRadio = new RadioButton(m_width/2+RADIO_BUTTONS_MARGIN, 285, 50, 50, "config_ball_capsule_skin");
+    m_englishLangRadio = new RadioButton(RADIOS_MARGIN, 205, 50, 50, "config_lang_english");
+    m_frenchLangRadio = new RadioButton(RADIOS_MARGIN, 245, 50, 50, "config_lang_french");
+    m_spanishLangRadio = new RadioButton(RADIOS_MARGIN, 285, 50, 50, "config_lang_spanish");
+    m_easyModeRadio = new RadioButton(RADIOS_MARGIN, 420, 50, 50, "config_easy_mode");
+    m_hardModeRadio = new RadioButton(RADIOS_MARGIN, 460, 50, 50, "config_hard_mode");
+    m_defaultBallSkinRadio = new RadioButton(m_width/2+RADIOS_MARGIN, 205, 50, 50, "config_ball_default_skin");
+    m_morphBallSkinRadio = new RadioButton(m_width/2+RADIOS_MARGIN, 245, 50, 50, "config_ball_morph_skin");
+    m_capsuleBallSkinRadio = new RadioButton(m_width/2+RADIOS_MARGIN, 285, 50, 50, "config_ball_capsule_skin");
 
 
     //=== Initialize Music controls
@@ -95,12 +94,12 @@ void SettingsView::loadImages()
     clipRect_music.push_back(sf::IntRect(0, 200, 50, 50));
     clipRect_music.push_back(sf::IntRect(50, 200, 50, 50));
 
-    m_menuMusicButton = new Button(m_width/2+RADIO_BUTTONS_MARGIN, 420, 25, 25, "config_music_menu",
+    m_menuMusicButton = new Button(m_width/2+RADIOS_MARGIN, 420, 25, 25, "config_music_menu",
                                    GAME_BUTTONS_IMAGE, clipRect_music);
     m_menuMusicButton->resize(25,25);
     m_menuMusicButton->setLabelPosition(RIGHT);
 
-    m_gameMusicButton = new Button(m_width/2+RADIO_BUTTONS_MARGIN, 460, 25, 25, "config_music_game",
+    m_gameMusicButton = new Button(m_width/2+RADIOS_MARGIN, 460, 25, 25, "config_music_game",
                                    GAME_BUTTONS_IMAGE, clipRect_music);
     m_gameMusicButton->resize(25,25);
     m_gameMusicButton->setLabelPosition(RIGHT);
@@ -147,8 +146,8 @@ void SettingsView::synchronize()
     m_englishLangRadio->setActivated(m_settings->getDataBase()->getLanguage() == "en");
     m_frenchLangRadio->setActivated(m_settings->getDataBase()->getLanguage() == "fr");
     m_spanishLangRadio->setActivated(m_settings->getDataBase()->getLanguage() == "es");
-    m_easyModeRadio->setActivated(m_model->getDataBase()->getDifficulty() == EASY);
-    m_hardModeRadio->setActivated(m_model->getDataBase()->getDifficulty() == HARD);
+    m_easyModeRadio->setActivated(m_settings->getDataBase()->getDifficulty() == EASY);
+    m_hardModeRadio->setActivated(m_settings->getDataBase()->getDifficulty() == HARD);
     m_defaultBallSkinRadio->setActivated(m_settings->getDataBase()->getBallSkin() == "default");
     m_morphBallSkinRadio->setActivated(m_settings->getDataBase()->getBallSkin() == "morphing");
     m_capsuleBallSkinRadio->setActivated(m_settings->getDataBase()->getBallSkin() == "capsule");
@@ -207,7 +206,7 @@ void SettingsView::draw() const
 
     m_window->draw(*m_homeFormButton);
 
-    if ( m_settings->getCurrentPage() == Settings::CONFIG)
+    if ( m_settings->getCurrentPage() == CONFIG)
     {
         m_englishLangRadio->draw(m_window);
         m_frenchLangRadio->draw(m_window);
@@ -220,11 +219,11 @@ void SettingsView::draw() const
         m_menuMusicButton->draw(m_window);
         m_gameMusicButton->draw(m_window);
 
-        m_textHandler->drawMenuSettingsText(m_window, Settings::CONFIG);
+        m_textHandler->drawMenuSettingsText(m_window, CONFIG);
     }
-    else if ( m_settings->getCurrentPage() == Settings::STATS)
+    else if ( m_settings->getCurrentPage() == STATS)
     {
-        m_textHandler->drawMenuSettingsText(m_window, Settings::STATS);
+        m_textHandler->drawMenuSettingsText(m_window, STATS);
         m_resetRectButton->draw(m_window);
         m_confirmDialog->draw(m_window);
     }
@@ -232,7 +231,7 @@ void SettingsView::draw() const
     {
         m_window->draw(*m_logoIUTSprite);
         m_window->draw(*m_logoSFMLSprite);
-        m_textHandler->drawMenuSettingsText(m_window, Settings::ABOUT);
+        m_textHandler->drawMenuSettingsText(m_window, ABOUT);
     }
 
     for( auto it : m_pageIndicators)
@@ -247,7 +246,6 @@ void SettingsView::draw() const
  * @author Arthur
  * @date 20/05/16 - 24/01/17
  */
-bool SettingsView::treatEvents() { return false; }
 bool SettingsView::treatEvents(sf::Event event)
 {
     bool stop_settings = false;
@@ -283,43 +281,41 @@ bool SettingsView::treatEvents(sf::Event event)
 
         //=== handle mouse up on a button
 
-        if ( m_settings->getCurrentPage() == Settings::CONFIG)
+        if ( m_settings->getCurrentPage() == CONFIG)
         {
             if (m_englishLangRadio->contains(MOUSE_POSITION) )
-            {
-                m_settings->changeLanguage("en");
-                m_textHandler->updateWholeText();
-            }
-            else if (m_frenchLangRadio->contains(MOUSE_POSITION) )
-            {
-                m_settings->changeLanguage("fr");
-                m_textHandler->updateWholeText();
-            }
-            else if (m_spanishLangRadio->contains(MOUSE_POSITION) )
-            {
-                m_settings->changeLanguage("es");
-                m_textHandler->updateWholeText();
-            }
-            else if (m_easyModeRadio->contains(MOUSE_POSITION) )
-            {
-                m_model->getDataBase()->setDifficulty(EASY);
-            }
-            else if (m_hardModeRadio->contains(MOUSE_POSITION) )
-            {
-                m_model->getDataBase()->setDifficulty(HARD);
-            }
-            else if (m_defaultBallSkinRadio->contains(MOUSE_POSITION) )
-            {
-                m_settings->changeBallSkin("default");
-            }
-            else if (m_morphBallSkinRadio->contains(MOUSE_POSITION) )
-            {
-                m_settings->changeBallSkin("morphing");
-            }
-            else if (m_capsuleBallSkinRadio->contains(MOUSE_POSITION) )
-            {
-                m_settings->changeBallSkin("capsule");
-            }
+            {m_settings->changeLanguage("en");
+            m_textHandler->updateWholeText();
+        }
+        else if ( m_frenchLangRadio->contains(MOUSE_POSITION ))
+        {
+            m_settings->changeLanguage("fr");
+            m_textHandler->updateWholeText();
+        }
+        else if ( m_spanishLangRadio->contains(MOUSE_POSITION ))
+        {
+            m_settings->changeLanguage("es");
+            m_textHandler->updateWholeText();
+        }
+        else if ( m_easyModeRadio->contains(MOUSE_POSITION ))
+        {
+            m_settings->getDataBase()->setDifficulty(EASY);
+        }
+        else if ( m_hardModeRadio->contains(MOUSE_POSITION ))
+        {
+            m_settings->getDataBase()->setDifficulty(HARD);
+        }
+        else if ( m_defaultBallSkinRadio->contains(MOUSE_POSITION) )
+        {
+            m_settings->changeBallSkin("default");
+        }
+        else if ( m_morphBallSkinRadio->contains(MOUSE_POSITION) )
+        {
+            m_settings->changeBallSkin("morphing");
+        }
+        else if ( m_capsuleBallSkinRadio->contains(MOUSE_POSITION) )
+        {
+            m_settings->changeBallSkin("capsule");}
             else if (m_menuMusicButton->contains(MOUSE_POSITION) )
             {
                 m_settings->getDataBase()->setMenuMusic(!m_settings->getDataBase()->isMenuMusicEnabled());

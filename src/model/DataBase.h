@@ -22,12 +22,8 @@ limitations under the License.
 #include <set>
 #include <fstream>
 #include "../constants.h"
-
-enum Difficulty
-{
-    EASY = 1,
-    HARD = 2
-};
+#include "../enum/AppState.h"
+#include "../enum/Difficulty.h"
 
 
 /**
@@ -36,7 +32,7 @@ enum Difficulty
  * statistics, buyable items, scores,
  * current game's values, etc.
  * @author Arthur
- * @date 02/05/16 - 25/01/17
+ * @date 02/05/16 - 29/01/17
  */
 class DataBase
 {
@@ -46,6 +42,7 @@ public:
     DataBase(const DataBase& d)=delete;
 
     //=== GETTERS
+    AppState getAppState() const;
     int getTotalCoinsNumber() const;
     int getTotalDistance() const;
     int getTotalFlattenedEnemies() const;
@@ -67,6 +64,7 @@ public:
     std::string getLanguageFile() const;
 
     //=== SETTERS
+    void setAppState(AppState state);
     void decreaseWallet(int amount);
     void increaseCurrentCoinsCollected(int amount);
     void increaseCurrentDistance(float amount);
@@ -80,23 +78,25 @@ public:
 
     //=== METHODS
     void createConfigFile();
-    bool checkConfigFileIntegrity();
+    bool checkConfigFileIntegrity() const;
     void fetchConfigurationFromFile();
-    std::string getTextValueFromStringsFile(std::string description);
     void fetchConfig();
     void fetchActivatedShopItems();
     void fetchScore();
-    void pushConfigurationToFile();
+    void pushConfigurationToFile() const;
     void addNewScore(int score);
-    void loadLeaderboardStringFromArray(Difficulty difficulty, std::string &scores_text);
     void saveCurrentGame();
     void launchNewGame();
     void clearLeaderboard();
     void clearAppData();
+    std::string getTextValueFromStringsFile(std::string description) const;
+    std::string loadLeaderboardStringFromArray(Difficulty difficulty) const;
 
 private:
     //=== ATTRIBUTES
+
     //Global App
+    AppState m_appState;
     int m_totalCoinsCollected;
     int m_totalDistance;
     int m_totalFlattenedEnemies;
@@ -108,6 +108,7 @@ private:
     int m_currentDifficulty;
     bool m_isMenuMusicEnabled;
     bool m_isGameMusicEnabled;
+    int m_scoreBonusFlattenedEnemies;
     std::string m_currentLanguage;
     std::string m_currentBallSkin;
     const int COIN_MULTIPLIER = 20;

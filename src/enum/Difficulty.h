@@ -13,25 +13,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef LEADERBOARD_H
-#define LEADERBOARD_H
-
-#include "AbstractModel.h"
+#ifndef DIFFICULTY_H
+#define DIFFICULTY_H
 
 /**
- * The Leaderboard class is the model of LeaderboardView class
+ * The Difficulty enum defines the different
+ * difficulty levels for the game.
+ * It affects game's running and scores.
  * @author Arthur
- * @date  19/04/16 - 29/01/17
+ * @date 30/01/17
  */
-class Leaderboard : public AbstractModel
+enum Difficulty
 {
-public:
-    //=== CTORs / DTORs
-    Leaderboard(DataBase *dataBase);
-    ~Leaderboard();
-
-    //=== Methods
-    virtual void nextStep() override;
+    EASY = 1,
+    HARD = 2
 };
 
 #endif

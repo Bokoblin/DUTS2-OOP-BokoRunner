@@ -1,9 +1,20 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.8.0
+Current version : v2.0.0-dev
 
 ==================================================================================================
+
+v2.0.0-dev
+
+- Structure refactoring :
+  - AbstractModel and AbstractView
+  - More classes inherits from AbstractModel
+  - Enumerations have each their own header file
+
+
+---------------------------------------------------------------------------------------------------
+
 
 v1.8.0 (26/01/16)
 

@@ -13,53 +13,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef MODEL_H
-#define MODEL_H
+#ifndef ABSTRACT_MODEL_H
+#define ABSTRACT_MODEL_H
 
 #include "DataBase.h"
 
-enum AppState
-{
-    INTRO,
-    MENU,
-    GAME,
-    RESET_GAME,
-    QUIT
-};
 
 /**
- * The Model class provides common
- * attributes and methods to other model classes
- * and contains App's current state
+ * The AbstractModel class provides
+ * a database and a nextStep method
+ * for its inherited classes.
+ *
  * @author Arthur, Florian
- * @date 21/02/16 - 20/12/16
+ * @date 21/02/16 - 29/01/17
  */
-class Model
+class AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    Model(int w, int h);
-    Model( const Model & model);
-    virtual ~Model();
+    AbstractModel(DataBase *dataBase);
+    virtual ~AbstractModel();
 
     //=== GETTERS
     DataBase *getDataBase() const;
-    AppState getAppState() const;
-
-    //=== SETTERS
-    void setDataBase(DataBase *data);
-    void setAppState(AppState state);
 
     //=== METHODS
-    virtual void nextStep();
+    virtual void nextStep()=0;
 
 protected:
     //=== ATTRIBUTES
-    int m_width, m_height;
     DataBase *m_dataBase;
-
-private:
-    AppState m_appState;
 };
 
 #endif

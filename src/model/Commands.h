@@ -16,26 +16,23 @@ limitations under the License.
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
-#include "DataBase.h"
+#include "AbstractModel.h"
+
 
 /**
  * The Commands class is the model of CommandsView class
  * @author Arthur
- * @date 24/01/17
+ * @date 24/01/17 - 30/01/17
  */
-class Commands
+class Commands : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
     Commands(DataBase *dataBase);
     ~Commands();
 
-    //=== GETTERS
-    DataBase* getDataBase() const;
-
-private:
-    //=== ATTRIBUTES
-    DataBase *m_dataBase;
+    //=== METHODS
+    virtual void nextStep() override;
 };
 
 #endif

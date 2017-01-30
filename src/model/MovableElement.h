@@ -17,21 +17,7 @@ limitations under the License.
 #define MOVABLE_ELEMENT_H
 
 #include <cstdlib>
-
-enum Element
-{
-    PLAYER,
-    STANDARD_ENEMY,
-    TOTEM_ENEMY,
-    BLOCK_ENEMY,
-    COIN,
-    PV_PLUS_BONUS,
-    MEGA_BONUS,
-    FLY_BONUS,
-    SLOW_SPEED_BONUS,
-    SHIELD_BONUS
-};
-
+#include "../enum/MovableElementType.h"
 
 /**
  * The MovableElement class is an abstract class

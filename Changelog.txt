@@ -1,9 +1,20 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.8.0
+Current version : v1.8.1
 
 ==================================================================================================
+
+v1.8.1 (02/02/17)
+
+- Added .travis.xml for Travis-CI*
+- Lowered CMake required version to 2.8
+- Fixed flattened enemy bonus
+- Updated online documentation to current version
+
+*Builds fails due to make having issues linking sfml with generated makefile
+
+---------------------------------------------------------------------------------------------------
 
 v1.8.0 (26/01/16)
 

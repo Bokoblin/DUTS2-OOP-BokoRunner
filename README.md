@@ -1,6 +1,5 @@
 # Boko Runner #
 
-
 ### Description ###
 
 Boko Runner is a C++ OOP project we've done as our DUT second semester's programming project.

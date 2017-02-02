@@ -353,7 +353,7 @@ void GameModel::handleMovableElementsCollisions()
             {
             case STANDARD_ENEMY:
                 if ( m_player->getState() == MEGA ) {
-                    //add 100 to number of flattened enemies
+                    //add 100 to bonus for flattened enemies
                     m_dataBase->increaseCurrentFlattenedEnemies(100);
                 }
                 else if (m_player->getState() == SHIELD
@@ -377,7 +377,7 @@ void GameModel::handleMovableElementsCollisions()
 
             case TOTEM_ENEMY:
                  if ( m_player->getState() == MEGA ) {
-                    //add 100 to number of flattened enemies
+                    //add 300 to bonus for flattened enemies
                      m_dataBase->increaseCurrentFlattenedEnemies(300);
                 }
                 else if (m_player->getState() == SHIELD
@@ -401,7 +401,7 @@ void GameModel::handleMovableElementsCollisions()
 
             case BLOCK_ENEMY:
                  if ( m_player->getState() == MEGA ) {
-                    //add 100 to number of flattened enemies
+                    //add 500 to bonus for flattened enemies
                      m_dataBase->increaseCurrentFlattenedEnemies(500);
                 }
                 else if (m_player->getState() == SHIELD

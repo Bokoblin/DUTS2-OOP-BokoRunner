@@ -36,7 +36,7 @@ enum Difficulty
  * statistics, buyable items, scores,
  * current game's values, etc.
  * @author Arthur
- * @date 02/05/16 - 25/01/17
+ * @date 02/05/16 - 26/01/17
  */
 class DataBase
 {
@@ -108,6 +108,7 @@ private:
     int m_currentDifficulty;
     bool m_isMenuMusicEnabled;
     bool m_isGameMusicEnabled;
+    int m_scoreBonusFlattenedEnemies;
     std::string m_currentLanguage;
     std::string m_currentBallSkin;
     const int COIN_MULTIPLIER = 20;

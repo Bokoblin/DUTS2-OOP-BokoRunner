@@ -57,7 +57,10 @@ string DataBase::getLanguageFile() const
 void DataBase::decreaseWallet(int amount) { m_wallet -= amount; }
 void DataBase::increaseCurrentCoinsCollected(int amount) { m_currentCoinsNumber += amount; }
 void DataBase::increaseCurrentDistance(float amount) { m_currentDistance += amount; }
-void DataBase::increaseCurrentFlattenedEnemies(int amount) { m_currentFlattenedEnemies += amount; }
+void DataBase::increaseCurrentFlattenedEnemies(int amount) {
+    m_scoreBonusFlattenedEnemies += amount;
+    m_currentFlattenedEnemies += 1;
+}
 void DataBase::setLanguage(string lang) { m_currentLanguage = lang;}
 void DataBase::setBallSkin(string skin) { m_currentBallSkin = skin; }
 void DataBase::setDifficulty(int d) { m_currentDifficulty = d;}
@@ -66,7 +69,7 @@ void DataBase::setGameMusic(bool on) { m_isGameMusicEnabled = on;}
 void DataBase::setCurrentScore(float speed)
 {
     m_currentScore = (int)(speed * m_currentDistance
-                     + COIN_MULTIPLIER*m_currentCoinsNumber + m_currentFlattenedEnemies );
+                     + COIN_MULTIPLIER*m_currentCoinsNumber + m_scoreBonusFlattenedEnemies );
 }
 
 

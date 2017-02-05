@@ -32,6 +32,17 @@ and "under the hood" improvements from the repository's owner : Arthur Jolivet.
 The Doxygen documentation can be found at 
 [this address](http://info-timide.iut.u-bordeaux.fr/perso/2017/ajolivet/documentations/BokoRunner/).
 
+
+### How to build ###
+
+From Project folder do :
+  - mkdir build
+  - cd build
+  - cmake .. && make
+
+*You'll need gcc-4.9/g++-4.9 or higher and some other libs asked by SFML (openal, .
+
+
 ### Licences ###
 
 Our project is mainly licensed under Apache License Version 2.0 but some elements have other licences.

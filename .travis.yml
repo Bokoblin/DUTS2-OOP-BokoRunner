@@ -1,5 +1,5 @@
+dist: trusty
 sudo: required
-dist: precise
 language: cpp
 
 matrix:
@@ -29,6 +29,7 @@ before_install:
   - sudo apt-get install -y libxcb-randr0
   - sudo apt-get install -y libudev-dev
   - sudo apt-get install -y libcgmanager0
+  - sudo apt install --reinstall libudev1
 
   
 # Build steps

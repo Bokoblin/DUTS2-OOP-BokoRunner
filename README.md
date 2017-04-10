@@ -1,7 +1,7 @@
 # Boko Runner #
 
 [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner.svg?branch=master)](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner)
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b75a85177a7e42e288b9df67f5a6c0db)](https://www.codacy.com/app/Bokoblin/DUTS2-POO-ProjetRunner?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bokoblin/DUTS2-POO-ProjetRunner&amp;utm_campaign=Badge_Grade)
 ### Description ###
 
 Boko Runner is a C++ OOP project we've done as our DUT second semester's programming project.

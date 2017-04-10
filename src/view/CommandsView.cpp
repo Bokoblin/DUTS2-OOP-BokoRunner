@@ -5,10 +5,11 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 24/01/17
+ * @date 24/01/17 - 10/04/17
  */
-CommandsView::CommandsView(float w, float h, sf::RenderWindow *window, TextHandler * text):
-        View(w, h, window,text), m_commands{nullptr}
+CommandsView::CommandsView(float w, float h, sf::RenderWindow *window, TextHandler *textHandler):
+        View(w, h, window, textHandler),
+        m_commands{nullptr}, m_commandSprite{nullptr}, m_homeFormButton{nullptr}
 {
 }
 

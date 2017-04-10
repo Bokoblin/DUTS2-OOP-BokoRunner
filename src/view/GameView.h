@@ -19,7 +19,6 @@ limitations under the License.
 #include "PixelateEffect.h"
 #include "View.h"
 
-//TODO : handle differently with "command screen" v1.8 feature
 #define KEYBOARD_LEFT  (sf::Keyboard::isKeyPressed(sf::Keyboard::A) \
                        || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
 #define KEYBOARD_RIGHT (sf::Keyboard::isKeyPressed(sf::Keyboard::D) \
@@ -31,7 +30,7 @@ limitations under the License.
 /**
  * GameView Class
  * @author Arthur, Florian
- * @date 21/02/16 - 25/01/17
+ * @date 21/02/16 - 10/04/17
  */
 class GameView : public View
 {

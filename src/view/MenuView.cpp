@@ -8,7 +8,7 @@ using namespace std;
  * @date 25/02/16 - 24/01/17
  */
 MenuView::MenuView(float w, float h, sf::RenderWindow *window, TextHandler * textHandler):
-        View(w, h, window,textHandler), m_menuModel{nullptr}, m_commandsView{nullptr},
+        View(w, h, window, textHandler), m_menuModel{nullptr}, m_commandsView{nullptr},
         m_leaderboardView{nullptr}, m_settingsView{nullptr},  m_shopView{nullptr}
 {
     if (m_window->getSize().x != m_width )
@@ -73,7 +73,7 @@ void MenuView::loadImages()
     m_nearBackground = new SlidingBackground(1200, m_height, 2, DEFAULT_NEAR_HILL_BACKGROUND);
 
     m_titleGraphic = new GraphicElement(m_width/2-200, m_height/6, 400, 200, TITLE_IMAGE);
-    m_titleGraphic->resize(400,200);
+    m_titleGraphic->resize(400, 200);
 
     //=== Initialize PLAY and QUIT buttons
 

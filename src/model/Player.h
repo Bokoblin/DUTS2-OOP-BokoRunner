@@ -40,7 +40,7 @@ enum MoveDirections {
  * The Player class inherited from MovableElements
  * contains player's logic and behaviours
  * @author Arthur, Florian
- * @date 22/02/16 - 04/01/17
+ * @date 22/02/16 - 10/04/17
  */
 class Player : public MovableElement
 {
@@ -52,16 +52,12 @@ public:
     //=== GETTERS
     int getState() const;
     int getLife() const;
-    bool getFlyingState() const;
-    bool getJumpState() const;
-    bool getDecelerationState() const;
-    std::pair<float,float> getVector() const;
 
     //=== SETTERS
     void setLife(int new_life);
-    void setFlyingState(bool state);
-    void setJumpState(bool state);
-    void setDecelerationState(bool state);
+
+    void setJumping(bool state);
+    void setDeceleration(bool state);
 
     //=== METHODS
     virtual void move() override;

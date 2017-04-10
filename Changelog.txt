@@ -1,9 +1,18 @@
 Project Name : Boko Runner
 Developers   : Arthur JOLIVET et Florian LARONZE
 
-Current version : v1.8.1-1
+Current version : v1.8.2
 
 ==================================================================================================
+
+v1.8.2 (10/04/17)
+
+- Improved code style
+- Improved code concerning reference parameter
+- Added Codacy badge to README
+- Added back documentation folder
+
+---------------------------------------------------------------------------------------------------
 
 v1.8.1-1 (18/02/17)
 

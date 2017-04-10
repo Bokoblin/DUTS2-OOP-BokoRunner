@@ -5,7 +5,7 @@ using namespace std;
 /**
  * Constructs a GameModel with the app common model
  * @author Arthur
- * @date 26/03/16 - 26/12/16
+ * @date 26/03/16 - 10/04/17
  *
  * @param model the app model
  */
@@ -13,7 +13,7 @@ GameModel::GameModel(const Model& model) :
     Model(model), m_gameState{RUNNING}, m_inTransition{false},
     m_isTransitionPossible{false}, m_currentZone{HILL},
     m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},
-    m_lastTime{chrono::system_clock::now()},  m_bonusTimeout{0}
+    m_lastTime{chrono::system_clock::now()}, m_bonusTimeout{0}, m_gameSlowSpeed{0}
 {
     srand((unsigned int) time(NULL));
 
@@ -211,7 +211,7 @@ bool GameModel::checkIfPositionFree(float x, float y) const
 
     while (positionIsFree &&  it != m_movableElementsArray.end() )
     {
-        if ( (*it)->contains(x,y) )
+        if ( (*it)->contains(x, y) )
             positionIsFree = false;
         else
             ++it;

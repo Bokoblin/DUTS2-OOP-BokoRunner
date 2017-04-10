@@ -7,11 +7,12 @@ using namespace std;
  * Constructs the app's database by initializing
  * all the data from config (backup) file
  * @author Arthur
- * @date 02/05/16 - 25/01/17
+ * @date 02/05/16 - 10/04/17
  */
 DataBase::DataBase() :
     m_currentCoinsNumber{0}, m_currentDistance{0}, m_currentFlattenedEnemies{0},
-    m_currentScore{0}, m_isMenuMusicEnabled{false}, m_isGameMusicEnabled{false}
+    m_currentScore{0}, m_isMenuMusicEnabled{false}, m_isGameMusicEnabled{false},
+    m_scoreBonusFlattenedEnemies{0}
 {
     if (!checkConfigFileIntegrity())
         createConfigFile();
@@ -183,12 +184,12 @@ void DataBase::fetchConfigurationFromFile()
  * from language string file
  * to affect to a Text object
  * @author Arthur
- * @date 04/01/17
+ * @date 04/01/17 - 10/04/17
  *
  * @param description to fetch corresponding content
  * @return text string
  */
-string DataBase::getTextValueFromStringsFile(string description)
+string DataBase::getTextValueFromStringsFile(const string &description)
 {
     pugi::xml_document doc;
     doc.load_file(getLanguageFile().c_str());

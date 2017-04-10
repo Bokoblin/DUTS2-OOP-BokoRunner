@@ -36,7 +36,7 @@ enum Difficulty
  * statistics, buyable items, scores,
  * current game's values, etc.
  * @author Arthur
- * @date 02/05/16 - 26/01/17
+ * @date 02/05/16 - 10/04/17
  */
 class DataBase
 {
@@ -82,7 +82,7 @@ public:
     void createConfigFile();
     bool checkConfigFileIntegrity();
     void fetchConfigurationFromFile();
-    std::string getTextValueFromStringsFile(std::string description);
+    std::string getTextValueFromStringsFile(const std::string &description);
     void fetchConfig();
     void fetchActivatedShopItems();
     void fetchScore();

@@ -24,9 +24,9 @@ PixelateEffect::~PixelateEffect()
 /**
  * Load if shader available
  * @author Arthur
- * @date 28/04/16
+ * @date 28/04/16 - 10/04/17
  */
-void PixelateEffect::load(string image)
+void PixelateEffect::load(const string &image)
 {
     m_isLoaded = sf::Shader::isAvailable() && onLoad(image);
 }

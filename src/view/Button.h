@@ -38,17 +38,17 @@ enum LabelPosition {
  * a string file thanks to its description
  *
  * @author Arthur
- * @date 06/04/16 - 25/01/17
+ * @date 06/04/16 - 10/04/17
  */
 class Button : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
     Button(float x, float y, float w, float h);
-    Button(float x, float y, float w, float h, std::string description);
-    Button(float x, float y, float w, float h, std::string image, const std::vector<sf::IntRect> &clipRect);
-    Button(float x, float y, float w, float h, std::string description,
-           std::string image, const std::vector<sf::IntRect> &clipRect);
+    Button(float x, float y, float w, float h, const std::string &description);
+    Button(float x, float y, float w, float h, const std::string &image, const std::vector<sf::IntRect> &clipRect);
+    Button(float x, float y, float w, float h, const std::string &description,
+           const std::string &image, const std::vector<sf::IntRect> &clipRect);
     Button(Button const& elementACopier);
 
     virtual ~Button();

@@ -5,10 +5,11 @@ using namespace std::chrono;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 03/03/16 - 22/05/16
+ * @date 03/03/16 - 10/04/17
  */
 AnimatedGraphicElement::AnimatedGraphicElement(
-        float x, float y, float w, float h, std::string image, const std::vector<sf::IntRect> &clipRect) :
+        float x, float y, float w, float h,
+        const std::string &image, const std::vector<sf::IntRect> &clipRect) :
     GraphicElement(x, y, w, h, image), m_clipRectArray{clipRect},
     m_currentClipRect{0}, m_lastAnimationTime{system_clock::now() }
 {

@@ -5,16 +5,16 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 16/05/16 - 25/01/17
+ * @date 16/05/16 - 10/04/17
  */
-ShopItemCard::ShopItemCard(int num, ShopItem *item, TextHandler *textHandler) :
-        GraphicElement(0, 150, 200, 300), m_id{num}, m_item{item}, m_title{""}, m_content{""}
+ShopItemCard::ShopItemCard(int id, ShopItem *item, TextHandler *textHandler) :
+        GraphicElement(0, 150, 200, 300), m_id{id}, m_item{item}, m_title{""}, m_content{""}
 {
-    if ( num%3 == 0)
+    if ( id%3 == 0)
         setPosition(100, 150);
-    else if ( num%3 == 1)
+    else if ( id%3 == 1)
         setPosition(350, 150);
-    else if ( num%3 == 2)
+    else if ( id%3 == 2)
         setPosition(600, 150);
 
     loadImages();
@@ -22,7 +22,7 @@ ShopItemCard::ShopItemCard(int num, ShopItem *item, TextHandler *textHandler) :
     m_title.setTextFont( textHandler->getCondensedFont(), 20, sf::Color::White );
     std::string utf8_string = item->getName();
     m_title.setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
-    m_title.setPositionSelfCentered( getPosition().x + m_width/2 , getPosition().y + 20);
+    m_title.setPositionSelfCentered( getPosition().x + m_width/2, getPosition().y + 20);
 
     m_content.setTextFont( textHandler->getCondensedFont(), 16, sf::Color::White );
     utf8_string = item->getDescription();

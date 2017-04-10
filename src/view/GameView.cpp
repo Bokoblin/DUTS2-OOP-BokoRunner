@@ -94,14 +94,14 @@ void GameView::setGameModel(GameModel *model)
     {
         std::vector<sf::IntRect> clipRect;
         for (int i=0; i<8; i++)
-            clipRect.push_back(sf::IntRect(50*i,50,50,50));
+            clipRect.push_back(sf::IntRect(50*i, 50, 50, 50));
         m_playerAnimSprite->setClipRectArray(clipRect);
     }
     else if (m_gameModel->getDataBase()->getBallSkin() == "capsule")
     {
         std::vector<sf::IntRect> clipRect;
         for (int i=0; i<8; i++)
-            clipRect.push_back(sf::IntRect(50*i,100,50,50));
+            clipRect.push_back(sf::IntRect(50*i, 100, 50, 50));
         m_playerAnimSprite->setClipRectArray(clipRect);
     }
 }
@@ -129,79 +129,79 @@ void GameView::loadImages()
     //=== Initialize UI elements
 
     m_lifeBoxSprite = new GraphicElement(105, 535, 200, 100);
-    m_lifeBoxSprite->setTextureFromImage(LIFE_BOX_IMAGE, sf::IntRect(0,0,300,50));
+    m_lifeBoxSprite->setTextureFromImage(LIFE_BOX_IMAGE, sf::IntRect(0, 0, 300, 50));
 
     m_remainingLifeSprite = new GraphicElement(107, 535, 300, 50);
-    m_remainingLifeSprite->setTextureFromImage(LIFE_BOX_IMAGE, sf::IntRect(0,51,300,50));
+    m_remainingLifeSprite->setTextureFromImage(LIFE_BOX_IMAGE, sf::IntRect(0, 51, 300, 50));
 
     m_distanceIconSprite = new GraphicElement(30, 35, 25, 25);
-    m_distanceIconSprite->setTextureFromImage(GAME_BUTTONS_IMAGE, sf::IntRect(0,150,50,50));
-    m_distanceIconSprite->resize(25,25);
+    m_distanceIconSprite->setTextureFromImage(GAME_BUTTONS_IMAGE, sf::IntRect(0, 150, 50, 50));
+    m_distanceIconSprite->resize(25, 25);
 
 
     //=== Initialize PLAYER
 
     std::vector<sf::IntRect> clipRect;
     for (int i=0; i<8; i++)
-        clipRect.push_back(sf::IntRect(50*i,0,50,50));
+        clipRect.push_back(sf::IntRect(50*i, 0, 50, 50));
     m_playerAnimSprite = new AnimatedGraphicElement(50, GAME_FLOOR, 30, 30, BALL_IMAGE, clipRect);
-    m_playerAnimSprite->setOrigin(0,50);
+    m_playerAnimSprite->setOrigin(0, 50);
 
 
     //=== Initialize ENEMIES
 
     std::vector<sf::IntRect> clipRectStdEnemy;
-    for (int i=0; i<2; i++) clipRectStdEnemy.push_back(sf::IntRect(50*i,0,50,50));
+    for (int i=0; i<2; i++) clipRectStdEnemy.push_back(sf::IntRect(50*i, 0, 50, 50));
     m_stdEnemyAnimSprite = new AnimatedGraphicElement(30, 135, 30, 30, ENEMIES_IMAGE, clipRectStdEnemy);
-    m_stdEnemyAnimSprite->setOrigin(0,50);
+    m_stdEnemyAnimSprite->setOrigin(0, 50);
 
     std::vector<sf::IntRect> clipRectTotemEnemy;
-    for (int i=0; i<2; i++) clipRectTotemEnemy.push_back(sf::IntRect(50*i,0,50,150));
+    for (int i=0; i<2; i++) clipRectTotemEnemy.push_back(sf::IntRect(50*i, 0, 50, 150));
     m_totemEnemyAnimSprite = new AnimatedGraphicElement(m_width, GAME_FLOOR, 30, 90, ENEMIES_IMAGE,
                                                         clipRectTotemEnemy);
-    m_totemEnemyAnimSprite->setOrigin(0,150);
+    m_totemEnemyAnimSprite->setOrigin(0, 150);
 
     std::vector<sf::IntRect> clipRectBlockEnemy;
-    for (int i=0; i<2; i++) clipRectBlockEnemy.push_back(sf::IntRect(50*i,150,50,50));
+    for (int i=0; i<2; i++) clipRectBlockEnemy.push_back(sf::IntRect(50*i, 150, 50, 50));
     m_blockEnemyAnimSprite = new AnimatedGraphicElement(50, 95, 50, 50, ENEMIES_IMAGE, clipRectBlockEnemy);
-    m_blockEnemyAnimSprite->setOrigin(0,50);
+    m_blockEnemyAnimSprite->setOrigin(0, 50);
 
 
     //=== Initialize COINS & BONUSES
 
     m_shieldAnimSprite = new GraphicElement(50, GAME_FLOOR, 40, 40);
     m_shieldAnimSprite->setTextureFromImage(SHIELD_IMAGE);
-    m_shieldAnimSprite->setOrigin(0,50);
+    m_shieldAnimSprite->setOrigin(0, 50);
 
     std::vector<sf::IntRect> clipRect_coin;
-    for (int i=0; i<5; i++) clipRect_coin.push_back(sf::IntRect(50*i,0,50,50));
+    for (int i=0; i<5; i++) clipRect_coin.push_back(sf::IntRect(50*i, 0, 50, 50));
     m_coinAnimSprite = new AnimatedGraphicElement(30, 95, 25, 25, BONUS_IMAGE, clipRect_coin);
-    m_coinAnimSprite->setOrigin(0,50);
+    m_coinAnimSprite->setOrigin(0, 50);
 
     std::vector<sf::IntRect> clipRect_pv;
-    for (int i=0; i<5; i++)clipRect_pv.push_back(sf::IntRect(50*i,50,50,50));
+    for (int i=0; i<5; i++)clipRect_pv.push_back(sf::IntRect(50*i, 50, 50, 50));
     m_PVPlusBonusAnimSprite = new AnimatedGraphicElement(m_width, GAME_FLOOR, 25, 25, BONUS_IMAGE, clipRect_pv);
-    m_PVPlusBonusAnimSprite->setOrigin(0,50);
+    m_PVPlusBonusAnimSprite->setOrigin(0, 50);
 
     std::vector<sf::IntRect> clipRect_mega;
-    for (int i=0; i<5; i++) clipRect_mega.push_back(sf::IntRect(50*i,100,50,50));
+    for (int i=0; i<5; i++) clipRect_mega.push_back(sf::IntRect(50*i, 100, 50, 50));
     m_megaBonusAnimSprite = new AnimatedGraphicElement(100, 50, 25, 25, BONUS_IMAGE, clipRect_mega);
-    m_megaBonusAnimSprite->setOrigin(0,50);
+    m_megaBonusAnimSprite->setOrigin(0, 50);
 
     std::vector<sf::IntRect> clipRect_fly;
-    for (int i=0; i<5; i++) clipRect_fly.push_back(sf::IntRect(50*i,150,50,50));
+    for (int i=0; i<5; i++) clipRect_fly.push_back(sf::IntRect(50*i, 150, 50, 50));
     m_flyBonusAnimSprite = new AnimatedGraphicElement(100, 50, 25, 25, BONUS_IMAGE, clipRect_fly);
-    m_flyBonusAnimSprite->setOrigin(0,50);
+    m_flyBonusAnimSprite->setOrigin(0, 50);
 
     std::vector<sf::IntRect> clipRect_slow;
-    for (int i=0; i<5; i++) clipRect_slow.push_back(sf::IntRect(50*i,200,50,50));
+    for (int i=0; i<5; i++) clipRect_slow.push_back(sf::IntRect(50*i, 200, 50, 50));
     m_slowSpeedBonusAnimSprite = new AnimatedGraphicElement(100, 50, 25, 25, BONUS_IMAGE, clipRect_slow);
-    m_slowSpeedBonusAnimSprite->setOrigin(0,50);
+    m_slowSpeedBonusAnimSprite->setOrigin(0, 50);
 
     std::vector<sf::IntRect> clipRect_shield;
-    for (int i=0; i<5; i++) clipRect_shield.push_back(sf::IntRect(50*i,250,50,50));
+    for (int i=0; i<5; i++) clipRect_shield.push_back(sf::IntRect(50*i, 250, 50, 50));
     m_shieldBonusAnimSprite = new AnimatedGraphicElement(100, 50, 25, 25, BONUS_IMAGE, clipRect_shield);
-    m_shieldBonusAnimSprite->setOrigin(0,50);
+    m_shieldBonusAnimSprite->setOrigin(0, 50);
 
 
     //=== Initialize buttons
@@ -211,7 +211,7 @@ void GameView::loadImages()
     clipRect_resume.push_back(sf::IntRect(50, 0, 50, 50));
     m_resumeGameButton = new Button(PAUSE_FORM_X, 355, 25, 25, "pause_resume",
                                     GAME_BUTTONS_IMAGE, clipRect_resume);
-    m_resumeGameButton->resize(25,25);
+    m_resumeGameButton->resize(25, 25);
     m_resumeGameButton->setLabelPosition(RIGHT);
 
     std::vector<sf::IntRect> clipRect_restart;
@@ -219,7 +219,7 @@ void GameView::loadImages()
     clipRect_restart.push_back(sf::IntRect(50, 50, 50, 50));
     m_restartGameButton = new Button(PAUSE_FORM_X, 405, 25, 25, "pause_restart",
                                      GAME_BUTTONS_IMAGE, clipRect_restart);
-    m_restartGameButton->resize(25,25);
+    m_restartGameButton->resize(25, 25);
     m_restartGameButton->setLabelPosition(RIGHT);
 
 
@@ -228,7 +228,7 @@ void GameView::loadImages()
     clipRect_home.push_back(sf::IntRect(50, 100, 50, 50));
     m_goToHomeButton = new Button(PAUSE_FORM_X, 455, 25, 25, "pause_go_to_home",
                                   GAME_BUTTONS_IMAGE, clipRect_home);
-    m_goToHomeButton->resize(25,25);
+    m_goToHomeButton->resize(25, 25);
     m_goToHomeButton->setLabelPosition(RIGHT);
 
     std::vector<sf::IntRect> clipRect_music;
@@ -236,7 +236,7 @@ void GameView::loadImages()
     clipRect_music.push_back(sf::IntRect(50, 200, 50, 50));
     m_controlMusicButton = new Button(PAUSE_FORM_X, 535, 25, 25, "pause_music",
                                       GAME_BUTTONS_IMAGE, clipRect_music);
-    m_controlMusicButton->resize(25,25);
+    m_controlMusicButton->resize(25, 25);
     m_controlMusicButton->setLabelPosition(RIGHT);
 
     std::vector<sf::IntRect> clipRect_save;
@@ -349,7 +349,7 @@ void GameView::handleZonesTransition()
     {
         m_farSlBackground->setSpeed((float) (0.5 * m_gameModel->getGameSpeed()));
         m_nearSlBackground->setSpeed(m_gameModel->getGameSpeed() );
-        m_nearSlBackground->setAlpha(255);
+        m_nearSlBackground->increaseAlpha(255);
 
         if (m_gameModel->getTransitionPossibleStatus()
             && m_farSlBackground->getSeparationPositionX() > m_width - 100)
@@ -413,7 +413,7 @@ void GameView::updateElements()
         m_shieldAnimSprite->setPosition( m_gameModel->getPlayer()->getPosX()-5,
                                          m_gameModel->getPlayer()->getPosY()+5 );
         m_shieldAnimSprite->sync();
-        m_shieldAnimSprite->resize(40,40);
+        m_shieldAnimSprite->resize(40, 40);
 
     }
     else if ( m_gameModel->getGameState() == PAUSED )
@@ -429,21 +429,21 @@ void GameView::updateElements()
         m_goToHomeButton->sync(m_gameModel->getDataBase());
         m_controlMusicButton->sync(m_gameModel->getDataBase());
         m_coinAnimSprite->sync();
-        m_coinAnimSprite->resize(20,20);
+        m_coinAnimSprite->resize(20, 20);
         m_stdEnemyAnimSprite->sync();
-        m_stdEnemyAnimSprite->resize(20,20);
+        m_stdEnemyAnimSprite->resize(20, 20);
     }
     else //GAME OVER
     {
         m_goToHomeButton->sync(m_gameModel->getDataBase());
-        m_goToHomeButton->resize(30,30);
+        m_goToHomeButton->resize(30, 30);
         m_goToHomeButton->setPosition(30, 535);
 
-        m_coinAnimSprite->resize(25,25);
+        m_coinAnimSprite->resize(25, 25);
         m_coinAnimSprite->setPosition( (float)(m_width / 2.4), 565);
 
         m_restartGameButton->sync(m_gameModel->getDataBase());
-        m_restartGameButton->resize(30,30);
+        m_restartGameButton->resize(30, 30);
         m_restartGameButton->setPosition(840, 535);
         m_restartGameButton->setLabelPosition(LEFT);
 
@@ -454,7 +454,7 @@ void GameView::updateElements()
 
 
 /**
- * Delete gElement
+ * Delete gElements
  * @author Arthur
  * @date 12/03/16 - 20/03/16
  */
@@ -534,8 +534,8 @@ void GameView::handleMusic()
     if (m_gameModel->getDataBase()->isGameMusicEnabled())
     {
         std::vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect(0,200,50,50));
-        clipRect.push_back(sf::IntRect(50,200,50,50));
+        clipRect.push_back(sf::IntRect(0, 200, 50, 50));
+        clipRect.push_back(sf::IntRect(50, 200, 50, 50));
         m_controlMusicButton->setClipRectArray(clipRect);
         m_gameThemeMusic.setVolume(100);
         m_coinMusic.setVolume(100);
@@ -544,8 +544,8 @@ void GameView::handleMusic()
     else
     {
         std::vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect(0,250,50,50));
-        clipRect.push_back(sf::IntRect(50,250,50,50));
+        clipRect.push_back(sf::IntRect(0, 250, 50, 50));
+        clipRect.push_back(sf::IntRect(50, 250, 50, 50));
         m_controlMusicButton->setClipRectArray(clipRect);
         m_gameThemeMusic.setVolume(0);
         m_coinMusic.setVolume(0);
@@ -636,7 +636,7 @@ void GameView::draw() const
 /**
  * Events treating
  * @author Arthur, Florian
- * @date 21/02/16 - 25/12/16
+ * @date 21/02/16 - 10/04/17
  */
 bool GameView::treatEvents()
 {
@@ -658,7 +658,7 @@ bool GameView::treatEvents()
                 m_gameModel->getPlayer()->controlPlayerMovements(MOVE_RIGHT);
 
             if (KEYBOARD_JUMP)
-                m_gameModel->getPlayer()->setJumpState(true);
+                m_gameModel->getPlayer()->setJumping(true);
         }
 
         sf::Event event;
@@ -690,7 +690,7 @@ bool GameView::treatEvents()
             }
 
             if (event.type == sf::Event::KeyReleased)
-                m_gameModel->getPlayer()->setDecelerationState(true);
+                m_gameModel->getPlayer()->setDeceleration(true);
 
             //=== Pause Screen
 

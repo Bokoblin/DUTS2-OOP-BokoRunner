@@ -4,10 +4,10 @@
 /**
  * Constructs a GraphicElement with a size
  * @author Arthur
- * @date 21/02/16
+ * @date 21/02/16 - 10/04/17
  */
-GraphicElement::GraphicElement( float w, float h) :
-        m_width{w}, m_height{h}, m_isShowing{true}
+GraphicElement::GraphicElement(float width, float height) :
+        m_width{width}, m_height{height}, m_isShowing{true}
 {}
 
 
@@ -15,10 +15,10 @@ GraphicElement::GraphicElement( float w, float h) :
  * Constructs a GraphicElement with
  * a position and a size
  * @author Arthur
- * @date 02/01/17
+ * @date 02/01/17 - 10/04/17
  */
-GraphicElement::GraphicElement( float x, float y, float w, float h) :
-        m_width{w}, m_height{h}, m_isShowing{true}
+GraphicElement::GraphicElement(float x, float y, float width, float height) :
+        m_width{width}, m_height{height}, m_isShowing{true}
 {
     this->setPosition(x, y);
 }
@@ -28,10 +28,10 @@ GraphicElement::GraphicElement( float x, float y, float w, float h) :
  * Constructs a GraphicElement with
  * a position, a size and an image
  * @author Arthur, Florian
- * @date 21/02/16 - 02/01/17
+ * @date 21/02/16 - 10/04/17
  */
-GraphicElement::GraphicElement(float x, float y, float w, float h, std::string image) :
-        m_width{w}, m_height{h}, m_isShowing{true}
+GraphicElement::GraphicElement(float x, float y, float width, float height, const std::string &image) :
+        m_width{width}, m_height{height}, m_isShowing{true}
 {
     this->setPosition(x, y);
     setTextureFromImage(image);

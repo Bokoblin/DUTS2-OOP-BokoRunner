@@ -27,15 +27,15 @@ limitations under the License.
  * The dialog class allows to create dialogs
  * with a title, a content and up to two buttons
  * @author Arthur
- * @date 16/05/16 - 04/01/17
+ * @date 16/05/16 - 10/04/17
  */
 class Dialog : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
     Dialog();
-    Dialog(float x, float y, float w, float h, ShopItem *item, TextHandler *textHandler, std::string description);
-    Dialog(float x, float y, float w, float h, TextHandler *textHandler, std::string id);
+    Dialog(float x, float y, float w, float h, ShopItem *item, TextHandler *textHandler, const std::string &description);
+    Dialog(float x, float y, float w, float h, TextHandler *textHandler, const std::string &id);
     Dialog(const Dialog& d)=delete;
     ~Dialog();
 

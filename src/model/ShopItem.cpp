@@ -6,14 +6,14 @@ using namespace std;
  * Constructs a ShopItem with a name,
  * a description, a price and a state
  * @author Arthur
- * @date 11/05/16
+ * @date 11/05/16 - 10/04/17
  *
  * @param name the item name
  * @param description the item description
  * @param price the item price
  * @param state the item bought state
  */
-ShopItem::ShopItem(string name, string description, int price, bool state) :
+ShopItem::ShopItem(const string &name, const string &description, int price, bool state) :
     m_name{name}, m_description{description}, m_price{price}, m_isBought{state}
 { }
 

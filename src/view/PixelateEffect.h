@@ -69,7 +69,7 @@ External libraries used by SFML
  * licence is included above
  *
  * @author Arthur
- * @date 26/04/16 - 29/04/16
+ * @date 26/04/16 - 10/04/17
  */
 class PixelateEffect : public sf::Drawable
 {
@@ -77,7 +77,7 @@ class PixelateEffect : public sf::Drawable
         PixelateEffect();
         ~PixelateEffect();
 
-        void load(std::string image);
+        void load(const std::string &image);
         void update(float x, float y);
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         bool onLoad(std::string image);

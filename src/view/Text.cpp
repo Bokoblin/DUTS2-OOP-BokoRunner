@@ -11,7 +11,7 @@ using namespace std;
  *
  * @param description the description used to parse text string
  */
-Text::Text(std::string description) : m_description{description}
+Text::Text(const string &description) : m_description{description}
 {
     m_font.loadFromFile(ROBOTO_REGULAR_FONT);
     setFont(m_font);
@@ -27,7 +27,7 @@ Text::Text(std::string description) : m_description{description}
  * @param description the description used to parse text string
  * @param isVisible defines if text is visible at instantiation
  */
-Text::Text(std::string description, bool isVisible) : m_description{description}
+Text::Text(const string &description, bool isVisible) : m_description{description}
 {
     m_font.loadFromFile(ROBOTO_REGULAR_FONT);
     setFont(m_font);

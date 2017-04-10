@@ -3,8 +3,13 @@
 using namespace std;
 
 
+/**
+ * Constructs a dialog with x and y coordinates
+ * @author Arthur
+ * @date 02/01/2017 - 10/04/17
+ */
 Dialog::Dialog() : GraphicElement(0, 0), m_title{""}, m_content{""},
-                   m_cancelButtonText{""}, m_okButtonText{""}
+                   m_cancelButtonText{""}, m_okButtonText{""}, m_shopItem{nullptr}
 {
     hide();
 }
@@ -14,11 +19,11 @@ Dialog::Dialog() : GraphicElement(0, 0), m_title{""}, m_content{""},
  * Constructs a dialog with x and y coordinates,
  * a textHandler and a description
  * @author Arthur
- * @date 02/01/2017 - 07/01/17
+ * @date 02/01/2017 - 10/04/17
  */
-Dialog::Dialog(float x, float y, float w, float h, TextHandler *textHandler, string id)  :
+Dialog::Dialog(float x, float y, float w, float h, TextHandler *textHandler, const string &id)  :
         GraphicElement(x, y, w, h), m_id{id}, m_title{""}, m_content{""},
-        m_cancelButtonText{""}, m_okButtonText{""}
+        m_cancelButtonText{""}, m_okButtonText{""}, m_shopItem{nullptr}
 {
     setTextureFromImage(DIALOG_IMAGE);
     setPosition(x, y);
@@ -44,9 +49,9 @@ Dialog::Dialog(float x, float y, float w, float h, TextHandler *textHandler, str
  * Constructs a dialog with x and y coordinates,
  * a shopItem, a textHandler and a description
  * @author Arthur
- * @date 01/01/2017 - 07/01/17
+ * @date 01/01/2017 - 10/04/17
  */
-Dialog::Dialog(float x, float y, float w, float h, ShopItem *item, TextHandler *textHandler, string description)  :
+Dialog::Dialog(float x, float y, float w, float h, ShopItem *item, TextHandler *textHandler, const string &description)  :
         GraphicElement(x, y, w, h), m_shopItem{item}, m_id{description},
         m_title{""}, m_content{""}, m_cancelButtonText{""}, m_okButtonText{""}
 {

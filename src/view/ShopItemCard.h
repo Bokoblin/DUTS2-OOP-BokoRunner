@@ -28,7 +28,7 @@ limitations under the License.
 /**
  * ShopItemCard Class
  * @author Arthur
- * @date 16/05/16 - 02/01/17
+ * @date 16/05/16 - 10/04/17
  */
 class ShopItemCard : public GraphicElement
 {

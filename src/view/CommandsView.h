@@ -24,13 +24,13 @@ limitations under the License.
  * The CommandsView class displays
  * game's command
  * @author Arthur
- * @date 24/01/17
+ * @date 24/01/17 - 10/04/17
  */
 class CommandsView : public View
 {
 public:
     //=== CTORs / DTORs
-    CommandsView(float w, float h, sf::RenderWindow *window, TextHandler * text);
+    CommandsView(float w, float h, sf::RenderWindow *window, TextHandler *textHandler);
     virtual ~CommandsView();
 
     //=== SETTERS

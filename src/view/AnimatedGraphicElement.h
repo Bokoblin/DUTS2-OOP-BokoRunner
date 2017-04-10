@@ -25,13 +25,13 @@ limitations under the License.
  * a timePoint of the last time the animation has changed
  * and an animation delay
  * @author Arthur
- * @date 3/03/16 - 02/01/17
+ * @date 3/03/16 - 10/04/17
  */
 class AnimatedGraphicElement : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
-    AnimatedGraphicElement(float x, float y, float w, float h, std::string image,
+    AnimatedGraphicElement(float x, float y, float w, float h, const std::string &image,
                            const std::vector<sf::IntRect> &clipRect);
     AnimatedGraphicElement( const AnimatedGraphicElement& other);
     virtual ~AnimatedGraphicElement();

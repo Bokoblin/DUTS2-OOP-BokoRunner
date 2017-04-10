@@ -32,7 +32,7 @@ class ShopView : public View
 {
 public:
     //=== CTORs / DTORs
-    ShopView(float w, float h, sf::RenderWindow *window, TextHandler * text);
+    ShopView(float w, float h, sf::RenderWindow *window, TextHandler *textHandler);
     virtual ~ShopView();
 
     //=== SETTERS

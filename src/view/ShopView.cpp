@@ -7,8 +7,8 @@ using namespace std;
  * @author Arthur
  * @date 16/05/16
  */
-ShopView::ShopView(float w, float h, sf::RenderWindow *window, TextHandler * text):
-        View(w, h, window,text), m_shop{nullptr}, m_currentIndicator{0},
+ShopView::ShopView(float w, float h, sf::RenderWindow *window, TextHandler *textHandler):
+        View(w, h, window, textHandler), m_shop{nullptr}, m_currentIndicator{0},
         m_totalIndicator{0}, m_buyDialog{nullptr}
 {
     loadImages();
@@ -55,7 +55,7 @@ void ShopView::loadImages()
     //=== Initialize COIN Sprite
 
     m_coinSprite = new GraphicElement(m_width/2-60, 53, 25, 25);
-    m_coinSprite->setTextureFromImage(BONUS_IMAGE, sf::IntRect(0,0,50,50));
+    m_coinSprite->setTextureFromImage(BONUS_IMAGE, sf::IntRect(0, 0, 50, 50));
     m_coinSprite->resize(25, 25);
 
     //=== Initialize HOME form buttons

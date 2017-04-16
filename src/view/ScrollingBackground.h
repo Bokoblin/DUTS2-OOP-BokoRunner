@@ -17,44 +17,38 @@ limitations under the License.
 #define SLIDING_BACKGROUND_H
 
 #include "GraphicElement.h"
-
+#include "../utils/constants.h"
 
 /**
  * SlidingBackground Class
  * @author Arthur, Florian
- * @date 3/03/16 - 7/05/16
+ * @date 3/03/16 - 16/04/17
  */
-class SlidingBackground : public GraphicElement
+class ScrollingBackground : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
-    SlidingBackground(float w, float h, float speed, std::string image);
-    SlidingBackground(SlidingBackground const& element) = delete;
-    virtual ~SlidingBackground();
+    ScrollingBackground(float width, float height, float scrollingSpeed, std::string image);
+    ScrollingBackground(ScrollingBackground const& element) = delete;
+    virtual ~ScrollingBackground();
 
-    //=== GETTERS
-    int getAlpha() const;
-    sf::Vector2f getPosition() const;
+    sf::Vector2f getLeftPosition() const;
     float getSeparationPositionX() const;
 
     //=== SETTERS
-    void setSpeed(float speed);
-    void setPosition(float x, float y);
-    void setAlpha(sf::Uint8 alpha);
+    void setScrollingSpeed(float speed);
+    void setPositions(float x, float y);
 
     //=== METHODS
     virtual void sync() override;
     virtual void draw(sf::RenderWindow *window) const override;
-    virtual void resize(float w, float h) override;
-    void decreaseAlpha(int level);
-    void increaseAlpha(int level);
+    virtual void resize(float width, float height) override;
     virtual void setTextureFromImage(std::string image);
 
 private:
     //=== ATTRIBUTES
     GraphicElement *m_left, *m_right;
-    float m_speed;
-    sf::Uint8 m_alpha;
+    float m_scrollingSpeed;
 
 };
 

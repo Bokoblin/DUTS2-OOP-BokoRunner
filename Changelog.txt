@@ -1,5 +1,5 @@
 Project Name : Boko Runner
-Developers   : Arthur JOLIVET et Florian LARONZE
+Developers   : Arthur JOLIVET and Florian LARONZE
 
 Current version : v2.0.0-dev
 
@@ -7,10 +7,26 @@ Current version : v2.0.0-dev
 
 v2.0.0-dev
 
+Major coding changes:
 - Structure refactoring :
   - AbstractModel and AbstractView
   - More classes inherits from AbstractModel
   - Enumerations have each their own header file
+  - Some classes have their name changed
+- Rewritten Dialog class which is more generic
+
+Fixes and misc:
+- Moved some #define to utils/definitions.h
+
+
+---------------------------------------------------------------------------------------------------
+
+v1.8.2 (10/04/17)
+
+- Improved code style
+- Improved code concerning reference parameter
+- Added Codacy badge to README
+- Added back documentation folder
 
 
 ---------------------------------------------------------------------------------------------------
@@ -206,7 +222,7 @@ v1.4.0 (30/04/16):
 - added Zone changing each 500m in Normal / 2000m in Master
 	- Zone changing is made with a scrolling far background transition
 	  and a pixel appearing near background
-- added PixelateEffect class to handle pixel transition (altered from SFML Examples - see file)
+- added PixelShader class to handle pixel transition (altered from SFML Examples - see file)
 - image loading optimized by merging textures using same file (number of textures reduced by half)
 - lots of variable renaming
 - documentation updated

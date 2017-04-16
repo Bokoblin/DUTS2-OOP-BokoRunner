@@ -17,18 +17,10 @@ limitations under the License.
 #define ABSTRACT_VIEW_H
 
 #include "TextHandler.h"
-#include "SlidingBackground.h"
-#include "AnimatedGraphicElement.h"
+#include "ScrollingBackground.h"
+#include "Sprite.h"
 #include "Button.h"
 #include <SFML/Audio.hpp>
-
-#define ENVIRONMENT_CENTER sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2, \
-				(sf::VideoMode::getDesktopMode().height - m_height)/2 )
-#define MINE_GREY_COLOR sf::Color(51, 51, 51, 255)
-#define FORM_BUTTONS_SIZE 30,30
-#define MOUSE_LEFT_PRESSED_EVENT event.type == sf::Event::MouseButtonPressed \
-                && event.mouseButton.button == sf::Mouse::Left
-#define MOUSE_POSITION event.mouseButton.x, event.mouseButton.y
 
 
 /**

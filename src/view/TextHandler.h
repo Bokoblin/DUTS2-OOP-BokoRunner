@@ -19,11 +19,7 @@ limitations under the License.
 #include "../model/DataBase.h"
 #include "Text.h"
 #include "../model/Settings.h"
-
-#define TITLE_TEXT_X m_height/12
-#define GOLD_COLOR sf::Color(255,204,0,255)
-#define ENEMY_BLUE_COLOR sf::Color(0,232,209,255)
-#define END_GREY_COLOR sf::Color(86,103,97,255)
+#include "../utils/definitions.h"
 
 
 /**

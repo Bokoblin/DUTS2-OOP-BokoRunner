@@ -18,45 +18,45 @@ limitations under the License.
 
 #include "GraphicElement.h"
 #include "TextHandler.h"
-#include "../model/ShopItem.h"
-
-#define MATERIAL_TEAL_COLOR sf::Color(0, 150, 136, 255)
+#include "../utils/definitions.h"
 
 
 /**
  * The dialog class allows to create dialogs
  * with a title, a content and up to two buttons
  * @author Arthur
- * @date 16/05/16 - 04/01/17
+ * @date 16/05/16 - 16/04/17
  */
 class Dialog : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
     Dialog();
-    Dialog(float x, float y, float w, float h, ShopItem *item, TextHandler *textHandler, std::string description);
-    Dialog(float x, float y, float w, float h, TextHandler *textHandler, std::string id);
+    Dialog(float x, float y, float w, float h, const TextHandler &textHandler, const std::string &context);
     Dialog(const Dialog& d)=delete;
     ~Dialog();
 
     //=== GETTERS
-    std::string getId() const;
-    const Text& getCancelButtonText() const;
-    const Text& getOkButtonText() const;
-    ShopItem *getLinkedShopItem() const;
+    const std::string &getContext() const;
+    const Text &getCancelButtonText() const;
+    const Text &getOkButtonText() const;
+
+    //=== SETTERS
+    void setTitleText(const std::string &title);
+    void setContentText(const std::string &content);
+    void setCancelButtonText(const std::string &cancel);
+    void setOkButtonText(const std::string &ok);
 
     //=== METHODS
-    void sync(DataBase *dataBase);
     void draw(sf::RenderWindow *window) const;
 
-private:
+protected:
     //=== ATTRIBUTES
-    std::string m_id;
+    std::string m_context;
     Text m_title;
     Text m_content;
     Text m_cancelButtonText;
     Text m_okButtonText;
-    ShopItem *m_shopItem;
 };
 
 #endif

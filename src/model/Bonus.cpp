@@ -66,3 +66,4 @@ void Bonus::chooseBonusType()
     else
         m_elementType = SHIELD_BONUS;
 }
+

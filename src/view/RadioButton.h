@@ -32,7 +32,7 @@ class RadioButton : public Button
 public:
     //=== CTORs / DTORs
     RadioButton(float x, float y, float w, float h);
-    RadioButton(float x, float y, float w, float h, std::string label);
+    RadioButton(float x, float y, float w, float h, const std::string &label);
     RadioButton(const RadioButton& other);
     virtual ~RadioButton() override;
 

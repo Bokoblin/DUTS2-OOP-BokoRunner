@@ -85,3 +85,4 @@ bool IntroView::treatEvents(sf::Event event)
     }
     return result;
 }
+

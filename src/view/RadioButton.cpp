@@ -20,7 +20,7 @@ RadioButton::RadioButton(float x, float y, float w, float h) :
  * @author Arthur
  * @date 23/12/16 - 02/01/17
  */
-RadioButton::RadioButton(float x, float y, float w, float h, string label) :
+RadioButton::RadioButton(float x, float y, float w, float h, const string &label) :
         Button(x, y, w, h, label)
 {
     setRadioClipRect();

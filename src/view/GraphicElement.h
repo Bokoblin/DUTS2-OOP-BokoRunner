@@ -22,7 +22,7 @@ limitations under the License.
 /**
  * GraphicElement Class
  * @author Arthur, Florian
- * @date 21/02/16 - 24/01/17
+ * @date 21/02/16 - 16/04/17
  */
 class GraphicElement : public sf::Sprite
 {
@@ -30,24 +30,28 @@ public:
     //=== CTORs / DTORs
     GraphicElement( float w, float h);
     GraphicElement( float x, float y, float w, float h);
-    GraphicElement(float x, float y, float w, float h, std::string image);
+    GraphicElement(float x, float y, float w, float h, const std::string &image);
     GraphicElement(GraphicElement const& element);
     ~GraphicElement();
 
     //=== GETTERS
+    int getAlpha() const;
     bool isShowing() const;
 
     //=== SETTERS
     void show();
     void hide();
+    void setAlpha(int alpha);
 
     //=== METHODS
     virtual void sync();
     virtual void draw(sf::RenderWindow *window)const;
-    virtual void resize(float w, float h);
+    virtual void resize(float width, float height);
     virtual void setTextureFromImage(std::string image);
     virtual bool contains(float x, float y) const;
-    void setTextureFromImage(std::string image, sf::IntRect intRect);
+    virtual void setTextureFromImage(std::string image, sf::IntRect intRect);
+    virtual void decreaseAlpha(int level);
+    virtual void increaseAlpha(int level);
 
 protected:
     //=== ATTRIBUTES
@@ -55,6 +59,7 @@ protected:
     float m_height;
     bool m_isShowing;
     sf::Texture m_texture;
+    sf::Uint8 m_alpha;
 };
 
 #endif

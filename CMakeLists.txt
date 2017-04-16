@@ -15,7 +15,7 @@ file(GLOB SOURCE_FILES
         "src/model/*.cpp"
         "src/view/*.h"
         "src/view/*.cpp"
-        "src/constants.h"
+        "src/utils/*.h"
         "src/main.cpp"
         )
 

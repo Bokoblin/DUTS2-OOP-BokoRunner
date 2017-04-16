@@ -278,13 +278,13 @@ void TextHandler::syncShopText()
  */
 void TextHandler::syncGameText(int bonusTimeout)
 {
-    m_playerLifeLabel->setPosition(40,545);
+    m_playerLifeLabel->setPosition(40, 545);
     m_currentDistanceLabel->setPosition(440, 545);
-    m_currentDistanceText->setPosition(640,545);
+    m_currentDistanceText->setPosition(640, 545);
     m_currentDistanceText->setColor(sf::Color::White);
     m_currentDistanceText->setString( to_string(
             m_dataBase->getCurrentDistance() ) + " m" );
-    m_bonusTimeoutText->setPosition(840,545);
+    m_bonusTimeoutText->setPosition(840, 545);
     if ( bonusTimeout > 0) {
         m_bonusTimeoutText->setStringFromInt(bonusTimeout);
         m_bonusTimeoutText->setVisible(true);
@@ -345,9 +345,9 @@ void TextHandler::syncEndText(int gameSpeed)
     m_flattenedEnemiesText->setColor(END_GREY_COLOR);
     m_flattenedEnemiesText->setStringFromInt( m_dataBase->getCurrentFlattenedEnemies() );
 
-    m_currentScoreLabel->setPosition(SUBTOTAL_LABEL_X,350);
+    m_currentScoreLabel->setPosition(SUBTOTAL_LABEL_X, 350);
     m_currentScoreLabel->setFont(m_BoldFont);
-    m_currentScoreText->setPosition(SUBTOTAL_VALUE_X,350);
+    m_currentScoreText->setPosition(SUBTOTAL_VALUE_X, 350);
     m_currentScoreText->setFont(m_BoldFont);
     m_currentScoreText->setStringFromInt( m_dataBase->getCurrentScore() );
 

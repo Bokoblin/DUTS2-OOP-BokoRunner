@@ -24,13 +24,13 @@ limitations under the License.
 /**
  * Text Class inherited from sf::Text
  * @author Arthur
- * @date 21/12/16 - 24/01/17
+ * @date 21/12/16 - 16/04/17
  */
 class Text : public sf::Text {
 public:
     //=== CTORs / DTORs
-    Text(std::string description);
-    Text(std::string description, bool isVisible);
+    Text(const std::string &description);
+    Text(const std::string &description, bool isVisible);
 
     //=== GETTERS
     std::string getDescription() const;

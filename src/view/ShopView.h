@@ -19,7 +19,7 @@ limitations under the License.
 #include "AbstractView.h"
 #include "../model/Shop.h"
 #include "ShopItemCard.h"
-#include "Dialog.h"
+#include "ShopDialog.h"
 #include "RadioButton.h"
 
 
@@ -52,7 +52,7 @@ private:
     //Graphic Elements
     GraphicElement *m_coinSprite;
     Button *m_homeFormButton;
-    Dialog *m_buyDialog;
+    ShopDialog *m_buyDialog;
 
     //Containers
     std::vector<ShopItemCard *> m_shopItemCardsArray;

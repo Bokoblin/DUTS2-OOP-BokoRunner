@@ -13,7 +13,7 @@ using namespace std;
  * @param price the item price
  * @param state the item bought state
  */
-ShopItem::ShopItem(string name, string description, int price, bool state) :
+ShopItem::ShopItem(const string &name, const string &description, int price, bool state) :
     m_name{name}, m_description{description}, m_price{price}, m_isBought{state}
 { }
 
@@ -39,3 +39,4 @@ bool ShopItem::isBought() const { return m_isBought; }
 //=== Setters
 
 void ShopItem::buy() { m_isBought = true; }
+

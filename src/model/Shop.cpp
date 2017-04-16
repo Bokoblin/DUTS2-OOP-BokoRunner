@@ -106,3 +106,4 @@ void Shop::fetchBuyableItemsFromFile()
  */
 void Shop::nextStep()
 {}
+

@@ -52,8 +52,8 @@ private:
     ShopView *m_shopView;
 
     //Graphic Elements
-    SlidingBackground *m_farBackground;
-    SlidingBackground *m_nearBackground;
+    ScrollingBackground *m_farBackground;
+    ScrollingBackground *m_nearBackground;
     GraphicElement *m_titleGraphic;
     Button *m_playRectButton;
     Button *m_quitRectButton;

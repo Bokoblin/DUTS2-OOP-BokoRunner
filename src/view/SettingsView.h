@@ -21,9 +21,6 @@ limitations under the License.
 #include "RadioButton.h"
 #include "Dialog.h"
 
-#define RADIOS_MARGIN 50
-#define RADIO_BUTTONS_SIZE 26,26
-#define INDICATOR_BUTTONS_SIZE 22,22
 
 /**
  * SettingsView Class

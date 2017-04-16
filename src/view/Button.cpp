@@ -14,7 +14,7 @@ Button::Button(float x, float y, float w, float h) :
     m_label.setColor(sf::Color::White);
     m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                      getPosition().y + getGlobalBounds().height/2);
-    m_label.setOrigin(0,m_label.getGlobalBounds().height/2);
+    m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
     m_label.setCharacterSize(24);
 }
 
@@ -27,7 +27,7 @@ Button::Button(float x, float y, float w, float h) :
  * @author Arthur
  * @date 02/01/17 - 25/01/17
  */
-Button::Button(float x, float y, float w, float h, std::string description) :
+Button::Button(float x, float y, float w, float h, const std::string &description) :
         GraphicElement(x, y, w, h), m_currentClipRect{0}, m_labelPosition{CENTER},
         m_isPressed{false}, m_isActive{false}, m_isDisabled{false}, m_label{description}
 {
@@ -36,7 +36,7 @@ Button::Button(float x, float y, float w, float h, std::string description) :
     m_label.setColor(sf::Color::White);
     m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                      getPosition().y + getGlobalBounds().height/2);
-    m_label.setOrigin(0,m_label.getGlobalBounds().height/2);
+    m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
     m_label.setCharacterSize(24);
 }
 
@@ -48,7 +48,7 @@ Button::Button(float x, float y, float w, float h, std::string description) :
  * @date 06/04/16 - 25/01/17
  */
 Button::Button(float x, float y, float w, float h,
-               std::string image, const std::vector<sf::IntRect> &clipRect) :
+               const std::string &image, const std::vector<sf::IntRect> &clipRect) :
         GraphicElement(x, y, w, h, image), m_clipRectArray{clipRect},
         m_currentClipRect{0},  m_isPressed{false}, m_labelPosition{CENTER},
         m_isActive{false}, m_isDisabled{false}, m_label{""}
@@ -60,7 +60,7 @@ Button::Button(float x, float y, float w, float h,
     m_label.setColor(sf::Color::White);
     m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                      getPosition().y + getGlobalBounds().height/2);
-    m_label.setOrigin(0,m_label.getGlobalBounds().height/2);
+    m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
     m_label.setCharacterSize(24);
 }
 
@@ -71,8 +71,8 @@ Button::Button(float x, float y, float w, float h,
  * @author Arthur
  * @date 06/04/16 - 25/01/17
  */
-Button::Button(float x, float y, float w, float h, std::string description,
-               std::string image, const std::vector<sf::IntRect> &clipRect) :
+Button::Button(float x, float y, float w, float h, const std::string &description,
+               const std::string &image, const std::vector<sf::IntRect> &clipRect) :
         GraphicElement(x, y, w, h, image), m_clipRectArray{clipRect},
         m_currentClipRect{0},  m_isPressed{false}, m_labelPosition{CENTER},
         m_isActive{false}, m_isDisabled{false}, m_label{description}
@@ -84,7 +84,7 @@ Button::Button(float x, float y, float w, float h, std::string description,
     m_label.setColor(sf::Color::White);
     m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                      getPosition().y + getGlobalBounds().height/2);
-    m_label.setOrigin(0,m_label.getGlobalBounds().height/2);
+    m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
     m_label.setCharacterSize(24);
 }
 
@@ -161,7 +161,7 @@ void Button::sync(DataBase *dataBase)
             case TOP:
                 m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                                  getPosition().y - getGlobalBounds().height/2);
-                m_label.setOrigin(0,m_label.getGlobalBounds().height/2);
+                m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
                 break;
             case RIGHT:
                 m_label.setPosition(getPosition().x + getGlobalBounds().width + 30,
@@ -171,7 +171,7 @@ void Button::sync(DataBase *dataBase)
             case BOTTOM:
                 m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                                  getPosition().y + getGlobalBounds().height + 50);
-                m_label.setOrigin(0,m_label.getGlobalBounds().height/2);
+                m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
                 break;
             case LEFT:
                 m_label.setPosition((getPosition().x - 30),
@@ -181,7 +181,7 @@ void Button::sync(DataBase *dataBase)
             case CENTER:
                 m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                                  getPosition().y + getGlobalBounds().height/2);
-                m_label.setOrigin(0,m_label.getGlobalBounds().height/2);
+                m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
                 break;
         }
     }

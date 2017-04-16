@@ -25,8 +25,6 @@ limitations under the License.
 #include "../enum/Zone.h"
 #include <chrono>
 
-#define ELEMENT_MOVE_X getGameSpeed()*(-1)
-
 
 /**
  * The GameModel class handles the game's logic

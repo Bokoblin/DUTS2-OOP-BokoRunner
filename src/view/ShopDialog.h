@@ -13,39 +13,37 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef COMMANDS_VIEW_H
-#define COMMANDS_VIEW_H
+#ifndef SHOP_DIALOG_H
+#define SHOP_DIALOG_H
 
-#include "AbstractView.h"
-#include "../model/Commands.h"
-#include "../utils/definitions.h"
+#include "Dialog.h"
+#include "../model/ShopItem.h"
 
 
 /**
- * The CommandsView class displays
- * game's command
+ * The ShopDialog class adds a shop item to the dialog
  * @author Arthur
- * @date 24/01/17 - 29/01/17
+ * @date 16/04/17
  */
-class CommandsView : public AbstractView
+class ShopDialog : public Dialog
 {
 public:
     //=== CTORs / DTORs
-    CommandsView(sf::RenderWindow *window, TextHandler *textHandler, Commands *commandsModel);
-    virtual ~CommandsView();
+    ShopDialog();
+    ShopDialog(float x, float y, float width, float height, const TextHandler &textHandler, const std::string &context);
+    ShopDialog(float x, float y, float width, float height, const TextHandler &textHandler,
+               const std::string &context, ShopItem *item);
 
-    //=== METHODS
-    virtual void synchronize() override;
-    virtual void draw() const override;
-    virtual void loadImages() override;
-    virtual bool treatEvents(sf::Event event) override;
+    ShopDialog(const Dialog& d)=delete;
+
+    ~ShopDialog();
+
+    //=== GETTERS
+    ShopItem *getLinkedShopItem() const;
 
 private:
     //=== ATTRIBUTES
-    Commands *m_commands;
-    GraphicElement *m_commandSprite;
-    Button *m_homeFormButton;
+    ShopItem *m_shopItem;
 };
-
 
 #endif

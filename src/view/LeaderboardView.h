@@ -18,6 +18,7 @@ limitations under the License.
 
 #include "AbstractView.h"
 #include "../model/Leaderboard.h"
+#include "../utils/definitions.h"
 
 
 /**

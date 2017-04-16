@@ -54,14 +54,15 @@ External libraries used by SFML
 * libflac is under the BSD license
 */
 
-#ifndef PIXELATE_EFFECT_H
-#define PIXELATE_EFFECT_H
+#ifndef PIXEL_SHADER_H
+#define PIXEL_SHADER_H
 
 #include "GraphicElement.h"
 
 
 /**
- * PixelateEffect Class
+ * The PixelShader class creates
+ * an animated pixelized effect on an image
  *
  * SFML shader example, from official SFML
  * github repository, Effect.cpp and Shader.cpp
@@ -69,18 +70,18 @@ External libraries used by SFML
  * licence is included above
  *
  * @author Arthur
- * @date 26/04/16 - 29/04/16
+ * @date 26/04/16 - 16/04/17
  */
-class PixelateEffect : public sf::Drawable
+class PixelShader : public sf::Drawable
 {
     public:
-        PixelateEffect();
-        ~PixelateEffect();
+        PixelShader();
+        ~PixelShader();
 
-        void load(std::string image);
+        void load(const std::string &image);
         void update(float x, float y);
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-        bool onLoad(std::string image);
+        bool onLoad(const std::string &image);
 
     private:
         bool m_isLoaded;

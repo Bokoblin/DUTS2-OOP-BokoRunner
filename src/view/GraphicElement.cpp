@@ -4,10 +4,10 @@
 /**
  * Constructs a GraphicElement with a size
  * @author Arthur
- * @date 21/02/16
+ * @date 21/02/16 - 16/04/17
  */
 GraphicElement::GraphicElement( float w, float h) :
-        m_width{w}, m_height{h}, m_isShowing{true}
+        m_width{w}, m_height{h}, m_isShowing{true}, m_alpha{255}
 {}
 
 
@@ -15,10 +15,10 @@ GraphicElement::GraphicElement( float w, float h) :
  * Constructs a GraphicElement with
  * a position and a size
  * @author Arthur
- * @date 02/01/17
+ * @date 02/01/17 - 16/04/17
  */
 GraphicElement::GraphicElement( float x, float y, float w, float h) :
-        m_width{w}, m_height{h}, m_isShowing{true}
+        m_width{w}, m_height{h}, m_isShowing{true}, m_alpha{255}
 {
     this->setPosition(x, y);
 }
@@ -28,10 +28,10 @@ GraphicElement::GraphicElement( float x, float y, float w, float h) :
  * Constructs a GraphicElement with
  * a position, a size and an image
  * @author Arthur, Florian
- * @date 21/02/16 - 02/01/17
+ * @date 21/02/16 - 16/04/17
  */
-GraphicElement::GraphicElement(float x, float y, float w, float h, std::string image) :
-        m_width{w}, m_height{h}, m_isShowing{true}
+GraphicElement::GraphicElement(float x, float y, float w, float h, const std::string &image) :
+        m_width{w}, m_height{h}, m_isShowing{true}, m_alpha{255}
 {
     this->setPosition(x, y);
     setTextureFromImage(image);
@@ -41,10 +41,11 @@ GraphicElement::GraphicElement(float x, float y, float w, float h, std::string i
 /**
  * Copy Constructor
  * @author Arthur, Florian
- * @date 25/02/16 - 02/01/17
+ * @date 25/02/16 - 16/04/17
  */
 GraphicElement::GraphicElement(GraphicElement const& element) :
-    Sprite(), m_width(element.m_width), m_height(element.m_height), m_isShowing{element.m_isShowing}
+    Sprite(), m_width(element.m_width), m_height(element.m_height),
+    m_isShowing{element.m_isShowing}, m_alpha{element.m_alpha}
 {
     this->setPosition( element.getPosition() );
     this->setTexture( *element.getTexture(), true );
@@ -63,10 +64,20 @@ GraphicElement::~GraphicElement()
 
 //=== Getters
 bool GraphicElement::isShowing() const { return m_isShowing; }
+int GraphicElement::getAlpha() const { return m_alpha; }
 
 //=== Setters
 void GraphicElement::show() { m_isShowing = true; }
 void GraphicElement::hide() { m_isShowing = false; }
+void GraphicElement::setAlpha(int alpha)
+{
+    if (alpha < 0)
+        m_alpha = 0;
+    else if (alpha > 255)
+        m_alpha = 255;
+    else
+        m_alpha = (sf::Uint8) alpha;
+}
 
 
 /**
@@ -75,7 +86,9 @@ void GraphicElement::hide() { m_isShowing = false; }
  * @date 03/04/16
  */
 void GraphicElement::sync()
-{}
+{
+    setColor(sf::Color(255, 255, 255, m_alpha));
+}
 
 
 /**
@@ -149,4 +162,26 @@ void GraphicElement::setTextureFromImage(std::string image, sf::IntRect intRect)
  */
 bool GraphicElement::contains(float x, float y) const {
     return isShowing() && getGlobalBounds().contains(sf::Vector2f(x, y));
+}
+
+
+/**
+ * Decrease alpha function
+ * @author Arthur
+ * @date 7/05/16 - 16/04/17
+ */
+void GraphicElement::decreaseAlpha(int level)
+{
+    setAlpha(getAlpha() - level);
+}
+
+
+/**
+ * Increase alpha function
+ * @author Arthur
+ * @date 7/05/16 - 16/04/17
+ */
+void GraphicElement::increaseAlpha(int level)
+{
+    setAlpha(getAlpha() + level);
 }

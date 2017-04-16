@@ -38,10 +38,10 @@ class Button : public GraphicElement
 public:
     //=== CTORs / DTORs
     Button(float x, float y, float w, float h);
-    Button(float x, float y, float w, float h, std::string description);
-    Button(float x, float y, float w, float h, std::string image, const std::vector<sf::IntRect> &clipRect);
-    Button(float x, float y, float w, float h, std::string description,
-           std::string image, const std::vector<sf::IntRect> &clipRect);
+    Button(float x, float y, float w, float h, const std::string &description);
+    Button(float x, float y, float w, float h, const std::string &image, const std::vector<sf::IntRect> &clipRect);
+    Button(float x, float y, float w, float h, const std::string &description,
+           const std::string &image, const std::vector<sf::IntRect> &clipRect);
     Button(Button const& elementACopier);
 
     virtual ~Button();

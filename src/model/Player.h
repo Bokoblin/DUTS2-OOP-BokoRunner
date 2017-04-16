@@ -42,14 +42,9 @@ public:
     //=== GETTERS
     int getState() const;
     int getLife() const;
-    bool getFlyingState() const;
-    bool getJumpState() const;
-    bool getDecelerationState() const;
-    std::pair<float,float> getVector() const;
 
     //=== SETTERS
     void setLife(int new_life);
-    void setFlyingState(bool state);
     void setJumpState(bool state);
     void setDecelerationState(bool state);
 
@@ -67,7 +62,7 @@ private:
     bool m_jumping;
     bool m_flying;
     bool m_inDeceleration;
-    std::pair<float,float> m_vectorBall;
+    std::pair<float, float> m_vectorBall;
 
     //Constants
     const int JUMP_LIMIT = 380;

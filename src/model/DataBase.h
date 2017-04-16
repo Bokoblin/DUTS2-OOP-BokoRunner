@@ -21,7 +21,7 @@ limitations under the License.
 #include <cassert>
 #include <set>
 #include <fstream>
-#include "../constants.h"
+#include "../utils/constants.h"
 #include "../enum/AppState.h"
 #include "../enum/Difficulty.h"
 
@@ -89,7 +89,7 @@ public:
     void launchNewGame();
     void clearLeaderboard();
     void clearAppData();
-    std::string getTextValueFromStringsFile(std::string description) const;
+    std::string getTextValueFromStringsFile(const std::string &description) const;
     std::string loadLeaderboardStringFromArray(Difficulty difficulty) const;
 
 private:

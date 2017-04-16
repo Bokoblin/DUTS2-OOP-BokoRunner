@@ -15,7 +15,7 @@ GameModel::GameModel(float width, float height, DataBase *dataBase) :
         AbstractModel(dataBase), m_width{width}, m_height{height}, m_gameState{RUNNING}, m_inTransition{false},
         m_isTransitionPossible{false}, m_currentZone{HILL},
         m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},
-        m_lastTime{chrono::system_clock::now()},  m_bonusTimeout{0}
+        m_lastTime{chrono::system_clock::now()}, m_bonusTimeout{0}, m_gameSlowSpeed{0}
 {
     srand((unsigned int) time(NULL));
 
@@ -220,7 +220,7 @@ bool GameModel::checkIfPositionFree(float x, float y) const
 
     while (positionIsFree &&  it != m_movableElementsArray.end() )
     {
-        if ( (*it)->contains(x,y) )
+        if ( (*it)->contains(x, y) )
             positionIsFree = false;
         else
             ++it;
@@ -315,7 +315,9 @@ void GameModel::handleMovableElementsCreation()
  */
 void GameModel::addANewMovableElement(float posX, float posY, int type)
 {
+    #define ELEMENT_MOVE_X getGameSpeed()*(-1)
     MovableElement *m_newMElement = nullptr;
+
     if (type == PLAYER)
     {
         m_player = new Player(posX, posY, 30, 30, 2.0, 18.0);

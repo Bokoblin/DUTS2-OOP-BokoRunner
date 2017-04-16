@@ -18,6 +18,7 @@ limitations under the License.
 
 #include "AbstractView.h"
 #include "../model/IntroModel.h"
+#include "../utils/definitions.h"
 
 /**
  * The IntroView class displays

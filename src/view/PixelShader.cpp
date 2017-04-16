@@ -1,4 +1,4 @@
-#include "PixelateEffect.h"
+#include "PixelShader.h"
 
 using namespace std;
 
@@ -8,7 +8,7 @@ using namespace std;
  * @author Arthur
  * @date 28/04/16
  */
-PixelateEffect::PixelateEffect() : m_isLoaded(false)
+PixelShader::PixelShader() : m_isLoaded(false)
 { }
 
 
@@ -17,7 +17,7 @@ PixelateEffect::PixelateEffect() : m_isLoaded(false)
  * @author Arthur
  * @date 28/04/16
  */
-PixelateEffect::~PixelateEffect()
+PixelShader::~PixelShader()
 { }
 
 
@@ -26,7 +26,7 @@ PixelateEffect::~PixelateEffect()
  * @author Arthur
  * @date 28/04/16
  */
-void PixelateEffect::load(string image)
+void PixelShader::load(const string &image)
 {
     m_isLoaded = sf::Shader::isAvailable() && onLoad(image);
 }
@@ -37,7 +37,7 @@ void PixelateEffect::load(string image)
  * @author Arthur
  * @date 28/04/16
  */
-bool PixelateEffect::onLoad(std::string image)
+bool PixelShader::onLoad(const string &image)
 {
     if (!m_texture.loadFromFile(image))
         return false;
@@ -57,7 +57,7 @@ bool PixelateEffect::onLoad(std::string image)
  * @author Arthur
  * @date 28/04/16
  */
-void PixelateEffect::update(float x, float y)
+void PixelShader::update(float x, float y)
 {
     if (m_isLoaded)
         m_shader.setParameter("pixel_threshold", (x + y) / 30);
@@ -69,7 +69,7 @@ void PixelateEffect::update(float x, float y)
  * @author Arthur
  * @date 28/04/16
  */
-void PixelateEffect::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void PixelShader::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     if (m_isLoaded)
     {

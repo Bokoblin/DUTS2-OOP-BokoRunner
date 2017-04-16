@@ -38,15 +38,10 @@ Player::~Player()
 
 int Player::getState() const { return m_state; }
 int Player::getLife() const { return m_life; }
-bool Player::getFlyingState() const { return m_flying; }
-bool Player::getJumpState() const { return m_jumping; }
-bool Player::getDecelerationState() const { return m_inDeceleration; }
-std::pair<float,float> Player::getVector() const { return m_vectorBall; }
 
 
 //=== Setters
 
-void Player::setFlyingState(bool state) { m_flying = state; }
 void Player::setJumpState(bool state) {  m_jumping = state; }
 void Player::setDecelerationState(bool state) {  m_inDeceleration = state; }
 void Player::setLife(int new_life)

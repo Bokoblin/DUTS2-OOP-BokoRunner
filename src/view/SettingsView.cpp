@@ -1,4 +1,5 @@
 #include "SettingsView.h"
+#include "../utils/DialogBuilder.h"
 
 using namespace std;
 
@@ -43,7 +44,7 @@ SettingsView::SettingsView(sf::RenderWindow *window, TextHandler *textHandler, S
     m_buttonList.push_back(m_menuMusicButton);
     m_buttonList.push_back(m_gameMusicButton);
 
-    m_confirmDialog = new Dialog(m_width/2-140, m_height/2-120, 280, 200, textHandler, "confirm");
+    m_confirmDialog = new Dialog(m_width/2-140, m_height/2-120, 280, 200, *textHandler, "confirm");
     m_confirmDialog->hide();
 
     handleMusic();
@@ -96,12 +97,12 @@ void SettingsView::loadImages()
 
     m_menuMusicButton = new Button(m_width/2+RADIOS_MARGIN, 420, 25, 25, "config_music_menu",
                                    GAME_BUTTONS_IMAGE, clipRect_music);
-    m_menuMusicButton->resize(25,25);
+    m_menuMusicButton->resize(25, 25);
     m_menuMusicButton->setLabelPosition(RIGHT);
 
     m_gameMusicButton = new Button(m_width/2+RADIOS_MARGIN, 460, 25, 25, "config_music_game",
                                    GAME_BUTTONS_IMAGE, clipRect_music);
-    m_gameMusicButton->resize(25,25);
+    m_gameMusicButton->resize(25, 25);
     m_gameMusicButton->setLabelPosition(RIGHT);
 
 
@@ -119,7 +120,7 @@ void SettingsView::loadImages()
     clipRectReset.push_back(sf::IntRect( 0, 100, 150, 40));
     clipRectReset.push_back(sf::IntRect(151, 100, 150, 40));
     m_resetRectButton = new Button(m_width/2-75, 450, 150, 40, "stats_app_reset", RECT_BUTTONS_IMAGE, clipRectReset);
-    m_resetRectButton->resize(170,45);
+    m_resetRectButton->resize(170, 45);
 
 
     //=== Initialize Logo sprites
@@ -164,7 +165,7 @@ void SettingsView::synchronize()
         button->sync(m_settings->getDataBase());
 
 
-    m_confirmDialog->sync(m_settings->getDataBase());
+    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, *m_settings->getDataBase());
 
 
     //=== Update and sync indicators
@@ -378,15 +379,15 @@ void SettingsView::handleMusic()
     if (m_settings->getDataBase()->isMenuMusicEnabled())
     {
         std::vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect(0,200,50,50));
-        clipRect.push_back(sf::IntRect(50,200,50,50));
+        clipRect.push_back(sf::IntRect(0, 200, 50, 50));
+        clipRect.push_back(sf::IntRect(50, 200, 50, 50));
         m_menuMusicButton->setClipRectArray(clipRect);
     }
     else
     {
         std::vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect(0,250,50,50));
-        clipRect.push_back(sf::IntRect(50,250,50,50));
+        clipRect.push_back(sf::IntRect(0, 250, 50, 50));
+        clipRect.push_back(sf::IntRect(50, 250, 50, 50));
         m_menuMusicButton->setClipRectArray(clipRect);
     }
 
@@ -395,15 +396,16 @@ void SettingsView::handleMusic()
     if (m_settings->getDataBase()->isGameMusicEnabled())
     {
         std::vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect(0,200,50,50));
-        clipRect.push_back(sf::IntRect(50,200,50,50));
+        clipRect.push_back(sf::IntRect(0, 200, 50, 50));
+        clipRect.push_back(sf::IntRect(50, 200, 50, 50));
         m_gameMusicButton->setClipRectArray(clipRect);
     }
     else
     {
         std::vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect(0,250,50,50));
-        clipRect.push_back(sf::IntRect(50,250,50,50));
+        clipRect.push_back(sf::IntRect(0, 250, 50, 50));
+        clipRect.push_back(sf::IntRect(50, 250, 50, 50));
         m_gameMusicButton->setClipRectArray(clipRect);
     }
 }
+

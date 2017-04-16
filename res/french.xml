@@ -77,7 +77,7 @@
                   &#xA;seront définitivement supprimées." />
 
     <!--  ShopItems strings -->
-    <string name="shop_doubler_name" value="Doubleur de piece" />
+    <string name="shop_doubler_name" value="Doubleur de pièce" />
     <string name="shop_doubler_desc" value="Double le nombre &#xA;de pieces collectées" />
     <string name="shop_shieldPlus_name" value="Bouclier+" />
     <string name="shop_shieldPlus_desc" value="Protege le joueur d'une &#xA;collision supplémentaire" />

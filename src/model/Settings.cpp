@@ -88,3 +88,4 @@ void Settings::checkItemsAvailability()
  */
 void Settings::nextStep()
 {}
+

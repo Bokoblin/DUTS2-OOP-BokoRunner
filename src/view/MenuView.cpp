@@ -70,11 +70,11 @@ MenuView::~MenuView()
  */
 void MenuView::loadImages()
 {
-    m_farBackground = new SlidingBackground(1200, m_height, 1, DEFAULT_FAR_HILL_BACKGROUND);
-    m_nearBackground = new SlidingBackground(1200, m_height, 2, DEFAULT_NEAR_HILL_BACKGROUND);
+    m_farBackground = new ScrollingBackground(1200, m_height, 1, DEFAULT_FAR_HILL_BACKGROUND);
+    m_nearBackground = new ScrollingBackground(1200, m_height, 2, DEFAULT_NEAR_HILL_BACKGROUND);
 
     m_titleGraphic = new GraphicElement(m_width/2-200, m_height/6, 400, 200, TITLE_IMAGE);
-    m_titleGraphic->resize(400,200);
+    m_titleGraphic->resize(400, 200);
 
     //=== Initialize PLAY and QUIT buttons
 

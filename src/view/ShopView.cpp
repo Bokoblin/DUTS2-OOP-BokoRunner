@@ -1,4 +1,5 @@
 #include "ShopView.h"
+#include "../utils/DialogBuilder.h"
 
 /**
  * Parameterized Constructor
@@ -11,7 +12,7 @@ ShopView::ShopView(sf::RenderWindow *window, TextHandler *textHandler, Shop *sho
 {
     loadImages();
     createCards();
-    m_buyDialog = new Dialog();
+    m_buyDialog = new ShopDialog();
 }
 
 
@@ -44,7 +45,7 @@ void ShopView::loadImages()
     //=== Initialize COIN Sprite
 
     m_coinSprite = new GraphicElement(m_width/2-60, 53, 25, 25);
-    m_coinSprite->setTextureFromImage(BONUS_IMAGE, sf::IntRect(0,0,50,50));
+    m_coinSprite->setTextureFromImage(BONUS_IMAGE, sf::IntRect(0, 0, 50, 50));
     m_coinSprite->resize(25, 25);
 
     //=== Initialize HOME form buttons
@@ -213,8 +214,8 @@ bool ShopView::treatEvents(sf::Event event)
                      && card->isShowing() && !card->getItem()->isBought() )
                 {
                     delete m_buyDialog;
-                    m_buyDialog = new Dialog(m_width/2-125, m_height/2-100, 250, 200,  card->getItem(), m_textHandler, "shopAskDialog");
-                    m_buyDialog->sync(m_shop->getDataBase());
+                    m_buyDialog = new ShopDialog(m_width/2-125, m_height/2-100, 250, 200, *m_textHandler, "shopAskDialog", card->getItem());
+                    DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, *m_shop->getDataBase());
                     m_buyDialog->show();
                 }
         }
@@ -222,19 +223,19 @@ bool ShopView::treatEvents(sf::Event event)
         {
             if ( m_buyDialog->getOkButtonText().contains(MOUSE_POSITION) )
             {
-                if (m_buyDialog->getId() == "shopAskDialog" )
+                if (m_buyDialog->getContext() == "shopAskDialog" )
                 {
                     if (m_shop->buyItem(m_buyDialog->getLinkedShopItem() ))
                     {
                         delete m_buyDialog;
-                        m_buyDialog = new Dialog(m_width/2-125, m_height/2-50, 250, 100, m_textHandler, "shopSuccess");
-                        m_buyDialog->sync(m_shop->getDataBase());
+                        m_buyDialog = new ShopDialog(m_width/2-125, m_height/2-50, 250, 100, *m_textHandler, "shopSuccess");
+                        DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, *m_shop->getDataBase());
                     }
                     else
                     {
                         delete m_buyDialog;
-                        m_buyDialog = new Dialog(m_width/2-125, m_height/2-50, 250, 100, m_textHandler, "shopFailure");
-                        m_buyDialog->sync(m_shop->getDataBase());
+                        m_buyDialog = new ShopDialog(m_width/2-125, m_height/2-50, 250, 100, *m_textHandler, "shopFailure");
+                        DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, *m_shop->getDataBase());
                     }
                 }
                 else

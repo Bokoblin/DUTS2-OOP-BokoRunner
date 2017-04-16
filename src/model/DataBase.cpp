@@ -12,7 +12,7 @@ using namespace std;
 DataBase::DataBase() :
     m_currentCoinsNumber{0}, m_currentDistance{0}, m_currentFlattenedEnemies{0},
     m_currentScore{0}, m_isMenuMusicEnabled{false}, m_isGameMusicEnabled{false},
-    m_appState{INTRO}
+    m_appState{INTRO}, m_scoreBonusFlattenedEnemies{0}
 {
     if (!checkConfigFileIntegrity())
         createConfigFile();
@@ -513,7 +513,7 @@ void DataBase::clearAppData()
  * @param description to fetch corresponding content
  * @return text string
  */
-string DataBase::getTextValueFromStringsFile(string description) const
+string DataBase::getTextValueFromStringsFile(const string &description) const
 {
     pugi::xml_document doc;
     doc.load_file(getLanguageFile().c_str());
@@ -571,3 +571,4 @@ string DataBase::loadLeaderboardStringFromArray(Difficulty difficulty) const
     }
     return result;
 }
+

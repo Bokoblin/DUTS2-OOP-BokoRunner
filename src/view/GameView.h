@@ -16,22 +16,16 @@ limitations under the License.
 #ifndef GAME_VIEW_H
 #define GAME_VIEW_H
 
-#include "PixelateEffect.h"
+#include "PixelShader.h"
 #include "AbstractView.h"
 #include "../model/GameModel.h"
-
-#define KEYBOARD_LEFT  (sf::Keyboard::isKeyPressed(sf::Keyboard::A) \
-                       || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
-#define KEYBOARD_RIGHT (sf::Keyboard::isKeyPressed(sf::Keyboard::D) \
-                       || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) )
-#define KEYBOARD_JUMP  (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) \
-                       || sf::Keyboard::isKeyPressed(sf::Keyboard::W ) )
+#include "../utils/definitions.h"
 
 
 /**
  * GameView Class
  * @author Arthur, Florian
- * @date 21/02/16 - 29/01/17
+ * @date 21/02/16 - 16/04/17
  */
 class GameView : public AbstractView
 {
@@ -55,35 +49,35 @@ public:
 private:
     //=== ATTRIBUTES
     GameModel *m_game; //to not delete in dtor
-    PixelateEffect *m_pixelShader;
+    PixelShader *m_pixelShader;
     float m_xPixelIntensity;
     float m_yPixelIntensity;
     const int TRANSITION_SPEED = 10;
     const int PAUSE_FORM_X = 30;
 
     //Game Graphic Elements
-    SlidingBackground *m_farSlBackground;
-    GraphicElement *m_farBgTransitionSprite;
-    SlidingBackground *m_nearSlBackground;
-    GraphicElement *m_bottomBarSprite;
-    GraphicElement *m_lifeBoxSprite;
-    GraphicElement *m_remainingLifeSprite;
-    GraphicElement *m_shieldAnimSprite;
-    AnimatedGraphicElement *m_playerAnimSprite; //deleted in map array
-    AnimatedGraphicElement *m_stdEnemyAnimSprite;
-    AnimatedGraphicElement *m_totemEnemyAnimSprite;
-    AnimatedGraphicElement *m_blockEnemyAnimSprite;
-    AnimatedGraphicElement *m_coinAnimSprite;
-    AnimatedGraphicElement *m_PVPlusBonusAnimSprite;
-    AnimatedGraphicElement *m_megaBonusAnimSprite;
-    AnimatedGraphicElement *m_flyBonusAnimSprite;
-    AnimatedGraphicElement *m_slowSpeedBonusAnimSprite;
-    AnimatedGraphicElement *m_shieldBonusAnimSprite;
+    ScrollingBackground *m_farScrollingBackground;
+    ScrollingBackground *m_nearScrollingBackground;
+    GraphicElement *m_farTransitionBackground;
+    GraphicElement *m_bottomBarImage;
+    GraphicElement *m_lifeBoxImage;
+    GraphicElement *m_remainingLifeImage;
+    GraphicElement *m_shieldImage;
+    Sprite *m_playerSprite;
+    Sprite *m_stdEnemySprite;
+    Sprite *m_totemEnemySprite;
+    Sprite *m_blockEnemySprite;
+    Sprite *m_coinSprite;
+    Sprite *m_PVPlusBonusSprite;
+    Sprite *m_megaBonusSprite;
+    Sprite *m_flyBonusSprite;
+    Sprite *m_slowSpeedBonusSprite;
+    Sprite *m_shieldBonusSprite;
 
     //Pause and End Graphic Elements
-    GraphicElement *m_pauseBackgroundSprite;
-    GraphicElement *m_distanceIconSprite;
-    GraphicElement *m_endBackgroundSprite;
+    GraphicElement *m_pauseBackground;
+    GraphicElement *m_distanceIcon;
+    GraphicElement *m_endBackground;
     Button *m_resumeGameButton;
     Button *m_restartGameButton;
     Button *m_goToHomeButton;
@@ -96,7 +90,7 @@ private:
     sf::Music m_destructedEnemiesMusic;
 
     //Containers
-    std::map<MovableElement*, GraphicElement*> m_MovableToGraphicElementMap;
+    std::map<MovableElement*, Sprite*> m_movableElementToSpriteMap;
 };
 
 

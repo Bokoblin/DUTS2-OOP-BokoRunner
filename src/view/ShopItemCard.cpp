@@ -22,7 +22,7 @@ ShopItemCard::ShopItemCard(int num, ShopItem *item, TextHandler *textHandler) :
     m_title.setTextFont( textHandler->getCondensedFont(), 20, sf::Color::White );
     std::string utf8_string = item->getName();
     m_title.setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
-    m_title.setPositionSelfCentered( getPosition().x + m_width/2 , getPosition().y + 20);
+    m_title.setPositionSelfCentered( getPosition().x + m_width/2, getPosition().y + 20);
 
     m_content.setTextFont( textHandler->getCondensedFont(), 16, sf::Color::White );
     utf8_string = item->getDescription();
@@ -116,3 +116,4 @@ void ShopItemCard::draw(sf::RenderWindow *window) const
         m_boughtButton->draw(window);
     }
 }
+

@@ -19,10 +19,7 @@ limitations under the License.
 #include "../model/ShopItem.h"
 #include "Button.h"
 #include "TextHandler.h"
-
-#define RED_BUTTON_UP sf::IntRect( 0, 100, 150, 40)
-#define GREEN_BUTTON_UP sf::IntRect(0, 178, 150, 43)
-#define GREEN_BUTTON_DOWN sf::IntRect(151, 179, 150, 40)
+#include "../utils/definitions.h"
 
 
 /**

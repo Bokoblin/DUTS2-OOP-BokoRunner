@@ -20,12 +20,12 @@ RadioButton::RadioButton(float x, float y, float w, float h) :
  * @author Arthur
  * @date 23/12/16 - 02/01/17
  */
-RadioButton::RadioButton(float x, float y, float w, float h, const string &label) :
-        Button(x, y, w, h, label)
+RadioButton::RadioButton(float x, float y, float width, float height, const string &label) :
+        Button(x, y, width, height, label)
 {
     setRadioClipRect();
 
-    if ( label != "indicator")
+    if (label != "indicator")
         setTextureFromImage(RADIO_BUTTONS_IMAGE);
     else
         setTextureFromImage(INDICATOR_IMAGE);
@@ -56,17 +56,17 @@ RadioButton::~RadioButton()
  */
 void RadioButton::sync()
 {
-    if ( !m_isDisabled && m_isActive && !m_isPressed )
+    if (!m_isDisabled && m_isActive && !m_isPressed)
         this->setTextureRect(m_clipRectArray[0]);
-    if ( !m_isDisabled && m_isActive && m_isPressed )
+    if (!m_isDisabled && m_isActive && m_isPressed)
         this->setTextureRect(m_clipRectArray[1]);
-    if ( !m_isDisabled && !m_isActive && !m_isPressed )
+    if (!m_isDisabled && !m_isActive && !m_isPressed)
         this->setTextureRect(m_clipRectArray[2]);
-    if ( !m_isDisabled && !m_isActive && m_isPressed )
+    if (!m_isDisabled && !m_isActive && m_isPressed)
         this->setTextureRect(m_clipRectArray[3]);
-    if ( m_isDisabled && m_isActive)
+    if (m_isDisabled && m_isActive)
         this->setTextureRect(m_clipRectArray[4]);
-    if ( m_isDisabled && !m_isActive)
+    if (m_isDisabled && !m_isActive)
         this->setTextureRect(m_clipRectArray[5]);
 }
 
@@ -94,12 +94,12 @@ void RadioButton::sync(DataBase *dataBase)
 void RadioButton::setRadioClipRect()
 {
     vector<sf::IntRect> clipRect;
-    clipRect.push_back(sf::IntRect( 0, 0, 50, 50) );
-    clipRect.push_back(sf::IntRect( 50, 0, 50, 50) );
-    clipRect.push_back(sf::IntRect( 0, 50, 50, 50) );
-    clipRect.push_back(sf::IntRect( 50, 50, 50, 50) );
-    clipRect.push_back(sf::IntRect( 0, 100, 50, 50) );
-    clipRect.push_back(sf::IntRect( 0, 150, 50, 50) );
+    clipRect.push_back(sf::IntRect(0, 0, 50, 50));
+    clipRect.push_back(sf::IntRect(50, 0, 50, 50));
+    clipRect.push_back(sf::IntRect(0, 50, 50, 50));
+    clipRect.push_back(sf::IntRect(50, 50, 50, 50));
+    clipRect.push_back(sf::IntRect(0, 100, 50, 50));
+    clipRect.push_back(sf::IntRect(0, 150, 50, 50));
 
     setClipRectArray(clipRect);
     setTextureRect(m_clipRectArray[m_currentClipRect]);

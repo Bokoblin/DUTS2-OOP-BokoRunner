@@ -40,7 +40,7 @@ vector<ShopItem*> Shop::getShopItemsArray() const { return m_shopItemsArray; }
  */
 bool Shop::buyItem(ShopItem *item)
 {
-    if ( !item->isBought() && item->getPrice() <= m_dataBase->getWallet() )
+    if (!item->isBought() && item->getPrice() <= m_dataBase->getWallet())
     {
         //=== update objects
 
@@ -57,7 +57,7 @@ bool Shop::buyItem(ShopItem *item)
 
         for (pugi::xml_node shopItem: shop.children("shopItem"))
         {
-            if ( string(shopItem.attribute("id").value()) == item->getId()  )
+            if (string(shopItem.attribute("id").value()) == item->getId())
             {
                 shopItem.attribute("bought").set_value(true);
                 doc.save_file(CONFIG_FILE.c_str());
@@ -92,10 +92,10 @@ void Shop::fetchBuyableItemsFromFile()
         string desc = m_dataBase->getTextValueFromStringsFile(id + "_desc");
         int price = atoi(shopItem.attribute("price").value());
         string result = shopItem.attribute("bought").value();
-        if (result == "true" ) isBought=true;
+        if (result == "true") isBought=true;
 
         //Adds item to array
-        m_shopItemsArray.push_back( new ShopItem(name, desc, price, isBought) );
+        m_shopItemsArray.push_back(new ShopItem(name, desc, price, isBought));
     }
 }
 

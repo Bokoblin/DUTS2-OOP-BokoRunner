@@ -33,7 +33,7 @@ public:
     //=== CTORs / DTORs
     Sprite(float x, float y, float width, float height, const std::string &image,
            const std::vector<sf::IntRect> &clipRect);
-    Sprite( const Sprite& other);
+    Sprite(const Sprite& other);
     virtual ~Sprite();
 
     //=== SETTERS

@@ -37,7 +37,7 @@ class AbstractView
         //=== CTORs / DTORs
         AbstractView(sf::RenderWindow *window, TextHandler *textHandler);
         AbstractView(float width, float height, sf::RenderWindow *window, TextHandler *textHandler);
-        AbstractView( const AbstractView& myView ) = delete;
+        AbstractView(const AbstractView& myView) = delete;
         virtual ~AbstractView();
 
         //=== METHODS

@@ -27,10 +27,10 @@ ShopView::~ShopView()
     delete m_homeFormButton;
     delete m_buyDialog;
 
-    for ( auto shopItemCard : m_shopItemCardsArray)
+    for (auto shopItemCard : m_shopItemCardsArray)
         delete shopItemCard;
 
-    for ( auto it : m_pageIndicators)
+    for (auto it : m_pageIndicators)
         delete it.second;
 }
 
@@ -51,8 +51,8 @@ void ShopView::loadImages()
     //=== Initialize HOME form buttons
 
     std::vector<sf::IntRect> clipRectHome;
-    clipRectHome.push_back(sf::IntRect( 0, 50, 50, 50));
-    clipRectHome.push_back(sf::IntRect( 51, 50, 50, 50));
+    clipRectHome.push_back(sf::IntRect(0, 50, 50, 50));
+    clipRectHome.push_back(sf::IntRect(51, 50, 50, 50));
     m_homeFormButton = new Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
 }
 
@@ -65,7 +65,7 @@ void ShopView::createCards()
 {
     //=== Create Item Cards
     int i = 0;
-    for ( ShopItem *item : m_shop->getShopItemsArray() )
+    for (ShopItem *item : m_shop->getShopItemsArray())
     {
         m_shopItemCardsArray.push_back(new ShopItemCard(i, item, m_textHandler));
         i++;
@@ -74,13 +74,13 @@ void ShopView::createCards()
     //=== Create Pages Indicator
 
     m_totalIndicator = (int) (m_shop->getShopItemsArray().size() / 3);
-    if ( m_shop->getShopItemsArray().size()%3 != 0)
+    if (m_shop->getShopItemsArray().size()%3 != 0)
         m_totalIndicator++;
 
     for (int j=0; j < m_totalIndicator; j++)
     {
         m_pageIndicators[j] = new RadioButton(0, 580, 15, 15, "indicator");
-        m_pageIndicators[j]->setPosition( m_width/2 - 10*m_totalIndicator + 20*j, 550 );
+        m_pageIndicators[j]->setPosition(m_width/2 - 10*m_totalIndicator + 20*j, 550);
         m_pageIndicators[j]->resize(22, 22);
     }
 }
@@ -95,12 +95,12 @@ void ShopView::createCards()
 void ShopView::syncCards() const
 {
     //display only 3 cards linked to the current page indicator
-    for( ShopItemCard *card : m_shopItemCardsArray)
+    for (ShopItemCard *card : m_shopItemCardsArray)
     {
         card->sync(m_shop->getDataBase());
-        if( card->getId() == 0 + 3*m_currentIndicator
+        if(card->getId() == 0 + 3*m_currentIndicator
             || card->getId() == 1 + 3*m_currentIndicator
-            || card->getId() == 2 + 3*m_currentIndicator )
+            || card->getId() == 2 + 3*m_currentIndicator)
         {
             card->show();
         }
@@ -124,7 +124,7 @@ void ShopView::synchronize()
 
     syncCards();
 
-    for( auto it : m_pageIndicators)
+    for (auto it : m_pageIndicators)
     {
         (it.second)->sync();
         it.first == m_currentIndicator ?
@@ -144,10 +144,10 @@ void ShopView::draw() const
 
     //=== Graphic Elements drawing
 
-    for( ShopItemCard *card : m_shopItemCardsArray)
+    for (ShopItemCard *card : m_shopItemCardsArray)
         card->draw(m_window);
 
-    for( auto it : m_pageIndicators)
+    for (auto it : m_pageIndicators)
             m_window->draw(*it.second);
     m_window->draw(*m_homeFormButton);
     m_window->draw(*m_coinSprite);
@@ -170,7 +170,7 @@ bool ShopView::treatEvents(sf::Event event)
 {
     bool stop_shop = false;
 
-    if (!m_buyDialog->isShowing() )
+    if (!m_buyDialog->isVisible())
     {
         if (MOUSE_LEFT_PRESSED_EVENT) {
             if (m_homeFormButton->contains(MOUSE_POSITION))
@@ -182,7 +182,7 @@ bool ShopView::treatEvents(sf::Event event)
 
             for (auto card : m_shopItemCardsArray)
                 if (card->getBuyButton()->contains(MOUSE_POSITION)
-                    && card->isShowing() && !m_buyDialog->isShowing())
+                    && card->isVisible() && !m_buyDialog->isVisible())
                     card->getBuyButton()->setPressed(true);
         }
     }
@@ -192,26 +192,26 @@ bool ShopView::treatEvents(sf::Event event)
         //=== Reset buttons
 
         m_homeFormButton->setPressed(false);
-        for ( auto card : m_shopItemCardsArray )
+        for (auto card : m_shopItemCardsArray)
             card->getBuyButton()->setPressed(false);
-        for( auto it : m_pageIndicators)
+        for (auto it : m_pageIndicators)
             it.second->setPressed(false);
 
 
         //=== handle mouse up on a button
 
-        if (!m_buyDialog->isShowing() )
+        if (!m_buyDialog->isVisible())
         {
-            if ( m_homeFormButton->contains(MOUSE_POSITION) )
+            if (m_homeFormButton->contains(MOUSE_POSITION))
                 stop_shop = true;
 
-            for( auto it : m_pageIndicators)
-                if ( it.second->contains(MOUSE_POSITION) )
+            for (auto it : m_pageIndicators)
+                if (it.second->contains(MOUSE_POSITION))
                     m_currentIndicator = it.first;
 
-            for ( auto card : m_shopItemCardsArray )
-                if ( card->getBuyButton()->contains(MOUSE_POSITION)
-                     && card->isShowing() && !card->getItem()->isBought() )
+            for (auto card : m_shopItemCardsArray)
+                if (card->getBuyButton()->contains(MOUSE_POSITION)
+                     && card->isVisible() && !card->getItem()->isBought())
                 {
                     delete m_buyDialog;
                     m_buyDialog = new ShopDialog(m_width/2-125, m_height/2-100, 250, 200, *m_textHandler, "shopAskDialog", card->getItem());
@@ -221,11 +221,11 @@ bool ShopView::treatEvents(sf::Event event)
         }
         else
         {
-            if ( m_buyDialog->getOkButtonText().contains(MOUSE_POSITION) )
+            if (m_buyDialog->getOkButtonText().contains(MOUSE_POSITION))
             {
-                if (m_buyDialog->getContext() == "shopAskDialog" )
+                if (m_buyDialog->getContext() == "shopAskDialog")
                 {
-                    if (m_shop->buyItem(m_buyDialog->getLinkedShopItem() ))
+                    if (m_shop->buyItem(m_buyDialog->getLinkedShopItem()))
                     {
                         delete m_buyDialog;
                         m_buyDialog = new ShopDialog(m_width/2-125, m_height/2-50, 250, 100, *m_textHandler, "shopSuccess");
@@ -242,7 +242,7 @@ bool ShopView::treatEvents(sf::Event event)
                     m_buyDialog->hide();
             }
 
-            else if ( m_buyDialog->getCancelButtonText().contains(MOUSE_POSITION)
+            else if (m_buyDialog->getCancelButtonText().contains(MOUSE_POSITION)
                  || !m_buyDialog->contains(MOUSE_POSITION))
             {
                 m_buyDialog->hide();

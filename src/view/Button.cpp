@@ -123,7 +123,7 @@ void Button::setActivated(bool state) { m_isActive = state; }
 void Button::setDisabled(bool state) { m_isDisabled = state; }
 void Button::setClipRectArray(std::vector<sf::IntRect> crA) { m_clipRectArray = crA; }
 void Button::setPositionSelfCentered(double x, double y) {
-    setPosition( (float)(x-getGlobalBounds().width/2), (float)y );
+    setPosition((float)(x-getGlobalBounds().width/2), (float)y);
 }
 void Button::setLabelPosition(LabelPosition labelPosition) { m_labelPosition = labelPosition; }
 
@@ -152,7 +152,7 @@ void Button::sync(DataBase *dataBase)
 
     //=== Sync label
 
-    if ( m_label.getDescription() != "")
+    if (m_label.getDescription() != "")
     {
         std::string utf8_string = dataBase->getTextValueFromStringsFile(m_label.getDescription());
         m_label.setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
@@ -195,7 +195,7 @@ void Button::sync(DataBase *dataBase)
  */
 void Button::draw(sf::RenderWindow *window) const
 {
-    if ( isShowing() )
+    if (isVisible())
     {
         window->draw(*this);
         window->draw(m_label);
@@ -209,7 +209,7 @@ void Button::draw(sf::RenderWindow *window) const
  * @date 23/12/16
  */
 bool Button::contains(float x, float y) const {
-    return !isDisabled() && isShowing() &&
+    return !isDisabled() && isVisible() &&
            (getGlobalBounds().contains(sf::Vector2f(x, y))
             || m_label.getGlobalBounds().contains(sf::Vector2f(x, y)));
 }

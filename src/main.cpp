@@ -24,34 +24,34 @@ limitations under the License.
  */
 int main()
 {
-    sf::RenderWindow window( sf::VideoMode(SCREEN_WIDTH,
-            SCREEN_HEIGHT, SCREEN_BPP), APP_TITLE, sf::Style::None );
+    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP),
+                            APP_TITLE, sf::Style::None);
     window.setFramerateLimit(FRAMERATE);
 
     DataBase dataBase;
     TextHandler textHandler(&dataBase, SCREEN_WIDTH, SCREEN_HEIGHT);
     sf::Event event = sf::Event();
-
-    while(window.isOpen() )
+    dataBase.setAppState(MENU); //TODO debug only
+    while(window.isOpen())
     {
-        if  ( dataBase.getAppState() == INTRO )
+        if (dataBase.getAppState() == INTRO)
         {
             IntroModel introModel(&dataBase);
             IntroView introView(INTRO_WIDTH, INTRO_HEIGHT, &window, &textHandler, &introModel);
 
-            while( dataBase.getAppState() == INTRO && introView.treatEvents(event) )
+            while(dataBase.getAppState() == INTRO && introView.treatEvents(event))
             {
                 introView.synchronize();
                 introView.draw();
             }
         }
 
-        if  ( dataBase.getAppState() == MENU )
+        if (dataBase.getAppState() == MENU)
         {
             MenuModel menuModel(&dataBase);
             MenuView menuView(SCREEN_WIDTH, SCREEN_HEIGHT, &window, &textHandler, &menuModel);
 
-            while( dataBase.getAppState() == MENU && menuView.treatEvents(event)  )
+            while(dataBase.getAppState() == MENU && menuView.treatEvents(event))
             {
                 menuModel.nextStep();
                 menuView.synchronize();
@@ -59,18 +59,18 @@ int main()
             }
         }
 
-        if  ( dataBase.getAppState() == GAME )
+        if (dataBase.getAppState() == GAME)
         {
             GameModel gameModel(SCREEN_WIDTH, SCREEN_HEIGHT, &dataBase);
             GameView gameView(&window, &textHandler, &gameModel);
 
-            while( dataBase.getAppState() == GAME && gameView.treatEvents(event) )
+            while(dataBase.getAppState() == GAME && gameView.treatEvents(event))
             {
                 gameModel.nextStep();
                 gameView.synchronize();
                 gameView.draw();
             }
-            if ( dataBase.getAppState() == RESET_GAME )
+            if (dataBase.getAppState() == RESET_GAME)
             {
                 dataBase.setAppState(GAME);
             }

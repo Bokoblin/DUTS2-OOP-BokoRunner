@@ -27,10 +27,10 @@ Dialog::Dialog(float x, float y, float w, float h, const TextHandler &textHandle
     //=== Initialize text
 
     m_title.setTextFont(textHandler.getBoldFont(), 19, sf::Color::Black);
-    m_title.setPosition( x + 24, y + 24);
+    m_title.setPosition(x + 24, y + 24);
 
     m_content.setTextFont(textHandler.getRegularFont(), 15, sf::Color::Black);
-    m_content.setPosition( x + 24, y + h/3);
+    m_content.setPosition(x + 24, y + h/3);
 
     m_cancelButtonText.setTextFont(textHandler.getBoldFont(), 14, MATERIAL_TEAL_COLOR);
     m_cancelButtonText.setPosition((float) (x + 0.5*m_width), y + h - 30);
@@ -69,7 +69,7 @@ void Dialog::setOkButtonText(const std::string &ok) { m_okButtonText.setString(o
  */
 void Dialog::draw(sf::RenderWindow *window) const
 {
-    if ( isShowing() )
+    if (isVisible())
     {
         window->draw(*this);
         window->draw(m_title);

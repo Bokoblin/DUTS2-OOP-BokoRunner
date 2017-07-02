@@ -59,9 +59,9 @@ void Sprite::sync()
 {
     system_clock::duration duration = system_clock::now() - m_lastAnimationTime;
 
-    if ( duration > milliseconds(ANIMATION_DELAY) )
+    if (duration > milliseconds(ANIMATION_DELAY))
     {
-        if (m_currentClipRect == m_clipRectArray.size()-1 )
+        if (m_currentClipRect == m_clipRectArray.size()-1)
             m_currentClipRect = 0;
         else
             m_currentClipRect++;

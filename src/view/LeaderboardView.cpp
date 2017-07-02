@@ -37,7 +37,7 @@ void LeaderboardView::loadImages()
     //=== Initialize CLEAR button
 
     vector<sf::IntRect> clipRect_clear;
-    clipRect_clear.push_back(sf::IntRect( 0, 100, 150, 40));
+    clipRect_clear.push_back(sf::IntRect(0, 100, 150, 40));
     clipRect_clear.push_back(sf::IntRect(151, 100, 150, 40));
     m_clearLbRectButton = new Button(m_width / 2 - 75, 540, 150, 40, "leaderboard_clear_button",
                                      RECT_BUTTONS_IMAGE, clipRect_clear);
@@ -45,8 +45,8 @@ void LeaderboardView::loadImages()
     //=== Initialize HOME form button
 
     std::vector<sf::IntRect> clipRect_home;
-    clipRect_home.push_back(sf::IntRect( 0, 50, 50, 50));
-    clipRect_home.push_back(sf::IntRect( 51, 50, 50, 50));
+    clipRect_home.push_back(sf::IntRect(0, 50, 50, 50));
+    clipRect_home.push_back(sf::IntRect(51, 50, 50, 50));
     m_homeFormButton = new Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRect_home);
 }
 
@@ -73,7 +73,7 @@ void LeaderboardView::synchronize()
  */
 void LeaderboardView::draw() const
 {
-    m_window->clear( MINE_GREY_COLOR );
+    m_window->clear(MINE_GREY_COLOR);
 
     //=== Graphic Elements drawing
 
@@ -98,10 +98,10 @@ bool LeaderboardView::treatEvents(sf::Event event)
 
     if (MOUSE_LEFT_PRESSED_EVENT)
     {
-        if (m_homeFormButton->contains(MOUSE_POSITION) )
+        if (m_homeFormButton->contains(MOUSE_POSITION))
             m_homeFormButton->setPressed(true);
 
-        if (m_clearLbRectButton->contains(MOUSE_POSITION) )
+        if (m_clearLbRectButton->contains(MOUSE_POSITION))
             m_clearLbRectButton->setPressed(true);
     }
 
@@ -114,11 +114,11 @@ bool LeaderboardView::treatEvents(sf::Event event)
 
         //=== handle mouse up on a button
 
-        if (m_homeFormButton->contains(MOUSE_POSITION) )
+        if (m_homeFormButton->contains(MOUSE_POSITION))
         {
             stop_leaderboard = true;
         }
-        if (m_clearLbRectButton->contains(MOUSE_POSITION) )
+        if (m_clearLbRectButton->contains(MOUSE_POSITION))
         {
             m_leaderboard->getDataBase()->clearLeaderboard();
             m_textHandler->syncMenuLeaderboardText();

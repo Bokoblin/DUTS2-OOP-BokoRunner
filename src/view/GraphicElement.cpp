@@ -6,8 +6,8 @@
  * @author Arthur
  * @date 21/02/16 - 16/04/17
  */
-GraphicElement::GraphicElement( float w, float h) :
-        m_width{w}, m_height{h}, m_isShowing{true}, m_alpha{255}
+GraphicElement::GraphicElement(float width, float height) :
+        m_width{width}, m_height{height}, m_isShowing{true}, m_alpha{255}
 {}
 
 
@@ -17,8 +17,8 @@ GraphicElement::GraphicElement( float w, float h) :
  * @author Arthur
  * @date 02/01/17 - 16/04/17
  */
-GraphicElement::GraphicElement( float x, float y, float w, float h) :
-        m_width{w}, m_height{h}, m_isShowing{true}, m_alpha{255}
+GraphicElement::GraphicElement(float x, float y, float width, float height) :
+        m_width{width}, m_height{height}, m_isShowing{true}, m_alpha{255}
 {
     this->setPosition(x, y);
 }
@@ -47,9 +47,9 @@ GraphicElement::GraphicElement(GraphicElement const& element) :
     Sprite(), m_width(element.m_width), m_height(element.m_height),
     m_isShowing{element.m_isShowing}, m_alpha{element.m_alpha}
 {
-    this->setPosition( element.getPosition() );
-    this->setTexture( *element.getTexture(), true );
-    this->setOrigin( element.getOrigin() );
+    this->setPosition(element.getPosition());
+    this->setTexture(*element.getTexture(), true);
+    this->setOrigin(element.getOrigin());
 }
 
 
@@ -63,7 +63,7 @@ GraphicElement::~GraphicElement()
 
 
 //=== Getters
-bool GraphicElement::isShowing() const { return m_isShowing; }
+bool GraphicElement::isVisible() const { return m_isShowing; }
 int GraphicElement::getAlpha() const { return m_alpha; }
 
 //=== Setters
@@ -98,7 +98,7 @@ void GraphicElement::sync()
  */
 void GraphicElement::draw(sf::RenderWindow *window) const
 {
-    if (isShowing())
+    if (isVisible())
     {
         window->draw(*this);
     }
@@ -128,7 +128,7 @@ void GraphicElement::resize(float width, float height)
  */
 void GraphicElement::setTextureFromImage(std::string image)
 {
-    if (!m_texture.loadFromFile(image) )
+    if (!m_texture.loadFromFile(image))
         std::cerr << "ERROR when loading image file: " << image << std::endl;
     else
     {
@@ -144,7 +144,7 @@ void GraphicElement::setTextureFromImage(std::string image)
  * @date 02/01/17
  */
 void GraphicElement::setTextureFromImage(std::string image, sf::IntRect intRect) {
-    if (!m_texture.loadFromFile(image, intRect) )
+    if (!m_texture.loadFromFile(image, intRect))
         std::cerr << "ERROR when loading image file: " << image << std::endl;
     else
     {
@@ -161,7 +161,7 @@ void GraphicElement::setTextureFromImage(std::string image, sf::IntRect intRect)
  * @date 24/01/16
  */
 bool GraphicElement::contains(float x, float y) const {
-    return isShowing() && getGlobalBounds().contains(sf::Vector2f(x, y));
+    return isVisible() && getGlobalBounds().contains(sf::Vector2f(x, y));
 }
 
 
@@ -185,3 +185,4 @@ void GraphicElement::increaseAlpha(int level)
 {
     setAlpha(getAlpha() + level);
 }
+

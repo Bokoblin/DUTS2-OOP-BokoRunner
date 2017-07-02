@@ -34,10 +34,10 @@ MenuView::MenuView(float width, float height, sf::RenderWindow *window,
 
     loadImages();
 
-    if (m_window->getSize().x != m_width )
+    if (m_window->getSize().x != m_width)
     {
         m_window->create(sf::VideoMode((unsigned int) m_width, (unsigned int) m_height, SCREEN_BPP),
-                         APP_TITLE, sf::Style::Close );
+                         APP_TITLE, sf::Style::Close);
         m_window->setFramerateLimit(30);
         m_window->setPosition(ENVIRONMENT_CENTER);
     }
@@ -79,13 +79,13 @@ void MenuView::loadImages()
     //=== Initialize PLAY and QUIT buttons
 
     vector<sf::IntRect> clipRectPlay;
-    clipRectPlay.push_back(sf::IntRect( 0, 0, 150, 80));
+    clipRectPlay.push_back(sf::IntRect(0, 0, 150, 80));
     clipRectPlay.push_back(sf::IntRect(151, 0, 150, 80));
     m_playRectButton = new Button(m_width/2-75, (float) (m_height / 1.5), 150, 80, "menu_play_button",
                                   RECT_BUTTONS_IMAGE, clipRectPlay);
 
     vector<sf::IntRect> clipRectQuit;
-    clipRectQuit.push_back(sf::IntRect( 0, 0, 150, 80));
+    clipRectQuit.push_back(sf::IntRect(0, 0, 150, 80));
     clipRectQuit.push_back(sf::IntRect(151, 0, 150, 80));
     m_quitRectButton = new Button(m_width/2-75, (float) (m_height / 1.2), 150, 80, "menu_quit_button",
                                   RECT_BUTTONS_IMAGE, clipRectQuit);
@@ -94,23 +94,23 @@ void MenuView::loadImages()
     //=== Initialize COMMANDS, SETTINGS, LEADERBOARD and SHOP form buttons
 
     vector<sf::IntRect> clipRectCommands;
-    clipRectCommands.push_back(sf::IntRect( 0, 200, 50, 50));
-    clipRectCommands.push_back(sf::IntRect( 51, 200, 50, 50));
+    clipRectCommands.push_back(sf::IntRect(0, 200, 50, 50));
+    clipRectCommands.push_back(sf::IntRect(51, 200, 50, 50));
     m_commandsFormButton = new Button(20, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectCommands);
 
     vector<sf::IntRect> clipRectSettings;
-    clipRectSettings.push_back(sf::IntRect( 0, 0, 50, 50));
-    clipRectSettings.push_back(sf::IntRect( 51, 0, 50, 50));
+    clipRectSettings.push_back(sf::IntRect(0, 0, 50, 50));
+    clipRectSettings.push_back(sf::IntRect(51, 0, 50, 50));
     m_settingsFormButton = new Button(20, 530, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectSettings);
 
     vector<sf::IntRect> clipRectLeaderboard;
-    clipRectLeaderboard.push_back(sf::IntRect( 0, 100, 50, 50));
-    clipRectLeaderboard.push_back(sf::IntRect( 51, 100, 50, 50));
+    clipRectLeaderboard.push_back(sf::IntRect(0, 100, 50, 50));
+    clipRectLeaderboard.push_back(sf::IntRect(51, 100, 50, 50));
     m_leaderboardFormButton = new Button(830, 530, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectLeaderboard);
 
     vector<sf::IntRect> clipRectShop;
-    clipRectShop.push_back(sf::IntRect( 0, 150, 50, 50));
-    clipRectShop.push_back(sf::IntRect( 51, 150, 50, 50));
+    clipRectShop.push_back(sf::IntRect(0, 150, 50, 50));
+    clipRectShop.push_back(sf::IntRect(51, 150, 50, 50));
     m_shopFormButton = new Button(830, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectShop);
 }
 
@@ -127,8 +127,8 @@ void MenuView::synchronize()
     else
         m_menuMusic.setVolume(0);
 
-    if ( m_menuMusic.getPlayingOffset() >= sf::milliseconds(28840))
-        m_menuMusic.setPlayingOffset( sf::milliseconds(4851));
+    if (m_menuMusic.getPlayingOffset() >= sf::milliseconds(28840))
+        m_menuMusic.setPlayingOffset(sf::milliseconds(4851));
 
     switch (m_menu->getMenuState())
     {
@@ -166,28 +166,28 @@ void MenuView::synchronize()
 
 
     //=== Delete commandsView if not anymore current menu state
-    if ( m_menu->getMenuState() != COMMANDS && m_commandsView != nullptr)
+    if (m_menu->getMenuState() != COMMANDS && m_commandsView != nullptr)
     {
         delete m_commandsView;
         m_commandsView = nullptr;
     }
 
     //=== Delete leaderboardView if not anymore current menu state
-    if ( m_menu->getMenuState() != LEADERBOARD && m_leaderboardView != nullptr)
+    if (m_menu->getMenuState() != LEADERBOARD && m_leaderboardView != nullptr)
     {
         delete m_leaderboardView;
         m_leaderboardView = nullptr;
     }
 
     //=== Delete settingsView if not anymore current menu state
-    if ( m_menu->getMenuState() != SETTINGS && m_settingsView != nullptr)
+    if (m_menu->getMenuState() != SETTINGS && m_settingsView != nullptr)
     {
         delete m_settingsView;
         m_settingsView = nullptr;
     }
 
     //=== Delete shopView if not anymore current menu state
-    if ( m_menu->getMenuState() != SHOP && m_shopView != nullptr)
+    if (m_menu->getMenuState() != SHOP && m_shopView != nullptr)
     {
         delete m_shopView;
         m_shopView = nullptr;
@@ -242,7 +242,7 @@ bool MenuView::treatEvents(sf::Event event)
 {
     bool result = false;
 
-    if(m_window->isOpen())
+    if (m_window->isOpen())
     {
         result = true;
 
@@ -259,22 +259,22 @@ bool MenuView::treatEvents(sf::Event event)
             {
                 if (MOUSE_LEFT_PRESSED_EVENT)
                 {
-                    if ( m_playRectButton->contains(MOUSE_POSITION) )
+                    if (m_playRectButton->contains(MOUSE_POSITION))
                         m_playRectButton->setPressed(true);
 
-                    else if ( m_quitRectButton->contains(MOUSE_POSITION) )
+                    else if (m_quitRectButton->contains(MOUSE_POSITION))
                         m_quitRectButton->setPressed(true);
 
-                    else if ( m_commandsFormButton->contains(MOUSE_POSITION) )
+                    else if (m_commandsFormButton->contains(MOUSE_POSITION))
                         m_commandsFormButton->setPressed(true);
 
-                    else if ( m_settingsFormButton->contains(MOUSE_POSITION) )
+                    else if (m_settingsFormButton->contains(MOUSE_POSITION))
                         m_settingsFormButton->setPressed(true);
 
-                    else if ( m_leaderboardFormButton->contains(MOUSE_POSITION) )
+                    else if (m_leaderboardFormButton->contains(MOUSE_POSITION))
                         m_leaderboardFormButton->setPressed(true);
 
-                    else if ( m_shopFormButton->contains(MOUSE_POSITION) )
+                    else if (m_shopFormButton->contains(MOUSE_POSITION))
                         m_shopFormButton->setPressed(true);
                 }
 
@@ -287,40 +287,40 @@ bool MenuView::treatEvents(sf::Event event)
                     m_leaderboardFormButton->setPressed(false);
                     m_shopFormButton->setPressed(false);
 
-                    if ( m_playRectButton->contains(MOUSE_POSITION) )
+                    if (m_playRectButton->contains(MOUSE_POSITION))
                     {
-                        if(m_menuMusic.getStatus() == sf::Music::Status::Playing )
+                        if (m_menuMusic.getStatus() == sf::Music::Status::Playing)
                             m_menuMusic.stop();
                         m_menu->getDataBase()->setAppState(GAME);
                         result = false;
                     }
-                    else if ( m_quitRectButton->contains(MOUSE_POSITION) )
+                    else if (m_quitRectButton->contains(MOUSE_POSITION))
                     {
                         m_window->close();
                         result = false;
                     }
-                    else if ( m_commandsFormButton->contains(MOUSE_POSITION) )
+                    else if (m_commandsFormButton->contains(MOUSE_POSITION))
                     {
                         m_commandsView = new CommandsView(m_window, m_textHandler, m_menu->launchCommands());
                     }
-                    else if ( m_leaderboardFormButton->contains(MOUSE_POSITION) )
+                    else if (m_leaderboardFormButton->contains(MOUSE_POSITION))
                     {
                         m_leaderboardView = new LeaderboardView(m_window, m_textHandler, m_menu->launchLeaderboard());
                     }
-                    else if ( m_settingsFormButton->contains(MOUSE_POSITION) )
+                    else if (m_settingsFormButton->contains(MOUSE_POSITION))
                     {
                         m_settingsView = new SettingsView(m_window, m_textHandler, m_menu->launchSettings());
                     }
-                    else if ( m_shopFormButton->contains(MOUSE_POSITION) )
+                    else if (m_shopFormButton->contains(MOUSE_POSITION))
                     {
                         m_shopView = new ShopView(m_window, m_textHandler, m_menu->launchShop());
                     }
                 }
             }
-            else if ( (m_menu->getMenuState() == COMMANDS && m_commandsView->treatEvents(event))
-                      ||(m_menu->getMenuState() == LEADERBOARD && m_leaderboardView->treatEvents(event) )
+            else if ((m_menu->getMenuState() == COMMANDS && m_commandsView->treatEvents(event))
+                      ||(m_menu->getMenuState() == LEADERBOARD && m_leaderboardView->treatEvents(event))
                       ||(m_menu->getMenuState() == SETTINGS && m_settingsView->treatEvents(event))
-                      ||(m_menu->getMenuState() == SHOP && m_shopView->treatEvents(event) )
+                      ||(m_menu->getMenuState() == SHOP && m_shopView->treatEvents(event))
                     )
             {
                 m_menu->setMenuState(HOME);

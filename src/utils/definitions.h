@@ -30,20 +30,20 @@ limitations under the License.
 #define END_GREY_COLOR sf::Color(86, 103, 97, 255)
 
 //=== SFML DEFINITIONS
-#define ENVIRONMENT_CENTER sf::Vector2i( (sf::VideoMode::getDesktopMode().width - m_width)/2, \
-				(sf::VideoMode::getDesktopMode().height - m_height)/2 )
+#define ENVIRONMENT_CENTER sf::Vector2i((sf::VideoMode::getDesktopMode().width - m_width)/2, \
+				(sf::VideoMode::getDesktopMode().height - m_height)/2)
 #define MOUSE_LEFT_PRESSED_EVENT event.type == sf::Event::MouseButtonPressed \
                 && event.mouseButton.button == sf::Mouse::Left
 #define MOUSE_POSITION event.mouseButton.x, event.mouseButton.y
 
 #define KEYBOARD_LEFT  (sf::Keyboard::isKeyPressed(sf::Keyboard::A) \
-                       || sf::Keyboard::isKeyPressed(sf::Keyboard::Left ) )
+                       || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 #define KEYBOARD_RIGHT (sf::Keyboard::isKeyPressed(sf::Keyboard::D) \
-                       || sf::Keyboard::isKeyPressed(sf::Keyboard::Right ) )
+                       || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 #define KEYBOARD_JUMP  (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) \
-                       || sf::Keyboard::isKeyPressed(sf::Keyboard::W ) )
+                       || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 
-#define RED_BUTTON_UP sf::IntRect( 0, 100, 150, 40)
+#define RED_BUTTON_UP sf::IntRect(0, 100, 150, 40)
 #define GREEN_BUTTON_UP sf::IntRect(0, 178, 150, 43)
 #define GREEN_BUTTON_DOWN sf::IntRect(151, 179, 150, 40)
 

@@ -37,7 +37,7 @@ public:
         std::string utf8_contentString;
         std::string utf8_cancelString;
         std::string utf8_okString;
-        if ( dialog->getContext() == "shopAskDialog")
+        if (dialog->getContext() == "shopAskDialog")
         {
             ShopDialog *shopDialog = dynamic_cast<ShopDialog*>(dialog);
             utf8_titleString = dataBase.getTextValueFromStringsFile("shop_dialog_title");
@@ -47,21 +47,21 @@ public:
             utf8_cancelString = dataBase.getTextValueFromStringsFile("dialog_cancel");
             utf8_okString = dataBase.getTextValueFromStringsFile("dialog_ok");
         }
-        else if ( dialog->getContext() == "shopSuccess")
+        else if (dialog->getContext() == "shopSuccess")
         {
             utf8_titleString = "";
             utf8_contentString = dataBase.getTextValueFromStringsFile("shop_dialog_success");
             utf8_cancelString = "";
             utf8_okString = dataBase.getTextValueFromStringsFile("dialog_ok");
         }
-        else if ( dialog->getContext() == "shopFailure")
+        else if (dialog->getContext() == "shopFailure")
         {
             utf8_titleString = "";
             utf8_contentString = dataBase.getTextValueFromStringsFile("shop_dialog_failure");
             utf8_cancelString = "";
             utf8_okString = dataBase.getTextValueFromStringsFile("dialog_ok");
         }
-        else if ( dialog->getContext() == "confirm")
+        else if (dialog->getContext() == "confirm")
         {
             utf8_titleString = dataBase.getTextValueFromStringsFile("confirm_dialog_title");
             utf8_contentString = dataBase.getTextValueFromStringsFile("confirm_dialog_content");

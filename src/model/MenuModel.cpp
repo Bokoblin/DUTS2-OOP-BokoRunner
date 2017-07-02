@@ -48,7 +48,7 @@ void MenuModel::nextStep()
 {
     chrono::system_clock::duration currentNextStepDelay = chrono::system_clock::now() - m_lastTime;
 
-    if ( currentNextStepDelay > chrono::milliseconds(1500) )
+    if (currentNextStepDelay > chrono::milliseconds(1500))
     {
 
         //=== Delete commands if not anymore current menu state

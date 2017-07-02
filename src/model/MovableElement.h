@@ -36,7 +36,7 @@ public:
     //=== METHODS
     virtual void move()=0;
     bool contains(float posX, float posY) const ;
-    bool collision( const MovableElement & other) const ;
+    bool collision(const MovableElement &other) const ;
 
     //=== GETTERS
     float getPosX() const;
@@ -44,7 +44,7 @@ public:
     float getWidth() const;
     float getHeight() const;
     bool isColliding() const;
-    virtual int getType() const;
+    virtual MovableElementType getType() const;
 
     //=== SETTERS
     void setMoveX(float mvX);
@@ -61,7 +61,7 @@ protected:
     float m_moveX;
     float m_moveY;
     bool m_isColliding;
-    int m_elementType;
+    MovableElementType m_elementType;
 };
 
 #endif

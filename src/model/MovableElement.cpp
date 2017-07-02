@@ -17,7 +17,7 @@ using namespace std;
  */
 MovableElement::MovableElement(float x, float y, float w, float h, float mvX, float mvY) :
     m_posX{x}, m_posY{y}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY},
-    m_isColliding{false}, m_elementType{-1}
+    m_isColliding{false}, m_elementType{UNDEFINED}
 {}
 
 
@@ -35,7 +35,7 @@ float MovableElement::getPosX()  const { return m_posX;  }
 float MovableElement::getPosY()  const { return m_posY;  }
 float MovableElement::getWidth() const { return m_width; }
 float MovableElement::getHeight()const { return m_height;}
-int MovableElement::getType() const { return m_elementType; }
+MovableElementType MovableElement::getType() const { return m_elementType; }
 bool MovableElement::isColliding() const { return m_isColliding; }
 
 
@@ -55,7 +55,7 @@ void MovableElement::setColliding(bool on) { m_isColliding = on;}
  * @param posY the other element y-position
  * @return a boolean indicating if position is in element
  */
-bool MovableElement::contains( float posX, float posY) const
+bool MovableElement::contains(float posX, float posY) const
 {
     float  maxX = m_posX + m_width;
     float  maxY = m_posY + m_height;
@@ -75,7 +75,7 @@ bool MovableElement::contains( float posX, float posY) const
  * @param other the other element
  * @return a boolean indicating if elements are colliding
  */
-bool MovableElement::collision( const MovableElement& other) const
+bool MovableElement::collision(const MovableElement& other) const
 {
     float leftA, leftB;
     float rightA, rightB;

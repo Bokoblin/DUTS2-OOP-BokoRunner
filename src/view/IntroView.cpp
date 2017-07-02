@@ -9,7 +9,7 @@ IntroView::IntroView(float width, float height, sf::RenderWindow *window,
                      TextHandler *textHandler, IntroModel *introModel) :
         AbstractView(width, height, window, textHandler), m_intro{introModel}
 {
-    m_window->create(sf::VideoMode((unsigned int) width, (unsigned int) height, SCREEN_BPP), APP_TITLE, sf::Style::None );
+    m_window->create(sf::VideoMode((unsigned int) width, (unsigned int) height, SCREEN_BPP), APP_TITLE, sf::Style::None);
     m_window->setFramerateLimit(30);
     m_window->setPosition(ENVIRONMENT_CENTER);
 
@@ -71,7 +71,7 @@ bool IntroView::treatEvents(sf::Event event)
 {
     bool result = false;
 
-    if(m_window->isOpen())
+    if (m_window->isOpen())
     {
         result = true;
 

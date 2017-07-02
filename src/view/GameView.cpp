@@ -17,7 +17,7 @@ GameView::GameView(sf::RenderWindow *myWindow, TextHandler *textHandler, GameMod
     //=== change default game music if in master mode
 
     string game_music;
-    if ( m_game->getDataBase()->getDifficulty() == EASY)
+    if (m_game->getDataBase()->getDifficulty() == EASY)
         game_music = GAME_NORMAL_THEME_MUSIC;
     else
         game_music = GAME_MASTER_THEME_MUSIC;
@@ -83,7 +83,7 @@ GameView::~GameView()
     delete m_shieldImage;
     delete m_pixelShader;
     for (auto it = m_movableElementToSpriteMap.begin();
-         it!=m_movableElementToSpriteMap.end(); ++it )
+         it!=m_movableElementToSpriteMap.end(); ++it)
         delete it->second;
 
     //=== Delete Pause and End Elements
@@ -245,27 +245,27 @@ void GameView::loadImages()
  */
 void GameView::linkElements()
 {
-    for ( auto element : m_game->getNewMElementsArray())
+    for (auto element : m_game->getNewMElementsArray())
     {
-        if ( element->getType() == PLAYER )
+        if (element->getType() == PLAYER)
             m_movableElementToSpriteMap[element] = m_playerSprite;
-        else if ( element->getType() == STANDARD_ENEMY )
+        else if (element->getType() == STANDARD_ENEMY)
             m_movableElementToSpriteMap[element] = new Sprite(*m_stdEnemySprite);
-        else if ( element->getType() == TOTEM_ENEMY )
+        else if (element->getType() == TOTEM_ENEMY)
             m_movableElementToSpriteMap[element] = new Sprite(*m_totemEnemySprite);
-        else if ( element->getType() == BLOCK_ENEMY )
+        else if (element->getType() == BLOCK_ENEMY)
             m_movableElementToSpriteMap[element] = new Sprite(*m_blockEnemySprite);
-        else if ( element->getType() == COIN )
+        else if (element->getType() == COIN)
             m_movableElementToSpriteMap[element] = new Sprite(*m_coinSprite);
-        else if ( element->getType() == PV_PLUS_BONUS )
+        else if (element->getType() == PV_PLUS_BONUS)
             m_movableElementToSpriteMap[element] = new Sprite(*m_PVPlusBonusSprite);
-        else if ( element->getType() == MEGA_BONUS )
+        else if (element->getType() == MEGA_BONUS)
             m_movableElementToSpriteMap[element] = new Sprite(*m_megaBonusSprite);
-        else if ( element->getType() == FLY_BONUS )
+        else if (element->getType() == FLY_BONUS)
             m_movableElementToSpriteMap[element] = new Sprite(*m_flyBonusSprite);
-        else if ( element->getType() == SLOW_SPEED_BONUS )
+        else if (element->getType() == SLOW_SPEED_BONUS)
             m_movableElementToSpriteMap[element] = new Sprite(*m_slowSpeedBonusSprite);
-        else if ( element->getType() == SHIELD_BONUS )
+        else if (element->getType() == SHIELD_BONUS)
             m_movableElementToSpriteMap[element] = new Sprite(*m_shieldBonusSprite);
         //TODO : else throw exception unknown element
     }
@@ -286,7 +286,7 @@ void GameView::handleZonesTransition()
         m_farTransitionBackground->setPosition(m_farTransitionBackground->getPosition().x - TRANSITION_SPEED, 0);
         m_farScrollingBackground->setScrollingSpeed(TRANSITION_SPEED);
         m_nearScrollingBackground->decreaseAlpha(5);
-        if ( m_nearScrollingBackground->getAlpha() == 0)
+        if (m_nearScrollingBackground->getAlpha() == 0)
             m_nearScrollingBackground->setScrollingSpeed(0);
         else
             m_nearScrollingBackground->setScrollingSpeed(TRANSITION_SPEED);
@@ -311,7 +311,7 @@ void GameView::handleZonesTransition()
         }
 
         //Update pixel creation of near background from 3/4 transition to end transition
-        if ( m_farTransitionBackground->getPosition().x < m_width/2 && m_xPixelIntensity >=0)
+        if (m_farTransitionBackground->getPosition().x < m_width/2 && m_xPixelIntensity >= 0)
         {
             m_xPixelIntensity -= 0.009;
             m_yPixelIntensity -= 0.009;
@@ -391,21 +391,21 @@ void GameView::updateElements()
             float position_x = (it->first)->getPosX();
             float position_y = (it->first)->getPosY();
 
-            it->second->setPosition( position_x, position_y );
+            it->second->setPosition(position_x, position_y);
             it->second->sync();
-            it->second->resize(it->first->getWidth(), it->first->getHeight() );
+            it->second->resize(it->first->getWidth(), it->first->getHeight());
         }
 
         //=== Update shield sprite
 
-        if(m_game->getPlayer()->getState() == SHIELD)
+        if (m_game->getPlayer()->getState() == SHIELD)
         {
-            m_shieldImage->setPosition( m_game->getPlayer()->getPosX()-5,
-                                             m_game->getPlayer()->getPosY()+5 );
+            m_shieldImage->setPosition(m_game->getPlayer()->getPosX()-5,
+                                             m_game->getPlayer()->getPosY()+5);
             m_shieldImage->resize(40, 40);
         }
     }
-    else if ( m_game->getGameState() == PAUSED )
+    else if (m_game->getGameState() == PAUSED)
     {
         if (m_game->getCurrentZone() == HILL)
             m_pauseBackground->setTextureFromImage(PAUSE_HILL_BACKGROUND);
@@ -429,7 +429,7 @@ void GameView::updateElements()
         m_goToHomeButton->setPosition(30, 535);
 
         m_coinSprite->resize(25, 25);
-        m_coinSprite->setPosition( (float)(m_width / 2.4), 565);
+        m_coinSprite->setPosition((float)(m_width / 2.4), 565);
 
         m_restartGameButton->sync(m_game->getDataBase());
         m_restartGameButton->resize(30, 30);
@@ -452,16 +452,16 @@ void GameView::deleteElements()
     std::map<MovableElement *, Sprite *>::iterator it =
             m_movableElementToSpriteMap.begin();
     bool found = false;
-    while (!found && it!=m_movableElementToSpriteMap.end() )
+    while (!found && it!=m_movableElementToSpriteMap.end())
     {
         if ((it->first)->isColliding())
         {
-            if ( (it->first)->getType() == COIN )
+            if ((it->first)->getType() == COIN)
                 m_coinMusic.play();
 
-            if ( (it->first)->getType() == STANDARD_ENEMY
+            if ((it->first)->getType() == STANDARD_ENEMY
                 || (it->first)->getType() == TOTEM_ENEMY
-                || (it->first)->getType() ==BLOCK_ENEMY  )
+                || (it->first)->getType() ==BLOCK_ENEMY)
                 m_destructedEnemiesMusic.play();
 
             delete it->second;
@@ -496,7 +496,7 @@ void GameView::synchronize()
             sf::sleep(sf::milliseconds(140)); //limit CPU usage
             break;
         case OVER:
-            if(m_gameThemeMusic.getStatus() == sf::Music::Status::Playing ) //Audio ending
+            if (m_gameThemeMusic.getStatus() == sf::Music::Status::Playing) //Audio ending
                 m_gameThemeMusic.stop();
             updateElements();
             m_textHandler->syncEndText((int)m_game->getGameSpeed());
@@ -557,7 +557,7 @@ void GameView::draw() const
         if (m_game->getTransitionStatus())
         {
             m_window->draw(*m_farTransitionBackground);
-            if ( m_farTransitionBackground->getPosition().x < m_width/2 )
+            if (m_farTransitionBackground->getPosition().x < m_width/2)
                 m_window->draw(*m_pixelShader);
         }
 
@@ -574,7 +574,7 @@ void GameView::draw() const
             it->second->draw(m_window);
         }
 
-        if ( m_game->getPlayer()->getState() == SHIELD)
+        if (m_game->getPlayer()->getState() == SHIELD)
             m_window->draw(*m_shieldImage);
 
         //=== TextHandler drawing
@@ -626,7 +626,7 @@ bool GameView::treatEvents(sf::Event event)
 {
     bool result = false;
 
-    if(m_window->isOpen())
+    if (m_window->isOpen())
     {
         result = true;
 
@@ -681,16 +681,16 @@ bool GameView::treatEvents(sf::Event event)
             {
                 if (MOUSE_LEFT_PRESSED_EVENT)
                 {
-                    if (m_resumeGameButton->contains(MOUSE_POSITION) )
+                    if (m_resumeGameButton->contains(MOUSE_POSITION))
                         m_resumeGameButton->setPressed(true);
 
-                    else if (m_restartGameButton->contains(MOUSE_POSITION) )
+                    else if (m_restartGameButton->contains(MOUSE_POSITION))
                         m_restartGameButton->setPressed(true);
 
-                    else if (m_goToHomeButton->contains(MOUSE_POSITION) )
+                    else if (m_goToHomeButton->contains(MOUSE_POSITION))
                         m_goToHomeButton->setPressed(true);
 
-                    else if (m_controlMusicButton->contains(MOUSE_POSITION) )
+                    else if (m_controlMusicButton->contains(MOUSE_POSITION))
                         m_controlMusicButton->setPressed(true);
 
                 }
@@ -702,23 +702,23 @@ bool GameView::treatEvents(sf::Event event)
                     m_goToHomeButton->setPressed(false);
                     m_controlMusicButton->setPressed(false);
 
-                    if (m_resumeGameButton->contains(MOUSE_POSITION) )
+                    if (m_resumeGameButton->contains(MOUSE_POSITION))
                     {
                         m_game->setGameState(RUNNING_SLOWLY);
-                        if(m_gameThemeMusic.getStatus() == sf::Music::Status::Paused)
+                        if (m_gameThemeMusic.getStatus() == sf::Music::Status::Paused)
                             m_gameThemeMusic.play();
                     }
-                    else if (m_restartGameButton->contains(MOUSE_POSITION) )
+                    else if (m_restartGameButton->contains(MOUSE_POSITION))
                     {
                         m_game->getDataBase()->setAppState(RESET_GAME);
                         result = false;
                     }
-                    else if (m_goToHomeButton->contains(MOUSE_POSITION) )
+                    else if (m_goToHomeButton->contains(MOUSE_POSITION))
                     {
                         m_game->getDataBase()->setAppState(MENU);
                         result = false;
                     }
-                    else if (m_controlMusicButton->contains(MOUSE_POSITION) )
+                    else if (m_controlMusicButton->contains(MOUSE_POSITION))
                     {
                         m_game->getDataBase()->setGameMusic(!m_game->getDataBase()->isGameMusicEnabled());
                         handleMusic();
@@ -729,13 +729,13 @@ bool GameView::treatEvents(sf::Event event)
             {
                 if (MOUSE_LEFT_PRESSED_EVENT)
                 {
-                    if (m_restartGameButton->contains(MOUSE_POSITION) )
+                    if (m_restartGameButton->contains(MOUSE_POSITION))
                         m_restartGameButton->setPressed(true);
 
-                    else if (m_goToHomeButton->contains(MOUSE_POSITION) )
+                    else if (m_goToHomeButton->contains(MOUSE_POSITION))
                         m_goToHomeButton->setPressed(true);
 
-                    else if (m_saveScoreButton->contains(MOUSE_POSITION) )
+                    else if (m_saveScoreButton->contains(MOUSE_POSITION))
                         m_saveScoreButton->setPressed(true);
                 }
 
@@ -745,17 +745,17 @@ bool GameView::treatEvents(sf::Event event)
                     m_goToHomeButton->setPressed(false);
                     m_saveScoreButton->setPressed(false);
 
-                    if (m_restartGameButton->contains(MOUSE_POSITION) )
+                    if (m_restartGameButton->contains(MOUSE_POSITION))
                     {
                         m_game->getDataBase()->setAppState(RESET_GAME);
                         result = false;
                     }
-                    else if (m_goToHomeButton->contains(MOUSE_POSITION) )
+                    else if (m_goToHomeButton->contains(MOUSE_POSITION))
                     {
                         m_game->getDataBase()->setAppState(MENU);
                         result = false;
                     }
-                    else if (m_saveScoreButton->contains(MOUSE_POSITION) )
+                    else if (m_saveScoreButton->contains(MOUSE_POSITION))
                     {
                         m_saveScoreButton->hide();
                         m_game->getDataBase()->saveCurrentGame();

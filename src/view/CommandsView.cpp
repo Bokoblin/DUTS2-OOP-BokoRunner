@@ -36,18 +36,18 @@ void CommandsView::loadImages()
     //=== Initialize COIN Sprite
 
     m_commandSprite = new GraphicElement(m_width/2-220, m_height/2-150, 440, 300);
-    if ( m_commands->getDataBase()->getLanguage() == "en")
+    if (m_commands->getDataBase()->getLanguage() == "en")
         m_commandSprite->setTextureFromImage(COMMAND_EN_IMAGE);
-    else if ( m_commands->getDataBase()->getLanguage() == "fr")
+    else if (m_commands->getDataBase()->getLanguage() == "fr")
         m_commandSprite->setTextureFromImage(COMMAND_FR_IMAGE);
-    else if ( m_commands->getDataBase()->getLanguage() == "es")
+    else if (m_commands->getDataBase()->getLanguage() == "es")
         m_commandSprite->setTextureFromImage(COMMAND_ES_IMAGE);
 
     //=== Initialize HOME form buttons
 
     std::vector<sf::IntRect> clipRectHome;
-    clipRectHome.push_back(sf::IntRect( 0, 50, 50, 50));
-    clipRectHome.push_back(sf::IntRect( 51, 50, 50, 50));
+    clipRectHome.push_back(sf::IntRect(0, 50, 50, 50));
+    clipRectHome.push_back(sf::IntRect(51, 50, 50, 50));
     m_homeFormButton = new Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
 }
 
@@ -110,7 +110,7 @@ bool CommandsView::treatEvents(sf::Event event)
 
         //=== handle mouse up on a button
 
-        if ( m_homeFormButton->contains(MOUSE_POSITION) )
+        if (m_homeFormButton->contains(MOUSE_POSITION))
             stop_command = true;
     }
 

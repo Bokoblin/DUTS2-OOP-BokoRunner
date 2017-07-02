@@ -72,7 +72,7 @@ void DataBase::setGameMusic(bool on) { m_isGameMusicEnabled = on;}
 void DataBase::setCurrentScore(float speed)
 {
     m_currentScore = (int)(speed * m_currentDistance
-                     + COIN_MULTIPLIER*m_currentCoinsNumber + m_scoreBonusFlattenedEnemies );
+                     + COIN_MULTIPLIER*m_currentCoinsNumber + m_scoreBonusFlattenedEnemies);
 }
 
 
@@ -84,7 +84,7 @@ void DataBase::setCurrentScore(float speed)
 void DataBase::createConfigFile()
 {
     fstream f;
-    f.open( CONFIG_FILE.c_str(), ios::out);
+    f.open(CONFIG_FILE.c_str(), ios::out);
     f << DEFAULT_CONFIG_CONTENT;
     f.close();
 }
@@ -103,10 +103,10 @@ bool DataBase::checkConfigFileIntegrity() const
     fstream f;
     string line;
 
-    f.open( CONFIG_FILE.c_str(), ios::in);
+    f.open(CONFIG_FILE.c_str(), ios::in);
 
     //=== Opening test
-    if ( f.fail() )
+    if (f.fail())
         return false;
 
     //=== Count lines / elements test
@@ -125,42 +125,42 @@ bool DataBase::checkConfigFileIntegrity() const
         nbLines++;
 
         unsigned long long int found = line.find("<config>");
-        if ( found != string::npos)
+        if (found != string::npos)
             isPresentConfig = true;
 
         found = line.find("<stats>");
-        if ( found != string::npos)
+        if (found != string::npos)
             isPresentStats = true;
 
         found = line.find("<shop>");
-        if ( found != string::npos)
+        if (found != string::npos)
             isPresentShop = true;
 
         found = line.find("<scoresEasy>");
-        if ( found != string::npos)
+        if (found != string::npos)
             isPresentScoreEasy = true;
 
         found = line.find("<scoresHard>");
-        if ( found != string::npos)
+        if (found != string::npos)
             isPresentScoreHard = true;
 
         found = line.find("<configItem");
-        if ( found != string::npos)
+        if (found != string::npos)
             nbConfigChildren++;
 
         found = line.find("<statItem");
-        if ( found != string::npos)
+        if (found != string::npos)
             nbStatsChildren++;
 
         found = line.find("<shopItem");
-        if ( found != string::npos)
+        if (found != string::npos)
             nbShopChildren++;
 
         found = line.find("<scoreItem");
-        if ( found != string::npos)
+        if (found != string::npos)
             nbScoreChildren++;
     }
-    while ( !f.eof() );
+    while (!f.eof());
 
     return !(!isPresentConfig || !isPresentStats || !isPresentShop || !isPresentScoreEasy || !isPresentScoreHard
              || (nbLines != 52 && nbLines != 53)
@@ -208,12 +208,12 @@ void DataBase::fetchConfig()
         else if (string(configItem.attribute("name").value()) == "menu_music")
         {
             string result = configItem.attribute("value").value();
-            if (result == "true" ) m_isMenuMusicEnabled=true;
+            if (result == "true") m_isMenuMusicEnabled=true;
         }
         else if (string(configItem.attribute("name").value()) == "game_music")
         {
             string result = configItem.attribute("value").value();
-            if (result == "true" ) m_isGameMusicEnabled=true;
+            if (result == "true") m_isGameMusicEnabled=true;
         }
     }
 
@@ -282,8 +282,8 @@ void DataBase::fetchActivatedShopItems()
 
     for (pugi::xml_node shopItem: shop.children("shopItem"))
     {
-        if ( string(shopItem.attribute("bought").value()) == "true")
-            m_activatedItemsArray.insert( shopItem.attribute("id").value() );
+        if (string(shopItem.attribute("bought").value()) == "true")
+            m_activatedItemsArray.insert(shopItem.attribute("id").value());
     }
 }
 
@@ -307,32 +307,32 @@ void DataBase::pushConfigurationToFile() const
     //Save config
     for (pugi::xml_node configItem: config.children("configItem"))
     {
-        if ( string(configItem.attribute("name").value()) == "language" )
+        if (string(configItem.attribute("name").value()) == "language")
         {
             pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value(m_currentLanguage.c_str());
         }
-        else if ( string(configItem.attribute("name").value()) == "difficulty" )
+        else if (string(configItem.attribute("name").value()) == "difficulty")
         {
             pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value((to_string(m_currentDifficulty)).c_str());
         }
-        else if ( string(configItem.attribute("name").value()) == "ball_skin" )
+        else if (string(configItem.attribute("name").value()) == "ball_skin")
         {
             pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value(m_currentBallSkin.c_str());
         }
-        else if ( string(configItem.attribute("name").value()) == "wallet" )
+        else if (string(configItem.attribute("name").value()) == "wallet")
         {
             pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value((to_string(m_wallet)).c_str());
         }
-        else if ( string(configItem.attribute("name").value()) == "menu_music" )
+        else if (string(configItem.attribute("name").value()) == "menu_music")
         {
             pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value(m_isMenuMusicEnabled);
         }
-        else if ( string(configItem.attribute("name").value()) == "game_music" )
+        else if (string(configItem.attribute("name").value()) == "game_music")
         {
             pugi::xml_attribute nodeValue = configItem.attribute("value");
             nodeValue.set_value(m_isGameMusicEnabled);
@@ -342,37 +342,37 @@ void DataBase::pushConfigurationToFile() const
     //Save stats
     for (pugi::xml_node statItem: stats.children("statItem"))
     {
-        if ( string(statItem.attribute("name").value()) == "total_coins_collected" )
+        if (string(statItem.attribute("name").value()) == "total_coins_collected")
         {
             pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_totalCoinsCollected)).c_str());
         }
-        else if ( string(statItem.attribute("name").value()) == "total_distance_travelled" )
+        else if (string(statItem.attribute("name").value()) == "total_distance_travelled")
         {
             pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_totalDistance)).c_str());
         }
-        else if ( string(statItem.attribute("name").value()) == "total_enemies_destroyed" )
+        else if (string(statItem.attribute("name").value()) == "total_enemies_destroyed")
         {
             pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_totalFlattenedEnemies)).c_str());
         }
-        else if ( string(statItem.attribute("name").value()) == "per_game_coins_collected" )
+        else if (string(statItem.attribute("name").value()) == "per_game_coins_collected")
         {
             pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_perGameCoinsCollected)).c_str());
         }
-        else if ( string(statItem.attribute("name").value()) == "per_game_distance_travelled" )
+        else if (string(statItem.attribute("name").value()) == "per_game_distance_travelled")
         {
             pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_perGameDistance)).c_str());
         }
-        else if ( string(statItem.attribute("name").value()) == "per_game_enemies_destroyed" )
+        else if (string(statItem.attribute("name").value()) == "per_game_enemies_destroyed")
         {
             pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_perGameFlattenedEnemies)).c_str());
         }
-        else if ( string(statItem.attribute("name").value()) == "total_games_played" )
+        else if (string(statItem.attribute("name").value()) == "total_games_played")
         {
             pugi::xml_attribute nodeValue = statItem.attribute("value");
             nodeValue.set_value((to_string(m_totalGamesPlayed)).c_str());
@@ -383,7 +383,7 @@ void DataBase::pushConfigurationToFile() const
     set<int>::iterator it = m_scoresEasyArray.begin();
     for (pugi::xml_node scoreItem: scoresEasy.children("scoreItem"))
     {
-        if ( it!=m_scoresEasyArray.end())
+        if (it!=m_scoresEasyArray.end())
         {
             pugi::xml_attribute nodeValue = scoreItem.attribute("value");
             nodeValue.set_value((to_string(*it)).c_str());
@@ -399,7 +399,7 @@ void DataBase::pushConfigurationToFile() const
     it = m_scoresHardArray.begin();
     for (pugi::xml_node scoreItem: scoresHard.children("scoreItem"))
     {
-        if ( it!=m_scoresHardArray.end())
+        if (it!=m_scoresHardArray.end())
         {
             pugi::xml_attribute nodeValue = scoreItem.attribute("value");
             nodeValue.set_value((to_string(*it)).c_str());
@@ -448,7 +448,7 @@ void DataBase::saveCurrentGame()
  */
 void DataBase::addNewScore(int score)
 {
-    if ( m_currentDifficulty == EASY)
+    if (m_currentDifficulty == EASY)
     {
         m_scoresEasyArray.insert(score);
         while (m_scoresEasyArray.size() > MAX_SCORES)
@@ -544,25 +544,25 @@ string DataBase::loadLeaderboardStringFromArray(Difficulty difficulty) const
     int i = 1;
     string result = "";
 
-    if ( difficulty == EASY && !m_scoresEasyArray.empty() )
+    if (difficulty == EASY && !m_scoresEasyArray.empty())
     {
         result = getTextValueFromStringsFile("config_easy_mode") + " :\n";
         //add each case content in string
         for (set<int>::reverse_iterator it = m_scoresEasyArray.rbegin(); it!=m_scoresEasyArray.rend(); ++it)
         {
-            if ( i != 10)
+            if (i != 10)
                 result += "\n" + to_string(i) + ".   " + to_string(*it);
             else
                 result += "\n" + to_string(i) + ". " + to_string(*it);
             i++;
         }
     }
-    else if (difficulty == HARD &&!m_scoresHardArray.empty() )
+    else if (difficulty == HARD &&!m_scoresHardArray.empty())
     {
         result = getTextValueFromStringsFile("config_hard_mode") + " :\n";
         for (set<int>::reverse_iterator it = m_scoresHardArray.rbegin(); it!=m_scoresHardArray.rend(); ++it)
         {
-            if ( i != 10)
+            if (i != 10)
                 result += "\n" + to_string(i) + ".   " + to_string(*it);
             else
                 result += "\n" + to_string(i) + ". " + to_string(*it);

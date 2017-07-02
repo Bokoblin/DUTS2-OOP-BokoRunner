@@ -41,7 +41,7 @@ float ScrollingBackground::getSeparationPositionX() const
      * Depending on the current displaying (left-right or right-left),
      * it returns the visible separation position
      */
-    if ( m_left->getPosition().x >= -(4*SCREEN_WIDTH/3) && m_left->getPosition().x <= SCREEN_WIDTH)
+    if (m_left->getPosition().x >= -(4*SCREEN_WIDTH/3) && m_left->getPosition().x <= SCREEN_WIDTH)
         return m_left->getPosition().x + m_left->getLocalBounds().width;
     else
         return m_right->getPosition().x + m_right->getLocalBounds().width;
@@ -68,7 +68,7 @@ void ScrollingBackground::sync()
     m_left->setPosition(m_left->getPosition().x - m_scrollingSpeed, m_left->getPosition().y);
     m_right->setPosition(m_right->getPosition().x - m_scrollingSpeed, m_right->getPosition().y);
 
-    if ( m_left->getPosition().x + m_width < 0 )
+    if (m_left->getPosition().x + m_width < 0)
     {
         m_left->setPosition(0, 0);
         m_right->setPosition(m_width, 0);

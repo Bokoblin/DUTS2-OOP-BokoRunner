@@ -22,21 +22,21 @@ limitations under the License.
 /**
  * GraphicElement Class
  * @author Arthur, Florian
- * @date 21/02/16 - 16/04/17
+ * @date 21/02/16 - 03/07/17
  */
 class GraphicElement : public sf::Sprite
 {
 public:
     //=== CTORs / DTORs
-    GraphicElement( float w, float h);
-    GraphicElement( float x, float y, float w, float h);
+    GraphicElement(float width, float height);
+    GraphicElement(float x, float y, float width, float height);
     GraphicElement(float x, float y, float w, float h, const std::string &image);
     GraphicElement(GraphicElement const& element);
     ~GraphicElement();
 
     //=== GETTERS
     int getAlpha() const;
-    bool isShowing() const;
+    bool isVisible() const;
 
     //=== SETTERS
     void show();

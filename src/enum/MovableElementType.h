@@ -33,7 +33,8 @@ enum MovableElementType
     MEGA_BONUS,
     FLY_BONUS,
     SLOW_SPEED_BONUS,
-    SHIELD_BONUS
+    SHIELD_BONUS,
+    UNDEFINED
 };
 
 #endif

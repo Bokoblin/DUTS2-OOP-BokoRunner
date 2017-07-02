@@ -30,7 +30,7 @@ const int FRAMERATE = 30;
  * The Player class inherited from MovableElements
  * contains player's logic and behaviours
  * @author Arthur, Florian
- * @date 22/02/16 - 04/01/17
+ * @date 22/02/16 - 03/07/17
  */
 class Player : public MovableElement
 {
@@ -40,7 +40,7 @@ public:
     virtual ~Player();
 
     //=== GETTERS
-    int getState() const;
+    PlayerState getState() const;
     int getLife() const;
 
     //=== SETTERS
@@ -50,18 +50,18 @@ public:
 
     //=== METHODS
     virtual void move() override;
-    void changeState(int state);
+    void changeState(PlayerState state);
     void controlPlayerMovements(MovingDirection direction);
 
 
 private:
-    int m_state;
+    PlayerState m_state;
     int m_life;
     float m_gravitation;
     float m_acceleration;
-    bool m_jumping;
-    bool m_flying;
-    bool m_inDeceleration;
+    bool m_isJumping;
+    bool m_isFlying;
+    bool m_isDecelerating;
     std::pair<float, float> m_vectorBall;
 
     //Constants

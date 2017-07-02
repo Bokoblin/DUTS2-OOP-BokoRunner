@@ -26,7 +26,7 @@ TextHandler::TextHandler(DataBase *dataBase, float width, float height)
  */
 TextHandler::~TextHandler()
 {
-    for ( Text *t : m_textList)
+    for (Text *t : m_textList)
         delete t;
 }
 
@@ -121,7 +121,7 @@ void TextHandler::loadText()
  */
 void TextHandler::updateWholeText()
 {
-    for ( Text* t : m_textList)
+    for (Text* t : m_textList)
     {
         t->setCharacterSize(DEFAULT_CHAR_SIZE);
         t->setFont(m_condensedFont);
@@ -148,7 +148,7 @@ void TextHandler::syncMenuHomeText()
  */
 void TextHandler::syncSettingsText(int currentPage)
 {
-    if ( currentPage == CONFIG)
+    if (currentPage == CONFIG)
     {
         m_configTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
         m_configLangTitleLabel->setPosition(40, 150);
@@ -156,7 +156,7 @@ void TextHandler::syncSettingsText(int currentPage)
         m_configCustomTitleLabel->setPosition(m_width/2+40, 150);
         m_configMusicTitleLabel->setPosition(m_width/2 +40, 370);
     }
-    else if ( currentPage == STATS)
+    else if (currentPage == STATS)
     {
         m_statsTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
         m_statsOverallTitleLabel->setPosition(40, 130);
@@ -166,44 +166,44 @@ void TextHandler::syncSettingsText(int currentPage)
         m_statsTotalDistanceLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalDistanceText->setPosition(STAT_LABEL_X+250, 190);
         m_statsTotalDistanceText->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalDistanceText->setString(to_string( m_dataBase->getTotalDistance() ) + " m" );
+        m_statsTotalDistanceText->setString(to_string(m_dataBase->getTotalDistance()) + " m");
 
         m_statsTotalEnemiesLabel->setPosition(STAT_LABEL_X, 230);
         m_statsTotalEnemiesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalEnemiesText->setPosition(STAT_LABEL_X+250, 230);
         m_statsTotalEnemiesText->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalEnemiesText->setStringFromInt( m_dataBase->getTotalFlattenedEnemies() );
+        m_statsTotalEnemiesText->setStringFromInt(m_dataBase->getTotalFlattenedEnemies());
 
         m_statsTotalCoinsLabel->setPosition(STAT_LABEL_X, 270);
         m_statsTotalCoinsLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalCoinsNbText->setPosition(STAT_LABEL_X+250, 270);
         m_statsTotalCoinsNbText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalCoinsNbText->setColor(sf::Color::White);
-        m_statsTotalCoinsNbText->setStringFromInt( m_dataBase->getTotalCoinsNumber() );
+        m_statsTotalCoinsNbText->setStringFromInt(m_dataBase->getTotalCoinsNumber());
 
         m_statsTotalGamesLabel->setPosition(STAT_LABEL_X, 310);
         m_statsTotalGamesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalGamesText->setPosition(STAT_LABEL_X+250, 310);
         m_statsTotalGamesText->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalGamesText->setStringFromInt( m_dataBase->getTotalGamesPlayed() );
+        m_statsTotalGamesText->setStringFromInt(m_dataBase->getTotalGamesPlayed());
 
         m_statsPerGameDistanceLabel->setPosition(m_width/2+STAT_LABEL_X, 190);
         m_statsPerGameDistanceLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsPerGameDistanceText->setPosition(m_width-2*STAT_LABEL_X, 190);
         m_statsPerGameDistanceText->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsPerGameDistanceText->setString(to_string( m_dataBase->getPerGameDistance() ) + " m" );
+        m_statsPerGameDistanceText->setString(to_string(m_dataBase->getPerGameDistance()) + " m");
 
         m_statsPerGameEnemiesLabel->setPosition(m_width/2+STAT_LABEL_X, 230);
         m_statsPerGameEnemiesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsPerGameEnemiesText->setPosition(m_width-2*STAT_LABEL_X, 230);
         m_statsPerGameEnemiesText->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsPerGameEnemiesText->setStringFromInt( m_dataBase->getPerGameFlattenedEnemies() );
+        m_statsPerGameEnemiesText->setStringFromInt(m_dataBase->getPerGameFlattenedEnemies());
 
         m_statsPerGameCoinsLabel->setPosition(m_width/2+STAT_LABEL_X, 270);
         m_statsPerGameCoinsLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsPerGameCoinsText->setPosition(m_width-2*STAT_LABEL_X, 270);
         m_statsPerGameCoinsText->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsPerGameCoinsText->setStringFromInt( m_dataBase->getPerGameCoinsNumber() );
+        m_statsPerGameCoinsText->setStringFromInt(m_dataBase->getPerGameCoinsNumber());
     }
     else //ABOUT
     {
@@ -230,7 +230,7 @@ void TextHandler::syncMenuLeaderboardText()
     string scoresEasy = m_dataBase->loadLeaderboardStringFromArray(EASY);
     string scoresHard = m_dataBase->loadLeaderboardStringFromArray(HARD);
 
-    if ( scoresEasy.empty() )
+    if (scoresEasy.empty())
     {
         updateWholeText();
         m_leaderboardContentEasyText->setPositionSelfCentered(m_width/4, m_height/2);
@@ -242,7 +242,7 @@ void TextHandler::syncMenuLeaderboardText()
         m_leaderboardContentEasyText->setPositionSelfCentered(m_width/4, 300);
     }
 
-    if ( scoresHard.empty() )
+    if (scoresHard.empty())
     {
         updateWholeText();
         m_leaderboardContentHardText->setPositionSelfCentered(m_width/2+m_width/4, m_height/2);
@@ -267,7 +267,7 @@ void TextHandler::syncShopText()
 {
     m_walletText->setPosition(m_width/2, TITLE_TEXT_X);
     m_walletText->setTextFont(m_condensedFont, DEFAULT_CHAR_SIZE, GOLD_COLOR);
-    m_walletText->setStringFromInt( m_dataBase->getWallet() );
+    m_walletText->setStringFromInt(m_dataBase->getWallet());
 }
 
 
@@ -282,10 +282,10 @@ void TextHandler::syncGameText(int bonusTimeout)
     m_currentDistanceLabel->setPosition(440, 545);
     m_currentDistanceText->setPosition(640, 545);
     m_currentDistanceText->setColor(sf::Color::White);
-    m_currentDistanceText->setString( to_string(
-            m_dataBase->getCurrentDistance() ) + " m" );
+    m_currentDistanceText->setString(to_string(
+            m_dataBase->getCurrentDistance()) + " m");
     m_bonusTimeoutText->setPosition(840, 545);
-    if ( bonusTimeout > 0) {
+    if (bonusTimeout > 0) {
         m_bonusTimeoutText->setStringFromInt(bonusTimeout);
         m_bonusTimeoutText->setVisible(true);
     }
@@ -304,11 +304,11 @@ void TextHandler::syncPauseText()
     m_currentDistanceText->setPosition(PAUSE_TEXT_X, 30);
     m_currentCoinsNbText->setPosition(PAUSE_TEXT_X, 70);
     m_currentCoinsNbText->setColor(GOLD_COLOR);
-    m_currentCoinsNbText->setStringFromInt(m_dataBase->getCurrentCoinsNumber() );
+    m_currentCoinsNbText->setStringFromInt(m_dataBase->getCurrentCoinsNumber());
 
     m_flattenedEnemiesText->setPosition(PAUSE_TEXT_X, 110);
     m_flattenedEnemiesText->setColor(ENEMY_BLUE_COLOR);
-    m_flattenedEnemiesText->setStringFromInt(m_dataBase->getCurrentFlattenedEnemies() );
+    m_flattenedEnemiesText->setStringFromInt(m_dataBase->getCurrentFlattenedEnemies());
 }
 
 
@@ -331,29 +331,29 @@ void TextHandler::syncEndText(int gameSpeed)
     m_currentDistanceLabel->setColor(sf::Color::White);
     m_currentDistanceText->setPosition(SUBTOTAL_VALUE_X, 207);
     m_currentDistanceText->setColor(END_GREY_COLOR);
-    m_currentDistanceText->setString( to_string( m_dataBase->getCurrentDistance() ) + " m" );
-    m_currentCoinsNbText->setString( to_string( m_dataBase->getCurrentCoinsNumber() ) + "  X  20" );
+    m_currentDistanceText->setString(to_string(m_dataBase->getCurrentDistance()) + " m");
+    m_currentCoinsNbText->setString(to_string(m_dataBase->getCurrentCoinsNumber()) + "  X  20");
 
     m_coinsCollectedLabel->setPosition(SUBTOTAL_LABEL_X, 245);
     m_currentCoinsNbText->setPosition(SUBTOTAL_VALUE_X, 245);
     m_currentCoinsNbText->setColor(END_GREY_COLOR);
-    m_statsTotalCoinsNbText->setStringFromInt( m_dataBase->getTotalCoinsNumber() );
+    m_statsTotalCoinsNbText->setStringFromInt(m_dataBase->getTotalCoinsNumber());
 
     m_flattenedEnemiesLabel->setPosition(SUBTOTAL_LABEL_X, 290);
     m_flattenedEnemiesLabel->setColor(sf::Color::White);
     m_flattenedEnemiesText->setPosition(SUBTOTAL_VALUE_X, 290);
     m_flattenedEnemiesText->setColor(END_GREY_COLOR);
-    m_flattenedEnemiesText->setStringFromInt( m_dataBase->getCurrentFlattenedEnemies() );
+    m_flattenedEnemiesText->setStringFromInt(m_dataBase->getCurrentFlattenedEnemies());
 
     m_currentScoreLabel->setPosition(SUBTOTAL_LABEL_X, 350);
     m_currentScoreLabel->setFont(m_BoldFont);
     m_currentScoreText->setPosition(SUBTOTAL_VALUE_X, 350);
     m_currentScoreText->setFont(m_BoldFont);
-    m_currentScoreText->setStringFromInt( m_dataBase->getCurrentScore() );
+    m_currentScoreText->setStringFromInt(m_dataBase->getCurrentScore());
 
     m_walletText->setTextFont(m_condensedFont, DEFAULT_CHAR_SIZE, GOLD_COLOR);
     m_walletText->setPosition(450, 535);
-    m_walletText->setStringFromInt( m_dataBase->getWallet() );
+    m_walletText->setStringFromInt(m_dataBase->getWallet());
 }
 
 
@@ -368,18 +368,18 @@ void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage
     switch(currentPage)
     {
         case CONFIG:
-            for ( auto text : m_textList)
-                if ( text->getDescription().find("config") != string::npos)
+            for (auto text : m_textList)
+                if (text->getDescription().find("config") != string::npos)
                     text->draw(window);
             break;
         case STATS:
-            for ( auto text : m_textList)
-                if ( text->getDescription().find("stats") != string::npos)
+            for (auto text : m_textList)
+                if (text->getDescription().find("stats") != string::npos)
                     text->draw(window);
             break;
         case ABOUT:
-            for ( auto text : m_textList)
-                if ( text->getDescription().find("about") != string::npos)
+            for (auto text : m_textList)
+                if (text->getDescription().find("about") != string::npos)
                     text->draw(window);
             break;
         default:
@@ -395,8 +395,8 @@ void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage
  */
 void TextHandler::drawLeaderboardText(sf::RenderWindow *window) const
 {
-    for ( auto text : m_textList)
-        if ( text->getDescription().find("leaderboard") != string::npos)
+    for (auto text : m_textList)
+        if (text->getDescription().find("leaderboard") != string::npos)
             text->draw(window);
 }
 
@@ -445,8 +445,8 @@ void TextHandler::drawPauseText(sf::RenderWindow *window) const
  */
 void TextHandler::drawEndText(sf::RenderWindow *window) const
 {
-    for ( auto text : m_textList)
-        if ( text->getDescription().find("end") != string::npos)
+    for (auto text : m_textList)
+        if (text->getDescription().find("end") != string::npos)
             text->draw(window);
 
     m_currentDistanceText->draw(window);

@@ -16,10 +16,10 @@ using namespace std;
  * @param mvY the y moving direction
  */
 Player::Player(float x, float y, float w, float h, float mvX, float mvY):
-    MovableElement(x, y, w, h, mvX, mvY), m_state{0}, m_gravitation{20.0},
-    m_acceleration{18.0}, m_jumping{false}, m_flying{false}, m_inDeceleration{false}
+    MovableElement(x, y, w, h, mvX, mvY), m_state{NORMAL}, m_gravitation{20.0},
+    m_acceleration{18.0}, m_isJumping{false}, m_isFlying{false}, m_isDecelerating{false}
 {
-    m_elementType = 0;
+    m_elementType = PLAYER;
     m_life  = 100;
     m_vectorBall.first = 0;
     m_vectorBall.second = 0;
@@ -36,19 +36,19 @@ Player::~Player()
 
 //=== Getters
 
-int Player::getState() const { return m_state; }
+PlayerState Player::getState() const { return m_state; }
 int Player::getLife() const { return m_life; }
 
 
 //=== Setters
 
-void Player::setJumpState(bool state) {  m_jumping = state; }
-void Player::setDecelerationState(bool state) {  m_inDeceleration = state; }
+void Player::setJumpState(bool state) {  m_isJumping = state; }
+void Player::setDecelerationState(bool state) {  m_isDecelerating = state; }
 void Player::setLife(int new_life)
 {
     m_life = new_life;
-    if ( m_life > 100 ) m_life = 100;
-    else if ( m_life < 0 ) m_life = 0;
+    if (m_life > 100) m_life = 100;
+    else if (m_life < 0) m_life = 0;
 }
 
 
@@ -59,40 +59,40 @@ void Player::setLife(int new_life)
  */
 void Player::move()
 {
-    m_flying = m_width < GAME_FLOOR;
+    m_isFlying = m_width < GAME_FLOOR;
 
     if (m_posY < JUMP_LIMIT)
-        m_jumping = false;
+        m_isJumping = false;
 
-    if(m_inDeceleration)
+    if (m_isDecelerating)
     {
-        if(fabs(m_vectorBall.first) < PRECISION)
+        if (fabs(m_vectorBall.first) < PRECISION)
         {
-            m_vectorBall.first =0;
-            m_inDeceleration = false;
+            m_vectorBall.first = 0;
+            m_isDecelerating = false;
         }
-        m_vectorBall.first /= 1+m_moveX/FRAMERATE;
+        m_vectorBall.first /= 1 + m_moveX/FRAMERATE;
     }
 
-    if(m_jumping && m_posY >=GAME_FLOOR)
+    if (m_isJumping && m_posY >= GAME_FLOOR)
     {
         m_vectorBall.second = -m_acceleration*m_gravitation/FRAMERATE;
-        m_posY+= m_vectorBall.second/FRAMERATE;
+        m_posY += m_vectorBall.second/FRAMERATE;
     }
 
-    if(m_flying)
+    if (m_isFlying)
     {
         m_vectorBall.second += m_gravitation/FRAMERATE;
-        m_posY+= m_vectorBall.second/FRAMERATE;
+        m_posY += m_vectorBall.second/FRAMERATE;
     }
 
-    if( m_posY == GAME_FLOOR && m_flying)
+    if (m_posY == GAME_FLOOR && m_isFlying)
     {
-        m_flying =false;
-        m_jumping=false;
+        m_isFlying = false;
+        m_isJumping = false;
         m_posY = GAME_FLOOR;
     }
-    if(m_posY > GAME_FLOOR )
+    if (m_posY > GAME_FLOOR)
     {
         m_vectorBall.second = 0;
         m_posY = GAME_FLOOR;
@@ -100,22 +100,22 @@ void Player::move()
 
    //=== Update player position
 
-    if ( m_posX + m_vectorBall.first >= 0 && (m_posX + m_width + m_vectorBall.first) <= 900 )
+    if (m_posX + m_vectorBall.first >= 0 && (m_posX + m_width + m_vectorBall.first) <= 900)
         m_posX += m_vectorBall.first;
     else if (m_posX + m_vectorBall.first < 0)
         m_posX = 0;
     else
         m_posX = 900 - m_width;
 
-    if(m_posY - m_height <= 0)
+    if (m_posY - m_height <= 0)
        m_vectorBall.second =0;
 
     m_posY += m_vectorBall.second;
 
-    if(m_posY >= GAME_FLOOR + PRECISION)
+    if (m_posY >= GAME_FLOOR + PRECISION)
     {
-        m_vectorBall.second =0;
-        m_posY=GAME_FLOOR;
+        m_vectorBall.second = 0;
+        m_posY = GAME_FLOOR;
     }
 }
 
@@ -127,9 +127,9 @@ void Player::move()
  *
  * @param state the player's new state
  */
-void Player::changeState(int state)
+void Player::changeState(PlayerState state)
 {
-    if ( state == NORMAL)
+    if (state == NORMAL)
     {
         m_state = NORMAL;
         m_width = 30;
@@ -137,7 +137,7 @@ void Player::changeState(int state)
         m_gravitation = 20.0;
         m_acceleration = 18.0;
     }
-    else if ( state == MEGA)
+    else if (state == MEGA)
     {
         m_state = MEGA;
         m_width = 70;
@@ -145,7 +145,7 @@ void Player::changeState(int state)
         m_gravitation = 20.0;
         m_acceleration = 18.0;
     }
-    else if ( state == FLY)
+    else if (state == FLY)
     {
         m_state = FLY;
         m_width = 30;
@@ -153,7 +153,7 @@ void Player::changeState(int state)
         m_gravitation = 5.0;
         m_acceleration = 70.0;
     }
-    else if ( state == SHIELD)
+    else if (state == SHIELD)
     {
         m_state = SHIELD;
         m_width = 30;
@@ -162,7 +162,9 @@ void Player::changeState(int state)
         m_acceleration = 18.0;
     }
     else
+    {
         m_state = state;
+    }
 }
 
 /**
@@ -174,7 +176,7 @@ void Player::changeState(int state)
  */
 void Player::controlPlayerMovements(MovingDirection direction)
 {
-    m_inDeceleration = false;
+    m_isDecelerating = false;
 
     if (direction == MOVE_LEFT && m_vectorBall.first > -10)
         m_vectorBall.first -= m_moveX*m_acceleration/FRAMERATE;

@@ -51,7 +51,7 @@ void Text::setTextFont(const sf::Font &font, unsigned int charSize, sf::Color co
 }
 void Text::setVisible(bool on) { m_isVisible = on; }
 void Text::setPositionSelfCentered(double x, double y) {
-    setPosition( (float)(x-getGlobalBounds().width/2), (float)(y-getGlobalBounds().height/2) );
+    setPosition((float)(x-getGlobalBounds().width/2), (float)(y-getGlobalBounds().height/2));
 }
 void Text::setStringFromInt(int value) {
     setString(to_string(value));
@@ -75,7 +75,7 @@ bool Text::contains(float posX, float posY) const
  */
 void Text::draw(sf::RenderWindow *window) const
 {
-    if ( isVisible() )
+    if (isVisible())
     {
         window->draw(*this);
     }

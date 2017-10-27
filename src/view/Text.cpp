@@ -7,7 +7,7 @@ using namespace std;
 /**
  * Constructs a Text with a description
  * @author Arthur
- * @date 21/12/16 - 16/04/17
+ * @date 21/12/16 - 27/10/17
  *
  * @param description the description used to parse text string
  */
@@ -15,14 +15,14 @@ Text::Text(const string &description) : m_description{description}
 {
     m_font.loadFromFile(ROBOTO_REGULAR_FONT);
     setFont(m_font);
-    setColor(sf::Color::White);
+    setFillColor(sf::Color::White);
     m_isVisible = true;
 }
 
 /**
  * Constructs a Text with a description and a visible state
  * @author Arthur
- * @date 21/12/16 - 16/04/17
+ * @date 21/12/16 - 27/10/17
  *
  * @param description the description used to parse text string
  * @param isVisible defines if text is visible at instantiation
@@ -31,7 +31,7 @@ Text::Text(const string &description, bool isVisible) : m_description{descriptio
 {
     m_font.loadFromFile(ROBOTO_REGULAR_FONT);
     setFont(m_font);
-    setColor(sf::Color::White);
+    setFillColor(sf::Color::White);
     m_isVisible = isVisible;
 }
 
@@ -42,12 +42,12 @@ bool Text::isVisible() const { return m_isVisible; }
 
 //=== Setters
 
-void Text::setDescription(std::string description) { m_description = description; }
+void Text::setDescription(const std::string &description) { m_description = description; }
 void Text::setTextFont(const sf::Font &font, unsigned int charSize, sf::Color color)
 {
     sf::Text::setFont(font);
     sf::Text::setCharacterSize(charSize);
-    sf::Text::setColor(color);
+    sf::Text::setFillColor(color);
 }
 void Text::setVisible(bool on) { m_isVisible = on; }
 void Text::setPositionSelfCentered(double x, double y) {

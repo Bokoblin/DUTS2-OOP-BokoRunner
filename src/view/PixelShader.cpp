@@ -35,7 +35,7 @@ void PixelShader::load(const string &image)
 /**
  * Action linked to load
  * @author Arthur
- * @date 28/04/16
+ * @date 28/04/16 - 27/10/17
  */
 bool PixelShader::onLoad(const string &image)
 {
@@ -46,7 +46,7 @@ bool PixelShader::onLoad(const string &image)
     // Load the shader
     if (!m_shader.loadFromFile("../res/pixelate.frag", sf::Shader::Fragment))
         return false;
-    m_shader.setParameter("texture", sf::Shader::CurrentTexture);
+    m_shader.setUniform("texture", sf::Shader::CurrentTexture);
 
     return true;
 }
@@ -55,12 +55,12 @@ bool PixelShader::onLoad(const string &image)
 /**
  * Effect update
  * @author Arthur
- * @date 28/04/16
+ * @date 28/04/16 - 27/10/17
  */
 void PixelShader::update(float x, float y)
 {
     if (m_isLoaded)
-        m_shader.setParameter("pixel_threshold", (x + y) / 30);
+        m_shader.setUniform("pixel_threshold", (x + y) / 30);
 }
 
 

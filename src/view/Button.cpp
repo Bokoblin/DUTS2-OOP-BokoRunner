@@ -3,7 +3,7 @@
 /**
  * Constructs a button with coordinates and a size
  * @author Arthur
- * @date 02/01/17
+ * @date 02/01/17 - 27/10/17
  */
 Button::Button(float x, float y, float w, float h) :
         GraphicElement(x, y, w, h), m_currentClipRect{0}, m_labelPosition{CENTER},
@@ -11,7 +11,7 @@ Button::Button(float x, float y, float w, float h) :
 {
     m_font.loadFromFile(RESOURCES_FOLDER + "Roboto_Condensed.ttf");
     m_label.setFont(m_font);
-    m_label.setColor(sf::Color::White);
+    m_label.setFillColor(sf::Color::White);
     m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                      getPosition().y + getGlobalBounds().height/2);
     m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
@@ -25,7 +25,7 @@ Button::Button(float x, float y, float w, float h) :
  * Constructs a button with coordinates,
  * a size and a description
  * @author Arthur
- * @date 02/01/17 - 25/01/17
+ * @date 02/01/17 - 27/10/17
  */
 Button::Button(float x, float y, float w, float h, const std::string &description) :
         GraphicElement(x, y, w, h), m_currentClipRect{0}, m_labelPosition{CENTER},
@@ -33,7 +33,7 @@ Button::Button(float x, float y, float w, float h, const std::string &descriptio
 {
     m_font.loadFromFile(RESOURCES_FOLDER + "Roboto_Condensed.ttf");
     m_label.setFont(m_font);
-    m_label.setColor(sf::Color::White);
+    m_label.setFillColor(sf::Color::White);
     m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                      getPosition().y + getGlobalBounds().height/2);
     m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
@@ -45,7 +45,7 @@ Button::Button(float x, float y, float w, float h, const std::string &descriptio
  * Constructs a button with coordinates,
  * a size, a texture and a clipRect
  * @author Arthur
- * @date 06/04/16 - 25/01/17
+ * @date 06/04/16 - 27/10/17
  */
 Button::Button(float x, float y, float w, float h,
                const std::string &image, const std::vector<sf::IntRect> &clipRect) :
@@ -57,7 +57,7 @@ Button::Button(float x, float y, float w, float h,
 
     m_font.loadFromFile(RESOURCES_FOLDER + "Roboto_Condensed.ttf");
     m_label.setFont(m_font);
-    m_label.setColor(sf::Color::White);
+    m_label.setFillColor(sf::Color::White);
     m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                      getPosition().y + getGlobalBounds().height/2);
     m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
@@ -69,7 +69,7 @@ Button::Button(float x, float y, float w, float h,
  * Constructs a button with coordinates,
  * a size, a texture, a clipRect and a description
  * @author Arthur
- * @date 06/04/16 - 25/01/17
+ * @date 06/04/16 - 27/10/17
  */
 Button::Button(float x, float y, float w, float h, const std::string &description,
                const std::string &image, const std::vector<sf::IntRect> &clipRect) :
@@ -81,7 +81,7 @@ Button::Button(float x, float y, float w, float h, const std::string &descriptio
 
     m_font.loadFromFile(RESOURCES_FOLDER + "Roboto_Condensed.ttf");
     m_label.setFont(m_font);
-    m_label.setColor(sf::Color::White);
+    m_label.setFillColor(sf::Color::White);
     m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                      getPosition().y + getGlobalBounds().height/2);
     m_label.setOrigin(0, m_label.getGlobalBounds().height/2);

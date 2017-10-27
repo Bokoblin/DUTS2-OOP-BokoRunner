@@ -7,7 +7,7 @@ set(EXECUTABLE_NAME ${PROJECT_NAME})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 #include libraries
-set(SFML_ROOT "${PROJECT_SOURCE_DIR}/libs/SFML-2.3.2")
+set(SFML_ROOT "${PROJECT_SOURCE_DIR}/libs/SFML-2.4.2")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
 
 file(GLOB SOURCE_FILES
@@ -26,7 +26,7 @@ set(PUGI_LIB
 
 add_executable(runner ${PUGI_LIB} ${SOURCE_FILES})
 
-FIND_PACKAGE(SFML 2.3 COMPONENTS audio graphics window system REQUIRED )
+FIND_PACKAGE(SFML 2.4 COMPONENTS audio graphics window system REQUIRED )
 
 include_directories( ${SFML_INCLUDE_DIR} )
 target_link_libraries( ${EXECUTABLE_NAME} ${SFML_LIBRARIES})

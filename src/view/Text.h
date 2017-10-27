@@ -24,7 +24,7 @@ limitations under the License.
 /**
  * Text Class inherited from sf::Text
  * @author Arthur
- * @date 21/12/16 - 16/04/17
+ * @date 21/12/16 - 27/10/17
  */
 class Text : public sf::Text {
 public:
@@ -37,7 +37,7 @@ public:
     bool isVisible() const;
 
     //=== SETTERS
-    void setDescription(std::string description);
+    void setDescription(const std::string &description);
     void setTextFont(const sf::Font &font, unsigned int charSize, sf::Color color);
     void setPositionSelfCentered(double, double);
     void setStringFromInt(int value);

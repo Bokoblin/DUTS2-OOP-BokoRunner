@@ -117,7 +117,7 @@ void TextHandler::loadText()
 /**
  * Changes Language
  * @author Arthur
- * @date 13/04/16 - 25/01/17
+ * @date 13/04/16 - 27/10/17
  */
 void TextHandler::updateWholeText()
 {
@@ -125,7 +125,7 @@ void TextHandler::updateWholeText()
     {
         t->setCharacterSize(DEFAULT_CHAR_SIZE);
         t->setFont(m_condensedFont);
-        t->setColor(sf::Color::White);
+        t->setFillColor(sf::Color::White);
         std::string utf8_string = m_dataBase->getTextValueFromStringsFile(t->getDescription());
         t->setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
     }
@@ -144,7 +144,7 @@ void TextHandler::syncMenuHomeText()
 /**
  * Menu Settings Text Syncing
  * @author Arthur
- * @date 14/04/16 - 30/01/17
+ * @date 14/04/16 - 27/10/17
  */
 void TextHandler::syncSettingsText(int currentPage)
 {
@@ -178,7 +178,7 @@ void TextHandler::syncSettingsText(int currentPage)
         m_statsTotalCoinsLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalCoinsNbText->setPosition(STAT_LABEL_X+250, 270);
         m_statsTotalCoinsNbText->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalCoinsNbText->setColor(sf::Color::White);
+        m_statsTotalCoinsNbText->setFillColor(sf::Color::White);
         m_statsTotalCoinsNbText->setStringFromInt(m_dataBase->getTotalCoinsNumber());
 
         m_statsTotalGamesLabel->setPosition(STAT_LABEL_X, 310);
@@ -274,14 +274,14 @@ void TextHandler::syncShopText()
 /**
  * Game Screen Syncing
  * @author Arthur
- * @date 02/04/16 - 23/12/16
+ * @date 02/04/16 - 27/10/17
  */
 void TextHandler::syncGameText(int bonusTimeout)
 {
     m_playerLifeLabel->setPosition(40, 545);
     m_currentDistanceLabel->setPosition(440, 545);
     m_currentDistanceText->setPosition(640, 545);
-    m_currentDistanceText->setColor(sf::Color::White);
+    m_currentDistanceText->setFillColor(sf::Color::White);
     m_currentDistanceText->setString(to_string(
             m_dataBase->getCurrentDistance()) + " m");
     m_bonusTimeoutText->setPosition(840, 545);
@@ -297,17 +297,17 @@ void TextHandler::syncGameText(int bonusTimeout)
 /**
  * Game Pause Screen Syncing
  * @author Arthur
- * @date 02/04/16 - 23/12/16
+ * @date 02/04/16 - 27/10/17
  */
 void TextHandler::syncPauseText()
 {
     m_currentDistanceText->setPosition(PAUSE_TEXT_X, 30);
     m_currentCoinsNbText->setPosition(PAUSE_TEXT_X, 70);
-    m_currentCoinsNbText->setColor(GOLD_COLOR);
+    m_currentCoinsNbText->setFillColor(GOLD_COLOR);
     m_currentCoinsNbText->setStringFromInt(m_dataBase->getCurrentCoinsNumber());
 
     m_flattenedEnemiesText->setPosition(PAUSE_TEXT_X, 110);
-    m_flattenedEnemiesText->setColor(ENEMY_BLUE_COLOR);
+    m_flattenedEnemiesText->setFillColor(ENEMY_BLUE_COLOR);
     m_flattenedEnemiesText->setStringFromInt(m_dataBase->getCurrentFlattenedEnemies());
 }
 
@@ -315,7 +315,7 @@ void TextHandler::syncPauseText()
 /**
  * Game End Screen Syncing
  * @author Arthur
- * @date 02/04/16 - 07/01/17
+ * @date 02/04/16 - 27/10/17
  */
 void TextHandler::syncEndText(int gameSpeed)
 {
@@ -324,25 +324,25 @@ void TextHandler::syncEndText(int gameSpeed)
 
     m_speedMultiplierLabel->setPosition(SUBTOTAL_LABEL_X, 170);
     m_speedMultiplierText->setPosition(SUBTOTAL_VALUE_X, 170);
-    m_speedMultiplierText->setColor(END_GREY_COLOR);
+    m_speedMultiplierText->setFillColor(END_GREY_COLOR);
     m_speedMultiplierText->setStringFromInt(gameSpeed);
 
     m_currentDistanceLabel->setPosition(SUBTOTAL_LABEL_X, 207);
-    m_currentDistanceLabel->setColor(sf::Color::White);
+    m_currentDistanceLabel->setFillColor(sf::Color::White);
     m_currentDistanceText->setPosition(SUBTOTAL_VALUE_X, 207);
-    m_currentDistanceText->setColor(END_GREY_COLOR);
+    m_currentDistanceText->setFillColor(END_GREY_COLOR);
     m_currentDistanceText->setString(to_string(m_dataBase->getCurrentDistance()) + " m");
     m_currentCoinsNbText->setString(to_string(m_dataBase->getCurrentCoinsNumber()) + "  X  20");
 
     m_coinsCollectedLabel->setPosition(SUBTOTAL_LABEL_X, 245);
     m_currentCoinsNbText->setPosition(SUBTOTAL_VALUE_X, 245);
-    m_currentCoinsNbText->setColor(END_GREY_COLOR);
+    m_currentCoinsNbText->setFillColor(END_GREY_COLOR);
     m_statsTotalCoinsNbText->setStringFromInt(m_dataBase->getTotalCoinsNumber());
 
     m_flattenedEnemiesLabel->setPosition(SUBTOTAL_LABEL_X, 290);
-    m_flattenedEnemiesLabel->setColor(sf::Color::White);
+    m_flattenedEnemiesLabel->setFillColor(sf::Color::White);
     m_flattenedEnemiesText->setPosition(SUBTOTAL_VALUE_X, 290);
-    m_flattenedEnemiesText->setColor(END_GREY_COLOR);
+    m_flattenedEnemiesText->setFillColor(END_GREY_COLOR);
     m_flattenedEnemiesText->setStringFromInt(m_dataBase->getCurrentFlattenedEnemies());
 
     m_currentScoreLabel->setPosition(SUBTOTAL_LABEL_X, 350);

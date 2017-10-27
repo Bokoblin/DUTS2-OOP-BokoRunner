@@ -19,8 +19,11 @@ and "under the hood" improvements from Bokoblin.
 
 * IDEs : Code::Blocks, QT Creator, CLion(current)
 * Language : C++11
-* Libraries : SFML & PugiXML
+* Libraries : 
+    * SFML 2.4.2
+    * PugiXML 1.8
 * Continuous integration : Travis CI
+* Code review : Codacy
 
 
 ### Authors ###

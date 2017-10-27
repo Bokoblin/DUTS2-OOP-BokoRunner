@@ -56,17 +56,17 @@ RadioButton::~RadioButton()
  */
 void RadioButton::sync()
 {
-    if (!m_isDisabled && m_isActive && !m_isPressed)
+    if (m_isEnabled && m_isSelected && !m_isPressed)
         this->setTextureRect(m_clipRectArray[0]);
-    if (!m_isDisabled && m_isActive && m_isPressed)
+    if (m_isEnabled && m_isSelected && m_isPressed)
         this->setTextureRect(m_clipRectArray[1]);
-    if (!m_isDisabled && !m_isActive && !m_isPressed)
+    if (m_isEnabled && !m_isSelected && !m_isPressed)
         this->setTextureRect(m_clipRectArray[2]);
-    if (!m_isDisabled && !m_isActive && m_isPressed)
+    if (m_isEnabled && !m_isSelected && m_isPressed)
         this->setTextureRect(m_clipRectArray[3]);
-    if (m_isDisabled && m_isActive)
+    if (!m_isEnabled && m_isSelected)
         this->setTextureRect(m_clipRectArray[4]);
-    if (m_isDisabled && !m_isActive)
+    if (!m_isEnabled && !m_isSelected)
         this->setTextureRect(m_clipRectArray[5]);
 }
 

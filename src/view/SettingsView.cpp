@@ -144,19 +144,19 @@ void SettingsView::synchronize()
 {
     //=== Update Status of Radio buttons
 
-    m_englishLangRadio->setActivated(m_settings->getDataBase()->getLanguage() == "en");
-    m_frenchLangRadio->setActivated(m_settings->getDataBase()->getLanguage() == "fr");
-    m_spanishLangRadio->setActivated(m_settings->getDataBase()->getLanguage() == "es");
-    m_easyModeRadio->setActivated(m_settings->getDataBase()->getDifficulty() == EASY);
-    m_hardModeRadio->setActivated(m_settings->getDataBase()->getDifficulty() == HARD);
-    m_defaultBallSkinRadio->setActivated(m_settings->getDataBase()->getBallSkin() == "default");
-    m_morphBallSkinRadio->setActivated(m_settings->getDataBase()->getBallSkin() == "morphing");
-    m_capsuleBallSkinRadio->setActivated(m_settings->getDataBase()->getBallSkin() == "capsule");
+    m_englishLangRadio->setSelected(m_settings->getDataBase()->getLanguage() == "en");
+    m_frenchLangRadio->setSelected(m_settings->getDataBase()->getLanguage() == "fr");
+    m_spanishLangRadio->setSelected(m_settings->getDataBase()->getLanguage() == "es");
+    m_easyModeRadio->setSelected(m_settings->getDataBase()->getDifficulty() == EASY);
+    m_hardModeRadio->setSelected(m_settings->getDataBase()->getDifficulty() == HARD);
+    m_defaultBallSkinRadio->setSelected(m_settings->getDataBase()->getBallSkin() == "default");
+    m_morphBallSkinRadio->setSelected(m_settings->getDataBase()->getBallSkin() == "morphing");
+    m_capsuleBallSkinRadio->setSelected(m_settings->getDataBase()->getBallSkin() == "capsule");
 
-    m_morphBallSkinRadio->setDisabled(!m_settings->getMorphSkinAvailability());
-    m_capsuleBallSkinRadio->setDisabled(!m_settings->getCapsuleSkinAvailability());
-    m_defaultBallSkinRadio->setDisabled(!m_settings->getMorphSkinAvailability()
-                                        && !m_settings->getCapsuleSkinAvailability());
+    m_morphBallSkinRadio->setEnabled(m_settings->isMorphSkinAvailable());
+    m_capsuleBallSkinRadio->setEnabled(m_settings->isCapsuleSkinAvailable());
+    m_defaultBallSkinRadio->setEnabled(m_settings->isMorphSkinAvailable()
+                                       || m_settings->isCapsuleSkinAvailable());
 
 
     //=== Sync buttons
@@ -173,7 +173,7 @@ void SettingsView::synchronize()
     for(auto it : m_pageIndicators)
     {
         (it.second)->sync();
-        it.second->setActivated(it.first == m_settings->getCurrentPage());
+        it.second->setSelected(it.first == m_settings->getCurrentPage());
     }
 
     //=== Resize Radio buttons

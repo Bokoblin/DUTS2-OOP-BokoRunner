@@ -12,10 +12,11 @@ Major coding changes:
   - AbstractModel and AbstractView
   - More classes inherits from AbstractModel
   - Enumerations have each their own header file
-  - Some classes have their name changed
+  - Some classes and methods have their name changed
 - Rewritten Dialog class which is more generic
 
 Fixes and misc:
+- Updated SFML ( 2.3.2 -> 2.4.2)
 - Moved some #define to utils/definitions.h
 
 

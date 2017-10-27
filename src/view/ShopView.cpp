@@ -128,7 +128,7 @@ void ShopView::synchronize()
     {
         (it.second)->sync();
         it.first == m_currentIndicator ?
-        it.second->setActivated(true) : it.second->setActivated(false);
+        it.second->setSelected(true) : it.second->setSelected(false);
     }
 }
 

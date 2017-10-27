@@ -21,18 +21,17 @@ limitations under the License.
 /**
  * Provides constants to model and view classes
  * @author Arthur
- * @date 23/10/16 - 24/01/17
+ * @date 23/10/16 - 28/10/17
  */
 
-//=== RES Folders
+//=== Ressources Folders
 const std::string RESOURCES_FOLDER = "../res/";
-const std::string IMAGE_FOLDER = "../res/images/";
-const std::string AUDIO_FOLDER = "../res/audio/";
+const std::string AUDIO_FOLDER = RESOURCES_FOLDER + "audio/";
+const std::string IMAGE_FOLDER = RESOURCES_FOLDER + "images/";
+const std::string FONTS_FOLDER = RESOURCES_FOLDER + "fonts/";
+const std::string STRINGS_FOLDER = RESOURCES_FOLDER + "strings/";
 
-//=== DataBase
-const std::string ENGLISH_STRINGS = RESOURCES_FOLDER + "english.xml";
-const std::string FRENCH_STRINGS = RESOURCES_FOLDER + "french.xml";
-const std::string SPANISH_STRINGS = RESOURCES_FOLDER + "spanish.xml";
+//=== Config
 const std::string CONFIG_FILE = RESOURCES_FOLDER + "config.xml";
 const std::string DEFAULT_CONFIG_CONTENT = "<?xml version=\"1.0\"?>\n"
         "<runner>\n"
@@ -96,11 +95,11 @@ const int INTRO_WIDTH = 400;
 const int INTRO_HEIGHT = 200;
 
 //=== Fonts
-const std::string ROBOTO_REGULAR_FONT = RESOURCES_FOLDER + "Roboto_Regular.ttf";
-const std::string ROBOTO_CONDENSED_FONT = RESOURCES_FOLDER + "Roboto_Condensed.ttf";
-const std::string ROBOTO_BOLD_FONT = RESOURCES_FOLDER + "Roboto_Bold.ttf";
+const std::string ROBOTO_REGULAR_FONT = FONTS_FOLDER + "Roboto_Regular.ttf";
+const std::string ROBOTO_CONDENSED_FONT = FONTS_FOLDER + "Roboto_Condensed.ttf";
+const std::string ROBOTO_BOLD_FONT = FONTS_FOLDER + "Roboto_Bold.ttf";
 
-//=== Backgrounds
+//=== Images : Backgrounds
 const std::string DEFAULT_FAR_HILL_BACKGROUND = IMAGE_FOLDER + "backgrounds/hill_far.png";
 const std::string DEFAULT_NEAR_HILL_BACKGROUND = IMAGE_FOLDER + "backgrounds/hill_near.png";
 const std::string DEFAULT_FAR_PLAIN_BACKGROUND = IMAGE_FOLDER + "backgrounds/plain_far.png";
@@ -113,7 +112,7 @@ const std::string PAUSE_HILL_BACKGROUND = IMAGE_FOLDER + "backgrounds/pause_hill
 const std::string PAUSE_PLAIN_BACKGROUND = IMAGE_FOLDER + "backgrounds/pause_plain.png";
 const std::string END_SCREEN_BACKGROUND = IMAGE_FOLDER + "backgrounds/end_background.png";
 
-//=== UI components
+//=== Images : UI components
 const std::string INDICATOR_IMAGE = IMAGE_FOLDER + "buttons/indicator_buttons.png";
 const std::string RADIO_BUTTONS_IMAGE = IMAGE_FOLDER + "buttons/radio_buttons.png";
 const std::string RECT_BUTTONS_IMAGE = IMAGE_FOLDER + "buttons/rect_buttons.png";
@@ -121,7 +120,7 @@ const std::string SHAPE_BUTTONS_IMAGE = IMAGE_FOLDER + "buttons/shape_buttons.pn
 const std::string CARD_IMAGE = IMAGE_FOLDER + "card.png";
 const std::string DIALOG_IMAGE = IMAGE_FOLDER + "dialog.png";
 
-//=== GAME components
+//=== Images : Game components
 const std::string BALL_IMAGE = IMAGE_FOLDER + "ball.png";
 const std::string BONUS_IMAGE = IMAGE_FOLDER + "bonus.png";
 const std::string ENEMIES_IMAGE = IMAGE_FOLDER + "enemies.png";
@@ -130,7 +129,7 @@ const std::string BOTTOM_BAR_IMAGE = IMAGE_FOLDER + "bottom_bar.png";
 const std::string LIFE_BOX_IMAGE = IMAGE_FOLDER + "life_bar.png";
 const std::string GAME_BUTTONS_IMAGE = IMAGE_FOLDER + "pause_elements.png";
 
-//=== MISC images
+//=== Images : Misc
 const std::string INTRO_IMAGE = IMAGE_FOLDER + "intro.png";
 const std::string TITLE_IMAGE = IMAGE_FOLDER + "title.png";
 const std::string IUT_LOGO_IMAGE = IMAGE_FOLDER + "logo_iut.png";
@@ -139,11 +138,16 @@ const std::string COMMAND_EN_IMAGE = IMAGE_FOLDER + "command_en.png";
 const std::string COMMAND_FR_IMAGE = IMAGE_FOLDER + "command_fr.png";
 const std::string COMMAND_ES_IMAGE = IMAGE_FOLDER + "command_es.png";
 
-//=== MUSICS
+//=== Musics
 const std::string MENU_MUSIC = AUDIO_FOLDER + "menu_sound.ogg";
 const std::string GAME_NORMAL_THEME_MUSIC = AUDIO_FOLDER + "game_normal_sound.ogg";
 const std::string GAME_MASTER_THEME_MUSIC = AUDIO_FOLDER + "game_master_sound.ogg";
 const std::string COINS_COLLECTED_MUSIC = AUDIO_FOLDER + "coin_collected_sound.ogg";
 const std::string ENEMIES_DESTRUCTED_MUSIC = AUDIO_FOLDER + "destroyed_enemies_sound.ogg";
+
+//=== Strings
+const std::string ENGLISH_STRINGS = STRINGS_FOLDER + "english.xml";
+const std::string FRENCH_STRINGS = STRINGS_FOLDER + "french.xml";
+const std::string SPANISH_STRINGS = STRINGS_FOLDER + "spanish.xml";
 
 #endif

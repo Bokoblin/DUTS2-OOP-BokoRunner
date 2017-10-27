@@ -47,12 +47,12 @@ public:
     virtual ~Button();
 
     //=== GETTERS
-    bool isDisabled() const;
+    bool isEnabled() const;
 
     //=== SETTERS
-    void setPressed(bool on);
-    void setActivated(bool on);
-    void setDisabled(bool on);
+    void setPressed(bool pressed);
+    void setSelected(bool selected);
+    void setEnabled(bool enabled);
     void setClipRectArray(std::vector<sf::IntRect> array);
     void setPositionSelfCentered(double, double);
     void setLabelPosition(LabelPosition labelPosition);
@@ -68,8 +68,8 @@ protected:
     std::vector<sf::IntRect> m_clipRectArray;
     unsigned int m_currentClipRect;
     bool m_isPressed;
-    bool m_isActive;
-    bool m_isDisabled;
+    bool m_isSelected;
+    bool m_isEnabled;
     sf::Font m_font;
     Text m_label;
     LabelPosition m_labelPosition;

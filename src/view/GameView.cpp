@@ -428,8 +428,9 @@ void GameView::updateElements()
         m_goToHomeButton->resize(30, 30);
         m_goToHomeButton->setPosition(30, 535);
 
+        m_coinSprite->sync();
         m_coinSprite->resize(25, 25);
-        m_coinSprite->setPosition((float)(m_width / 2.4), 565);
+        m_coinSprite->setPosition((float)(m_width / 2.3), 563);
 
         m_restartGameButton->sync(m_game->getDataBase());
         m_restartGameButton->resize(30, 30);

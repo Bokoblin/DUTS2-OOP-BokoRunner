@@ -77,7 +77,7 @@ void GameModel::setCurrentZone(Zone z) { m_currentZone = z; }
  * (elements apparition, behaviours, deletion)
  * and game mode changing
  * @author Arthur
- * @date 21/02/16 - 26/12/16
+ * @date 21/02/16 - 28/10/17
  */
 void GameModel::nextStep()
 {
@@ -90,7 +90,9 @@ void GameModel::nextStep()
         //outside of delay otherwise some high speed collisions are not triggered
         handleMovableElementsCollisions();
 
-		if (currentNextStepDelay > chrono::milliseconds(NEXT_STEP_DELAY))
+        chrono::system_clock::duration nextStepDelay = std::chrono::milliseconds(NEXT_STEP_DELAY);
+
+		if (currentNextStepDelay.count() > nextStepDelay.count())
 		{
             //=== Update distance and gameSpeed
 
@@ -112,16 +114,16 @@ void GameModel::nextStep()
 
             //=== Bonus timeout & ending
 
-            if (m_bonusTimeout > chrono::milliseconds(0))
-                m_bonusTimeout -= chrono::milliseconds(NEXT_STEP_DELAY);
+            if (m_bonusTimeout.count() > chrono::milliseconds(0).count())
+                m_bonusTimeout.operator-=(chrono::milliseconds(NEXT_STEP_DELAY));
 
-            if (m_bonusTimeout <= chrono::milliseconds(0)
+            if (m_bonusTimeout.count() <= chrono::milliseconds(0).count()
                  && m_player->getState() != SHIELD)
             {
                 m_player->changeState(NORMAL);
             }
 
-            if (m_bonusTimeout <= chrono::milliseconds(0)
+            if (m_bonusTimeout.count() <= chrono::milliseconds(0).count()
                  && m_gameState == RUNNING_SLOWLY)
             {
                 m_gameState = RUNNING;
@@ -365,7 +367,7 @@ void GameModel::handleMovableElementsCollisions()
                         m_dataBase->increaseCurrentFlattenedEnemies(100);
                     }
                     else if (m_player->getState() == SHIELD
-                             && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
+                             && m_bonusTimeout.count() != chrono::milliseconds(SHIELD_TIMEOUT).count())
                     {
                         if (m_dataBase->getActivatedItemsArray().find("shieldPlus")
                              == m_dataBase->getActivatedItemsArray().end())
@@ -389,7 +391,7 @@ void GameModel::handleMovableElementsCollisions()
                         m_dataBase->increaseCurrentFlattenedEnemies(300);
                     }
                     else if (m_player->getState() == SHIELD
-                             && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
+                             && m_bonusTimeout.count() != chrono::milliseconds(SHIELD_TIMEOUT).count())
                     {
                         if (m_dataBase->getActivatedItemsArray().find("shieldPlus")
                              == m_dataBase->getActivatedItemsArray().end())
@@ -413,7 +415,7 @@ void GameModel::handleMovableElementsCollisions()
                         m_dataBase->increaseCurrentFlattenedEnemies(500);
                     }
                     else if (m_player->getState() == SHIELD
-                             && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
+                             && m_bonusTimeout.count() != chrono::milliseconds(SHIELD_TIMEOUT).count())
                     {
                         if (m_dataBase->getActivatedItemsArray().find("shieldPlus")
                              == m_dataBase->getActivatedItemsArray().end())

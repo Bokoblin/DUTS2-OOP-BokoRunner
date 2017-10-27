@@ -352,7 +352,7 @@ void TextHandler::syncEndText(int gameSpeed)
     m_currentScoreText->setStringFromInt(m_dataBase->getCurrentScore());
 
     m_walletText->setTextFont(m_condensedFont, DEFAULT_CHAR_SIZE, GOLD_COLOR);
-    m_walletText->setPosition(450, 535);
+    m_walletText->setPosition(m_width/2-15, 535);
     m_walletText->setStringFromInt(m_dataBase->getWallet());
 }
 

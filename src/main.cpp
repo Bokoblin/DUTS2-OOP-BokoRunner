@@ -25,7 +25,7 @@ limitations under the License.
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP),
-                            APP_TITLE, sf::Style::None);
+                            APP_TITLE, sf::Style::Default);
     window.setFramerateLimit(FRAMERATE);
 
     DataBase dataBase;

@@ -61,8 +61,8 @@
     <string name="about_copyright" value="2016-2017 Jolivet Arthur &amp; Laronze Florian" />
 
     <!--  Shop strings -->
-    <string name="shop_bought" value="Obtenu" />
-    <string name="shop_purchasable" value="Acheter" />
+    <string name="shop_bought" value="OBTENU" />
+    <string name="shop_purchasable" value="ACHETER" />
     <string name="shop_dialog_title" value="Acheter cet objet ?" />
     <string name="shop_dialog_content" value="Nom : $NAME &#xA;&#xA;Prix : $PRICE pieces" />
     <string name="shop_dialog_success" value="Merci pour votre achat." />

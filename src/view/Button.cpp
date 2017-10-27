@@ -3,19 +3,19 @@
 /**
  * Constructs a button with coordinates and a size
  * @author Arthur
- * @date 02/01/17 - 27/10/17
+ * @date 02/01/17 - 28/10/17
  */
 Button::Button(float x, float y, float w, float h) :
         GraphicElement(x, y, w, h), m_currentClipRect{0}, m_labelPosition{CENTER},
-        m_isPressed{false}, m_isActive{false}, m_isDisabled{false}, m_label{""}
+        m_isPressed{false}, m_isSelected{false}, m_isEnabled{true}, m_label{""}
 {
-    m_font.loadFromFile(RESOURCES_FOLDER + "Roboto_Condensed.ttf");
+    m_font.loadFromFile(ROBOTO_CONDENSED_FONT);
     m_label.setFont(m_font);
     m_label.setFillColor(sf::Color::White);
     m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                      getPosition().y + getGlobalBounds().height/2);
     m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
-    m_label.setCharacterSize(24);
+    m_label.setCharacterSize(22);
 }
 
 
@@ -25,19 +25,19 @@ Button::Button(float x, float y, float w, float h) :
  * Constructs a button with coordinates,
  * a size and a description
  * @author Arthur
- * @date 02/01/17 - 27/10/17
+ * @date 02/01/17 - 28/10/17
  */
 Button::Button(float x, float y, float w, float h, const std::string &description) :
         GraphicElement(x, y, w, h), m_currentClipRect{0}, m_labelPosition{CENTER},
-        m_isPressed{false}, m_isActive{false}, m_isDisabled{false}, m_label{description}
+        m_isPressed{false}, m_isSelected{false}, m_isEnabled{true}, m_label{description}
 {
-    m_font.loadFromFile(RESOURCES_FOLDER + "Roboto_Condensed.ttf");
+    m_font.loadFromFile(ROBOTO_CONDENSED_FONT);
     m_label.setFont(m_font);
     m_label.setFillColor(sf::Color::White);
     m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                      getPosition().y + getGlobalBounds().height/2);
     m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
-    m_label.setCharacterSize(24);
+    m_label.setCharacterSize(22);
 }
 
 
@@ -45,23 +45,23 @@ Button::Button(float x, float y, float w, float h, const std::string &descriptio
  * Constructs a button with coordinates,
  * a size, a texture and a clipRect
  * @author Arthur
- * @date 06/04/16 - 27/10/17
+ * @date 06/04/16 - 28/10/17
  */
 Button::Button(float x, float y, float w, float h,
                const std::string &image, const std::vector<sf::IntRect> &clipRect) :
         GraphicElement(x, y, w, h, image), m_clipRectArray{clipRect},
         m_currentClipRect{0},  m_isPressed{false}, m_labelPosition{CENTER},
-        m_isActive{false}, m_isDisabled{false}, m_label{""}
+        m_isSelected{false}, m_isEnabled{true}, m_label{""}
 {
     this->setTextureRect(m_clipRectArray[m_currentClipRect]);
 
-    m_font.loadFromFile(RESOURCES_FOLDER + "Roboto_Condensed.ttf");
+    m_font.loadFromFile(ROBOTO_CONDENSED_FONT);
     m_label.setFont(m_font);
     m_label.setFillColor(sf::Color::White);
     m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                      getPosition().y + getGlobalBounds().height/2);
     m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
-    m_label.setCharacterSize(24);
+    m_label.setCharacterSize(22);
 }
 
 
@@ -69,23 +69,23 @@ Button::Button(float x, float y, float w, float h,
  * Constructs a button with coordinates,
  * a size, a texture, a clipRect and a description
  * @author Arthur
- * @date 06/04/16 - 27/10/17
+ * @date 06/04/16 - 28/10/17
  */
 Button::Button(float x, float y, float w, float h, const std::string &description,
                const std::string &image, const std::vector<sf::IntRect> &clipRect) :
         GraphicElement(x, y, w, h, image), m_clipRectArray{clipRect},
         m_currentClipRect{0},  m_isPressed{false}, m_labelPosition{CENTER},
-        m_isActive{false}, m_isDisabled{false}, m_label{description}
+        m_isSelected{false}, m_isEnabled{true}, m_label{description}
 {
     this->setTextureRect(m_clipRectArray[m_currentClipRect]);
 
-    m_font.loadFromFile(RESOURCES_FOLDER + "Roboto_Condensed.ttf");
+    m_font.loadFromFile(ROBOTO_CONDENSED_FONT);
     m_label.setFont(m_font);
     m_label.setFillColor(sf::Color::White);
     m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                      getPosition().y + getGlobalBounds().height/2);
     m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
-    m_label.setCharacterSize(24);
+    m_label.setCharacterSize(22);
 }
 
 
@@ -97,7 +97,7 @@ Button::Button(float x, float y, float w, float h, const std::string &descriptio
 Button::Button(Button const& other) :
         GraphicElement(other), m_clipRectArray{other.m_clipRectArray}, m_currentClipRect{0},
         m_label{other.m_label}, m_labelPosition{other.m_labelPosition},
-        m_isPressed{false}, m_isActive{false}, m_isDisabled{false}
+        m_isPressed{false}, m_isSelected{false}, m_isEnabled{true}
 {
     this->setTextureRect(m_clipRectArray[m_currentClipRect]);
 }
@@ -114,14 +114,14 @@ Button::~Button()
 
 //=== Getters
 
-bool Button::isDisabled() const { return m_isDisabled; }
+bool Button::isEnabled() const { return m_isEnabled; }
 
 //=== Setters
 
-void Button::setPressed(bool state) { m_isPressed = state; }
-void Button::setActivated(bool state) { m_isActive = state; }
-void Button::setDisabled(bool state) { m_isDisabled = state; }
-void Button::setClipRectArray(std::vector<sf::IntRect> crA) { m_clipRectArray = crA; }
+void Button::setPressed(bool pressed) { m_isPressed = pressed; }
+void Button::setSelected(bool selected) { m_isSelected = selected; }
+void Button::setEnabled(bool enabled) { m_isEnabled = enabled; }
+void Button::setClipRectArray(std::vector<sf::IntRect> array) { m_clipRectArray = array; }
 void Button::setPositionSelfCentered(double x, double y) {
     setPosition((float)(x-getGlobalBounds().width/2), (float)y);
 }
@@ -206,10 +206,10 @@ void Button::draw(sf::RenderWindow *window) const
  * Checks if a point of given coordinates is contained
  * in the button or its label
  * @author Arthur
- * @date 23/12/16
+ * @date 23/12/16 - 28/10/17
  */
 bool Button::contains(float x, float y) const {
-    return !isDisabled() && isVisible() &&
+    return isEnabled() && isVisible() &&
            (getGlobalBounds().contains(sf::Vector2f(x, y))
             || m_label.getGlobalBounds().contains(sf::Vector2f(x, y)));
 }

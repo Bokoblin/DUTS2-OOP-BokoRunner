@@ -33,8 +33,8 @@ public:
     ~Settings();
 
     //=== GETTERS
-    bool getMorphSkinAvailability() const;
-    bool getCapsuleSkinAvailability() const;
+    bool isMorphSkinAvailable() const;
+    bool isCapsuleSkinAvailable() const;
     int getCurrentPage() const;
 
     //=== SETTERS

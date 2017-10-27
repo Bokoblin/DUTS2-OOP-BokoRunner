@@ -27,8 +27,8 @@ Settings::~Settings()
 
 //=== Getters & Setters
 
-bool Settings::getMorphSkinAvailability() const { return m_morphSkinIsAvailable; }
-bool Settings::getCapsuleSkinAvailability() const { return m_capsuleSkinIsAvailable; }
+bool Settings::isMorphSkinAvailable() const { return m_morphSkinIsAvailable; }
+bool Settings::isCapsuleSkinAvailable() const { return m_capsuleSkinIsAvailable; }
 int Settings::getCurrentPage() const { return m_currentPage; }
 void Settings::setCurrentPage(int page) { m_currentPage = page; }
 

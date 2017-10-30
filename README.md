@@ -41,9 +41,9 @@ The Doxygen documentation can be found at
 ### How to build ###
 
 From Project folder do :
-  - mkdir build
-  - cd build
-  - cmake .. && make
+  - `mkdir build`
+  - `cd build`
+  - `cmake .. && make`
   
 Note : This project has been tested on Ubuntu Trusty (14.04 LTS) with gcc-4.9 and clang-3.6.<br>
 You may need to install the following packages before building : <br>

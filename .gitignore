@@ -10,3 +10,4 @@
 *.idea
 cmake-build-debug/
 res/config.xml
+/build/

@@ -5,7 +5,7 @@ using namespace std;
 /**
  * Constructs a GameModel with the app common model
  * @author Arthur
- * @date 26/03/16 - 30/01/16
+ * @date 26/03/16 - 31/10/16
  *
  * @param width the app's width
  * @param height the app's height
@@ -13,9 +13,9 @@ using namespace std;
  */
 GameModel::GameModel(float width, float height, DataBase *dataBase) :
         AbstractModel(dataBase), m_width{width}, m_height{height}, m_gameState{RUNNING}, m_inTransition{false},
-        m_isTransitionPossible{false}, m_currentZone{HILL},
-        m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},
-        m_lastTime{chrono::system_clock::now()}, m_bonusTimeout{0}, m_gameSlowSpeed{0}
+        m_isTransitionPossible{false}, m_currentZone{HILL}, m_gameSlowSpeed{0},
+        m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0}, m_bonusTimeout{0},
+        m_lastTime{chrono::system_clock::now()}, m_nextStepDelay{std::chrono::milliseconds(NEXT_STEP_DELAY)}
 {
     srand((unsigned int) time(NULL));
 
@@ -29,7 +29,7 @@ GameModel::GameModel(float width, float height, DataBase *dataBase) :
     if (m_dataBase->getDifficulty() == EASY)
         m_gameSpeed = DEFAULT_SPEED;
     else
-        m_gameSpeed = 2*DEFAULT_SPEED;
+        m_gameSpeed = 2 * DEFAULT_SPEED;
 
     //=== Initialize elements apparition time-spacing
 
@@ -77,7 +77,7 @@ void GameModel::setCurrentZone(Zone z) { m_currentZone = z; }
  * (elements apparition, behaviours, deletion)
  * and game mode changing
  * @author Arthur
- * @date 21/02/16 - 28/10/17
+ * @date 21/02/16 - 31/10/17
  */
 void GameModel::nextStep()
 {
@@ -90,7 +90,7 @@ void GameModel::nextStep()
         //outside of delay otherwise some high speed collisions are not triggered
         handleMovableElementsCollisions();
 
-        chrono::system_clock::duration nextStepDelay = std::chrono::milliseconds(NEXT_STEP_DELAY);
+        chrono::system_clock::duration nextStepDelay = m_nextStepDelay;
 
 		if (currentNextStepDelay.count() > nextStepDelay.count())
 		{
@@ -112,23 +112,25 @@ void GameModel::nextStep()
             handleMovableElementsDeletion();
 
 
-            //=== Bonus timeout & ending
+            //=== Handle bonus timeout expiration
 
             if (m_bonusTimeout.count() > chrono::milliseconds(0).count())
-                m_bonusTimeout.operator-=(chrono::milliseconds(NEXT_STEP_DELAY));
-
-            if (m_bonusTimeout.count() <= chrono::milliseconds(0).count()
-                 && m_player->getState() != SHIELD)
             {
-                m_player->changeState(NORMAL);
+                m_bonusTimeout.operator-=(m_nextStepDelay);
             }
-
-            if (m_bonusTimeout.count() <= chrono::milliseconds(0).count()
-                 && m_gameState == RUNNING_SLOWLY)
+            else
             {
-                m_gameState = RUNNING;
-                if (m_gameSpeed == m_gameSlowSpeed)
-                    m_gameSpeed *= 1.5;
+                if (m_player->getState() != SHIELD)
+                {
+                    m_player->changeState(NORMAL);
+                }
+
+                if (m_gameState == RUNNING_SLOWLY)
+                {
+                    m_gameState = RUNNING;
+                    if (m_gameSpeed == m_gameSlowSpeed)
+                        m_gameSpeed *= 1.5;
+                }
             }
 
 
@@ -347,7 +349,7 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
 /**
  * Handles Movable Elements Collisions
  * @author Arthur
- * @date 12/03/16 - 30/01/17
+ * @date 12/03/16 - 31/10/17
  */
 void GameModel::handleMovableElementsCollisions()
 {
@@ -369,19 +371,20 @@ void GameModel::handleMovableElementsCollisions()
                     else if (m_player->getState() == SHIELD
                              && m_bonusTimeout.count() != chrono::milliseconds(SHIELD_TIMEOUT).count())
                     {
-                        if (m_dataBase->getActivatedItemsArray().find("shieldPlus")
-                             == m_dataBase->getActivatedItemsArray().end())
-                            m_player->changeState(NORMAL);
-                        else
+                        if (m_dataBase->findActivatedItem("shieldPlus"))
                             m_bonusTimeout = chrono::milliseconds(SHIELD_TIMEOUT);
+                        else
+                            m_player->changeState(NORMAL);
                     }
                     else if (m_player->getState() == SHIELD)
+                    {
                         m_player->changeState(NORMAL);
+                    }
                     else {
                         if (m_dataBase->getDifficulty() == EASY)
-                            m_player->setLife(m_player->getLife()-10);
+                            m_player->setLife(m_player->getLife() - 10);
                         else
-                            m_player->setLife(m_player->getLife()-20);
+                            m_player->setLife(m_player->getLife() - 20);
                     }
                     break;
 
@@ -393,19 +396,18 @@ void GameModel::handleMovableElementsCollisions()
                     else if (m_player->getState() == SHIELD
                              && m_bonusTimeout.count() != chrono::milliseconds(SHIELD_TIMEOUT).count())
                     {
-                        if (m_dataBase->getActivatedItemsArray().find("shieldPlus")
-                             == m_dataBase->getActivatedItemsArray().end())
-                            m_player->changeState(NORMAL);
-                        else
+                        if (m_dataBase->findActivatedItem("shieldPlus"))
                             m_bonusTimeout = chrono::milliseconds(SHIELD_TIMEOUT);
+                        else
+                            m_player->changeState(NORMAL);
                     }
                     else if (m_player->getState() == SHIELD)
                         m_player->changeState(NORMAL);
                     else {
                         if (m_dataBase->getDifficulty() == EASY)
-                            m_player->setLife(m_player->getLife()-15);
+                            m_player->setLife(m_player->getLife() - 15);
                         else
-                            m_player->setLife(m_player->getLife()-30);
+                            m_player->setLife(m_player->getLife() - 30);
                     }
                     break;
 
@@ -417,65 +419,59 @@ void GameModel::handleMovableElementsCollisions()
                     else if (m_player->getState() == SHIELD
                              && m_bonusTimeout.count() != chrono::milliseconds(SHIELD_TIMEOUT).count())
                     {
-                        if (m_dataBase->getActivatedItemsArray().find("shieldPlus")
-                             == m_dataBase->getActivatedItemsArray().end())
-                            m_player->changeState(NORMAL);
-                        else
+                        if (m_dataBase->findActivatedItem("shieldPlus"))
                             m_bonusTimeout = chrono::milliseconds(SHIELD_TIMEOUT);
+                        else
+                            m_player->changeState(NORMAL);
                     }
                     else if (m_player->getState() == SHIELD)
+                    {
                         m_player->changeState(NORMAL);
+                    }
                     else {
                         if (m_dataBase->getDifficulty() == EASY)
-                            m_player->setLife(m_player->getLife()-25);
+                            m_player->setLife(m_player->getLife() - 25);
                         else
-                            m_player->setLife(m_player->getLife()-50);
+                            m_player->setLife(m_player->getLife() - 50);
                     }
                     break;
 
                 case COIN:
-                    if (m_dataBase->getActivatedItemsArray().find("doubler")
-                         == m_dataBase->getActivatedItemsArray().end())
-                        m_dataBase->increaseCurrentCoinsCollected(1);
-                    else
-                        m_dataBase->increaseCurrentCoinsCollected(2);
+                    m_dataBase->increaseCurrentCoinsCollected(
+                            m_dataBase->findActivatedItem("doubler") ? 2 : 1);
                     break;
 
                 case PV_PLUS_BONUS:
-                    m_player->setLife(m_player->getLife()+10);
+                    m_player->setLife(m_player->getLife() + 10);
                     break;
 
                 case MEGA_BONUS:
                 {
-                    int mega_bonus_timeout = 10000; //stop Mega bonus effect in 10s
-                    if (m_dataBase->getActivatedItemsArray().find("megaPlus")
-                         != m_dataBase->getActivatedItemsArray().end())
-                        mega_bonus_timeout += 5000;
-
                     m_player->changeState(MEGA);
-                    m_bonusTimeout = chrono::milliseconds(mega_bonus_timeout);
+
+                    m_bonusTimeout = chrono::milliseconds(m_dataBase->findActivatedItem("megaPlus")
+                            ? MEGA_TIMEOUT + ADDITIONAL_TIMEOUT
+                            : MEGA_TIMEOUT);
                 }
                     break;
 
                 case FLY_BONUS:
                 {
-                    int fly_bonus_timeout = 15000; //stop Fly bonus effect in 15s
-                    if (m_dataBase->getActivatedItemsArray().find("flyPlus")
-                         != m_dataBase->getActivatedItemsArray().end())
-                        fly_bonus_timeout += 5000;
-
                     m_player->changeState(FLY);
-                    m_bonusTimeout = chrono::milliseconds(fly_bonus_timeout);
+
+                    m_bonusTimeout = chrono::milliseconds(m_dataBase->findActivatedItem("flyPlus")
+                            ? FLY_TIMEOUT + ADDITIONAL_TIMEOUT
+                            : FLY_TIMEOUT);
+
                 }
                     break;
 
                 case SLOW_SPEED_BONUS:
                 {
                     m_gameState = RUNNING_SLOWLY;
-                    int slowSpeed_bonus_timeout = 20000;
-                    m_gameSpeed = m_gameSpeed/2;
+                    m_gameSpeed /= 2;
                     m_gameSlowSpeed = m_gameSpeed;
-                    m_bonusTimeout = chrono::milliseconds(slowSpeed_bonus_timeout);
+                    m_bonusTimeout = chrono::milliseconds(SLOW_SPEED_TIMEOUT);
                 }
                     break;
 

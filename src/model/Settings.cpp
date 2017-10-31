@@ -61,24 +61,12 @@ void Settings::changeBallSkin(string skin)
 /**
  * Checks all customization items availability
  * @author Arthur
- * @date 21/05/16
+ * @date 21/05/16 - 31/10/17
  */
 void Settings::checkItemsAvailability()
 {
-    if (m_dataBase->getActivatedItemsArray().empty())
-    {
-        m_morphSkinIsAvailable = false;
-        m_capsuleSkinIsAvailable = false;
-    }
-    else
-    {
-        //check in array if a bought item is present and update the variable value
-        m_morphSkinIsAvailable = !(m_dataBase->getActivatedItemsArray().find("shop_morphing")
-                                   == m_dataBase->getActivatedItemsArray().end());
-
-        m_capsuleSkinIsAvailable = !(m_dataBase->getActivatedItemsArray().find("shop_capsule")
-                                     == m_dataBase->getActivatedItemsArray().end());
-    }
+    m_morphSkinIsAvailable = m_dataBase->findActivatedItem("shop_morphing");
+    m_capsuleSkinIsAvailable = m_dataBase->findActivatedItem("shop_capsule");
 }
 
 /**

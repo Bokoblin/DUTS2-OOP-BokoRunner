@@ -154,7 +154,7 @@ void Button::sync(DataBase *dataBase)
 
     if (m_label.getDescription() != "")
     {
-        std::string utf8_string = dataBase->getTextValueFromStringsFile(m_label.getDescription());
+        std::string utf8_string = dataBase->loadTextFromIdentifier(m_label.getDescription());
         m_label.setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
 
         switch (m_labelPosition)

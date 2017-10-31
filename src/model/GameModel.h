@@ -34,7 +34,7 @@ limitations under the License.
  * calculating final score, etc.
  *
  * @author Arthur
- * @date 26/03/16 - 30/01/17
+ * @date 26/03/16 - 31/10/17
  */
 class GameModel : public AbstractModel
 {
@@ -87,6 +87,7 @@ private:
     int m_chosenBonusTimeSpacing;
     std::chrono::system_clock::time_point m_lastTime;
     std::chrono::milliseconds m_bonusTimeout;
+    std::chrono::milliseconds m_nextStepDelay;
     Player *m_player;
 
     //Containers
@@ -101,6 +102,10 @@ private:
     const int ZONE_CHANGING_DISTANCE = 500;
     const int BONUS_ROW = GAME_FLOOR - 100;
     const int SHIELD_TIMEOUT = -581374;
+    const int MEGA_TIMEOUT = 10000;
+    const int FLY_TIMEOUT = 15000;
+    const int SLOW_SPEED_TIMEOUT = 20000;
+    const int ADDITIONAL_TIMEOUT = 5000;
     const float DEFAULT_SPEED = 5.0;
     const float SPEED_STEP = 0.02;
 };

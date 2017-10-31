@@ -32,7 +32,7 @@ limitations under the License.
  * statistics, buyable items, scores,
  * current game's values, etc.
  * @author Arthur
- * @date 02/05/16 - 29/01/17
+ * @date 02/05/16 - 31/10/17
  */
 class DataBase
 {
@@ -60,7 +60,7 @@ public:
     bool isGameMusicEnabled() const;
     std::string getLanguage() const;
     std::string getBallSkin() const;
-    const std::set<std::string>& getActivatedItemsArray() const;
+    //const std::set<std::string>& getActivatedItemsArray() const;
     std::string getLanguageFile() const;
 
     //=== SETTERS
@@ -89,8 +89,9 @@ public:
     void launchNewGame();
     void clearLeaderboard();
     void clearAppData();
-    std::string getTextValueFromStringsFile(const std::string &description) const;
-    std::string loadLeaderboardStringFromArray(Difficulty difficulty) const;
+    bool findActivatedItem(const std::string &item);
+    std::string loadTextFromIdentifier(const std::string &description) const;
+    std::string loadLeaderboardScores(Difficulty difficulty) const;
 
 private:
     //=== ATTRIBUTES

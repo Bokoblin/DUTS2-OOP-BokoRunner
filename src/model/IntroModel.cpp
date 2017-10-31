@@ -42,16 +42,10 @@ void IntroModel::nextStep()
     {
         if (m_continueBlinkingMonitor.count() <= chrono::milliseconds(0).count())
         {
-            if (m_isContinueVisible)
-            {
-                m_isContinueVisible = false;
-                m_continueBlinkingMonitor = chrono::milliseconds(CONTINUE_HIDDEN_TIMEOUT);
-            }
-            else
-            {
-                m_isContinueVisible = true;
-                m_continueBlinkingMonitor = chrono::milliseconds(CONTINUE_VISIBLE_TIMEOUT);
-            }
+            m_continueBlinkingMonitor = chrono::milliseconds(m_isContinueVisible
+                    ? CONTINUE_HIDDEN_TIMEOUT
+                    : CONTINUE_VISIBLE_TIMEOUT);
+            m_isContinueVisible = !m_isContinueVisible;
         }
         else
             m_continueBlinkingMonitor.operator-=(chrono::milliseconds(NEXT_STEP_DELAY));

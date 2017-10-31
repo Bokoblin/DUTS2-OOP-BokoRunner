@@ -130,7 +130,7 @@ void TextHandler::updateWholeText()
         t->setCharacterSize(DEFAULT_CHAR_SIZE);
         t->setFont(m_condensedFont);
         t->setFillColor(sf::Color::White);
-        std::string utf8_string = m_dataBase->getTextValueFromStringsFile(t->getDescription());
+        std::string utf8_string = m_dataBase->loadTextFromIdentifier(t->getDescription());
         t->setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
     }
 }
@@ -235,8 +235,8 @@ void TextHandler::syncSettingsText(int currentPage)
  */
 void TextHandler::syncMenuLeaderboardText()
 {
-    string scoresEasy = m_dataBase->loadLeaderboardStringFromArray(EASY);
-    string scoresHard = m_dataBase->loadLeaderboardStringFromArray(HARD);
+    string scoresEasy = m_dataBase->loadLeaderboardScores(EASY);
+    string scoresHard = m_dataBase->loadLeaderboardScores(HARD);
 
     if (scoresEasy.empty())
     {

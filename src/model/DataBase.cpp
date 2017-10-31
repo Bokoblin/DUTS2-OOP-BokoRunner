@@ -40,7 +40,6 @@ bool DataBase::isMenuMusicEnabled() const {return m_isMenuMusicEnabled;}
 bool DataBase::isGameMusicEnabled() const {return m_isGameMusicEnabled;}
 string DataBase::getLanguage() const { return m_currentLanguage;}
 string DataBase::getBallSkin() const { return m_currentBallSkin; }
-const set<string>& DataBase::getActivatedItemsArray() const { return m_activatedItemsArray; }
 string DataBase::getLanguageFile() const
 {
     if (m_currentLanguage == ENGLISH)
@@ -504,16 +503,31 @@ void DataBase::clearAppData()
 
 
 /**
- * Gets language-adapted string
- * from language string file
- * to affect to a Text object
+ * Looks for an item in the activated items array
+ * @author Arthur
+ * @date 31/10/17
+ *
+ * @param item the item to find
+ * @return true if found
+ */
+bool DataBase::findActivatedItem(const std::string &item) {
+    if (m_activatedItemsArray.empty())
+        return false;
+    else
+        return m_activatedItemsArray.find(item) != m_activatedItemsArray.end();
+}
+
+
+/**
+ * Gets translated string
+ * from a language file with given identifier
  * @author Arthur
  * @date 04/01/17
  *
  * @param description to fetch corresponding content
  * @return text string
  */
-string DataBase::getTextValueFromStringsFile(const string &description) const
+string DataBase::loadTextFromIdentifier(const string &description) const
 {
     pugi::xml_document doc;
     doc.load_file(getLanguageFile().c_str());
@@ -530,43 +544,37 @@ string DataBase::getTextValueFromStringsFile(const string &description) const
     return "unknown";
 }
 
-
 /**
- * Updates string content from array
+ * Fills a string with the scores of a given difficulty,
+ * extracted from a string array
  * @author Arthur
- * @date 23/10/16 - 23/01/17
+ * @date 23/10/16 - 31/10/17
  *
  * @param difficulty for the difficulty related scores
  * @return a string containing scores of a given difficulty
  */
-string DataBase::loadLeaderboardStringFromArray(Difficulty difficulty) const
+string DataBase::loadLeaderboardScores(Difficulty difficulty) const
 {
-    int i = 1;
+    int scoreRank = 1;
     string result = "";
 
     if (difficulty == EASY && !m_scoresEasyArray.empty())
     {
-        result = getTextValueFromStringsFile("config_easy_mode") + " :\n";
+        result = loadTextFromIdentifier("config_easy_mode") + " :\n";
         //add each case content in string
         for (set<int>::reverse_iterator it = m_scoresEasyArray.rbegin(); it!=m_scoresEasyArray.rend(); ++it)
         {
-            if (i != 10)
-                result += "\n" + to_string(i) + ".   " + to_string(*it);
-            else
-                result += "\n" + to_string(i) + ". " + to_string(*it);
-            i++;
+            result += "\n" + to_string(scoreRank) + (scoreRank != 10 ? ".   " : ". ") + to_string(*it);
+            scoreRank++;
         }
     }
-    else if (difficulty == HARD &&!m_scoresHardArray.empty())
+    else if (difficulty == HARD && !m_scoresHardArray.empty())
     {
-        result = getTextValueFromStringsFile("config_hard_mode") + " :\n";
+        result = loadTextFromIdentifier("config_hard_mode") + " :\n";
         for (set<int>::reverse_iterator it = m_scoresHardArray.rbegin(); it!=m_scoresHardArray.rend(); ++it)
         {
-            if (i != 10)
-                result += "\n" + to_string(i) + ".   " + to_string(*it);
-            else
-                result += "\n" + to_string(i) + ". " + to_string(*it);
-            i++;
+            result += "\n" + to_string(scoreRank) + (scoreRank != 10 ? ".   " : ". ") + to_string(*it);
+            scoreRank++;
         }
     }
     return result;

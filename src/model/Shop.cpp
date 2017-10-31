@@ -73,7 +73,7 @@ bool Shop::buyItem(ShopItem *item)
 /**
  * Fetches Shop Items from file
  * @author Arthur
- * @date 11/05/16 - 07/01/17
+ * @date 11/05/16 - 31/10/17
  */
 void Shop::fetchBuyableItemsFromFile()
 {
@@ -86,13 +86,11 @@ void Shop::fetchBuyableItemsFromFile()
     for (pugi::xml_node shopItem: shop.children("shopItem"))
     {
         //Updates item's attributes
-        bool isBought = false;
         string id = shopItem.attribute("id").value();
-        string name = m_dataBase->getTextValueFromStringsFile(id + "_name");
-        string desc = m_dataBase->getTextValueFromStringsFile(id + "_desc");
+        string name = m_dataBase->loadTextFromIdentifier(id + "_name");
+        string desc = m_dataBase->loadTextFromIdentifier(id + "_desc");
         int price = atoi(shopItem.attribute("price").value());
-        string result = shopItem.attribute("bought").value();
-        if (result == "true") isBought=true;
+        bool isBought = ((string)shopItem.attribute("bought").value()) == "true";
 
         //Adds item to array
         m_shopItemsArray.push_back(new ShopItem(name, desc, price, isBought));

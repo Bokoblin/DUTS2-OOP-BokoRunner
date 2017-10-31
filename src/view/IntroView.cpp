@@ -9,7 +9,7 @@ IntroView::IntroView(float width, float height, sf::RenderWindow *window,
                      TextHandler *textHandler, IntroModel *introModel) :
         AbstractView(width, height, window, textHandler), m_intro{introModel}
 {
-    m_window->create(sf::VideoMode((unsigned int) width, (unsigned int) height, SCREEN_BPP), APP_TITLE, sf::Style::None);
+    m_window->create(sf::VideoMode((unsigned int) width, (unsigned int) height, SCREEN_BPP), APP_TITLE, sf::Style::Close);
     m_window->setFramerateLimit(30);
     m_window->setPosition(ENVIRONMENT_CENTER);
 
@@ -46,7 +46,9 @@ void IntroView::loadImages()
  * @date 27/03/16
  */
 void IntroView::synchronize()
-{ }
+{
+    m_textHandler->syncSplashScreenText(m_intro->isContinueVisible());
+}
 
 
 /**
@@ -57,7 +59,10 @@ void IntroView::synchronize()
 void IntroView::draw() const
 {
     m_window->clear();
+
     m_window->draw(*m_introGraphic);
+    m_textHandler->drawSplashScreenText(m_window);
+
     m_window->display();
 }
 

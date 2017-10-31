@@ -25,14 +25,19 @@ Current version : v2.0.0-dev
     - `PixelateEffect` => `PixelShader`
     - `SlidingBackground` => `ScrollingBackground`
   - **ressources**: folder organization improvements
+  <!-- TODO: for splash-->
     
 #### Features
 - **dialogs**: rewritten `Dialog` class into a generic dialog class
     - `ShopDialog` inherits from it for shop specific dialogs
 
+#### Bug fixes
+- Style and spacing fixes
+
 #### Misc
 - **Styling**: typo and C++ code styling improvements
-- **changelog**: changed for `.md` and reformatted file accordingly 
+- **changelog**: changed for `.md` and reformatted file accordingly
+ 
 #### Library changes
 - **SFML**: updated SFML version ( 2.3.2 => 2.4.2)
 

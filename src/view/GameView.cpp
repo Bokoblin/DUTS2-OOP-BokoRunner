@@ -7,8 +7,8 @@ using namespace std;
  * @author Arthur
  * @date 26/03/16 - 29/01/17
  */
-GameView::GameView(sf::RenderWindow *myWindow, TextHandler *textHandler, GameModel *gameModel) :
-        AbstractView(myWindow, textHandler), m_game{gameModel},
+GameView::GameView(sf::RenderWindow *window, TextHandler *textHandler, GameModel *gameModel) :
+        AbstractView(window, textHandler), m_game{gameModel},
         m_xPixelIntensity{1}, m_yPixelIntensity{1}
 {
     loadImages();

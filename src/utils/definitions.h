@@ -31,7 +31,7 @@ limitations under the License.
 
 //=== SFML DEFINITIONS
 #define ENVIRONMENT_CENTER sf::Vector2i((sf::VideoMode::getDesktopMode().width - m_width)/2, \
-				(sf::VideoMode::getDesktopMode().height - m_height)/2)
+				(sf::VideoMode::getDesktopMode().height - m_height)/2 - 20)
 #define MOUSE_LEFT_PRESSED_EVENT event.type == sf::Event::MouseButtonPressed \
                 && event.mouseButton.button == sf::Mouse::Left
 #define MOUSE_POSITION event.mouseButton.x, event.mouseButton.y

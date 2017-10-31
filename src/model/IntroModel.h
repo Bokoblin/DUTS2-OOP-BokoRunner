@@ -17,6 +17,7 @@ limitations under the License.
 #define INTRO_MODEL_H
 
 #include "AbstractModel.h"
+#include <chrono>
 
 
 /**
@@ -33,6 +34,20 @@ public:
 
     //=== METHODS
     virtual void nextStep() override;
+
+    //=== GETTERS
+    bool isContinueVisible() const;
+
+private:
+    //=== ATTRIBUTES
+    std::chrono::system_clock::time_point m_lastTime;
+    std::chrono::milliseconds m_continueBlinkingMonitor;
+    bool m_isContinueVisible;
+
+    //Constant Variables
+    const int NEXT_STEP_DELAY = 100;
+    const int CONTINUE_VISIBLE_TIMEOUT = 1000;
+    const int CONTINUE_HIDDEN_TIMEOUT = 500;
 };
 
 #endif

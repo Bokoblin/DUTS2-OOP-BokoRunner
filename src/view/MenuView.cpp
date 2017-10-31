@@ -141,7 +141,6 @@ void MenuView::synchronize()
             m_settingsFormButton->sync();
             m_leaderboardFormButton->sync();
             m_shopFormButton->sync();
-            m_textHandler->syncMenuHomeText();
             break;
 
         case COMMANDS:

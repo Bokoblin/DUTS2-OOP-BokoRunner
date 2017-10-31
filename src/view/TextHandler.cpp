@@ -45,6 +45,10 @@ const sf::Font& TextHandler::getBoldFont() const { return m_BoldFont; }
  * */
 void TextHandler::loadText()
 {
+    //=== Splash screen
+
+    m_textList.push_back(m_splashScreenContinueLabel = new Text("splash_screen_continue"));
+
     //=== Leaderboard
 
     m_textList.push_back(m_leaderboardTitleLabel = new Text("leaderboard_title"));
@@ -133,12 +137,16 @@ void TextHandler::updateWholeText()
 
 
 /**
- * Menu Home Text Syncing
+ * Splash screen Text Syncing
  * @author Arthur
- * @date 02/04/16 - 23/12/16
+ * @date 31/10/17
  */
-void TextHandler::syncMenuHomeText()
-{}
+void TextHandler::syncSplashScreenText(bool visibility)
+{
+    m_splashScreenContinueLabel->setVisible(visibility);
+    m_splashScreenContinueLabel->setCharacterSize(DEFAULT_CHAR_SIZE);
+    m_splashScreenContinueLabel->setPositionSelfCentered(m_width/2, 450);
+}
 
 
 /**
@@ -356,6 +364,17 @@ void TextHandler::syncEndText(int gameSpeed)
     m_walletText->setStringFromInt(m_dataBase->getWallet());
 }
 
+
+
+/**
+ * Splash Screen Drawing
+ * @author Arthur
+ * @date 31/10/17
+ */
+void TextHandler::drawSplashScreenText(sf::RenderWindow *window) const
+{
+    m_splashScreenContinueLabel->draw(window);
+}
 
 
 /**

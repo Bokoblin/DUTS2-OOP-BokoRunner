@@ -15,6 +15,9 @@
 -->
 
 <resources>
+    <!-- Splash screen strings -->
+    <string name="splash_screen_continue" value="Presione el botón ESPACIO para empezar" />
+
     <!-- Menu & Leaderboard strings -->
     <string name="menu_play_button" value="JUGAR" />
     <string name="menu_quit_button" value="DEJAR" />

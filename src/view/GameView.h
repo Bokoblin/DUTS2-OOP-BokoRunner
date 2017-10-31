@@ -31,7 +31,7 @@ class GameView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    GameView(sf::RenderWindow *myWindow, TextHandler *textHandler, GameModel *gameModel);
+    GameView(sf::RenderWindow *window, TextHandler *textHandler, GameModel *gameModel);
     virtual ~GameView();
 
     //=== METHODS

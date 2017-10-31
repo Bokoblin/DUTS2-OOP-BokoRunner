@@ -49,13 +49,14 @@ class TextHandler
     void loadText();
     void updateWholeText();
 
-    void syncMenuHomeText();
+    void syncSplashScreenText(bool visibility);
     void syncSettingsText(int currentPage);
     void syncMenuLeaderboardText();
     void syncShopText();
     void syncGameText(int bonusTimeout);
     void syncPauseText();
     void syncEndText(int gameSpeed);
+    void drawSplashScreenText(sf::RenderWindow *window) const;
     void drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const;
     void drawLeaderboardText(sf::RenderWindow *window) const;
     void drawMenuShopText(sf::RenderWindow *window) const;
@@ -71,6 +72,9 @@ private:
     sf::Font m_BoldFont;
     DataBase *m_dataBase;
     std::vector<Text*> m_textList;
+
+    //Splash screen label
+    Text *m_splashScreenContinueLabel; //FIXME: To keep only until auto dismissing with full-screen
 
     //Leaderboard Labels
     Text *m_leaderboardTitleLabel;

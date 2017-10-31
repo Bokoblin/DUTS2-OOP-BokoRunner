@@ -31,7 +31,7 @@ int main()
     DataBase dataBase;
     TextHandler textHandler(&dataBase, SCREEN_WIDTH, SCREEN_HEIGHT);
     sf::Event event = sf::Event();
-    dataBase.setAppState(MENU); //TODO debug only
+    dataBase.setAppState(INTRO);
     while(window.isOpen())
     {
         if (dataBase.getAppState() == INTRO)
@@ -41,6 +41,7 @@ int main()
 
             while(dataBase.getAppState() == INTRO && introView.treatEvents(event))
             {
+                introModel.nextStep();
                 introView.synchronize();
                 introView.draw();
             }

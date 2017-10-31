@@ -91,8 +91,8 @@ const std::string APP_TITLE = "Boko Runner";
 const int SCREEN_WIDTH = 900;
 const int SCREEN_HEIGHT = 600;
 const int SCREEN_BPP = 32;
-const int INTRO_WIDTH = 400;
-const int INTRO_HEIGHT = 200;
+const int INTRO_WIDTH = 900;
+const int INTRO_HEIGHT = 600;
 
 //=== Languages
 const std::string ENGLISH = "en";
@@ -138,8 +138,8 @@ const std::string LIFE_BOX_IMAGE = IMAGE_FOLDER + "life_bar.png";
 const std::string GAME_BUTTONS_IMAGE = IMAGE_FOLDER + "pause_elements.png";
 
 //=== Images : Misc
-const std::string INTRO_IMAGE = IMAGE_FOLDER + "intro.png";
-const std::string TITLE_IMAGE = IMAGE_FOLDER + "title.png";
+const std::string INTRO_IMAGE = IMAGE_FOLDER + "splash_screen.png";
+const std::string TITLE_IMAGE = IMAGE_FOLDER + "new_title.png";
 const std::string IUT_LOGO_IMAGE = IMAGE_FOLDER + "logo_iut.png";
 const std::string SFML_LOGO_IMAGE = IMAGE_FOLDER + "sfml-logo-small.png";
 const std::string COMMAND_EN_IMAGE = IMAGE_FOLDER + "command_en.png";

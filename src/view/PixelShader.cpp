@@ -60,7 +60,9 @@ bool PixelShader::onLoad(const string &image)
 void PixelShader::update(float x, float y)
 {
     if (m_isLoaded)
+    {
         m_shader.setUniform("pixel_threshold", (x + y) / 30);
+    }
 }
 
 

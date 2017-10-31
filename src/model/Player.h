@@ -19,6 +19,7 @@ limitations under the License.
 #include "MovableElement.h"
 #include "../enum/MovingDirection.h"
 #include "../enum/PlayerState.h"
+#include "../utils/constants.h"
 #include <cmath>
 #include <utility>
 

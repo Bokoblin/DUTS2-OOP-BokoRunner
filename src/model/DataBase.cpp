@@ -43,14 +43,14 @@ string DataBase::getBallSkin() const { return m_currentBallSkin; }
 const set<string>& DataBase::getActivatedItemsArray() const { return m_activatedItemsArray; }
 string DataBase::getLanguageFile() const
 {
-    if (m_currentLanguage == "en")
+    if (m_currentLanguage == ENGLISH)
         return ENGLISH_STRINGS;
-    else if (m_currentLanguage == "fr")
+    else if (m_currentLanguage == FRENCH)
         return FRENCH_STRINGS;
-    else if (m_currentLanguage == "es")
+    else if (m_currentLanguage == SPANISH)
         return SPANISH_STRINGS;
     else
-        return "null"; //TODO: Throw exception
+        return ENGLISH; //Default
 }
 
 
@@ -66,7 +66,7 @@ void DataBase::increaseCurrentFlattenedEnemies(int amount) {
 }
 void DataBase::setLanguage(string lang) { m_currentLanguage = lang;}
 void DataBase::setBallSkin(string skin) { m_currentBallSkin = skin; }
-void DataBase::setDifficulty(int d) { m_currentDifficulty = d;}
+void DataBase::setDifficulty(int difficulty) { m_currentDifficulty = difficulty;}
 void DataBase::setMenuMusic(bool on) { m_isMenuMusicEnabled = on; }
 void DataBase::setGameMusic(bool on) { m_isGameMusicEnabled = on;}
 void DataBase::setCurrentScore(float speed)

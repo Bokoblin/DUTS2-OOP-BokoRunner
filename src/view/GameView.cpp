@@ -170,7 +170,7 @@ void GameView::loadImages()
     m_coinSprite->setOrigin(0, 50);
 
     std::vector<sf::IntRect> clipRect_pv;
-    for (int i=0; i<5; i++)clipRect_pv.push_back(sf::IntRect(50*i, 50, 50, 50));
+    for (int i=0; i<5; i++) clipRect_pv.push_back(sf::IntRect(50*i, 50, 50, 50));
     m_PVPlusBonusSprite = new Sprite(m_width, GAME_FLOOR, 25, 25, BONUS_IMAGE, clipRect_pv);
     m_PVPlusBonusSprite->setOrigin(0, 50);
 

@@ -172,7 +172,8 @@ bool ShopView::treatEvents(sf::Event event)
 
     if (!m_buyDialog->isVisible())
     {
-        if (MOUSE_LEFT_PRESSED_EVENT) {
+        if (MOUSE_LEFT_PRESSED_EVENT)
+        {
             if (m_homeFormButton->contains(MOUSE_POSITION))
                 m_homeFormButton->setPressed(true);
 

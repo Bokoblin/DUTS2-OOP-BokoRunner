@@ -99,7 +99,7 @@ private:
     const int SPEED_LIMIT = 20;
     const int NEXT_STEP_DELAY = 100;
     const int ZONE_CHANGING_DISTANCE = 500;
-    const int BONUS_ROW = GAME_FLOOR-100;
+    const int BONUS_ROW = GAME_FLOOR - 100;
     const int SHIELD_TIMEOUT = -581374;
     const float DEFAULT_SPEED = 5.0;
     const float SPEED_STEP = 0.02;

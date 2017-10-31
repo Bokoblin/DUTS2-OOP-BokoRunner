@@ -157,7 +157,8 @@ void Button::sync(DataBase *dataBase)
         std::string utf8_string = dataBase->getTextValueFromStringsFile(m_label.getDescription());
         m_label.setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
 
-        switch (m_labelPosition) {
+        switch (m_labelPosition)
+        {
             case TOP:
                 m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
                                                  getPosition().y - getGlobalBounds().height/2);

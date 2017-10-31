@@ -94,6 +94,14 @@ const int SCREEN_BPP = 32;
 const int INTRO_WIDTH = 400;
 const int INTRO_HEIGHT = 200;
 
+//=== Languages
+const std::string ENGLISH = "en";
+const std::string FRENCH = "fr";
+const std::string SPANISH = "es";
+
+//=== Game
+const int MAX_LIFE = 100;
+
 //=== Fonts
 const std::string ROBOTO_REGULAR_FONT = FONTS_FOLDER + "Roboto_Regular.ttf";
 const std::string ROBOTO_CONDENSED_FONT = FONTS_FOLDER + "Roboto_Condensed.ttf";

@@ -33,14 +33,14 @@ CommandsView::~CommandsView()
  */
 void CommandsView::loadImages()
 {
-    //=== Initialize COIN Sprite
+    //=== Initialize Command image
 
     m_commandSprite = new GraphicElement(m_width/2-220, m_height/2-150, 440, 300);
-    if (m_commands->getDataBase()->getLanguage() == "en")
+    if (m_commands->getDataBase()->getLanguage() == ENGLISH)
         m_commandSprite->setTextureFromImage(COMMAND_EN_IMAGE);
-    else if (m_commands->getDataBase()->getLanguage() == "fr")
+    else if (m_commands->getDataBase()->getLanguage() == FRENCH)
         m_commandSprite->setTextureFromImage(COMMAND_FR_IMAGE);
-    else if (m_commands->getDataBase()->getLanguage() == "es")
+    else if (m_commands->getDataBase()->getLanguage() == SPANISH)
         m_commandSprite->setTextureFromImage(COMMAND_ES_IMAGE);
 
     //=== Initialize HOME form buttons

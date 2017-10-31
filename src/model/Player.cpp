@@ -20,7 +20,7 @@ Player::Player(float x, float y, float w, float h, float mvX, float mvY):
     m_acceleration{18.0}, m_isJumping{false}, m_isFlying{false}, m_isDecelerating{false}
 {
     m_elementType = PLAYER;
-    m_life  = 100;
+    m_life  = MAX_LIFE;
     m_vectorBall.first = 0;
     m_vectorBall.second = 0;
 }
@@ -47,7 +47,7 @@ void Player::setDecelerationState(bool state) {  m_isDecelerating = state; }
 void Player::setLife(int new_life)
 {
     m_life = new_life;
-    if (m_life > 100) m_life = 100;
+    if (m_life > MAX_LIFE) m_life = MAX_LIFE;
     else if (m_life < 0) m_life = 0;
 }
 
@@ -108,7 +108,7 @@ void Player::move()
         m_posX = 900 - m_width;
 
     if (m_posY - m_height <= 0)
-       m_vectorBall.second =0;
+       m_vectorBall.second = 0;
 
     m_posY += m_vectorBall.second;
 
@@ -179,8 +179,8 @@ void Player::controlPlayerMovements(MovingDirection direction)
     m_isDecelerating = false;
 
     if (direction == MOVE_LEFT && m_vectorBall.first > -10)
-        m_vectorBall.first -= m_moveX*m_acceleration/FRAMERATE;
+        m_vectorBall.first -= m_moveX * m_acceleration / FRAMERATE;
     else if (direction == MOVE_RIGHT && m_vectorBall.first < 10)
-        m_vectorBall.first += m_moveX*m_acceleration/FRAMERATE;
+        m_vectorBall.first += m_moveX * m_acceleration / FRAMERATE;
 }
 

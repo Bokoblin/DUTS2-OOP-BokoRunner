@@ -144,9 +144,9 @@ void SettingsView::synchronize()
 {
     //=== Update Status of Radio buttons
 
-    m_englishLangRadio->setSelected(m_settings->getDataBase()->getLanguage() == "en");
-    m_frenchLangRadio->setSelected(m_settings->getDataBase()->getLanguage() == "fr");
-    m_spanishLangRadio->setSelected(m_settings->getDataBase()->getLanguage() == "es");
+    m_englishLangRadio->setSelected(m_settings->getDataBase()->getLanguage() == ENGLISH);
+    m_frenchLangRadio->setSelected(m_settings->getDataBase()->getLanguage() == FRENCH);
+    m_spanishLangRadio->setSelected(m_settings->getDataBase()->getLanguage() == SPANISH);
     m_easyModeRadio->setSelected(m_settings->getDataBase()->getDifficulty() == EASY);
     m_hardModeRadio->setSelected(m_settings->getDataBase()->getDifficulty() == HARD);
     m_defaultBallSkinRadio->setSelected(m_settings->getDataBase()->getBallSkin() == "default");
@@ -253,16 +253,21 @@ bool SettingsView::treatEvents(sf::Event event)
 
     if (!m_confirmDialog->isVisible())
     {
-        if (MOUSE_LEFT_PRESSED_EVENT) {
-            for (Button *button : m_buttonList) {
-                if (button->contains(MOUSE_POSITION)) {
+        if (MOUSE_LEFT_PRESSED_EVENT)
+        {
+            for (Button *button : m_buttonList)
+            {
+                if (button->contains(MOUSE_POSITION))
+                {
                     button->setPressed(true);
                     break;
                 }
             }
 
-            for (auto it : m_pageIndicators) {
-                if (it.second->contains(MOUSE_POSITION)) {
+            for (auto it : m_pageIndicators)
+            {
+                if (it.second->contains(MOUSE_POSITION))
+                {
                     it.second->setPressed(true);
                     break;
                 }
@@ -286,17 +291,17 @@ bool SettingsView::treatEvents(sf::Event event)
         {
             if (m_englishLangRadio->contains(MOUSE_POSITION))
             {
-                m_settings->changeLanguage("en");
+                m_settings->changeLanguage(ENGLISH);
                 m_textHandler->updateWholeText();
             }
             else if (m_frenchLangRadio->contains(MOUSE_POSITION))
             {
-                m_settings->changeLanguage("fr");
+                m_settings->changeLanguage(FRENCH);
                 m_textHandler->updateWholeText();
             }
             else if (m_spanishLangRadio->contains(MOUSE_POSITION))
             {
-                m_settings->changeLanguage("es");
+                m_settings->changeLanguage(SPANISH);
                 m_textHandler->updateWholeText();
             }
             else if (m_easyModeRadio->contains(MOUSE_POSITION))

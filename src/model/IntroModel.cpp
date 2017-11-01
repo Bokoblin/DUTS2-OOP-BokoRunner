@@ -5,13 +5,16 @@ using namespace std;
 /**
  * Default Constructor
  * @author Arthur
- * @date 29/01/17 - 31/10/17
+ * @date 29/01/17 - 02/10/17
  */
 IntroModel::IntroModel(DataBase *dataBase) :
     AbstractModel(dataBase), m_isContinueVisible{true},
     m_lastTime{chrono::system_clock::now()},
-    m_continueBlinkingMonitor{chrono::milliseconds(CONTINUE_VISIBLE_TIMEOUT)}
-{}
+    m_continueBlinkingMonitor{0}
+{
+    srand((unsigned int) time(NULL));
+    m_continueBlinkingMonitor = chrono::milliseconds(CONTINUE_VISIBLE_TIMEOUT);
+}
 
 
 /**
@@ -37,7 +40,6 @@ void IntroModel::nextStep()
     chrono::system_clock::duration currentNextStepDelay = chrono::system_clock::now() - m_lastTime;
     chrono::system_clock::duration nextStepDelay = std::chrono::milliseconds(NEXT_STEP_DELAY);
 
-    //FIXME
     if (currentNextStepDelay.count() > nextStepDelay.count())
     {
         if (m_continueBlinkingMonitor.count() <= chrono::milliseconds(0).count())
@@ -48,7 +50,7 @@ void IntroModel::nextStep()
             m_isContinueVisible = !m_isContinueVisible;
         }
         else
-            m_continueBlinkingMonitor.operator-=(chrono::milliseconds(NEXT_STEP_DELAY));
+            m_continueBlinkingMonitor.operator-=(std::chrono::milliseconds(NEXT_STEP_DELAY));
 
         m_lastTime = chrono::system_clock::now();
     }

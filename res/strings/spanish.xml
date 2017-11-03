@@ -53,14 +53,16 @@
     <string name="stats_per_game_coins" value="Mejor monedas recogidas" />
     <string name="stats_app_reset" value="BORRAR DATOS" />
     <string name="about_title" value="Credits" />
-    <string name="about_description" value="Boko Runner es un proyecto C++ que hemos realizado como proyecto
-                  &#xA;de programación de nuestro segundo semestre de DUT. Su objetivo era
-                  &#xA;poner en practica las nociones de OOP que aprendimos en S2 y crear un
-                  &#xA;juego con la biblioteca de SFML." />
-    <string name="about_repository" value="El código de este juego esta disponible en Github en la dirección :
-                  &#xA; https://github.com/Bokoblin/DUTS2-POO-ProjetRunner.
-                  &#xA;Para rellenar reportes de fallos, vaya a la sección ''Issues''."/>
-    <string name="about_email" value="Envíenos un correo electrónico a : pro.jolivetarthur@gmail.com." />
+    <string name="about_description" value=" Boko Runner es un proyecto C++ que hemos realizado como proyecto
+                  &#xA; de programación de nuestro segundo semestre de DUT. Su objetivo era
+                  &#xA; poner en practica las nociones de OOP que aprendimos en S2 y crear un
+                  &#xA; juego con la biblioteca de SFML." />
+    <string name="about_repository" value=" El código de este juego esta disponible en Github en la dirección :
+                  &#xA;&#xA;
+                  &#xA; Puede rellenar reportes de fallos a la sección ''Issues'' del depósito,
+                  &#xA; o enviar un correo electrónico en la dirección siguiente :"/>
+    <string name="about_repo_address" value="https://github.com/Bokoblin/DUTS2-POO-ProjetRunner" />
+    <string name="about_email" value="pro.jolivetarthur@gmail.com." />
     <string name="about_copyright" value="2016-2017 Jolivet Arthur &amp; Laronze Florian" />
 
     <!--  Shop strings -->

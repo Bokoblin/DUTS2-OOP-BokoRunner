@@ -18,12 +18,17 @@ limitations under the License.
 
 #include "AbstractModel.h"
 #include "../enum/SettingsPage.h"
+#include "../utils/definitions.h"
+
+#if defined _WIN32
+#include <rpc.h>
+#endif
 
 /**
  * The Settings class is the model of SettingsView class
  * It controls page changing and checks item's availability for config changing
  * @author Arthur
- * @date 20/05/16 - 30/01/17
+ * @date 20/05/16 - 02/11/17
  */
 class Settings : public AbstractModel
 {
@@ -44,7 +49,9 @@ public:
     void changeLanguage(std::string lang);
     void changeBallSkin(std::string skin);
     void checkItemsAvailability();
+    void openURLinBrowser(std::string url);
     virtual void nextStep() override;
+    void quit();
 
     //=== ATTRIBUTES
     static const int PAGE_NUMBER = 3;

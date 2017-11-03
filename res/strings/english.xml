@@ -56,10 +56,12 @@
     <string name="about_description" value=" Boko Runner is a C++ project we've done as our DUT 2nd semester's
                   &#xA; programming project. Its goal was to put into practice the OOP notions
                   &#xA; we learnt in S2 and develop a game with the SFML library."/>
-    <string name="about_repository" value="The source code of this game is available on Github at the address :
-                  &#xA; https://github.com/Bokoblin/DUTS2-POO-ProjetRunner.
-                  &#xA;To fill bug reports please go to the ''Issues'' section." />
-    <string name="about_email" value="Please send us an email at : pro.jolivetarthur@gmail.com." />
+    <string name="about_repository" value=" The source code of this game is available on Github at the address :
+                  &#xA;&#xA;
+                  &#xA; You can fill out a bug report in the ''Issues'' section of the repository,
+                  &#xA; or by sending a mail at the address below :" />
+    <string name="about_repo_address" value="https://github.com/Bokoblin/DUTS2-POO-ProjetRunner" />
+    <string name="about_email" value="pro.jolivetarthur@gmail.com" />
     <string name="about_copyright" value="2016-2017 Jolivet Arthur &amp; Laronze Florian" />
 
     <!--  Shop strings -->

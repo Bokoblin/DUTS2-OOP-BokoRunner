@@ -16,6 +16,7 @@ limitations under the License.
 #ifndef TEXT_HANDLER_H
 #define TEXT_HANDLER_H
 
+#include <SFML/Window/Event.hpp>
 #include "../model/DataBase.h"
 #include "Text.h"
 #include "../model/Settings.h"
@@ -63,6 +64,7 @@ class TextHandler
     void drawGameText(sf::RenderWindow *window) const;
     void drawPauseText(sf::RenderWindow *window) const;
     void drawEndText(sf::RenderWindow *window) const;
+    void treatAboutLinks(sf::Event event, Settings &settings) const;
 
 private:
     //=== ATTRIBUTES
@@ -98,8 +100,11 @@ private:
     Text *m_aboutTitleLabel;
     Text *m_aboutDescriptionLabel;
     Text *m_aboutRepositoryLabel;
-    Text *m_aboutEmailLabel;
     Text *m_aboutCopyrightLabel;
+
+    //Settings Links
+    Text *m_aboutRepositoryLink;
+    Text *m_aboutEmailLink;
 
     //Game (Main, Pause & End) Labels
     Text *m_playerLifeLabel;

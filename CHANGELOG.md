@@ -25,12 +25,15 @@ Current version : v2.0.0-dev
     - `PixelateEffect` => `PixelShader`
     - `SlidingBackground` => `ScrollingBackground`
   - **ressources**: folder organization improvements
-  <!-- TODO: for splash-->
     
 #### Features
+- **splash screen**: 
+    - now same size as menu and game
+    - layout has been changed : it now displays title, author and "powered by SFML" on grey background
+    - "press START to continue" is now blinking periodically and compatible with multi-language
 - **dialogs**: rewritten `Dialog` class into a generic dialog class
     - `ShopDialog` inherits from it for shop specific dialogs
-
+- **settings**: added support for hyperlinks (URL is opened in default browser) [tested on Ubuntu 14.04 and Windows 10]
 #### Bug fixes
 - Style and spacing fixes
 

@@ -6,10 +6,10 @@ using namespace std;
  * Constructs a text handler with
  * app's database and size
  * @author Arthur
- * @date 02/04/16 - 07/01/17
+ * @date 02/04/16 - 02/11/17
  */
-TextHandler::TextHandler(DataBase *dataBase, float width, float height)
-        : m_dataBase{dataBase}, m_width{width}, m_height{height}
+TextHandler::TextHandler(DataBase *dataBase, float width, float height) :
+        m_dataBase{dataBase}, m_width{width}, m_height{height}
 {
     m_regularFont.loadFromFile(ROBOTO_REGULAR_FONT);
     m_condensedFont.loadFromFile(ROBOTO_CONDENSED_FONT);
@@ -41,7 +41,7 @@ const sf::Font& TextHandler::getBoldFont() const { return m_BoldFont; }
 /**
  * Text Loading
  * @author Arthur
- * @date 02/04/16 - 30/01/17
+ * @date 02/04/16 - 31/10/17
  * */
 void TextHandler::loadText()
 {
@@ -92,7 +92,8 @@ void TextHandler::loadText()
     m_textList.push_back(m_aboutTitleLabel = new Text("about_title"));
     m_textList.push_back(m_aboutDescriptionLabel = new Text("about_description"));
     m_textList.push_back(m_aboutRepositoryLabel = new Text("about_repository"));
-    m_textList.push_back(m_aboutEmailLabel = new Text("about_email"));
+    m_textList.push_back(m_aboutRepositoryLink = new Text("about_repo_address"));
+    m_textList.push_back(m_aboutEmailLink = new Text("about_email"));
     m_textList.push_back(m_aboutCopyrightLabel = new Text("about_copyright"));
 
     //=== Game
@@ -152,7 +153,7 @@ void TextHandler::syncSplashScreenText(bool visibility)
 /**
  * Menu Settings Text Syncing
  * @author Arthur
- * @date 14/04/16 - 27/10/17
+ * @date 14/04/16 - 03/11/17
  */
 void TextHandler::syncSettingsText(int currentPage)
 {
@@ -218,12 +219,18 @@ void TextHandler::syncSettingsText(int currentPage)
         m_aboutTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
         m_aboutDescriptionLabel->setPosition(70, 150);
         m_aboutDescriptionLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_aboutRepositoryLabel->setPosition(70, 260);
+        m_aboutRepositoryLabel->setPosition(70, 250);
         m_aboutRepositoryLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_aboutEmailLabel->setPosition(70, 350);
-        m_aboutEmailLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_aboutCopyrightLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_aboutCopyrightLabel->setPositionSelfCentered(m_width/2, 490);
+        m_aboutCopyrightLabel->setPositionSelfCentered((int)m_width/2, 490);
+
+        //Links
+        m_aboutRepositoryLink->setPosition(110, 275);
+        m_aboutRepositoryLink->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_aboutRepositoryLink->setStyle(sf::Text::Style::Underlined);
+        m_aboutEmailLink->setPosition(110, 367);
+        m_aboutEmailLink->setCharacterSize(CONTENT_CHAR_SIZE);
+        m_aboutEmailLink->setStyle(sf::Text::Style::Underlined);
     }
 }
 
@@ -457,6 +464,7 @@ void TextHandler::drawPauseText(sf::RenderWindow *window) const
     m_flattenedEnemiesText->draw(window);
 }
 
+
 /**
  * End Screen Drawing
  * @author Arthur
@@ -471,4 +479,35 @@ void TextHandler::drawEndText(sf::RenderWindow *window) const
     m_currentDistanceText->draw(window);
     m_currentCoinsNbText->draw(window);
     m_walletText->draw(window);
+}
+
+
+/**
+ * Treats events related to link texts
+ * @param event sfml event object
+ * @param settings the settings model
+ *
+ * @author Arthur
+ * @date 02/11/17
+ */
+void TextHandler::treatAboutLinks(sf::Event event, Settings &settings) const
+{
+    if (MOUSE_LEFT_PRESSED_EVENT)
+    {
+        if (m_aboutRepositoryLink->contains(MOUSE_POSITION))
+            m_aboutRepositoryLink->setFillColor(URL_RED_COLOR);
+        if (m_aboutEmailLink->contains(MOUSE_POSITION))
+            m_aboutEmailLink->setFillColor(URL_RED_COLOR);
+    }
+
+    if (event.type == sf::Event::MouseButtonReleased)
+    {
+        m_aboutRepositoryLink->setFillColor(sf::Color::White);
+        m_aboutEmailLink->setFillColor(sf::Color::White);
+
+        if (m_aboutRepositoryLink->contains(MOUSE_POSITION))
+            settings.openURLinBrowser(REPOSITORY);
+        if (m_aboutEmailLink->contains(MOUSE_POSITION))
+            settings.openURLinBrowser(EMAIL);
+    }
 }

@@ -58,9 +58,11 @@
                   &#xA; mettre en pratique les notions de POO que nous avons apprises au cours
                   &#xA; du S2 et de développer avec celles-ci un jeu utilisant la bibliothèque SFML."/>
     <string name="about_repository" value=" Le code de source du jeu est disponible sur Github a l'adresse :
-                  &#xA; https://github.com/Bokoblin/DUTS2-POO-ProjetRunner.
-                  &#xA; Pour signaler des bugs, allez dans la section ''Issues''."/>
-    <string name="about_email" value=" Contactez-nous a l'adresse e-mail : pro.jolivetarthur@gmail.com." />
+                  &#xA;&#xA;
+                  &#xA; Vous pouvez signaler des bugs dans la section ''Issues'' du dépôt,
+                  &#xA; ou en envoyant un e-mail à l'adresse suivante :"/>
+    <string name="about_repo_address" value="https://github.com/Bokoblin/DUTS2-POO-ProjetRunner" />
+    <string name="about_email" value=" pro.jolivetarthur@gmail.com." />
     <string name="about_copyright" value="2016-2017 Jolivet Arthur &amp; Laronze Florian" />
 
     <!--  Shop strings -->

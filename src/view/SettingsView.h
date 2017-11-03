@@ -25,7 +25,7 @@ limitations under the License.
 /**
  * SettingsView Class
  * @author Arthur
- * @date 20/05/16 - 25/01/17
+ * @date 20/05/16 - 02/11/17
  */
 class SettingsView : public AbstractView
 {
@@ -59,8 +59,10 @@ private:
     Button *m_resetRectButton;
     Button *m_menuMusicButton;
     Button *m_gameMusicButton;
-    GraphicElement *m_logoIUTSprite;
-    GraphicElement *m_logoSFMLSprite;
+    GraphicElement *m_logoIUTGraphic;
+    GraphicElement *m_logoSFMLGraphic;
+    GraphicElement *m_link1Graphic;
+    GraphicElement *m_link2Graphic;
 
     //Containers
     std::map<int, RadioButton *> m_pageIndicators;

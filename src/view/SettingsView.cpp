@@ -64,8 +64,8 @@ SettingsView::~SettingsView()
     for (auto it : m_pageIndicators)
         delete it.second;
 
-    delete m_logoIUTSprite;
-    delete m_logoSFMLSprite;
+    delete m_logoIUTGraphic;
+    delete m_logoSFMLGraphic;
     delete m_confirmDialog;
 }
 
@@ -125,13 +125,20 @@ void SettingsView::loadImages()
 
     //=== Initialize Logo sprites
 
-    m_logoIUTSprite = new GraphicElement(700, 160, 245, 210);
-    m_logoIUTSprite->setTextureFromImage(IUT_LOGO_IMAGE);
-    m_logoIUTSprite->resize(150, 130);
+    m_logoIUTGraphic = new GraphicElement(700, 160, 245, 210);
+    m_logoIUTGraphic->setTextureFromImage(IUT_LOGO_IMAGE);
+    m_logoIUTGraphic->resize(150, 130);
 
-    m_logoSFMLSprite = new GraphicElement(700, 350, 373, 113);
-    m_logoSFMLSprite->setTextureFromImage(SFML_LOGO_IMAGE);
-    m_logoSFMLSprite->resize(150, 45);
+    m_logoSFMLGraphic = new GraphicElement(700, 350, 373, 113);
+    m_logoSFMLGraphic->setTextureFromImage(SFML_LOGO_IMAGE);
+    m_logoSFMLGraphic->resize(150, 45);
+
+    //=== Initialize link icon
+
+    m_link1Graphic = new GraphicElement(75, 276, 24, 24);
+    m_link1Graphic->setTextureFromImage(IMAGE_FOLDER + "ui/ic_link.png");
+    m_link2Graphic = new GraphicElement(75, 368, 24, 24);
+    m_link2Graphic->setTextureFromImage(IMAGE_FOLDER + "ui/ic_link.png");
 }
 
 
@@ -230,8 +237,10 @@ void SettingsView::draw() const
     }
     else //ABOUT
     {
-        m_window->draw(*m_logoIUTSprite);
-        m_window->draw(*m_logoSFMLSprite);
+        m_window->draw(*m_logoIUTGraphic);
+        m_window->draw(*m_logoSFMLGraphic);
+        m_window->draw(*m_link1Graphic);
+        m_window->draw(*m_link2Graphic);
         m_textHandler->drawMenuSettingsText(m_window, ABOUT);
     }
 
@@ -244,16 +253,21 @@ void SettingsView::draw() const
 
 /**
  * Events treating
+ * @param event sfml event object
+ *
  * @author Arthur
- * @date 20/05/16 - 24/01/17
+ * @date 20/05/16 - 02/11/17
  */
 bool SettingsView::treatEvents(sf::Event event)
 {
-    bool stop_settings = false;
-
-    if (!m_confirmDialog->isVisible())
+    if (MOUSE_LEFT_PRESSED_EVENT)
     {
-        if (MOUSE_LEFT_PRESSED_EVENT)
+        if (m_settings->getCurrentPage() == ABOUT)
+        {
+            m_textHandler->treatAboutLinks(event, *m_settings);
+        }
+
+        if (!m_confirmDialog->isVisible())
         {
             for (Button *button : m_buttonList)
             {
@@ -335,7 +349,7 @@ bool SettingsView::treatEvents(sf::Event event)
                 handleMusic();
             }
         }
-        else
+        else if (m_settings->getCurrentPage() == STATS)
         {
             if (!m_confirmDialog->isVisible())
             {
@@ -360,18 +374,25 @@ bool SettingsView::treatEvents(sf::Event event)
                 }
             }
         }
+        else
+        {
+            m_textHandler->treatAboutLinks(event, *m_settings);
+        }
 
         if (!m_confirmDialog->isVisible())
         {
             if (m_homeFormButton->contains(MOUSE_POSITION))
-                stop_settings = true;
+            {
+                m_settings->quit();
+                return true;
+            }
 
             for (auto it : m_pageIndicators)
                 if (it.second->contains(MOUSE_POSITION))
                     m_settings->setCurrentPage(it.first);
         }
     }
-    return stop_settings;
+    return false;
 }
 
 /**

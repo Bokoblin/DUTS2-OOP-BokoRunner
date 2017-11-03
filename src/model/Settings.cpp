@@ -70,10 +70,36 @@ void Settings::checkItemsAvailability()
 }
 
 /**
+ * Opens an URL in default browser
+ * @author Arthur
+ * @date 02/11/17
+ */
+void Settings::openURLinBrowser(string url)
+{
+#if defined __linux__
+    string command = "x-www-browser " + url;
+    system(command.c_str());
+#elif _WIN32
+    ShellExecute(0, 0, url.c_str(), 0, 0 , SW_SHOW );
+#else
+#error Operation not supported on your platform
+#endif
+}
+
+
+/**
  * Next Step
  * @author Arthur
  * @date 29/01
  */
 void Settings::nextStep()
 {}
+
+/**
+ * Quits settings by saving configuration
+ */
+void Settings::quit()
+{
+    m_dataBase->pushConfigurationToFile();
+}
 

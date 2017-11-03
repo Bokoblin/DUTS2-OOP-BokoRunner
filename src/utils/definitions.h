@@ -28,6 +28,7 @@ limitations under the License.
 #define GOLD_COLOR sf::Color(255, 204, 0, 255)
 #define ENEMY_BLUE_COLOR sf::Color(0, 232, 209, 255)
 #define END_GREY_COLOR sf::Color(86, 103, 97, 255)
+#define URL_RED_COLOR sf::Color(255, 82, 82, 255)
 
 //=== SFML DEFINITIONS
 #define ENVIRONMENT_CENTER sf::Vector2i((sf::VideoMode::getDesktopMode().width - m_width)/2, \
@@ -46,6 +47,10 @@ limitations under the License.
 #define RED_BUTTON_UP sf::IntRect(0, 100, 150, 40)
 #define GREEN_BUTTON_UP sf::IntRect(0, 178, 150, 43)
 #define GREEN_BUTTON_DOWN sf::IntRect(151, 179, 150, 40)
+
+//=== URL DEFINITIONS
+#define REPOSITORY "https://github.com/Bokoblin/DUTS2-POO-ProjetRunner"
+#define EMAIL "mailto:pro.jolivetarthur@gmail.com"
 
 //=== OTHER DEFINITIONS
 #define TITLE_TEXT_X m_height/12

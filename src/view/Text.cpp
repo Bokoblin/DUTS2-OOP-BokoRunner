@@ -1,37 +1,30 @@
 #include "Text.h"
 #include "../utils/constants.h"
 
-using namespace std;
-
-
 /**
  * Constructs a Text with a description
  * @author Arthur
- * @date 21/12/16 - 27/10/17
+ * @date 21/12/16 - 03/11/17
  *
  * @param description the description used to parse text string
  */
-Text::Text(const string &description) : m_description{description}
+Text::Text(const std::string &description) : m_description{description}, m_isVisible{true}
 {
     m_font.loadFromFile(ROBOTO_REGULAR_FONT);
     setFont(m_font);
     setFillColor(sf::Color::White);
-    m_isVisible = true;
 }
 
 /**
  * Constructs a Text with a description and a visible state
  * @author Arthur
- * @date 21/12/16 - 27/10/17
+ * @date 21/12/16 - 03/11/17
  *
  * @param description the description used to parse text string
  * @param isVisible defines if text is visible at instantiation
  */
-Text::Text(const string &description, bool isVisible) : m_description{description}
+Text::Text(const std::string &description, bool isVisible) : Text(description)
 {
-    m_font.loadFromFile(ROBOTO_REGULAR_FONT);
-    setFont(m_font);
-    setFillColor(sf::Color::White);
     m_isVisible = isVisible;
 }
 
@@ -54,7 +47,7 @@ void Text::setPositionSelfCentered(double x, double y) {
     setPosition((float)(x-getGlobalBounds().width/2), (float)(y-getGlobalBounds().height/2));
 }
 void Text::setStringFromInt(int value) {
-    setString(to_string(value));
+    setString(std::to_string(value));
 }
 
 /**

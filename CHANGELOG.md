@@ -50,9 +50,6 @@ Current version : v2.0.0-dev
 #### Library changes
 - **SFML**: updated SFML version ( 2.3.2 => 2.4.2)
 
-#### Known issues
-- **game**: the first game launched on the program life-cycle has always a bugged loop frequency (investigating)
-
 <br>
 
 <!------------------------------------------------------------------------------------------------------->

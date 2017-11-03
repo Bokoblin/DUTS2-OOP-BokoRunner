@@ -14,8 +14,8 @@ using namespace std;
 GameModel::GameModel(float width, float height, DataBase *dataBase) :
         AbstractModel(dataBase), m_width{width}, m_height{height}, m_gameState{RUNNING}, m_inTransition{false},
         m_isTransitionPossible{false}, m_currentZone{HILL}, m_gameSlowSpeed{0},
-        m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0}, m_bonusTimeout{0},
-        m_lastTime{chrono::system_clock::now()}, m_nextStepDelay{std::chrono::milliseconds(NEXT_STEP_DELAY)}
+        m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},
+        m_lastTime{chrono::system_clock::now()}, m_bonusTimeout{0}
 {
     //=== Initialize new game
 
@@ -75,7 +75,7 @@ void GameModel::setCurrentZone(Zone z) { m_currentZone = z; }
  * (elements apparition, behaviours, deletion)
  * and game mode changing
  * @author Arthur
- * @date 21/02/16 - 31/10/17
+ * @date 21/02/16 - 03/11/17
  */
 void GameModel::nextStep()
 {
@@ -88,7 +88,7 @@ void GameModel::nextStep()
         //outside of delay otherwise some high speed collisions are not triggered
         handleMovableElementsCollisions();
 
-        chrono::system_clock::duration nextStepDelay = m_nextStepDelay;
+        chrono::system_clock::duration nextStepDelay = std::chrono::milliseconds(NEXT_STEP_DELAY);
 
 		if (currentNextStepDelay.count() > nextStepDelay.count())
 		{
@@ -114,7 +114,7 @@ void GameModel::nextStep()
 
             if (m_bonusTimeout.count() > chrono::milliseconds(0).count())
             {
-                m_bonusTimeout.operator-=(m_nextStepDelay);
+                m_bonusTimeout.operator-=(std::chrono::milliseconds(NEXT_STEP_DELAY));
             }
             else
             {

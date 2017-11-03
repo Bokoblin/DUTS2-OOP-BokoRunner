@@ -1,7 +1,5 @@
 #include "RadioButton.h"
 
-using namespace std;
-
 /**
  * Parameterized Constructor without label description
  * @author Arthur
@@ -20,7 +18,7 @@ RadioButton::RadioButton(float x, float y, float w, float h) :
  * @author Arthur
  * @date 23/12/16 - 02/01/17
  */
-RadioButton::RadioButton(float x, float y, float width, float height, const string &label) :
+RadioButton::RadioButton(float x, float y, float width, float height, const std::string &label) :
         Button(x, y, width, height, label)
 {
     setRadioClipRect();
@@ -93,7 +91,7 @@ void RadioButton::sync(DataBase *dataBase)
  */
 void RadioButton::setRadioClipRect()
 {
-    vector<sf::IntRect> clipRect;
+    std::vector<sf::IntRect> clipRect;
     clipRect.push_back(sf::IntRect(0, 0, 50, 50));
     clipRect.push_back(sf::IntRect(50, 0, 50, 50));
     clipRect.push_back(sf::IntRect(0, 50, 50, 50));

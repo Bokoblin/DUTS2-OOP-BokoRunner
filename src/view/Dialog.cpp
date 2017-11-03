@@ -1,8 +1,5 @@
 #include "Dialog.h"
 
-using namespace std;
-
-
 Dialog::Dialog() : GraphicElement(0, 0), m_title{""}, m_content{""},
                    m_cancelButtonText{""}, m_okButtonText{""}
 {
@@ -16,7 +13,7 @@ Dialog::Dialog() : GraphicElement(0, 0), m_title{""}, m_content{""},
  * @author Arthur
  * @date 02/01/2017 - 07/01/17
  */
-Dialog::Dialog(float x, float y, float w, float h, const TextHandler &textHandler, const string &context)  :
+Dialog::Dialog(float x, float y, float w, float h, const TextHandler &textHandler, const std::string &context)  :
         GraphicElement(x, y, w, h), m_context{context}, m_title{""}, m_content{""},
         m_cancelButtonText{""}, m_okButtonText{""}
 {
@@ -50,7 +47,7 @@ Dialog::~Dialog()
 
 
 //=== Getters
-const string & Dialog::getContext() const { return m_context; }
+const std::string& Dialog::getContext() const { return m_context; }
 const Text& Dialog::getCancelButtonText() const { return m_cancelButtonText; }
 const Text& Dialog::getOkButtonText() const { return m_okButtonText; }
 

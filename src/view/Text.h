@@ -26,7 +26,8 @@ limitations under the License.
  * @author Arthur
  * @date 21/12/16 - 27/10/17
  */
-class Text : public sf::Text {
+class Text : public sf::Text
+{
 public:
     //=== CTORs / DTORs
     Text(const std::string &description);

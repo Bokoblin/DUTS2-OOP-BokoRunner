@@ -87,7 +87,6 @@ private:
     int m_chosenBonusTimeSpacing;
     std::chrono::system_clock::time_point m_lastTime;
     std::chrono::milliseconds m_bonusTimeout;
-    std::chrono::milliseconds m_nextStepDelay;
     Player *m_player;
 
     //Containers

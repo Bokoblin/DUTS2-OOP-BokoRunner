@@ -10,5 +10,7 @@
 *.idea
 Thumbs.db
 cmake-build-debug/
+cmake-build-release/
 res/config.xml
 /build/
+/tmp_doc/

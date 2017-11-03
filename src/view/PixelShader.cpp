@@ -1,8 +1,5 @@
 #include "PixelShader.h"
 
-using namespace std;
-
-
 /**
  * Default Constructor
  * @author Arthur
@@ -26,7 +23,7 @@ PixelShader::~PixelShader()
  * @author Arthur
  * @date 28/04/16
  */
-void PixelShader::load(const string &image)
+void PixelShader::load(const std::string &image)
 {
     m_isLoaded = sf::Shader::isAvailable() && onLoad(image);
 }
@@ -37,7 +34,7 @@ void PixelShader::load(const string &image)
  * @author Arthur
  * @date 28/04/16 - 27/10/17
  */
-bool PixelShader::onLoad(const string &image)
+bool PixelShader::onLoad(const std::string &image)
 {
     if (!m_texture.loadFromFile(image))
         return false;

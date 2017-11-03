@@ -40,6 +40,7 @@ Current version : v2.0.0-dev
 #### Misc
 - **Styling**: typo and C++ code styling improvements
 - **changelog**: changed for `.md` and reformatted file accordingly
+- **script**: added a little bash `build.sh` script
  
 #### Library changes
 - **SFML**: updated SFML version ( 2.3.2 => 2.4.2)

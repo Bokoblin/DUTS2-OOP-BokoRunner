@@ -12,7 +12,6 @@ IntroModel::IntroModel(DataBase *dataBase) :
     m_lastTime{chrono::system_clock::now()},
     m_continueBlinkingMonitor{0}
 {
-    srand((unsigned int) time(NULL));
     m_continueBlinkingMonitor = chrono::milliseconds(CONTINUE_VISIBLE_TIMEOUT);
 }
 

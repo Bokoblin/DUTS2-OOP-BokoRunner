@@ -74,7 +74,7 @@ void Settings::checkItemsAvailability()
  * @author Arthur
  * @date 02/11/17
  */
-void Settings::openURLinBrowser(string url)
+void Settings::openURLinBrowser(const string &url)
 {
 #if defined __linux__
     string command = "x-www-browser " + url;
@@ -95,8 +95,12 @@ void Settings::openURLinBrowser(string url)
 void Settings::nextStep()
 {}
 
+
 /**
  * Quits settings by saving configuration
+ *
+ * @author Arthur
+ * @date 03/11/17
  */
 void Settings::quit()
 {

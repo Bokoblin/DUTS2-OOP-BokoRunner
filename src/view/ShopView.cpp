@@ -163,16 +163,17 @@ void ShopView::draw() const
 
 /**
  * Events treating
+ * @param event sfml event object
+ * @return true if app state is unchanged
+ *
  * @author Arthur
- * @date 16/05/16 - 24/01/17
+ * @date 16/05/16 - 03/11/17
  */
 bool ShopView::treatEvents(sf::Event event)
 {
-    bool stop_shop = false;
-
-    if (!m_buyDialog->isVisible())
+    if (MOUSE_LEFT_PRESSED_EVENT)
     {
-        if (MOUSE_LEFT_PRESSED_EVENT)
+        if (!m_buyDialog->isVisible())
         {
             if (m_homeFormButton->contains(MOUSE_POSITION))
                 m_homeFormButton->setPressed(true);
@@ -204,7 +205,10 @@ bool ShopView::treatEvents(sf::Event event)
         if (!m_buyDialog->isVisible())
         {
             if (m_homeFormButton->contains(MOUSE_POSITION))
-                stop_shop = true;
+            {
+                m_shop->quit();
+                return false;
+            }
 
             for (auto it : m_pageIndicators)
                 if (it.second->contains(MOUSE_POSITION))
@@ -251,5 +255,5 @@ bool ShopView::treatEvents(sf::Event event)
         }
     }
 
-    return stop_shop;
+    return true;
 }

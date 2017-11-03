@@ -32,6 +32,7 @@ public:
 
     //=== Methods
     virtual void nextStep() override;
+    void quit();
 };
 
 #endif

@@ -24,6 +24,8 @@ Current version : v2.0.0-dev
     - `AnimatedGraphicElement` => `Sprite`
     - `PixelateEffect` => `PixelShader`
     - `SlidingBackground` => `ScrollingBackground`
+  - **window**: life-cycle now handled only in `main.cpp`
+  - **events**: improvements of treatEvents() methods : useless code removed, window::close() moved to `main.cpp`
   - **ressources**: folder organization improvements
     
 #### Features
@@ -34,16 +36,22 @@ Current version : v2.0.0-dev
 - **dialogs**: rewritten `Dialog` class into a generic dialog class
     - `ShopDialog` inherits from it for shop specific dialogs
 - **settings**: added support for hyperlinks (URL is opened in default browser) [tested on Ubuntu 14.04 and Windows 10]
+
 #### Bug fixes
 - Style and spacing fixes
 
 #### Misc
-- **Styling**: typo and C++ code styling improvements
+- **iconography**: added application icon (title bar and task bar)
+- **constants**: more constants have been moved to `constants.h`
+- **styling**: typo and C++ code styling improvements
 - **changelog**: changed for `.md` and reformatted file accordingly
 - **script**: added a little bash `build.sh` script
  
 #### Library changes
 - **SFML**: updated SFML version ( 2.3.2 => 2.4.2)
+
+#### Known issues
+- **game**: the first game launched on the program life-cycle has always a bugged loop frequency (investigating)
 
 <br>
 

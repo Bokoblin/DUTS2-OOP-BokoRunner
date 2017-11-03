@@ -34,3 +34,15 @@ Leaderboard::~Leaderboard() {}
 void Leaderboard::nextStep()
 {}
 
+
+/**
+ * Quits leaderboard by saving configuration
+ *
+ * @author Arthur
+ * @date 03/11/17
+ */
+void Leaderboard::quit()
+{
+    m_dataBase->pushConfigurationToFile();
+}
+

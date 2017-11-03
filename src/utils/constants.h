@@ -91,8 +91,7 @@ const std::string APP_TITLE = "Boko Runner";
 const int SCREEN_WIDTH = 900;
 const int SCREEN_HEIGHT = 600;
 const int SCREEN_BPP = 32;
-const int INTRO_WIDTH = 900;
-const int INTRO_HEIGHT = 600;
+const int FRAMERATE = 30;
 
 //=== Languages
 const std::string ENGLISH = "en";
@@ -101,6 +100,7 @@ const std::string SPANISH = "es";
 
 //=== Game
 const int MAX_LIFE = 100;
+const int GAME_FLOOR = 480;
 
 //=== Fonts
 const std::string ROBOTO_REGULAR_FONT = FONTS_FOLDER + "Roboto_Regular.ttf";
@@ -121,30 +121,31 @@ const std::string PAUSE_PLAIN_BACKGROUND = IMAGE_FOLDER + "backgrounds/pause_pla
 const std::string END_SCREEN_BACKGROUND = IMAGE_FOLDER + "backgrounds/end_background.png";
 
 //=== Images : UI components
-const std::string INDICATOR_IMAGE = IMAGE_FOLDER + "buttons/indicator_buttons.png";
-const std::string RADIO_BUTTONS_IMAGE = IMAGE_FOLDER + "buttons/radio_buttons.png";
-const std::string RECT_BUTTONS_IMAGE = IMAGE_FOLDER + "buttons/rect_buttons.png";
-const std::string SHAPE_BUTTONS_IMAGE = IMAGE_FOLDER + "buttons/shape_buttons.png";
-const std::string CARD_IMAGE = IMAGE_FOLDER + "card.png";
-const std::string DIALOG_IMAGE = IMAGE_FOLDER + "dialog.png";
+const std::string INDICATOR_IMAGE = IMAGE_FOLDER + "ui/indicator_buttons.png";
+const std::string RADIO_BUTTONS_IMAGE = IMAGE_FOLDER + "ui/radio_buttons.png";
+const std::string RECT_BUTTONS_IMAGE = IMAGE_FOLDER + "ui/rect_buttons.png";
+const std::string SHAPE_BUTTONS_IMAGE = IMAGE_FOLDER + "ui/shape_buttons.png";
+const std::string GAME_BUTTONS_IMAGE = IMAGE_FOLDER + "ui/game_buttons.png";
+const std::string CARD_IMAGE = IMAGE_FOLDER + "ui/card.png";
+const std::string DIALOG_IMAGE = IMAGE_FOLDER + "ui/dialog.png";
 
 //=== Images : Game components
-const std::string BALL_IMAGE = IMAGE_FOLDER + "ball.png";
-const std::string BONUS_IMAGE = IMAGE_FOLDER + "bonus.png";
-const std::string ENEMIES_IMAGE = IMAGE_FOLDER + "enemies.png";
-const std::string SHIELD_IMAGE = IMAGE_FOLDER + "shield.png";
-const std::string BOTTOM_BAR_IMAGE = IMAGE_FOLDER + "bottom_bar.png";
-const std::string LIFE_BOX_IMAGE = IMAGE_FOLDER + "life_bar.png";
-const std::string GAME_BUTTONS_IMAGE = IMAGE_FOLDER + "pause_elements.png";
+const std::string BALL_IMAGE = IMAGE_FOLDER + "game_elements/ball.png";
+const std::string BONUS_IMAGE = IMAGE_FOLDER + "game_elements/bonus.png";
+const std::string ENEMIES_IMAGE = IMAGE_FOLDER + "game_elements/enemies.png";
+const std::string SHIELD_IMAGE = IMAGE_FOLDER + "game_elements/shield.png";
+const std::string BOTTOM_BAR_IMAGE = IMAGE_FOLDER + "game_elements/bottom_bar.png";
+const std::string LIFE_BOX_IMAGE = IMAGE_FOLDER + "game_elements/life_bar.png";
 
 //=== Images : Misc
+const std::string ICON_IMAGE = IMAGE_FOLDER + "app_icon.png";
 const std::string INTRO_IMAGE = IMAGE_FOLDER + "splash_screen.png";
-const std::string TITLE_IMAGE = IMAGE_FOLDER + "new_title.png";
+const std::string TITLE_IMAGE = IMAGE_FOLDER + "title.png";
 const std::string IUT_LOGO_IMAGE = IMAGE_FOLDER + "logo_iut.png";
-const std::string SFML_LOGO_IMAGE = IMAGE_FOLDER + "sfml-logo-small.png";
-const std::string COMMAND_EN_IMAGE = IMAGE_FOLDER + "command_en.png";
-const std::string COMMAND_FR_IMAGE = IMAGE_FOLDER + "command_fr.png";
-const std::string COMMAND_ES_IMAGE = IMAGE_FOLDER + "command_es.png";
+const std::string SFML_LOGO_IMAGE = IMAGE_FOLDER + "logo_sfml.png";
+const std::string COMMAND_EN_IMAGE = IMAGE_FOLDER + "command_en.png"; //TODO-1 : only one image with translations
+const std::string COMMAND_FR_IMAGE = IMAGE_FOLDER + "command_fr.png"; //TODO-2 : or in list without keyboard image
+const std::string COMMAND_ES_IMAGE = IMAGE_FOLDER + "command_es.png"; //TODO-3 : in order to have configuration later
 
 //=== Musics
 const std::string MENU_MUSIC = AUDIO_FOLDER + "menu_sound.ogg";

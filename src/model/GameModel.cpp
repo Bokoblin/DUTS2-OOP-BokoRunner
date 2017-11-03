@@ -17,8 +17,6 @@ GameModel::GameModel(float width, float height, DataBase *dataBase) :
         m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0}, m_bonusTimeout{0},
         m_lastTime{chrono::system_clock::now()}, m_nextStepDelay{std::chrono::milliseconds(NEXT_STEP_DELAY)}
 {
-    srand((unsigned int) time(NULL));
-
     //=== Initialize new game
 
     m_dataBase->launchNewGame();
@@ -33,7 +31,7 @@ GameModel::GameModel(float width, float height, DataBase *dataBase) :
 
     //=== Initialize elements apparition time-spacing
 
-    m_chosenEnemyTimeSpacing = 10 +rand()%11;  //10 to 20 m
+    m_chosenEnemyTimeSpacing = 10 + rand()%11;  //10 to 20 m
     m_chosenCoinTimeSpacing = rand()%11; //0 to 10m
     m_chosenBonusTimeSpacing = 100 + rand()%51; //100 to 150 m
 }

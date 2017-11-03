@@ -6,6 +6,10 @@ using namespace std;
  * Parameterized Constructor
  * @author Arthur
  * @date 26/03/16 - 29/01/17
+ *
+ * @param window the app's window
+ * @param textHandler a text handler to display standalone text
+ * @param gameModel the game's model part
  */
 GameView::GameView(sf::RenderWindow *window, TextHandler *textHandler, GameModel *gameModel) :
         AbstractView(window, textHandler), m_game{gameModel},
@@ -620,150 +624,145 @@ void GameView::draw() const
 
 /**
  * Events treating
+ * @param event sfml event object
+ * @return true if app state is unchanged
+ *
  * @author Arthur, Florian
- * @date 21/02/16 - 30/01/17
+ * @date 21/02/16 - 03/11/17
  */
 bool GameView::treatEvents(sf::Event event)
 {
-    bool result = false;
-
-    if (m_window->isOpen())
+    if (m_game->getGameState() == RUNNING ||
+        m_game->getGameState() == RUNNING_SLOWLY)
     {
-        result = true;
+        //=== Player Controls in Game Screen
 
-        if (m_game->getGameState() == RUNNING ||
-            m_game->getGameState() == RUNNING_SLOWLY)
+        if (KEYBOARD_LEFT)
+            m_game->getPlayer()->controlPlayerMovements(MOVE_LEFT);
+
+        else if (KEYBOARD_RIGHT)
+            m_game->getPlayer()->controlPlayerMovements(MOVE_RIGHT);
+
+        if (KEYBOARD_JUMP)
+            m_game->getPlayer()->setJumpState(true);
+    }
+
+    while (m_window->pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed)
         {
-            //=== Player Controls in Game Screen
-
-            if (KEYBOARD_LEFT)
-                m_game->getPlayer()->controlPlayerMovements(MOVE_LEFT);
-
-            else if (KEYBOARD_RIGHT)
-                m_game->getPlayer()->controlPlayerMovements(MOVE_RIGHT);
-
-            if (KEYBOARD_JUMP)
-                m_game->getPlayer()->setJumpState(true);
+            m_game->getDataBase()->setAppState(QUIT);
+            return false;
         }
 
-        while (m_window->pollEvent(event))
+        //=== Handle open/quit pause
+
+        if (m_game->getGameState() != OVER && event.type == sf::Event::KeyPressed
+            && event.key.code == sf::Keyboard::Escape)
         {
-            if  (event.type == sf::Event::Closed)
+            if (m_game->getGameState() == RUNNING ||
+                m_game->getGameState() == RUNNING_SLOWLY)
             {
-                m_game->getDataBase()->setAppState(QUIT);
-                m_window->close();
-                result = false;
+                m_game->setGameState(PAUSED);
+                m_gameThemeMusic.pause();
+            }
+            else
+            {
+                m_game->setGameState(RUNNING_SLOWLY);
+                m_gameThemeMusic.play();
+            }
+        }
+
+        if (event.type == sf::Event::KeyReleased)
+            m_game->getPlayer()->setDecelerationState(true);
+
+        //=== Pause Screen
+
+        if (m_game->getGameState() == PAUSED)
+        {
+            if (MOUSE_LEFT_PRESSED_EVENT)
+            {
+                if (m_resumeGameButton->contains(MOUSE_POSITION))
+                    m_resumeGameButton->setPressed(true);
+
+                else if (m_restartGameButton->contains(MOUSE_POSITION))
+                    m_restartGameButton->setPressed(true);
+
+                else if (m_goToHomeButton->contains(MOUSE_POSITION))
+                    m_goToHomeButton->setPressed(true);
+
+                else if (m_controlMusicButton->contains(MOUSE_POSITION))
+                    m_controlMusicButton->setPressed(true);
+
             }
 
-            //=== Handle open/quit pause
-
-            if (m_game->getGameState() != OVER && event.type == sf::Event::KeyPressed
-                && event.key.code == sf::Keyboard::Escape)
+            if (event.type == sf::Event::MouseButtonReleased)
             {
-                if (m_game->getGameState() == RUNNING ||
-                    m_game->getGameState() == RUNNING_SLOWLY)
-                {
-                    m_game->setGameState(PAUSED);
-                    m_gameThemeMusic.pause();
-                }
-                else
+                m_resumeGameButton->setPressed(false);
+                m_restartGameButton->setPressed(false);
+                m_goToHomeButton->setPressed(false);
+                m_controlMusicButton->setPressed(false);
+
+                if (m_resumeGameButton->contains(MOUSE_POSITION))
                 {
                     m_game->setGameState(RUNNING_SLOWLY);
-                    m_gameThemeMusic.play();
+                    if (m_gameThemeMusic.getStatus() == sf::Music::Status::Paused)
+                        m_gameThemeMusic.play();
+                }
+                else if (m_restartGameButton->contains(MOUSE_POSITION))
+                {
+                    m_game->getDataBase()->setAppState(RESET_GAME);
+                    return false;
+                }
+                else if (m_goToHomeButton->contains(MOUSE_POSITION))
+                {
+                    m_game->getDataBase()->setAppState(MENU);
+                    return false;
+                }
+                else if (m_controlMusicButton->contains(MOUSE_POSITION))
+                {
+                    m_game->getDataBase()->setGameMusic(!m_game->getDataBase()->isGameMusicEnabled());
+                    handleMusic();
                 }
             }
-
-            if (event.type == sf::Event::KeyReleased)
-                m_game->getPlayer()->setDecelerationState(true);
-
-            //=== Pause Screen
-
-            if (m_game->getGameState() == PAUSED)
+        }
+        else if (m_game->getGameState() == OVER)
+        {
+            if (MOUSE_LEFT_PRESSED_EVENT)
             {
-                if (MOUSE_LEFT_PRESSED_EVENT)
-                {
-                    if (m_resumeGameButton->contains(MOUSE_POSITION))
-                        m_resumeGameButton->setPressed(true);
+                if (m_restartGameButton->contains(MOUSE_POSITION))
+                    m_restartGameButton->setPressed(true);
 
-                    else if (m_restartGameButton->contains(MOUSE_POSITION))
-                        m_restartGameButton->setPressed(true);
+                else if (m_goToHomeButton->contains(MOUSE_POSITION))
+                    m_goToHomeButton->setPressed(true);
 
-                    else if (m_goToHomeButton->contains(MOUSE_POSITION))
-                        m_goToHomeButton->setPressed(true);
-
-                    else if (m_controlMusicButton->contains(MOUSE_POSITION))
-                        m_controlMusicButton->setPressed(true);
-
-                }
-
-                if (event.type == sf::Event::MouseButtonReleased)
-                {
-                    m_resumeGameButton->setPressed(false);
-                    m_restartGameButton->setPressed(false);
-                    m_goToHomeButton->setPressed(false);
-                    m_controlMusicButton->setPressed(false);
-
-                    if (m_resumeGameButton->contains(MOUSE_POSITION))
-                    {
-                        m_game->setGameState(RUNNING_SLOWLY);
-                        if (m_gameThemeMusic.getStatus() == sf::Music::Status::Paused)
-                            m_gameThemeMusic.play();
-                    }
-                    else if (m_restartGameButton->contains(MOUSE_POSITION))
-                    {
-                        m_game->getDataBase()->setAppState(RESET_GAME);
-                        result = false;
-                    }
-                    else if (m_goToHomeButton->contains(MOUSE_POSITION))
-                    {
-                        m_game->getDataBase()->setAppState(MENU);
-                        result = false;
-                    }
-                    else if (m_controlMusicButton->contains(MOUSE_POSITION))
-                    {
-                        m_game->getDataBase()->setGameMusic(!m_game->getDataBase()->isGameMusicEnabled());
-                        handleMusic();
-                    }
-                }
+                else if (m_saveScoreButton->contains(MOUSE_POSITION))
+                    m_saveScoreButton->setPressed(true);
             }
-            else if (m_game->getGameState() == OVER)
+
+            if (event.type == sf::Event::MouseButtonReleased)
             {
-                if (MOUSE_LEFT_PRESSED_EVENT)
+                m_restartGameButton->setPressed(false);
+                m_goToHomeButton->setPressed(false);
+                m_saveScoreButton->setPressed(false);
+
+                if (m_restartGameButton->contains(MOUSE_POSITION))
                 {
-                    if (m_restartGameButton->contains(MOUSE_POSITION))
-                        m_restartGameButton->setPressed(true);
-
-                    else if (m_goToHomeButton->contains(MOUSE_POSITION))
-                        m_goToHomeButton->setPressed(true);
-
-                    else if (m_saveScoreButton->contains(MOUSE_POSITION))
-                        m_saveScoreButton->setPressed(true);
+                    m_game->getDataBase()->setAppState(RESET_GAME);
+                    return false;
                 }
-
-                if (event.type == sf::Event::MouseButtonReleased)
+                else if (m_goToHomeButton->contains(MOUSE_POSITION))
                 {
-                    m_restartGameButton->setPressed(false);
-                    m_goToHomeButton->setPressed(false);
-                    m_saveScoreButton->setPressed(false);
-
-                    if (m_restartGameButton->contains(MOUSE_POSITION))
-                    {
-                        m_game->getDataBase()->setAppState(RESET_GAME);
-                        result = false;
-                    }
-                    else if (m_goToHomeButton->contains(MOUSE_POSITION))
-                    {
-                        m_game->getDataBase()->setAppState(MENU);
-                        result = false;
-                    }
-                    else if (m_saveScoreButton->contains(MOUSE_POSITION))
-                    {
-                        m_saveScoreButton->hide();
-                        m_game->getDataBase()->saveCurrentGame();
-                    }
+                    m_game->getDataBase()->setAppState(MENU);
+                    return false;
+                }
+                else if (m_saveScoreButton->contains(MOUSE_POSITION))
+                {
+                    m_saveScoreButton->hide();
+                    m_game->getDataBase()->saveCurrentGame();
                 }
             }
         }
     }
-    return result;
+    return true;
 }

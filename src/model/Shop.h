@@ -24,7 +24,7 @@ limitations under the License.
  * The Shop class is the model of ShopView class
  * It fetches the list of available to buy items
  * @author Arthur
- * @date 11/05/16 - 29/01/17
+ * @date 11/05/16 - 03/11/17
  */
 class Shop : public AbstractModel
 {
@@ -39,6 +39,7 @@ public:
     //=== METHODS
     bool buyItem(ShopItem *item);
     virtual void nextStep() override;
+    void quit();
 
 private:
     //=== ATTRIBUTES

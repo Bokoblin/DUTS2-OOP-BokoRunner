@@ -89,13 +89,14 @@ void LeaderboardView::draw() const
 
 /**
  * Events treating
+ * @param event sfml event object
+ * @return true if app state is unchanged
+ *
  * @author Arthur
  * @date 21/05/16 - 23/12/16
  */
 bool LeaderboardView::treatEvents(sf::Event event)
 {
-    bool stop_leaderboard = false;
-
     if (MOUSE_LEFT_PRESSED_EVENT)
     {
         if (m_homeFormButton->contains(MOUSE_POSITION))
@@ -116,7 +117,8 @@ bool LeaderboardView::treatEvents(sf::Event event)
 
         if (m_homeFormButton->contains(MOUSE_POSITION))
         {
-            stop_leaderboard = true;
+            m_leaderboard->quit();
+            return false;
         }
         if (m_clearLbRectButton->contains(MOUSE_POSITION))
         {
@@ -124,5 +126,5 @@ bool LeaderboardView::treatEvents(sf::Event event)
             m_textHandler->syncMenuLeaderboardText();
         }
     }
-    return stop_leaderboard;
+    return true;
 }

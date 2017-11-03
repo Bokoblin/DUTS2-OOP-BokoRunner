@@ -88,13 +88,14 @@ void CommandsView::draw() const
 
 /**
  * Events treating
+ * @param event sfml event object
+ * @return true if app state is unchanged
+ *
  * @author Arthur
- * @date 24/01/17
+ * @date 24/01/17 - 03/11/17
  */
 bool CommandsView::treatEvents(sf::Event event)
 {
-    bool stop_command = false;
-
     if (MOUSE_LEFT_PRESSED_EVENT)
     {
         if (m_homeFormButton->contains(MOUSE_POSITION))
@@ -111,8 +112,10 @@ bool CommandsView::treatEvents(sf::Event event)
         //=== handle mouse up on a button
 
         if (m_homeFormButton->contains(MOUSE_POSITION))
-            stop_command = true;
+        {
+            return false;
+        }
     }
 
-    return stop_command;
+    return true;
 }

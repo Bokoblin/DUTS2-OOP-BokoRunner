@@ -384,7 +384,7 @@ bool SettingsView::treatEvents(sf::Event event)
             if (m_homeFormButton->contains(MOUSE_POSITION))
             {
                 m_settings->quit();
-                return true;
+                return false;
             }
 
             for (auto it : m_pageIndicators)
@@ -392,7 +392,7 @@ bool SettingsView::treatEvents(sf::Event event)
                     m_settings->setCurrentPage(it.first);
         }
     }
-    return false;
+    return true;
 }
 
 /**

@@ -105,3 +105,15 @@ void Shop::fetchBuyableItemsFromFile()
 void Shop::nextStep()
 {}
 
+
+/**
+ * Quits shop by saving configuration
+ *
+ * @author Arthur
+ * @date 03/11/17
+ */
+void Shop::quit()
+{
+    m_dataBase->pushConfigurationToFile();
+}
+

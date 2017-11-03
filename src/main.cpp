@@ -18,26 +18,40 @@ limitations under the License.
 #include "view/GameView.h"
 
 /**
- * The main function initializes the application
+ * Initializes the application and controls its loop
  * @author Arthur, Florian
- * @date 21/02/16 - 30/01/17
+ * @date 21/02/16 - 03/11/17
  */
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP),
-                            APP_TITLE, sf::Style::Default);
+    //=== Initialize window
+
+    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP), APP_TITLE, sf::Style::Close);
     window.setFramerateLimit(FRAMERATE);
+
+    sf::Image appIcon;
+    if (appIcon.loadFromFile(ICON_IMAGE))
+        window.setIcon(appIcon.getSize().x, appIcon.getSize().y, appIcon.getPixelsPtr());
+
+    //=== Initialize app data and text
 
     DataBase dataBase;
     TextHandler textHandler(&dataBase, SCREEN_WIDTH, SCREEN_HEIGHT);
-    sf::Event event = sf::Event();
+
+    //=== Initialize app state, random numbers and event object
+
     dataBase.setAppState(INTRO);
+    srand((unsigned int) time(NULL));
+    sf::Event event = sf::Event();
+
+    //=== Program loop
+
     while(window.isOpen())
     {
         if (dataBase.getAppState() == INTRO)
         {
             IntroModel introModel(&dataBase);
-            IntroView introView(INTRO_WIDTH, INTRO_HEIGHT, &window, &textHandler, &introModel);
+            IntroView introView(&window, &textHandler, &introModel);
 
             while(dataBase.getAppState() == INTRO && introView.treatEvents(event))
             {
@@ -46,11 +60,10 @@ int main()
                 introView.draw();
             }
         }
-
         if (dataBase.getAppState() == MENU)
         {
             MenuModel menuModel(&dataBase);
-            MenuView menuView(SCREEN_WIDTH, SCREEN_HEIGHT, &window, &textHandler, &menuModel);
+            MenuView menuView(&window, &textHandler, &menuModel);
 
             while(dataBase.getAppState() == MENU && menuView.treatEvents(event))
             {
@@ -59,7 +72,6 @@ int main()
                 menuView.draw();
             }
         }
-
         if (dataBase.getAppState() == GAME)
         {
             GameModel gameModel(SCREEN_WIDTH, SCREEN_HEIGHT, &dataBase);
@@ -76,9 +88,12 @@ int main()
                 dataBase.setAppState(GAME);
             }
         }
+        if (dataBase.getAppState() == QUIT)
+        {
+            dataBase.pushConfigurationToFile();
+            window.close();
+        }
     }
-
-    dataBase.pushConfigurationToFile();
 
     return EXIT_SUCCESS;
 }

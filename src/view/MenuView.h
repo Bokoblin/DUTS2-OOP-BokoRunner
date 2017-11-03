@@ -27,14 +27,13 @@ limitations under the License.
 /**
  * MenuView Class
  * @author Arthur, Florian
- * @date 26/03/16 - 29/01/17
+ * @date 26/03/16 - 02/11/17
  */
 class MenuView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    MenuView(float width, float height, sf::RenderWindow *window,
-             TextHandler *textHandler, MenuModel *menuModel);
+    MenuView(sf::RenderWindow *window, TextHandler *textHandler, MenuModel *menuModel);
     virtual ~MenuView();
 
     //=== METHODS

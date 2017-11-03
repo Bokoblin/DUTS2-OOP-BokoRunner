@@ -24,14 +24,13 @@ limitations under the License.
  * The IntroView class displays
  * a little banner at app startup
  * @author Arthur
- * @date 27/03/16 - 29/01/17
+ * @date 27/03/16 - 02/11/17
  */
 class IntroView : public AbstractView
 {
     public:
     //=== CTORs / DTORs
-    IntroView(float width, float height, sf::RenderWindow *window,
-              TextHandler *textHandler, IntroModel *introModel);
+    IntroView(sf::RenderWindow *window, TextHandler *textHandler, IntroModel *introModel);
     virtual ~IntroView();
 
     //=== METHODS
@@ -45,5 +44,7 @@ private:
     IntroModel *m_intro;
     GraphicElement *m_introGraphic;
 };
+
+//TODO: Quitting animation + renaming
 
 #endif

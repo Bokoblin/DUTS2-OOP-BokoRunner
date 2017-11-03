@@ -23,9 +23,6 @@ limitations under the License.
 #include <cmath>
 #include <utility>
 
-const int GAME_FLOOR = 480;
-const int FRAMERATE = 30;
-
 
 /**
  * The Player class inherited from MovableElements

@@ -711,7 +711,6 @@ bool GameView::treatEvents(sf::Event event)
                 }
                 else if (m_restartGameButton->contains(MOUSE_POSITION))
                 {
-                    m_game->getDataBase()->setAppState(RESET_GAME);
                     return false;
                 }
                 else if (m_goToHomeButton->contains(MOUSE_POSITION))
@@ -748,7 +747,6 @@ bool GameView::treatEvents(sf::Event event)
 
                 if (m_restartGameButton->contains(MOUSE_POSITION))
                 {
-                    m_game->getDataBase()->setAppState(RESET_GAME);
                     return false;
                 }
                 else if (m_goToHomeButton->contains(MOUSE_POSITION))

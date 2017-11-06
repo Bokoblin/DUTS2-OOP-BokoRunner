@@ -83,10 +83,6 @@ int main()
                 gameView.synchronize();
                 gameView.draw();
             }
-            if (dataBase.getAppState() == RESET_GAME)
-            {
-                dataBase.setAppState(GAME);
-            }
         }
         if (dataBase.getAppState() == QUIT)
         {

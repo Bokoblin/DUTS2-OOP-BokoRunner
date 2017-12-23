@@ -1,6 +1,5 @@
 #include "AbstractModel.h"
 
-
 /**
  * Parameterized Constructor called
  * by the inherited classes
@@ -18,8 +17,7 @@ AbstractModel::AbstractModel(DataBase *dataBase) : m_dataBase{dataBase}
  * @author Arthur, Florian
  * @date 21/02/16 - 26/03/16
  */
-AbstractModel::~AbstractModel()
-{}
+AbstractModel::~AbstractModel() = default;
 
 
 //=== Getters

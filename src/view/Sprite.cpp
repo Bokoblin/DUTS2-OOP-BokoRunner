@@ -6,10 +6,15 @@
  * and an array detailing the image clips
  * @author Arthur
  * @date 03/03/16 - 22/05/16
+ * @param x the sprite's x position
+ * @param y the sprite's y position
+ * @param width the sprite's width
+ * @param height the sprite's height
+ * @param image the file to use for sprite texture
+ * @param clipRect the part of the image to use for texture
  */
-Sprite::Sprite(
-        float x, float y, float width, float height, const std::string &image,
-        const std::vector<sf::IntRect> &clipRect) :
+Sprite::Sprite(float x, float y, float width, float height, const std::string &image,
+               const std::vector<sf::IntRect> &clipRect) :
         GraphicElement(x, y, width, height, image), m_clipRectArray{clipRect},
         m_currentClipRect{0}, m_lastAnimationTime{std::chrono::system_clock::now() }
 {
@@ -21,10 +26,12 @@ Sprite::Sprite(
  * Copy Constructor
  * @author Arthur
  * @date 19/03/16 - 22/05/16
+ *
+ * @param other another sprite object to copy
  */
 Sprite::Sprite(const Sprite& other) :
-    GraphicElement(other), m_clipRectArray{other.m_clipRectArray},
-    m_currentClipRect{0}, m_lastAnimationTime{std::chrono::system_clock::now() }
+        GraphicElement(other), m_clipRectArray{other.m_clipRectArray},
+        m_currentClipRect{0}, m_lastAnimationTime{std::chrono::system_clock::now() }
 {
     this->setTextureRect(m_clipRectArray[m_currentClipRect]);
 }
@@ -35,15 +42,14 @@ Sprite::Sprite(const Sprite& other) :
  * @author Arthur
  * @date 05/03/16
  */
-Sprite::~Sprite()
-{}
+Sprite::~Sprite() = default;
 
 
 //=== Setters
 
 void Sprite::setClipRectArray(std::vector<sf::IntRect> clipRectsArray)
 {
-    m_clipRectArray = clipRectsArray;
+    m_clipRectArray = std::move(clipRectsArray);
 }
 
 

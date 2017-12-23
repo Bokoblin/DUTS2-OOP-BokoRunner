@@ -25,7 +25,7 @@ Bonus::Bonus(float x, float y, float w, float h, float mvX, float mvY) :
  * @author Arthur
  * @date 11/04/16
  */
-Bonus::~Bonus() {}
+Bonus::~Bonus() = default;
 
 
 /**

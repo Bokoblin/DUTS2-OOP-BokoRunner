@@ -21,7 +21,6 @@ limitations under the License.
 #include "../model/GameModel.h"
 #include "../utils/definitions.h"
 
-
 /**
  * GameView Class
  * @author Arthur, Florian
@@ -32,7 +31,7 @@ class GameView : public AbstractView
 public:
     //=== CTORs / DTORs
     GameView(sf::RenderWindow *window, TextHandler *textHandler, GameModel *gameModel);
-    virtual ~GameView();
+    virtual ~GameView() override;
 
     //=== METHODS
     virtual void loadImages() override;
@@ -44,7 +43,6 @@ public:
     virtual void deleteElements();
     void handleZonesTransition();
     void handleMusic();
-
 
 private:
     //=== ATTRIBUTES
@@ -92,6 +90,5 @@ private:
     //Containers
     std::map<MovableElement*, Sprite*> m_movableElementToSpriteMap;
 };
-
 
 #endif

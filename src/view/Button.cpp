@@ -108,8 +108,7 @@ Button::Button(Button const& other) :
  * @author Arthur
  * @date 06/04/16 - 25/01/17
  */
-Button::~Button()
-{}
+Button::~Button() = default;
 
 
 //=== Getters
@@ -121,7 +120,7 @@ bool Button::isEnabled() const { return m_isEnabled; }
 void Button::setPressed(bool pressed) { m_isPressed = pressed; }
 void Button::setSelected(bool selected) { m_isSelected = selected; }
 void Button::setEnabled(bool enabled) { m_isEnabled = enabled; }
-void Button::setClipRectArray(std::vector<sf::IntRect> array) { m_clipRectArray = array; }
+void Button::setClipRectArray(std::vector<sf::IntRect> array) { m_clipRectArray = std::move(array); }
 void Button::setPositionSelfCentered(double x, double y) {
     setPosition((float)(x-getGlobalBounds().width/2), (float)y);
 }
@@ -152,7 +151,7 @@ void Button::sync(DataBase *dataBase)
 
     //=== Sync label
 
-    if (m_label.getDescription() != "")
+    if (!m_label.getDescription().empty())
     {
         std::string utf8_string = dataBase->loadTextFromIdentifier(m_label.getDescription());
         m_label.setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));

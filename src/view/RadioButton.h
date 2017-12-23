@@ -18,6 +18,7 @@ limitations under the License.
 
 #include "Button.h"
 
+
 /**
  * The RadioButton Class inherited from Button class
  * adds different syncing behaviours
@@ -41,6 +42,7 @@ public:
     virtual void sync(DataBase *dataBase) override;
 
 private:
+    //=== METHODS
     void setRadioClipRect();
 };
 

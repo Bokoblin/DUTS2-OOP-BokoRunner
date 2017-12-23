@@ -7,6 +7,10 @@ using namespace std;
  * app's database and size
  * @author Arthur
  * @date 02/04/16 - 02/11/17
+ *
+ * @param dataBase the app database
+ * @param width the app width
+ * @param height the app height
  */
 TextHandler::TextHandler(DataBase *dataBase, float width, float height) :
         m_dataBase{dataBase}, m_width{width}, m_height{height}
@@ -141,10 +145,12 @@ void TextHandler::updateWholeText()
  * Splash screen Text Syncing
  * @author Arthur
  * @date 31/10/17
+ *
+ * @param continueVisibility the splash screen continue text visibility state
  */
-void TextHandler::syncSplashScreenText(bool visibility)
+void TextHandler::syncSplashScreenText(bool continueVisibility)
 {
-    m_splashScreenContinueLabel->setVisible(visibility);
+    m_splashScreenContinueLabel->setVisible(continueVisibility);
     m_splashScreenContinueLabel->setCharacterSize(DEFAULT_CHAR_SIZE);
     m_splashScreenContinueLabel->setPositionSelfCentered(m_width/2, 450);
 }
@@ -154,6 +160,8 @@ void TextHandler::syncSplashScreenText(bool visibility)
  * Menu Settings Text Syncing
  * @author Arthur
  * @date 14/04/16 - 03/11/17
+ *
+ * @param currentPage the current settings page opened
  */
 void TextHandler::syncSettingsText(int currentPage)
 {
@@ -224,7 +232,7 @@ void TextHandler::syncSettingsText(int currentPage)
         m_aboutCopyrightLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_aboutCopyrightLabel->setPositionSelfCentered((int)m_width/2, 490);
 
-        //Links
+        //Hyperlinks
         m_aboutRepositoryLink->setPosition(110, 275);
         m_aboutRepositoryLink->setCharacterSize(CONTENT_CHAR_SIZE);
         m_aboutRepositoryLink->setStyle(sf::Text::Style::Underlined);
@@ -290,6 +298,8 @@ void TextHandler::syncShopText()
  * Game Screen Syncing
  * @author Arthur
  * @date 02/04/16 - 27/10/17
+ *
+ * @param bonusTimeout the current bonus timeout
  */
 void TextHandler::syncGameText(int bonusTimeout)
 {
@@ -331,8 +341,10 @@ void TextHandler::syncPauseText()
  * Game End Screen Syncing
  * @author Arthur
  * @date 02/04/16 - 27/10/17
+ *
+ * @param gameSpeed the last game speed before game over
  */
-void TextHandler::syncEndText(int gameSpeed)
+void TextHandler::syncGameOverText(int gameSpeed)
 {
     m_endTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
     m_endTitleLabel->setFont(m_BoldFont);
@@ -377,6 +389,8 @@ void TextHandler::syncEndText(int gameSpeed)
  * Splash Screen Drawing
  * @author Arthur
  * @date 31/10/17
+ *
+ * @param window the app's window
  */
 void TextHandler::drawSplashScreenText(sf::RenderWindow *window) const
 {
@@ -388,6 +402,9 @@ void TextHandler::drawSplashScreenText(sf::RenderWindow *window) const
  * Settings Screen Drawing
  * @author Arthur
  * @date 14/04/16 - 30/01/17
+ *
+ * @param window the app's window
+ * @param currentPage the current settings page opened
  */
 void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const
 {
@@ -418,6 +435,8 @@ void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage
  * Leaderboard Screen Drawing
  * @author Arthur
  * @date 19/04/16 - 30/01/17
+ *
+ * @param window the app's window
  */
 void TextHandler::drawLeaderboardText(sf::RenderWindow *window) const
 {
@@ -431,6 +450,8 @@ void TextHandler::drawLeaderboardText(sf::RenderWindow *window) const
  * Shop Screen Drawing
  * @author Arthur
  * @date 16/05/16 - 04/01/17
+ *
+ * @param window the app's window
  */
 void TextHandler::drawMenuShopText(sf::RenderWindow *window) const
 {
@@ -442,6 +463,8 @@ void TextHandler::drawMenuShopText(sf::RenderWindow *window) const
  * Game Screen Drawing
  * @author Arthur
  * @date 02/04/16 - 02/01/17
+ *
+ * @param window the app's window
  */
 void TextHandler::drawGameText(sf::RenderWindow *window) const
 {
@@ -456,6 +479,8 @@ void TextHandler::drawGameText(sf::RenderWindow *window) const
  * Pause Screen Drawing
  * @author Arthur
  * @date 02/04/16 - 02/01/17
+ *
+ * @param window the app's window
  */
 void TextHandler::drawPauseText(sf::RenderWindow *window) const
 {
@@ -469,8 +494,10 @@ void TextHandler::drawPauseText(sf::RenderWindow *window) const
  * End Screen Drawing
  * @author Arthur
  * @date 02/04/16 - 30/01/17
+ *
+ * @param window the app's window
  */
-void TextHandler::drawEndText(sf::RenderWindow *window) const
+void TextHandler::drawGameOverText(sf::RenderWindow *window) const
 {
     for (auto text : m_textList)
         if (text->getDescription().find("end") != string::npos)
@@ -484,14 +511,16 @@ void TextHandler::drawEndText(sf::RenderWindow *window) const
 
 /**
  * Treats events related to link texts
- * @param event sfml event object
- * @param settings the settings model
- *
  * @author Arthur
  * @date 02/11/17
+ *
+ * @param event sfml event object
+ * @param settings the settings model
  */
-void TextHandler::treatAboutLinks(sf::Event event, Settings &settings) const
+void TextHandler::handleAboutLinks(sf::Event event, const Settings &settings) const
 {
+    //TODO : Temporary until dedicated LinkButton class
+
     if (MOUSE_LEFT_PRESSED_EVENT)
     {
         if (m_aboutRepositoryLink->contains(MOUSE_POSITION))

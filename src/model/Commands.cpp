@@ -17,8 +17,8 @@ Commands::Commands(DataBase *dataBase) :
  * @author Arthur
  * @date 24/01/17
  */
-Commands::~Commands()
-{}
+Commands::~Commands() = default;
+
 
 /**
  * Next Step
@@ -27,4 +27,3 @@ Commands::~Commands()
  */
 void Commands::nextStep()
 {}
-

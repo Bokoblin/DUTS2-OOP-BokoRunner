@@ -51,7 +51,6 @@ public:
     void setMoveY(float mvY);
     void setColliding(bool on);
 
-
 protected:
     //=== ATTRIBUTES
     float m_posX;

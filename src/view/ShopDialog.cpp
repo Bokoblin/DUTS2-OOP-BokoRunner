@@ -16,7 +16,7 @@ ShopDialog::ShopDialog() : Dialog(), m_shopItem{nullptr}
 ShopDialog::ShopDialog(float x, float y, float width, float height, const TextHandler &textHandler,
                        const std::string &context) :
         Dialog(x, y, width, height, textHandler, context), m_shopItem{nullptr}
-{ }
+{}
 
 /**
  * Constructs a dialog with x and y coordinates,
@@ -27,7 +27,7 @@ ShopDialog::ShopDialog(float x, float y, float width, float height, const TextHa
 ShopDialog::ShopDialog(float x, float y, float width, float height, const TextHandler &textHandler,
                        const std::string &context, ShopItem *item) :
         Dialog(x, y, width, height, textHandler, context), m_shopItem{item}
-{ }
+{}
 
 
 /**
@@ -35,8 +35,7 @@ ShopDialog::ShopDialog(float x, float y, float width, float height, const TextHa
  * @author Arthur
  * @date 16/04/17
  */
-ShopDialog::~ShopDialog()
-{}
+ShopDialog::~ShopDialog() = default;
 
 
 //=== Getters

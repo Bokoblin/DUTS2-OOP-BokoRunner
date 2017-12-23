@@ -21,8 +21,7 @@ IntroModel::IntroModel(DataBase *dataBase) :
  * @author Arthur
  * @date 29/01/17
  */
-IntroModel::~IntroModel()
-{}
+IntroModel::~IntroModel() = default;
 
 
 //=== Getters

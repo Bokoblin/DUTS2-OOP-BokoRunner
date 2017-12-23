@@ -23,7 +23,6 @@ limitations under the License.
 #include <cmath>
 #include <utility>
 
-
 /**
  * The Player class inherited from MovableElements
  * contains player's logic and behaviours
@@ -35,7 +34,7 @@ class Player : public MovableElement
 public:
     //=== CTORs / DTORs
     Player(float x, float y, float w, float h, float mvX, float mvY);
-    virtual ~Player();
+    virtual ~Player() override;
 
     //=== GETTERS
     PlayerState getState() const;
@@ -50,7 +49,6 @@ public:
     virtual void move() override;
     void changeState(PlayerState state);
     void controlPlayerMovements(MovingDirection direction);
-
 
 private:
     PlayerState m_state;

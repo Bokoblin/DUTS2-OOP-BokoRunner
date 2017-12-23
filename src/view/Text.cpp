@@ -55,6 +55,9 @@ void Text::setStringFromInt(int value) {
  * is contained in the text
  * @author Arthur
  * @date 23/12/16
+ *
+ * @param posX the text x position
+ * @param posY the text y position
  */
 bool Text::contains(float posX, float posY) const
 {
@@ -65,6 +68,8 @@ bool Text::contains(float posX, float posY) const
  * Draws text on the window
  * @author Arthur
  * @date 02/01/17
+ *
+ * @param the app's window
  */
 void Text::draw(sf::RenderWindow *window) const
 {

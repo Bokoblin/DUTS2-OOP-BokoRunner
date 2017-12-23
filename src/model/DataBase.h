@@ -16,15 +16,15 @@ limitations under the License.
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include "../../libs/pugixml-1.8/src/pugixml.hpp"
 #include <iostream>
 #include <cassert>
 #include <set>
 #include <fstream>
+#include <regex>
+#include "../../libs/pugixml-1.8/src/pugixml.hpp"
 #include "../utils/constants.h"
 #include "../enum/AppState.h"
 #include "../enum/Difficulty.h"
-
 
 /**
  * The DataBase class concentrates
@@ -40,6 +40,7 @@ public:
     //=== CTORs / DTORs
     DataBase();
     DataBase(const DataBase& d)=delete;
+    ~DataBase();
 
     //=== GETTERS
     AppState getAppState() const;
@@ -60,7 +61,6 @@ public:
     bool isGameMusicEnabled() const;
     std::string getLanguage() const;
     std::string getBallSkin() const;
-    //const std::set<std::string>& getActivatedItemsArray() const;
     std::string getLanguageFile() const;
 
     //=== SETTERS
@@ -71,8 +71,8 @@ public:
     void increaseCurrentFlattenedEnemies(int amount);
     void setCurrentScore(float speed);
     void setDifficulty(int difficulty);
-    void setLanguage(std::string lang);
-    void setBallSkin(std::string skin);
+    void setLanguage(const std::string &language);
+    void setBallSkin(const std::string &skin);
     void setMenuMusic(bool on);
     void setGameMusic(bool on);
 

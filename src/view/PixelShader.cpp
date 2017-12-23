@@ -6,7 +6,7 @@
  * @date 28/04/16
  */
 PixelShader::PixelShader() : m_isLoaded(false)
-{ }
+{}
 
 
 /**
@@ -14,8 +14,7 @@ PixelShader::PixelShader() : m_isLoaded(false)
  * @author Arthur
  * @date 28/04/16
  */
-PixelShader::~PixelShader()
-{ }
+PixelShader::~PixelShader() = default;
 
 
 /**

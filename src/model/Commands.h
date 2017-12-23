@@ -18,7 +18,6 @@ limitations under the License.
 
 #include "AbstractModel.h"
 
-
 /**
  * The Commands class is the model of CommandsView class
  * @author Arthur
@@ -29,7 +28,7 @@ class Commands : public AbstractModel
 public:
     //=== CTORs / DTORs
     Commands(DataBase *dataBase);
-    ~Commands();
+    virtual ~Commands() override;
 
     //=== METHODS
     virtual void nextStep() override;

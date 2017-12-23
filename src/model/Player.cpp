@@ -30,8 +30,7 @@ Player::Player(float x, float y, float w, float h, float mvX, float mvY):
  * @author Arthur, Florian
  * @date 22/02/16
  */
-Player::~Player()
-{}
+Player::~Player() = default;
 
 
 //=== Getters

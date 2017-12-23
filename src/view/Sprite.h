@@ -20,7 +20,7 @@ limitations under the License.
 #include <chrono>
 
 /**
- * The AnimatedGraphicElement class adds animation to a Graphic element
+ * The Sprite class adds animation to a Graphic element
  * It uses multiple clips from texture for them to change on events,
  * a timePoint of the last time the animation has changed
  * and an animation delay.
@@ -34,7 +34,7 @@ public:
     Sprite(float x, float y, float width, float height, const std::string &image,
            const std::vector<sf::IntRect> &clipRect);
     Sprite(const Sprite& other);
-    virtual ~Sprite();
+    virtual ~Sprite() override;
 
     //=== SETTERS
     void setClipRectArray(std::vector<sf::IntRect> clipRectsArray);

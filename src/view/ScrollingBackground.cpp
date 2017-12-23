@@ -6,7 +6,7 @@
  * @author Arthur, Florian
  * @date 3/03/16 - 16/04/17
  */
-ScrollingBackground::ScrollingBackground(float width, float height, float scrollingSpeed, std::string image) :
+ScrollingBackground::ScrollingBackground(float width, float height, float scrollingSpeed, const std::string &image) :
     GraphicElement(width, height), m_scrollingSpeed{scrollingSpeed}
 {
     m_left = new GraphicElement(0, 0, width, height);
@@ -108,7 +108,7 @@ void ScrollingBackground::resize(float width, float height)
  * @author Arthur
  * @date 02/01/17
  */
-void ScrollingBackground::setTextureFromImage(std::string image)
+void ScrollingBackground::setTextureFromImage(const std::string &image)
 {
     m_left->setTextureFromImage(image);
     m_right->setTextureFromImage(image);

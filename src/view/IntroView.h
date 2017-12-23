@@ -28,10 +28,10 @@ limitations under the License.
  */
 class IntroView : public AbstractView
 {
-    public:
+public:
     //=== CTORs / DTORs
     IntroView(sf::RenderWindow *window, TextHandler *textHandler, IntroModel *introModel);
-    virtual ~IntroView();
+    virtual ~IntroView() override;
 
     //=== METHODS
     virtual void synchronize() override;

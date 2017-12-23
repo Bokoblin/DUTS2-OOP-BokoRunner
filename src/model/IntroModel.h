@@ -19,7 +19,6 @@ limitations under the License.
 #include "AbstractModel.h"
 #include <chrono>
 
-
 /**
  * IntroModel Class
  * @author Arthur
@@ -30,7 +29,7 @@ class IntroModel : public AbstractModel
 public:
     //=== CTORs / DTORs
     IntroModel(DataBase *dataBase);
-    virtual ~IntroModel();
+    virtual ~IntroModel() override;
 
     //=== METHODS
     virtual void nextStep() override;

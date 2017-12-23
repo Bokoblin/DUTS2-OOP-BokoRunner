@@ -20,7 +20,6 @@ limitations under the License.
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-
 /**
  * Text Class inherited from sf::Text
  * @author Arthur
@@ -54,6 +53,5 @@ private:
     std::string m_description;
     bool m_isVisible;
 };
-
 
 #endif

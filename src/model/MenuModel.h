@@ -23,7 +23,6 @@ limitations under the License.
 #include "../enum/MenuState.h"
 #include <chrono>
 
-
 /**
  * The MenuModel class handles the menu's logic
  * @author Arthur
@@ -34,7 +33,7 @@ class MenuModel : public AbstractModel
 public:
     //=== CTORs / DTORs
     MenuModel(DataBase *dataBase);
-    virtual ~MenuModel();
+    virtual ~MenuModel() override;
 
     //=== GETTERS
     MenuState getMenuState() const;

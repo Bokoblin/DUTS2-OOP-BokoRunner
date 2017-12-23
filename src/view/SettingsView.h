@@ -21,7 +21,6 @@ limitations under the License.
 #include "RadioButton.h"
 #include "Dialog.h"
 
-
 /**
  * SettingsView Class
  * @author Arthur
@@ -32,7 +31,7 @@ class SettingsView : public AbstractView
 public:
     //=== CTORs / DTORs
     SettingsView(sf::RenderWindow *window, TextHandler *textHandler, Settings *settingsModel);
-    virtual ~SettingsView();
+    virtual ~SettingsView() override;
 
     //=== METHODS
     virtual void synchronize() override;

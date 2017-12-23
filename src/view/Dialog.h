@@ -20,7 +20,6 @@ limitations under the License.
 #include "TextHandler.h"
 #include "../utils/definitions.h"
 
-
 /**
  * The dialog class allows to create dialogs
  * with a title, a content and up to two buttons
@@ -34,7 +33,7 @@ public:
     Dialog();
     Dialog(float x, float y, float w, float h, const TextHandler &textHandler, const std::string &context);
     Dialog(const Dialog& d)=delete;
-    ~Dialog();
+    virtual ~Dialog() override;
 
     //=== GETTERS
     const std::string &getContext() const;
@@ -48,7 +47,7 @@ public:
     void setOkButtonText(const std::string &ok);
 
     //=== METHODS
-    void draw(sf::RenderWindow *window) const;
+    void draw(sf::RenderWindow *window) const override;
 
 protected:
     //=== ATTRIBUTES

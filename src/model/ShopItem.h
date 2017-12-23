@@ -28,28 +28,28 @@ limitations under the License.
  */
 class ShopItem
 {
-    public:
-        //=== CTORs / DTORs
-        ShopItem(const std::string &name, const std::string &description, int price, bool state);
-        ~ShopItem();
+public:
+    //=== CTORs / DTORs
+    ShopItem(const std::string &name, const std::string &description, int price, bool state);
+    ~ShopItem();
 
-        //=== GETTERS
-        std::string getId() const;
-        std::string getName() const;
-        std::string getDescription() const;
-        int getPrice() const;
-        bool isBought() const;
+    //=== GETTERS
+    std::string getId() const;
+    std::string getName() const;
+    std::string getDescription() const;
+    int getPrice() const;
+    bool isBought() const;
 
-        //=== SETTERS
-        void buy();
+    //=== SETTERS
+    void buy();
 
 private:
-        //=== ATTRIBUTES
-        std::string m_id;
-        std::string m_name;
-        std::string m_description;
-        int m_price;
-        bool m_isBought;
+    //=== ATTRIBUTES
+    std::string m_id;
+    std::string m_name;
+    std::string m_description;
+    int m_price;
+    bool m_isBought;
 };
 
 #endif

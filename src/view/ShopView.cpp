@@ -5,6 +5,9 @@
  * Parameterized Constructor
  * @author Arthur
  * @date 16/05/16 - 29/01/17
+ * @param window the app's window
+ * @param textHandler the app's text handler
+ * @param shopModel the shop's model object
  */
 ShopView::ShopView(sf::RenderWindow *window, TextHandler *textHandler, Shop *shopModel) :
         AbstractView(window, textHandler),
@@ -38,7 +41,7 @@ ShopView::~ShopView()
 /**
  * Image Loading
  * @author Arthur
- * @date 16/05/16 - 02/01/17
+ * @date 16/05/16 - 26/01/17
  */
 void ShopView::loadImages()
 {
@@ -51,8 +54,8 @@ void ShopView::loadImages()
     //=== Initialize HOME form buttons
 
     std::vector<sf::IntRect> clipRectHome;
-    clipRectHome.push_back(sf::IntRect(0, 50, 50, 50));
-    clipRectHome.push_back(sf::IntRect(51, 50, 50, 50));
+    clipRectHome.emplace_back(0, 50, 50, 50);
+    clipRectHome.emplace_back(51, 50, 50, 50);
     m_homeFormButton = new Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
 }
 
@@ -92,15 +95,15 @@ void ShopView::createCards()
  * @author Arthur
  * @date 16/05/16 - 02/01/17
  */
-void ShopView::syncCards() const
+void ShopView::syncCards()
 {
     //display only 3 cards linked to the current page indicator
     for (ShopItemCard *card : m_shopItemCardsArray)
     {
         card->sync(m_shop->getDataBase());
-        if(card->getId() == 0 + 3*m_currentIndicator
-            || card->getId() == 1 + 3*m_currentIndicator
-            || card->getId() == 2 + 3*m_currentIndicator)
+        if(card->getId() == 0 + 3 * m_currentIndicator
+            || card->getId() == 1 + 3 * m_currentIndicator
+            || card->getId() == 2 + 3 * m_currentIndicator)
         {
             card->show();
         }
@@ -199,7 +202,6 @@ bool ShopView::treatEvents(sf::Event event)
         for (auto it : m_pageIndicators)
             it.second->setPressed(false);
 
-
         //=== handle mouse up on a button
 
         if (!m_buyDialog->isVisible())
@@ -219,7 +221,8 @@ bool ShopView::treatEvents(sf::Event event)
                      && card->isVisible() && !card->getItem()->isBought())
                 {
                     delete m_buyDialog;
-                    m_buyDialog = new ShopDialog(m_width/2-125, m_height/2-100, 250, 200, *m_textHandler, "shopAskDialog", card->getItem());
+                    m_buyDialog = new ShopDialog(m_width/2 - 125, m_height/2 - 100, 250, 200,
+                                                 *m_textHandler, "shopAskDialog", card->getItem());
                     DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, *m_shop->getDataBase());
                     m_buyDialog->show();
                 }
@@ -228,25 +231,18 @@ bool ShopView::treatEvents(sf::Event event)
         {
             if (m_buyDialog->getOkButtonText().contains(MOUSE_POSITION))
             {
-                if (m_buyDialog->getContext() == "shopAskDialog")
+                if (m_buyDialog->getContext() == "shopAskDialog") //TODO : Don't use strings
                 {
-                    if (m_shop->buyItem(m_buyDialog->getLinkedShopItem()))
-                    {
-                        delete m_buyDialog;
-                        m_buyDialog = new ShopDialog(m_width/2-125, m_height/2-50, 250, 100, *m_textHandler, "shopSuccess");
-                        DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, *m_shop->getDataBase());
-                    }
-                    else
-                    {
-                        delete m_buyDialog;
-                        m_buyDialog = new ShopDialog(m_width/2-125, m_height/2-50, 250, 100, *m_textHandler, "shopFailure");
-                        DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, *m_shop->getDataBase());
-                    }
+                    delete m_buyDialog;
+                    const std::string operationResult = m_shop->buyItem(m_buyDialog->getLinkedShopItem())
+                                                        ? "shopSuccess" : "shopFailure"; //TODO : Don't use strings
+                    m_buyDialog = new ShopDialog(m_width/2 - 125, m_height/2 - 50, 250, 100,
+                                                 *m_textHandler, operationResult);
+                    DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, *m_shop->getDataBase());
                 }
                 else
                     m_buyDialog->hide();
             }
-
             else if (m_buyDialog->getCancelButtonText().contains(MOUSE_POSITION)
                  || !m_buyDialog->contains(MOUSE_POSITION))
             {

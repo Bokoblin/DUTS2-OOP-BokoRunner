@@ -20,7 +20,6 @@ limitations under the License.
 #include "../model/Leaderboard.h"
 #include "../utils/definitions.h"
 
-
 /**
  * LeaderboardView Class
  * @author Arthur
@@ -28,24 +27,22 @@ limitations under the License.
  */
 class LeaderboardView : public AbstractView
 {
-    public:
-        //=== CTORs / DTORs
-        LeaderboardView(sf::RenderWindow *window, TextHandler *textHandler, Leaderboard *leaderboardModel);
-        virtual ~LeaderboardView();
+public:
+    //=== CTORs / DTORs
+    LeaderboardView(sf::RenderWindow *window, TextHandler *textHandler, Leaderboard *leaderboardModel);
+    virtual ~LeaderboardView() override;
 
+    //=== METHODS
+    virtual void synchronize() override;
+    virtual void draw() const override;
+    virtual void loadImages() override;
+    virtual bool treatEvents(sf::Event event) override;
 
-        //=== METHODS
-        virtual void synchronize() override;
-        virtual void draw() const override;
-        virtual void loadImages() override;
-        virtual bool treatEvents(sf::Event event) override;
-
-    private:
-        //=== ATTRIBUTES
-        Leaderboard *m_leaderboard;
-        Button *m_homeFormButton;
-        Button *m_clearLbRectButton;
+private:
+    //=== ATTRIBUTES
+    Leaderboard *m_leaderboard;
+    Button *m_homeFormButton;
+    Button *m_clearLbRectButton;
 };
-
 
 #endif

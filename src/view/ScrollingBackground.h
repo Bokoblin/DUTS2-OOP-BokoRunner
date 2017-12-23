@@ -28,10 +28,11 @@ class ScrollingBackground : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
-    ScrollingBackground(float width, float height, float scrollingSpeed, std::string image);
+    ScrollingBackground(float width, float height, float scrollingSpeed, const std::string &image);
     ScrollingBackground(ScrollingBackground const& element) = delete;
-    virtual ~ScrollingBackground();
+    virtual ~ScrollingBackground() override;
 
+    //=== GETTERS
     sf::Vector2f getLeftPosition() const;
     float getSeparationPositionX() const;
 
@@ -43,13 +44,12 @@ public:
     virtual void sync() override;
     virtual void draw(sf::RenderWindow *window) const override;
     virtual void resize(float width, float height) override;
-    virtual void setTextureFromImage(std::string image);
+    virtual void setTextureFromImage(const std::string &image) override;
 
 private:
     //=== ATTRIBUTES
     GraphicElement *m_left, *m_right;
     float m_scrollingSpeed;
-
 };
 
 #endif

@@ -23,7 +23,6 @@ limitations under the License.
 #include "SettingsView.h"
 #include "ShopView.h"
 
-
 /**
  * MenuView Class
  * @author Arthur, Florian
@@ -34,7 +33,7 @@ class MenuView : public AbstractView
 public:
     //=== CTORs / DTORs
     MenuView(sf::RenderWindow *window, TextHandler *textHandler, MenuModel *menuModel);
-    virtual ~MenuView();
+    virtual ~MenuView() override;
 
     //=== METHODS
     virtual void synchronize() override;

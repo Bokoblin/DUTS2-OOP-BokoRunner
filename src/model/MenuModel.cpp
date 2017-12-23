@@ -36,7 +36,7 @@ MenuModel::~MenuModel()
 //=== Getters & Setters
 
 MenuState MenuModel::getMenuState() const { return m_menuState; }
-void MenuModel::setMenuState(MenuState state){ m_menuState = state;}
+void MenuModel::setMenuState(MenuState state){ m_menuState = state; }
 
 
 /**
@@ -123,6 +123,7 @@ Shop* MenuModel::launchShop()
     m_shop = new Shop(m_dataBase);
     return m_shop;
 }
+
 
 /**
  * Launches settings function

@@ -45,5 +45,5 @@ AbstractView::AbstractView(float width, float height, sf::RenderWindow *window, 
  * @author Arthur, Florian
  * @date 21/02/16 - 29/01/17
  */
-AbstractView::~AbstractView() {}
+AbstractView::~AbstractView() = default;
 

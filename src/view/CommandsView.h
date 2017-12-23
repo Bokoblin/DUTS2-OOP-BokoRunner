@@ -20,7 +20,6 @@ limitations under the License.
 #include "../model/Commands.h"
 #include "../utils/definitions.h"
 
-
 /**
  * The CommandsView class displays
  * game's command
@@ -46,6 +45,5 @@ private:
     GraphicElement *m_commandSprite;
     Button *m_homeFormButton;
 };
-
 
 #endif

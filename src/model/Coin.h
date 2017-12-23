@@ -18,7 +18,6 @@ limitations under the License.
 
 #include "MovableElement.h"
 
-
 /**
  * The Coin class inherited from MovableElement
  * provides a moving behaviour for coins
@@ -31,11 +30,10 @@ class Coin : public MovableElement
 public:
     //=== CTORs / DTORs
     Coin(float x, float y, float w, float h, float mvX, float mvY);
-    virtual ~Coin();
+    virtual ~Coin() override;
 
     //=== METHODS
-    void move();
-
+    virtual void move() override;
 };
 
 #endif

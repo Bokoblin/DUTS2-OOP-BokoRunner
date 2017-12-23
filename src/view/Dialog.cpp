@@ -1,6 +1,6 @@
 #include "Dialog.h"
 
-Dialog::Dialog() : GraphicElement(0, 0), m_title{""}, m_content{""},
+Dialog::Dialog() : GraphicElement(0, 0), m_context{""}, m_title{""}, m_content{""},
                    m_cancelButtonText{""}, m_okButtonText{""}
 {
     hide();
@@ -42,8 +42,7 @@ Dialog::Dialog(float x, float y, float w, float h, const TextHandler &textHandle
  * @author Arthur
  * @date 16/05/17 - 02/01/17
  */
-Dialog::~Dialog()
-{}
+Dialog::~Dialog() = default;
 
 
 //=== Getters

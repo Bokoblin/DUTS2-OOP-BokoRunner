@@ -25,7 +25,6 @@ limitations under the License.
 #include "../enum/Zone.h"
 #include <chrono>
 
-
 /**
  * The GameModel class handles the game's logic
  * by handling MovableElements creation, behaviours,
@@ -41,7 +40,7 @@ class GameModel : public AbstractModel
 public:
     //=== CTORs / DTORs
     GameModel(float width, float height, DataBase *dataBase);
-    ~GameModel();
+    virtual ~GameModel() override;
 
     //=== GETTERS
     GameState getGameState() const;

@@ -41,7 +41,7 @@ int main()
     //=== Initialize app state, random numbers and event object
 
     dataBase.setAppState(INTRO);
-    srand((unsigned int) time(NULL));
+    srand((unsigned int) time(nullptr));
     sf::Event event = sf::Event();
 
     //=== Program loop

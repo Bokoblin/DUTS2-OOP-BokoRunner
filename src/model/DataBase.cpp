@@ -2,7 +2,6 @@
 
 using namespace std;
 
-
 /**
  * Constructs the app's database by initializing
  * all the data from config (backup) file
@@ -20,9 +19,17 @@ DataBase::DataBase() :
 }
 
 
+/**
+ * Destructor
+ * @author Arthur
+ * @date 26/11/17
+ */
+DataBase::~DataBase() = default;
+
+
 //=== Getters
 
-AppState DataBase::getAppState() const {return m_appState;}
+AppState DataBase::getAppState() const { return m_appState; }
 int DataBase::getTotalCoinsNumber() const { return m_totalCoinsCollected; }
 int DataBase::getTotalDistance() const { return m_totalDistance; }
 int DataBase::getTotalFlattenedEnemies() const { return m_totalFlattenedEnemies; }
@@ -34,11 +41,11 @@ int DataBase::getCurrentCoinsNumber() const { return m_currentCoinsNumber; }
 int DataBase::getCurrentDistance() const { return (int)m_currentDistance; }
 int DataBase::getCurrentFlattenedEnemies() const { return m_currentFlattenedEnemies; }
 int DataBase::getCurrentScore() const { return m_currentScore; }
-int DataBase::getDifficulty() const {return m_currentDifficulty;}
-int DataBase::getWallet() const {return m_wallet;}
-bool DataBase::isMenuMusicEnabled() const {return m_isMenuMusicEnabled;}
-bool DataBase::isGameMusicEnabled() const {return m_isGameMusicEnabled;}
-string DataBase::getLanguage() const { return m_currentLanguage;}
+int DataBase::getDifficulty() const { return m_currentDifficulty;}
+int DataBase::getWallet() const { return m_wallet;}
+bool DataBase::isMenuMusicEnabled() const { return m_isMenuMusicEnabled; }
+bool DataBase::isGameMusicEnabled() const { return m_isGameMusicEnabled; }
+string DataBase::getLanguage() const { return m_currentLanguage; }
 string DataBase::getBallSkin() const { return m_currentBallSkin; }
 string DataBase::getLanguageFile() const
 {
@@ -49,13 +56,13 @@ string DataBase::getLanguageFile() const
     else if (m_currentLanguage == SPANISH)
         return SPANISH_STRINGS;
     else
-        return ENGLISH; //Default
+        return ENGLISH_STRINGS; //Default
 }
 
 
 //=== Setters
 
-void DataBase::setAppState(AppState state) { m_appState = state;}
+void DataBase::setAppState(AppState state) { m_appState = state; }
 void DataBase::decreaseWallet(int amount) { m_wallet -= amount; }
 void DataBase::increaseCurrentCoinsCollected(int amount) { m_currentCoinsNumber += amount; }
 void DataBase::increaseCurrentDistance(float amount) { m_currentDistance += amount; }
@@ -63,15 +70,16 @@ void DataBase::increaseCurrentFlattenedEnemies(int amount) {
     m_scoreBonusFlattenedEnemies += amount;
     m_currentFlattenedEnemies += 1;
 }
-void DataBase::setLanguage(string lang) { m_currentLanguage = lang;}
-void DataBase::setBallSkin(string skin) { m_currentBallSkin = skin; }
-void DataBase::setDifficulty(int difficulty) { m_currentDifficulty = difficulty;}
+void DataBase::setLanguage(const string &language) { m_currentLanguage = language; }
+void DataBase::setBallSkin(const string &skin) { m_currentBallSkin = skin; }
+void DataBase::setDifficulty(int difficulty) { m_currentDifficulty = difficulty; }
 void DataBase::setMenuMusic(bool on) { m_isMenuMusicEnabled = on; }
-void DataBase::setGameMusic(bool on) { m_isGameMusicEnabled = on;}
+void DataBase::setGameMusic(bool on) { m_isGameMusicEnabled = on; }
 void DataBase::setCurrentScore(float speed)
 {
-    m_currentScore = (int)(speed * m_currentDistance
-                     + COIN_MULTIPLIER*m_currentCoinsNumber + m_scoreBonusFlattenedEnemies);
+    m_currentScore = (int)((speed * m_currentDistance)
+                           + (COIN_MULTIPLIER * m_currentCoinsNumber)
+                           + m_scoreBonusFlattenedEnemies);
 }
 
 
@@ -119,6 +127,7 @@ bool DataBase::checkConfigFileIntegrity() const
     int nbStatsChildren = 0; //should be 7
     int nbShopChildren = 0; //should be 6
     int nbScoreChildren = 0; //should be 20
+
     do {
         getline(f, line, '\n');
         nbLines++;
@@ -161,9 +170,9 @@ bool DataBase::checkConfigFileIntegrity() const
     }
     while (!f.eof());
 
-    return !(!isPresentConfig || !isPresentStats || !isPresentShop || !isPresentScoreEasy || !isPresentScoreHard
-             || (nbLines != 52 && nbLines != 53)
-             || nbConfigChildren!=6 || nbStatsChildren!=7 || nbShopChildren!=6 || nbScoreChildren!=20);
+    return isPresentConfig && isPresentStats && isPresentShop && isPresentScoreEasy && isPresentScoreHard
+           && nbConfigChildren == 6 && nbStatsChildren == 7 && nbShopChildren == 6 && nbScoreChildren == 20
+           && (nbLines == 52 || nbLines == 53);
 }
 
 
@@ -197,11 +206,24 @@ void DataBase::fetchConfig()
     for (pugi::xml_node configItem: config.children("configItem"))
     {
         if (string(configItem.attribute("name").value()) == "language")
+        {
             m_currentLanguage = configItem.attribute("value").value();
-        if (string(configItem.attribute("name").value()) == "difficulty")
+            const regex r("en|fr|es");
+            smatch sm;
+            m_currentLanguage = regex_match(m_currentLanguage, sm, r) ? m_currentLanguage : ENGLISH;
+        }
+        else if (string(configItem.attribute("name").value()) == "difficulty")
+        {
             m_currentDifficulty = atoi(configItem.attribute("value").value());
+            m_currentDifficulty = (m_currentDifficulty == EASY) ? EASY : HARD; //prevent bad value
+        }
         else if (string(configItem.attribute("name").value()) == "ball_skin")
+        {
             m_currentBallSkin = configItem.attribute("value").value();
+            const regex r("default|morphing|capsule");
+            smatch sm;
+            m_currentBallSkin = regex_match(m_currentBallSkin, sm, r) ? m_currentBallSkin : "default";
+        }
         else if (string(configItem.attribute("name").value()) == "wallet")
             m_wallet = atoi(configItem.attribute("value").value());
         else if (string(configItem.attribute("name").value()) == "menu_music")
@@ -379,36 +401,30 @@ void DataBase::pushConfigurationToFile() const
     }
 
     //Save score
-    set<int>::iterator it = m_scoresEasyArray.begin();
+    auto it = m_scoresEasyArray.begin();
     for (pugi::xml_node scoreItem: scoresEasy.children("scoreItem"))
     {
-        if (it!=m_scoresEasyArray.end())
+        pugi::xml_attribute nodeValue = scoreItem.attribute("value");
+        if (it != m_scoresEasyArray.end())
         {
-            pugi::xml_attribute nodeValue = scoreItem.attribute("value");
             nodeValue.set_value((to_string(*it)).c_str());
             ++it;
         }
         else
-        {
-            pugi::xml_attribute nodeValue = scoreItem.attribute("value");
             nodeValue.set_value("0");
-        }
     }
 
     it = m_scoresHardArray.begin();
     for (pugi::xml_node scoreItem: scoresHard.children("scoreItem"))
     {
-        if (it!=m_scoresHardArray.end())
+        pugi::xml_attribute nodeValue = scoreItem.attribute("value");
+        if (it != m_scoresHardArray.end())
         {
-            pugi::xml_attribute nodeValue = scoreItem.attribute("value");
             nodeValue.set_value((to_string(*it)).c_str());
             ++it;
         }
         else
-        {
-            pugi::xml_attribute nodeValue = scoreItem.attribute("value");
             nodeValue.set_value("0");
-        }
     }
 
     doc.save_file(CONFIG_FILE.c_str());
@@ -459,7 +475,6 @@ void DataBase::addNewScore(int score)
         while (m_scoresHardArray.size() > MAX_SCORES)
             m_scoresHardArray.erase(m_scoresHardArray.begin());
     }
-
 }
 
 
@@ -510,7 +525,7 @@ void DataBase::clearAppData()
  * @param item the item to find
  * @return true if found
  */
-bool DataBase::findActivatedItem(const std::string &item) {
+bool DataBase::findActivatedItem(const string &item) {
     if (m_activatedItemsArray.empty())
         return false;
     else
@@ -556,13 +571,13 @@ string DataBase::loadTextFromIdentifier(const string &description) const
 string DataBase::loadLeaderboardScores(Difficulty difficulty) const
 {
     int scoreRank = 1;
-    string result = "";
+    string result;
 
     if (difficulty == EASY && !m_scoresEasyArray.empty())
     {
         result = loadTextFromIdentifier("config_easy_mode") + " :\n";
         //add each case content in string
-        for (set<int>::reverse_iterator it = m_scoresEasyArray.rbegin(); it!=m_scoresEasyArray.rend(); ++it)
+        for (auto it = m_scoresEasyArray.rbegin(); it!=m_scoresEasyArray.rend(); ++it)
         {
             result += "\n" + to_string(scoreRank) + (scoreRank != 10 ? ".   " : ". ") + to_string(*it);
             scoreRank++;
@@ -571,7 +586,7 @@ string DataBase::loadLeaderboardScores(Difficulty difficulty) const
     else if (difficulty == HARD && !m_scoresHardArray.empty())
     {
         result = loadTextFromIdentifier("config_hard_mode") + " :\n";
-        for (set<int>::reverse_iterator it = m_scoresHardArray.rbegin(); it!=m_scoresHardArray.rend(); ++it)
+        for (auto it = m_scoresHardArray.rbegin(); it!=m_scoresHardArray.rend(); ++it)
         {
             result += "\n" + to_string(scoreRank) + (scoreRank != 10 ? ".   " : ". ") + to_string(*it);
             scoreRank++;

@@ -1,6 +1,5 @@
 #include "GraphicElement.h"
 
-
 /**
  * Constructs a GraphicElement with a size
  * @author Arthur
@@ -58,8 +57,7 @@ GraphicElement::GraphicElement(GraphicElement const& element) :
  * @author Arthur, Florian
  * @date 21/02/16
  */
-GraphicElement::~GraphicElement()
-{}
+GraphicElement::~GraphicElement() = default;
 
 
 //=== Getters
@@ -126,7 +124,7 @@ void GraphicElement::resize(float width, float height)
  * @author Arthur
  * @date 02/01/17
  */
-void GraphicElement::setTextureFromImage(std::string image)
+void GraphicElement::setTextureFromImage(const std::string &image)
 {
     if (!m_texture.loadFromFile(image))
         std::cerr << "ERROR when loading image file: " << image << std::endl;
@@ -143,7 +141,7 @@ void GraphicElement::setTextureFromImage(std::string image)
  * @author Arthur
  * @date 02/01/17
  */
-void GraphicElement::setTextureFromImage(std::string image, sf::IntRect intRect) {
+void GraphicElement::setTextureFromImage(const std::string &image, sf::IntRect intRect) {
     if (!m_texture.loadFromFile(image, intRect))
         std::cerr << "ERROR when loading image file: " << image << std::endl;
     else

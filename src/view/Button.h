@@ -21,7 +21,6 @@ limitations under the License.
 #include "GraphicElement.h"
 #include "Text.h"
 
-
 /**
  * The Button class adds to a Graphic element
  * multiple clips from texture for them to change on events
@@ -44,7 +43,7 @@ public:
            const std::string &image, const std::vector<sf::IntRect> &clipRect);
     Button(Button const& elementACopier);
 
-    virtual ~Button();
+    virtual ~Button() override;
 
     //=== GETTERS
     bool isEnabled() const;
@@ -60,7 +59,7 @@ public:
     //=== METHODS
     virtual void sync() override;
     virtual void sync(DataBase *dataBase);
-    virtual void draw(sf::RenderWindow *window)const;
+    virtual void draw(sf::RenderWindow *window) const override;
     virtual bool contains(float x, float y) const override;
 
 protected:

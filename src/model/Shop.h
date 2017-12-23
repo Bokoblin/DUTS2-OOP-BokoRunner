@@ -31,7 +31,7 @@ class Shop : public AbstractModel
 public:
     //=== CTORs / DTORs
     Shop(DataBase *dataBase);
-    ~Shop();
+    virtual ~Shop() override;
 
     //=== GETTERS
     std::vector<ShopItem*> getShopItemsArray() const;

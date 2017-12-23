@@ -21,8 +21,7 @@ Settings::Settings(DataBase *dataBase) :  AbstractModel(dataBase), m_currentPage
  * @author Arthur
  * @date 20/05/16
  */
-Settings::~Settings()
-{ }
+Settings::~Settings() = default;
 
 
 //=== Getters & Setters
@@ -30,6 +29,7 @@ Settings::~Settings()
 bool Settings::isMorphSkinAvailable() const { return m_morphSkinIsAvailable; }
 bool Settings::isCapsuleSkinAvailable() const { return m_capsuleSkinIsAvailable; }
 int Settings::getCurrentPage() const { return m_currentPage; }
+
 void Settings::setCurrentPage(int page) { m_currentPage = page; }
 
 
@@ -38,11 +38,11 @@ void Settings::setCurrentPage(int page) { m_currentPage = page; }
  * @author Arthur
  * @date 16/05/16
  *
- * @param lang the new language
+ * @param language the new language
  */
-void Settings::changeLanguage(string lang)
+void Settings::changeLanguage(const string &language)
 {
-    m_dataBase->setLanguage(lang);
+    m_dataBase->setLanguage(language);
 }
 
 /**
@@ -52,7 +52,7 @@ void Settings::changeLanguage(string lang)
  *
  * @param skin the new skin
  */
-void Settings::changeBallSkin(string skin)
+void Settings::changeBallSkin(const string &skin)
 {
     m_dataBase->setBallSkin(skin);
 }
@@ -74,13 +74,12 @@ void Settings::checkItemsAvailability()
  * @author Arthur
  * @date 02/11/17
  */
-void Settings::openURLinBrowser(const string &url)
-{
+void Settings::openURLinBrowser(const string &url) const {
 #if defined __linux__
     string command = "x-www-browser " + url;
     system(command.c_str());
 #elif _WIN32
-    ShellExecute(0, 0, url.c_str(), 0, 0 , SW_SHOW );
+    ShellExecute(nullptr, nullptr, url.c_str(), nullptr, nullptr, SW_SHOW);
 #else
 #error Operation not supported on your platform
 #endif

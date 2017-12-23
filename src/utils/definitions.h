@@ -53,10 +53,11 @@ limitations under the License.
 #define EMAIL "mailto:pro.jolivetarthur@gmail.com"
 
 //=== OTHER DEFINITIONS
-#define TITLE_TEXT_X m_height/12
+#define TITLE_TEXT_X (m_height/12)
 #define FORM_BUTTONS_SIZE 30, 30
 #define RADIOS_MARGIN 50
 #define RADIO_BUTTONS_SIZE 26, 26
 #define INDICATOR_BUTTONS_SIZE 22, 22
+#define PAUSE_BUTTONS_SIZE 25, 25
 
 #endif

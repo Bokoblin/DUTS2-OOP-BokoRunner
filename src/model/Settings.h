@@ -35,7 +35,7 @@ class Settings : public AbstractModel
 public:
     //=== CTORs / DTORs
     Settings(DataBase *dataBase);
-    ~Settings();
+    virtual ~Settings() override;
 
     //=== GETTERS
     bool isMorphSkinAvailable() const;
@@ -46,10 +46,10 @@ public:
     void setCurrentPage(int page);
 
     //=== METHODS
-    void changeLanguage(std::string lang);
-    void changeBallSkin(std::string skin);
+    void changeLanguage(const std::string &language);
+    void changeBallSkin(const std::string &skin);
     void checkItemsAvailability();
-    void openURLinBrowser(const std::string &url);
+    void openURLinBrowser(const std::string &url) const;
     virtual void nextStep() override;
     void quit();
 

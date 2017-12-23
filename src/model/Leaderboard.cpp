@@ -19,12 +19,14 @@ Leaderboard::Leaderboard(DataBase *dataBase) :
     }
 }
 
+
 /**
  * Destructor
  * @author Arthur
  * @date 19/04/16
  */
-Leaderboard::~Leaderboard() {}
+Leaderboard::~Leaderboard() = default;
+
 
 /**
  * Next Step

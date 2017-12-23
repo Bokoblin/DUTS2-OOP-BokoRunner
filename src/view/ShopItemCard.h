@@ -21,7 +21,6 @@ limitations under the License.
 #include "TextHandler.h"
 #include "../utils/definitions.h"
 
-
 /**
  * ShopItemCard Class
  * @author Arthur
@@ -29,29 +28,29 @@ limitations under the License.
  */
 class ShopItemCard : public GraphicElement
 {
-    public:
-        //=== CTORs / DTORs
-        ShopItemCard(int id, ShopItem *item, TextHandler *textHandler);
-        ~ShopItemCard();
+public:
+    //=== CTORs / DTORs
+    ShopItemCard(int id, ShopItem *item, TextHandler *textHandler);
+    virtual ~ShopItemCard() override;
 
-        //=== GETTERS
-        int getId() const;
-        Button *getBuyButton() const;
-        ShopItem *getItem() const;
+    //=== GETTERS
+    int getId() const;
+    Button *getBuyButton() const;
+    ShopItem *getItem() const;
 
-        //=== METHODS
-        void loadImages();
-        void sync(DataBase *dataBase);
-        void draw(sf::RenderWindow *window) const;
+    //=== METHODS
+    void loadImages();
+    void sync(DataBase *dataBase);
+    void draw(sf::RenderWindow *window) const override;
 
-    private:
-        //=== ATTRIBUTES
-        int m_id;
-        ShopItem *m_item;
-        Text m_title;
-        Text m_content;
-        Button *m_buyButton;
-        Button *m_boughtButton;
+private:
+    //=== ATTRIBUTES
+    int m_id;
+    ShopItem *m_item;
+    Text m_title;
+    Text m_content;
+    Button *m_buyButton;
+    Button *m_boughtButton;
 };
 
 #endif

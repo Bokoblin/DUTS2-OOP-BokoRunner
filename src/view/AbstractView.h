@@ -22,7 +22,6 @@ limitations under the License.
 #include "Button.h"
 #include <SFML/Audio.hpp>
 
-
 /**
  * The AbstractView class provides common
  * attributes and methods that will be used
@@ -33,24 +32,24 @@ limitations under the License.
  */
 class AbstractView
 {
-    public:
-        //=== CTORs / DTORs
-        AbstractView(sf::RenderWindow *window, TextHandler *textHandler);
-        AbstractView(float width, float height, sf::RenderWindow *window, TextHandler *textHandler);
-        AbstractView(const AbstractView& myView) = delete;
-        virtual ~AbstractView();
+public:
+    //=== CTORs / DTORs
+    AbstractView(sf::RenderWindow *window, TextHandler *textHandler);
+    AbstractView(float width, float height, sf::RenderWindow *window, TextHandler *textHandler);
+    AbstractView(const AbstractView& myView) = delete;
+    virtual ~AbstractView();
 
-        //=== METHODS
-        virtual void loadImages()=0;
-        virtual void synchronize()=0;
-        virtual void draw() const =0;
-        virtual bool treatEvents(sf::Event event)=0;
+    //=== METHODS
+    virtual void loadImages() = 0;
+    virtual void synchronize() = 0;
+    virtual void draw() const = 0;
+    virtual bool treatEvents(sf::Event event) = 0;
 
-    protected:
-        //=== ATTRIBUTES
-        float m_width, m_height;
-        sf::RenderWindow *m_window;
-        TextHandler *m_textHandler;
+protected:
+    //=== ATTRIBUTES
+    float m_width, m_height;
+    sf::RenderWindow *m_window;
+    TextHandler *m_textHandler;
 };
 
 #endif

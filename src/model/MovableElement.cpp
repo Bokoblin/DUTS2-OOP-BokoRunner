@@ -26,7 +26,7 @@ MovableElement::MovableElement(float x, float y, float w, float h, float mvX, fl
  * @author Arthur
  * @date 23/02/16
  */
-MovableElement::~MovableElement() {}
+MovableElement::~MovableElement() = default;
 
 
 //=== Getters
@@ -34,7 +34,7 @@ MovableElement::~MovableElement() {}
 float MovableElement::getPosX()  const { return m_posX;  }
 float MovableElement::getPosY()  const { return m_posY;  }
 float MovableElement::getWidth() const { return m_width; }
-float MovableElement::getHeight()const { return m_height;}
+float MovableElement::getHeight()const { return m_height; }
 MovableElementType MovableElement::getType() const { return m_elementType; }
 bool MovableElement::isColliding() const { return m_isColliding; }
 

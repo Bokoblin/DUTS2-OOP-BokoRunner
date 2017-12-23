@@ -22,7 +22,6 @@ limitations under the License.
 #include "../model/Settings.h"
 #include "../utils/definitions.h"
 
-
 /**
  * The TextHandler Class groups app's standalone texts
  * and handles them
@@ -50,21 +49,21 @@ class TextHandler
     void loadText();
     void updateWholeText();
 
-    void syncSplashScreenText(bool visibility);
+    void syncSplashScreenText(bool continueVisibility);
     void syncSettingsText(int currentPage);
     void syncMenuLeaderboardText();
     void syncShopText();
     void syncGameText(int bonusTimeout);
     void syncPauseText();
-    void syncEndText(int gameSpeed);
+    void syncGameOverText(int gameSpeed);
     void drawSplashScreenText(sf::RenderWindow *window) const;
     void drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const;
     void drawLeaderboardText(sf::RenderWindow *window) const;
     void drawMenuShopText(sf::RenderWindow *window) const;
     void drawGameText(sf::RenderWindow *window) const;
     void drawPauseText(sf::RenderWindow *window) const;
-    void drawEndText(sf::RenderWindow *window) const;
-    void treatAboutLinks(sf::Event event, Settings &settings) const;
+    void drawGameOverText(sf::RenderWindow *window) const;
+    void handleAboutLinks(sf::Event event, const Settings &settings) const;
 
 private:
     //=== ATTRIBUTES

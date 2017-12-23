@@ -18,7 +18,6 @@ limitations under the License.
 
 #include "DataBase.h"
 
-
 /**
  * The AbstractModel class provides
  * a database and a nextStep method

@@ -28,9 +28,9 @@ class Leaderboard : public AbstractModel
 public:
     //=== CTORs / DTORs
     Leaderboard(DataBase *dataBase);
-    ~Leaderboard();
+    virtual ~Leaderboard() override;
 
-    //=== Methods
+    //=== METHODS
     virtual void nextStep() override;
     void quit();
 };

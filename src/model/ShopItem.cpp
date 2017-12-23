@@ -23,8 +23,7 @@ ShopItem::ShopItem(const string &name, const string &description, int price, boo
  * @author Arthur
  * @date 11/05/16
  */
-ShopItem::~ShopItem()
-{ }
+ShopItem::~ShopItem() = default;
 
 
 //=== Getters

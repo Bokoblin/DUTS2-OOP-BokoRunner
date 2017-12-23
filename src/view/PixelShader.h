@@ -74,20 +74,23 @@ External libraries used by SFML
  */
 class PixelShader : public sf::Drawable
 {
-    public:
-        PixelShader();
-        ~PixelShader();
+public:
+    //=== CTORs / DTORs
+    PixelShader();
+    virtual ~PixelShader() override;
 
-        void load(const std::string &image);
-        void update(float x, float y);
-        void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-        bool onLoad(const std::string &image);
+    //=== METHODS
+    void load(const std::string &image);
+    void update(float x, float y);
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    bool onLoad(const std::string &image);
 
-    private:
-        bool m_isLoaded;
-        sf::Texture m_texture;
-        sf::Sprite m_sprite;
-        sf::Shader m_shader;
+private:
+    //=== ATTRIBUTES
+    bool m_isLoaded;
+    sf::Texture m_texture;
+    sf::Sprite m_sprite;
+    sf::Shader m_shader;
 };
 
 #endif

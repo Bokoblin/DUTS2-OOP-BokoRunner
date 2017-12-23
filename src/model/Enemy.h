@@ -18,7 +18,6 @@ limitations under the License.
 
 #include "MovableElement.h"
 
-
 /**
  * The Enemy class inherited from MovableElement
  * provides a moving behaviour and types of enemies among :
@@ -32,12 +31,11 @@ class Enemy : public MovableElement
 public:
     //=== CTORs / DTORs
     Enemy(float x, float y, float w, float h, float mvX, float mvY);
-    virtual~Enemy();
+    virtual ~Enemy() override;
 
     //=== METHODS
-    void move();
+    virtual void move() override;
     void chooseEnemyType();
-
 };
 
 #endif

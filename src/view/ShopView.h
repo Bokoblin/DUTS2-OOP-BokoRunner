@@ -22,7 +22,6 @@ limitations under the License.
 #include "ShopDialog.h"
 #include "RadioButton.h"
 
-
 /**
  * ShopView Class
  * @author Arthur
@@ -33,14 +32,14 @@ class ShopView : public AbstractView
 public:
     //=== CTORs / DTORs
     ShopView(sf::RenderWindow *window, TextHandler *textHandler, Shop *shopModel);
-    virtual ~ShopView();
+    virtual ~ShopView() override;
 
     //=== METHODS
     virtual void synchronize() override;
     virtual void draw() const override;
     virtual void loadImages() override;
     virtual bool treatEvents(sf::Event event) override;
-    void syncCards() const;
+    void syncCards();
     void createCards();
 
 private:

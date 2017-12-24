@@ -89,7 +89,7 @@ void Shop::fetchBuyableItemsFromFile()
         string id = shopItem.attribute("id").value();
         string name = m_dataBase->loadTextFromIdentifier(id + "_name");
         string desc = m_dataBase->loadTextFromIdentifier(id + "_desc");
-        int price = atoi(shopItem.attribute("price").value());
+        int price = stoi(shopItem.attribute("price").value());
         bool isBought = ((string)shopItem.attribute("bought").value()) == "true";
 
         //Adds item to array

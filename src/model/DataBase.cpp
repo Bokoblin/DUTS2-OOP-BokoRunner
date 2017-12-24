@@ -167,8 +167,7 @@ bool DataBase::checkConfigFileIntegrity() const
         found = line.find("<scoreItem");
         if (found != string::npos)
             nbScoreChildren++;
-    }
-    while (!f.eof());
+    } while (!f.eof());
 
     return isPresentConfig && isPresentStats && isPresentShop && isPresentScoreEasy && isPresentScoreHard
            && nbConfigChildren == 6 && nbStatsChildren == 7 && nbShopChildren == 6 && nbScoreChildren == 20
@@ -214,7 +213,7 @@ void DataBase::fetchConfig()
         }
         else if (string(configItem.attribute("name").value()) == "difficulty")
         {
-            m_currentDifficulty = atoi(configItem.attribute("value").value());
+            m_currentDifficulty = stoi(configItem.attribute("value").value());
             m_currentDifficulty = (m_currentDifficulty == EASY) ? EASY : HARD; //prevent bad value
         }
         else if (string(configItem.attribute("name").value()) == "ball_skin")
@@ -225,7 +224,7 @@ void DataBase::fetchConfig()
             m_currentBallSkin = regex_match(m_currentBallSkin, sm, r) ? m_currentBallSkin : "default";
         }
         else if (string(configItem.attribute("name").value()) == "wallet")
-            m_wallet = atoi(configItem.attribute("value").value());
+            m_wallet = stoi(configItem.attribute("value").value());
         else if (string(configItem.attribute("name").value()) == "menu_music")
         {
             string result = configItem.attribute("value").value();
@@ -241,19 +240,19 @@ void DataBase::fetchConfig()
     for (pugi::xml_node statItem: stats.children("statItem"))
     {
         if (string(statItem.attribute("name").value()) == "total_coins_collected")
-            m_totalCoinsCollected = atoi(statItem.attribute("value").value());
+            m_totalCoinsCollected = stoi(statItem.attribute("value").value());
         else if (string(statItem.attribute("name").value()) == "total_distance_travelled")
-            m_totalDistance = atoi(statItem.attribute("value").value());
+            m_totalDistance = stoi(statItem.attribute("value").value());
         else if (string(statItem.attribute("name").value()) == "total_enemies_destroyed")
-            m_totalFlattenedEnemies = atoi(statItem.attribute("value").value());
+            m_totalFlattenedEnemies = stoi(statItem.attribute("value").value());
         else if (string(statItem.attribute("name").value()) == "per_game_coins_collected")
-            m_perGameCoinsCollected = atoi(statItem.attribute("value").value());
+            m_perGameCoinsCollected = stoi(statItem.attribute("value").value());
         else if (string(statItem.attribute("name").value()) == "per_game_distance_travelled")
-            m_perGameDistance = atoi(statItem.attribute("value").value());
+            m_perGameDistance = stoi(statItem.attribute("value").value());
         else if (string(statItem.attribute("name").value()) == "per_game_enemies_destroyed")
-            m_perGameFlattenedEnemies = atoi(statItem.attribute("value").value());
+            m_perGameFlattenedEnemies = stoi(statItem.attribute("value").value());
         else if (string(statItem.attribute("name").value()) == "total_games_played")
-            m_totalGamesPlayed = atoi(statItem.attribute("value").value());
+            m_totalGamesPlayed = stoi(statItem.attribute("value").value());
     }
 }
 
@@ -278,12 +277,12 @@ void DataBase::fetchScore()
     for (pugi::xml_node scoreItem: scoresEasy.children("scoreItem"))
     {
         if (string(scoreItem.attribute("value").value()) != "0")
-            m_scoresEasyArray.insert(atoi(scoreItem.attribute("value").value()));
+            m_scoresEasyArray.insert(stoi(scoreItem.attribute("value").value()));
     }
     for (pugi::xml_node scoreItem: scoresHard.children("scoreItem"))
     {
         if (string(scoreItem.attribute("value").value()) != "0")
-            m_scoresHardArray.insert(atoi(scoreItem.attribute("value").value()));
+            m_scoresHardArray.insert(stoi(scoreItem.attribute("value").value()));
     }
 }
 

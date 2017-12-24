@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "view/IntroView.h"
+#include "view/SplashScreenView.h"
 #include "view/MenuView.h"
 #include "view/GameView.h"
 
@@ -40,7 +40,7 @@ int main()
 
     //=== Initialize app state, random numbers and event object
 
-    dataBase.setAppState(INTRO);
+    dataBase.setAppState(SPLASH);
     srand((unsigned int) time(nullptr));
     sf::Event event = sf::Event();
 
@@ -48,16 +48,16 @@ int main()
 
     while(window.isOpen())
     {
-        if (dataBase.getAppState() == INTRO)
+        if (dataBase.getAppState() == SPLASH)
         {
-            IntroModel introModel(&dataBase);
-            IntroView introView(&window, &textHandler, &introModel);
+            SplashScreenModel splashModel(&dataBase);
+            SplashScreenView splashView(&window, &textHandler, &splashModel);
 
-            while(dataBase.getAppState() == INTRO && introView.treatEvents(event))
+            while(dataBase.getAppState() == SPLASH && splashView.treatEvents(event))
             {
-                introModel.nextStep();
-                introView.synchronize();
-                introView.draw();
+                splashModel.nextStep();
+                splashView.synchronize();
+                splashView.draw();
             }
         }
         if (dataBase.getAppState() == MENU)

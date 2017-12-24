@@ -139,7 +139,7 @@ const std::string LIFE_BOX_IMAGE = IMAGE_FOLDER + "game_elements/life_bar.png";
 
 //=== Images : Misc
 const std::string ICON_IMAGE = IMAGE_FOLDER + "app_icon.png";
-const std::string INTRO_IMAGE = IMAGE_FOLDER + "splash_screen.png";
+const std::string SPLASH_SCREEN_IMAGE = IMAGE_FOLDER + "splash_screen.png";
 const std::string TITLE_IMAGE = IMAGE_FOLDER + "title.png";
 const std::string IUT_LOGO_IMAGE = IMAGE_FOLDER + "logo_iut.png";
 const std::string SFML_LOGO_IMAGE = IMAGE_FOLDER + "logo_sfml.png";
@@ -148,7 +148,7 @@ const std::string COMMAND_FR_IMAGE = IMAGE_FOLDER + "command_fr.png"; //TODO-2 :
 const std::string COMMAND_ES_IMAGE = IMAGE_FOLDER + "command_es.png"; //TODO-3 : in order to have configuration later
 
 //=== Musics
-const std::string MENU_MUSIC = AUDIO_FOLDER + "menu_sound.ogg";
+const std::string MENU_MUSIC_THEME = AUDIO_FOLDER + "menu_sound.ogg";
 const std::string GAME_MUSIC_THEME_EASY_MODE = AUDIO_FOLDER + "game_normal_sound.ogg";
 const std::string GAME_MUSIC_THEME_HARD_MODE = AUDIO_FOLDER + "game_master_sound.ogg";
 const std::string COINS_COLLECTED_MUSIC = AUDIO_FOLDER + "coin_collected_sound.ogg";

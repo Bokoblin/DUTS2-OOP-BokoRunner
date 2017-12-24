@@ -24,7 +24,8 @@ limitations under the License.
 #include <chrono>
 
 /**
- * The MenuModel class handles the menu's logic
+ * The MenuModel class
+ * handles the menu's logic
  * @author Arthur
  * @date 14/04/16 - 29/01/17
  */

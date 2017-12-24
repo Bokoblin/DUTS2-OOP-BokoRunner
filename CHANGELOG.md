@@ -19,6 +19,8 @@ Current version : v2.0.0-dev
   - **enumerations**: each of them now has its own `.h` file
   - **definitions**: all `#define` constants are now in `utils/definition.h` file
   - **renaming**: several classes and methods have been renamed
+    - `IntroModel` => `SplashScreenModel`
+    - `IntroView` => `SplashScreenView`
     - `Model` => `AbstractModel`
     - `View` => `AbstractView`
     - `AnimatedGraphicElement` => `Sprite`
@@ -33,17 +35,19 @@ Current version : v2.0.0-dev
     - now same size as menu and game
     - layout has been changed : it now displays title, author and "powered by SFML" on grey background
     - "press START to continue" is now blinking periodically and compatible with multi-language
+    - a transition to menu has been added
 - **dialogs**: rewritten `Dialog` class into a generic dialog class
     - `ShopDialog` inherits from it for shop specific dialogs
 - **settings**: added support for hyperlinks (URL is opened in default browser) [tested on Ubuntu 14.04 and Windows 10]
-
+- **graphics**: support for changing graphic elements's light (using same principle as alpha)
 #### Bug fixes
 - Style and spacing fixes
 
 #### Misc
 - **iconography**: added application icon (title bar and task bar)
 - **constants**: more constants have been moved to `constants.h`
-- **styling**: typo and C++ code styling improvements
+- **language**: more C++11 keywords and functions usage
+- **styling**: typo and code styling improvements
 - **changelog**: changed for `.md` and reformatted file accordingly
 - **script**: added a little bash `build.sh` script
  

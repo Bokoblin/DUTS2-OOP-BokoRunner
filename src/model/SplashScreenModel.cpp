@@ -1,14 +1,14 @@
-#include "IntroModel.h"
+#include "SplashScreenModel.h"
 
 using namespace std;
 
 /**
  * Default Constructor
  * @author Arthur
- * @date 29/01/17 - 02/10/17
+ * @date 29/01/17 - 24/12/17
  */
-IntroModel::IntroModel(DataBase *dataBase) :
-    AbstractModel(dataBase), m_isContinueVisible{true},
+SplashScreenModel::SplashScreenModel(DataBase *dataBase) :
+    AbstractModel(dataBase), m_isContinueVisible{true}, m_inEndingPhase{false},
     m_lastTime{chrono::system_clock::now()},
     m_continueBlinkingMonitor{0}
 {
@@ -21,24 +21,29 @@ IntroModel::IntroModel(DataBase *dataBase) :
  * @author Arthur
  * @date 29/01/17
  */
-IntroModel::~IntroModel() = default;
+SplashScreenModel::~SplashScreenModel() = default;
 
 
 //=== Getters
-bool IntroModel::isContinueVisible() const { return m_isContinueVisible; }
+bool SplashScreenModel::isContinueVisible() const { return m_isContinueVisible; }
+bool SplashScreenModel::isInEndingPhase() const { return m_inEndingPhase; }
+
+
+//=== Setters
+void SplashScreenModel::setEndingPhase(bool inEndingPhase) { m_inEndingPhase = inEndingPhase; }
 
 
 /**
  * Next Step
  * @author Arthur
- * @date 29/01/17 - 31/10/17
+ * @date 29/01/17 - 24/12/17
  */
-void IntroModel::nextStep()
+void SplashScreenModel::nextStep()
 {
     chrono::system_clock::duration currentNextStepDelay = chrono::system_clock::now() - m_lastTime;
     chrono::system_clock::duration nextStepDelay = std::chrono::milliseconds(NEXT_STEP_DELAY);
 
-    if (currentNextStepDelay.count() > nextStepDelay.count())
+    if (!m_inEndingPhase && currentNextStepDelay.count() > nextStepDelay.count())
     {
         if (m_continueBlinkingMonitor.count() <= chrono::milliseconds(0).count())
         {

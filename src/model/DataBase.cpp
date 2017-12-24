@@ -11,7 +11,7 @@ using namespace std;
 DataBase::DataBase() :
     m_currentCoinsNumber{0}, m_currentDistance{0}, m_currentFlattenedEnemies{0},
     m_currentScore{0}, m_isMenuMusicEnabled{false}, m_isGameMusicEnabled{false},
-    m_appState{INTRO}, m_scoreBonusFlattenedEnemies{0}
+    m_appState{SPLASH}, m_scoreBonusFlattenedEnemies{0}
 {
     if (!checkConfigFileIntegrity())
         createConfigFile();

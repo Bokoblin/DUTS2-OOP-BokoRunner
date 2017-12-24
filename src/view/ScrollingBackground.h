@@ -22,7 +22,7 @@ limitations under the License.
 /**
  * SlidingBackground Class
  * @author Arthur, Florian
- * @date 3/03/16 - 16/04/17
+ * @date 3/03/16 - 24/12/17
  */
 class ScrollingBackground : public GraphicElement
 {
@@ -45,6 +45,7 @@ public:
     virtual void draw(sf::RenderWindow *window) const override;
     virtual void resize(float width, float height) override;
     virtual void setTextureFromImage(const std::string &image) override;
+    virtual void applyColor() override;
 
 private:
     //=== ATTRIBUTES

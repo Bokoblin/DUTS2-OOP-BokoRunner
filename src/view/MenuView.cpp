@@ -16,8 +16,8 @@ MenuView::MenuView(sf::RenderWindow *window, TextHandler *textHandler, MenuModel
         AbstractView(window, textHandler), m_menu{menuModel},
         m_commandsView{nullptr}, m_leaderboardView{nullptr}, m_settingsView{nullptr}, m_shopView{nullptr}
 {
-    if (!m_menuMusic.openFromFile(MENU_MUSIC))
-        cerr << "ERROR when loading music file: " << MENU_MUSIC << endl;
+    if (!m_menuMusic.openFromFile(MENU_MUSIC_THEME))
+        cerr << "ERROR when loading music file: " << MENU_MUSIC_THEME << endl;
     else
     {
         if (m_menu->getDataBase()->isMenuMusicEnabled())
@@ -55,15 +55,15 @@ MenuView::~MenuView()
 /**
  * Image Loading
  * @author Arthur
- * @date 26/03/16 - 24/01/17
+ * @date 26/03/16 - 24/12/17
  */
 void MenuView::loadImages()
 {
     m_farBackground = new ScrollingBackground(1200, m_height, 1, DEFAULT_FAR_HILL_BACKGROUND);
     m_nearBackground = new ScrollingBackground(1200, m_height, 2, DEFAULT_NEAR_HILL_BACKGROUND);
 
-    m_titleGraphic = new GraphicElement(m_width/2-200, m_height/6, 400, 200, TITLE_IMAGE);
-    m_titleGraphic->resize(400, 200);
+    m_titleGraphic = new GraphicElement(m_width/2-180, m_height/6, 400, 200, TITLE_IMAGE);
+    m_titleGraphic->resize(360, 180);
 
     //=== Initialize PLAY and QUIT buttons
 

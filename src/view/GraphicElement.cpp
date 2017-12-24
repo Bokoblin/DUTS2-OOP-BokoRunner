@@ -3,10 +3,10 @@
 /**
  * Constructs a GraphicElement with a size
  * @author Arthur
- * @date 21/02/16 - 16/04/17
+ * @date 21/02/16 - 24/12/17
  */
 GraphicElement::GraphicElement(float width, float height) :
-        m_width{width}, m_height{height}, m_isShowing{true}, m_alpha{255}
+        m_width{width}, m_height{height}, m_isShowing{true}, m_alpha{255}, m_light{255}
 {}
 
 
@@ -14,10 +14,10 @@ GraphicElement::GraphicElement(float width, float height) :
  * Constructs a GraphicElement with
  * a position and a size
  * @author Arthur
- * @date 02/01/17 - 16/04/17
+ * @date 02/01/17 - 24/12/17
  */
 GraphicElement::GraphicElement(float x, float y, float width, float height) :
-        m_width{width}, m_height{height}, m_isShowing{true}, m_alpha{255}
+        GraphicElement(width, height)
 {
     this->setPosition(x, y);
 }
@@ -27,12 +27,11 @@ GraphicElement::GraphicElement(float x, float y, float width, float height) :
  * Constructs a GraphicElement with
  * a position, a size and an image
  * @author Arthur, Florian
- * @date 21/02/16 - 16/04/17
+ * @date 21/02/16 - 24/12/17
  */
-GraphicElement::GraphicElement(float x, float y, float w, float h, const std::string &image) :
-        m_width{w}, m_height{h}, m_isShowing{true}, m_alpha{255}
+GraphicElement::GraphicElement(float x, float y, float width, float height, const std::string &image) :
+        GraphicElement(x, y, width, height)
 {
-    this->setPosition(x, y);
     setTextureFromImage(image);
 }
 
@@ -63,6 +62,7 @@ GraphicElement::~GraphicElement() = default;
 //=== Getters
 bool GraphicElement::isVisible() const { return m_isShowing; }
 int GraphicElement::getAlpha() const { return m_alpha; }
+int GraphicElement::getLight() const { return m_light; }
 
 //=== Setters
 void GraphicElement::show() { m_isShowing = true; }
@@ -76,16 +76,25 @@ void GraphicElement::setAlpha(int alpha)
     else
         m_alpha = (sf::Uint8) alpha;
 }
+void GraphicElement::setLight(int light)
+{
+    if (light < 0)
+        m_light = 0;
+    else if (light > 255)
+        m_light = 255;
+    else
+        m_light = (sf::Uint8) light;
+}
 
 
 /**
  * Synchronization function
  * @author Arthur
- * @date 03/04/16
+ * @date 03/04/16 - 24/12/17
  */
 void GraphicElement::sync()
 {
-    setColor(sf::Color(255, 255, 255, m_alpha));
+    applyColor();
 }
 
 
@@ -168,9 +177,9 @@ bool GraphicElement::contains(float x, float y) const {
  * @author Arthur
  * @date 7/05/16 - 16/04/17
  */
-void GraphicElement::decreaseAlpha(int level)
+void GraphicElement::decreaseAlpha(int alphaLevel)
 {
-    setAlpha(getAlpha() - level);
+    setAlpha(getAlpha() - alphaLevel);
 }
 
 
@@ -179,8 +188,41 @@ void GraphicElement::decreaseAlpha(int level)
  * @author Arthur
  * @date 7/05/16 - 16/04/17
  */
-void GraphicElement::increaseAlpha(int level)
+void GraphicElement::increaseAlpha(int alphaLevel)
 {
-    setAlpha(getAlpha() + level);
+    setAlpha(getAlpha() + alphaLevel);
+}
+
+
+/**
+ * Decrease alpha function
+ * @author Arthur
+ * @date 24/12/17
+ */
+void GraphicElement::decreaseLight(int lightLevel)
+{
+    setLight(getLight() - lightLevel);
+}
+
+
+/**
+ * Increase alpha function
+ * @author Arthur
+ * @date 24/12/17
+ */
+void GraphicElement::increaseLight(int lightLevel)
+{
+    setLight(getLight() + lightLevel);
+}
+
+
+/**
+ * Apply light and alpha values to color
+ * @author Arthur
+ * @date 24/12/17
+ */
+void GraphicElement::applyColor()
+{
+    setColor(sf::Color(m_light, m_light, m_light, m_alpha));
 }
 

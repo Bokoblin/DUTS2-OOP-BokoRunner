@@ -20,11 +20,11 @@ limitations under the License.
  * The AppState enum defines the different
  * states that the app can take while running.
  * @author Arthur
- * @date 30/01/17 - 06/11/17
+ * @date 30/01/17 - 24/12/17
  */
 enum AppState
 {
-    INTRO,
+    SPLASH,
     MENU,
     GAME,
     QUIT

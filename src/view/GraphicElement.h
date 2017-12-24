@@ -22,7 +22,7 @@ limitations under the License.
 /**
  * GraphicElement Class
  * @author Arthur, Florian
- * @date 21/02/16 - 03/07/17
+ * @date 21/02/16 - 24/12/17
  */
 class GraphicElement : public sf::Sprite
 {
@@ -30,18 +30,20 @@ public:
     //=== CTORs / DTORs
     GraphicElement(float width, float height);
     GraphicElement(float x, float y, float width, float height);
-    GraphicElement(float x, float y, float w, float h, const std::string &image);
+    GraphicElement(float x, float y, float width, float height, const std::string &image);
     GraphicElement(GraphicElement const& element);
     virtual ~GraphicElement() override;
 
     //=== GETTERS
     int getAlpha() const;
+    int getLight() const;
     bool isVisible() const;
 
     //=== SETTERS
     void show();
     void hide();
     void setAlpha(int alpha);
+    void setLight(int light);
 
     //=== METHODS
     virtual void sync();
@@ -50,8 +52,11 @@ public:
     virtual void setTextureFromImage(const std::string &image);
     virtual bool contains(float x, float y) const;
     virtual void setTextureFromImage(const std::string &image, sf::IntRect intRect);
-    virtual void decreaseAlpha(int level);
-    virtual void increaseAlpha(int level);
+    virtual void decreaseAlpha(int alphaLevel);
+    virtual void increaseAlpha(int alphaLevel);
+    virtual void decreaseLight(int lightLevel);
+    virtual void increaseLight(int lightLevel);
+    virtual void applyColor();
 
 protected:
     //=== ATTRIBUTES
@@ -60,6 +65,7 @@ protected:
     bool m_isShowing;
     sf::Texture m_texture;
     sf::Uint8 m_alpha;
+    sf::Uint8 m_light;
 };
 
 #endif

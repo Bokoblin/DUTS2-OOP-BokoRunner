@@ -13,25 +13,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef INTRO_H
-#define INTRO_H
+#ifndef SPLASH_SCREEN_VIEW_H
+#define SPLASH_SCREEN_VIEW_H
 
 #include "AbstractView.h"
-#include "../model/IntroModel.h"
+#include "../model/SplashScreenModel.h"
 #include "../utils/definitions.h"
 
 /**
- * The IntroView class displays
- * a little banner at app startup
+ * The SplashScreenView class displays
+ * the app's splash screen at startup
  * @author Arthur
- * @date 27/03/16 - 02/11/17
+ * @date 27/03/16 - 24/12/17
  */
-class IntroView : public AbstractView
+class SplashScreenView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    IntroView(sf::RenderWindow *window, TextHandler *textHandler, IntroModel *introModel);
-    virtual ~IntroView() override;
+    SplashScreenView(sf::RenderWindow *window, TextHandler *textHandler, SplashScreenModel *splashModel);
+    virtual ~SplashScreenView() override;
 
     //=== METHODS
     virtual void synchronize() override;
@@ -41,10 +41,13 @@ public:
 
 private:
     //=== ATTRIBUTES
-    IntroModel *m_intro;
-    GraphicElement *m_introGraphic;
-};
+    SplashScreenModel *m_splashModel;
+    GraphicElement *m_splashScreenGraphic;
 
-//TODO: Quitting animation + renaming
+    //For transition
+    ScrollingBackground *m_farBackground;
+    ScrollingBackground *m_nearBackground;
+    GraphicElement *m_titleGraphic;
+};
 
 #endif

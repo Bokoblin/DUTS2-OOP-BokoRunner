@@ -61,7 +61,7 @@ void ScrollingBackground::setPositions(float x, float y)
 /**
  * Synchronization Function
  * @author Arthur
- * @date 3/03/16 - 7/05/16
+ * @date 3/03/16 - 24/12/17
  */
 void ScrollingBackground::sync()
 {
@@ -74,8 +74,7 @@ void ScrollingBackground::sync()
         m_right->setPosition(m_width, 0);
     }
 
-    m_left->setColor(sf::Color(255, 255, 255, m_alpha));
-    m_right->setColor(sf::Color(255, 255, 255, m_alpha));
+    applyColor();
 }
 
 
@@ -112,6 +111,17 @@ void ScrollingBackground::setTextureFromImage(const std::string &image)
 {
     m_left->setTextureFromImage(image);
     m_right->setTextureFromImage(image);
+}
+
+/**
+ * Apply light and alpha values to color
+ * @author Arthur
+ * @date 24/12/17
+ */
+void ScrollingBackground::applyColor()
+{
+    m_left->setColor(sf::Color(m_light, m_light, m_light, m_alpha));
+    m_right->setColor(sf::Color(m_light, m_light, m_light, m_alpha));
 }
 
 

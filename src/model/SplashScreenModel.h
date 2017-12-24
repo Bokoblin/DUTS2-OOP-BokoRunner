@@ -13,35 +13,41 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef INTRO_MODEL_H
-#define INTRO_MODEL_H
+#ifndef SPLASH_SCREEN_MODEL_H
+#define SPLASH_SCREEN_MODEL_H
 
 #include "AbstractModel.h"
 #include <chrono>
 
 /**
- * IntroModel Class
+ * The SplashScreenModel class
+ * handles the splash screen's logic
  * @author Arthur
- * @date 29/01/17
+ * @date 29/01/17 - 24/12/17
  */
-class IntroModel : public AbstractModel
+class SplashScreenModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    IntroModel(DataBase *dataBase);
-    virtual ~IntroModel() override;
+    SplashScreenModel(DataBase *dataBase);
+    virtual ~SplashScreenModel() override;
 
     //=== METHODS
     virtual void nextStep() override;
 
     //=== GETTERS
     bool isContinueVisible() const;
+    bool isInEndingPhase() const;
+
+    //=== SETTERS
+    void setEndingPhase(bool inEndingPhase);
 
 private:
     //=== ATTRIBUTES
     std::chrono::system_clock::time_point m_lastTime;
     std::chrono::milliseconds m_continueBlinkingMonitor;
     bool m_isContinueVisible;
+    bool m_inEndingPhase;
 
     //Constant Variables
     const int NEXT_STEP_DELAY = 100;

@@ -73,7 +73,7 @@ bool Shop::buyItem(ShopItem *item)
 /**
  * Fetches Shop Items from file
  * @author Arthur
- * @date 11/05/16 - 31/10/17
+ * @date 11/05/16 - 24/12/17
  */
 void Shop::fetchBuyableItemsFromFile()
 {

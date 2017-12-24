@@ -191,7 +191,7 @@ void DataBase::fetchConfigurationFromFile()
 /**
  * Updates variable values from file
  * @author Arthur
- * @date 24/10/16 - 25/01/17
+ * @date 24/10/16 - 24/12/17
  */
 void DataBase::fetchConfig()
 {
@@ -201,6 +201,9 @@ void DataBase::fetchConfig()
     pugi::xml_node runner = doc.child("runner");
     pugi::xml_node config = runner.child("config");
     pugi::xml_node stats = runner.child("stats");
+
+    //Generic function for getting value, checking and putting default if issue (separate class) :
+    //safeRetrieve(Type<T> attribute, std::string identifier, std::string regex, Type<T> default_value);
 
     for (pugi::xml_node configItem: config.children("configItem"))
     {
@@ -261,7 +264,7 @@ void DataBase::fetchConfig()
  * Updates each score array
  * with values from config file
  * @author Arthur
- * @date 23/10/16 - 23/01/17
+ * @date 23/10/16 - 24/12/17
  */
 void DataBase::fetchScore()
 {

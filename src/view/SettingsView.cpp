@@ -54,14 +54,14 @@ SettingsView::SettingsView(sf::RenderWindow *window, TextHandler *textHandler, S
 /**
  * Destructor
  * @author Arthur
- * @date 20/05/16 - 24/01/17
+ * @date 20/05/16 - 24/12/17
  */
 SettingsView::~SettingsView()
 {
-    for (auto button : m_buttonList)
+    for (auto &button : m_buttonList)
         delete button;
 
-    for (auto it : m_pageIndicators)
+    for (auto &it : m_pageIndicators)
         delete it.second;
 
     delete m_logoIUTGraphic;
@@ -177,7 +177,7 @@ void SettingsView::synchronize()
 
     //=== Update and sync indicators
 
-    for(auto it : m_pageIndicators)
+    for(auto &it : m_pageIndicators)
     {
         (it.second)->sync();
         it.second->setSelected(it.first == m_settings->getCurrentPage());
@@ -244,7 +244,7 @@ void SettingsView::draw() const
         m_textHandler->drawMenuSettingsText(m_window, ABOUT);
     }
 
-    for(auto it : m_pageIndicators)
+    for(const auto &it : m_pageIndicators)
         it.second->draw(m_window);
 
     m_window->display();
@@ -278,7 +278,7 @@ bool SettingsView::treatEvents(sf::Event event)
                 }
             }
 
-            for (auto it : m_pageIndicators)
+            for (auto &it : m_pageIndicators)
             {
                 if (it.second->contains(MOUSE_POSITION))
                 {
@@ -295,7 +295,7 @@ bool SettingsView::treatEvents(sf::Event event)
 
         for (Button *button : m_buttonList)
             button->setPressed(false);
-        for(auto it : m_pageIndicators)
+        for(auto &it : m_pageIndicators)
             it.second->setPressed(false);
 
 
@@ -387,7 +387,7 @@ bool SettingsView::treatEvents(sf::Event event)
                 return false;
             }
 
-            for (auto it : m_pageIndicators)
+            for (auto &it : m_pageIndicators)
                 if (it.second->contains(MOUSE_POSITION))
                     m_settings->setCurrentPage(it.first);
         }

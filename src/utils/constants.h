@@ -149,8 +149,8 @@ const std::string COMMAND_ES_IMAGE = IMAGE_FOLDER + "command_es.png"; //TODO-3 :
 
 //=== Musics
 const std::string MENU_MUSIC = AUDIO_FOLDER + "menu_sound.ogg";
-const std::string GAME_NORMAL_THEME_MUSIC = AUDIO_FOLDER + "game_normal_sound.ogg";
-const std::string GAME_MASTER_THEME_MUSIC = AUDIO_FOLDER + "game_master_sound.ogg";
+const std::string GAME_MUSIC_THEME_EASY_MODE = AUDIO_FOLDER + "game_normal_sound.ogg";
+const std::string GAME_MUSIC_THEME_HARD_MODE = AUDIO_FOLDER + "game_master_sound.ogg";
 const std::string COINS_COLLECTED_MUSIC = AUDIO_FOLDER + "coin_collected_sound.ogg";
 const std::string ENEMIES_DESTRUCTED_MUSIC = AUDIO_FOLDER + "destroyed_enemies_sound.ogg";
 

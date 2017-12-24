@@ -30,10 +30,10 @@ ShopView::~ShopView()
     delete m_homeFormButton;
     delete m_buyDialog;
 
-    for (auto shopItemCard : m_shopItemCardsArray)
+    for (auto &shopItemCard : m_shopItemCardsArray)
         delete shopItemCard;
 
-    for (auto it : m_pageIndicators)
+    for (auto &it : m_pageIndicators)
         delete it.second;
 }
 
@@ -127,7 +127,7 @@ void ShopView::synchronize()
 
     syncCards();
 
-    for (auto it : m_pageIndicators)
+    for (auto &it : m_pageIndicators)
     {
         (it.second)->sync();
         it.first == m_currentIndicator ?
@@ -150,7 +150,7 @@ void ShopView::draw() const
     for (ShopItemCard *card : m_shopItemCardsArray)
         card->draw(m_window);
 
-    for (auto it : m_pageIndicators)
+    for (const auto &it : m_pageIndicators)
             m_window->draw(*it.second);
     m_window->draw(*m_homeFormButton);
     m_window->draw(*m_coinSprite);
@@ -181,11 +181,11 @@ bool ShopView::treatEvents(sf::Event event)
             if (m_homeFormButton->contains(MOUSE_POSITION))
                 m_homeFormButton->setPressed(true);
 
-            for (auto it : m_pageIndicators)
+            for (auto &it : m_pageIndicators)
                 if (it.second->contains(MOUSE_POSITION))
                     it.second->setPressed(true);
 
-            for (auto card : m_shopItemCardsArray)
+            for (auto &card : m_shopItemCardsArray)
                 if (card->getBuyButton()->contains(MOUSE_POSITION)
                     && card->isVisible() && !m_buyDialog->isVisible())
                     card->getBuyButton()->setPressed(true);
@@ -197,9 +197,9 @@ bool ShopView::treatEvents(sf::Event event)
         //=== Reset buttons
 
         m_homeFormButton->setPressed(false);
-        for (auto card : m_shopItemCardsArray)
+        for (auto &card : m_shopItemCardsArray)
             card->getBuyButton()->setPressed(false);
-        for (auto it : m_pageIndicators)
+        for (auto &it : m_pageIndicators)
             it.second->setPressed(false);
 
         //=== handle mouse up on a button
@@ -212,11 +212,11 @@ bool ShopView::treatEvents(sf::Event event)
                 return false;
             }
 
-            for (auto it : m_pageIndicators)
+            for (auto &it : m_pageIndicators)
                 if (it.second->contains(MOUSE_POSITION))
                     m_currentIndicator = it.first;
 
-            for (auto card : m_shopItemCardsArray)
+            for (auto &card : m_shopItemCardsArray)
                 if (card->getBuyButton()->contains(MOUSE_POSITION)
                      && card->isVisible() && !card->getItem()->isBought())
                 {

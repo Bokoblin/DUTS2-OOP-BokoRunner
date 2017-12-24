@@ -20,11 +20,9 @@ GameView::GameView(sf::RenderWindow *window, TextHandler *textHandler, GameModel
 
     //=== change default game music if in master mode
 
-    string game_music;
-    if (m_game->getDataBase()->getDifficulty() == EASY)
-        game_music = GAME_NORMAL_THEME_MUSIC;
-    else
-        game_music = GAME_MASTER_THEME_MUSIC;
+    string game_music = (m_game->getDataBase()->getDifficulty() == EASY)
+                        ? GAME_MUSIC_THEME_EASY_MODE
+                        : GAME_MUSIC_THEME_HARD_MODE;
 
     if (!m_gameThemeMusic.openFromFile(game_music))
         cerr << "ERROR when loading music file: " << game_music << endl;
@@ -63,7 +61,7 @@ GameView::GameView(sf::RenderWindow *window, TextHandler *textHandler, GameModel
 /**
  * Destructor
  * @author Arthur
- * @date 26/03/16 - 21/05/16
+ * @date 26/03/16 - 24/12/16
  */
 GameView::~GameView()
 {
@@ -75,17 +73,10 @@ GameView::~GameView()
     delete m_bottomBarImage;
     delete m_lifeBoxImage;
     delete m_remainingLifeImage;
-    delete m_stdEnemySprite;
-    delete m_totemEnemySprite;
-    delete m_blockEnemySprite;
-    delete m_coinSprite;
-    delete m_PVPlusBonusSprite;
-    delete m_megaBonusSprite;
-    delete m_flyBonusSprite;
-    delete m_slowSpeedBonusSprite;
-    delete m_shieldBonusSprite;
     delete m_shieldImage;
     delete m_pixelShader;
+    for (auto &it : m_typeToSpriteMap)
+        delete it.second;
     for (auto &it : m_movableElementToSpriteMap)
         delete it.second;
 
@@ -103,7 +94,7 @@ GameView::~GameView()
 
 
 /**
- * Image Loading
+ * Loads all sprites used by the game (backgrounds, UI, elements)
  * @author Arthur
  * @date 26/03/16 - 25/01/17
  */
@@ -134,7 +125,7 @@ void GameView::loadImages()
     m_distanceIcon->resize(25, 25);
 
 
-    //=== Initialize PLAYER
+    //=== Initialize PLAYER sprite
 
     std::vector<sf::IntRect> clipRect;
     for (int i=0; i<8; i++) clipRect.emplace_back(50 * i, 0, 50, 50);
@@ -142,7 +133,7 @@ void GameView::loadImages()
     m_playerSprite->setOrigin(0, 50);
 
 
-    //=== Initialize ENEMIES
+    //=== Initialize ENEMIES sprite
 
     std::vector<sf::IntRect> clipRectStdEnemy;
     for (int i=0; i<2; i++) clipRectStdEnemy.emplace_back(50 * i, 0, 50, 50);
@@ -160,7 +151,7 @@ void GameView::loadImages()
     m_blockEnemySprite->setOrigin(0, 50);
 
 
-    //=== Initialize COINS & BONUSES
+    //=== Initialize COINS & BONUSES sprite
 
     m_shieldImage = new GraphicElement(50, GAME_FLOOR, 40, 40);
     m_shieldImage->setTextureFromImage(SHIELD_IMAGE);
@@ -237,46 +228,39 @@ void GameView::loadImages()
     clipRect_save.emplace_back(151, 179, 150, 40);
     m_saveScoreButton = new Button(730, 350, m_width / 2 - 75, 430, "end_save_button",
                                    RECT_BUTTONS_IMAGE, clipRect_save);
+
+
+    //=== Associate element type to sprite
+
+    m_typeToSpriteMap[PLAYER] = m_playerSprite;
+    m_typeToSpriteMap[STANDARD_ENEMY] = m_stdEnemySprite;
+    m_typeToSpriteMap[TOTEM_ENEMY] = m_totemEnemySprite;
+    m_typeToSpriteMap[BLOCK_ENEMY] = m_blockEnemySprite;
+    m_typeToSpriteMap[COIN] = m_coinSprite;
+    m_typeToSpriteMap[PV_PLUS_BONUS] = m_PVPlusBonusSprite;
+    m_typeToSpriteMap[MEGA_BONUS] = m_megaBonusSprite;
+    m_typeToSpriteMap[FLY_BONUS] = m_flyBonusSprite;
+    m_typeToSpriteMap[SLOW_SPEED_BONUS] = m_slowSpeedBonusSprite;
+    m_typeToSpriteMap[SHIELD_BONUS] = m_shieldBonusSprite;
 }
 
 
 /**
- * Link mElements with gElements
+ * Links a model movable element to new sprite matching its type
  * @author Arthur
- * @date 18/03/16 - 30/01/17
+ * @date 18/03/16 - 24/12/17
  */
 void GameView::linkElements()
 {
-    for (auto element : m_game->getNewMElementsArray())
-    {
-        if (element->getType() == PLAYER)
-            m_movableElementToSpriteMap[element] = m_playerSprite;
-        else if (element->getType() == STANDARD_ENEMY)
-            m_movableElementToSpriteMap[element] = new Sprite(*m_stdEnemySprite);
-        else if (element->getType() == TOTEM_ENEMY)
-            m_movableElementToSpriteMap[element] = new Sprite(*m_totemEnemySprite);
-        else if (element->getType() == BLOCK_ENEMY)
-            m_movableElementToSpriteMap[element] = new Sprite(*m_blockEnemySprite);
-        else if (element->getType() == COIN)
-            m_movableElementToSpriteMap[element] = new Sprite(*m_coinSprite);
-        else if (element->getType() == PV_PLUS_BONUS)
-            m_movableElementToSpriteMap[element] = new Sprite(*m_PVPlusBonusSprite);
-        else if (element->getType() == MEGA_BONUS)
-            m_movableElementToSpriteMap[element] = new Sprite(*m_megaBonusSprite);
-        else if (element->getType() == FLY_BONUS)
-            m_movableElementToSpriteMap[element] = new Sprite(*m_flyBonusSprite);
-        else if (element->getType() == SLOW_SPEED_BONUS)
-            m_movableElementToSpriteMap[element] = new Sprite(*m_slowSpeedBonusSprite);
-        else if (element->getType() == SHIELD_BONUS)
-            m_movableElementToSpriteMap[element] = new Sprite(*m_shieldBonusSprite);
-        //TODO : else throw exception unknown element
-    }
+    for (auto &element : m_game->getNewMElementsArray())
+        m_movableElementToSpriteMap[element] = new Sprite(*(m_typeToSpriteMap[element->getType()]));
+
     m_game->clearNewMovableElementList();
 }
 
 
 /**
- * Create seamless transition between zones
+ * Creates seamless transition between zones
  * @author Arthur
  * @date 25/04/16 - 02/01/17
  */
@@ -365,88 +349,99 @@ void GameView::handleZonesTransition()
 
 
 /**
- * Update gElements
+ * Updates elements of a running game
  * @author Arthur
- * @date 6/03/16 - 16/04/17
+ * @date 6/03/16 - 24/12/17
  */
-void GameView::updateElements()
+void GameView::updateRunningGameElements()
 {
-    if (m_game->getGameState() == RUNNING ||
-        m_game->getGameState() == RUNNING_SLOWLY)
+    //=== Handle Transitions between zones
+
+    handleZonesTransition();
+
+    //=== Update Game Elements
+
+    m_farScrollingBackground->sync();
+    m_nearScrollingBackground->sync();
+
+    m_remainingLifeImage->resize(3*m_game->getPlayer()->getLife(), 50);
+
+    for(auto &it : m_movableElementToSpriteMap)
     {
-        //=== Handle Transitions between zones
+        m_game->moveMovableElement(it.first);
 
-        handleZonesTransition();
+        float position_x = (it.first)->getPosX();
+        float position_y = (it.first)->getPosY();
 
-        //=== Update Game Elements
-
-        m_farScrollingBackground->sync();
-        m_nearScrollingBackground->sync();
-
-        m_remainingLifeImage->resize(3*m_game->getPlayer()->getLife(), 50);
-
-        std::map<MovableElement*, Sprite*>::iterator it;
-        for(it = m_movableElementToSpriteMap.begin() ; it != m_movableElementToSpriteMap.end() ; ++it)
-        {
-            m_game->moveMovableElement(it->first);
-
-            float position_x = (it->first)->getPosX();
-            float position_y = (it->first)->getPosY();
-
-            it->second->setPosition(position_x, position_y);
-            it->second->sync();
-            it->second->resize(it->first->getWidth(), it->first->getHeight());
-        }
-
-        //=== Update shield sprite
-
-        if (m_game->getPlayer()->getState() == SHIELD)
-        {
-            m_shieldImage->setPosition(m_game->getPlayer()->getPosX()-5,
-                                             m_game->getPlayer()->getPosY()+5);
-            m_shieldImage->resize(40, 40);
-        }
+        it.second->setPosition(position_x, position_y);
+        it.second->sync();
+        it.second->resize(it.first->getWidth(), it.first->getHeight());
     }
-    else if (m_game->getGameState() == PAUSED)
+
+    //=== Update shield sprite
+
+    if (m_game->getPlayer()->getState() == SHIELD)
     {
-        if (m_game->getCurrentZone() == HILL)
-            m_pauseBackground->setTextureFromImage(PAUSE_HILL_BACKGROUND);
-        else
-            m_pauseBackground->setTextureFromImage(PAUSE_PLAIN_BACKGROUND);
-
-        m_resumeGameButton->sync(m_game->getDataBase());
-        m_restartGameButton->sync(m_game->getDataBase());
-        m_restartGameButton->setLabelPosition(RIGHT);
-        m_goToHomeButton->sync(m_game->getDataBase());
-        m_controlMusicButton->sync(m_game->getDataBase());
-        m_coinSprite->sync();
-        m_coinSprite->resize(20, 20);
-        m_stdEnemySprite->sync();
-        m_stdEnemySprite->resize(20, 20);
-    }
-    else //GAME OVER
-    {
-        m_goToHomeButton->sync(m_game->getDataBase());
-        m_goToHomeButton->resize(30, 30);
-        m_goToHomeButton->setPosition(30, 535);
-
-        m_coinSprite->sync();
-        m_coinSprite->resize(25, 25);
-        m_coinSprite->setPosition((float)(m_width / 2.3), 563);
-
-        m_restartGameButton->sync(m_game->getDataBase());
-        m_restartGameButton->resize(30, 30);
-        m_restartGameButton->setPosition(840, 535);
-        m_restartGameButton->setLabelPosition(LEFT);
-
-        m_saveScoreButton->sync(m_game->getDataBase());
-        m_saveScoreButton->setPositionSelfCentered(m_width/2, 430);
+        m_shieldImage->setPosition(m_game->getPlayer()->getPosX()-5,
+                                   m_game->getPlayer()->getPosY()+5);
+        m_shieldImage->resize(40, 40);
     }
 }
 
 
 /**
- * Delete gElement
+ * Updates elements of a paused game
+ * @author Arthur
+ * @date 6/03/16 - 24/12/17
+ */
+void GameView::updatePausedGameElements()
+{
+    if (m_game->getCurrentZone() == HILL)
+        m_pauseBackground->setTextureFromImage(PAUSE_HILL_BACKGROUND);
+    else
+        m_pauseBackground->setTextureFromImage(PAUSE_PLAIN_BACKGROUND);
+
+    m_resumeGameButton->sync(m_game->getDataBase());
+    m_restartGameButton->sync(m_game->getDataBase());
+    m_restartGameButton->setLabelPosition(RIGHT);
+    m_goToHomeButton->sync(m_game->getDataBase());
+    m_controlMusicButton->sync(m_game->getDataBase());
+    m_coinSprite->sync();
+    m_coinSprite->resize(20, 20);
+    m_stdEnemySprite->sync();
+    m_stdEnemySprite->resize(20, 20);
+}
+
+
+/**
+ * Updates elements of a game over
+ * @author Arthur
+ * @date 6/03/16 - 24/12/17
+ */
+void GameView::updateGameOverElements()
+{
+    m_goToHomeButton->sync(m_game->getDataBase());
+    m_goToHomeButton->resize(30, 30);
+    m_goToHomeButton->setPosition(30, 535);
+
+    m_coinSprite->sync();
+    m_coinSprite->resize(25, 25);
+    m_coinSprite->setPosition((float)(m_width / 2.3), 563);
+
+    m_restartGameButton->sync(m_game->getDataBase());
+    m_restartGameButton->resize(30, 30);
+    m_restartGameButton->setPosition(840, 535);
+    m_restartGameButton->setLabelPosition(LEFT);
+
+    m_saveScoreButton->sync(m_game->getDataBase());
+    m_saveScoreButton->setPositionSelfCentered(m_width/2, 430);
+}
+
+
+/**
+ * Deletes the Sprite that collided with the player
+ * We consider that the player only collide with one element per complete loop,
+ * it allows to reduce average complexity instead doing n loops each time (worst case)
  * @author Arthur
  * @date 12/03/16 - 20/03/16
  */
@@ -464,7 +459,7 @@ void GameView::deleteElements()
 
             if ((it->first)->getType() == STANDARD_ENEMY
                 || (it->first)->getType() == TOTEM_ENEMY
-                || (it->first)->getType() ==BLOCK_ENEMY)
+                || (it->first)->getType() == BLOCK_ENEMY)
                 m_destructedEnemiesMusic.play();
 
             delete it->second;
@@ -478,7 +473,7 @@ void GameView::deleteElements()
 
 
 /**
- * Synchronization function
+ * Synchronizes game elements data
  * @author Arthur
  * @date 26/03/16 - 30/01/17
  */
@@ -490,18 +485,19 @@ void GameView::synchronize()
         case RUNNING_SLOWLY :
             linkElements();
             deleteElements();
-            updateElements();
+            updateRunningGameElements();
             m_textHandler->syncGameText(m_game->getBonusTimeout());
             break;
         case PAUSED:
-            updateElements();
+            updatePausedGameElements();
             m_textHandler->syncPauseText();
-            sf::sleep(sf::milliseconds(140)); //limit CPU usage
+            sf::sleep(sf::milliseconds(140)); //limit CPU usage for this thread
             break;
         case OVER:
-            if (m_gameThemeMusic.getStatus() == sf::Music::Status::Playing) //Audio ending
+            //Stop game music if still playing
+            if (m_gameThemeMusic.getStatus() == sf::Music::Status::Playing)
                 m_gameThemeMusic.stop();
-            updateElements();
+            updateGameOverElements();
             m_textHandler->syncGameOverText((int) m_game->getGameSpeed());
             break;
         default:
@@ -542,76 +538,112 @@ void GameView::handleMusic()
 
 
 /**
- * GameView Drawing
+ * Draws elements of a running game
  * @author Arthur
- * @date 26/03/16 - 25/12/16
+ * @date 24/12/17
+ */
+void GameView::drawRunningGame() const
+{
+    //=== Standalone GraphicElements drawing
+
+    m_farScrollingBackground->draw(m_window);
+
+    if (m_game->getTransitionStatus())
+    {
+        m_window->draw(*m_farTransitionBackground);
+        if (m_farTransitionBackground->getPosition().x < m_width/2)
+            m_window->draw(*m_pixelShader);
+    }
+
+    m_nearScrollingBackground->draw(m_window);
+    m_window->draw(*m_bottomBarImage);
+    m_window->draw(*m_remainingLifeImage);
+    m_window->draw(*m_lifeBoxImage);
+
+    //=== Array's GraphicElements drawing
+
+    for (const auto &it : m_movableElementToSpriteMap)
+        it.second->draw(m_window);
+
+    if (m_game->getPlayer()->getState() == SHIELD)
+        m_window->draw(*m_shieldImage);
+
+    //=== TextHandler drawing
+
+    m_textHandler->drawGameText(m_window);
+}
+
+
+/**
+ * Draws elements of a paused game
+ * @author Arthur
+ * @date 24/12/17
+ */
+void GameView::drawPausedGame() const
+{
+    //=== Background drawing & GraphicElements drawing
+
+    m_window->draw(*m_pauseBackground);
+    m_window->draw(*m_distanceIcon);
+    m_window->draw(*m_coinSprite);
+    m_window->draw(*m_stdEnemySprite);
+
+    m_resumeGameButton->draw(m_window);
+    m_restartGameButton->draw(m_window);
+    m_goToHomeButton->draw(m_window);
+    m_controlMusicButton->draw(m_window);
+
+    //=== TextHandler drawing
+
+    m_textHandler->drawPauseText(m_window);
+}
+
+
+/**
+ * Draws elements of a game over
+ * @author Arthur
+ * @date 24/12/17
+ */
+void GameView::drawGameOver() const
+{
+    //=== Background drawing & Buttons drawing
+
+    m_window->draw(*m_endBackground);
+    m_window->draw(*m_coinSprite);
+
+    m_restartGameButton->draw(m_window);
+    m_goToHomeButton->draw(m_window);
+    m_saveScoreButton->draw(m_window);
+
+    //=== TextHandler drawing
+
+    m_textHandler->drawGameOverText(m_window);
+}
+
+
+/**
+ * Draws game elements on the windows
+ * @author Arthur
+ * @date 26/03/16 - 24/12/17
  */
 void GameView::draw() const
 {
     m_window->clear();
 
-    if (m_game->getGameState() == RUNNING ||
-        m_game->getGameState() == RUNNING_SLOWLY)
+    switch(m_game->getGameState())
     {
-        //=== Standalone GraphicElements drawing
-
-        m_farScrollingBackground->draw(m_window);
-
-        if (m_game->getTransitionStatus())
-        {
-            m_window->draw(*m_farTransitionBackground);
-            if (m_farTransitionBackground->getPosition().x < m_width/2)
-                m_window->draw(*m_pixelShader);
-        }
-
-        m_nearScrollingBackground->draw(m_window);
-        m_window->draw(*m_bottomBarImage);
-        m_window->draw(*m_remainingLifeImage);
-        m_window->draw(*m_lifeBoxImage);
-
-        //=== Array's GraphicElements drawing
-
-        for (const auto &it : m_movableElementToSpriteMap) {
-            it.second->draw(m_window);
-        }
-
-        if (m_game->getPlayer()->getState() == SHIELD)
-            m_window->draw(*m_shieldImage);
-
-        //=== TextHandler drawing
-
-        m_textHandler->drawGameText(m_window);
-    }
-    else if (m_game->getGameState() == PAUSED)
-    {
-        //=== Background drawing & GraphicElements drawing
-
-        m_window->draw(*m_pauseBackground);
-        m_window->draw(*m_distanceIcon);
-        m_window->draw(*m_coinSprite);
-        m_window->draw(*m_stdEnemySprite);
-        m_resumeGameButton->draw(m_window);
-        m_restartGameButton->draw(m_window);
-        m_goToHomeButton->draw(m_window);
-        m_controlMusicButton->draw(m_window);
-
-        //=== TextHandler drawing
-
-        m_textHandler->drawPauseText(m_window);
-    }
-    else //GAME OVER
-    {
-        //=== Background drawing & Buttons drawing
-
-        m_window->draw(*m_endBackground);
-        m_window->draw(*m_coinSprite);
-        m_restartGameButton->draw(m_window);
-        m_goToHomeButton->draw(m_window);
-        m_saveScoreButton->draw(m_window);
-
-        //=== TextHandler drawing
-
-        m_textHandler->drawGameOverText(m_window);
+        case RUNNING :
+        case RUNNING_SLOWLY :
+            drawRunningGame();
+            break;
+        case PAUSED:
+            drawPausedGame();
+            break;
+        case OVER:
+            drawGameOver();
+            break;
+        default:
+            break;
     }
 
     m_window->display();
@@ -619,7 +651,7 @@ void GameView::draw() const
 
 
 /**
- * Events treating
+ * Handles the user interaction events (mouse, keyboard, title bar buttons)
  * @param event sfml event object
  * @return true if app state is unchanged
  *

@@ -411,17 +411,17 @@ void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage
     switch(currentPage)
     {
         case CONFIG:
-            for (auto text : m_textList)
+            for (const auto &text : m_textList)
                 if (text->getDescription().find("config") != string::npos)
                     text->draw(window);
             break;
         case STATS:
-            for (auto text : m_textList)
+            for (const auto &text : m_textList)
                 if (text->getDescription().find("stats") != string::npos)
                     text->draw(window);
             break;
         case ABOUT:
-            for (auto text : m_textList)
+            for (const auto &text : m_textList)
                 if (text->getDescription().find("about") != string::npos)
                     text->draw(window);
             break;
@@ -440,7 +440,7 @@ void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage
  */
 void TextHandler::drawLeaderboardText(sf::RenderWindow *window) const
 {
-    for (auto text : m_textList)
+    for (const auto &text : m_textList)
         if (text->getDescription().find("leaderboard") != string::npos)
             text->draw(window);
 }
@@ -499,7 +499,7 @@ void TextHandler::drawPauseText(sf::RenderWindow *window) const
  */
 void TextHandler::drawGameOverText(sf::RenderWindow *window) const
 {
-    for (auto text : m_textList)
+    for (const auto &text : m_textList)
         if (text->getDescription().find("end") != string::npos)
             text->draw(window);
 

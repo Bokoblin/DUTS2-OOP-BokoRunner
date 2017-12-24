@@ -40,11 +40,11 @@ GameModel::GameModel(float width, float height, DataBase *dataBase) :
 /**
  * Destructor
  * @author Arthur
- * @date 26/03/16 - 24/05/16
+ * @date 26/03/16 - 24/12/17
  */
 GameModel::~GameModel()
 {
-    for (auto element : m_movableElementsArray)
+    for (auto &element : m_movableElementsArray)
         delete element;
 
     m_movableElementsArray.clear();

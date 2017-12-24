@@ -34,14 +34,25 @@ public:
     virtual ~GameView() override;
 
     //=== METHODS
+
+    //sprite loading
     virtual void loadImages() override;
-    virtual void synchronize() override;
-    virtual void draw() const override;
-    virtual bool treatEvents(sf::Event event) override;
-    virtual void linkElements();
-    virtual void updateElements();
-    virtual void deleteElements();
+    //synchronization
     void handleZonesTransition();
+    virtual void linkElements();
+    virtual void deleteElements();
+    virtual void updateRunningGameElements();
+    virtual void updatePausedGameElements();
+    virtual void updateGameOverElements();
+    virtual void synchronize() override;
+    //drawing
+    void drawRunningGame() const;
+    void drawPausedGame() const;
+    void drawGameOver() const;
+    virtual void draw() const override;
+    //events
+    virtual bool treatEvents(sf::Event event) override;
+    //music
     void handleMusic();
 
 private:
@@ -88,6 +99,7 @@ private:
     sf::Music m_destructedEnemiesMusic;
 
     //Containers
+    std::map<MovableElementType , Sprite*> m_typeToSpriteMap;
     std::map<MovableElement*, Sprite*> m_movableElementToSpriteMap;
 };
 

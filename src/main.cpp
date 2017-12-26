@@ -53,7 +53,7 @@ int main()
             SplashScreenModel splashModel(&dataBase);
             SplashScreenView splashView(&window, &textHandler, &splashModel);
 
-            while(dataBase.getAppState() == SPLASH && splashView.treatEvents(event))
+            while(dataBase.getAppState() == SPLASH && splashView.handleEvents(event))
             {
                 splashModel.nextStep();
                 splashView.synchronize();
@@ -65,7 +65,7 @@ int main()
             MenuModel menuModel(&dataBase);
             MenuView menuView(&window, &textHandler, &menuModel);
 
-            while(dataBase.getAppState() == MENU && menuView.treatEvents(event))
+            while(dataBase.getAppState() == MENU && menuView.handleEvents(event))
             {
                 menuModel.nextStep();
                 menuView.synchronize();
@@ -77,7 +77,7 @@ int main()
             GameModel gameModel(SCREEN_WIDTH, SCREEN_HEIGHT, &dataBase);
             GameView gameView(&window, &textHandler, &gameModel);
 
-            while(dataBase.getAppState() == GAME && gameView.treatEvents(event))
+            while(dataBase.getAppState() == GAME && gameView.handleEvents(event))
             {
                 gameModel.nextStep();
                 gameView.synchronize();

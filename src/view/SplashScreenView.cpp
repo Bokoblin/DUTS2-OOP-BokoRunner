@@ -112,11 +112,14 @@ void SplashScreenView::draw() const
 
 
 /**
- * Events treating
+ * Handles the user interaction events (mouse, keyboard, title bar buttons)
+ * @param event sfml event object
+ * @return true if app state is unchanged
+ *
  * @author Arthur
- * @date 27/03/16 - 24/12/17
+ * @date 27/03/16 - 26/12/17
  */
-bool SplashScreenView::treatEvents(sf::Event event)
+bool SplashScreenView::handleEvents(sf::Event event)
 {
     while (m_window->pollEvent(event))
     {

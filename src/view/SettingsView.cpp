@@ -252,13 +252,14 @@ void SettingsView::draw() const
 
 
 /**
- * Events treating
+ * Handles the user interaction events (mouse, keyboard, title bar buttons)
  * @param event sfml event object
+ * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 20/05/16 - 02/11/17
+ * @date 20/05/16 - 26/12/17
  */
-bool SettingsView::treatEvents(sf::Event event)
+bool SettingsView::handleEvents(sf::Event event)
 {
     if (MOUSE_LEFT_PRESSED_EVENT)
     {

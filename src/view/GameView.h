@@ -51,7 +51,7 @@ public:
     void drawGameOver() const;
     virtual void draw() const override;
     //events
-    virtual bool treatEvents(sf::Event event) override;
+    virtual bool handleEvents(sf::Event event) override;
     //music
     void handleMusic();
 

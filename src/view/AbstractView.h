@@ -43,7 +43,7 @@ public:
     virtual void loadImages() = 0;
     virtual void synchronize() = 0;
     virtual void draw() const = 0;
-    virtual bool treatEvents(sf::Event event) = 0;
+    virtual bool handleEvents(sf::Event event) = 0;
 
 protected:
     //=== ATTRIBUTES

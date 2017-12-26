@@ -165,14 +165,14 @@ void ShopView::draw() const
 
 
 /**
- * Events treating
+ * Handles the user interaction events (mouse, keyboard, title bar buttons)
  * @param event sfml event object
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 16/05/16 - 03/11/17
+ * @date 16/05/16 - 26/12/17
  */
-bool ShopView::treatEvents(sf::Event event)
+bool ShopView::handleEvents(sf::Event event)
 {
     if (MOUSE_LEFT_PRESSED_EVENT)
     {

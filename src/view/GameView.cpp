@@ -656,9 +656,9 @@ void GameView::draw() const
  * @return true if app state is unchanged
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 03/11/17
+ * @date 21/02/16 - 26/12/17
  */
-bool GameView::treatEvents(sf::Event event)
+bool GameView::handleEvents(sf::Event event)
 {
     if (m_game->getGameState() == RUNNING ||
         m_game->getGameState() == RUNNING_SLOWLY)

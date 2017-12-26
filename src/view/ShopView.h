@@ -38,7 +38,7 @@ public:
     virtual void synchronize() override;
     virtual void draw() const override;
     virtual void loadImages() override;
-    virtual bool treatEvents(sf::Event event) override;
+    virtual bool handleEvents(sf::Event event) override;
     void syncCards();
     void createCards();
 

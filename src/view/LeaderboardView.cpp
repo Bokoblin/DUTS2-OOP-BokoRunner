@@ -88,14 +88,14 @@ void LeaderboardView::draw() const
 
 
 /**
- * Events treating
+ * Handles the user interaction events (mouse, keyboard, title bar buttons)
  * @param event sfml event object
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 21/05/16 - 23/12/16
+ * @date 21/05/16 - 26/12/16
  */
-bool LeaderboardView::treatEvents(sf::Event event)
+bool LeaderboardView::handleEvents(sf::Event event)
 {
     if (MOUSE_LEFT_PRESSED_EVENT)
     {

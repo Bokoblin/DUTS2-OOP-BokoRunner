@@ -84,14 +84,14 @@ void CommandsView::draw() const
 
 
 /**
- * Events treating
+ * Handles the user interaction events (mouse, keyboard, title bar buttons)
  * @param event sfml event object
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 24/01/17 - 03/11/17
+ * @date 24/01/17 - 26/12/17
  */
-bool CommandsView::treatEvents(sf::Event event)
+bool CommandsView::handleEvents(sf::Event event)
 {
     if (MOUSE_LEFT_PRESSED_EVENT)
     {

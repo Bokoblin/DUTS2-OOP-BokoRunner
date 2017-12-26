@@ -27,7 +27,9 @@ Current version : v2.0.0-dev
     - `PixelateEffect` => `PixelShader`
     - `SlidingBackground` => `ScrollingBackground`
   - **window**: life-cycle now handled only in `main.cpp`
-  - **events**: improvements of treatEvents() methods : useless code removed, window::close() moved to `main.cpp`
+  - **events**: 
+    - `treatEvents()` => `handleEvents()`
+    - improvements of handleEvents() methods : useless code removed, window::close() moved to `main.cpp`
   - **ressources**: folder organization improvements
     
 #### Features

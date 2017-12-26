@@ -222,14 +222,14 @@ void MenuView::draw() const
 
 
 /**
- * Events treating
+ * Handles the user interaction events (mouse, keyboard, title bar buttons)
  * @param event sfml event object
  * @return true if app state is unchanged
  *
  * @author Arthur, Florian
- * @date 25/03/16 - 03/11/17
+ * @date 25/03/16 - 26/12/17
  */
-bool MenuView::treatEvents(sf::Event event)
+bool MenuView::handleEvents(sf::Event event)
 {
     while (m_window->pollEvent(event))
     {
@@ -303,10 +303,10 @@ bool MenuView::treatEvents(sf::Event event)
                 }
             }
         }
-        else if ((m_menu->getMenuState() == COMMANDS && !m_commandsView->treatEvents(event))
-                 || (m_menu->getMenuState() == LEADERBOARD && !m_leaderboardView->treatEvents(event))
-                 || (m_menu->getMenuState() == SETTINGS && !m_settingsView->treatEvents(event))
-                 || (m_menu->getMenuState() == SHOP && !m_shopView->treatEvents(event))
+        else if ((m_menu->getMenuState() == COMMANDS && !m_commandsView->handleEvents(event))
+                 || (m_menu->getMenuState() == LEADERBOARD && !m_leaderboardView->handleEvents(event))
+                 || (m_menu->getMenuState() == SETTINGS && !m_settingsView->handleEvents(event))
+                 || (m_menu->getMenuState() == SHOP && !m_shopView->handleEvents(event))
                 )
         {
             m_menu->setMenuState(HOME);

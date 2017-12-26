@@ -32,7 +32,7 @@ public:
     GraphicElement(float x, float y, float width, float height);
     GraphicElement(float x, float y, float width, float height, const std::string &image);
     GraphicElement(GraphicElement const& element);
-    virtual ~GraphicElement() override;
+    ~GraphicElement() override;
 
     //=== GETTERS
     int getAlpha() const;

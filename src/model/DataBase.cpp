@@ -528,10 +528,9 @@ void DataBase::clearAppData()
  * @return true if found
  */
 bool DataBase::findActivatedItem(const string &item) {
-    if (m_activatedItemsArray.empty())
-        return false;
-    else
-        return m_activatedItemsArray.find(item) != m_activatedItemsArray.end();
+    return m_activatedItemsArray.empty()
+           ? false
+           : m_activatedItemsArray.find(item) != m_activatedItemsArray.end();
 }
 
 

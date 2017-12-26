@@ -27,11 +27,11 @@ class Commands : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    Commands(DataBase *dataBase);
-    virtual ~Commands() override;
+    explicit Commands(DataBase *dataBase);
+    ~Commands() override;
 
     //=== METHODS
-    virtual void nextStep() override;
+    void nextStep() override;
 };
 
 #endif

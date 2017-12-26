@@ -33,7 +33,7 @@ public:
     Dialog();
     Dialog(float x, float y, float w, float h, const TextHandler &textHandler, const std::string &context);
     Dialog(const Dialog& d)=delete;
-    virtual ~Dialog() override;
+    ~Dialog() override;
 
     //=== GETTERS
     const std::string &getContext() const;

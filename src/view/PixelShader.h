@@ -77,7 +77,7 @@ class PixelShader : public sf::Drawable
 public:
     //=== CTORs / DTORs
     PixelShader();
-    virtual ~PixelShader() override;
+    ~PixelShader() override;
 
     //=== METHODS
     void load(const std::string &image);

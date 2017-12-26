@@ -33,8 +33,8 @@ class MenuModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    MenuModel(DataBase *dataBase);
-    virtual ~MenuModel() override;
+    explicit MenuModel(DataBase *dataBase);
+    ~MenuModel() override;
 
     //=== GETTERS
     MenuState getMenuState() const;
@@ -43,7 +43,7 @@ public:
     void setMenuState(MenuState state);
 
     //=== METHODS
-    virtual void nextStep() override;
+    void nextStep() override;
     Commands* launchCommands();
     Leaderboard* launchLeaderboard();
     Shop* launchShop();

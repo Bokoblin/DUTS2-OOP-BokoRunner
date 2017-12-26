@@ -31,13 +31,13 @@ class CommandsView : public AbstractView
 public:
     //=== CTORs / DTORs
     CommandsView(sf::RenderWindow *window, TextHandler *textHandler, Commands *commandsModel);
-    virtual ~CommandsView();
+    ~CommandsView() override;
 
     //=== METHODS
-    virtual void synchronize() override;
-    virtual void draw() const override;
-    virtual void loadImages() override;
-    virtual bool handleEvents(sf::Event event) override;
+    void synchronize() override;
+    void draw() const override;
+    void loadImages() override;
+    bool handleEvents(sf::Event event) override;
 
 private:
     //=== ATTRIBUTES

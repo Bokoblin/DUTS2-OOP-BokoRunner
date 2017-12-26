@@ -31,13 +31,13 @@ class SettingsView : public AbstractView
 public:
     //=== CTORs / DTORs
     SettingsView(sf::RenderWindow *window, TextHandler *textHandler, Settings *settingsModel);
-    virtual ~SettingsView() override;
+    ~SettingsView() override;
 
     //=== METHODS
-    virtual void synchronize() override;
-    virtual void draw() const override;
-    virtual void loadImages() override;
-    virtual bool handleEvents(sf::Event event) override;
+    void synchronize() override;
+    void draw() const override;
+    void loadImages() override;
+    bool handleEvents(sf::Event event) override;
     void handleMusic();
 
 private:

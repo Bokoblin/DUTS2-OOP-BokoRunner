@@ -31,13 +31,13 @@ class SplashScreenView : public AbstractView
 public:
     //=== CTORs / DTORs
     SplashScreenView(sf::RenderWindow *window, TextHandler *textHandler, SplashScreenModel *splashModel);
-    virtual ~SplashScreenView() override;
+    ~SplashScreenView() override;
 
     //=== METHODS
-    virtual void synchronize() override;
-    virtual void draw() const override;
-    virtual void loadImages() override;
-    virtual bool handleEvents(sf::Event event) override;
+    void synchronize() override;
+    void draw() const override;
+    void loadImages() override;
+    bool handleEvents(sf::Event event) override;
 
 private:
     //=== ATTRIBUTES

@@ -31,12 +31,12 @@ class GameView : public AbstractView
 public:
     //=== CTORs / DTORs
     GameView(sf::RenderWindow *window, TextHandler *textHandler, GameModel *gameModel);
-    virtual ~GameView() override;
+    ~GameView() override;
 
     //=== METHODS
 
     //sprite loading
-    virtual void loadImages() override;
+    void loadImages() override;
     //synchronization
     void handleZonesTransition();
     virtual void linkElements();
@@ -44,14 +44,14 @@ public:
     virtual void updateRunningGameElements();
     virtual void updatePausedGameElements();
     virtual void updateGameOverElements();
-    virtual void synchronize() override;
+    void synchronize() override;
     //drawing
     void drawRunningGame() const;
     void drawPausedGame() const;
     void drawGameOver() const;
-    virtual void draw() const override;
+    void draw() const override;
     //events
-    virtual bool handleEvents(sf::Event event) override;
+    bool handleEvents(sf::Event event) override;
     //music
     void handleMusic();
 

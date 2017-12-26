@@ -34,7 +34,7 @@ public:
     ShopDialog(float x, float y, float width, float height, const TextHandler &textHandler,
                const std::string &context, ShopItem *item);
     ShopDialog(const Dialog& d)=delete;
-    virtual ~ShopDialog() override;
+    ~ShopDialog() override;
 
     //=== GETTERS
     ShopItem *getLinkedShopItem() const;

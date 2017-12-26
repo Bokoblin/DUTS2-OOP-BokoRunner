@@ -35,8 +35,7 @@ RadioButton::RadioButton(float x, float y, float width, float height, const std:
  * @author Arthur
  * @date 02/01/17
  */
-RadioButton::RadioButton(RadioButton const& other) : Button(other)
-{}
+RadioButton::RadioButton(RadioButton const& other) = default;
 
 
 /**

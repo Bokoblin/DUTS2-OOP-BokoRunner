@@ -29,7 +29,7 @@ class Text : public sf::Text
 {
 public:
     //=== CTORs / DTORs
-    Text(const std::string &description);
+    explicit Text(const std::string &description);
     Text(const std::string &description, bool isVisible);
 
     //=== GETTERS

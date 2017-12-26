@@ -30,7 +30,7 @@ public:
     //=== CTORs / DTORs
     ScrollingBackground(float width, float height, float scrollingSpeed, const std::string &image);
     ScrollingBackground(ScrollingBackground const& element) = delete;
-    virtual ~ScrollingBackground() override;
+    ~ScrollingBackground() override;
 
     //=== GETTERS
     sf::Vector2f getLeftPosition() const;
@@ -41,11 +41,11 @@ public:
     void setPositions(float x, float y);
 
     //=== METHODS
-    virtual void sync() override;
-    virtual void draw(sf::RenderWindow *window) const override;
-    virtual void resize(float width, float height) override;
-    virtual void setTextureFromImage(const std::string &image) override;
-    virtual void applyColor() override;
+    void sync() override;
+    void draw(sf::RenderWindow *window) const override;
+    void resize(float width, float height) override;
+    void setTextureFromImage(const std::string &image) override;
+    void applyColor() override;
 
 private:
     //=== ATTRIBUTES

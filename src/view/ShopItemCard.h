@@ -31,7 +31,7 @@ class ShopItemCard : public GraphicElement
 public:
     //=== CTORs / DTORs
     ShopItemCard(int id, ShopItem *item, TextHandler *textHandler);
-    virtual ~ShopItemCard() override;
+    ~ShopItemCard() override;
 
     //=== GETTERS
     int getId() const;

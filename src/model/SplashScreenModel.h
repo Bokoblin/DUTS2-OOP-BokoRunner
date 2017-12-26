@@ -29,11 +29,11 @@ class SplashScreenModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    SplashScreenModel(DataBase *dataBase);
-    virtual ~SplashScreenModel() override;
+    explicit SplashScreenModel(DataBase *dataBase);
+    ~SplashScreenModel() override;
 
     //=== METHODS
-    virtual void nextStep() override;
+    void nextStep() override;
 
     //=== GETTERS
     bool isContinueVisible() const;

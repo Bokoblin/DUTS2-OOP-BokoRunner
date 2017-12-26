@@ -30,15 +30,15 @@ class Shop : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    Shop(DataBase *dataBase);
-    virtual ~Shop() override;
+    explicit Shop(DataBase *dataBase);
+    ~Shop() override;
 
     //=== GETTERS
     std::vector<ShopItem*> getShopItemsArray() const;
 
     //=== METHODS
     bool buyItem(ShopItem *item);
-    virtual void nextStep() override;
+    void nextStep() override;
     void quit();
 
 private:

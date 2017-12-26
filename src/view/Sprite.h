@@ -34,13 +34,13 @@ public:
     Sprite(float x, float y, float width, float height, const std::string &image,
            const std::vector<sf::IntRect> &clipRect);
     Sprite(const Sprite& other);
-    virtual ~Sprite() override;
+    ~Sprite() override;
 
     //=== SETTERS
     void setClipRectArray(std::vector<sf::IntRect> clipRectsArray);
 
     //=== METHODS
-    virtual void sync() override;
+    void sync() override;
 
 private:
     //=== ATTRIBUTES

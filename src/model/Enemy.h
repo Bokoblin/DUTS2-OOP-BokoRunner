@@ -31,10 +31,10 @@ class Enemy : public MovableElement
 public:
     //=== CTORs / DTORs
     Enemy(float x, float y, float w, float h, float mvX, float mvY);
-    virtual ~Enemy() override;
+    ~Enemy() override;
 
     //=== METHODS
-    virtual void move() override;
+    void move() override;
     void chooseEnemyType();
 };
 

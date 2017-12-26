@@ -30,13 +30,13 @@ class LeaderboardView : public AbstractView
 public:
     //=== CTORs / DTORs
     LeaderboardView(sf::RenderWindow *window, TextHandler *textHandler, Leaderboard *leaderboardModel);
-    virtual ~LeaderboardView() override;
+    ~LeaderboardView() override;
 
     //=== METHODS
-    virtual void synchronize() override;
-    virtual void draw() const override;
-    virtual void loadImages() override;
-    virtual bool handleEvents(sf::Event event) override;
+    void synchronize() override;
+    void draw() const override;
+    void loadImages() override;
+    bool handleEvents(sf::Event event) override;
 
 private:
     //=== ATTRIBUTES

@@ -30,7 +30,7 @@ class AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    AbstractModel(DataBase *dataBase);
+    explicit AbstractModel(DataBase *dataBase);
     virtual ~AbstractModel();
 
     //=== GETTERS

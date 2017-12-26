@@ -40,16 +40,49 @@ The Doxygen documentation can be found at
 
 ### How to build ###
 
-From Project folder do :
+Execute `build.sh` file or do, from Project folder :
   - `mkdir build`
   - `cd build`
   - `cmake .. && make`
   
-Note : This project has been tested on Ubuntu Trusty (14.04 LTS) with gcc-4.9 and clang-3.6.<br>
-You may need to install the following packages before building : <br>
-libopenal-dev, libalut-dev, libxcb-image0, libudev-dev, libudev1
+Note : You may need to install some of the following packages, depending of your configuration, before building : <br>
+- g++-4.9
+- libopenal
+- libvorbis
+- libogg.so
+- libFLAC.so
+- libGL.so
+- libSM.so
+- libICE.so
+- libXrandr.so
+- libalut-dev
+- libxcb-image0
+- libudev-dev
+- libudev1
+
+Note: sfml lib files were built with g++-4.9 <br>
+It may only works with this compiler or clang-3.6<br>
+Use `update-alternatives` to change default g++ priority if needed.
 
 
+### Tested environments ###
+
+- **Windows 10 Home Version 1709 - Fall Creator Update**
+	- **Kernel**: Windows NT 10.0
+	- **Compiler**: mingw-w64-6.1.0
+	- **Environment**: local
+	
+- **Ubuntu 16.04 LTS - Xenial**
+	- **Kernel**: x86_64 Linux 4.4.0-43-Microsoft
+	- **Compiler**: g++-4.9
+	- **Environment**: local (Windows Linux Subsystem)
+	
+- **Ubuntu 14.04 LTS - Trusty**
+	- **Kernel**: ??
+	- **Compiler**: gcc-4.9 and clang-3.6
+	- **Environment**: Virtual machine on GCE (Travis CI)
+
+	
 ### Licences ###
 
 Our project is mainly licensed under Apache License Version 2.0 but some elements have other licences.<br>

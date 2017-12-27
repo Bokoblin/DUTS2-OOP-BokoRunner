@@ -6,7 +6,7 @@
  * @date 21/02/16 - 24/12/17
  */
 GraphicElement::GraphicElement(float width, float height) :
-        m_width{width}, m_height{height}, m_isShowing{true}, m_alpha{255}, m_light{255}
+        m_width{width}, m_height{height}, m_isShowing{true}, m_alpha{255}, m_light{255}, m_texture_filename{""}
 {}
 
 
@@ -63,6 +63,7 @@ GraphicElement::~GraphicElement() = default;
 bool GraphicElement::isVisible() const { return m_isShowing; }
 int GraphicElement::getAlpha() const { return m_alpha; }
 int GraphicElement::getLight() const { return m_light; }
+std::string GraphicElement::getTextureFileName() const { return m_texture_filename; }
 
 //=== Setters
 void GraphicElement::show() { m_isShowing = true; }
@@ -131,7 +132,7 @@ void GraphicElement::resize(float width, float height)
 /**
  * Sets the GraphicElement's texture from an image
  * @author Arthur
- * @date 02/01/17
+ * @date 02/01/17 - 26/12/17
  */
 void GraphicElement::setTextureFromImage(const std::string &image)
 {
@@ -141,6 +142,7 @@ void GraphicElement::setTextureFromImage(const std::string &image)
     {
         m_texture.setSmooth(true);
         setTexture(m_texture);
+        m_texture_filename = image;
     }
 }
 

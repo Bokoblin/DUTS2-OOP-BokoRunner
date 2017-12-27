@@ -44,8 +44,8 @@ public:
 
     //=== GETTERS
     GameState getGameState() const;
-    bool getTransitionStatus() const;
-    bool getTransitionPossibleStatus() const;
+    bool isTransitionRunning() const;
+    bool isTransitionPossible() const;
     Player* getPlayer() const;
     float getGameSpeed() const;
     Zone getCurrentZone() const;
@@ -54,8 +54,8 @@ public:
 
     //=== SETTERS
     void setGameState(GameState state);
-    void setTransitionStatus(bool status);
-    void setTransitionPossibleStatus(bool status);
+    void setTransitionState(bool inTransition);
+    void setTransitionPossibleState(bool state);
     void setCurrentZone(Zone z);
 
     //=== METHODS

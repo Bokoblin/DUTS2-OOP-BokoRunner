@@ -24,7 +24,7 @@ limitations under the License.
 /**
  * GameView Class
  * @author Arthur, Florian
- * @date 21/02/16 - 16/04/17
+ * @date 21/02/16 - 26/12/17
  */
 class GameView : public AbstractView
 {
@@ -37,8 +37,10 @@ public:
 
     //sprite loading
     void loadImages() override;
+    //transition
+    void processZonesTransition();
+    void setupTransition();
     //synchronization
-    void handleZonesTransition();
     virtual void linkElements();
     virtual void deleteElements();
     virtual void updateRunningGameElements();
@@ -51,6 +53,10 @@ public:
     void drawGameOver() const;
     void draw() const override;
     //events
+    void handlePlayerInput() const;
+    bool handleRunningGameEvents(sf::Event event);
+    bool handlePausedGameEvents(sf::Event event);
+    bool handleGameOverEvents(sf::Event event);
     bool handleEvents(sf::Event event) override;
     //music
     void handleMusic();

@@ -50,7 +50,6 @@ void MenuModel::nextStep()
 
     if (currentNextStepDelay > chrono::milliseconds(1500))
     {
-
         //=== Delete commands if not anymore current menu state
 
         if (m_menuState != COMMANDS && m_commands != nullptr)

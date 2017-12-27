@@ -22,7 +22,7 @@ limitations under the License.
 /**
  * GraphicElement Class
  * @author Arthur, Florian
- * @date 21/02/16 - 24/12/17
+ * @date 21/02/16 - 26/12/17
  */
 class GraphicElement : public sf::Sprite
 {
@@ -38,6 +38,7 @@ public:
     int getAlpha() const;
     int getLight() const;
     bool isVisible() const;
+    std::string getTextureFileName() const;
 
     //=== SETTERS
     void show();
@@ -64,6 +65,7 @@ protected:
     float m_height;
     bool m_isShowing;
     sf::Texture m_texture;
+    std::string m_texture_filename;
     sf::Uint8 m_alpha;
     sf::Uint8 m_light;
 };

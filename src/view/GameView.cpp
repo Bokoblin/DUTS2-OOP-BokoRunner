@@ -260,90 +260,93 @@ void GameView::linkElements()
 
 
 /**
- * Creates seamless transition between zones
+ * Processes the transition between zones
  * @author Arthur
- * @date 25/04/16 - 02/01/17
+ * @date 25/04/16 - 26/12/17
  */
-void GameView::handleZonesTransition()
+void GameView::processZonesTransition()
 {
-    if (m_game->getTransitionStatus())
+    //=== [Always] Set background speed and position
+
+    m_farTransitionBackground->setPosition(m_farTransitionBackground->getPosition().x - TRANSITION_SPEED, 0);
+    m_farScrollingBackground->setScrollingSpeed(TRANSITION_SPEED);
+    m_nearScrollingBackground->decreaseAlpha(5);
+    if (m_nearScrollingBackground->getAlpha() == 0)
+        m_nearScrollingBackground->setScrollingSpeed(0);
+    else
+        m_nearScrollingBackground->setScrollingSpeed(TRANSITION_SPEED);
+
+    //=== [Transition half only] Update zone background image and position
+
+    if (m_farTransitionBackground->getPosition().x  <= 5
+        && m_farTransitionBackground->getPosition().x  >= -5)
     {
-        //Set background speed and position
-        m_farTransitionBackground->setPosition(m_farTransitionBackground->getPosition().x - TRANSITION_SPEED, 0);
-        m_farScrollingBackground->setScrollingSpeed(TRANSITION_SPEED);
-        m_nearScrollingBackground->decreaseAlpha(5);
-        if (m_nearScrollingBackground->getAlpha() == 0)
-            m_nearScrollingBackground->setScrollingSpeed(0);
+        if (m_game->getCurrentZone() == HILL)
+        {
+            m_farScrollingBackground->setTextureFromImage(DEFAULT_FAR_PLAIN_BACKGROUND);
+            m_nearScrollingBackground->setTextureFromImage(DEFAULT_NEAR_PLAIN_BACKGROUND);
+        }
         else
-            m_nearScrollingBackground->setScrollingSpeed(TRANSITION_SPEED);
-
-        //Update zone background image and position at half transition
-        if (m_farTransitionBackground->getPosition().x  <= 5
-            && m_farTransitionBackground->getPosition().x  >= -5)
         {
-            if (m_game->getCurrentZone() == HILL)
-            {
-                m_farScrollingBackground->setTextureFromImage(DEFAULT_FAR_PLAIN_BACKGROUND);
-                m_nearScrollingBackground->setTextureFromImage(DEFAULT_NEAR_PLAIN_BACKGROUND);
-            }
-            else
-            {
-                m_farScrollingBackground->setTextureFromImage(DEFAULT_FAR_HILL_BACKGROUND);
-                m_nearScrollingBackground->setTextureFromImage(DEFAULT_NEAR_HILL_BACKGROUND);
-            }
-
-            m_farScrollingBackground->setPositions(-300, 0);
-            m_nearScrollingBackground->setPositions(0, 0);
+            m_farScrollingBackground->setTextureFromImage(DEFAULT_FAR_HILL_BACKGROUND);
+            m_nearScrollingBackground->setTextureFromImage(DEFAULT_NEAR_HILL_BACKGROUND);
         }
 
-        //Update pixel creation of near background from 3/4 transition to end transition
-        if (m_farTransitionBackground->getPosition().x < m_width/2 && m_xPixelIntensity >= 0)
-        {
-            m_xPixelIntensity -= 0.009;
-            m_yPixelIntensity -= 0.009;
-            m_pixelShader->update(m_xPixelIntensity, m_yPixelIntensity);
-        }
+        m_farScrollingBackground->setPositions(-300, 0);
+        m_nearScrollingBackground->setPositions(0, 0);
+    }
 
-        //Finish transition
-        if (m_farTransitionBackground->getPosition().x
-            + m_farTransitionBackground->getLocalBounds().width <= 0)
-        {
-            //Update Transition status
-            m_game->setTransitionStatus(false);
-            m_game->setTransitionPossibleStatus(false);
+    //=== [Transition 3/4 until end] Update pixel creation of near background
 
-            //Set current zone
-            if (m_game->getCurrentZone() == HILL)
-                m_game->setCurrentZone(PLAIN);
-            else
-                m_game->setCurrentZone(HILL);
+    if (m_farTransitionBackground->getPosition().x < m_width/2 && m_xPixelIntensity >= 0)
+    {
+        m_xPixelIntensity -= 0.009;
+        m_yPixelIntensity -= 0.009;
+        m_pixelShader->update(m_xPixelIntensity, m_yPixelIntensity);
+    }
+
+    //=== [Transition end]
+
+    if (m_farTransitionBackground->getPosition().x
+        + m_farTransitionBackground->getLocalBounds().width <= 0)
+    {
+        //Update Transition status
+        m_game->setTransitionState(false);
+        m_game->setTransitionPossibleState(false);
+
+        //Set current zone and change pause background
+        if (m_game->getCurrentZone() == HILL) {
+            m_game->setCurrentZone(PLAIN);
+            m_pauseBackground->setTextureFromImage(PAUSE_PLAIN_BACKGROUND);
+        } else {
+            m_game->setCurrentZone(HILL);
+            m_pauseBackground->setTextureFromImage(PAUSE_HILL_BACKGROUND);
         }
+    }
+}
+
+
+/**
+* Setups the transition between zones
+* @author Arthur
+* @date 25/04/16 - 26/12/17
+*/
+void GameView::setupTransition()
+{
+    m_game->setTransitionState(true);
+    m_xPixelIntensity = 1;
+    m_yPixelIntensity = 1;
+    m_farTransitionBackground->setPosition(m_farScrollingBackground->getLeftPosition().x + 1200, 0);
+
+    if (m_game->getCurrentZone() == HILL)
+    {
+        m_pixelShader->load(DEFAULT_NEAR_T1_BACKGROUND);
+        m_farTransitionBackground->setTextureFromImage(DEFAULT_FAR_T1_BACKGROUND);
     }
     else
     {
-        m_farScrollingBackground->setScrollingSpeed((float) (0.5 * m_game->getGameSpeed()));
-        m_nearScrollingBackground->setScrollingSpeed(m_game->getGameSpeed());
-        m_nearScrollingBackground->increaseAlpha(255);
-
-        if (m_game->getTransitionPossibleStatus()
-            && m_farScrollingBackground->getSeparationPositionX() > m_width - 100)
-        {
-            m_game->setTransitionStatus(true);
-            m_xPixelIntensity = 1;
-            m_yPixelIntensity = 1;
-            m_farTransitionBackground->setPosition(m_farScrollingBackground->getLeftPosition().x + 1200, 0);
-
-            if (m_game->getCurrentZone() == HILL)
-            {
-                m_pixelShader->load(DEFAULT_NEAR_T1_BACKGROUND);
-                m_farTransitionBackground->setTextureFromImage(DEFAULT_FAR_T1_BACKGROUND);
-            }
-            else
-            {
-                m_pixelShader->load(DEFAULT_NEAR_T2_BACKGROUND);
-                m_farTransitionBackground->setTextureFromImage(DEFAULT_FAR_T2_BACKGROUND);
-            }
-        }
+        m_pixelShader->load(DEFAULT_NEAR_T2_BACKGROUND);
+        m_farTransitionBackground->setTextureFromImage(DEFAULT_FAR_T2_BACKGROUND);
     }
 }
 
@@ -351,13 +354,26 @@ void GameView::handleZonesTransition()
 /**
  * Updates elements of a running game
  * @author Arthur
- * @date 6/03/16 - 24/12/17
+ * @date 6/03/16 - 26/12/17
  */
 void GameView::updateRunningGameElements()
 {
     //=== Handle Transitions between zones
 
-    handleZonesTransition();
+    if (m_game->isTransitionRunning())
+    {
+        processZonesTransition();
+    }
+    else
+    {
+        m_farScrollingBackground->setScrollingSpeed((float) (0.5 * m_game->getGameSpeed()));
+        m_nearScrollingBackground->setScrollingSpeed(m_game->getGameSpeed());
+        m_nearScrollingBackground->setAlpha(255);
+
+        if (m_game->isTransitionPossible()
+            && m_farScrollingBackground->getSeparationPositionX() > m_width - 100)
+            setupTransition();
+    }
 
     //=== Update Game Elements
 
@@ -392,15 +408,10 @@ void GameView::updateRunningGameElements()
 /**
  * Updates elements of a paused game
  * @author Arthur
- * @date 6/03/16 - 24/12/17
+ * @date 6/03/16 - 26/12/17
  */
 void GameView::updatePausedGameElements()
 {
-    if (m_game->getCurrentZone() == HILL)
-        m_pauseBackground->setTextureFromImage(PAUSE_HILL_BACKGROUND);
-    else
-        m_pauseBackground->setTextureFromImage(PAUSE_PLAIN_BACKGROUND);
-
     m_resumeGameButton->sync(m_game->getDataBase());
     m_restartGameButton->sync(m_game->getDataBase());
     m_restartGameButton->setLabelPosition(RIGHT);
@@ -548,7 +559,7 @@ void GameView::drawRunningGame() const
 
     m_farScrollingBackground->draw(m_window);
 
-    if (m_game->getTransitionStatus())
+    if (m_game->isTransitionRunning())
     {
         m_window->draw(*m_farTransitionBackground);
         if (m_farTransitionBackground->getPosition().x < m_width/2)
@@ -651,14 +662,11 @@ void GameView::draw() const
 
 
 /**
- * Handles the user interaction events (mouse, keyboard, title bar buttons)
- * @param event sfml event object
- * @return true if app state is unchanged
- *
- * @author Arthur, Florian
- * @date 21/02/16 - 26/12/17
+ * Handle players inputs
+ * @author Arthur
+ * @date 26/12/17
  */
-bool GameView::handleEvents(sf::Event event)
+void GameView::handlePlayerInput() const
 {
     if (m_game->getGameState() == RUNNING ||
         m_game->getGameState() == RUNNING_SLOWLY)
@@ -674,120 +682,183 @@ bool GameView::handleEvents(sf::Event event)
         if (KEYBOARD_JUMP)
             m_game->getPlayer()->setJumpState(true);
     }
+}
+
+
+/**
+ * Handle running game events
+ * @param event sfml event object
+ * @return true if app state is unchanged
+ *
+ * @author Arthur
+ * @date 26/12/17
+ */
+bool GameView::handleRunningGameEvents(sf::Event event)
+{
+    if (event.type == sf::Event::KeyReleased)
+        m_game->getPlayer()->setDecelerationState(true);
+}
+
+
+/**
+ * Handle paused game events
+ * @param event sfml event object
+ * @return true if app state is unchanged
+ *
+ * @author Arthur
+ * @date 26/12/17
+ */
+bool GameView::handlePausedGameEvents(sf::Event event)
+{
+    if (MOUSE_LEFT_PRESSED_EVENT)
+    {
+        if (m_resumeGameButton->contains(MOUSE_POSITION))
+            m_resumeGameButton->setPressed(true);
+
+        else if (m_restartGameButton->contains(MOUSE_POSITION))
+            m_restartGameButton->setPressed(true);
+
+        else if (m_goToHomeButton->contains(MOUSE_POSITION))
+            m_goToHomeButton->setPressed(true);
+
+        else if (m_controlMusicButton->contains(MOUSE_POSITION))
+            m_controlMusicButton->setPressed(true);
+    }
+
+    if (event.type == sf::Event::MouseButtonReleased)
+    {
+        m_resumeGameButton->setPressed(false);
+        m_restartGameButton->setPressed(false);
+        m_goToHomeButton->setPressed(false);
+        m_controlMusicButton->setPressed(false);
+
+        if (m_resumeGameButton->contains(MOUSE_POSITION))
+        {
+            m_game->setGameState(RUNNING_SLOWLY);
+            if (m_gameThemeMusic.getStatus() == sf::Music::Status::Paused)
+                m_gameThemeMusic.play();
+        }
+        else if (m_restartGameButton->contains(MOUSE_POSITION))
+        {
+            return false;
+        }
+        else if (m_goToHomeButton->contains(MOUSE_POSITION))
+        {
+            m_game->getDataBase()->setAppState(MENU);
+            return false;
+        }
+        else if (m_controlMusicButton->contains(MOUSE_POSITION))
+        {
+            m_game->getDataBase()->setGameMusic(!m_game->getDataBase()->isGameMusicEnabled());
+            handleMusic();
+        }
+    }
+    return true;
+}
+
+
+/**
+ * Handle game over events
+ * @param event sfml event object
+ * @return true if app state is unchanged
+ *
+ * @author Arthur
+ * @date 26/12/17
+ */
+bool GameView::handleGameOverEvents(sf::Event event)
+{
+    if (MOUSE_LEFT_PRESSED_EVENT)
+    {
+        if (m_restartGameButton->contains(MOUSE_POSITION))
+            m_restartGameButton->setPressed(true);
+
+        else if (m_goToHomeButton->contains(MOUSE_POSITION))
+            m_goToHomeButton->setPressed(true);
+
+        else if (m_saveScoreButton->contains(MOUSE_POSITION))
+            m_saveScoreButton->setPressed(true);
+    }
+
+    if (event.type == sf::Event::MouseButtonReleased)
+    {
+        m_restartGameButton->setPressed(false);
+        m_goToHomeButton->setPressed(false);
+        m_saveScoreButton->setPressed(false);
+
+        if (m_restartGameButton->contains(MOUSE_POSITION))
+        {
+            return false;
+        }
+        else if (m_goToHomeButton->contains(MOUSE_POSITION))
+        {
+            m_game->getDataBase()->setAppState(MENU);
+            return false;
+        }
+        else if (m_saveScoreButton->contains(MOUSE_POSITION))
+        {
+            m_saveScoreButton->hide();
+            m_game->getDataBase()->saveCurrentGame();
+        }
+    }
+    return true;
+}
+
+
+/**
+ * Handles the user interaction events (mouse, keyboard, title bar buttons)
+ * @param event sfml event object
+ * @return true if app state is unchanged
+ *
+ * @author Arthur, Florian
+ * @date 21/02/16 - 26/12/17
+ */
+bool GameView::handleEvents(sf::Event event)
+{
+    handlePlayerInput();
 
     while (m_window->pollEvent(event))
     {
+        //=== Window event handling
+
         if (event.type == sf::Event::Closed)
         {
             m_game->getDataBase()->setAppState(QUIT);
             return false;
         }
 
-        //=== Handle open/quit pause
+        //=== Pause opening/quitting handling
 
-        if (m_game->getGameState() != OVER && event.type == sf::Event::KeyPressed
-            && event.key.code == sf::Keyboard::Escape)
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
         {
-            if (m_game->getGameState() == RUNNING ||
-                m_game->getGameState() == RUNNING_SLOWLY)
+            switch(m_game->getGameState())
             {
-                m_game->setGameState(PAUSED);
-                m_gameThemeMusic.pause();
-            }
-            else
-            {
-                m_game->setGameState(RUNNING_SLOWLY);
-                m_gameThemeMusic.play();
-            }
-        }
-
-        if (event.type == sf::Event::KeyReleased)
-            m_game->getPlayer()->setDecelerationState(true);
-
-        //=== Pause Screen
-
-        if (m_game->getGameState() == PAUSED)
-        {
-            if (MOUSE_LEFT_PRESSED_EVENT)
-            {
-                if (m_resumeGameButton->contains(MOUSE_POSITION))
-                    m_resumeGameButton->setPressed(true);
-
-                else if (m_restartGameButton->contains(MOUSE_POSITION))
-                    m_restartGameButton->setPressed(true);
-
-                else if (m_goToHomeButton->contains(MOUSE_POSITION))
-                    m_goToHomeButton->setPressed(true);
-
-                else if (m_controlMusicButton->contains(MOUSE_POSITION))
-                    m_controlMusicButton->setPressed(true);
-
-            }
-
-            if (event.type == sf::Event::MouseButtonReleased)
-            {
-                m_resumeGameButton->setPressed(false);
-                m_restartGameButton->setPressed(false);
-                m_goToHomeButton->setPressed(false);
-                m_controlMusicButton->setPressed(false);
-
-                if (m_resumeGameButton->contains(MOUSE_POSITION))
-                {
+                case RUNNING :
+                case RUNNING_SLOWLY :
+                    m_game->setGameState(PAUSED);
+                    m_gameThemeMusic.pause();
+                    break;
+                case PAUSED:
                     m_game->setGameState(RUNNING_SLOWLY);
-                    if (m_gameThemeMusic.getStatus() == sf::Music::Status::Paused)
-                        m_gameThemeMusic.play();
-                }
-                else if (m_restartGameButton->contains(MOUSE_POSITION))
-                {
-                    return false;
-                }
-                else if (m_goToHomeButton->contains(MOUSE_POSITION))
-                {
-                    m_game->getDataBase()->setAppState(MENU);
-                    return false;
-                }
-                else if (m_controlMusicButton->contains(MOUSE_POSITION))
-                {
-                    m_game->getDataBase()->setGameMusic(!m_game->getDataBase()->isGameMusicEnabled());
-                    handleMusic();
-                }
+                    m_gameThemeMusic.play();
+                    break;
+                default:
+                    break;
             }
         }
-        else if (m_game->getGameState() == OVER)
+
+        //=== Specific game state handling
+
+        switch(m_game->getGameState())
         {
-            if (MOUSE_LEFT_PRESSED_EVENT)
-            {
-                if (m_restartGameButton->contains(MOUSE_POSITION))
-                    m_restartGameButton->setPressed(true);
-
-                else if (m_goToHomeButton->contains(MOUSE_POSITION))
-                    m_goToHomeButton->setPressed(true);
-
-                else if (m_saveScoreButton->contains(MOUSE_POSITION))
-                    m_saveScoreButton->setPressed(true);
-            }
-
-            if (event.type == sf::Event::MouseButtonReleased)
-            {
-                m_restartGameButton->setPressed(false);
-                m_goToHomeButton->setPressed(false);
-                m_saveScoreButton->setPressed(false);
-
-                if (m_restartGameButton->contains(MOUSE_POSITION))
-                {
-                    return false;
-                }
-                else if (m_goToHomeButton->contains(MOUSE_POSITION))
-                {
-                    m_game->getDataBase()->setAppState(MENU);
-                    return false;
-                }
-                else if (m_saveScoreButton->contains(MOUSE_POSITION))
-                {
-                    m_saveScoreButton->hide();
-                    m_game->getDataBase()->saveCurrentGame();
-                }
-            }
+            case RUNNING :
+            case RUNNING_SLOWLY :
+                return handleRunningGameEvents(event);
+            case PAUSED:
+                return handlePausedGameEvents(event);
+            case OVER:
+                return handleGameOverEvents(event);
+            default:
+                break;
         }
     }
     return true;

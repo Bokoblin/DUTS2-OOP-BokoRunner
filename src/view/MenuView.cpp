@@ -217,7 +217,6 @@ void MenuView::draw() const
 
     else if (m_menu->getMenuState() == SHOP)
         m_shopView->draw();
-
 }
 
 

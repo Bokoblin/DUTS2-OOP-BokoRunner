@@ -54,8 +54,8 @@ GameModel::~GameModel()
 //=== Getters
 
 GameState GameModel::getGameState() const { return m_gameState; }
-bool GameModel::getTransitionStatus() const { return m_inTransition; }
-bool GameModel::getTransitionPossibleStatus() const { return m_isTransitionPossible; }
+bool GameModel::isTransitionRunning() const { return m_inTransition; }
+bool GameModel::isTransitionPossible() const { return m_isTransitionPossible; }
 float GameModel::getGameSpeed() const { return m_gameSpeed; }
 int GameModel::getBonusTimeout() const { return (int) (m_bonusTimeout.count() / 1000); } // return seconds
 Zone GameModel::getCurrentZone() const { return m_currentZone; }
@@ -65,8 +65,8 @@ const set<MovableElement*>& GameModel::getNewMElementsArray() const { return m_n
 //=== Setters
 
 void GameModel::setGameState(GameState state) { m_gameState = state; }
-void GameModel::setTransitionStatus(bool status) { m_inTransition = status; }
-void GameModel::setTransitionPossibleStatus(bool status) { m_isTransitionPossible = status; }
+void GameModel::setTransitionState(bool inTransition) { m_inTransition = inTransition; }
+void GameModel::setTransitionPossibleState(bool state) { m_isTransitionPossible = state; }
 void GameModel::setCurrentZone(Zone z) { m_currentZone = z; }
 
 

@@ -197,6 +197,7 @@ void GameView::loadImages()
                                     GAME_BUTTONS_IMAGE, clipRect_resume);
     m_resumeGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_resumeGameButton->setLabelPosition(RIGHT);
+    m_resumeGameButton->retrieveAndSyncLabel(*m_game->getDataBase());
 
     std::vector<sf::IntRect> clipRect_restart;
     clipRect_restart.emplace_back(0, 50, 50, 50);
@@ -205,6 +206,7 @@ void GameView::loadImages()
                                      GAME_BUTTONS_IMAGE, clipRect_restart);
     m_restartGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_restartGameButton->setLabelPosition(RIGHT);
+    m_restartGameButton->retrieveAndSyncLabel(*m_game->getDataBase());
 
 
     std::vector<sf::IntRect> clipRect_home;
@@ -214,6 +216,7 @@ void GameView::loadImages()
                                   GAME_BUTTONS_IMAGE, clipRect_home);
     m_goToHomeButton->resize(PAUSE_BUTTONS_SIZE);
     m_goToHomeButton->setLabelPosition(RIGHT);
+    m_goToHomeButton->retrieveAndSyncLabel(*m_game->getDataBase());
 
     std::vector<sf::IntRect> clipRect_music;
     clipRect_music.emplace_back(0, 200, 50, 50);
@@ -222,12 +225,15 @@ void GameView::loadImages()
                                       GAME_BUTTONS_IMAGE, clipRect_music);
     m_controlMusicButton->resize(PAUSE_BUTTONS_SIZE);
     m_controlMusicButton->setLabelPosition(RIGHT);
+    m_controlMusicButton->retrieveAndSyncLabel(*m_game->getDataBase());
 
     std::vector<sf::IntRect> clipRect_save;
     clipRect_save.emplace_back(0, 179, 150, 40);
     clipRect_save.emplace_back(151, 179, 150, 40);
     m_saveScoreButton = new Button(730, 350, m_width / 2 - 75, 430, "end_save_button",
                                    RECT_BUTTONS_IMAGE, clipRect_save);
+    m_controlMusicButton->setLabelPosition(CENTER);
+    m_saveScoreButton->retrieveAndSyncLabel(*m_game->getDataBase());
 
 
     //=== Associate element type to sprite
@@ -412,11 +418,10 @@ void GameView::updateRunningGameElements()
  */
 void GameView::updatePausedGameElements()
 {
-    m_resumeGameButton->sync(m_game->getDataBase());
-    m_restartGameButton->sync(m_game->getDataBase());
-    m_restartGameButton->setLabelPosition(RIGHT);
-    m_goToHomeButton->sync(m_game->getDataBase());
-    m_controlMusicButton->sync(m_game->getDataBase());
+    m_resumeGameButton->sync();
+    m_restartGameButton->sync();
+    m_goToHomeButton->sync();
+    m_controlMusicButton->sync();
     m_coinSprite->sync();
     m_coinSprite->resize(20, 20);
     m_stdEnemySprite->sync();
@@ -431,21 +436,24 @@ void GameView::updatePausedGameElements()
  */
 void GameView::updateGameOverElements()
 {
-    m_goToHomeButton->sync(m_game->getDataBase());
+    m_goToHomeButton->sync();
     m_goToHomeButton->resize(30, 30);
     m_goToHomeButton->setPosition(30, 535);
+    m_goToHomeButton->syncLabelPosition();
 
     m_coinSprite->sync();
     m_coinSprite->resize(25, 25);
     m_coinSprite->setPosition((float)(m_width / 2.3), 563);
 
-    m_restartGameButton->sync(m_game->getDataBase());
+    m_restartGameButton->sync();
     m_restartGameButton->resize(30, 30);
     m_restartGameButton->setPosition(840, 535);
     m_restartGameButton->setLabelPosition(LEFT);
+    m_restartGameButton->syncLabelPosition();
 
-    m_saveScoreButton->sync(m_game->getDataBase());
+    m_saveScoreButton->sync();
     m_saveScoreButton->setPositionSelfCentered(m_width/2, 430);
+    m_saveScoreButton->syncLabelPosition();
 }
 
 

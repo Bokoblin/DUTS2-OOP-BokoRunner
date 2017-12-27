@@ -24,7 +24,7 @@ limitations under the License.
  * The CommandsView class displays
  * game's command
  * @author Arthur
- * @date 24/01/17 - 29/01/17
+ * @date 24/01/17 - 27/12/17
  */
 class CommandsView : public AbstractView
 {
@@ -36,7 +36,6 @@ public:
     //=== METHODS
     void synchronize() override;
     void draw() const override;
-    void loadImages() override;
     bool handleEvents(sf::Event event) override;
 
 private:
@@ -44,6 +43,9 @@ private:
     Commands *m_commands;
     GraphicElement *m_commandSprite;
     Button *m_homeFormButton;
+
+    //=== METHODS
+    void loadImages() override;
 };
 
 #endif

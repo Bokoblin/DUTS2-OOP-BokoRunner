@@ -24,7 +24,7 @@ limitations under the License.
 /**
  * ShopItemCard Class
  * @author Arthur
- * @date 16/05/16 - 02/01/17
+ * @date 16/05/16 - 27/12/17
  */
 class ShopItemCard : public GraphicElement
 {
@@ -40,7 +40,8 @@ public:
 
     //=== METHODS
     void loadImages();
-    void sync(DataBase *dataBase);
+    void sync() override;
+    void syncWithButtonLabelRetrieval(const DataBase &dataBase);
     void draw(sf::RenderWindow *window) const override;
 
 private:

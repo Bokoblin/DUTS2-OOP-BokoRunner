@@ -46,8 +46,9 @@ class TextHandler
     const sf::Font& getBoldFont() const;
 
     //=== METHODS
-    void loadText();
     void updateWholeText();
+
+    void initMenuLeaderboardText();
 
     void syncSplashScreenText(bool continueVisibility);
     void syncSettingsText(int currentPage);
@@ -56,6 +57,7 @@ class TextHandler
     void syncGameText(int bonusTimeout);
     void syncPauseText();
     void syncGameOverText(int gameSpeed);
+
     void drawSplashScreenText(sf::RenderWindow *window) const;
     void drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const;
     void drawLeaderboardText(sf::RenderWindow *window) const;
@@ -141,6 +143,9 @@ private:
     const int SUBTOTAL_VALUE_X = 580;
     const unsigned int DEFAULT_CHAR_SIZE = 24;
     const unsigned int CONTENT_CHAR_SIZE = 20;
+
+    //=== METHODS
+    void loadText();
 };
 
 #endif

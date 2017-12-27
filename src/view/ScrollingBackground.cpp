@@ -65,6 +65,8 @@ void ScrollingBackground::setPositions(float x, float y)
  */
 void ScrollingBackground::sync()
 {
+    GraphicElement::sync();
+
     m_left->setPosition(m_left->getPosition().x - m_scrollingSpeed, m_left->getPosition().y);
     m_right->setPosition(m_right->getPosition().x - m_scrollingSpeed, m_right->getPosition().y);
 

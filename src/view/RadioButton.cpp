@@ -71,14 +71,14 @@ void RadioButton::sync()
  * Changes animation depending on pressed state
  * sync button's label
  * @author Arthur
- * @date 23/12/16
+ * @date 23/12/16 - 27/12/17
  */
-void RadioButton::sync(DataBase *dataBase)
+void RadioButton::syncLabelPosition()
 {
-    sync();
-    Button::sync(dataBase);
-    m_label.setPosition(getPosition().x + 2*getGlobalBounds().width, getPosition().y-3);
-    m_label.setOrigin(0, 0);
+    if (!m_label.getDescription().empty()) {
+        m_label.setPosition(getPosition().x + 2 * getGlobalBounds().width, getPosition().y - 3);
+        m_label.setOrigin(0, 0);
+    }
 }
 
 

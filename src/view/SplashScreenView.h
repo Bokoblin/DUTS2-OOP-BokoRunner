@@ -24,7 +24,7 @@ limitations under the License.
  * The SplashScreenView class displays
  * the app's splash screen at startup
  * @author Arthur
- * @date 27/03/16 - 24/12/17
+ * @date 27/03/16 - 27/12/17
  */
 class SplashScreenView : public AbstractView
 {
@@ -36,7 +36,6 @@ public:
     //=== METHODS
     void synchronize() override;
     void draw() const override;
-    void loadImages() override;
     bool handleEvents(sf::Event event) override;
 
 private:
@@ -48,6 +47,9 @@ private:
     ScrollingBackground *m_farBackground;
     ScrollingBackground *m_nearBackground;
     GraphicElement *m_titleGraphic;
+
+    //=== METHODS
+    void loadImages() override;
 };
 
 #endif

@@ -28,7 +28,7 @@ limitations under the License.
  * by its inherited classes.
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 30/01/17
+ * @date 21/02/16 - 27/12/17
  */
 class AbstractView
 {
@@ -40,7 +40,6 @@ public:
     virtual ~AbstractView();
 
     //=== METHODS
-    virtual void loadImages() = 0;
     virtual void synchronize() = 0;
     virtual void draw() const = 0;
     virtual bool handleEvents(sf::Event event) = 0;
@@ -50,6 +49,9 @@ protected:
     float m_width, m_height;
     sf::RenderWindow *m_window;
     TextHandler *m_textHandler;
+
+    //=== METHODS
+    virtual void loadImages() = 0;
 };
 
 #endif

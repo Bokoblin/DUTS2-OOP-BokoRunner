@@ -30,7 +30,7 @@ limitations under the License.
  * a string file thanks to its description
  *
  * @author Arthur
- * @date 06/04/16 - 30/01/17
+ * @date 06/04/16 - 27/12/17
  */
 class Button : public GraphicElement
 {
@@ -41,7 +41,7 @@ public:
     Button(float x, float y, float w, float h, const std::string &image, const std::vector<sf::IntRect> &clipRect);
     Button(float x, float y, float w, float h, const std::string &description,
            const std::string &image, const std::vector<sf::IntRect> &clipRect);
-    Button(Button const& elementACopier);
+    Button(Button const& other);
     ~Button() override;
 
     //=== GETTERS
@@ -57,7 +57,9 @@ public:
 
     //=== METHODS
     void sync() override;
-    virtual void sync(DataBase *dataBase);
+    virtual void retrieveLabel(const DataBase &dataBase);
+    virtual void syncLabelPosition();
+    virtual void retrieveAndSyncLabel(const DataBase &dataBase);
     void draw(sf::RenderWindow *window) const override;
     bool contains(float x, float y) const override;
 

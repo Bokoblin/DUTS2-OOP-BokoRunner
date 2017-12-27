@@ -45,6 +45,8 @@ int DataBase::getDifficulty() const { return m_currentDifficulty;}
 int DataBase::getWallet() const { return m_wallet;}
 bool DataBase::isMenuMusicEnabled() const { return m_isMenuMusicEnabled; }
 bool DataBase::isGameMusicEnabled() const { return m_isGameMusicEnabled; }
+bool DataBase::isScoreEasyArrayEmpty() const { return m_scoresEasyArray.empty(); }
+bool DataBase::isScoreHardArrayEmpty() const { return m_scoresHardArray.empty(); }
 string DataBase::getLanguage() const { return m_currentLanguage; }
 string DataBase::getBallSkin() const { return m_currentBallSkin; }
 string DataBase::getLanguageFile() const
@@ -574,7 +576,7 @@ string DataBase::loadLeaderboardScores(Difficulty difficulty) const
     int scoreRank = 1;
     string result;
 
-    if (difficulty == EASY && !m_scoresEasyArray.empty())
+    if (difficulty == EASY && !isScoreEasyArrayEmpty())
     {
         result = loadTextFromIdentifier("config_easy_mode") + " :\n";
         //add each case content in string
@@ -584,7 +586,7 @@ string DataBase::loadLeaderboardScores(Difficulty difficulty) const
             scoreRank++;
         }
     }
-    else if (difficulty == HARD && !m_scoresHardArray.empty())
+    else if (difficulty == HARD && !isScoreHardArrayEmpty())
     {
         result = loadTextFromIdentifier("config_hard_mode") + " :\n";
         for (auto it = m_scoresHardArray.rbegin(); it!=m_scoresHardArray.rend(); ++it)

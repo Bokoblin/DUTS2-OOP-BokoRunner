@@ -128,34 +128,46 @@ void Button::setLabelPosition(LabelPosition labelPosition) { m_labelPosition = l
 
 
 /**
- * Synchronization Function :
- * Changes animation depending on pressed state
+ * Synchronizes Button Sprite by applying color modifiers
+ * and animating sprite
+ * (by changing current texture rect depending on pressed state)
  * @author Arthur
  * @date 06/04/16 - 23/12/16
  */
 void Button::sync()
 {
+    GraphicElement::sync();
+
     this->setTextureRect(m_clipRectArray[m_isPressed]);
 }
 
+
 /**
- * Synchronization Function :
- * Changes animation depending on pressed state
- * sync button's label
+ * Retrieves the button's label text
  * @author Arthur
- * @date 23/12/16 - 25/01/17
+ * @date 23/12/16 - 27/12/17
+ *
+ * @param dataBase the app's database
  */
-void Button::sync(DataBase *dataBase)
+void Button::retrieveLabel(const DataBase &dataBase)
 {
-    sync();
-
-    //=== Sync label
-
     if (!m_label.getDescription().empty())
     {
-        std::string utf8_string = dataBase->loadTextFromIdentifier(m_label.getDescription());
+        std::string utf8_string = dataBase.loadTextFromIdentifier(m_label.getDescription());
         m_label.setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
+    }
+}
 
+
+/**
+ * Sync the button's label position
+ * @author Arthur
+ * @date 23/12/16 - 27/12/17
+ */
+void Button::syncLabelPosition()
+{
+    if (!m_label.getDescription().empty())
+    {
         switch (m_labelPosition)
         {
             case TOP:
@@ -189,6 +201,23 @@ void Button::sync(DataBase *dataBase)
 
 
 /**
+ * Retrieves and syncs the button's label
+ * (updates position + displayed text)
+ *
+ * Note: This function is only a combination of syncLabel() and retrieveLabel()
+ * @author Arthur
+ * @date 27/12/17
+ *
+ * @param dataBase the app's database
+ */
+void Button::retrieveAndSyncLabel(const DataBase &dataBase)
+{
+    retrieveLabel(dataBase);
+    syncLabelPosition();
+}
+
+
+/**
  * Draws the button and its label
  * @author Arthur
  * @date 23/12/16
@@ -202,11 +231,15 @@ void Button::draw(sf::RenderWindow *window) const
     }
 }
 
+
 /**
  * Checks if a point of given coordinates is contained
  * in the button or its label
  * @author Arthur
  * @date 23/12/16 - 28/10/17
+ *
+ * @param x the x-axis of the coordinate
+ * @param y the y_axis of the coordinate
  */
 bool Button::contains(float x, float y) const {
     return isEnabled() && isVisible() &&

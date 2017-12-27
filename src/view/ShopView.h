@@ -25,7 +25,7 @@ limitations under the License.
 /**
  * ShopView Class
  * @author Arthur
- * @date 11/05/16 - 02/01/17
+ * @date 11/05/16 - 27/12/17
  */
 class ShopView : public AbstractView
 {
@@ -37,10 +37,7 @@ public:
     //=== METHODS
     void synchronize() override;
     void draw() const override;
-    void loadImages() override;
     bool handleEvents(sf::Event event) override;
-    void syncCards();
-    void createCards();
 
 private:
     //=== ATTRIBUTES
@@ -56,6 +53,11 @@ private:
     //Containers
     std::vector<ShopItemCard *> m_shopItemCardsArray;
     std::map<int, RadioButton *> m_pageIndicators;
+
+    //=== METHODS
+    void loadImages() override;
+    void syncCards();
+    void createCards();
 };
 
 

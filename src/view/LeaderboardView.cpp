@@ -6,12 +6,14 @@ using namespace std;
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 21/05/16 - 29/01/17
+ * @date 21/05/16 - 27/12/17
  */
 LeaderboardView::LeaderboardView(sf::RenderWindow *window, TextHandler *textHandler, Leaderboard *leaderboardModel) :
         AbstractView(window, textHandler), m_leaderboard{leaderboardModel}
 {
     loadImages();
+
+    textHandler->initMenuLeaderboardText();
 }
 
 
@@ -41,6 +43,7 @@ void LeaderboardView::loadImages()
     clipRect_clear.emplace_back(151, 100, 150, 40);
     m_clearLbRectButton = new Button(m_width / 2 - 75, 540, 150, 40, "leaderboard_clear_button",
                                      RECT_BUTTONS_IMAGE, clipRect_clear);
+    m_clearLbRectButton->retrieveAndSyncLabel(*m_leaderboard->getDataBase());
 
     //=== Initialize HOME form button
 
@@ -54,13 +57,13 @@ void LeaderboardView::loadImages()
 /**
  * Synchronization function
  * @author Arthur
- * @date 20/05/16 - 29/01/17
+ * @date 20/05/16 - 27/12/17
  */
 void LeaderboardView::synchronize()
 {
     m_homeFormButton->sync();
     m_homeFormButton->resize(FORM_BUTTONS_SIZE);
-    m_clearLbRectButton->sync(m_leaderboard->getDataBase());
+    m_clearLbRectButton->sync();
 
     m_textHandler->syncMenuLeaderboardText();
 }

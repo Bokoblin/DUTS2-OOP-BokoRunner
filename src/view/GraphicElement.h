@@ -31,7 +31,7 @@ public:
     GraphicElement(float width, float height);
     GraphicElement(float x, float y, float width, float height);
     GraphicElement(float x, float y, float width, float height, const std::string &image);
-    GraphicElement(GraphicElement const& element);
+    GraphicElement(GraphicElement const& other);
     ~GraphicElement() override;
 
     //=== GETTERS

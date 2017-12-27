@@ -33,7 +33,7 @@ limitations under the License.
  * calculating final score, etc.
  *
  * @author Arthur
- * @date 26/03/16 - 31/10/17
+ * @date 26/03/16 - 27/12/17
  */
 class GameModel : public AbstractModel
 {

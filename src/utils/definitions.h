@@ -19,7 +19,7 @@ limitations under the License.
 /**
  * Provides pre-processor definitions to view classes
  * @author Arthur
- * @date 16/04/17
+ * @date 16/04/17 - 27/12/17
  */
 
 //=== COLORS DEFINITIONS
@@ -44,9 +44,9 @@ limitations under the License.
 #define KEYBOARD_JUMP  (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) \
                        || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 
-#define RED_BUTTON_UP sf::IntRect(0, 100, 150, 40)
-#define GREEN_BUTTON_UP sf::IntRect(0, 178, 150, 43)
-#define GREEN_BUTTON_DOWN sf::IntRect(151, 179, 150, 40)
+#define RED_BUTTON_UP 0, 100, 150, 40
+#define GREEN_BUTTON_UP 0, 178, 150, 43
+#define GREEN_BUTTON_DOWN 151, 179, 150, 40
 
 //=== URL DEFINITIONS
 #define REPOSITORY "https://github.com/Bokoblin/DUTS2-POO-ProjetRunner"

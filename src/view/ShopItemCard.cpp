@@ -62,14 +62,14 @@ void ShopItemCard::loadImages()
     //=== Initialize BUY, BOUGHT Buttons
 
     vector<sf::IntRect> clipRectGreen;
-    clipRectGreen.push_back(GREEN_BUTTON_UP);
-    clipRectGreen.push_back(GREEN_BUTTON_DOWN);
+    clipRectGreen.emplace_back(GREEN_BUTTON_UP);
+    clipRectGreen.emplace_back(GREEN_BUTTON_DOWN);
     m_buyButton = new Button(getPosition().x + m_width/2-75, getPosition().y + 250, 150, 80, "shop_purchasable",
                              RECT_BUTTONS_IMAGE, clipRectGreen);
 
     vector<sf::IntRect> clipRectRed;
-    clipRectRed.push_back(RED_BUTTON_UP);
-    clipRectRed.push_back(RED_BUTTON_UP);
+    clipRectRed.emplace_back(RED_BUTTON_UP);
+    clipRectRed.emplace_back(RED_BUTTON_UP);
     m_boughtButton = new Button(getPosition().x + m_width/2-75, getPosition().y + 250, 150, 80, "shop_bought",
                                 RECT_BUTTONS_IMAGE, clipRectRed);
     m_boughtButton->setEnabled(false);
@@ -81,21 +81,53 @@ void ShopItemCard::loadImages()
 /**
  * Sync function
  * @author Arthur
- * @date 16/05/16 - 04/01/17
+ * @date 16/05/16 - 27/12/17
  */
-void ShopItemCard::sync(DataBase *dataBase)
+void ShopItemCard::sync()
 {
+    GraphicElement::sync();
+
     if (m_item->isBought())
     {
         m_buyButton->hide();
+        m_boughtButton->applyColor();
         m_boughtButton->show();
-        m_boughtButton->sync(dataBase);
+        m_boughtButton->sync();
     }
     else
     {
         m_boughtButton->hide();
+        m_buyButton->applyColor();
         m_buyButton->show();
-        m_buyButton->sync(dataBase);
+        m_buyButton->sync();
+    }
+}
+
+
+/**
+ * Syncs the card and retrieve content of buttons label
+ * @author Arthur
+ * @date 16/05/16 - 04/01/17
+ *
+ * @param dataBase the database for retrieval
+ */
+void ShopItemCard::syncWithButtonLabelRetrieval(const DataBase &dataBase)
+{
+    if (m_item->isBought())
+    {
+        m_buyButton->hide();
+        m_boughtButton->applyColor();
+        m_boughtButton->show();
+        m_boughtButton->sync();
+        m_boughtButton->retrieveAndSyncLabel(dataBase);
+    }
+    else
+    {
+        m_boughtButton->hide();
+        m_buyButton->applyColor();
+        m_buyButton->show();
+        m_buyButton->sync();
+        m_buyButton->retrieveAndSyncLabel(dataBase);
     }
 }
 

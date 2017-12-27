@@ -44,6 +44,9 @@ SettingsView::SettingsView(sf::RenderWindow *window, TextHandler *textHandler, S
     m_buttonList.push_back(m_menuMusicButton);
     m_buttonList.push_back(m_gameMusicButton);
 
+    for (Button *button : m_buttonList)
+        button->retrieveAndSyncLabel(*m_settings->getDataBase());
+
     m_confirmDialog = new Dialog(m_width/2-140, m_height/2-120, 280, 200, *textHandler, "confirm");
     m_confirmDialog->hide();
 
@@ -169,7 +172,7 @@ void SettingsView::synchronize()
     //=== Sync buttons
 
     for (Button *button : m_buttonList)
-        button->sync(m_settings->getDataBase());
+        button->sync();
 
 
     DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, *m_settings->getDataBase());
@@ -308,16 +311,22 @@ bool SettingsView::handleEvents(sf::Event event)
             {
                 m_settings->changeLanguage(ENGLISH);
                 m_textHandler->updateWholeText();
+                for (Button *button : m_buttonList)
+                    button->retrieveAndSyncLabel(*m_settings->getDataBase());
             }
             else if (m_frenchLangRadio->contains(MOUSE_POSITION))
             {
                 m_settings->changeLanguage(FRENCH);
                 m_textHandler->updateWholeText();
+                for (Button *button : m_buttonList)
+                    button->retrieveAndSyncLabel(*m_settings->getDataBase());
             }
             else if (m_spanishLangRadio->contains(MOUSE_POSITION))
             {
                 m_settings->changeLanguage(SPANISH);
                 m_textHandler->updateWholeText();
+                for (Button *button : m_buttonList)
+                    button->retrieveAndSyncLabel(*m_settings->getDataBase());
             }
             else if (m_easyModeRadio->contains(MOUSE_POSITION))
             {

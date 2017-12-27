@@ -29,7 +29,7 @@ class ScrollingBackground : public GraphicElement
 public:
     //=== CTORs / DTORs
     ScrollingBackground(float width, float height, float scrollingSpeed, const std::string &image);
-    ScrollingBackground(ScrollingBackground const& element) = delete;
+    ScrollingBackground(ScrollingBackground const& other) = delete;
     ~ScrollingBackground() override;
 
     //=== GETTERS

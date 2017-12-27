@@ -39,15 +39,16 @@ GraphicElement::GraphicElement(float x, float y, float width, float height, cons
 /**
  * Copy Constructor
  * @author Arthur, Florian
- * @date 25/02/16 - 16/04/17
+ * @date 25/02/16 - 27/12/17
  */
-GraphicElement::GraphicElement(GraphicElement const& element) :
-    Sprite(), m_width(element.m_width), m_height(element.m_height),
-    m_isShowing{element.m_isShowing}, m_alpha{element.m_alpha}
+GraphicElement::GraphicElement(GraphicElement const& other) :
+    Sprite(), m_width(other.m_width), m_height(other.m_height),
+    m_isShowing{other.m_isShowing}, m_alpha{other.m_alpha}, m_light{other.m_light},
+    m_texture_filename{other.m_texture_filename}
 {
-    this->setPosition(element.getPosition());
-    this->setTexture(*element.getTexture(), true);
-    this->setOrigin(element.getOrigin());
+    this->setPosition(other.getPosition());
+    this->setTexture(*other.getTexture(), true);
+    this->setOrigin(other.getOrigin());
 }
 
 

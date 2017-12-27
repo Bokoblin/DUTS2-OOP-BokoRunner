@@ -244,18 +244,17 @@ void TextHandler::syncSettingsText(int currentPage)
 
 
 /**
- * Menu Leaderboard Text Syncing
+ * Menu Leaderboard Text Init
  * @author Arthur
- * @date 19/04/16 - 30/01/17
+ * @date 27/12/17
  */
-void TextHandler::syncMenuLeaderboardText()
+void TextHandler::initMenuLeaderboardText()
 {
     string scoresEasy = m_dataBase->loadLeaderboardScores(EASY);
     string scoresHard = m_dataBase->loadLeaderboardScores(HARD);
 
     if (scoresEasy.empty())
     {
-        updateWholeText();
         m_leaderboardContentEasyText->setPositionSelfCentered(m_width/4, m_height/2);
     }
     else
@@ -267,12 +266,42 @@ void TextHandler::syncMenuLeaderboardText()
 
     if (scoresHard.empty())
     {
-        updateWholeText();
         m_leaderboardContentHardText->setPositionSelfCentered(m_width/2+m_width/4, m_height/2);
     }
     else
     {
         m_leaderboardContentHardText->setString(sf::String::fromUtf8(scoresHard.begin(), scoresHard.end()));
+        m_leaderboardContentHardText->setCharacterSize(26);
+        m_leaderboardContentHardText->setPositionSelfCentered(m_width/2+m_width/4, 300);
+    }
+
+    m_leaderboardTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
+}
+
+
+/**
+ * Menu Leaderboard Text Syncing
+ * @author Arthur
+ * @date 19/04/16 - 30/01/17
+ */
+void TextHandler::syncMenuLeaderboardText()
+{
+    if (m_dataBase->isScoreEasyArrayEmpty())
+    {
+        m_leaderboardContentEasyText->setPositionSelfCentered(m_width/4, m_height/2);
+    }
+    else
+    {
+        m_leaderboardContentEasyText->setCharacterSize(26);
+        m_leaderboardContentEasyText->setPositionSelfCentered(m_width/4, 300);
+    }
+
+    if (m_dataBase->isScoreHardArrayEmpty())
+    {
+        m_leaderboardContentHardText->setPositionSelfCentered(m_width/2+m_width/4, m_height/2);
+    }
+    else
+    {
         m_leaderboardContentHardText->setCharacterSize(26);
         m_leaderboardContentHardText->setPositionSelfCentered(m_width/2+m_width/4, 300);
     }

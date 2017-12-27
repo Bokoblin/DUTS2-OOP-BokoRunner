@@ -23,7 +23,7 @@ limitations under the License.
 /**
  * LeaderboardView Class
  * @author Arthur
- * @date 21/05/16 - 29/01/17
+ * @date 21/05/16 - 27/12/17
  */
 class LeaderboardView : public AbstractView
 {
@@ -35,7 +35,6 @@ public:
     //=== METHODS
     void synchronize() override;
     void draw() const override;
-    void loadImages() override;
     bool handleEvents(sf::Event event) override;
 
 private:
@@ -43,6 +42,9 @@ private:
     Leaderboard *m_leaderboard;
     Button *m_homeFormButton;
     Button *m_clearLbRectButton;
+
+    //=== METHODS
+    void loadImages() override;
 };
 
 #endif

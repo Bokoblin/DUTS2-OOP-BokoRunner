@@ -72,12 +72,14 @@ void MenuView::loadImages()
     clipRectPlay.emplace_back(151, 0, 150, 80);
     m_playRectButton = new Button(m_width/2-75, (float) (m_height / 1.5), 150, 80, "menu_play_button",
                                   RECT_BUTTONS_IMAGE, clipRectPlay);
+    m_playRectButton->retrieveAndSyncLabel(*m_menu->getDataBase());
 
     vector<sf::IntRect> clipRectQuit;
     clipRectQuit.emplace_back(0, 0, 150, 80);
     clipRectQuit.emplace_back(151, 0, 150, 80);
     m_quitRectButton = new Button(m_width/2-75, (float) (m_height / 1.2), 150, 80, "menu_quit_button",
                                   RECT_BUTTONS_IMAGE, clipRectQuit);
+    m_quitRectButton->retrieveAndSyncLabel(*m_menu->getDataBase());
 
 
     //=== Initialize COMMANDS, SETTINGS, LEADERBOARD and SHOP form buttons
@@ -124,30 +126,25 @@ void MenuView::synchronize()
         case HOME:
             m_farBackground->sync();
             m_nearBackground->sync();
-            m_playRectButton->sync(m_menu->getDataBase());
-            m_quitRectButton->sync(m_menu->getDataBase());
+            m_playRectButton->sync();
+            m_quitRectButton->sync();
             m_commandsFormButton->sync();
             m_settingsFormButton->sync();
             m_leaderboardFormButton->sync();
             m_shopFormButton->sync();
             break;
-
         case COMMANDS:
             m_commandsView->synchronize();
             break;
-
         case LEADERBOARD:
             m_leaderboardView->synchronize();
             break;
-
         case SETTINGS:
             m_settingsView->synchronize();
             break;
-
         case SHOP:
             m_shopView->synchronize();
             break;
-
         default:
             break;
     }
@@ -221,12 +218,88 @@ void MenuView::draw() const
 
 
 /**
+ * Handles Home screen events
+ * @param event sfml event object
+ * @return true if app state is unchanged
+ *
+ * @author Arthur, Florian
+ * @date 25/03/16 - 27/12/17
+ */
+bool MenuView::handleHomeEvents(const sf::Event &event)
+{
+    if (MOUSE_LEFT_PRESSED_EVENT)
+    {
+        if (m_playRectButton->contains(MOUSE_POSITION))
+            m_playRectButton->setPressed(true);
+
+        else if (m_quitRectButton->contains(MOUSE_POSITION))
+            m_quitRectButton->setPressed(true);
+
+        else if (m_commandsFormButton->contains(MOUSE_POSITION))
+            m_commandsFormButton->setPressed(true);
+
+        else if (m_settingsFormButton->contains(MOUSE_POSITION))
+            m_settingsFormButton->setPressed(true);
+
+        else if (m_leaderboardFormButton->contains(MOUSE_POSITION))
+            m_leaderboardFormButton->setPressed(true);
+
+        else if (m_shopFormButton->contains(MOUSE_POSITION))
+            m_shopFormButton->setPressed(true);
+    }
+
+    if (event.type == sf::Event::MouseButtonReleased)
+    {
+        m_playRectButton->setPressed(false);
+        m_quitRectButton->setPressed(false);
+        m_commandsFormButton->setPressed(false);
+        m_settingsFormButton->setPressed(false);
+        m_leaderboardFormButton->setPressed(false);
+        m_shopFormButton->setPressed(false);
+
+        if (m_playRectButton->contains(MOUSE_POSITION))
+        {
+            if (m_menuMusic.getStatus() == sf::Music::Status::Playing)
+                m_menuMusic.stop();
+            m_menu->getDataBase()->setAppState(GAME);
+            return false;
+        }
+        else if (m_quitRectButton->contains(MOUSE_POSITION))
+        {
+            if (m_menuMusic.getStatus() == sf::Music::Status::Playing)
+                m_menuMusic.stop();
+            m_menu->getDataBase()->setAppState(QUIT);
+            return false;
+        }
+        else if (m_commandsFormButton->contains(MOUSE_POSITION))
+        {
+            m_commandsView = new CommandsView(m_window, m_textHandler, m_menu->launchCommands());
+        }
+        else if (m_leaderboardFormButton->contains(MOUSE_POSITION))
+        {
+            m_leaderboardView = new LeaderboardView(m_window, m_textHandler, m_menu->launchLeaderboard());
+        }
+        else if (m_settingsFormButton->contains(MOUSE_POSITION))
+        {
+            m_settingsView = new SettingsView(m_window, m_textHandler, m_menu->launchSettings());
+        }
+        else if (m_shopFormButton->contains(MOUSE_POSITION))
+        {
+            m_shopView = new ShopView(m_window, m_textHandler, m_menu->launchShop());
+        }
+    }
+
+    return true;
+}
+
+
+/**
  * Handles the user interaction events (mouse, keyboard, title bar buttons)
  * @param event sfml event object
  * @return true if app state is unchanged
  *
  * @author Arthur, Florian
- * @date 25/03/16 - 26/12/17
+ * @date 25/03/16 - 27/12/17
  */
 bool MenuView::handleEvents(sf::Event event)
 {
@@ -240,67 +313,7 @@ bool MenuView::handleEvents(sf::Event event)
 
         if (m_menu->getMenuState() == HOME)
         {
-            if (MOUSE_LEFT_PRESSED_EVENT)
-            {
-                if (m_playRectButton->contains(MOUSE_POSITION))
-                    m_playRectButton->setPressed(true);
-
-                else if (m_quitRectButton->contains(MOUSE_POSITION))
-                    m_quitRectButton->setPressed(true);
-
-                else if (m_commandsFormButton->contains(MOUSE_POSITION))
-                    m_commandsFormButton->setPressed(true);
-
-                else if (m_settingsFormButton->contains(MOUSE_POSITION))
-                    m_settingsFormButton->setPressed(true);
-
-                else if (m_leaderboardFormButton->contains(MOUSE_POSITION))
-                    m_leaderboardFormButton->setPressed(true);
-
-                else if (m_shopFormButton->contains(MOUSE_POSITION))
-                    m_shopFormButton->setPressed(true);
-            }
-
-            if (event.type == sf::Event::MouseButtonReleased)
-            {
-                m_playRectButton->setPressed(false);
-                m_quitRectButton->setPressed(false);
-                m_commandsFormButton->setPressed(false);
-                m_settingsFormButton->setPressed(false);
-                m_leaderboardFormButton->setPressed(false);
-                m_shopFormButton->setPressed(false);
-
-                if (m_playRectButton->contains(MOUSE_POSITION))
-                {
-                    if (m_menuMusic.getStatus() == sf::Music::Status::Playing)
-                        m_menuMusic.stop();
-                    m_menu->getDataBase()->setAppState(GAME);
-                    return false;
-                }
-                else if (m_quitRectButton->contains(MOUSE_POSITION))
-                {
-                    if (m_menuMusic.getStatus() == sf::Music::Status::Playing)
-                        m_menuMusic.stop();
-                    m_menu->getDataBase()->setAppState(QUIT);
-                    return false;
-                }
-                else if (m_commandsFormButton->contains(MOUSE_POSITION))
-                {
-                    m_commandsView = new CommandsView(m_window, m_textHandler, m_menu->launchCommands());
-                }
-                else if (m_leaderboardFormButton->contains(MOUSE_POSITION))
-                {
-                    m_leaderboardView = new LeaderboardView(m_window, m_textHandler, m_menu->launchLeaderboard());
-                }
-                else if (m_settingsFormButton->contains(MOUSE_POSITION))
-                {
-                    m_settingsView = new SettingsView(m_window, m_textHandler, m_menu->launchSettings());
-                }
-                else if (m_shopFormButton->contains(MOUSE_POSITION))
-                {
-                    m_shopView = new ShopView(m_window, m_textHandler, m_menu->launchShop());
-                }
-            }
+            return handleHomeEvents(event);
         }
         else if ((m_menu->getMenuState() == COMMANDS && !m_commandsView->handleEvents(event))
                  || (m_menu->getMenuState() == LEADERBOARD && !m_leaderboardView->handleEvents(event))
@@ -309,6 +322,8 @@ bool MenuView::handleEvents(sf::Event event)
                 )
         {
             m_menu->setMenuState(HOME);
+            m_playRectButton->retrieveAndSyncLabel(*m_menu->getDataBase());
+            m_quitRectButton->retrieveAndSyncLabel(*m_menu->getDataBase());
         }
     }
     return true;

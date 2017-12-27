@@ -61,6 +61,8 @@ void Sprite::setClipRectArray(std::vector<sf::IntRect> clipRectsArray)
  */
 void Sprite::sync()
 {
+    GraphicElement::sync();
+
     std::chrono::system_clock::duration duration = std::chrono::system_clock::now() - m_lastAnimationTime;
 
     if (duration > std::chrono::milliseconds(ANIMATION_DELAY))

@@ -24,7 +24,7 @@ limitations under the License.
 /**
  * GameView Class
  * @author Arthur, Florian
- * @date 21/02/16 - 26/12/17
+ * @date 21/02/16 - 27/12/17
  */
 class GameView : public AbstractView
 {
@@ -34,32 +34,9 @@ public:
     ~GameView() override;
 
     //=== METHODS
-
-    //sprite loading
-    void loadImages() override;
-    //transition
-    void processZonesTransition();
-    void setupTransition();
-    //synchronization
-    virtual void linkElements();
-    virtual void deleteElements();
-    virtual void updateRunningGameElements();
-    virtual void updatePausedGameElements();
-    virtual void updateGameOverElements();
     void synchronize() override;
-    //drawing
-    void drawRunningGame() const;
-    void drawPausedGame() const;
-    void drawGameOver() const;
     void draw() const override;
-    //events
-    void handlePlayerInput() const;
-    bool handleRunningGameEvents(sf::Event event);
-    bool handlePausedGameEvents(sf::Event event);
-    bool handleGameOverEvents(sf::Event event);
     bool handleEvents(sf::Event event) override;
-    //music
-    void handleMusic();
 
 private:
     //=== ATTRIBUTES
@@ -107,6 +84,36 @@ private:
     //Containers
     std::map<MovableElementType , Sprite*> m_typeToSpriteMap;
     std::map<MovableElement*, Sprite*> m_movableElementToSpriteMap;
+
+    //=== METHODS
+
+    //Sprite loading
+    void loadImages() override;
+
+    //Zone transition
+    void processZonesTransition();
+    void setupTransition();
+
+    //Synchronization
+    virtual void linkElements();
+    virtual void deleteElements();
+    virtual void updateRunningGameElements();
+    virtual void updatePausedGameElements();
+    virtual void updateGameOverElements();
+
+    //Drawing
+    void drawRunningGame() const;
+    void drawPausedGame() const;
+    void drawGameOver() const;
+
+    //Events
+    void handlePlayerInput() const;
+    bool handleRunningGameEvents(sf::Event event);
+    bool handlePausedGameEvents(sf::Event event);
+    bool handleGameOverEvents(sf::Event event);
+
+    //Audio
+    void handleMusic();
 };
 
 #endif

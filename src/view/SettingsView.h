@@ -36,9 +36,7 @@ public:
     //=== METHODS
     void synchronize() override;
     void draw() const override;
-    void loadImages() override;
     bool handleEvents(sf::Event event) override;
-    void handleMusic();
 
 private:
     //=== ATTRIBUTES
@@ -66,6 +64,10 @@ private:
     //Containers
     std::map<int, RadioButton *> m_pageIndicators;
     std::vector<Button*> m_buttonList;
+
+    //=== METHODS
+    void loadImages() override;
+    void handleMusic();
 };
 
 

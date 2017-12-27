@@ -26,7 +26,7 @@ limitations under the License.
 /**
  * MenuView Class
  * @author Arthur, Florian
- * @date 26/03/16 - 02/11/17
+ * @date 26/03/16 - 27/12/17
  */
 class MenuView : public AbstractView
 {
@@ -38,7 +38,6 @@ public:
     //=== METHODS
     void synchronize() override;
     void draw() const override;
-    void loadImages() override;
     bool handleEvents(sf::Event event) override;
 
 private:
@@ -62,6 +61,10 @@ private:
 
     //Audio
     sf::Music m_menuMusic;
+
+    //=== METHODS
+    void loadImages() override;
+    bool handleHomeEvents(const sf::Event &event);
 };
 
 #endif

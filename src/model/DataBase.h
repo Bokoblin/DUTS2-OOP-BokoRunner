@@ -32,7 +32,7 @@ limitations under the License.
  * statistics, buyable items, scores,
  * current game's values, etc.
  * @author Arthur
- * @date 02/05/16 - 31/10/17
+ * @date 02/05/16 - 27/12/17
  */
 class DataBase
 {
@@ -92,6 +92,8 @@ public:
     bool findActivatedItem(const std::string &item);
     std::string loadTextFromIdentifier(const std::string &description) const;
     std::string loadLeaderboardScores(Difficulty difficulty) const;
+    bool isScoreEasyArrayEmpty() const;
+    bool isScoreHardArrayEmpty() const;
 
 private:
     //=== ATTRIBUTES

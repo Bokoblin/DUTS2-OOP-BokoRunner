@@ -70,7 +70,9 @@ void ShopView::createCards()
     int i = 0;
     for (ShopItem *item : m_shop->getShopItemsArray())
     {
-        m_shopItemCardsArray.push_back(new ShopItemCard(i, item, m_textHandler));
+        ShopItemCard *card = new ShopItemCard(i, item, m_textHandler);
+        card->syncWithButtonLabelRetrieval(*m_shop->getDataBase());
+        m_shopItemCardsArray.push_back(card);
         i++;
     }
 
@@ -100,7 +102,7 @@ void ShopView::syncCards()
     //display only 3 cards linked to the current page indicator
     for (ShopItemCard *card : m_shopItemCardsArray)
     {
-        card->sync(m_shop->getDataBase());
+        card->sync();
         if(card->getId() == 0 + 3 * m_currentIndicator
             || card->getId() == 1 + 3 * m_currentIndicator
             || card->getId() == 2 + 3 * m_currentIndicator)
@@ -233,12 +235,21 @@ bool ShopView::handleEvents(sf::Event event)
             {
                 if (m_buyDialog->getContext() == "shopAskDialog") //TODO : Don't use strings
                 {
+                    ShopItem *shopItem = m_buyDialog->getLinkedShopItem();
+
                     delete m_buyDialog;
-                    const std::string operationResult = m_shop->buyItem(m_buyDialog->getLinkedShopItem())
-                                                        ? "shopSuccess" : "shopFailure"; //TODO : Don't use strings
+                    //TODO : Don't use strings
+                    const std::string operationResult = m_shop->buyItem(shopItem) ? "shopSuccess" : "shopFailure";
                     m_buyDialog = new ShopDialog(m_width/2 - 125, m_height/2 - 50, 250, 100,
                                                  *m_textHandler, operationResult);
                     DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, *m_shop->getDataBase());
+
+                    if (operationResult == "shopSuccess")
+                    {
+                        for (auto &card : m_shopItemCardsArray)
+                            if (card->getItem() == shopItem)
+                                card->syncWithButtonLabelRetrieval(*m_shop->getDataBase());
+                    }
                 }
                 else
                     m_buyDialog->hide();

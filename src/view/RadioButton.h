@@ -26,7 +26,7 @@ limitations under the License.
  * and a different label location than other buttons
  *
  * @author Arthur
- * @date 23/12/16 - 02/01/17
+ * @date 23/12/16 - 27/12/17
  */
 class RadioButton : public Button
 {
@@ -39,7 +39,7 @@ public:
 
     //=== METHODS
     void sync() override;
-    void sync(DataBase *dataBase) override;
+    void syncLabelPosition() override;
 
 private:
     //=== METHODS

@@ -58,15 +58,9 @@ public:
     void setTransitionPossibleState(bool state);
     void setCurrentZone(Zone z);
 
-    //=== METHODS
+    //=== PUBLIC METHODS
     void nextStep() override;
-    void chooseTimeSpacing(int elementType);
-    bool checkIfPositionFree(float x, float y) const;
     void moveMovableElement(MovableElement *element);
-    void handleMovableElementsCreation();
-    void handleMovableElementsCollisions();
-    void handleMovableElementsDeletion();
-    void addANewMovableElement(float posX, float posY, int type);
     void clearNewMovableElementList();
 
 private:
@@ -106,6 +100,25 @@ private:
     const int ADDITIONAL_TIMEOUT = 5000;
     const float DEFAULT_SPEED = 5.0;
     const float SPEED_STEP = 0.02;
+    const int PV_BONUS_INCREASE = 10;
+    const int SLOW_SPEED_BONUS_DIVIDER = 2;
+    const int MEGA_BONUS_FLATTENED_STD = 100;
+    const int MEGA_BONUS_FLATTENED_TOTEM = 300;
+    const int MEGA_BONUS_FLATTENED_BLOCK = 500;
+    const int COLLISION_DAMAGE_STD = 10;
+    const int COLLISION_DAMAGE_TOTEM = 15;
+    const int COLLISION_DAMAGE_BLOCK = 25;
+
+    //=== PRIVATE METHODS
+    void chooseTimeSpacing(int elementType);
+    bool checkIfPositionFree(float x, float y) const;
+    void handleMovableElementsCreation();
+    void handleEnemyCollision(MovableElementType enemyType);
+    void handleCoinCollision() const;
+    void handleBonusCollision(MovableElementType bonusType);
+    void handleMovableElementsCollisions();
+    void handleMovableElementsDeletion();
+    void addANewMovableElement(float posX, float posY, int type);
 };
 
 #endif

@@ -62,6 +62,7 @@ Zone GameModel::getCurrentZone() const { return m_currentZone; }
 Player* GameModel::getPlayer() const { return m_player; }
 const set<MovableElement*>& GameModel::getNewMElementsArray() const { return m_newMovableElementsArray; }
 
+
 //=== Setters
 
 void GameModel::setGameState(GameState state) { m_gameState = state; }
@@ -81,17 +82,17 @@ void GameModel::nextStep()
 {
     chrono::system_clock::duration currentNextStepDelay = chrono::system_clock::now() - m_lastTime;
 
-	if (m_gameState == RUNNING || m_gameState == RUNNING_SLOWLY)
-	{
-	    //=== Handle Movable Elements Collisions
+    if (m_gameState == RUNNING || m_gameState == RUNNING_SLOWLY)
+    {
+        //=== Handle Movable Elements Collisions
 
         //outside of delay otherwise some high speed collisions are not triggered
         handleMovableElementsCollisions();
 
-        chrono::system_clock::duration nextStepDelay = std::chrono::milliseconds(NEXT_STEP_DELAY);
+        chrono::system_clock::duration nextStepDelay = chrono::milliseconds(NEXT_STEP_DELAY);
 
-		if (currentNextStepDelay.count() > nextStepDelay.count())
-		{
+        if (currentNextStepDelay.count() > nextStepDelay.count())
+        {
             //=== Update distance and gameSpeed
 
             if (m_gameSpeed < SPEED_LIMIT && m_gameState != RUNNING_SLOWLY)
@@ -102,9 +103,9 @@ void GameModel::nextStep()
             m_dataBase->increaseCurrentDistance(m_gameSpeed/5);
 
 
-			//=== Handle Movable Elements Creation & Deletion
+            //=== Handle Movable Elements Creation & Deletion
 
-			if (!m_isTransitionPossible)
+            if (!m_isTransitionPossible)
                 handleMovableElementsCreation();
 
             handleMovableElementsDeletion();
@@ -114,7 +115,7 @@ void GameModel::nextStep()
 
             if (m_bonusTimeout.count() > chrono::milliseconds(0).count())
             {
-                m_bonusTimeout.operator-=(std::chrono::milliseconds(NEXT_STEP_DELAY));
+                m_bonusTimeout.operator-=(chrono::milliseconds(NEXT_STEP_DELAY));
             }
             else
             {
@@ -317,7 +318,7 @@ void GameModel::handleMovableElementsCreation()
  */
 void GameModel::addANewMovableElement(float posX, float posY, int type)
 {
-    #define ELEMENT_MOVE_X getGameSpeed()*(-1)
+    const float ELEMENT_MOVE_X = getGameSpeed()*(-1);
     MovableElement *m_newMElement = nullptr;
 
     if (type == PLAYER)
@@ -345,9 +346,115 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
 
 
 /**
+ * Handles a collision between the player and an enemy
+ * @author Arthur, Florian
+ * @date 25/02/16 - 27/12/17
+ *
+ * @param enemyType the enemy type
+ */
+void GameModel::handleEnemyCollision(MovableElementType enemyType)
+{
+    if (m_player->getState() == MEGA) {
+        //Earn points by flattening enemies
+        if (enemyType == STANDARD_ENEMY)
+            m_dataBase->increaseCurrentFlattenedEnemies(MEGA_BONUS_FLATTENED_STD);
+        else if (enemyType == TOTEM_ENEMY)
+            m_dataBase->increaseCurrentFlattenedEnemies(MEGA_BONUS_FLATTENED_TOTEM);
+        else
+            m_dataBase->increaseCurrentFlattenedEnemies(MEGA_BONUS_FLATTENED_BLOCK);
+    }
+    else if (m_player->getState() == SHIELD
+             && m_bonusTimeout.count() != chrono::milliseconds(SHIELD_TIMEOUT).count())
+    {
+        if (m_dataBase->findActivatedItem("shieldPlus"))
+            m_bonusTimeout = chrono::milliseconds(SHIELD_TIMEOUT);
+        else
+            m_player->changeState(NORMAL);
+    }
+    else if (m_player->getState() == SHIELD)
+    {
+        m_player->changeState(NORMAL);
+    }
+    else {
+        if (m_dataBase->getDifficulty() == EASY)
+        {
+            if (enemyType == STANDARD_ENEMY)
+                m_player->setLife(m_player->getLife() - COLLISION_DAMAGE_STD);
+            else if (enemyType == TOTEM_ENEMY)
+                m_player->setLife(m_player->getLife() - COLLISION_DAMAGE_TOTEM);
+            else
+                m_player->setLife(m_player->getLife() - COLLISION_DAMAGE_BLOCK);
+        }
+        else
+        {
+            if (enemyType == STANDARD_ENEMY)
+                m_player->setLife(m_player->getLife() - 2 * COLLISION_DAMAGE_STD);
+            else if (enemyType == TOTEM_ENEMY)
+                m_player->setLife(m_player->getLife() - 2 * COLLISION_DAMAGE_TOTEM);
+            else
+                m_player->setLife(m_player->getLife() - 2 * COLLISION_DAMAGE_BLOCK);
+        }
+    }
+}
+
+
+/**
+ * Handles a collision between the player and a coin
+ * @author Arthur, Florian
+ * @date 25/02/16 - 27/12/17
+ */
+void GameModel::handleCoinCollision() const
+{
+    m_dataBase->increaseCurrentCoinsCollected(
+            m_dataBase->findActivatedItem("doubler") ? 2 : 1);
+}
+
+
+/**
+ * Handles a collision between the player and a bonus
+ * @author Arthur, Florian
+ * @date 25/02/16 - 27/12/17
+ */
+void GameModel::handleBonusCollision(MovableElementType bonusType) {
+    if (bonusType == PV_PLUS_BONUS)
+    {
+        m_player->setLife(m_player->getLife() + PV_BONUS_INCREASE);
+    }
+    else if (bonusType == MEGA_BONUS)
+    {
+        m_player->changeState(MEGA);
+        m_bonusTimeout = chrono::milliseconds(m_dataBase->findActivatedItem("megaPlus")
+                                              ? MEGA_TIMEOUT + ADDITIONAL_TIMEOUT
+                                              : MEGA_TIMEOUT);
+    }
+    else if (bonusType == FLY_BONUS)
+    {
+        m_player->changeState(FLY);
+        m_bonusTimeout = chrono::milliseconds(m_dataBase->findActivatedItem("flyPlus")
+                                              ? FLY_TIMEOUT + ADDITIONAL_TIMEOUT
+                                              : FLY_TIMEOUT);
+    }
+    else if (bonusType == SLOW_SPEED_TIMEOUT)
+    {
+        m_gameState = RUNNING_SLOWLY;
+        m_gameSpeed /= SLOW_SPEED_BONUS_DIVIDER;
+        m_gameSlowSpeed = m_gameSpeed;
+        m_bonusTimeout = chrono::milliseconds(SLOW_SPEED_TIMEOUT);
+    }
+    else if (bonusType == SHIELD_BONUS)
+    {
+        m_player->changeState(SHIELD);
+    }
+    else
+    {
+        cerr << "ERROR undefined bonus type " << endl;
+    }
+}
+
+/**
  * Handles Movable Elements Collisions
  * @author Arthur
- * @date 12/03/16 - 24/12/17
+ * @date 12/03/16 - 27/12/17
  */
 void GameModel::handleMovableElementsCollisions()
 {
@@ -363,84 +470,20 @@ void GameModel::handleMovableElementsCollisions()
                 case STANDARD_ENEMY:
                 case TOTEM_ENEMY:
                 case BLOCK_ENEMY:
-                    if (m_player->getState() == MEGA) {
-                        //Earn points by flattening enemies
-                        if (element->getType() == STANDARD_ENEMY)
-                            m_dataBase->increaseCurrentFlattenedEnemies(100);
-                        else if (element->getType() == TOTEM_ENEMY)
-                            m_dataBase->increaseCurrentFlattenedEnemies(300);
-                        else
-                            m_dataBase->increaseCurrentFlattenedEnemies(500);
-                    }
-                    else if (m_player->getState() == SHIELD
-                             && m_bonusTimeout.count() != chrono::milliseconds(SHIELD_TIMEOUT).count())
-                    {
-                        if (m_dataBase->findActivatedItem("shieldPlus"))
-                            m_bonusTimeout = chrono::milliseconds(SHIELD_TIMEOUT);
-                        else
-                            m_player->changeState(NORMAL);
-                    }
-                    else if (m_player->getState() == SHIELD)
-                    {
-                        m_player->changeState(NORMAL);
-                    }
-                    else {
-                        if (m_dataBase->getDifficulty() == EASY)
-                        {
-                            if (element->getType() == STANDARD_ENEMY)
-                                m_player->setLife(m_player->getLife() - 10);
-                            else if (element->getType() == TOTEM_ENEMY)
-                                m_player->setLife(m_player->getLife() - 15);
-                            else
-                                m_player->setLife(m_player->getLife() - 25);
-                        }
-                        else
-                        {
-                            if (element->getType() == STANDARD_ENEMY)
-                                m_player->setLife(m_player->getLife() - 20);
-                            else if (element->getType() == TOTEM_ENEMY)
-                                m_player->setLife(m_player->getLife() - 30);
-                            else
-                                m_player->setLife(m_player->getLife() - 50);
-                        }
-                        m_player->setLife(m_player->getLife() - 20);
-                    }
+                    handleEnemyCollision(element->getType());
                     break;
-
                 case COIN:
-                    m_dataBase->increaseCurrentCoinsCollected(
-                            m_dataBase->findActivatedItem("doubler") ? 2 : 1);
+                    handleCoinCollision();
                     break;
-
                 case PV_PLUS_BONUS:
-                    m_player->setLife(m_player->getLife() + 10);
-                    break;
-
                 case MEGA_BONUS:
-                    m_player->changeState(MEGA);
-                    m_bonusTimeout = chrono::milliseconds(m_dataBase->findActivatedItem("megaPlus")
-                                                          ? MEGA_TIMEOUT + ADDITIONAL_TIMEOUT
-                                                          : MEGA_TIMEOUT);
-                    break;
                 case FLY_BONUS:
-                    m_player->changeState(FLY);
-                    m_bonusTimeout = chrono::milliseconds(m_dataBase->findActivatedItem("flyPlus")
-                                                          ? FLY_TIMEOUT + ADDITIONAL_TIMEOUT
-                                                          : FLY_TIMEOUT);
-                    break;
-
                 case SLOW_SPEED_BONUS:
-                    m_gameState = RUNNING_SLOWLY;
-                    m_gameSpeed /= 2;
-                    m_gameSlowSpeed = m_gameSpeed;
-                    m_bonusTimeout = chrono::milliseconds(SLOW_SPEED_TIMEOUT);
-                    break;
-
                 case SHIELD_BONUS:
-                    m_player->changeState(SHIELD);
+                    handleBonusCollision(element->getType());
                     break;
-
                 default:
+                    cerr << "ERROR undefined element type " << endl;
                     break;
             }
         }
@@ -461,7 +504,7 @@ void GameModel::handleMovableElementsDeletion()
     while(it!=m_movableElementsArray.end())
     {
         if (((*it)->getPosX() + (*it)->getWidth()) < 0
-             || (*it)->isColliding())
+            || (*it)->isColliding())
         {
             m_movableElementsArray.erase(it);
             it = m_movableElementsArray.end();

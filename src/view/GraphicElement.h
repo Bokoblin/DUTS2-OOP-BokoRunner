@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef GRAPHIC_ELEMENT_H
 #define GRAPHIC_ELEMENT_H
 
-#include <iostream>
+#include <iostream> //FIXME : with a logger
 #include <SFML/Graphics.hpp>
 
 /**
@@ -48,7 +48,7 @@ public:
 
     //=== METHODS
     virtual void sync();
-    virtual void draw(sf::RenderWindow *window)const;
+    virtual void draw(sf::RenderWindow *window) const;
     virtual void resize(float width, float height);
     virtual void setTextureFromImage(const std::string &image);
     virtual bool contains(float x, float y) const;

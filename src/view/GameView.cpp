@@ -129,7 +129,7 @@ void GameView::loadImages()
 
     std::vector<sf::IntRect> clipRect;
     for (int i=0; i<8; i++) clipRect.emplace_back(50 * i, 0, 50, 50);
-    m_playerSprite = new Sprite(50, GAME_FLOOR, 30, 30, BALL_IMAGE, clipRect);
+    m_playerSprite = new AnimatedSprite(50, GAME_FLOOR, 30, 30, BALL_IMAGE, clipRect);
     m_playerSprite->setOrigin(0, 50);
 
 
@@ -137,17 +137,17 @@ void GameView::loadImages()
 
     std::vector<sf::IntRect> clipRectStdEnemy;
     for (int i=0; i<2; i++) clipRectStdEnemy.emplace_back(50 * i, 0, 50, 50);
-    m_stdEnemySprite = new Sprite(30, 135, 30, 30, ENEMIES_IMAGE, clipRectStdEnemy);
+    m_stdEnemySprite = new AnimatedSprite(30, 135, 30, 30, ENEMIES_IMAGE, clipRectStdEnemy);
     m_stdEnemySprite->setOrigin(0, 50);
 
     std::vector<sf::IntRect> clipRectTotemEnemy;
     for (int i=0; i<2; i++) clipRectTotemEnemy.emplace_back(50 * i, 0, 50, 150);
-    m_totemEnemySprite = new Sprite(m_width, GAME_FLOOR, 30, 90, ENEMIES_IMAGE, clipRectTotemEnemy);
+    m_totemEnemySprite = new AnimatedSprite(m_width, GAME_FLOOR, 30, 90, ENEMIES_IMAGE, clipRectTotemEnemy);
     m_totemEnemySprite->setOrigin(0, 150);
 
     std::vector<sf::IntRect> clipRectBlockEnemy;
     for (int i=0; i<2; i++) clipRectBlockEnemy.emplace_back(50 * i, 150, 50, 50);
-    m_blockEnemySprite = new Sprite(50, 95, 50, 50, ENEMIES_IMAGE, clipRectBlockEnemy);
+    m_blockEnemySprite = new AnimatedSprite(50, 95, 50, 50, ENEMIES_IMAGE, clipRectBlockEnemy);
     m_blockEnemySprite->setOrigin(0, 50);
 
 
@@ -159,32 +159,32 @@ void GameView::loadImages()
 
     std::vector<sf::IntRect> clipRect_coin;
     for (int i=0; i<5; i++) clipRect_coin.emplace_back(50 * i, 0, 50, 50);
-    m_coinSprite = new Sprite(30, 95, 25, 25, BONUS_IMAGE, clipRect_coin);
+    m_coinSprite = new AnimatedSprite(30, 95, 25, 25, BONUS_IMAGE, clipRect_coin);
     m_coinSprite->setOrigin(0, 50);
 
     std::vector<sf::IntRect> clipRect_pv;
     for (int i=0; i<5; i++) clipRect_pv.emplace_back(50 * i, 50, 50, 50);
-    m_PVPlusBonusSprite = new Sprite(m_width, GAME_FLOOR, 25, 25, BONUS_IMAGE, clipRect_pv);
+    m_PVPlusBonusSprite = new AnimatedSprite(m_width, GAME_FLOOR, 25, 25, BONUS_IMAGE, clipRect_pv);
     m_PVPlusBonusSprite->setOrigin(0, 50);
 
     std::vector<sf::IntRect> clipRect_mega;
     for (int i=0; i<5; i++) clipRect_mega.emplace_back(50*i, 100, 50, 50);
-    m_megaBonusSprite = new Sprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_mega);
+    m_megaBonusSprite = new AnimatedSprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_mega);
     m_megaBonusSprite->setOrigin(0, 50);
 
     std::vector<sf::IntRect> clipRect_fly;
     for (int i=0; i<5; i++) clipRect_fly.emplace_back(50 * i, 150, 50, 50);
-    m_flyBonusSprite = new Sprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_fly);
+    m_flyBonusSprite = new AnimatedSprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_fly);
     m_flyBonusSprite->setOrigin(0, 50);
 
     std::vector<sf::IntRect> clipRect_slow;
     for (int i=0; i<5; i++) clipRect_slow.emplace_back(50 * i, 200, 50, 50);
-    m_slowSpeedBonusSprite = new Sprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_slow);
+    m_slowSpeedBonusSprite = new AnimatedSprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_slow);
     m_slowSpeedBonusSprite->setOrigin(0, 50);
 
     std::vector<sf::IntRect> clipRect_shield;
     for (int i=0; i<5; i++) clipRect_shield.emplace_back(50 * i, 250, 50, 50);
-    m_shieldBonusSprite = new Sprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_shield);
+    m_shieldBonusSprite = new AnimatedSprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_shield);
     m_shieldBonusSprite->setOrigin(0, 50);
 
 
@@ -259,7 +259,7 @@ void GameView::loadImages()
 void GameView::linkElements()
 {
     for (auto &element : m_game->getNewMElementsArray())
-        m_movableElementToSpriteMap[element] = new Sprite(*(m_typeToSpriteMap[element->getType()]));
+        m_movableElementToSpriteMap[element] = new AnimatedSprite(*(m_typeToSpriteMap[element->getType()]));
 
     m_game->clearNewMovableElementList();
 }

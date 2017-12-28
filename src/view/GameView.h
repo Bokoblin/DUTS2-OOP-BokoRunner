@@ -55,16 +55,16 @@ private:
     GraphicElement *m_lifeBoxImage;
     GraphicElement *m_remainingLifeImage;
     GraphicElement *m_shieldImage;
-    Sprite *m_playerSprite;
-    Sprite *m_stdEnemySprite;
-    Sprite *m_totemEnemySprite;
-    Sprite *m_blockEnemySprite;
-    Sprite *m_coinSprite;
-    Sprite *m_PVPlusBonusSprite;
-    Sprite *m_megaBonusSprite;
-    Sprite *m_flyBonusSprite;
-    Sprite *m_slowSpeedBonusSprite;
-    Sprite *m_shieldBonusSprite;
+    AnimatedSprite *m_playerSprite;
+    AnimatedSprite *m_stdEnemySprite;
+    AnimatedSprite *m_totemEnemySprite;
+    AnimatedSprite *m_blockEnemySprite;
+    AnimatedSprite *m_coinSprite;
+    AnimatedSprite *m_PVPlusBonusSprite;
+    AnimatedSprite *m_megaBonusSprite;
+    AnimatedSprite *m_flyBonusSprite;
+    AnimatedSprite *m_slowSpeedBonusSprite;
+    AnimatedSprite *m_shieldBonusSprite;
 
     //Pause and End Graphic Elements
     GraphicElement *m_pauseBackground;
@@ -82,8 +82,8 @@ private:
     sf::Music m_destructedEnemiesMusic;
 
     //Containers
-    std::map<MovableElementType , Sprite*> m_typeToSpriteMap;
-    std::map<MovableElement*, Sprite*> m_movableElementToSpriteMap;
+    std::map<MovableElementType , AnimatedSprite*> m_typeToSpriteMap;
+    std::map<MovableElement*, AnimatedSprite*> m_movableElementToSpriteMap;
 
     //=== METHODS
 

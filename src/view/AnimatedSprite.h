@@ -27,14 +27,14 @@ limitations under the License.
  * @author Arthur
  * @date 3/03/16 - 16/04/17
  */
-class Sprite : public GraphicElement
+class AnimatedSprite : public GraphicElement
 {
 public:
     //=== CTORs / DTORs
-    Sprite(float x, float y, float width, float height, const std::string &image,
+    AnimatedSprite(float x, float y, float width, float height, const std::string &image,
            const std::vector<sf::IntRect> &clipRect);
-    Sprite(const Sprite& other);
-    ~Sprite() override;
+    AnimatedSprite(const AnimatedSprite& other);
+    ~AnimatedSprite() override;
 
     //=== SETTERS
     void setClipRectArray(std::vector<sf::IntRect> clipRectsArray);

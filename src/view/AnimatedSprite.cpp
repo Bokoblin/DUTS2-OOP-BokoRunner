@@ -1,4 +1,4 @@
-#include "Sprite.h"
+#include "AnimatedSprite.h"
 
 /**
  * Constructs a sprite with a position, a size,
@@ -13,7 +13,7 @@
  * @param image the file to use for sprite texture
  * @param clipRect the part of the image to use for texture
  */
-Sprite::Sprite(float x, float y, float width, float height, const std::string &image,
+AnimatedSprite::AnimatedSprite(float x, float y, float width, float height, const std::string &image,
                const std::vector<sf::IntRect> &clipRect) :
         GraphicElement(x, y, width, height, image), m_clipRectArray{clipRect},
         m_currentClipRect{0}, m_lastAnimationTime{std::chrono::system_clock::now() }
@@ -29,7 +29,7 @@ Sprite::Sprite(float x, float y, float width, float height, const std::string &i
  *
  * @param other another sprite object to copy
  */
-Sprite::Sprite(const Sprite& other) :
+AnimatedSprite::AnimatedSprite(const AnimatedSprite& other) :
         GraphicElement(other), m_clipRectArray{other.m_clipRectArray},
         m_currentClipRect{0}, m_lastAnimationTime{std::chrono::system_clock::now() }
 {
@@ -42,12 +42,12 @@ Sprite::Sprite(const Sprite& other) :
  * @author Arthur
  * @date 05/03/16
  */
-Sprite::~Sprite() = default;
+AnimatedSprite::~AnimatedSprite() = default;
 
 
 //=== Setters
 
-void Sprite::setClipRectArray(std::vector<sf::IntRect> clipRectsArray)
+void AnimatedSprite::setClipRectArray(std::vector<sf::IntRect> clipRectsArray)
 {
     m_clipRectArray = std::move(clipRectsArray);
 }
@@ -59,7 +59,7 @@ void Sprite::setClipRectArray(std::vector<sf::IntRect> clipRectsArray)
  * @author Arthur
  * @date 03/03/16 - 22/05/16
  */
-void Sprite::sync()
+void AnimatedSprite::sync()
 {
     GraphicElement::sync();
 

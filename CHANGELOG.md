@@ -23,7 +23,7 @@ Current version : v2.0.0-dev
     - `IntroView` => `SplashScreenView`
     - `Model` => `AbstractModel`
     - `View` => `AbstractView`
-    - `AnimatedGraphicElement` => `Sprite`
+    - `AnimatedGraphicElement` => `AnimatedSprite`
     - `PixelateEffect` => `PixelShader`
     - `SlidingBackground` => `ScrollingBackground`
   - **window**: life-cycle now handled only in `main.cpp`

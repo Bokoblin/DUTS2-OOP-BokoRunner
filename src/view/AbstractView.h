@@ -18,7 +18,7 @@ limitations under the License.
 
 #include "TextHandler.h"
 #include "ScrollingBackground.h"
-#include "Sprite.h"
+#include "AnimatedSprite.h"
 #include "Button.h"
 #include <SFML/Audio.hpp>
 

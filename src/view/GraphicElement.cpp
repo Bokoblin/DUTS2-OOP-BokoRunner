@@ -6,7 +6,8 @@
  * @date 21/02/16 - 24/12/17
  */
 GraphicElement::GraphicElement(float width, float height) :
-        m_width{width}, m_height{height}, m_isShowing{true}, m_alpha{255}, m_light{255}, m_texture_filename{""}
+        m_width{width}, m_height{height}, m_isShowing{true},
+        m_alpha{255}, m_light{255}, m_texture_filename{""}
 {}
 
 

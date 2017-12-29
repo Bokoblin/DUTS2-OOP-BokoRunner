@@ -13,41 +13,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef LOGGER_H
-#define LOGGER_H
+#ifndef CONFIG_H
+#define CONFIG_H
 
-#include <iostream>
+#include "../Logger/Logger.h"
+#include <string>
 
 namespace Bokoblin
 {
-namespace SimpleLogger
+namespace MaterialDesignComponentsForSFML
 {
 
 /**
  * TODO : Temporary \n
- * The Logger class currently implements a temporary logger for stdout and stderr. \n
- * Moving forward to Boko Runner 2.0.x release, it should implement
- * a more complexe logger than just writing in program console
+ * The Config class currently implements a temporary config for MDC-SFML for stdout and stderr. \n
+ * Moving forward it shall use values defined in an XML that user can change
  *
  * @author Arthur
- * @date 28/12/17
+ * @date 29/12/17
  */
-class Logger
+class Config
 {
 public:
-    static void printWarningOnConsole(const std::string &message)
-    {
-        std::cout << "[WARNING] " << message << std::endl;
-    }
-
-    static void printErrorOnConsole(const std::string &message)
-    {
-        std::cerr << "[ERROR] " << message << std::endl;
-    }
+    //=== ATTRIBUTES
+    static constexpr const char* DEFAULT_REGULAR_FONT = "../res/fonts/Roboto_Regular.ttf";
+    static constexpr const char* DEFAULT_CONDENSED_FONT = "../res/fonts/Roboto_Condensed.ttf";
+    static constexpr const char* DEFAULT_BOLD_FONT = "../res/fonts/Roboto_Bold.ttf";
 };
 
-} //namespace SimpleLogger
+} //namespace MaterialDesignComponentsForSFML
 } //namespace Bokoblin
-
 
 #endif

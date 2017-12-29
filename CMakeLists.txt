@@ -7,26 +7,32 @@ set(EXECUTABLE_NAME ${PROJECT_NAME})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 #include libraries
-set(SFML_ROOT "${PROJECT_SOURCE_DIR}/libs/SFML-2.4.2")
+set(SFML_ROOT "${PROJECT_SOURCE_DIR}/ext-libs/SFML-2.4.2")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
 
-file(GLOB SOURCE_FILES
-        "src/model/*.h"
-        "src/model/*.cpp"
-        "src/view/*.h"
-        "src/view/*.cpp"
-        "src/utils/*.h"
-        "src/main.cpp"
-        )
-
 set(PUGI_LIB
-        libs/pugixml-1.8/src/pugixml.hpp
-        libs/pugixml-1.8/src/pugixml.cpp
+        ext-libs/pugixml-1.8/src/pugixml.hpp
+        ext-libs/pugixml-1.8/src/pugixml.cpp
         )
 
-add_executable(${EXECUTABLE_NAME} ${PUGI_LIB} ${SOURCE_FILES})
+set(LOGGER_LIB
+        src/libs/Logger/Logger.h
+        )
 
-FIND_PACKAGE(SFML 2.4 COMPONENTS audio graphics window system REQUIRED )
+file(GLOB MDC-SFML_LIB
+        "src/libs/MDC-SFML/*.h"
+        "src/libs/MDC-SFML/*.cpp"
+        )
 
-include_directories( ${SFML_INCLUDE_DIR} )
-target_link_libraries( ${EXECUTABLE_NAME} ${SFML_LIBRARIES})
+file(GLOB_RECURSE SOURCE_FILES
+        "src/app/*.h"
+        "src/app/*.cpp"
+        )
+
+
+add_executable(${EXECUTABLE_NAME} ${PUGI_LIB} ${LOGGER_LIB} ${MDC-SFML_LIB} ${SOURCE_FILES})
+
+FIND_PACKAGE(SFML 2.4 COMPONENTS audio graphics window system REQUIRED)
+
+include_directories(${SFML_INCLUDE_DIR})
+target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES})

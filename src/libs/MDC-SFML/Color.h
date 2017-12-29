@@ -13,41 +13,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef LOGGER_H
-#define LOGGER_H
+#ifndef Color_H
+#define Color_H
 
-#include <iostream>
+#include <SFML/Graphics/Color.hpp>
 
 namespace Bokoblin
 {
-namespace SimpleLogger
+namespace MaterialDesignComponentsForSFML
 {
 
 /**
- * TODO : Temporary \n
- * The Logger class currently implements a temporary logger for stdout and stderr. \n
- * Moving forward to Boko Runner 2.0.x release, it should implement
- * a more complexe logger than just writing in program console
+ * The Color class inherits sf::Color.
+ * It defines other colors used by MDC-SFML.
  *
  * @author Arthur
- * @date 28/12/17
+ * @date 29/12/17
+ *
+ * @see sf::Color
  */
-class Logger
+class Color: public sf::Color
 {
 public:
-    static void printWarningOnConsole(const std::string &message)
-    {
-        std::cout << "[WARNING] " << message << std::endl;
-    }
-
-    static void printErrorOnConsole(const std::string &message)
-    {
-        std::cerr << "[ERROR] " << message << std::endl;
-    }
+    //=== ATTRIBUTES
+    static const sf::Color MaterialTeal;
+    static const sf::Color MaterialMine;
 };
 
-} //namespace SimpleLogger
+} //namespace MaterialDesignComponentsForSFML
 } //namespace Bokoblin
-
 
 #endif

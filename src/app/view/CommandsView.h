@@ -17,20 +17,22 @@ limitations under the License.
 #define COMMANDS_VIEW_H
 
 #include "AbstractView.h"
-#include "../model/Commands.h"
+#include "../model/CommandsModel.h"
 #include "../utils/definitions.h"
 
 /**
- * The CommandsView class displays
- * game's command
+ * The CommandsView class inherits AbstractView.
+ * It is the view counterpart of the class CommandsModel.
+ * It handles the commands screen's rendering.
+ *
  * @author Arthur
- * @date 24/01/17 - 27/12/17
+ * @date 24/01/17 - 29/12/17
  */
 class CommandsView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    CommandsView(sf::RenderWindow *window, TextHandler *textHandler, Commands *commandsModel);
+    CommandsView(sf::RenderWindow *window, TextHandler *textHandler, CommandsModel *commandsModel);
     ~CommandsView() override;
 
     //=== METHODS
@@ -40,7 +42,7 @@ public:
 
 private:
     //=== ATTRIBUTES
-    Commands *m_commands;
+    CommandsModel *m_commands;
     mdsf::Sprite *m_commandSprite;
     mdsf::Button *m_homeFormButton;
 

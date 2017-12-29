@@ -14,7 +14,7 @@ using std::string;
  * @param textHandler the text handler to display standalone texts
  * @param settingsModel the settings model
  */
-SettingsView::SettingsView(sf::RenderWindow *window, TextHandler *textHandler, Settings *settingsModel) :
+SettingsView::SettingsView(sf::RenderWindow *window, TextHandler *textHandler, SettingsModel *settingsModel) :
         AbstractView(window, textHandler),
     m_settings{settingsModel}, m_confirmDialog{nullptr}
 {
@@ -22,10 +22,10 @@ SettingsView::SettingsView(sf::RenderWindow *window, TextHandler *textHandler, S
 
     //=== Create Pages Indicator
 
-    for (int i=0; i < Settings::PAGE_NUMBER; i++)
+    for (int i=0; i < SettingsModel::PAGE_NUMBER; i++)
     {
         m_pageIndicators[i] = new mdsf::RadioButton(0, 580, 15, 15, "indicator");
-        m_pageIndicators[i]->setPosition(m_width/2 - 12*Settings::PAGE_NUMBER + 24*i, 550);
+        m_pageIndicators[i]->setPosition(m_width/2 - 12*SettingsModel::PAGE_NUMBER + 24*i, 550);
         m_pageIndicators[i]->resize(INDICATOR_BUTTONS_SIZE);
     }
 

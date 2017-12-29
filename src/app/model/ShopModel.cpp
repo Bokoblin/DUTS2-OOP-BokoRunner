@@ -1,4 +1,4 @@
-#include "Shop.h"
+#include "ShopModel.h"
 
 using std::string;
 using std::stoi;
@@ -11,7 +11,7 @@ using std::vector;
  *
  * @param dataBase the common app's dataBase
  */
-Shop::Shop(DataBase *dataBase) :  AbstractModel(dataBase)
+ShopModel::ShopModel(DataBase *dataBase) :  AbstractModel(dataBase)
 {
     fetchBuyableItemsFromFile();
 }
@@ -22,7 +22,7 @@ Shop::Shop(DataBase *dataBase) :  AbstractModel(dataBase)
  * @author Arthur
  * @date 11/05/16 - 18/05/16
  */
-Shop::~Shop()
+ShopModel::~ShopModel()
 {
     for (ShopItem *shopItem: m_shopItemsArray)
         delete shopItem;
@@ -30,7 +30,7 @@ Shop::~Shop()
 
 
 //=== Getters
-vector<ShopItem*> Shop::getShopItemsArray() const { return m_shopItemsArray; }
+vector<ShopItem*> ShopModel::getShopItemsArray() const { return m_shopItemsArray; }
 
 
 /**
@@ -40,7 +40,7 @@ vector<ShopItem*> Shop::getShopItemsArray() const { return m_shopItemsArray; }
  *
  * @param item the item to buy
  */
-bool Shop::buyItem(ShopItem *item)
+bool ShopModel::buyItem(ShopItem *item)
 {
     if (!item->isBought() && item->getPrice() <= m_dataBase->getWallet())
     {
@@ -77,7 +77,7 @@ bool Shop::buyItem(ShopItem *item)
  * @author Arthur
  * @date 11/05/16 - 24/12/17
  */
-void Shop::fetchBuyableItemsFromFile()
+void ShopModel::fetchBuyableItemsFromFile()
 {
     //Opens config file with pugiXML library
     pugi::xml_document doc;
@@ -104,7 +104,7 @@ void Shop::fetchBuyableItemsFromFile()
  * @author Arthur
  * @date 29/01/17
  */
-void Shop::nextStep()
+void ShopModel::nextStep()
 {}
 
 
@@ -114,7 +114,7 @@ void Shop::nextStep()
  * @author Arthur
  * @date 03/11/17
  */
-void Shop::quit()
+void ShopModel::quit()
 {
     m_dataBase->pushConfigurationToFile();
 }

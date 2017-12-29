@@ -16,21 +16,28 @@ Current version : v2.0.0-dev
 - **Structure refactoring**
   - **abstraction inheritance**: introducing `AbstractModel` and `AbstractView` classes
   - **abstraction inheritance**: more classes inherit from abstract classes
-  - **enumerations**: each of them now has its own `.h` file
-  - **definitions**: all `#define` constants are now in `utils/definition.h` file
-  - **renaming**: several classes and methods have been renamed
-    - `IntroModel` => `SplashScreenModel`
-    - `IntroView` => `SplashScreenView`
-    - `Model` => `AbstractModel`
-    - `View` => `AbstractView`
-    - `AnimatedGraphicElement` => `AnimatedSprite`
-    - `PixelateEffect` => `PixelShader`
-    - `SlidingBackground` => `ScrollingBackground`
+  - **ui components**: Generic UI components are now dissociated from app and grouped under *MDC-SFML'
   - **window**: life-cycle now handled only in `main.cpp`
   - **events**: 
     - `treatEvents()` => `handleEvents()`
     - improvements of handleEvents() methods : useless code removed, window::close() moved to `main.cpp`
   - **ressources**: folder organization improvements
+  - **enumerations**: each of them now has its own `.h` file
+  - **definitions**: all `#define` constants are now in `utils/definition.h` file
+  - **constants**: more constants have been moved to `constants.h`
+  - **classes renaming**: several classes and methods have been renamed
+    - `IntroModel` => `SplashScreenModel`
+    - `IntroView` => `SplashScreenView`
+    - `Model` => `AbstractModel`
+    - `Commands` => `CommandsModel`
+    - `Leaderboard` => `LeaderboardModel`
+    - `Settings` => `SettingsModel`
+    - `Shop` => `ShopModel`
+    - `View` => `AbstractView`
+    - `GraphicElement` => `Sprite`
+    - `AnimatedGraphicElement` => `AnimatedSprite`
+    - `PixelateEffect` => `PixelShader`
+    - `SlidingBackground` => `ScrollingBackground`
     
 #### Features
 - **splash screen**: 
@@ -42,12 +49,14 @@ Current version : v2.0.0-dev
     - `ShopDialog` inherits from it for shop specific dialogs
 - **settings**: added support for hyperlinks (URL is opened in default browser) [tested on Ubuntu 14.04 and Windows 10]
 - **graphics**: support for changing graphic elements's light (using same principle as alpha)
+
 #### Bug fixes
 - Style and spacing fixes
+- Performance fixes by removing unnecessary actions in sync loop (i.e. xml file access)
 
 #### Misc
 - **iconography**: added application icon (title bar and task bar)
-- **constants**: more constants have been moved to `constants.h`
+- **randomness**: switched to C++11 random functions
 - **language**: more C++11 keywords and functions usage
 - **styling**: typo and code styling improvements
 - **changelog**: changed for `.md` and reformatted file accordingly

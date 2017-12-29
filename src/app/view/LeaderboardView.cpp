@@ -6,7 +6,7 @@
  * @author Arthur
  * @date 21/05/16 - 27/12/17
  */
-LeaderboardView::LeaderboardView(sf::RenderWindow *window, TextHandler *textHandler, Leaderboard *leaderboardModel) :
+LeaderboardView::LeaderboardView(sf::RenderWindow *window, TextHandler *textHandler, LeaderboardModel *leaderboardModel) :
         AbstractView(window, textHandler), m_leaderboard{leaderboardModel}
 {
     loadImages();

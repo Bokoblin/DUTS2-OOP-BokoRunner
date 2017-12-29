@@ -19,16 +19,19 @@ limitations under the License.
 #include "AbstractModel.h"
 
 /**
- * The Commands class is the model of CommandsView class
+ * The CommandsModel class inherits AbstractModel.
+ * It is the model counterpart of the class CommandsView.
+ * It handles the commands screen's logic
+ *
  * @author Arthur
- * @date 24/01/17 - 30/01/17
+ * @date 24/01/17 - 29/12/17
  */
-class Commands : public AbstractModel
+class CommandsModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit Commands(DataBase *dataBase);
-    ~Commands() override;
+    explicit CommandsModel(DataBase *dataBase);
+    ~CommandsModel() override;
 
     //=== METHODS
     void nextStep() override;

@@ -1,4 +1,4 @@
-#include "Leaderboard.h"
+#include "LeaderboardModel.h"
 
 /**
  * Constructs a Leaderboard model with database
@@ -7,7 +7,7 @@
  *
  * @param dataBase the common app's dataBase
  */
-Leaderboard::Leaderboard(DataBase *dataBase) :
+LeaderboardModel::LeaderboardModel(DataBase *dataBase) :
         AbstractModel(dataBase)
 {
     if (!m_dataBase->checkConfigFileIntegrity())
@@ -23,7 +23,7 @@ Leaderboard::Leaderboard(DataBase *dataBase) :
  * @author Arthur
  * @date 19/04/16
  */
-Leaderboard::~Leaderboard() = default;
+LeaderboardModel::~LeaderboardModel() = default;
 
 
 /**
@@ -31,7 +31,7 @@ Leaderboard::~Leaderboard() = default;
  * @author Arthur
  * @date 29/01/17
  */
-void Leaderboard::nextStep()
+void LeaderboardModel::nextStep()
 {}
 
 
@@ -41,7 +41,7 @@ void Leaderboard::nextStep()
  * @author Arthur
  * @date 03/11/17
  */
-void Leaderboard::quit()
+void LeaderboardModel::quit()
 {
     m_dataBase->pushConfigurationToFile();
 }

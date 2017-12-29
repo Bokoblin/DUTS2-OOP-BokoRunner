@@ -5,7 +5,7 @@
  * @author Arthur
  * @date 24/01/17 - 29/01/17
  */
-CommandsView::CommandsView(sf::RenderWindow *window, TextHandler *textHandler, Commands *commandsModel) :
+CommandsView::CommandsView(sf::RenderWindow *window, TextHandler *textHandler, CommandsModel *commandsModel) :
         AbstractView(window, textHandler), m_commands{commandsModel}
 {
     loadImages();

@@ -540,7 +540,7 @@ void TextHandler::drawGameOverText(sf::RenderWindow *window) const
  * @param event sfml event object
  * @param settings the settings model
  */
-void TextHandler::handleAboutLinks(sf::Event event, const Settings &settings) const
+void TextHandler::handleAboutLinks(sf::Event event, const SettingsModel &settings) const
 {
     //TODO : Temporary until dedicated LinkButton class
 

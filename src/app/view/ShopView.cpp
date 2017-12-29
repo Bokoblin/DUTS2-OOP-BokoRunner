@@ -9,7 +9,7 @@
  * @param textHandler the app's text handler
  * @param shopModel the shop's model object
  */
-ShopView::ShopView(sf::RenderWindow *window, TextHandler *textHandler, Shop *shopModel) :
+ShopView::ShopView(sf::RenderWindow *window, TextHandler *textHandler, ShopModel *shopModel) :
         AbstractView(window, textHandler),
     m_shop{shopModel}, m_currentIndicator{0}, m_totalIndicator{0}, m_buyDialog{nullptr}
 {

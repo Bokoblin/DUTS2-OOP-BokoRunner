@@ -91,10 +91,10 @@ void MenuModel::nextStep()
  * @author Arthur
  * @date 24/01/17
  */
-Commands* MenuModel::launchCommands()
+CommandsModel* MenuModel::launchCommands()
 {
     m_menuState = COMMANDS;
-    m_commands = new Commands(m_dataBase);
+    m_commands = new CommandsModel(m_dataBase);
     return m_commands;
 }
 
@@ -104,10 +104,10 @@ Commands* MenuModel::launchCommands()
  * @author Arthur
  * @date 21/05/16
  */
-Leaderboard* MenuModel::launchLeaderboard()
+LeaderboardModel* MenuModel::launchLeaderboard()
 {
     m_menuState = LEADERBOARD;
-    m_leaderboard = new Leaderboard(m_dataBase);
+    m_leaderboard = new LeaderboardModel(m_dataBase);
     return m_leaderboard;
 }
 
@@ -117,10 +117,10 @@ Leaderboard* MenuModel::launchLeaderboard()
  * @author Arthur
  * @date 14/05/16
  */
-Shop* MenuModel::launchShop()
+ShopModel* MenuModel::launchShop()
 {
     m_menuState = SHOP;
-    m_shop = new Shop(m_dataBase);
+    m_shop = new ShopModel(m_dataBase);
     return m_shop;
 }
 
@@ -130,9 +130,9 @@ Shop* MenuModel::launchShop()
  * @author Arthur
  * @date 20/05/16
  */
-Settings* MenuModel::launchSettings()
+SettingsModel* MenuModel::launchSettings()
 {
     m_menuState = SETTINGS;
-    m_settings = new Settings(m_dataBase);
+    m_settings = new SettingsModel(m_dataBase);
     return m_settings;
 }

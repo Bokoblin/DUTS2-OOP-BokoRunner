@@ -17,19 +17,22 @@ limitations under the License.
 #define LEADERBOARD_VIEW_H
 
 #include "AbstractView.h"
-#include "../model/Leaderboard.h"
+#include "../model/LeaderboardModel.h"
 #include "../utils/definitions.h"
 
 /**
- * LeaderboardView Class
+ * The LeaderboardView class inherits AbstractView.
+ * It is the view counterpart of the class LeaderboardModel.
+ * It handles the leaderboard screen's rendering.
+ *
  * @author Arthur
- * @date 21/05/16 - 27/12/17
+ * @date 21/05/16 - 29/12/17
  */
 class LeaderboardView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    LeaderboardView(sf::RenderWindow *window, TextHandler *textHandler, Leaderboard *leaderboardModel);
+    LeaderboardView(sf::RenderWindow *window, TextHandler *textHandler, LeaderboardModel *leaderboardModel);
     ~LeaderboardView() override;
 
     //=== METHODS
@@ -39,7 +42,7 @@ public:
 
 private:
     //=== ATTRIBUTES
-    Leaderboard *m_leaderboard;
+    LeaderboardModel *m_leaderboard;
     mdsf::Button *m_homeFormButton;
     mdsf::Button *m_clearLbRectButton;
 

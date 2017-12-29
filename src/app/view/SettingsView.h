@@ -17,20 +17,23 @@ limitations under the License.
 #define SETTINGS_VIEW_H
 
 #include "AbstractView.h"
-#include "../model/Settings.h"
+#include "../model/SettingsModel.h"
 #include "../../libs/MDC-SFML/RadioButton.h"
 #include "../../libs/MDC-SFML/Dialog.h"
 
 /**
- * SettingsView Class
+ * The SettingsView class inherits AbstractView.
+ * It is the view counterpart of the class SettingsModel.
+ * It handles the settings screen's rendering.
+ *
  * @author Arthur
- * @date 20/05/16 - 02/11/17
+ * @date 20/05/16 - 29/12/17
  */
 class SettingsView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    SettingsView(sf::RenderWindow *window, TextHandler *textHandler, Settings *settingsModel);
+    SettingsView(sf::RenderWindow *window, TextHandler *textHandler, SettingsModel *settingsModel);
     ~SettingsView() override;
 
     //=== METHODS
@@ -40,7 +43,7 @@ public:
 
 private:
     //=== ATTRIBUTES
-    Settings *m_settings;
+    SettingsModel *m_settings;
     mdsf::Dialog *m_confirmDialog;
 
     //Graphic Elements

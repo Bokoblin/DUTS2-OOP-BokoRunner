@@ -17,21 +17,24 @@ limitations under the License.
 #define SHOP_VIEW_H
 
 #include "AbstractView.h"
-#include "../model/Shop.h"
+#include "../model/ShopModel.h"
 #include "ShopItemCard.h"
 #include "ShopDialog.h"
 #include "../../libs/MDC-SFML/RadioButton.h"
 
 /**
- * ShopView Class
+ * The ShopView class inherits AbstractView.
+ * It is the view counterpart of the class ShopModel.
+ * It handles the shop screen's rendering.
+ *
  * @author Arthur
- * @date 11/05/16 - 27/12/17
+ * @date 11/05/16 - 29/12/17
  */
 class ShopView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    ShopView(sf::RenderWindow *window, TextHandler *textHandler, Shop *shopModel);
+    ShopView(sf::RenderWindow *window, TextHandler *textHandler, ShopModel *shopModel);
     ~ShopView() override;
 
     //=== METHODS
@@ -41,7 +44,7 @@ public:
 
 private:
     //=== ATTRIBUTES
-    Shop *m_shop;
+    ShopModel *m_shop;
     int m_currentIndicator;
     int m_totalIndicator;
 

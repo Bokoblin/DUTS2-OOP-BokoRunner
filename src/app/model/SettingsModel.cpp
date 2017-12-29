@@ -1,4 +1,4 @@
-#include "Settings.h"
+#include "SettingsModel.h"
 
 using std::string;
 
@@ -9,7 +9,7 @@ using std::string;
  *
  * @param dataBase the common app's dataBase
  */
-Settings::Settings(DataBase *dataBase) :  AbstractModel(dataBase), m_currentPage{CONFIG}
+SettingsModel::SettingsModel(DataBase *dataBase) :  AbstractModel(dataBase), m_currentPage{CONFIG}
 {
     m_dataBase->fetchActivatedShopItems();
     checkItemsAvailability();
@@ -21,16 +21,16 @@ Settings::Settings(DataBase *dataBase) :  AbstractModel(dataBase), m_currentPage
  * @author Arthur
  * @date 20/05/16
  */
-Settings::~Settings() = default;
+SettingsModel::~SettingsModel() = default;
 
 
 //=== Getters & Setters
 
-bool Settings::isMorphSkinAvailable() const { return m_morphSkinIsAvailable; }
-bool Settings::isCapsuleSkinAvailable() const { return m_capsuleSkinIsAvailable; }
-int Settings::getCurrentPage() const { return m_currentPage; }
+bool SettingsModel::isMorphSkinAvailable() const { return m_morphSkinIsAvailable; }
+bool SettingsModel::isCapsuleSkinAvailable() const { return m_capsuleSkinIsAvailable; }
+int SettingsModel::getCurrentPage() const { return m_currentPage; }
 
-void Settings::setCurrentPage(int page) { m_currentPage = page; }
+void SettingsModel::setCurrentPage(int page) { m_currentPage = page; }
 
 
 /**
@@ -40,7 +40,7 @@ void Settings::setCurrentPage(int page) { m_currentPage = page; }
  *
  * @param language the new language
  */
-void Settings::changeLanguage(const string &language)
+void SettingsModel::changeLanguage(const string &language)
 {
     m_dataBase->setLanguage(language);
 }
@@ -52,7 +52,7 @@ void Settings::changeLanguage(const string &language)
  *
  * @param skin the new skin
  */
-void Settings::changeBallSkin(const string &skin)
+void SettingsModel::changeBallSkin(const string &skin)
 {
     m_dataBase->setBallSkin(skin);
 }
@@ -63,7 +63,7 @@ void Settings::changeBallSkin(const string &skin)
  * @author Arthur
  * @date 21/05/16 - 31/10/17
  */
-void Settings::checkItemsAvailability()
+void SettingsModel::checkItemsAvailability()
 {
     m_morphSkinIsAvailable = m_dataBase->findActivatedItem("shop_morphing");
     m_capsuleSkinIsAvailable = m_dataBase->findActivatedItem("shop_capsule");
@@ -74,7 +74,7 @@ void Settings::checkItemsAvailability()
  * @author Arthur
  * @date 02/11/17
  */
-void Settings::openURLinBrowser(const string &url) const {
+void SettingsModel::openURLinBrowser(const string &url) const {
 #if defined __linux__
     string command = "x-www-browser " + url;
     system(command.c_str());
@@ -91,7 +91,7 @@ void Settings::openURLinBrowser(const string &url) const {
  * @author Arthur
  * @date 29/01
  */
-void Settings::nextStep()
+void SettingsModel::nextStep()
 {}
 
 
@@ -101,7 +101,7 @@ void Settings::nextStep()
  * @author Arthur
  * @date 03/11/17
  */
-void Settings::quit()
+void SettingsModel::quit()
 {
     m_dataBase->pushConfigurationToFile();
 }

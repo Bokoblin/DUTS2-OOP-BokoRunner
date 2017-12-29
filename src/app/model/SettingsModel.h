@@ -25,17 +25,20 @@ limitations under the License.
 #endif
 
 /**
- * The Settings class is the model of SettingsView class
- * It controls page changing and checks item's availability for config changing
+ * The SettingsModel class inherits AbstractModel.
+ * It is the model counterpart of the class SettingsView.
+ * It handles the settings screen's logic :
+ * controlling current active page and checking item's availability
+ *
  * @author Arthur
- * @date 20/05/16 - 03/11/17
+ * @date 20/05/16 - 30/12/17
  */
-class Settings : public AbstractModel
+class SettingsModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit Settings(DataBase *dataBase);
-    ~Settings() override;
+    explicit SettingsModel(DataBase *dataBase);
+    ~SettingsModel() override;
 
     //=== GETTERS
     bool isMorphSkinAvailable() const;

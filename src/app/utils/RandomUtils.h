@@ -28,7 +28,6 @@ limitations under the License.
 class RandomUtils
 {
 public:
-
     /**
      * Provides uniformly an integer number between 2 limits
      * using the Uniform probability law

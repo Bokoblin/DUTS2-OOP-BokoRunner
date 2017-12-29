@@ -1,4 +1,4 @@
-#include "Commands.h"
+#include "CommandsModel.h"
 
 /**
  * Constructs a Commands model with database
@@ -7,7 +7,7 @@
  *
  * @param dataBase the common app's dataBase
  */
-Commands::Commands(DataBase *dataBase) :
+CommandsModel::CommandsModel(DataBase *dataBase) :
         AbstractModel{dataBase}
 {}
 
@@ -17,7 +17,7 @@ Commands::Commands(DataBase *dataBase) :
  * @author Arthur
  * @date 24/01/17
  */
-Commands::~Commands() = default;
+CommandsModel::~CommandsModel() = default;
 
 
 /**
@@ -25,5 +25,5 @@ Commands::~Commands() = default;
  * @author Arthur
  * @date 30/01/17
  */
-void Commands::nextStep()
+void CommandsModel::nextStep()
 {}

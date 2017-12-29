@@ -13,40 +13,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef SHOP_H
-#define SHOP_H
+#ifndef LEADERBOARD_H
+#define LEADERBOARD_H
 
-#include <vector>
-#include "ShopItem.h"
 #include "AbstractModel.h"
 
 /**
- * The Shop class is the model of ShopView class
- * It fetches the list of available to buy items
+ * The LeaderboardModel class inherits AbstractModel.
+ * It is the model counterpart of the class LeaderboardView.
+ * It handles the leaderboard screen's logic.
+ *
  * @author Arthur
- * @date 11/05/16 - 03/11/17
+ * @date  19/04/16 - 29/12/17
  */
-class Shop : public AbstractModel
+class LeaderboardModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit Shop(DataBase *dataBase);
-    ~Shop() override;
-
-    //=== GETTERS
-    std::vector<ShopItem*> getShopItemsArray() const;
+    explicit LeaderboardModel(DataBase *dataBase);
+    ~LeaderboardModel() override;
 
     //=== METHODS
-    bool buyItem(ShopItem *item);
     void nextStep() override;
     void quit();
-
-private:
-    //=== ATTRIBUTES
-    std::vector<ShopItem*> m_shopItemsArray;
-
-    //=== METHODS
-    void fetchBuyableItemsFromFile();
 };
 
 #endif

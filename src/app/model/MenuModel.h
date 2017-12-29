@@ -16,18 +16,20 @@ limitations under the License.
 #ifndef MENU_MODEL_H
 #define MENU_MODEL_H
 
-#include "Commands.h"
-#include "Leaderboard.h"
-#include "Settings.h"
-#include "Shop.h"
+#include "CommandsModel.h"
+#include "LeaderboardModel.h"
+#include "SettingsModel.h"
+#include "ShopModel.h"
 #include "../enum/MenuState.h"
 #include <chrono>
 
 /**
- * The MenuModel class
- * handles the menu's logic
+ * The MenuModel class inherits AbstractModel.
+ * It is the model counterpart of the class MenuView.
+ * It handles the menu screen's logic.
+ *
  * @author Arthur
- * @date 14/04/16 - 29/01/17
+ * @date 14/04/16 - 29/12/17
  */
 class MenuModel : public AbstractModel
 {
@@ -44,18 +46,18 @@ public:
 
     //=== METHODS
     void nextStep() override;
-    Commands* launchCommands();
-    Leaderboard* launchLeaderboard();
-    Shop* launchShop();
-    Settings* launchSettings();
+    CommandsModel* launchCommands();
+    LeaderboardModel* launchLeaderboard();
+    ShopModel* launchShop();
+    SettingsModel* launchSettings();
 
 private:
     //=== ATTRIBUTES
     MenuState m_menuState;
-    Commands *m_commands;
-    Leaderboard *m_leaderboard;
-    Settings *m_settings;
-    Shop *m_shop;
+    CommandsModel *m_commands;
+    LeaderboardModel *m_leaderboard;
+    SettingsModel *m_settings;
+    ShopModel *m_shop;
     std::chrono::system_clock::time_point m_lastTime;
 };
 

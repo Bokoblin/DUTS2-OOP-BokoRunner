@@ -19,7 +19,7 @@ limitations under the License.
 #include <SFML/Window/Event.hpp>
 #include "../model/DataBase.h"
 #include "../../libs/MDC-SFML/Text.h"
-#include "../model/Settings.h"
+#include "../model/SettingsModel.h"
 #include "../utils/definitions.h"
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
@@ -62,7 +62,7 @@ class TextHandler
     void drawGameText(sf::RenderWindow *window) const;
     void drawPauseText(sf::RenderWindow *window) const;
     void drawGameOverText(sf::RenderWindow *window) const;
-    void handleAboutLinks(sf::Event event, const Settings &settings) const;
+    void handleAboutLinks(sf::Event event, const SettingsModel &settings) const;
 
 private:
     //=== ATTRIBUTES

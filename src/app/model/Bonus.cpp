@@ -49,11 +49,11 @@ void Bonus::move()
  * 76-100: SHIELD ~25%
  *
  * @author Arthur
- * @date 11/04/16 - 21/05/16
+ * @date 11/04/16 - 29/12/16
  */
 void Bonus::chooseBonusType()
 {
-    int result = 1 + rand()%100;
+    int result = RandomUtils::getUniformRandomNumber(1, 100);
 
     if (result <= 30)
         m_elementType = PV_PLUS_BONUS;

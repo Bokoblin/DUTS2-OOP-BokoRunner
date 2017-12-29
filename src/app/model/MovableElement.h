@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef MOVABLE_ELEMENT_H
 #define MOVABLE_ELEMENT_H
 
-#include <cstdlib>
+#include "../utils/RandomUtils.h"
 #include "../enum/MovableElementType.h"
 
 /**

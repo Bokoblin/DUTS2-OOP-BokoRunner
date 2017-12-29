@@ -8,7 +8,7 @@ using Bokoblin::SimpleLogger::Logger;
 /**
  * Constructs a GameModel with the app common model
  * @author Arthur
- * @date 26/03/16 - 31/10/16
+ * @date 26/03/16 - 29/12/17
  *
  * @param width the app's width
  * @param height the app's height
@@ -34,9 +34,9 @@ GameModel::GameModel(float width, float height, DataBase *dataBase) :
 
     //=== Initialize elements apparition time-spacing
 
-    m_chosenEnemyTimeSpacing = 10 + rand()%11;  //10 to 20 m
-    m_chosenCoinTimeSpacing = rand()%11; //0 to 10m
-    m_chosenBonusTimeSpacing = 100 + rand()%51; //100 to 150 m
+    m_chosenCoinTimeSpacing = RandomUtils::getUniformRandomNumber(0, 10);       //Between 0 and 10 meters
+    m_chosenEnemyTimeSpacing = RandomUtils::getUniformRandomNumber(10, 20);     //Between 10 and 20 meters
+    m_chosenBonusTimeSpacing = RandomUtils::getUniformRandomNumber(100, 150);   //Between 100 and 150 meters
 }
 
 
@@ -162,7 +162,7 @@ void GameModel::nextStep()
  * Calculates the time-spacing before creating
  * a new element of the same type
  * @author Arthur
- * @date 12/03/16 - 30/01/17
+ * @date 12/03/16 - 29/12/17
  *
  * @param elementType the type of element that was just created
  */
@@ -173,11 +173,11 @@ void GameModel::chooseTimeSpacing(int elementType)
         case STANDARD_ENEMY: //Any enemy though
         {
             if (m_chosenEnemyTimeSpacing > 40)
-                m_chosenEnemyTimeSpacing = abs(rand()%31); //0 to 30m
+                m_chosenEnemyTimeSpacing = RandomUtils::getUniformRandomNumber(0, 30); //Between 0 and 30 meters
             else if (m_chosenEnemyTimeSpacing < 10)
-                m_chosenEnemyTimeSpacing = 10 + abs(rand()%41); //10 to 50m
+                m_chosenEnemyTimeSpacing = RandomUtils::getUniformRandomNumber(10, 50); //Between 10 and 50 meters
             else
-                m_chosenEnemyTimeSpacing = abs(rand()%41); //0 to 40m
+                m_chosenEnemyTimeSpacing = RandomUtils::getUniformRandomNumber(0, 40); //Between 0 and 40 meters
 
             if (m_dataBase->getDifficulty() != EASY)
                 m_chosenEnemyTimeSpacing /= 2;
@@ -186,21 +186,21 @@ void GameModel::chooseTimeSpacing(int elementType)
         case COIN:
         {
             if (m_chosenCoinTimeSpacing > 10)
-                m_chosenCoinTimeSpacing = abs(rand()%21); //0 to 10m
+                m_chosenCoinTimeSpacing = RandomUtils::getUniformRandomNumber(0, 10); //0 to 10m
             else if (m_chosenCoinTimeSpacing < 10)
-                m_chosenCoinTimeSpacing = 10 + abs(rand()%11); //10 to 20m
+                m_chosenCoinTimeSpacing = RandomUtils::getUniformRandomNumber(10, 20); //10 to 20m
             else
-                m_chosenCoinTimeSpacing = abs(rand()%21); //0 to 20m
+                m_chosenCoinTimeSpacing = RandomUtils::getUniformRandomNumber(0, 20); //0 to 20m
         }
             break;
         case PV_PLUS_BONUS: //Any bonus though
         {
             if (m_chosenBonusTimeSpacing > 300)
-                m_chosenBonusTimeSpacing = 200 + abs(rand()%101); //200 to 300m
+                m_chosenBonusTimeSpacing = RandomUtils::getUniformRandomNumber(200, 300); //200 to 300m
             else if (m_chosenBonusTimeSpacing < 275)
-                m_chosenBonusTimeSpacing = 300 + abs(rand()%101); //300 to 400m
+                m_chosenBonusTimeSpacing = RandomUtils::getUniformRandomNumber(300, 400);  //300 to 400m
             else
-                m_chosenBonusTimeSpacing = 200 + abs(rand()%201); //200 to 400m
+                m_chosenBonusTimeSpacing = RandomUtils::getUniformRandomNumber(200, 400); //200 to 400m
         }
             break;
         default:
@@ -258,7 +258,7 @@ void GameModel::moveMovableElement(MovableElement *currentElement)
 {
     if (currentElement == m_player)
         currentElement->move();
-    else if (currentElement != NULL)
+    else if (currentElement != nullptr)
     {
         currentElement->setMoveX(-1*m_gameSpeed);
         currentElement->move();
@@ -268,7 +268,7 @@ void GameModel::moveMovableElement(MovableElement *currentElement)
 /**
  * Handles Elements Creation
  * @author Arthur
- * @date 12/04/16 - 24/05/16
+ * @date 12/04/16 - 29/12/17
  */
 void GameModel::handleMovableElementsCreation()
 {
@@ -278,7 +278,10 @@ void GameModel::handleMovableElementsCreation()
 
         if (m_currentEnemyTimeSpacing >= m_chosenEnemyTimeSpacing)
         {
-            addANewMovableElement(m_width, GAME_FLOOR, STANDARD_ENEMY);
+            float pos_x = m_width;
+            float pos_y = GAME_FLOOR;
+            addANewMovableElement(pos_x, pos_y, STANDARD_ENEMY);
+
             m_currentEnemyTimeSpacing = 0;
             chooseTimeSpacing(STANDARD_ENEMY);
             return; //to not add another element if time-spacing valid
@@ -289,7 +292,10 @@ void GameModel::handleMovableElementsCreation()
 
         if (m_currentCoinTimeSpacing >= m_chosenCoinTimeSpacing)
         {
-            addANewMovableElement(m_width, GAME_FLOOR-rand()%100, COIN);
+            float pos_x = m_width;
+            float pos_y = GAME_FLOOR - RandomUtils::getUniformRandomNumber(0, 100);
+            addANewMovableElement(pos_x, pos_y, COIN);
+
             m_currentCoinTimeSpacing = 0;
             chooseTimeSpacing(COIN);
             return;
@@ -300,7 +306,10 @@ void GameModel::handleMovableElementsCreation()
 
         if (m_currentBonusTimeSpacing >= m_chosenBonusTimeSpacing)
         {
-            addANewMovableElement(m_width, BONUS_ROW, PV_PLUS_BONUS);
+            float pos_x = m_width;
+            float pos_y = BONUS_ROW;
+            addANewMovableElement(pos_x, pos_y, PV_PLUS_BONUS);
+
             m_currentBonusTimeSpacing = 0;
             chooseTimeSpacing(PV_PLUS_BONUS);
             return;

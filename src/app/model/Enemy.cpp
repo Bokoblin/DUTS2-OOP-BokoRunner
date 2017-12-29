@@ -45,11 +45,11 @@ void Enemy::move()
  *   56-80 : TOTEM     ~25% \n
  *  81-100 : BLOCK     ~20%
  * @author Arthur
- * @date 13/03/16 - 05/04/16
+ * @date 13/03/16 - 29/12/17
  */
 void Enemy::chooseEnemyType()
 {
-    int result = 1+ rand()%100;
+    int result = RandomUtils::getUniformRandomNumber(1, 100);
 
     if (result <= 55)
     {

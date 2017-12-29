@@ -17,7 +17,6 @@ limitations under the License.
 #define DATABASE_H
 
 #include <iostream>
-#include <cassert>
 #include <set>
 #include <fstream>
 #include <regex>

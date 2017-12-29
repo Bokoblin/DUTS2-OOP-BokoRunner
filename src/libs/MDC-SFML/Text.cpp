@@ -84,7 +84,7 @@ bool Text::contains(float posX, float posY) const
  * @author Arthur
  * @date 02/01/17
  *
- * @param the app's window
+ * @param window the app's window
  */
 void Text::draw(sf::RenderWindow *window) const
 {

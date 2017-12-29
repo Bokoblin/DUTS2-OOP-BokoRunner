@@ -42,11 +42,6 @@ class TextHandler
     TextHandler(const TextHandler& myText) = delete;
     ~TextHandler();
 
-    //=== GETTERS
-    const sf::Font& getRegularFont() const;
-    const sf::Font& getCondensedFont() const;
-    const sf::Font& getBoldFont() const;
-
     //=== METHODS
     void updateWholeText();
 

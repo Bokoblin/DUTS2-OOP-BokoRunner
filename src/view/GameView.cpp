@@ -287,7 +287,7 @@ void GameView::linkElements()
 /**
  * Create seamless transition between zones
  * @author Arthur
- * @date 25/04/16 - 02/01/17
+ * @date 25/04/16 - 30/12/17
  */
 void GameView::handleZonesTransition()
 {
@@ -339,9 +339,14 @@ void GameView::handleZonesTransition()
 
             //Set current zone
             if (m_gameModel->getCurrentZone() == HILL)
+            {
                 m_gameModel->setCurrentZone(PLAIN);
-            else
+                m_pauseBackgroundSprite->setTextureFromImage(PAUSE_PLAIN_BACKGROUND);
+            }
+            else {
                 m_gameModel->setCurrentZone(HILL);
+                m_pauseBackgroundSprite->setTextureFromImage(PAUSE_HILL_BACKGROUND);
+            }
         }
     }
     else
@@ -376,7 +381,7 @@ void GameView::handleZonesTransition()
 /**
  * Update gElements
  * @author Arthur
- * @date 6/03/16 - 25/01/17
+ * @date 6/03/16 - 30/12/17
  */
 void GameView::updateElements()
 {
@@ -416,11 +421,6 @@ void GameView::updateElements()
     }
     else if ( m_gameModel->getGameState() == PAUSED )
     {
-        if (m_gameModel->getCurrentZone() == HILL)
-            m_pauseBackgroundSprite->setTextureFromImage(PAUSE_HILL_BACKGROUND);
-        else
-            m_pauseBackgroundSprite->setTextureFromImage(PAUSE_PLAIN_BACKGROUND);
-
         m_resumeGameButton->sync(m_gameModel->getDataBase());
         m_restartGameButton->sync(m_gameModel->getDataBase());
         m_restartGameButton->setLabelPosition(RIGHT);

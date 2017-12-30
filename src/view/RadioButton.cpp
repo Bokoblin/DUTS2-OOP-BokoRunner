@@ -37,8 +37,7 @@ RadioButton::RadioButton(float x, float y, float w, float h, const string &label
  * @author Arthur
  * @date 02/01/17
  */
-RadioButton::RadioButton(RadioButton const& other) : Button(other)
-{}
+RadioButton::RadioButton(RadioButton const& other) = default;
 
 
 /**
@@ -46,8 +45,7 @@ RadioButton::RadioButton(RadioButton const& other) : Button(other)
  * @author Arthur
  * @date 23/12/16
  */
-RadioButton::~RadioButton()
-{}
+RadioButton::~RadioButton() = default;
 
 /**
  * Synchronization Function : change animation
@@ -94,12 +92,12 @@ void RadioButton::sync(DataBase *dataBase)
 void RadioButton::setRadioClipRect()
 {
     vector<sf::IntRect> clipRect;
-    clipRect.push_back(sf::IntRect( 0, 0, 50, 50) );
-    clipRect.push_back(sf::IntRect( 50, 0, 50, 50) );
-    clipRect.push_back(sf::IntRect( 0, 50, 50, 50) );
-    clipRect.push_back(sf::IntRect( 50, 50, 50, 50) );
-    clipRect.push_back(sf::IntRect( 0, 100, 50, 50) );
-    clipRect.push_back(sf::IntRect( 0, 150, 50, 50) );
+    clipRect.emplace_back(0, 0, 50, 50);
+    clipRect.emplace_back(50, 0, 50, 50);
+    clipRect.emplace_back(0, 50, 50, 50);
+    clipRect.emplace_back(50, 50, 50, 50);
+    clipRect.emplace_back(0, 100, 50, 50);
+    clipRect.emplace_back(0, 150, 50, 50);
 
     setClipRectArray(clipRect);
     setTextureRect(m_clipRectArray[m_currentClipRect]);

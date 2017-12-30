@@ -80,8 +80,7 @@ Dialog::Dialog(float x, float y, float w, float h, ShopItem *item, TextHandler *
  * @author Arthur
  * @date 16/05/17 - 02/01/17
  */
-Dialog::~Dialog()
-{}
+Dialog::~Dialog() = default;
 
 
 //=== Getters

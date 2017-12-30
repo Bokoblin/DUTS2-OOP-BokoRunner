@@ -92,8 +92,8 @@ void SettingsView::loadImages()
     //=== Initialize Music controls
 
     std::vector<sf::IntRect> clipRect_music;
-    clipRect_music.push_back(sf::IntRect(0, 200, 50, 50));
-    clipRect_music.push_back(sf::IntRect(50, 200, 50, 50));
+    clipRect_music.emplace_back(0, 200, 50, 50);
+    clipRect_music.emplace_back(50, 200, 50, 50);
 
     m_menuMusicButton = new Button(m_width/2+RADIO_BUTTONS_MARGIN, 420, 25, 25, "config_music_menu",
                                    GAME_BUTTONS_IMAGE, clipRect_music);
@@ -109,16 +109,16 @@ void SettingsView::loadImages()
     //=== Initialize HOME form button
 
     std::vector<sf::IntRect> clipRectHome;
-    clipRectHome.push_back(sf::IntRect( 0, 50, 50, 50));
-    clipRectHome.push_back(sf::IntRect( 51, 50, 50, 50));
+    clipRectHome.emplace_back(0, 50, 50, 50);
+    clipRectHome.emplace_back(51, 50, 50, 50);
     m_homeFormButton = new Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
 
 
     //=== Initialize RESET button
 
     vector<sf::IntRect> clipRectReset;
-    clipRectReset.push_back(sf::IntRect( 0, 100, 150, 40));
-    clipRectReset.push_back(sf::IntRect(151, 100, 150, 40));
+    clipRectReset.emplace_back(0, 100, 150, 40);
+    clipRectReset.emplace_back(151, 100, 150, 40);
     m_resetRectButton = new Button(m_width/2-75, 450, 150, 40, "stats_app_reset", RECT_BUTTONS_IMAGE, clipRectReset);
     m_resetRectButton->resize(170, 45);
 
@@ -382,15 +382,15 @@ void SettingsView::handleMusic()
     if (m_settings->getDataBase()->isMenuMusicEnabled())
     {
         std::vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect(0, 200, 50, 50));
-        clipRect.push_back(sf::IntRect(50, 200, 50, 50));
+        clipRect.emplace_back(0, 200, 50, 50);
+        clipRect.emplace_back(50, 200, 50, 50);
         m_menuMusicButton->setClipRectArray(clipRect);
     }
     else
     {
         std::vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect(0, 250, 50, 50));
-        clipRect.push_back(sf::IntRect(50, 250, 50, 50));
+        clipRect.emplace_back(0, 250, 50, 50);
+        clipRect.emplace_back(50, 250, 50, 50);
         m_menuMusicButton->setClipRectArray(clipRect);
     }
 
@@ -399,15 +399,15 @@ void SettingsView::handleMusic()
     if (m_settings->getDataBase()->isGameMusicEnabled())
     {
         std::vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect(0, 200, 50, 50));
-        clipRect.push_back(sf::IntRect(50, 200, 50, 50));
+        clipRect.emplace_back(0, 200, 50, 50);
+        clipRect.emplace_back(50, 200, 50, 50);
         m_gameMusicButton->setClipRectArray(clipRect);
     }
     else
     {
         std::vector<sf::IntRect> clipRect;
-        clipRect.push_back(sf::IntRect(0, 250, 50, 50));
-        clipRect.push_back(sf::IntRect(50, 250, 50, 50));
+        clipRect.emplace_back(0, 250, 50, 50);
+        clipRect.emplace_back(50, 250, 50, 50);
         m_gameMusicButton->setClipRectArray(clipRect);
     }
 }

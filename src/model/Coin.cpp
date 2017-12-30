@@ -27,8 +27,7 @@ Coin::Coin(float x, float y, float w, float h, float mvX, float mvY) :
  * @author Arthur
  * @date 19/03/16
  */
-Coin::~Coin()
-{}
+Coin::~Coin() = default;
 
 
 /**

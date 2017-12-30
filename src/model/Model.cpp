@@ -31,7 +31,7 @@ Model::Model(const Model& model) :
  * @author Arthur, Florian
  * @date 21/02/16 - 26/03/16
  */
-Model::~Model() {}
+Model::~Model() = default;
 
 
 //=== Getters

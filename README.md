@@ -3,9 +3,9 @@
 ### Branches ###
 | Branch name | Branch description |     CI     |   Code review    |
 | ----------- | ------------------ | ---------- | ---------------- |
-| **master**  | Stable builds merged from dev | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner.svg?branch=master)](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b75a85177a7e42e288b9df67f5a6c0db?branch=master)](https://www.codacy.com/app/Bokoblin/DUTS2-POO-ProjetRunner?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bokoblin/DUTS2-POO-ProjetRunner&amp;utm_campaign=Badge_Grade) 
-| **release** | Release builds rebased from master | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner.svg?branch=release)](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b75a85177a7e42e288b9df67f5a6c0db?branch=release)](https://www.codacy.com/app/Bokoblin/DUTS2-POO-ProjetRunner?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bokoblin/DUTS2-POO-ProjetRunner&amp;utm_campaign=Badge_Grade)
-| **dev** | In-development unstable builds | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner.svg?branch=dev)](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b75a85177a7e42e288b9df67f5a6c0db?branch=dev)](https://www.codacy.com/app/Bokoblin/DUTS2-POO-ProjetRunner?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bokoblin/DUTS2-POO-ProjetRunner&amp;utm_campaign=Badge_Grade)|
+| **master**  | Stable builds merged from dev | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner.svg?branch=master)](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b75a85177a7e42e288b9df67f5a6c0db?branch=master)](https://www.codacy.com/app/Bokoblin/DUTS2-POO-ProjetRunner?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bokoblin/DUTS2-POO-ProjetRunner&amp;utm_campaign=Badge_Grade) [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-poo-projetrunner/badge/master)](https://www.codefactor.io/repository/github/bokoblin/duts2-poo-projetrunner/overview/master)
+| **release** | Release builds rebased from master | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner.svg?branch=release)](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b75a85177a7e42e288b9df67f5a6c0db?branch=release)](https://www.codacy.com/app/Bokoblin/DUTS2-POO-ProjetRunner?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bokoblin/DUTS2-POO-ProjetRunner&amp;utm_campaign=Badge_Grade) [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-poo-projetrunner/badge/release)](https://www.codefactor.io/repository/github/bokoblin/duts2-poo-projetrunner/overview/release)
+| **dev** | In-development unstable builds | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner.svg?branch=dev)](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b75a85177a7e42e288b9df67f5a6c0db?branch=dev)](https://www.codacy.com/app/Bokoblin/DUTS2-POO-ProjetRunner?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bokoblin/DUTS2-POO-ProjetRunner&amp;utm_campaign=Badge_Grade)  [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-poo-projetrunner/badge/dev)](https://www.codefactor.io/repository/github/bokoblin/duts2-poo-projetrunner/overview/dev) |
 
 ### Description ###
 
@@ -29,13 +29,13 @@ and "under the hood" improvements from Bokoblin.
   * SFML 2.3.2
   * PugiXML 1.8
 * Continuous integration : Travis CI
-* Code review : Codacy
+* Code review : Codacy, CodeFactor
 
 
 ### Authors ###
 
-* Arthur Jolivet - main developer
-* Florian Laronze
+* Arthur Jolivet  (2016/02 - current)
+* Florian Laronze (2016/02 - 2016/05)
 
 
 ### Documentation ###

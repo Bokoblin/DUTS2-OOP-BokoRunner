@@ -75,11 +75,11 @@ class PixelateEffect : public sf::Drawable
 {
     public:
         PixelateEffect();
-        ~PixelateEffect();
+        ~PixelateEffect() override;
 
         void load(const std::string &image);
         void update(float x, float y);
-        void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
         bool onLoad(std::string image);
 
     private:

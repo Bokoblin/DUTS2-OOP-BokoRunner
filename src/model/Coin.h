@@ -31,11 +31,10 @@ class Coin : public MovableElement
 public:
     //=== CTORs / DTORs
     Coin(float x, float y, float w, float h, float mvX, float mvY);
-    virtual ~Coin();
+    ~Coin() override;
 
     //=== METHODS
-    void move();
-
+    void move() override;
 };
 
 #endif

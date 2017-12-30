@@ -20,9 +20,9 @@ limitations under the License.
 #include "Button.h"
 #include "TextHandler.h"
 
-#define RED_BUTTON_UP sf::IntRect( 0, 100, 150, 40)
-#define GREEN_BUTTON_UP sf::IntRect(0, 178, 150, 43)
-#define GREEN_BUTTON_DOWN sf::IntRect(151, 179, 150, 40)
+#define RED_BUTTON_UP 0, 100, 150, 40
+#define GREEN_BUTTON_UP 0, 178, 150, 43
+#define GREEN_BUTTON_DOWN 151, 179, 150, 40
 
 
 /**
@@ -35,7 +35,7 @@ class ShopItemCard : public GraphicElement
     public:
         //=== CTORs / DTORs
         ShopItemCard(int id, ShopItem *item, TextHandler *textHandler);
-        ~ShopItemCard();
+        ~ShopItemCard() override;
 
         //=== GETTERS
         int getId() const;
@@ -45,7 +45,7 @@ class ShopItemCard : public GraphicElement
         //=== METHODS
         void loadImages();
         void sync(DataBase *dataBase);
-        void draw(sf::RenderWindow *window) const;
+        void draw(sf::RenderWindow *window) const override;
 
     private:
         //=== ATTRIBUTES

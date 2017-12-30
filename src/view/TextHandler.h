@@ -20,7 +20,7 @@ limitations under the License.
 #include "Text.h"
 #include "../model/Settings.h"
 
-#define TITLE_TEXT_X m_height/12
+#define TITLE_TEXT_X (m_height/12)
 #define GOLD_COLOR sf::Color(255,204,0,255)
 #define ENEMY_BLUE_COLOR sf::Color(0,232,209,255)
 #define END_GREY_COLOR sf::Color(86,103,97,255)
@@ -40,7 +40,7 @@ class TextHandler
 {
     public:
     //=== CTORs / DTORs
-    TextHandler(DataBase *dataBase, const int width, const int height);
+    TextHandler(DataBase *dataBase, int width, int height);
     TextHandler(const TextHandler& myText) = delete;
     ~TextHandler();
 

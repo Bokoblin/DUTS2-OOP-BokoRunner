@@ -27,26 +27,26 @@ limitations under the License.
  */
 class LeaderboardView : public View
 {
-    public:
-        //=== CTORs / DTORs
-        LeaderboardView(float w, float h, sf::RenderWindow *window, TextHandler * text);
-        virtual ~LeaderboardView();
+public:
+    //=== CTORs / DTORs
+    LeaderboardView(float w, float h, sf::RenderWindow *window, TextHandler * text);
+    ~LeaderboardView() override;
 
-        //=== SETTERS
-        void setLeaderboardModel(Leaderboard *model);
+    //=== SETTERS
+    void setLeaderboardModel(Leaderboard *model);
 
-        //=== METHODS
-        virtual void synchronize() override;
-        virtual void draw() const override;
-        virtual void loadImages() override;
-        virtual bool treatEvents() override;
-        bool treatEvents( sf::Event event );
+    //=== METHODS
+    void synchronize() override;
+    void draw() const override;
+    void loadImages() override;
+    bool treatEvents() override;
+    bool treatEvents( sf::Event event );
 
-    private:
-        //=== ATTRIBUTES
-        Leaderboard *m_leaderboard;
-        Button *m_homeFormButton;
-        Button *m_clearLbRectButton;
+private:
+    //=== ATTRIBUTES
+    Leaderboard *m_leaderboard;
+    Button *m_homeFormButton;
+    Button *m_clearLbRectButton;
 };
 
 

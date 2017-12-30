@@ -27,7 +27,7 @@ class Commands
 {
 public:
     //=== CTORs / DTORs
-    Commands(DataBase *dataBase);
+    explicit Commands(DataBase *dataBase);
     ~Commands();
 
     //=== GETTERS

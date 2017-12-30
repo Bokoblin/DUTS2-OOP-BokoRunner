@@ -51,7 +51,7 @@ public:
            const std::string &image, const std::vector<sf::IntRect> &clipRect);
     Button(Button const& elementACopier);
 
-    virtual ~Button();
+    ~Button() override;
 
     //=== GETTERS
     bool isDisabled() const;
@@ -65,10 +65,10 @@ public:
     void setLabelPosition(LabelPosition labelPosition);
 
     //=== METHODS
-    virtual void sync() override;
+    void sync() override;
     virtual void sync(DataBase *dataBase);
-    virtual void draw(sf::RenderWindow *window)const;
-    virtual bool contains(float x, float y) const override;
+    void draw(sf::RenderWindow *window)const override;
+    bool contains(float x, float y) const override;
 
 protected:
     //=== ATTRIBUTES

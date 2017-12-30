@@ -29,7 +29,7 @@ limitations under the License.
 class Text : public sf::Text {
 public:
     //=== CTORs / DTORs
-    Text(const std::string &description);
+    explicit Text(const std::string &description);
     Text(const std::string &description, bool isVisible);
 
     //=== GETTERS
@@ -37,7 +37,7 @@ public:
     bool isVisible() const;
 
     //=== SETTERS
-    void setDescription(std::string description);
+    void setDescription(const std::string &description);
     void setTextFont(const sf::Font &font, unsigned int charSize, sf::Color color);
     void setPositionSelfCentered(double, double);
     void setStringFromInt(int value);

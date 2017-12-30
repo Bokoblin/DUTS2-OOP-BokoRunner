@@ -34,11 +34,11 @@ public:
     RadioButton(float x, float y, float w, float h);
     RadioButton(float x, float y, float w, float h, const std::string &label);
     RadioButton(const RadioButton& other);
-    virtual ~RadioButton() override;
+    ~RadioButton() override;
 
     //=== METHODS
-    virtual void sync() override;
-    virtual void sync(DataBase *dataBase) override;
+    void sync() override;
+    void sync(DataBase *dataBase) override;
 
 private:
     void setRadioClipRect();

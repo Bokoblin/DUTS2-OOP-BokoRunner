@@ -136,7 +136,7 @@ void SlidingBackground::increaseAlpha(int level)
  * @author Arthur
  * @date 02/01/17
  */
-void SlidingBackground::setTextureFromImage(std::string image)
+void SlidingBackground::setTextureFromImage(const std::string &image)
 {
     m_left->setTextureFromImage(image);
     m_right->setTextureFromImage(image);

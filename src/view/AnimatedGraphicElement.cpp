@@ -1,5 +1,7 @@
 #include "AnimatedGraphicElement.h"
 
+#include <utility>
+
 using namespace std::chrono;
 
 /**
@@ -35,15 +37,14 @@ AnimatedGraphicElement::AnimatedGraphicElement(const AnimatedGraphicElement& oth
  * @author Arthur
  * @date 05/03/16
  */
-AnimatedGraphicElement::~AnimatedGraphicElement()
-{}
+AnimatedGraphicElement::~AnimatedGraphicElement() = default;
 
 
 //=== Setters
 
 void AnimatedGraphicElement::setClipRectArray(std::vector<sf::IntRect> clipRectsArray)
 {
-    m_clipRectArray = clipRectsArray;
+    m_clipRectArray = std::move(clipRectsArray);
 }
 
 

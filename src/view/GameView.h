@@ -37,16 +37,16 @@ class GameView : public View
 public:
     //=== CTORs / DTORs
     GameView(float w, float h, sf::RenderWindow *myWindow, TextHandler *text);
-    virtual ~GameView();
+    ~GameView() override;
 
     //=== SETTERS
     void setGameModel(GameModel *model);
 
     //=== METHODS
-    virtual void loadImages() override;
-    virtual void synchronize() override;
-    virtual void draw() const override;
-    virtual bool treatEvents() override;
+    void loadImages() override;
+    void synchronize() override;
+    void draw() const override;
+    bool treatEvents() override;
     virtual void linkElements();
     virtual void updateElements();
     virtual void deleteElements();

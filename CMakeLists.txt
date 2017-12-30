@@ -24,9 +24,9 @@ set(PUGI_LIB
         libs/pugixml-1.8/src/pugixml.cpp
         )
 
-add_executable(runner ${PUGI_LIB} ${SOURCE_FILES})
+add_executable(${EXECUTABLE_NAME} ${PUGI_LIB} ${SOURCE_FILES})
 
-FIND_PACKAGE(SFML 2.3 COMPONENTS audio graphics window system REQUIRED )
+FIND_PACKAGE(SFML 2.3 COMPONENTS audio graphics window system REQUIRED)
 
-include_directories( ${SFML_INCLUDE_DIR} )
-target_link_libraries( ${EXECUTABLE_NAME} ${SFML_LIBRARIES})
+include_directories(${SFML_INCLUDE_DIR})
+target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES})

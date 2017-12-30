@@ -57,8 +57,7 @@ GraphicElement::GraphicElement(GraphicElement const& element) :
  * @author Arthur, Florian
  * @date 21/02/16
  */
-GraphicElement::~GraphicElement()
-{}
+GraphicElement::~GraphicElement() = default;
 
 
 //=== Getters
@@ -111,9 +110,9 @@ void GraphicElement::resize(float width, float height)
 /**
  * Sets the GraphicElement's texture from an image
  * @author Arthur
- * @date 02/01/17
+ * @date 02/01/17 - 30/12/17
  */
-void GraphicElement::setTextureFromImage(std::string image)
+void GraphicElement::setTextureFromImage(const std::string &image)
 {
     if (!m_texture.loadFromFile(image) )
         std::cerr << "ERROR when loading image file: " << image << std::endl;

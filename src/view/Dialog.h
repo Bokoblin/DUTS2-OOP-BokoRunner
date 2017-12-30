@@ -37,7 +37,7 @@ public:
     Dialog(float x, float y, float w, float h, ShopItem *item, TextHandler *textHandler, const std::string &description);
     Dialog(float x, float y, float w, float h, TextHandler *textHandler, const std::string &id);
     Dialog(const Dialog& d)=delete;
-    ~Dialog();
+    ~Dialog() override;
 
     //=== GETTERS
     std::string getId() const;
@@ -47,7 +47,7 @@ public:
 
     //=== METHODS
     void sync(DataBase *dataBase);
-    void draw(sf::RenderWindow *window) const;
+    void draw(sf::RenderWindow *window) const override;
 
 private:
     //=== ATTRIBUTES

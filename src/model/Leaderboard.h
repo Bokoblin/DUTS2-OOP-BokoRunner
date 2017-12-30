@@ -27,7 +27,7 @@ class Leaderboard
 {
 public:
     //=== CTORs / DTORs
-    Leaderboard(DataBase *dataBase);
+    explicit Leaderboard(DataBase *dataBase);
     ~Leaderboard();
 
     //=== GETTERS

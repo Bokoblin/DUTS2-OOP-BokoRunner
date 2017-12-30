@@ -33,16 +33,16 @@ class ShopView : public View
 public:
     //=== CTORs / DTORs
     ShopView(float w, float h, sf::RenderWindow *window, TextHandler *textHandler);
-    virtual ~ShopView();
+    ~ShopView() override;
 
     //=== SETTERS
     void setShopModel(Shop *model);
 
     //=== METHODS
-    virtual void synchronize() override;
-    virtual void draw() const override;
-    virtual void loadImages() override;
-    virtual bool treatEvents() override;
+    void synchronize() override;
+    void draw() const override;
+    void loadImages() override;
+    bool treatEvents() override;
     bool treatEvents( sf::Event event );
     void syncCards() const;
     void createCards();

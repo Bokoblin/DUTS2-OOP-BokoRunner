@@ -10,12 +10,12 @@ using namespace std;
  * @param model the app model
  */
 GameModel::GameModel(const Model& model) :
-    Model(model), m_gameState{RUNNING}, m_inTransition{false},
-    m_isTransitionPossible{false}, m_currentZone{HILL},
-    m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},
-    m_lastTime{chrono::system_clock::now()}, m_bonusTimeout{0}, m_gameSlowSpeed{0}
+        Model(model), m_gameState{RUNNING}, m_inTransition{false},
+        m_isTransitionPossible{false}, m_currentZone{HILL},
+        m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},
+        m_lastTime{chrono::system_clock::now()}, m_bonusTimeout{0}, m_gameSlowSpeed{0}
 {
-    srand((unsigned int) time(NULL));
+    srand((unsigned int) time(nullptr));
 
     //=== Initialize new game
 
@@ -81,15 +81,15 @@ void GameModel::nextStep()
 {
     chrono::system_clock::duration currentNextStepDelay = chrono::system_clock::now() - m_lastTime;
 
-	if (m_gameState == RUNNING || m_gameState == RUNNING_SLOWLY)
-	{
-	    //=== Handle Movable Elements Collisions
+    if (m_gameState == RUNNING || m_gameState == RUNNING_SLOWLY)
+    {
+        //=== Handle Movable Elements Collisions
 
         //outside of delay otherwise some high speed collisions are not triggered
         handleMovableElementsCollisions();
 
-		if ( currentNextStepDelay > chrono::milliseconds( NEXT_STEP_DELAY ) )
-		{
+        if ( currentNextStepDelay > chrono::milliseconds( NEXT_STEP_DELAY ) )
+        {
             //=== Update distance and gameSpeed
 
             if (m_gameSpeed < SPEED_LIMIT && m_gameState != RUNNING_SLOWLY)
@@ -100,9 +100,9 @@ void GameModel::nextStep()
             m_dataBase->increaseCurrentDistance(m_gameSpeed/5);
 
 
-			//=== Handle Movable Elements Creation & Deletion
+            //=== Handle Movable Elements Creation & Deletion
 
-			if (!m_isTransitionPossible)
+            if (!m_isTransitionPossible)
                 handleMovableElementsCreation();
 
             handleMovableElementsDeletion();
@@ -114,13 +114,13 @@ void GameModel::nextStep()
                 m_bonusTimeout -= chrono::milliseconds( NEXT_STEP_DELAY );
 
             if ( m_bonusTimeout <= chrono::milliseconds(0)
-                 && m_player->getState() != SHIELD)
+                    && m_player->getState() != SHIELD)
             {
                 m_player->changeState(NORMAL);
             }
 
             if ( m_bonusTimeout <= chrono::milliseconds(0)
-                 && m_gameState == RUNNING_SLOWLY)
+                    && m_gameState == RUNNING_SLOWLY)
             {
                 m_gameState = RUNNING;
                 if ( m_gameSpeed == m_gameSlowSpeed)
@@ -131,7 +131,7 @@ void GameModel::nextStep()
             //=== Handle transition status
 
             if ( m_dataBase->getCurrentDistance() != 0
-                && m_dataBase->getCurrentDistance()%ZONE_CHANGING_DISTANCE == 0)
+                    && m_dataBase->getCurrentDistance()%ZONE_CHANGING_DISTANCE == 0)
                 m_isTransitionPossible = true;
 
 
@@ -243,7 +243,7 @@ void GameModel::moveMovableElement(MovableElement *currentElement)
 {
     if( currentElement == m_player)
         currentElement->move();
-    else if( currentElement != NULL )
+    else if( currentElement != nullptr)
     {
         currentElement->setMoveX(-1*m_gameSpeed);
         currentElement->move();
@@ -351,132 +351,132 @@ void GameModel::handleMovableElementsCollisions()
 
             switch ( element->getType() )
             {
-            case STANDARD_ENEMY:
-                if ( m_player->getState() == MEGA ) {
-                    //add 100 to bonus for flattened enemies
-                    m_dataBase->increaseCurrentFlattenedEnemies(100);
-                }
-                else if (m_player->getState() == SHIELD
-                         && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
-                {
-                    if ( m_dataBase->getActivatedItemsArray().find("shieldPlus")
-                            == m_dataBase->getActivatedItemsArray().end() )
+                case STANDARD_ENEMY:
+                    if ( m_player->getState() == MEGA ) {
+                        //add 100 to bonus for flattened enemies
+                        m_dataBase->increaseCurrentFlattenedEnemies(100);
+                    }
+                    else if (m_player->getState() == SHIELD
+                            && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
+                    {
+                        if ( m_dataBase->getActivatedItemsArray().find("shieldPlus")
+                                == m_dataBase->getActivatedItemsArray().end() )
+                            m_player->changeState(NORMAL);
+                        else
+                            m_bonusTimeout = chrono::milliseconds(SHIELD_TIMEOUT);
+                    }
+                    else if (m_player->getState() == SHIELD)
                         m_player->changeState(NORMAL);
-                    else
-                        m_bonusTimeout = chrono::milliseconds(SHIELD_TIMEOUT);
-                }
-                else if (m_player->getState() == SHIELD)
-                    m_player->changeState(NORMAL);
-                else {
-                    if (m_dataBase->getDifficulty() == EASY)
-                        m_player->setLife(m_player->getLife()-10);
-                    else
-                        m_player->setLife(m_player->getLife()-20);
-                }
-                break;
+                    else {
+                        if (m_dataBase->getDifficulty() == EASY)
+                            m_player->setLife(m_player->getLife()-10);
+                        else
+                            m_player->setLife(m_player->getLife()-20);
+                    }
+                    break;
 
-            case TOTEM_ENEMY:
-                 if ( m_player->getState() == MEGA ) {
-                    //add 300 to bonus for flattened enemies
-                     m_dataBase->increaseCurrentFlattenedEnemies(300);
-                }
-                else if (m_player->getState() == SHIELD
-                         && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
-                {
-                    if ( m_dataBase->getActivatedItemsArray().find("shieldPlus")
-                            == m_dataBase->getActivatedItemsArray().end() )
+                case TOTEM_ENEMY:
+                    if ( m_player->getState() == MEGA ) {
+                        //add 300 to bonus for flattened enemies
+                        m_dataBase->increaseCurrentFlattenedEnemies(300);
+                    }
+                    else if (m_player->getState() == SHIELD
+                            && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
+                    {
+                        if ( m_dataBase->getActivatedItemsArray().find("shieldPlus")
+                                == m_dataBase->getActivatedItemsArray().end() )
+                            m_player->changeState(NORMAL);
+                        else
+                            m_bonusTimeout = chrono::milliseconds(SHIELD_TIMEOUT);
+                    }
+                    else if (m_player->getState() == SHIELD)
                         m_player->changeState(NORMAL);
-                    else
-                        m_bonusTimeout = chrono::milliseconds(SHIELD_TIMEOUT);
-                }
-                else if (m_player->getState() == SHIELD)
-                    m_player->changeState(NORMAL);
-                else {
-                    if (m_dataBase->getDifficulty() == EASY)
-                        m_player->setLife(m_player->getLife()-15);
-                    else
-                        m_player->setLife(m_player->getLife()-30);
-                }
-                break;
+                    else {
+                        if (m_dataBase->getDifficulty() == EASY)
+                            m_player->setLife(m_player->getLife()-15);
+                        else
+                            m_player->setLife(m_player->getLife()-30);
+                    }
+                    break;
 
-            case BLOCK_ENEMY:
-                 if ( m_player->getState() == MEGA ) {
-                    //add 500 to bonus for flattened enemies
-                     m_dataBase->increaseCurrentFlattenedEnemies(500);
-                }
-                else if (m_player->getState() == SHIELD
-                         && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
-                {
-                    if ( m_dataBase->getActivatedItemsArray().find("shieldPlus")
-                            == m_dataBase->getActivatedItemsArray().end() )
+                case BLOCK_ENEMY:
+                    if ( m_player->getState() == MEGA ) {
+                        //add 500 to bonus for flattened enemies
+                        m_dataBase->increaseCurrentFlattenedEnemies(500);
+                    }
+                    else if (m_player->getState() == SHIELD
+                            && m_bonusTimeout != chrono::milliseconds(SHIELD_TIMEOUT))
+                    {
+                        if ( m_dataBase->getActivatedItemsArray().find("shieldPlus")
+                                == m_dataBase->getActivatedItemsArray().end() )
+                            m_player->changeState(NORMAL);
+                        else
+                            m_bonusTimeout = chrono::milliseconds(SHIELD_TIMEOUT);
+                    }
+                    else if (m_player->getState() == SHIELD)
                         m_player->changeState(NORMAL);
+                    else {
+                        if (m_dataBase->getDifficulty() == EASY)
+                            m_player->setLife(m_player->getLife()-25);
+                        else
+                            m_player->setLife(m_player->getLife()-50);
+                    }
+                    break;
+
+                case COIN:
+                    if ( m_dataBase->getActivatedItemsArray().find("doubler")
+                            == m_dataBase->getActivatedItemsArray().end() )
+                        m_dataBase->increaseCurrentCoinsCollected(1); //1-increment coins number
                     else
-                        m_bonusTimeout = chrono::milliseconds(SHIELD_TIMEOUT);
+                        m_dataBase->increaseCurrentCoinsCollected(2);
+                    break;
+
+                case PV_PLUS_BONUS:
+                    m_player->setLife(m_player->getLife()+10);
+                    break;
+
+                case MEGA_BONUS:
+                {
+                    int mega_bonus_timeout = 10000; //stop Mega bonus effect in 10s
+                    if ( m_dataBase->getActivatedItemsArray().find("megaPlus")
+                            != m_dataBase->getActivatedItemsArray().end() )
+                        mega_bonus_timeout += 5000;
+
+                    m_player->changeState(MEGA);
+                    m_bonusTimeout = chrono::milliseconds(mega_bonus_timeout);
                 }
-                else if (m_player->getState() == SHIELD)
-                    m_player->changeState(NORMAL);
-                else {
-                    if (m_dataBase->getDifficulty() == EASY)
-                        m_player->setLife(m_player->getLife()-25);
-                    else
-                        m_player->setLife(m_player->getLife()-50);
+                    break;
+
+                case FLY_BONUS:
+                {
+                    int fly_bonus_timeout = 15000; //stop Fly bonus effect in 15s
+                    if ( m_dataBase->getActivatedItemsArray().find("flyPlus")
+                            != m_dataBase->getActivatedItemsArray().end() )
+                        fly_bonus_timeout += 5000;
+
+                    m_player->changeState(FLY);
+                    m_bonusTimeout = chrono::milliseconds(fly_bonus_timeout);
                 }
-                break;
+                    break;
 
-            case COIN:
-                if ( m_dataBase->getActivatedItemsArray().find("doubler")
-                     == m_dataBase->getActivatedItemsArray().end() )
-                    m_dataBase->increaseCurrentCoinsCollected(1); //1-increment coins number
-                else
-                    m_dataBase->increaseCurrentCoinsCollected(2);
-                break;
+                case SLOW_SPEED_BONUS:
+                {
+                    m_gameState = RUNNING_SLOWLY;
+                    int slowSpeed_bonus_timeout = 20000;
+                    m_gameSpeed = m_gameSpeed/2;
+                    m_gameSlowSpeed = m_gameSpeed;
+                    m_bonusTimeout = chrono::milliseconds(slowSpeed_bonus_timeout);
+                }
+                    break;
 
-            case PV_PLUS_BONUS:
-                m_player->setLife(m_player->getLife()+10);
-                break;
+                case SHIELD_BONUS:
+                {
+                    m_player->changeState(SHIELD);
+                }
+                    break;
 
-            case MEGA_BONUS:
-            {
-                int mega_bonus_timeout = 10000; //stop Mega bonus effect in 10s
-                if ( m_dataBase->getActivatedItemsArray().find("megaPlus")
-                     != m_dataBase->getActivatedItemsArray().end() )
-                    mega_bonus_timeout += 5000;
-
-                m_player->changeState(MEGA);
-                m_bonusTimeout = chrono::milliseconds(mega_bonus_timeout);
-            }
-                break;
-
-            case FLY_BONUS:
-            {
-                int fly_bonus_timeout = 15000; //stop Fly bonus effect in 15s
-                if ( m_dataBase->getActivatedItemsArray().find("flyPlus")
-                     != m_dataBase->getActivatedItemsArray().end() )
-                    fly_bonus_timeout += 5000;
-
-                m_player->changeState(FLY);
-                m_bonusTimeout = chrono::milliseconds(fly_bonus_timeout);
-            }
-                break;
-
-            case SLOW_SPEED_BONUS:
-            {
-                m_gameState = RUNNING_SLOWLY;
-                int slowSpeed_bonus_timeout = 20000;
-                m_gameSpeed = m_gameSpeed/2;
-                m_gameSlowSpeed = m_gameSpeed;
-                m_bonusTimeout = chrono::milliseconds(slowSpeed_bonus_timeout);
-            }
-                break;
-
-            case SHIELD_BONUS:
-            {
-                m_player->changeState(SHIELD);
-            }
-                break;
-
-            default:
-                break;
+                default:
+                    break;
             }
         }
     }
@@ -495,7 +495,7 @@ void GameModel::handleMovableElementsDeletion()
     while( it!=m_movableElementsArray.end() )
     {
         if ( ( (*it)->getPosX() + (*it)->getWidth() ) < 0
-             || (*it)->isColliding())
+                || (*it)->isColliding())
         {
             m_movableElementsArray.erase(it);
             it = m_movableElementsArray.end();

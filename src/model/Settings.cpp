@@ -22,8 +22,7 @@ Settings::Settings(DataBase *dataBase) :
  * @author Arthur
  * @date 20/05/16
  */
-Settings::~Settings()
-{ }
+Settings::~Settings() = default;
 
 
 //=== Getters & Setters
@@ -43,7 +42,7 @@ void Settings::setCurrentPage(int page) { m_currentPage = page; }
  *
  * @param lang the new language
  */
-void Settings::changeLanguage(string lang)
+void Settings::changeLanguage(const string &lang)
 {
     m_dataBase->setLanguage(lang);
 }
@@ -55,7 +54,7 @@ void Settings::changeLanguage(string lang)
  *
  * @param skin the new skin
  */
-void Settings::changeBallSkin(string skin)
+void Settings::changeBallSkin(const string &skin)
 {
     m_dataBase->setBallSkin(skin);
 }

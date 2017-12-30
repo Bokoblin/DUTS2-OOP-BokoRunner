@@ -25,7 +25,7 @@ Enemy::Enemy(float x, float y, float w, float h, float mvX, float mvY) :
  * @author Arthur
  * @date 13/03/16
  */
-Enemy::~Enemy() {}
+Enemy::~Enemy() = default;
 
 
 /**

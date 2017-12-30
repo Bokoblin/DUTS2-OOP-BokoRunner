@@ -75,7 +75,7 @@ bool Intro::treatEvents()
     {
         result = true;
 
-        sf::Event event;
+        sf::Event event{};
         while (m_window->pollEvent(event))
         {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_model->getAppState() == INTRO)

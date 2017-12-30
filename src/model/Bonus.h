@@ -31,11 +31,10 @@ class Bonus : public MovableElement
 public:
     //=== CTORs / DTORs
     Bonus(float x, float y, float w, float h, float mvX, float mvY);
-    virtual ~Bonus();
+    ~Bonus() override;
 
     //=== METHODS
-    void move();
+    void move() override;
     void chooseBonusType();
-
 };
 #endif

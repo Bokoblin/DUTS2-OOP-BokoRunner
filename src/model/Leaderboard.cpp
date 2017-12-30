@@ -17,7 +17,7 @@ Leaderboard::Leaderboard(DataBase *dataBase) :  m_dataBase{dataBase}
  * @author Arthur
  * @date 19/04/16
  */
-Leaderboard::~Leaderboard() {}
+Leaderboard::~Leaderboard() = default;
 
 
 //=== Getters

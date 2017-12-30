@@ -28,7 +28,7 @@ class Settings
 {
 public:
     //=== CTORs / DTORs
-    Settings(DataBase *dataBase);
+    explicit Settings(DataBase *dataBase);
     ~Settings();
 
     //=== GETTERS
@@ -41,8 +41,8 @@ public:
     void setCurrentPage(int page);
 
     //=== METHODS
-    void changeLanguage(std::string lang);
-    void changeBallSkin(std::string skin);
+    void changeLanguage(const std::string &lang);
+    void changeBallSkin(const std::string &skin);
     void checkItemsAvailability();
 
     //=== ATTRIBUTES

@@ -30,7 +30,7 @@ public:
     //=== CTORs / DTORs
     SlidingBackground(float width, float height, float speed, std::string image);
     SlidingBackground(SlidingBackground const& element) = delete;
-    virtual ~SlidingBackground();
+    ~SlidingBackground() override;
 
     //=== GETTERS
     int getAlpha() const;
@@ -43,19 +43,18 @@ public:
     void setAlpha(int alpha);
 
     //=== METHODS
-    virtual void sync() override;
-    virtual void draw(sf::RenderWindow *window) const override;
-    virtual void resize(float width, float height) override;
+    void sync() override;
+    void draw(sf::RenderWindow *window) const override;
+    void resize(float width, float height) override;
     void decreaseAlpha(int level);
     void increaseAlpha(int level);
-    virtual void setTextureFromImage(std::string image);
+    void setTextureFromImage(const std::string &image) override;
 
 private:
     //=== ATTRIBUTES
     GraphicElement *m_left, *m_right;
     float m_speed;
     sf::Uint8 m_alpha;
-
 };
 
 #endif

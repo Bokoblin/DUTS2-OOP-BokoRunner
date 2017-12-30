@@ -17,7 +17,7 @@ View::View(float w, float h, sf::RenderWindow *window, TextHandler *text):
  * @author Arthur, Florian
  * @date 21/02/16 - 27/03/16
  */
-View::~View() {}
+View::~View() = default;
 
 
 /**

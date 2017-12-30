@@ -73,8 +73,8 @@ public:
     void increaseCurrentFlattenedEnemies(int amount);
     void setCurrentScore(float speed);
     void setDifficulty(int difficulty);
-    void setLanguage(std::string lang);
-    void setBallSkin(std::string skin);
+    void setLanguage(const std::string &lang);
+    void setBallSkin(const std::string &skin);
     void setMenuMusic(bool on);
     void setGameMusic(bool on);
 

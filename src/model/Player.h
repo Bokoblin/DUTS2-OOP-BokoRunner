@@ -47,7 +47,7 @@ class Player : public MovableElement
 public:
     //=== CTORs / DTORs
     Player(float x, float y, float w, float h, float mvX, float mvY);
-    virtual ~Player();
+    ~Player() override;
 
     //=== GETTERS
     int getState() const;
@@ -60,7 +60,7 @@ public:
     void setDeceleration(bool state);
 
     //=== METHODS
-    virtual void move() override;
+    void move() override;
     void changeState(int state);
     void controlPlayerMovements(MoveDirections direction);
 

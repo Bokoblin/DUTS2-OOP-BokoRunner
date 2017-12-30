@@ -34,13 +34,13 @@ public:
     AnimatedGraphicElement(float x, float y, float w, float h, const std::string &image,
                            const std::vector<sf::IntRect> &clipRect);
     AnimatedGraphicElement( const AnimatedGraphicElement& other);
-    virtual ~AnimatedGraphicElement();
+    ~AnimatedGraphicElement() override;
 
     //=== SETTERS
     void setClipRectArray(std::vector<sf::IntRect> clipRectsArray);
 
     //=== METHODS
-    virtual void sync() override;
+    void sync() override;
 
 private:
     //=== ATTRIBUTES

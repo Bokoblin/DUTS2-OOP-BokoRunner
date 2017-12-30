@@ -32,7 +32,7 @@ public:
     GraphicElement(float x, float y, float width, float height);
     GraphicElement(float x, float y, float width, float height, const std::string &image);
     GraphicElement(GraphicElement const& element);
-    ~GraphicElement();
+    ~GraphicElement() override;
 
     //=== GETTERS
     bool isShowing() const;
@@ -45,7 +45,7 @@ public:
     virtual void sync();
     virtual void draw(sf::RenderWindow *window)const;
     virtual void resize(float width, float height);
-    virtual void setTextureFromImage(std::string image);
+    virtual void setTextureFromImage(const std::string &image);
     virtual bool contains(float x, float y) const;
     void setTextureFromImage(std::string image, sf::IntRect intRect);
 

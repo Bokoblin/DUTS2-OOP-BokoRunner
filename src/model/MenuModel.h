@@ -40,8 +40,8 @@ class MenuModel : public Model
 {
 public:
     //=== CTORs / DTORs
-    MenuModel(const Model& model);
-    virtual ~MenuModel();
+    explicit MenuModel(const Model& model);
+    ~MenuModel() override;
 
     //=== GETTERS
     MenuState getMenuState() const;
@@ -50,7 +50,7 @@ public:
     void setMenuState(MenuState state);
 
     //=== METHODS
-    virtual void nextStep() override;
+    void nextStep() override;
     Commands* launchCommands();
     Leaderboard* launchLeaderboard();
     Shop* launchShop();

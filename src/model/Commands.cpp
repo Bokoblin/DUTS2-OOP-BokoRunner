@@ -18,8 +18,7 @@ Commands::Commands(DataBase *dataBase) :  m_dataBase{dataBase}
  * @author Arthur
  * @date 24/01/17
  */
-Commands::~Commands()
-{}
+Commands::~Commands() = default;
 
 
 //=== Getters

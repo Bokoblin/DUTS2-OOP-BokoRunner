@@ -31,16 +31,16 @@ class CommandsView : public View
 public:
     //=== CTORs / DTORs
     CommandsView(float w, float h, sf::RenderWindow *window, TextHandler *textHandler);
-    virtual ~CommandsView();
+    ~CommandsView() override;
 
     //=== SETTERS
     void setCommandsModel(Commands *model);
 
     //=== METHODS
-    virtual void synchronize() override;
-    virtual void draw() const override;
-    virtual void loadImages() override;
-    virtual bool treatEvents() override;
+    void synchronize() override;
+    void draw() const override;
+    void loadImages() override;
+    bool treatEvents() override;
     bool treatEvents( sf::Event event );
 
 private:

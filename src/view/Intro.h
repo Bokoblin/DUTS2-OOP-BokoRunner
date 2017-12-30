@@ -28,13 +28,13 @@ class Intro : public View
     public:
     //=== CTORs / DTORs
     Intro(float w, float h, sf::RenderWindow *window, TextHandler *text);
-    virtual ~Intro();
+    ~Intro() override;
 
     //=== METHODS
-    virtual void synchronize() override;
-    virtual void draw() const override;
-    virtual void loadImages() override;
-    virtual bool treatEvents() override;
+    void synchronize() override;
+    void draw() const override;
+    void loadImages() override;
+    bool treatEvents() override;
 
 private:
     //=== ATTRIBUTES

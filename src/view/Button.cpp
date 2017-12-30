@@ -19,8 +19,6 @@ Button::Button(float x, float y, float w, float h) :
 }
 
 
-
-
 /**
  * Constructs a button with coordinates,
  * a size and a description
@@ -108,8 +106,7 @@ Button::Button(Button const& other) :
  * @author Arthur
  * @date 06/04/16 - 25/01/17
  */
-Button::~Button()
-{}
+Button::~Button() = default;
 
 
 //=== Getters
@@ -121,7 +118,7 @@ bool Button::isDisabled() const { return m_isDisabled; }
 void Button::setPressed(bool state) { m_isPressed = state; }
 void Button::setActivated(bool state) { m_isActive = state; }
 void Button::setDisabled(bool state) { m_isDisabled = state; }
-void Button::setClipRectArray(std::vector<sf::IntRect> crA) { m_clipRectArray = crA; }
+void Button::setClipRectArray(std::vector<sf::IntRect> crA) { m_clipRectArray = std::move(crA); }
 void Button::setPositionSelfCentered(double x, double y) {
     setPosition( (float)(x-getGlobalBounds().width/2), (float)y );
 }
@@ -152,7 +149,7 @@ void Button::sync(DataBase *dataBase)
 
     //=== Sync label
 
-    if ( m_label.getDescription() != "")
+    if (!m_label.getDescription().empty())
     {
         std::string utf8_string = dataBase->getTextValueFromStringsFile(m_label.getDescription());
         m_label.setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));

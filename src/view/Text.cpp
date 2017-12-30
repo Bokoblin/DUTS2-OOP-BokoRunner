@@ -42,7 +42,7 @@ bool Text::isVisible() const { return m_isVisible; }
 
 //=== Setters
 
-void Text::setDescription(std::string description) { m_description = description; }
+void Text::setDescription(const string &description) { m_description = description; }
 void Text::setTextFont(const sf::Font &font, unsigned int charSize, sf::Color color)
 {
     sf::Text::setFont(font);

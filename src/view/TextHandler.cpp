@@ -310,8 +310,8 @@ void TextHandler::syncSettingsText(int currentPage)
  */
 void TextHandler::syncMenuLeaderboardText()
 {
-    string scoresEasy = "";
-    string scoresHard = "";
+    string scoresEasy;
+    string scoresHard;
     m_dataBase->loadLeaderboardStringFromArray(EASY, scoresEasy);
     m_dataBase->loadLeaderboardStringFromArray(HARD, scoresHard);
 

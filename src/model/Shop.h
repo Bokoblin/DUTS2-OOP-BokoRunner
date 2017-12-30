@@ -30,7 +30,7 @@ class Shop
 {
 public:
     //=== CTORs / DTORs
-    Shop(DataBase *dataBase);
+    explicit Shop(DataBase *dataBase);
     ~Shop();
 
     //=== GETTERS

@@ -65,7 +65,7 @@ void MenuView::setMenuModel(MenuModel *model)
 /**
  * Image Loading
  * @author Arthur
- * @date 26/03/16 - 24/01/17
+ * @date 26/03/16 - 30/12/17
  */
 void MenuView::loadImages()
 {
@@ -78,14 +78,14 @@ void MenuView::loadImages()
     //=== Initialize PLAY and QUIT buttons
 
     vector<sf::IntRect> clipRectPlay;
-    clipRectPlay.push_back(sf::IntRect( 0, 0, 150, 80));
-    clipRectPlay.push_back(sf::IntRect(151, 0, 150, 80));
+    clipRectPlay.emplace_back(0, 0, 150, 80);
+    clipRectPlay.emplace_back(151, 0, 150, 80);
     m_playRectButton = new Button(m_width/2-75, (float) (m_height / 1.5), 150, 80, "menu_play_button",
                                   RECT_BUTTONS_IMAGE, clipRectPlay);
 
     vector<sf::IntRect> clipRectQuit;
-    clipRectQuit.push_back(sf::IntRect( 0, 0, 150, 80));
-    clipRectQuit.push_back(sf::IntRect(151, 0, 150, 80));
+    clipRectQuit.emplace_back(0, 0, 150, 80);
+    clipRectQuit.emplace_back(151, 0, 150, 80);
     m_quitRectButton = new Button(m_width/2-75, (float) (m_height / 1.2), 150, 80, "menu_quit_button",
                                   RECT_BUTTONS_IMAGE, clipRectQuit);
 
@@ -93,23 +93,23 @@ void MenuView::loadImages()
     //=== Initialize COMMANDS, SETTINGS, LEADERBOARD and SHOP form buttons
 
     vector<sf::IntRect> clipRectCommands;
-    clipRectCommands.push_back(sf::IntRect( 0, 200, 50, 50));
-    clipRectCommands.push_back(sf::IntRect( 51, 200, 50, 50));
+    clipRectCommands.emplace_back(0, 200, 50, 50);
+    clipRectCommands.emplace_back(51, 200, 50, 50);
     m_commandsFormButton = new Button(20, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectCommands);
 
     vector<sf::IntRect> clipRectSettings;
-    clipRectSettings.push_back(sf::IntRect( 0, 0, 50, 50));
-    clipRectSettings.push_back(sf::IntRect( 51, 0, 50, 50));
+    clipRectSettings.emplace_back(0, 0, 50, 50);
+    clipRectSettings.emplace_back(51, 0, 50, 50);
     m_settingsFormButton = new Button(20, 530, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectSettings);
 
     vector<sf::IntRect> clipRectLeaderboard;
-    clipRectLeaderboard.push_back(sf::IntRect( 0, 100, 50, 50));
-    clipRectLeaderboard.push_back(sf::IntRect( 51, 100, 50, 50));
+    clipRectLeaderboard.emplace_back(0, 100, 50, 50);
+    clipRectLeaderboard.emplace_back(51, 100, 50, 50);
     m_leaderboardFormButton = new Button(830, 530, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectLeaderboard);
 
     vector<sf::IntRect> clipRectShop;
-    clipRectShop.push_back(sf::IntRect( 0, 150, 50, 50));
-    clipRectShop.push_back(sf::IntRect( 51, 150, 50, 50));
+    clipRectShop.emplace_back(0, 150, 50, 50);
+    clipRectShop.emplace_back(51, 150, 50, 50);
     m_shopFormButton = new Button(830, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectShop);
 }
 
@@ -220,7 +220,6 @@ void MenuView::draw() const
 
     else if (m_menuModel->getMenuState() == SHOP)
         m_shopView->draw();
-
 }
 
 
@@ -237,7 +236,7 @@ bool MenuView::treatEvents()
     {
         result = true;
 
-        sf::Event event;
+        sf::Event event{};
         while (m_window->pollEvent(event))
         {
             if  (event.type == sf::Event::Closed)

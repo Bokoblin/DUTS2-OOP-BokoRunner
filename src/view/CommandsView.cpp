@@ -55,8 +55,8 @@ void CommandsView::loadImages()
     //=== Initialize HOME form buttons
 
     std::vector<sf::IntRect> clipRectHome;
-    clipRectHome.push_back(sf::IntRect( 0, 50, 50, 50));
-    clipRectHome.push_back(sf::IntRect( 51, 50, 50, 50));
+    clipRectHome.emplace_back(0, 50, 50, 50);
+    clipRectHome.emplace_back(51, 50, 50, 50);
     m_homeFormButton = new Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
 }
 

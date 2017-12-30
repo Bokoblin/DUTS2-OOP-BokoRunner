@@ -53,8 +53,8 @@ class GameModel : public Model
 {
 public:
     //=== CTORs / DTORs
-    GameModel(const Model& model);
-    ~GameModel();
+    explicit GameModel(const Model& model);
+    ~GameModel() override;
 
     //=== GETTERS
     GameState getGameState() const;
@@ -74,7 +74,7 @@ public:
     void setCurrentZone(Zone z);
 
     //=== METHODS
-    virtual void nextStep() override;
+    void nextStep() override;
     void chooseTimeSpacing(int elementType);
     bool checkIfPositionFree(float x, float y) const;
     void moveMovableElement(MovableElement *element);

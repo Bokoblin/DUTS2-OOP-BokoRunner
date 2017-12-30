@@ -17,8 +17,7 @@ PixelateEffect::PixelateEffect() : m_isLoaded(false)
  * @author Arthur
  * @date 28/04/16
  */
-PixelateEffect::~PixelateEffect()
-{ }
+PixelateEffect::~PixelateEffect() = default;
 
 
 /**

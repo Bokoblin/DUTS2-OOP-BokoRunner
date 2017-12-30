@@ -34,16 +34,16 @@ class MenuView : public View
 public:
     //=== CTORs / DTORs
     MenuView(float w, float h, sf::RenderWindow *window, TextHandler *textHandler);
-    virtual ~MenuView();
+    ~MenuView() override;
 
     //=== SETTERS
 	void setMenuModel(MenuModel *model);
 
     //=== METHODS
-    virtual void synchronize() override;
-    virtual void draw() const override;
-    virtual void loadImages() override;
-    virtual bool treatEvents() override;
+    void synchronize() override;
+    void draw() const override;
+    void loadImages() override;
+    bool treatEvents() override;
 
 private:
     //=== ATTRIBUTES

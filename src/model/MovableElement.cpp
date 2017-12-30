@@ -26,7 +26,7 @@ MovableElement::MovableElement(float x, float y, float w, float h, float mvX, fl
  * @author Arthur
  * @date 23/02/16
  */
-MovableElement::~MovableElement() {}
+MovableElement::~MovableElement() = default;
 
 
 //=== Getters

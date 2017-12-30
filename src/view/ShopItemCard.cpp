@@ -62,14 +62,14 @@ void ShopItemCard::loadImages()
     //=== Initialize BUY, BOUGHT Buttons
 
     vector<sf::IntRect> clipRectGreen;
-    clipRectGreen.push_back(GREEN_BUTTON_UP);
-    clipRectGreen.push_back(GREEN_BUTTON_DOWN);
+    clipRectGreen.emplace_back(GREEN_BUTTON_UP);
+    clipRectGreen.emplace_back(GREEN_BUTTON_DOWN);
     m_buyButton = new Button(getPosition().x + m_width/2-75, getPosition().y + 250, 150, 80, "shop_purchasable",
                              RECT_BUTTONS_IMAGE, clipRectGreen);
 
     vector<sf::IntRect> clipRectRed;
-    clipRectRed.push_back(RED_BUTTON_UP);
-    clipRectRed.push_back(RED_BUTTON_UP);
+    clipRectRed.emplace_back(RED_BUTTON_UP);
+    clipRectRed.emplace_back(RED_BUTTON_UP);
     m_boughtButton = new Button(getPosition().x + m_width/2-75, getPosition().y + 250, 150, 80, "shop_bought",
                                 RECT_BUTTONS_IMAGE, clipRectRed);
     m_boughtButton->setDisabled(true);

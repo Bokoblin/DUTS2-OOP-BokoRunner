@@ -8,5 +8,6 @@
 *.map
 *.md5
 *.idea
+build/
 cmake-build-debug/
 res/config.xml

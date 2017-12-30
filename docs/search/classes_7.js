@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['leaderboard',['Leaderboard',['../a00773.html',1,'']]],
-  ['leaderboardview',['LeaderboardView',['../a00833.html',1,'']]]
+  ['leaderboard',['Leaderboard',['../a00776.html',1,'']]],
+  ['leaderboardview',['LeaderboardView',['../a00836.html',1,'']]]
 ];

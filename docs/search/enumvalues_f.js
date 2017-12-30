@@ -6,5 +6,5 @@ var searchData=
   ['shop',['SHOP',['../a00053.html#aa3041ae4242c0dd57a126d17505443b2a5f3a97f0c8c3605b875c0d9c3e710e38',1,'MenuModel.h']]],
   ['slow_5fspeed_5fbonus',['SLOW_SPEED_BONUS',['../a00065.html#a8b9bbfde536d6e2a415388fa10347062ad79dcef0531b52a7f6974fd1742eb9ed',1,'MovableElement.h']]],
   ['standard_5fenemy',['STANDARD_ENEMY',['../a00065.html#a8b9bbfde536d6e2a415388fa10347062a2ad847621904a2058180180bec7047cb',1,'MovableElement.h']]],
-  ['stats',['STATS',['../a00793.html#a3e9afefe3b953723048adb1776bce6e6ad300ce25e82f5bc11c7ffecb10ff4e11',1,'Settings']]]
+  ['stats',['STATS',['../a00796.html#a3e9afefe3b953723048adb1776bce6e6ad300ce25e82f5bc11c7ffecb10ff4e11',1,'Settings']]]
 ];

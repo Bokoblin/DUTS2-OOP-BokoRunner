@@ -17,6 +17,7 @@ set(PUGI_LIB
 
 set(LOGGER_LIB
         src/libs/Logger/Logger.h
+        src/libs/Logger/Logger.cpp
         )
 
 file(GLOB MDC-SFML_LIB

@@ -14,8 +14,7 @@ using std::string;
  * @param settingsModel the settings model
  */
 SettingsView::SettingsView(sf::RenderWindow *window, TextHandler *textHandler, SettingsModel *settingsModel) :
-        AbstractView(window, textHandler),
-    m_settings{settingsModel}, m_confirmDialog{nullptr}
+        AbstractView(window, textHandler), m_settings{settingsModel}, m_confirmDialog{nullptr}
 {
     loadImages();
 
@@ -49,8 +48,9 @@ SettingsView::SettingsView(sf::RenderWindow *window, TextHandler *textHandler, S
 
     //=== Init confirm dialog
 
-    m_confirmDialog = new mdsf::Dialog(m_width/2-140, m_height/2-120, 280, 200, "confirm");
+    m_confirmDialog = new mdsf::Dialog(m_width/2-140, m_height/2-120, 280, 200, "confirm_data_delete");
     m_confirmDialog->hide();
+    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, *m_settings->getDataBase());
 
     //=== Init music
 
@@ -185,9 +185,6 @@ void SettingsView::synchronize()
         button->sync();
 
 
-    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, *m_settings->getDataBase());
-
-
     //=== Update and sync indicators
 
     for(auto &it : m_pageIndicators)
@@ -254,12 +251,79 @@ void SettingsView::draw() const
 
 
 /**
+ * Handles music settings
+ *
+ * @author Arthur
+ * @date 25/01/17
+ */
+void SettingsView::handleMusic()
+{
+    //=== Change menu music volume
+
+    if (m_settings->getDataBase()->isMenuMusicEnabled())
+    {
+        std::vector<sf::IntRect> clipRect;
+        clipRect.emplace_back(0, 200, 50, 50);
+        clipRect.emplace_back(50, 200, 50, 50);
+        m_menuMusicButton->setClipRectArray(clipRect);
+    }
+    else
+    {
+        std::vector<sf::IntRect> clipRect;
+        clipRect.emplace_back(0, 250, 50, 50);
+        clipRect.emplace_back(50, 250, 50, 50);
+        m_menuMusicButton->setClipRectArray(clipRect);
+    }
+
+    //=== Change game music volume
+
+    if (m_settings->getDataBase()->isGameMusicEnabled())
+    {
+        std::vector<sf::IntRect> clipRect;
+        clipRect.emplace_back(0, 200, 50, 50);
+        clipRect.emplace_back(50, 200, 50, 50);
+        m_gameMusicButton->setClipRectArray(clipRect);
+    }
+    else
+    {
+        std::vector<sf::IntRect> clipRect;
+        clipRect.emplace_back(0, 250, 50, 50);
+        clipRect.emplace_back(50, 250, 50, 50);
+        m_gameMusicButton->setClipRectArray(clipRect);
+    }
+}
+
+
+/**
+ * Updates all text based components
+ * or components that uses text (e.g. buttons, dialogs).
+ * This function is meant to be used only by some
+ * event triggers (those which change language) to minimize disk access.
+ *
+ * @author Arthur
+ * @date 02/01/18
+ */
+void SettingsView::updateTextBasedComponents() const
+{
+    //Update standalone text
+    m_textHandler->updateWholeText();
+
+    //Update button text
+    for (mdsf::Button *button : m_buttonList)
+        button->retrieveAndSyncLabel(*m_settings->getDataBase());
+
+    //Update dialog text
+    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, *m_settings->getDataBase());
+}
+
+
+/**
  * Handles the user interaction events (mouse, keyboard, title bar buttons)
  * @param event sfml event object
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 20/05/16 - 26/12/17
+ * @date 20/05/16 - 02/01/18
  */
 bool SettingsView::handleEvents(sf::Event event)
 {
@@ -304,28 +368,35 @@ bool SettingsView::handleEvents(sf::Event event)
 
         //=== handle mouse up on a button
 
+        if (!m_confirmDialog->isVisible())
+        {
+            if (m_homeFormButton->contains(MOUSE_POSITION))
+            {
+                m_settings->quit();
+                return false;
+            }
+
+            for (auto &it : m_pageIndicators)
+                if (it.second->contains(MOUSE_POSITION))
+                    m_settings->setCurrentPage(it.first);
+        }
+
         if (m_settings->getCurrentPage() == CONFIG)
         {
             if (m_englishLangRadio->contains(MOUSE_POSITION))
             {
                 m_settings->changeLanguage(ENGLISH);
-                m_textHandler->updateWholeText();
-                for (mdsf::Button *button : m_buttonList)
-                    button->retrieveAndSyncLabel(*m_settings->getDataBase());
+                updateTextBasedComponents();
             }
             else if (m_frenchLangRadio->contains(MOUSE_POSITION))
             {
                 m_settings->changeLanguage(FRENCH);
-                m_textHandler->updateWholeText();
-                for (mdsf::Button *button : m_buttonList)
-                    button->retrieveAndSyncLabel(*m_settings->getDataBase());
+                updateTextBasedComponents();
             }
             else if (m_spanishLangRadio->contains(MOUSE_POSITION))
             {
                 m_settings->changeLanguage(SPANISH);
-                m_textHandler->updateWholeText();
-                for (mdsf::Button *button : m_buttonList)
-                    button->retrieveAndSyncLabel(*m_settings->getDataBase());
+                updateTextBasedComponents();
             }
             else if (m_easyModeRadio->contains(MOUSE_POSITION))
             {
@@ -377,7 +448,7 @@ bool SettingsView::handleEvents(sf::Event event)
                     m_settings->checkItemsAvailability();
                 }
                 else if (m_confirmDialog->getCancelButtonText().contains(MOUSE_POSITION)
-                     || !m_confirmDialog->contains(MOUSE_POSITION))
+                        || !m_confirmDialog->contains(MOUSE_POSITION))
                 {
                     m_confirmDialog->hide();
                 }
@@ -387,62 +458,13 @@ bool SettingsView::handleEvents(sf::Event event)
         {
             m_textHandler->handleAboutLinks(event, *m_settings);
         }
-
-        if (!m_confirmDialog->isVisible())
-        {
-            if (m_homeFormButton->contains(MOUSE_POSITION))
-            {
-                m_settings->quit();
-                return false;
-            }
-
-            for (auto &it : m_pageIndicators)
-                if (it.second->contains(MOUSE_POSITION))
-                    m_settings->setCurrentPage(it.first);
-        }
     }
+
+    if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
+    {
+        m_confirmDialog->hide();
+    }
+
     return true;
-}
-
-/**
- * Handles music settings
- * @author Arthur
- * @date 25/01/17
- */
-void SettingsView::handleMusic()
-{
-    //=== Change menu music volume
-
-    if (m_settings->getDataBase()->isMenuMusicEnabled())
-    {
-        std::vector<sf::IntRect> clipRect;
-        clipRect.emplace_back(0, 200, 50, 50);
-        clipRect.emplace_back(50, 200, 50, 50);
-        m_menuMusicButton->setClipRectArray(clipRect);
-    }
-    else
-    {
-        std::vector<sf::IntRect> clipRect;
-        clipRect.emplace_back(0, 250, 50, 50);
-        clipRect.emplace_back(50, 250, 50, 50);
-        m_menuMusicButton->setClipRectArray(clipRect);
-    }
-
-    //=== Change game music volume
-
-    if (m_settings->getDataBase()->isGameMusicEnabled())
-    {
-        std::vector<sf::IntRect> clipRect;
-        clipRect.emplace_back(0, 200, 50, 50);
-        clipRect.emplace_back(50, 200, 50, 50);
-        m_gameMusicButton->setClipRectArray(clipRect);
-    }
-    else
-    {
-        std::vector<sf::IntRect> clipRect;
-        clipRect.emplace_back(0, 250, 50, 50);
-        clipRect.emplace_back(50, 250, 50, 50);
-        m_gameMusicButton->setClipRectArray(clipRect);
-    }
 }
 

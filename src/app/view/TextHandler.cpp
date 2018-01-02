@@ -119,6 +119,7 @@ void TextHandler::loadText()
 
 /**
  * Changes Language
+ * TODO: divide in modules to reduce time complexity (divide textList too)
  * @author Arthur
  * @date 13/04/16 - 27/10/17
  */
@@ -320,25 +321,22 @@ void TextHandler::syncShopText()
 /**
  * Game Screen Syncing
  * @author Arthur
- * @date 02/04/16 - 27/10/17
+ * @date 02/04/16 - 02/01/18
  *
  * @param bonusTimeout the current bonus timeout
  */
 void TextHandler::syncGameText(int bonusTimeout)
 {
     m_playerLifeLabel->setPosition(40, 545);
+
     m_currentDistanceLabel->setPosition(440, 545);
     m_currentDistanceText->setPosition(640, 545);
     m_currentDistanceText->setFillColor(sf::Color::White);
-    m_currentDistanceText->setString(to_string(
-            m_dataBase->getCurrentDistance()) + " m");
+    m_currentDistanceText->setString(to_string(m_dataBase->getCurrentDistance()) + " m");
+
     m_bonusTimeoutText->setPosition(840, 545);
-    if (bonusTimeout > 0) {
-        m_bonusTimeoutText->setStringFromInt(bonusTimeout);
-        m_bonusTimeoutText->setVisible(true);
-    }
-    else
-        m_bonusTimeoutText->setVisible(false);
+    m_bonusTimeoutText->setVisible(bonusTimeout > 0);
+    m_bonusTimeoutText->setStringFromInt(bonusTimeout);
 }
 
 
@@ -350,6 +348,7 @@ void TextHandler::syncGameText(int bonusTimeout)
 void TextHandler::syncPauseText()
 {
     m_currentDistanceText->setPosition(PAUSE_TEXT_X, 30);
+
     m_currentCoinsNbText->setPosition(PAUSE_TEXT_X, 70);
     m_currentCoinsNbText->setFillColor(GOLD_COLOR);
     m_currentCoinsNbText->setStringFromInt(m_dataBase->getCurrentCoinsNumber());
@@ -382,11 +381,11 @@ void TextHandler::syncGameOverText(int gameSpeed)
     m_currentDistanceText->setPosition(SUBTOTAL_VALUE_X, 207);
     m_currentDistanceText->setFillColor(END_GREY_COLOR);
     m_currentDistanceText->setString(to_string(m_dataBase->getCurrentDistance()) + " m");
-    m_currentCoinsNbText->setString(to_string(m_dataBase->getCurrentCoinsNumber()) + "  X  20");
 
     m_coinsCollectedLabel->setPosition(SUBTOTAL_LABEL_X, 245);
     m_currentCoinsNbText->setPosition(SUBTOTAL_VALUE_X, 245);
     m_currentCoinsNbText->setFillColor(END_GREY_COLOR);
+    m_currentCoinsNbText->setString(to_string(m_dataBase->getCurrentCoinsNumber()) + "  X  20");
     m_statsTotalCoinsNbText->setStringFromInt(m_dataBase->getTotalCoinsNumber());
 
     m_flattenedEnemiesLabel->setPosition(SUBTOTAL_LABEL_X, 290);

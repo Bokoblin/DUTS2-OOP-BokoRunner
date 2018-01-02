@@ -23,7 +23,7 @@ Dialog::Dialog() : Sprite(0, 0), m_context{""}, m_title{""}, m_content{""},
  * Constructs a dialog with x and y coordinates,
  * a textHandler and a description
  * @author Arthur
- * @date 02/01/2017 - 07/01/17
+ * @date 02/01/2017 - 02/01/18
  */
 Dialog::Dialog(float x, float y, float w, float h, const string &context) :
         Sprite(x, y, w, h), m_context{context}, m_title{""}, m_content{""},
@@ -32,6 +32,7 @@ Dialog::Dialog(float x, float y, float w, float h, const string &context) :
     setTextureFromImage(DIALOG_IMAGE);
     setPosition(x, y);
     resize(w, h);
+    applyColor();
 
     //=== Initialize text
 

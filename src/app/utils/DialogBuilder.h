@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -68,10 +68,17 @@ public:
                 utf8_cancelString = "";
                 utf8_okString = dataBase.loadTextFromIdentifier("dialog_ok");
             }
-            else if (dialog->getContext() == "confirm")
+            else if (dialog->getContext() == "confirm_data_delete")
             {
-                utf8_titleString = dataBase.loadTextFromIdentifier("confirm_dialog_title");
-                utf8_contentString = dataBase.loadTextFromIdentifier("confirm_dialog_content");
+                utf8_titleString = dataBase.loadTextFromIdentifier("confirm_data_delete_dialog_title");
+                utf8_contentString = dataBase.loadTextFromIdentifier("confirm_data_delete_dialog_content");
+                utf8_cancelString = dataBase.loadTextFromIdentifier("dialog_cancel");
+                utf8_okString = dataBase.loadTextFromIdentifier("dialog_ok");
+            }
+            else if (dialog->getContext() == "confirm_leaderboard_delete")
+            {
+                utf8_titleString = dataBase.loadTextFromIdentifier("confirm_leaderboard_delete_dialog_title");
+                utf8_contentString = dataBase.loadTextFromIdentifier("confirm_leaderboard_delete_dialog_content");
                 utf8_cancelString = dataBase.loadTextFromIdentifier("dialog_cancel");
                 utf8_okString = dataBase.loadTextFromIdentifier("dialog_ok");
             }

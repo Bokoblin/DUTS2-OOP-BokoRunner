@@ -62,7 +62,7 @@
                   &#xA; or by sending a mail at the address below :" />
     <string name="about_repo_address" value="https://github.com/Bokoblin/DUTS2-POO-ProjetRunner" />
     <string name="about_email" value="pro.jolivetarthur@gmail.com" />
-    <string name="about_copyright" value="2016-2017 Jolivet Arthur &amp; Laronze Florian" />
+    <string name="about_copyright" value="2016-2018 Jolivet Arthur &amp; Laronze Florian" />
 
     <!--  Shop strings -->
     <string name="shop_bought" value="BOUGHT" />
@@ -75,9 +75,12 @@
     <!-- Dialog strings -->
     <string name="dialog_cancel" value="CANCEL" />
     <string name="dialog_ok" value="OK" />
-    <string name="confirm_dialog_title" value="Delete app data ?" />
-    <string name="confirm_dialog_content" value="All this app's data will be deleted&#xA;permanently. This includes
-&#xA;settings, stats, scores, etc." />
+    <string name="confirm_data_delete_dialog_title" value="Delete app data ?" />
+    <string name="confirm_data_delete_dialog_content" value="All this app's data will be deleted
+                  &#xA;permanently. This includes&#xA;settings, stats, scores, etc." />
+    <string name="confirm_leaderboard_delete_dialog_title" value="Delete leaderboard data ?" />
+    <string name="confirm_leaderboard_delete_dialog_content" value="Both scores difficulty levels
+                  &#xA;will be deleted permanently." />
 
     <!--  ShopItems strings -->
     <string name="shop_doubler_name" value="Coin Doubler" />

@@ -4,26 +4,35 @@
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 21/05/16 - 27/12/17
+ * @date 21/05/16 - 02/01/18
  */
 LeaderboardView::LeaderboardView(sf::RenderWindow *window, TextHandler *textHandler, LeaderboardModel *leaderboardModel) :
         AbstractView(window, textHandler), m_leaderboard{leaderboardModel}
 {
+    //=== Init images and text
+
     loadImages();
 
     textHandler->initMenuLeaderboardText();
+
+    //=== Init confirm dialog
+
+    m_confirmDialog = new mdsf::Dialog(m_width/2-140, m_height/2-120, 280, 200, "confirm_leaderboard_delete");
+    m_confirmDialog->hide();
+    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, *m_leaderboard->getDataBase());
 }
 
 
 /**
  * Destructor
  * @author Arthur
- * @date 21/05/16
+ * @date 21/05/16 - 02/01/18
  */
 LeaderboardView::~LeaderboardView()
 {
     delete m_homeFormButton;
     delete m_clearLbRectButton;
+    delete m_confirmDialog;
 }
 
 
@@ -70,7 +79,7 @@ void LeaderboardView::synchronize()
 /**
  * LeaderboardView Drawing
  * @author Arthur
- * @date 21/05/16 - 23/12/16
+ * @date 21/05/16 - 02/01/18
  */
 void LeaderboardView::draw() const
 {
@@ -80,6 +89,7 @@ void LeaderboardView::draw() const
 
     m_window->draw(*m_homeFormButton);
     m_clearLbRectButton->draw(m_window);
+    m_confirmDialog->draw(m_window);
 
     //=== TextHandler Drawing
 
@@ -94,7 +104,7 @@ void LeaderboardView::draw() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 21/05/16 - 26/12/16
+ * @date 21/05/16 - 02/01/17
  */
 bool LeaderboardView::handleEvents(sf::Event event)
 {
@@ -103,8 +113,11 @@ bool LeaderboardView::handleEvents(sf::Event event)
         if (m_homeFormButton->contains(MOUSE_POSITION))
             m_homeFormButton->setPressed(true);
 
-        if (m_clearLbRectButton->contains(MOUSE_POSITION))
-            m_clearLbRectButton->setPressed(true);
+        if (!m_confirmDialog->isVisible())
+        {
+            if (m_clearLbRectButton->contains(MOUSE_POSITION))
+                m_clearLbRectButton->setPressed(true);
+        }
     }
 
     if (event.type == sf::Event::MouseButtonReleased)
@@ -116,16 +129,40 @@ bool LeaderboardView::handleEvents(sf::Event event)
 
         //=== handle mouse up on a button
 
-        if (m_homeFormButton->contains(MOUSE_POSITION))
+        if (!m_confirmDialog->isVisible())
         {
-            m_leaderboard->quit();
-            return false;
+            if (m_homeFormButton->contains(MOUSE_POSITION))
+            {
+                m_leaderboard->quit();
+                return false;
+            }
+
+            if (m_clearLbRectButton->contains(MOUSE_POSITION))
+            {
+                m_confirmDialog->show();
+            }
         }
-        if (m_clearLbRectButton->contains(MOUSE_POSITION))
+        else
         {
-            m_leaderboard->getDataBase()->clearLeaderboard();
-            m_textHandler->syncMenuLeaderboardText();
+            if (m_confirmDialog->getOkButtonText().contains(MOUSE_POSITION))
+            {
+                m_confirmDialog->hide();
+                m_leaderboard->getDataBase()->clearLeaderboard();
+                m_textHandler->updateWholeText();
+                m_textHandler->syncMenuLeaderboardText();
+            }
+            else if (m_confirmDialog->getCancelButtonText().contains(MOUSE_POSITION)
+                    || !m_confirmDialog->contains(MOUSE_POSITION))
+            {
+                m_confirmDialog->hide();
+            }
         }
     }
+
+    if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
+    {
+        m_confirmDialog->hide();
+    }
+
     return true;
 }

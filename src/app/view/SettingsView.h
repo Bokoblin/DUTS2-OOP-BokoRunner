@@ -28,7 +28,7 @@ limitations under the License.
  * It handles the settings screen's rendering.
  *
  * @author Arthur
- * @date 20/05/16 - 29/12/17
+ * @date 20/05/16 - 02/01/18
  */
 class SettingsView : public AbstractView
 {
@@ -45,9 +45,8 @@ public:
 private:
     //=== ATTRIBUTES
     SettingsModel *m_settings;
-    mdsf::Dialog *m_confirmDialog;
 
-    //Graphic Elements
+    //UI components
     mdsf::Button *m_homeFormButton;
     mdsf::Button *m_englishLangRadio;
     mdsf::Button *m_frenchLangRadio;
@@ -64,6 +63,7 @@ private:
     mdsf::Sprite *m_logoSFML;
     mdsf::Sprite *m_iconRepoLink;
     mdsf::Sprite *m_iconEmailLink;
+    mdsf::Dialog *m_confirmDialog;
 
     //Containers
     std::map<int, mdsf::RadioButton *> m_pageIndicators;
@@ -72,6 +72,7 @@ private:
     //=== METHODS
     void loadImages() override;
     void handleMusic();
+    void updateTextBasedComponents() const;
 };
 
 

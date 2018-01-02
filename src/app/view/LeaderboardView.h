@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,9 +16,11 @@ limitations under the License.
 #ifndef LEADERBOARD_VIEW_H
 #define LEADERBOARD_VIEW_H
 
+#include "../../libs/MDC-SFML/Dialog.h"
 #include "AbstractView.h"
 #include "../model/LeaderboardModel.h"
 #include "../utils/definitions.h"
+#include "../utils/DialogBuilder.h"
 
 /**
  * The LeaderboardView class inherits AbstractView.
@@ -26,7 +28,7 @@ limitations under the License.
  * It handles the leaderboard screen's rendering.
  *
  * @author Arthur
- * @date 21/05/16 - 29/12/17
+ * @date 21/05/16 - 02/01/18
  */
 class LeaderboardView : public AbstractView
 {
@@ -43,8 +45,11 @@ public:
 private:
     //=== ATTRIBUTES
     LeaderboardModel *m_leaderboard;
+
+    //UI components
     mdsf::Button *m_homeFormButton;
     mdsf::Button *m_clearLbRectButton;
+    mdsf::Dialog *m_confirmDialog;
 
     //=== METHODS
     void loadImages() override;

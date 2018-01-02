@@ -14,30 +14,28 @@ namespace MaterialDesignComponentsForSFML
 /**
  * Parameterized Constructor without label description
  * @author Arthur
- * @date 23/12/16 - 02/01/17
+ * @date 23/12/16 - 02/01/18
  */
-RadioButton::RadioButton(float x, float y, float w, float h) :
-        Button(x, y, w, h)
+RadioButton::RadioButton(float x, float y, float diameter) :
+        Button(x, y, diameter, diameter)
 {
     setRadioClipRect();
     setTextureFromImage(RADIO_BUTTONS_IMAGE);
+    resize(m_width, m_height);
 }
 
 
 /**
  * Parameterized Constructor with label description
  * @author Arthur
- * @date 23/12/16 - 02/01/17
+ * @date 23/12/16 - 02/01/18
  */
-RadioButton::RadioButton(float x, float y, float width, float height, const string &label) :
-        Button(x, y, width, height, label)
+RadioButton::RadioButton(float x, float y, float diameter, const std::string &label) :
+        Button(x, y, diameter, diameter, label)
 {
     setRadioClipRect();
-
-    if (label != "indicator")
-        setTextureFromImage(RADIO_BUTTONS_IMAGE);
-    else
-        setTextureFromImage(INDICATOR_IMAGE);
+    setTextureFromImage(label == "indicator" ? INDICATOR_IMAGE : RADIO_BUTTONS_IMAGE);
+    resize(m_width, m_height);
 }
 
 
@@ -64,7 +62,7 @@ RadioButton::~RadioButton() = default;
 /**
  * Synchronization Function : change animation
  * @author Arthur
- * @date 23/12/16
+ * @date 23/12/16 - 02/01/18
  */
 void RadioButton::sync()
 {
@@ -80,6 +78,8 @@ void RadioButton::sync()
         this->setTextureRect(m_clipRectArray[4]);
     if (!m_isEnabled && !m_isSelected)
         this->setTextureRect(m_clipRectArray[5]);
+
+    resize(m_width, m_height); //Needed for correct size after reloading texture rectangle clip
 }
 
 /**

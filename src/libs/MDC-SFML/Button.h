@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ namespace MaterialDesignComponentsForSFML
  * and to update it using a string file thanks to its description (i.e. id)
  *
  * @author Arthur
- * @date 06/04/16 - 27/12/17
+ * @date 06/04/16 - 02/01/18
  *
  * @see Sprite
  * @see LabelPosition
@@ -44,16 +44,19 @@ class Button : public Sprite
 {
 public:
     //=== CTORs / DTORs
-    Button(float x, float y, float w, float h);
-    Button(float x, float y, float w, float h, const std::string &description);
-    Button(float x, float y, float w, float h, const std::string &image, const std::vector<sf::IntRect> &clipRect);
-    Button(float x, float y, float w, float h, const std::string &description,
-           const std::string &image, const std::vector<sf::IntRect> &clipRect);
+    Button(float x, float y, float width, float height);
+    Button(float x, float y, float width, float height, const std::string &description);
+    Button(float x, float y, float width, float height, const std::string &textureImage, const std::vector<sf::IntRect> &clipRect);
+    Button(float x, float y, float width, float height, const std::string &description,
+           const std::string &textureImage, const std::vector<sf::IntRect> &clipRect);
     Button(Button const& other);
     ~Button() override;
 
     //=== GETTERS
+    bool isPressed() const;
+    bool isSelected() const;
     bool isEnabled() const;
+    LabelPosition getLabelPosition() const;
 
     //=== SETTERS
     void setPressed(bool pressed);

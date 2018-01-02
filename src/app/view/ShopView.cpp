@@ -1,5 +1,4 @@
 #include "ShopView.h"
-#include "../utils/DialogBuilder.h"
 
 /**
  * Parameterized Constructor
@@ -57,12 +56,13 @@ void ShopView::loadImages()
     clipRectHome.emplace_back(0, 50, 50, 50);
     clipRectHome.emplace_back(51, 50, 50, 50);
     m_homeFormButton = new mdsf::Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
+    m_homeFormButton->resize(FORM_BUTTONS_SIZE);
 }
 
 /**
  * Create Cards ans Indicators
  * @author Arthur
- * @date 16/05/16 - 02/01/17
+ * @date 16/05/16 - 02/01/18
  */
 void ShopView::createCards()
 {
@@ -84,9 +84,8 @@ void ShopView::createCards()
 
     for (int j=0; j < m_totalIndicator; j++)
     {
-        m_pageIndicators[j] = new mdsf::RadioButton(0, 580, 15, 15, "indicator");
-        m_pageIndicators[j]->setPosition(m_width/2 - 10*m_totalIndicator + 20*j, 550);
-        m_pageIndicators[j]->resize(22, 22);
+        m_pageIndicators[j] = new mdsf::RadioButton(0, 580, INDICATOR_DIAMETER, "indicator");
+        m_pageIndicators[j]->setPosition(m_width/2 - 10*m_totalIndicator + 24*j, 550);
     }
 }
 
@@ -118,12 +117,11 @@ void ShopView::syncCards()
 /**
  * Synchronization function
  * @author Arthur
- * @date 16/05/16 - 02/01/17
+ * @date 16/05/16 - 02/01/18
  */
 void ShopView::synchronize()
 {
     m_homeFormButton->sync();
-    m_homeFormButton->resize(FORM_BUTTONS_SIZE);
 
     m_textHandler->syncShopText();
 
@@ -132,8 +130,7 @@ void ShopView::synchronize()
     for (auto &it : m_pageIndicators)
     {
         (it.second)->sync();
-        it.first == m_currentIndicator ?
-        it.second->setSelected(true) : it.second->setSelected(false);
+        (it.second)->setSelected(it.first == m_currentIndicator);
     }
 }
 

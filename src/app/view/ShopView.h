@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ limitations under the License.
 #include "../model/ShopModel.h"
 #include "ShopItemCard.h"
 #include "ShopDialog.h"
+#include "../utils/DialogBuilder.h"
 #include "../../libs/MDC-SFML/RadioButton.h"
 
 /**

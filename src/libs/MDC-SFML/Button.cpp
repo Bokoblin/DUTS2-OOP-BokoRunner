@@ -10,55 +10,66 @@ namespace MaterialDesignComponentsForSFML
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
 //------------------------------------------------
-
 /**
  * Constructs a button with coordinates and a size
+ *
+ * @param x the x-axis coordinate
+ * @param y the y-axis coordinate
+ * @param width the width
+ * @param height the height
+ *
  * @author Arthur
- * @date 02/01/17 - 28/10/17
+ * @date 02/01/17 - 01/01/18
  */
-Button::Button(float x, float y, float w, float h) :
-        Sprite(x, y, w, h), m_currentClipRect{0}, m_labelPosition{CENTER},
+Button::Button(float x, float y, float width, float height) :
+        Sprite(x, y, width, height), m_currentClipRect{0}, m_labelPosition{CENTER},
         m_isPressed{false}, m_isSelected{false}, m_isEnabled{true}, m_label{""}
 {
     m_font.loadFromFile(Config::DEFAULT_CONDENSED_FONT);
     m_label.setFont(m_font);
     m_label.setFillColor(sf::Color::White);
-    m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
-                                     getPosition().y + getGlobalBounds().height/2);
-    m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
     m_label.setCharacterSize(22);
 }
 
 
 /**
  * Constructs a button with coordinates,
- * a size and a description
+ * a size and a label description
+ *
+ * @param x the x-axis coordinate
+ * @param y the y-axis coordinate
+ * @param width the width
+ * @param height the height
+ * @param description the label's description
+ *
  * @author Arthur
- * @date 02/01/17 - 28/10/17
+ * @date 02/01/17 - 01/01/18
  */
-Button::Button(float x, float y, float w, float h, const string &description) :
-        Sprite(x, y, w, h), m_currentClipRect{0}, m_labelPosition{CENTER},
-        m_isPressed{false}, m_isSelected{false}, m_isEnabled{true}, m_label{description}
+Button::Button(float x, float y, float width, float height, const string &description) :
+        Button(x, y, width, height)
 {
-    m_font.loadFromFile(Config::DEFAULT_CONDENSED_FONT);
-    m_label.setFont(m_font);
-    m_label.setFillColor(sf::Color::White);
-    m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
-                                     getPosition().y + getGlobalBounds().height/2);
-    m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
-    m_label.setCharacterSize(22);
+    m_label.setDescription(description);
+    syncLabelPosition();
 }
 
 
 /**
  * Constructs a button with coordinates,
- * a size, a texture and a clipRect
+ * a size, a texture and an image rectangle clip
+ *
+ * @param x the x-axis coordinate
+ * @param y the y-axis coordinate
+ * @param width the width
+ * @param height the height
+ * @param textureImage the button texture image
+ * @param clipRect the image part used
+ *
  * @author Arthur
  * @date 06/04/16 - 28/10/17
  */
-Button::Button(float x, float y, float w, float h,
-               const string &image, const std::vector<sf::IntRect> &clipRect) :
-        Sprite(x, y, w, h, image), m_clipRectArray{clipRect},
+Button::Button(float x, float y, float width, float height,
+               const string &textureImage, const std::vector<sf::IntRect> &clipRect) :
+        Sprite(x, y, width, height, textureImage), m_clipRectArray{clipRect},
         m_currentClipRect{0},  m_isPressed{false}, m_labelPosition{CENTER},
         m_isSelected{false}, m_isEnabled{true}, m_label{""}
 {
@@ -67,46 +78,46 @@ Button::Button(float x, float y, float w, float h,
     m_font.loadFromFile(Config::DEFAULT_CONDENSED_FONT);
     m_label.setFont(m_font);
     m_label.setFillColor(sf::Color::White);
-    m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
-                                     getPosition().y + getGlobalBounds().height/2);
-    m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
     m_label.setCharacterSize(22);
 }
 
 
 /**
  * Constructs a button with coordinates,
- * a size, a texture, a clipRect and a description
+ * a size, a label, a texture image and an image rectangle clip
+ *
+ * @param x the x-axis coordinate
+ * @param y the y-axis coordinate
+ * @param width the width
+ * @param height the height
+ * @param description the label's description
+ * @param textureImage the button texture image
+ * @param clipRect the image part used
+ *
  * @author Arthur
- * @date 06/04/16 - 28/10/17
+ * @date 06/04/16 - 01/01/18
  */
-Button::Button(float x, float y, float w, float h, const string &description,
-               const string &image, const std::vector<sf::IntRect> &clipRect) :
-        Sprite(x, y, w, h, image), m_clipRectArray{clipRect},
-        m_currentClipRect{0},  m_isPressed{false}, m_labelPosition{CENTER},
-        m_isSelected{false}, m_isEnabled{true}, m_label{description}
+Button::Button(float x, float y, float width, float height, const string &description,
+               const string &textureImage, const std::vector<sf::IntRect> &clipRect) :
+        Button(x, y, width, height, textureImage, clipRect)
 {
-    this->setTextureRect(m_clipRectArray[m_currentClipRect]);
-
-    m_font.loadFromFile(Config::DEFAULT_CONDENSED_FONT);
-    m_label.setFont(m_font);
-    m_label.setFillColor(sf::Color::White);
-    m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
-                                     getPosition().y + getGlobalBounds().height/2);
-    m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
-    m_label.setCharacterSize(22);
+    m_label.setDescription(description);
+    syncLabelPosition();
 }
 
 
 /**
  * Copy Constructor
+ *
+ * @param other another button object to copy
+ *
  * @author Arthur
- * @date 06/04/16 - 02/01/17
+ * @date 06/04/16 - 01/01/18
  */
 Button::Button(Button const& other) :
-        Sprite(other), m_clipRectArray{other.m_clipRectArray}, m_currentClipRect{0},
-        m_label{other.m_label}, m_labelPosition{other.m_labelPosition},
-        m_isPressed{false}, m_isSelected{false}, m_isEnabled{true}
+        Sprite(other), m_clipRectArray{other.m_clipRectArray}, m_currentClipRect{other.m_currentClipRect},
+        m_isPressed{other.m_isPressed}, m_isSelected{other.m_isSelected}, m_isEnabled{other.m_isEnabled},
+        m_font{other.m_font}, m_label{other.m_label}, m_labelPosition{other.m_labelPosition}
 {
     this->setTextureRect(m_clipRectArray[m_currentClipRect]);
 }
@@ -124,7 +135,10 @@ Button::~Button() = default;
 //          GETTERS
 //------------------------------------------------
 
+bool Button::isPressed() const { return m_isPressed; }
+bool Button::isSelected() const { return m_isSelected; }
 bool Button::isEnabled() const { return m_isEnabled; }
+LabelPosition Button::getLabelPosition() const { return m_labelPosition; }
 
 
 //------------------------------------------------
@@ -149,6 +163,7 @@ void Button::setLabelPosition(LabelPosition labelPosition) { m_labelPosition = l
  * Synchronizes Button Sprite by applying color modifiers
  * and animating sprite
  * (by changing current texture rect depending on pressed state)
+ *
  * @author Arthur
  * @date 06/04/16 - 23/12/16
  */
@@ -162,10 +177,11 @@ void Button::sync()
 
 /**
  * Retrieves the button's label text
+ *
+ * @param dataBase the app's database //TODO: not for a lib
+ *
  * @author Arthur
  * @date 23/12/16 - 27/12/17
- *
- * @param dataBase the app's database
  */
 void Button::retrieveLabel(const DataBase &dataBase)
 {
@@ -179,6 +195,7 @@ void Button::retrieveLabel(const DataBase &dataBase)
 
 /**
  * Sync the button's label position
+ *
  * @author Arthur
  * @date 23/12/16 - 27/12/17
  */
@@ -221,12 +238,12 @@ void Button::syncLabelPosition()
 /**
  * Retrieves and syncs the button's label
  * (updates position + displayed text)
- *
  * Note: This function is only a combination of syncLabel() and retrieveLabel()
- * @author Arthur
- * @date 27/12/17
  *
  * @param dataBase the app's database
+ *
+ * @author Arthur
+ * @date 27/12/17
  */
 void Button::retrieveAndSyncLabel(const DataBase &dataBase)
 {
@@ -237,15 +254,18 @@ void Button::retrieveAndSyncLabel(const DataBase &dataBase)
 
 /**
  * Draws the button and its label
+ *
+ * @param window the app's window
+ *
  * @author Arthur
- * @date 23/12/16
+ * @date 23/12/16 - 02/01/18
  */
 void Button::draw(sf::RenderWindow *window) const
 {
     if (isVisible())
     {
         window->draw(*this);
-        window->draw(m_label);
+        m_label.draw(window);
     }
 }
 
@@ -253,11 +273,12 @@ void Button::draw(sf::RenderWindow *window) const
 /**
  * Checks if a point of given coordinates is contained
  * in the button or its label
+ *
+ * @param x the x-axis coordinate
+ * @param y the y-axis coordinate
+ *
  * @author Arthur
  * @date 23/12/16 - 28/10/17
- *
- * @param x the x-axis of the coordinate
- * @param y the y_axis of the coordinate
  */
 bool Button::contains(float x, float y) const {
     return isEnabled() && isVisible() &&

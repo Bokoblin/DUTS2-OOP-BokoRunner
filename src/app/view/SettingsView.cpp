@@ -1,5 +1,4 @@
 #include "SettingsView.h"
-#include "../utils/DialogBuilder.h"
 
 using std::string;
 
@@ -8,7 +7,7 @@ using std::string;
  * Constructs a Settings view with
  * the window, a text handler and Settings model
  * @author Arthur
- * @date 20/05/16 - 30/01/17
+ * @date 20/05/16 - 02/01/18
  *
  * @param window the current window which displays a settings view
  * @param textHandler the text handler to display standalone texts
@@ -24,9 +23,8 @@ SettingsView::SettingsView(sf::RenderWindow *window, TextHandler *textHandler, S
 
     for (int i=0; i < SettingsModel::PAGE_NUMBER; i++)
     {
-        m_pageIndicators[i] = new mdsf::RadioButton(0, 580, 15, 15, "indicator");
+        m_pageIndicators[i] = new mdsf::RadioButton(0, 580, INDICATOR_DIAMETER, "indicator");
         m_pageIndicators[i]->setPosition(m_width/2 - 12*SettingsModel::PAGE_NUMBER + 24*i, 550);
-        m_pageIndicators[i]->resize(INDICATOR_BUTTONS_SIZE);
     }
 
     //=== Fill button list
@@ -44,11 +42,17 @@ SettingsView::SettingsView(sf::RenderWindow *window, TextHandler *textHandler, S
     m_buttonList.push_back(m_menuMusicButton);
     m_buttonList.push_back(m_gameMusicButton);
 
+    //=== Init buttons
+
     for (mdsf::Button *button : m_buttonList)
         button->retrieveAndSyncLabel(*m_settings->getDataBase());
 
+    //=== Init confirm dialog
+
     m_confirmDialog = new mdsf::Dialog(m_width/2-140, m_height/2-120, 280, 200, "confirm");
     m_confirmDialog->hide();
+
+    //=== Init music
 
     handleMusic();
 }
@@ -76,20 +80,23 @@ SettingsView::~SettingsView()
 /**
  * Image Loading
  * @author Arthur
- * @date 20/05/16 - 23/12/16
+ * @date 20/05/16 - 02/01/18
  */
 void SettingsView::loadImages()
 {
     //=== Initialize RADIOS buttons
 
-    m_englishLangRadio = new mdsf::RadioButton(RADIOS_MARGIN, 205, 50, 50, "config_lang_english");
-    m_frenchLangRadio = new mdsf::RadioButton(RADIOS_MARGIN, 245, 50, 50, "config_lang_french");
-    m_spanishLangRadio = new mdsf::RadioButton(RADIOS_MARGIN, 285, 50, 50, "config_lang_spanish");
-    m_easyModeRadio = new mdsf::RadioButton(RADIOS_MARGIN, 420, 50, 50, "config_easy_mode");
-    m_hardModeRadio = new mdsf::RadioButton(RADIOS_MARGIN, 460, 50, 50, "config_hard_mode");
-    m_defaultBallSkinRadio = new mdsf::RadioButton(m_width/2+RADIOS_MARGIN, 205, 50, 50, "config_ball_default_skin");
-    m_morphBallSkinRadio = new mdsf::RadioButton(m_width/2+RADIOS_MARGIN, 245, 50, 50, "config_ball_morph_skin");
-    m_capsuleBallSkinRadio = new mdsf::RadioButton(m_width/2+RADIOS_MARGIN, 285, 50, 50, "config_ball_capsule_skin");
+    const int POS_COL_1 = 50; //Column 1 starting x-axis
+    const int POS_COL_2 = POS_COL_1 + (int)(m_width/2); //Column 2 starting x-axis
+
+    m_englishLangRadio = new mdsf::RadioButton(POS_COL_1, 205, RADIO_DIAMETER, "config_lang_english");
+    m_frenchLangRadio = new mdsf::RadioButton(POS_COL_1, 245, RADIO_DIAMETER, "config_lang_french");
+    m_spanishLangRadio = new mdsf::RadioButton(POS_COL_1, 285, RADIO_DIAMETER, "config_lang_spanish");
+    m_easyModeRadio = new mdsf::RadioButton(POS_COL_1, 420, RADIO_DIAMETER, "config_easy_mode");
+    m_hardModeRadio = new mdsf::RadioButton(POS_COL_1, 460, RADIO_DIAMETER, "config_hard_mode");
+    m_defaultBallSkinRadio = new mdsf::RadioButton(POS_COL_2, 205, RADIO_DIAMETER, "config_ball_default_skin");
+    m_morphBallSkinRadio = new mdsf::RadioButton(POS_COL_2, 245, RADIO_DIAMETER, "config_ball_morph_skin");
+    m_capsuleBallSkinRadio = new mdsf::RadioButton(POS_COL_2, 285, RADIO_DIAMETER, "config_ball_capsule_skin");
 
 
     //=== Initialize Music controls
@@ -98,12 +105,14 @@ void SettingsView::loadImages()
     clipRect_music.emplace_back(0, 200, 50, 50);
     clipRect_music.emplace_back(50, 200, 50, 50);
 
-    m_menuMusicButton = new mdsf::Button(m_width/2+RADIOS_MARGIN, 420, 25, 25, "config_music_menu",
+    m_menuMusicButton = new mdsf::Button(POS_COL_2, 420, 25, 25, "config_music_menu",
                                    GAME_BUTTONS_IMAGE, clipRect_music);
+    //TODO: fix the resize explicit call (hint: correct size in ctor and resize in self.sync())
+    //Resize should only be used by user of the lib when s.he actually want to change the size
     m_menuMusicButton->resize(25, 25);
     m_menuMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
 
-    m_gameMusicButton = new mdsf::Button(m_width/2+RADIOS_MARGIN, 460, 25, 25, "config_music_game",
+    m_gameMusicButton = new mdsf::Button(POS_COL_2, 460, 25, 25, "config_music_game",
                                    GAME_BUTTONS_IMAGE, clipRect_music);
     m_gameMusicButton->resize(25, 25);
     m_gameMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
@@ -115,6 +124,7 @@ void SettingsView::loadImages()
     clipRectHome.emplace_back(0, 50, 50, 50);
     clipRectHome.emplace_back(51, 50, 50, 50);
     m_homeFormButton = new mdsf::Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
+    m_homeFormButton->resize(FORM_BUTTONS_SIZE);
 
 
     //=== Initialize RESET button
@@ -148,7 +158,7 @@ void SettingsView::loadImages()
 /**
  * Synchronization function
  * @author Arthur
- * @date 20/05/16 - 23/12/16
+ * @date 20/05/16 - 02/01/18
  */
 void SettingsView::synchronize()
 {
@@ -183,20 +193,9 @@ void SettingsView::synchronize()
     for(auto &it : m_pageIndicators)
     {
         (it.second)->sync();
-        it.second->setSelected(it.first == m_settings->getCurrentPage());
+        (it.second)->setSelected(it.first == m_settings->getCurrentPage());
     }
 
-    //=== Resize Radio buttons
-
-    m_homeFormButton->resize(FORM_BUTTONS_SIZE);
-    m_englishLangRadio->resize(RADIO_BUTTONS_SIZE);
-    m_frenchLangRadio->resize(RADIO_BUTTONS_SIZE);
-    m_spanishLangRadio->resize(RADIO_BUTTONS_SIZE);
-    m_easyModeRadio->resize(RADIO_BUTTONS_SIZE);
-    m_hardModeRadio->resize(RADIO_BUTTONS_SIZE);
-    m_defaultBallSkinRadio->resize(RADIO_BUTTONS_SIZE);
-    m_morphBallSkinRadio->resize(RADIO_BUTTONS_SIZE);
-    m_capsuleBallSkinRadio->resize(RADIO_BUTTONS_SIZE);
 
     //=== TextHandler update
 

@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,14 +30,14 @@ namespace MaterialDesignComponentsForSFML
  * and a different label location than other buttons
  *
  * @author Arthur
- * @date 23/12/16 - 29/12/17
+ * @date 23/12/16 - 02/01/18
  */
 class RadioButton : public Button
 {
 public:
     //=== CTORs / DTORs
-    RadioButton(float x, float y, float w, float h);
-    RadioButton(float x, float y, float width, float height, const std::string &label);
+    RadioButton(float x, float y, float diameter);
+    RadioButton(float x, float y, float diameter, const std::string &label);
     RadioButton(const RadioButton& other);
     ~RadioButton() override;
 
@@ -51,6 +51,7 @@ private:
 
     //=== CONSTANTS
     const std::string RADIO_BUTTONS_IMAGE = "../res/images/ui/radio_buttons.png";
+    const std::string INDICATOR_IMAGE = "../res/images/ui/indicator_buttons.png";
 };
 
 } //namespace MaterialDesignComponentsForSFML

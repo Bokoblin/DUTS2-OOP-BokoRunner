@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ limitations under the License.
  * TODO : remove a lot
  * Provides pre-processor definitions to view classes
  * @author Arthur
- * @date 16/04/17 - 27/12/17
+ * @date 16/04/17 - 02/01/18
  */
 
 //=== COLORS DEFINITIONS
@@ -54,9 +54,8 @@ limitations under the License.
 //=== OTHER DEFINITIONS
 #define TITLE_TEXT_X (m_height/12)
 #define FORM_BUTTONS_SIZE 30, 30
-#define RADIOS_MARGIN 50
-#define RADIO_BUTTONS_SIZE 26, 26
-#define INDICATOR_BUTTONS_SIZE 22, 22
+#define RADIO_DIAMETER 25
+#define INDICATOR_DIAMETER 22
 #define PAUSE_BUTTONS_SIZE 25, 25
 
 #endif

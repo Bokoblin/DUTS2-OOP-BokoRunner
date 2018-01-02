@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ limitations under the License.
 /**
  * Provides constants to model and view classes
  * @author Arthur
- * @date 23/10/16 - 27/12/17
+ * @date 23/10/16 - 01/01/18
  */
 
 //=== Ressources Folders
@@ -121,7 +121,6 @@ static const std::string PAUSE_PLAIN_BACKGROUND = IMAGE_FOLDER + "backgrounds/pa
 static const std::string END_SCREEN_BACKGROUND = IMAGE_FOLDER + "backgrounds/end_background.png";
 
 //=== Images : UI components
-static const std::string INDICATOR_IMAGE = IMAGE_FOLDER + "ui/indicator_buttons.png";
 static const std::string RECT_BUTTONS_IMAGE = IMAGE_FOLDER + "ui/rect_buttons.png";
 static const std::string SHAPE_BUTTONS_IMAGE = IMAGE_FOLDER + "ui/shape_buttons.png";
 static const std::string GAME_BUTTONS_IMAGE = IMAGE_FOLDER + "ui/game_buttons.png";

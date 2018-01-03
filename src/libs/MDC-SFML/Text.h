@@ -19,6 +19,7 @@ limitations under the License.
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "Config.h"
 
 namespace Bokoblin
 {

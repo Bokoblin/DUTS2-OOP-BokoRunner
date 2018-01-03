@@ -7,6 +7,7 @@ namespace SimpleLogger
 
 /**
  * Prints an info message on the console
+ *
  * @param message the message to print along info tag
  *
  * @author Arthur
@@ -19,6 +20,7 @@ void Logger::printInfoOnConsole(const std::string &message)
 
 /**
  * Prints a warning message on the console
+ *
  * @param message the message to print along warning tag
  *
  * @author Arthur
@@ -31,6 +33,7 @@ void Logger::printWarningOnConsole(const std::string &message)
 
 /**
  * Prints an error message on the console
+ *
  * @param message the message to print along error tag
  *
  * @author Arthur

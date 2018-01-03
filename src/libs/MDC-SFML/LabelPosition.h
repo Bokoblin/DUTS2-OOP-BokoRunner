@@ -24,6 +24,7 @@ namespace MaterialDesignComponentsForSFML
 /**
  * The LabelPosition enum defines the different
  * position that are settable for button's label.
+ *
  * @author Arthur
  * @date 30/01/17
  */

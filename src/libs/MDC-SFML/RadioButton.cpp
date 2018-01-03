@@ -13,34 +13,52 @@ namespace MaterialDesignComponentsForSFML
 
 /**
  * Parameterized Constructor without label description
+ *
+ * @param x the x-axis coordinate
+ * @param y the y-axis coordinate
+ * @param diameter the diameter
+ *
  * @author Arthur
  * @date 23/12/16 - 02/01/18
  */
 RadioButton::RadioButton(float x, float y, float diameter) :
         Button(x, y, diameter, diameter)
 {
+    m_labelPosition = RIGHT;
     setRadioClipRect();
     setTextureFromImage(RADIO_BUTTONS_IMAGE);
+    applyColor();
     resize(m_width, m_height);
 }
 
 
 /**
  * Parameterized Constructor with label description
+ *
+ * @param x the x-axis coordinate
+ * @param y the y-axis coordinate
+ * @param diameter the diameter
+ * @param description the label's description
+ *
  * @author Arthur
  * @date 23/12/16 - 02/01/18
  */
-RadioButton::RadioButton(float x, float y, float diameter, const std::string &label) :
-        Button(x, y, diameter, diameter, label)
+RadioButton::RadioButton(float x, float y, float diameter, const std::string &description) :
+        Button(x, y, diameter, diameter, description)
 {
+    m_labelPosition = RIGHT;
     setRadioClipRect();
-    setTextureFromImage(label == "indicator" ? INDICATOR_IMAGE : RADIO_BUTTONS_IMAGE);
+    setTextureFromImage(description == "indicator" ? INDICATOR_IMAGE : RADIO_BUTTONS_IMAGE);
+    applyColor();
     resize(m_width, m_height);
 }
 
 
 /**
  * Copy Constructor
+ *
+ * @param other another button object to copy
+ *
  * @author Arthur
  * @date 02/01/17
  */
@@ -56,16 +74,42 @@ RadioButton::~RadioButton() = default;
 
 
 //------------------------------------------------
+//          SETTERS
+//------------------------------------------------
+
+void RadioButton::setLabelPosition(LabelPosition labelPosition)
+{
+    switch (labelPosition)
+    {
+        case LEFT:
+            m_labelPosition = LEFT;
+            break;
+        case RIGHT:
+            m_labelPosition = RIGHT;
+            break;
+        default:
+            SimpleLogger::Logger::printErrorOnConsole("Not allowed label position");
+    }
+}
+
+//------------------------------------------------
 //          METHODS
 //------------------------------------------------
 
 /**
- * Synchronization Function : change animation
+ * Synchronizes Button sprite by applying color modifiers,
+ * animating sprite (by changing current texture rect
+ * depending on pressed/selected/enabled state) and
+ * resizing to diameter the button size after texture applying
+ * (because texture overrides size)
+ *
  * @author Arthur
  * @date 23/12/16 - 02/01/18
  */
 void RadioButton::sync()
 {
+    Sprite::sync();
+
     if (m_isEnabled && m_isSelected && !m_isPressed)
         this->setTextureRect(m_clipRectArray[0]);
     if (m_isEnabled && m_isSelected && m_isPressed)
@@ -83,17 +127,27 @@ void RadioButton::sync()
 }
 
 /**
- * Synchronization Function :
- * Changes animation depending on pressed state
- * sync button's label
+ * Synchronizes button label position (always left or right)
  * @author Arthur
  * @date 23/12/16 - 27/12/17
  */
 void RadioButton::syncLabelPosition()
 {
     if (!m_label.getDescription().empty()) {
-        m_label.setPosition(getPosition().x + 2 * getGlobalBounds().width, getPosition().y - 3);
-        m_label.setOrigin(0, 0);
+        switch (m_labelPosition)
+        {
+            case LEFT:
+                m_label.setPosition(getPosition().x - (m_label.getGlobalBounds().width + m_width),
+                        getPosition().y - 2);
+                m_label.setOrigin(0, 0);
+                break;
+            case RIGHT:
+                m_label.setPosition(getPosition().x + 2 * m_width, getPosition().y - 2);
+                m_label.setOrigin(0, 0);
+                break;
+            default:
+                SimpleLogger::Logger::printErrorOnConsole("Not allowed label position");
+        }
     }
 }
 

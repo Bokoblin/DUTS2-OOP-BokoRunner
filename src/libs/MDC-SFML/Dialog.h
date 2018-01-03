@@ -34,13 +34,14 @@ namespace MaterialDesignComponentsForSFML
  * @date 16/05/16 - 29/12/17
  *
  * @see Sprite
+ * @see Text
  */
 class Dialog : public Sprite
 {
 public:
     //=== CTORs / DTORs
     Dialog();
-    Dialog(float x, float y, float w, float h, const std::string &context);
+    Dialog(float x, float y, float width, float height, const std::string &context);
     Dialog(const Dialog& d)=delete;
     ~Dialog() override;
 

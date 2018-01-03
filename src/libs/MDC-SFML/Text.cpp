@@ -1,5 +1,4 @@
 #include "Text.h"
-#include "Config.h"
 
 using std::string;
 

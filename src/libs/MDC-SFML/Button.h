@@ -64,7 +64,7 @@ public:
     void setEnabled(bool enabled);
     void setClipRectArray(std::vector<sf::IntRect> array);
     void setPositionSelfCentered(double, double);
-    void setLabelPosition(LabelPosition labelPosition);
+    virtual void setLabelPosition(LabelPosition labelPosition);
 
     //=== METHODS
     void sync() override;

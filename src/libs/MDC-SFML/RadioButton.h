@@ -27,23 +27,26 @@ namespace MaterialDesignComponentsForSFML
  * The RadioButton Class inherited from Button class
  * adds different syncing behaviours
  * a pre-configured texture with its clip rectangles
- * and a different label location than other buttons
+ * and a different label location than other buttons.
  *
  * @author Arthur
  * @date 23/12/16 - 02/01/18
+ *
+ * @see Button
  */
 class RadioButton : public Button
 {
 public:
     //=== CTORs / DTORs
     RadioButton(float x, float y, float diameter);
-    RadioButton(float x, float y, float diameter, const std::string &label);
+    RadioButton(float x, float y, float diameter, const std::string &description);
     RadioButton(const RadioButton& other);
     ~RadioButton() override;
 
     //=== METHODS
     void sync() override;
     void syncLabelPosition() override;
+    void setLabelPosition(LabelPosition labelPosition) override; //TOP, CENTER and BOTTOM are unexpected behaviours
 
 private:
     //=== METHODS

@@ -10,6 +10,7 @@ namespace MaterialDesignComponentsForSFML
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
 //------------------------------------------------
+
 /**
  * Constructs a button with coordinates and a size
  *
@@ -148,6 +149,7 @@ void Button::setEnabled(bool enabled) { m_isEnabled = enabled; }
 void Button::setClipRectArray(std::vector<sf::IntRect> array) { m_clipRectArray = std::move(array); }
 void Button::setPositionSelfCentered(float x, float y) { setPosition(x-m_width/2, y); }
 void Button::setLabelPosition(LabelPosition labelPosition) { m_labelPosition = labelPosition; }
+void Button::setLabelDescription(const std::string &description) { m_label.setDescription(description); }
 
 
 //------------------------------------------------
@@ -155,18 +157,18 @@ void Button::setLabelPosition(LabelPosition labelPosition) { m_labelPosition = l
 //------------------------------------------------
 
 /**
- * Synchronizes Button sprite by applying color modifiers
- * and animating sprite
+ * Synchronizes Button sprite by animating sprite
  * (by changing current texture rect depending on pressed state)
  *
  * @author Arthur
- * @date 06/04/16 - 23/12/16
+ * @date 06/04/16 - 04/01/18
  */
 void Button::sync()
 {
-    Sprite::sync();
-
-    this->setTextureRect(m_clipRectArray[m_isPressed]);
+    if (m_isEnabled)
+        this->setTextureRect(m_clipRectArray[m_isPressed]); //TODO: Raised buttons: resize instead later (if no Z-axis)
+    else
+        this->setTextureRect(m_clipRectArray[0]);
 }
 
 
@@ -190,6 +192,7 @@ void Button::retrieveLabel(const DataBase &dataBase)
 
 /**
  * Sync the button's label position
+ * TODO:Raised button: adjust width to text
  *
  * @author Arthur
  * @date 23/12/16 - 04/01/18

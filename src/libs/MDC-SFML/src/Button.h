@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef BUTTON_H
-#define BUTTON_H
+#ifndef MDC_SFML_BUTTON_H
+#define MDC_SFML_BUTTON_H
 
 #include "LabelPosition.h"
 #include "../../../app/model/DataBase.h" //FIXME : delete
@@ -61,7 +61,8 @@ public:
     void setPressed(bool pressed);
     void setEnabled(bool enabled);
     void setClipRectArray(std::vector<sf::IntRect> array);
-    void setPositionSelfCentered(float, float);
+    void setPositionSelfCentered(float x, float y);
+    void setLabelDescription(const std::string &description);
     virtual void setLabelPosition(LabelPosition labelPosition);
 
     //=== METHODS

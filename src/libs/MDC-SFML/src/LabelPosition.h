@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef LABEL_POSITION_H
-#define LABEL_POSITION_H
+#ifndef MDC_SFML_LABEL_POSITION_H
+#define MDC_SFML_LABEL_POSITION_H
 
 namespace Bokoblin
 {

@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef TEXT_H
-#define TEXT_H
+#ifndef MDC_SFML_TEXT_H
+#define MDC_SFML_TEXT_H
 
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Font.hpp>

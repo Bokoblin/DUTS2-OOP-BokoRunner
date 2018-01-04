@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef GRAPHIC_ELEMENT_H
-#define GRAPHIC_ELEMENT_H
+#ifndef MDC_SFML_SPRITE_H
+#define MDC_SFML_SPRITE_H
 
 #include "Config.h"
 #include <SFML/Graphics.hpp>

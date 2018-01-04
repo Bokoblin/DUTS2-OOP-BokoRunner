@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef RADIO_BUTTON_H
-#define RADIO_BUTTON_H
+#ifndef MDC_SFML_RADIO_BUTTON_H
+#define MDC_SFML_RADIO_BUTTON_H
 
 #include "Button.h"
 #include "Sprite.h"

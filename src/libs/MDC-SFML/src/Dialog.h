@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef DIALOG_H
-#define DIALOG_H
+#ifndef MDC_SFML_DIALOG_H
+#define MDC_SFML_DIALOG_H
 
 #include "Color.h"
 #include "Sprite.h"

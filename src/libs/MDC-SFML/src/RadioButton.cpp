@@ -77,9 +77,17 @@ RadioButton::~RadioButton() = default;
 
 
 //------------------------------------------------
+//          GETTERS
+//------------------------------------------------
+
+bool RadioButton::isSelected() const { return m_isSelected; }
+
+
+//------------------------------------------------
 //          SETTERS
 //------------------------------------------------
 
+void RadioButton::setSelected(bool selected) { m_isSelected = selected; }
 void RadioButton::setLabelPosition(LabelPosition labelPosition)
 {
     switch (labelPosition)
@@ -94,18 +102,6 @@ void RadioButton::setLabelPosition(LabelPosition labelPosition)
             SimpleLogger::Logger::printErrorOnConsole("Not allowed label position");
     }
 }
-//------------------------------------------------
-//          GETTERS
-//------------------------------------------------
-
-bool RadioButton::isSelected() const { return m_isSelected; }
-
-
-//------------------------------------------------
-//          SETTERS
-//------------------------------------------------
-
-void RadioButton::setSelected(bool selected) { m_isSelected = selected; }
 
 
 //------------------------------------------------

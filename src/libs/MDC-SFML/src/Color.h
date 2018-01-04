@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef Color_H
-#define Color_H
+#ifndef MDC_SFML_COLOR_H
+#define MDC_SFML_COLOR_H
 
 #include <SFML/Graphics/Color.hpp>
 
@@ -25,10 +25,12 @@ namespace MaterialDesignComponentsForSFML
 
 /**
  * The Color class inherits sf::Color.
- * It defines other colors used by MDC-SFML.
+ * It defines the official Material colors that can be found
+ * at @code https://material.io/guidelines/style/color.html.
+ * It also defines custom colors.
  *
  * @author Arthur
- * @date 29/12/17
+ * @date 29/12/17 - 04/01/2018
  *
  * @see sf::Color
  */
@@ -36,7 +38,32 @@ class Color: public sf::Color
 {
 public:
     //=== ATTRIBUTES
+
+    //Main colors
+    static const sf::Color MaterialRed;
+    static const sf::Color MaterialPink;
+    static const sf::Color MaterialPurple;
+    static const sf::Color MaterialDeepPurple;
+    static const sf::Color MaterialIndigo;
+    static const sf::Color MaterialBlue;
+    static const sf::Color MaterialLightBlue;
+    static const sf::Color MaterialCyan;
     static const sf::Color MaterialTeal;
+    static const sf::Color MaterialGreen;
+    static const sf::Color MaterialLightGreen;
+    static const sf::Color MaterialLime;
+    static const sf::Color MaterialYellow;
+    static const sf::Color MaterialAmber;
+    static const sf::Color MaterialOrange;
+    static const sf::Color MaterialDeepOrange;
+    static const sf::Color MaterialBrown;
+    static const sf::Color MaterialGrey;
+    static const sf::Color MaterialBlueGrey;
+
+    //Additional colors
+    static const sf::Color MaterialGreenA700;
+
+    //Lib custom colors
     static const sf::Color MaterialMine;
 };
 

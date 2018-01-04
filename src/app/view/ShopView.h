@@ -21,7 +21,7 @@ limitations under the License.
 #include "ShopItemCard.h"
 #include "ShopDialog.h"
 #include "../utils/DialogBuilder.h"
-#include "../../libs/MDC-SFML/RadioButton.h"
+#include "../../libs/MDC-SFML/src/RadioButton.h"
 
 /**
  * The ShopView class inherits AbstractView.

@@ -19,8 +19,8 @@ limitations under the License.
 #include "AbstractView.h"
 #include "../utils/DialogBuilder.h"
 #include "../model/SettingsModel.h"
-#include "../../libs/MDC-SFML/RadioButton.h"
-#include "../../libs/MDC-SFML/Dialog.h"
+#include "../../libs/MDC-SFML/src/RadioButton.h"
+#include "../../libs/MDC-SFML/src/Dialog.h"
 
 /**
  * The SettingsView class inherits AbstractView.
@@ -48,14 +48,14 @@ private:
 
     //UI components
     mdsf::Button *m_homeFormButton;
-    mdsf::Button *m_englishLangRadio;
-    mdsf::Button *m_frenchLangRadio;
-    mdsf::Button *m_spanishLangRadio;
-    mdsf::Button *m_easyModeRadio;
-    mdsf::Button *m_hardModeRadio;
-    mdsf::Button *m_defaultBallSkinRadio;
-    mdsf::Button *m_morphBallSkinRadio;
-    mdsf::Button *m_capsuleBallSkinRadio;
+    mdsf::RadioButton *m_englishLangRadio;
+    mdsf::RadioButton *m_frenchLangRadio;
+    mdsf::RadioButton *m_spanishLangRadio;
+    mdsf::RadioButton *m_easyModeRadio;
+    mdsf::RadioButton *m_hardModeRadio;
+    mdsf::RadioButton *m_defaultBallSkinRadio;
+    mdsf::RadioButton *m_morphBallSkinRadio;
+    mdsf::RadioButton *m_capsuleBallSkinRadio;
     mdsf::Button *m_resetRectButton;
     mdsf::Button *m_menuMusicButton;
     mdsf::Button *m_gameMusicButton;

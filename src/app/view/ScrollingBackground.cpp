@@ -15,9 +15,9 @@ ScrollingBackground::ScrollingBackground(float width, float height, float scroll
     Sprite(width, height), m_scrollingSpeed{scrollingSpeed}
 {
     m_left = new mdsf::Sprite(0, 0, width, height);
-    m_left->setTextureFromImage(image);
+    m_left->loadAndApplyTextureFromImageFile(image);
     m_right = new mdsf::Sprite(width, 0, width, height);
-    m_right->setTextureFromImage(image);
+    m_right->loadAndApplyTextureFromImageFile(image);
 
     m_left->resize(width, height);
     m_right->resize(width, height);
@@ -48,10 +48,10 @@ float ScrollingBackground::getSeparationPositionX() const {
      * Depending on the current displaying (left-right or right-left),
      * it returns the visible separation position
      */
-    if (m_left->getPosition().x >= -(4*SCREEN_WIDTH/3) && m_left->getPosition().x <= SCREEN_WIDTH)
-        return m_left->getPosition().x + m_left->getLocalBounds().width;
+    if (m_left->getX() >= -(4*SCREEN_WIDTH/3) && m_left->getX() <= SCREEN_WIDTH)
+        return m_left->getX() + m_left->getLocalBounds().width;
     else
-        return m_right->getPosition().x + m_right->getLocalBounds().width;
+        return m_right->getX() + m_right->getLocalBounds().width;
 }
 
 
@@ -79,10 +79,10 @@ void ScrollingBackground::sync()
 {
     Sprite::sync();
 
-    m_left->setPosition(m_left->getPosition().x - m_scrollingSpeed, m_left->getPosition().y);
-    m_right->setPosition(m_right->getPosition().x - m_scrollingSpeed, m_right->getPosition().y);
+    m_left->setPosition(m_left->getX() - m_scrollingSpeed, m_left->getY());
+    m_right->setPosition(m_right->getX() - m_scrollingSpeed, m_right->getY());
 
-    if (m_left->getPosition().x + m_left->getWidth() < 0)
+    if (m_left->getX() + m_left->getWidth() < 0)
     {
         m_left->setPosition(0, 0);
         m_right->setPosition(m_left->getWidth(), 0);
@@ -117,18 +117,24 @@ void ScrollingBackground::resize(float width, float height)
 
 
 /**
- * Sets the SlidingBackground's texture from an image
+ * Checks if a point of given coordinates is contained
+ * inside this element
+ *
+ * @param x the x-axis of position to check
+ * @param y the y-axis of position to check
+ *
  * @author Arthur
- * @date 02/01/17
+ * @date 30/04/16
  */
-void ScrollingBackground::setTextureFromImage(const std::string &image)
+bool ScrollingBackground::contains(float x, float y) const
 {
-    m_left->setTextureFromImage(image);
-    m_right->setTextureFromImage(image);
+    return m_left->contains(x, y) ||  m_right->contains(x, y);
 }
 
+
 /**
- * Apply light and alpha values to color
+ * Applies light and alpha values to color
+ *
  * @author Arthur
  * @date 24/12/17
  */
@@ -136,4 +142,19 @@ void ScrollingBackground::applyColor()
 {
     m_left->setColor(sf::Color(m_light, m_light, m_light, m_alpha));
     m_right->setColor(sf::Color(m_light, m_light, m_light, m_alpha));
+}
+
+/**
+ * Loads a texture from an image file
+ * and applies it to the SlidingBackground's left and right sprites on loading success
+ *
+ * @param imageFile the source file
+ *
+ * @author Arthur
+ * @date 02/01/17
+ */
+void ScrollingBackground::loadAndApplyTextureFromImageFile(const std::string &image)
+{
+    m_left->loadAndApplyTextureFromImageFile(image);
+    m_right->loadAndApplyTextureFromImageFile(image);
 }

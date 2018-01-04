@@ -21,8 +21,8 @@ set(LOGGER_LIB
         )
 
 file(GLOB MDC-SFML_LIB
-        "src/libs/MDC-SFML/*.h"
-        "src/libs/MDC-SFML/*.cpp"
+        "src/libs/MDC-SFML/src/*.h"
+        "src/libs/MDC-SFML/src/*.cpp"
         )
 
 file(GLOB_RECURSE SOURCE_FILES

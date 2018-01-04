@@ -36,7 +36,7 @@ Dialog::Dialog(float x, float y, float width, float height, const string &contex
         Sprite(x, y, width, height), m_context{context}, m_title{""}, m_content{""},
         m_cancelButtonText{""}, m_okButtonText{""}
 {
-    setTextureFromImage(DIALOG_IMAGE);
+    loadAndApplyTextureFromImageFile(DIALOG_IMAGE);
     setPosition(x, y);
     resize(width, height);
     applyColor();

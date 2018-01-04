@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,9 +27,13 @@ namespace MaterialDesignComponentsForSFML
 {
 
 /**
- * Text Class inherited from sf::Text
+ * The Text class inherits sf::Text.
+ * It adds visibility, a text description (i.e. identifier) and a font tied to the text.
+ *
  * @author Arthur
- * @date 21/12/16 - 29/12/17
+ * @date 21/12/16 - 04/01/18
+ *
+ * @see sf::Text
  */
 class Text : public sf::Text
 {
@@ -37,20 +41,23 @@ public:
     //=== CTORs / DTORs
     explicit Text(const std::string &description);
     Text(const std::string &description, bool isVisible);
+    Text(const Text& other);
 
     //=== GETTERS
+    virtual float getWidth() const;
+    virtual float getHeight() const;
     std::string getDescription() const;
     bool isVisible() const;
 
     //=== SETTERS
     void setDescription(const std::string &description);
-    void setPositionSelfCentered(double x, double y);
+    void setPositionSelfCentered(float x, float y);
     void setStringFromInt(int value);
-    void setVisible(bool on);
+    void setVisible(bool visible);
 
     //=== METHODS
     void draw(sf::RenderWindow *window) const;
-    bool contains(float posX, float posY) const;
+    bool contains(float x, float y) const;
     void applyTextFont(const std::string &fontFileName, unsigned int charSize, sf::Color color);
 
 private:

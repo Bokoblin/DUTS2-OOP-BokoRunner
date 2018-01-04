@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,9 +25,16 @@ namespace MaterialDesignComponentsForSFML
 {
 
 /**
- * GraphicElement Class
+ * The Sprite class inherits sf::Sprite.
+ * It adds visibility, alpha and light control to a sprite. \n
+ * It keeps the texture (and its filename) used to set sprite texture
+ * for sync purpose in inherited classes.
+ * Finally, it allows resize and position containing check.
+ *
  * @author Arthur, Florian
- * @date 21/02/16 - 29/12/17
+ * @date 21/02/16 - 04/01/18
+ *
+ * @see sf::Sprite
  */
 class Sprite : public sf::Sprite
 {
@@ -40,41 +47,49 @@ public:
     ~Sprite() override;
 
     //=== GETTERS
+    virtual float getX() const;
+    virtual float getY() const;
     virtual float getWidth() const;
     virtual float getHeight() const;
+    bool isVisible() const;
     int getAlpha() const;
     int getLight() const;
-    bool isVisible() const;
     std::string getTextureFileName() const;
 
     //=== SETTERS
+    void setVisible(bool visible);
     void show();
     void hide();
-    void setAlpha(int alpha);
-    void setLight(int light);
+    virtual void setAlpha(int alpha);
+    virtual void setLight(int light);
+    virtual void increaseAlpha(int alphaLevel);
+    virtual void decreaseAlpha(int alphaLevel);
+    virtual void increaseLight(int lightLevel);
+    virtual void decreaseLight(int lightLevel);
 
     //=== METHODS
     virtual void sync();
     virtual void draw(sf::RenderWindow *window) const;
+
     virtual void resize(float width, float height);
-    virtual void setTextureFromImage(const std::string &image);
     virtual bool contains(float x, float y) const;
-    virtual void setTextureFromImage(const std::string &image, sf::IntRect intRect);
-    virtual void decreaseAlpha(int alphaLevel);
-    virtual void increaseAlpha(int alphaLevel);
-    virtual void decreaseLight(int lightLevel);
-    virtual void increaseLight(int lightLevel);
     virtual void applyColor();
+
+    virtual void loadAndApplyTextureFromImageFile(const std::string &imageFile);
+    virtual void loadAndApplyTextureFromImageFile(const std::string &imageFile, sf::IntRect area);
 
 protected:
     //=== ATTRIBUTES
     float m_width;
     float m_height;
-    bool m_isShowing;
-    sf::Texture m_texture;
-    std::string m_texture_filename;
+    bool m_isVisible;
     sf::Uint8 m_alpha;
     sf::Uint8 m_light;
+    sf::Texture m_texture;
+    std::string m_textureFilename;
+
+private:
+    void processTextureLoading(const std::string &imageFile);
 };
 
 } //namespace MaterialDesignComponentsForSFML

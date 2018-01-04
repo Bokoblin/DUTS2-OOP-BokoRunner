@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ limitations under the License.
 #define RADIO_BUTTON_H
 
 #include "Button.h"
+#include "Sprite.h"
 
 namespace Bokoblin
 {
@@ -30,7 +31,7 @@ namespace MaterialDesignComponentsForSFML
  * and a different label location than other buttons.
  *
  * @author Arthur
- * @date 23/12/16 - 02/01/18
+ * @date 23/12/16 - 04/01/18
  *
  * @see Button
  */
@@ -43,12 +44,21 @@ public:
     RadioButton(const RadioButton& other);
     ~RadioButton() override;
 
+    //=== GETTERS
+    bool isSelected() const;
+
+    //=== SETTERS
+    void setSelected(bool selected);
+
     //=== METHODS
     void sync() override;
     void syncLabelPosition() override;
     void setLabelPosition(LabelPosition labelPosition) override; //TOP, CENTER and BOTTOM are unexpected behaviours
 
-private:
+protected:
+    //=== ATTRIBUTES
+    bool m_isSelected;
+
     //=== METHODS
     void setRadioClipRect();
 

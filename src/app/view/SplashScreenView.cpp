@@ -41,7 +41,7 @@ SplashScreenView::~SplashScreenView()
 void SplashScreenView::loadImages()
 {
     m_splashScreen = new mdsf::Sprite(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    m_splashScreen->setTextureFromImage(SPLASH_SCREEN_IMAGE);
+    m_splashScreen->loadAndApplyTextureFromImageFile(SPLASH_SCREEN_IMAGE);
 
     m_farBackground = new ScrollingBackground(1200, m_height, 0, DEFAULT_FAR_HILL_BACKGROUND);
     m_nearBackground = new ScrollingBackground(1200, m_height, 0, DEFAULT_NEAR_HILL_BACKGROUND);

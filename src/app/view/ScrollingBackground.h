@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ limitations under the License.
 #define SLIDING_BACKGROUND_H
 
 #include "../utils/constants.h"
-#include "../../libs/MDC-SFML/Sprite.h"
+#include "../../libs/MDC-SFML/src/Sprite.h"
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 
@@ -49,9 +49,12 @@ public:
     //=== METHODS
     void sync() override;
     void draw(sf::RenderWindow *window) const override;
+
     void resize(float width, float height) override;
-    void setTextureFromImage(const std::string &image) override;
+    bool contains(float x, float y) const override;
     void applyColor() override;
+
+    void loadAndApplyTextureFromImageFile(const std::string &image) override;
 
 private:
     //=== ATTRIBUTES

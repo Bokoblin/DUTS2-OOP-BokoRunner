@@ -23,7 +23,7 @@ namespace MaterialDesignComponentsForSFML
  */
 Button::Button(float x, float y, float width, float height) :
         Sprite(x, y, width, height), m_currentClipRect{0}, m_labelPosition{CENTER},
-        m_isPressed{false}, m_isSelected{false}, m_isEnabled{true}, m_label{""}
+        m_isPressed{false}, m_isEnabled{true}, m_label{""}
 {
     m_font.loadFromFile(Config::DEFAULT_CONDENSED_FONT);
     m_label.setFont(m_font);
@@ -65,13 +65,12 @@ Button::Button(float x, float y, float width, float height, const string &descri
  * @param clipRect the image part used
  *
  * @author Arthur
- * @date 06/04/16 - 28/10/17
+ * @date 06/04/16 - 04/01/18
  */
 Button::Button(float x, float y, float width, float height,
                const string &textureImage, const std::vector<sf::IntRect> &clipRect) :
-        Sprite(x, y, width, height, textureImage), m_clipRectArray{clipRect},
-        m_currentClipRect{0},  m_isPressed{false}, m_labelPosition{CENTER},
-        m_isSelected{false}, m_isEnabled{true}, m_label{""}
+        Sprite(x, y, width, height, textureImage), m_clipRectArray{clipRect}, m_currentClipRect{0},
+        m_isPressed{false}, m_isEnabled{true}, m_labelPosition{CENTER}, m_label{""}
 {
     this->setTextureRect(m_clipRectArray[m_currentClipRect]);
 
@@ -112,11 +111,11 @@ Button::Button(float x, float y, float width, float height, const string &descri
  * @param other another button object to copy
  *
  * @author Arthur
- * @date 06/04/16 - 01/01/18
+ * @date 06/04/16 - 04/01/18
  */
 Button::Button(Button const& other) :
         Sprite(other), m_clipRectArray{other.m_clipRectArray}, m_currentClipRect{other.m_currentClipRect},
-        m_isPressed{other.m_isPressed}, m_isSelected{other.m_isSelected}, m_isEnabled{other.m_isEnabled},
+        m_isPressed{other.m_isPressed}, m_isEnabled{other.m_isEnabled},
         m_font{other.m_font}, m_label{other.m_label}, m_labelPosition{other.m_labelPosition}
 {
     this->setTextureRect(m_clipRectArray[m_currentClipRect]);
@@ -136,7 +135,6 @@ Button::~Button() = default;
 //------------------------------------------------
 
 bool Button::isPressed() const { return m_isPressed; }
-bool Button::isSelected() const { return m_isSelected; }
 bool Button::isEnabled() const { return m_isEnabled; }
 LabelPosition Button::getLabelPosition() const { return m_labelPosition; }
 
@@ -146,12 +144,9 @@ LabelPosition Button::getLabelPosition() const { return m_labelPosition; }
 //------------------------------------------------
 
 void Button::setPressed(bool pressed) { m_isPressed = pressed; }
-void Button::setSelected(bool selected) { m_isSelected = selected; }
 void Button::setEnabled(bool enabled) { m_isEnabled = enabled; }
 void Button::setClipRectArray(std::vector<sf::IntRect> array) { m_clipRectArray = std::move(array); }
-void Button::setPositionSelfCentered(double x, double y) {
-    setPosition((float)(x-getGlobalBounds().width/2), (float)y);
-}
+void Button::setPositionSelfCentered(float x, float y) { setPosition(x-m_width/2, y); }
 void Button::setLabelPosition(LabelPosition labelPosition) { m_labelPosition = labelPosition; }
 
 
@@ -160,7 +155,7 @@ void Button::setLabelPosition(LabelPosition labelPosition) { m_labelPosition = l
 //------------------------------------------------
 
 /**
- * Synchronizes Button Sprite by applying color modifiers
+ * Synchronizes Button sprite by applying color modifiers
  * and animating sprite
  * (by changing current texture rect depending on pressed state)
  *
@@ -197,7 +192,7 @@ void Button::retrieveLabel(const DataBase &dataBase)
  * Sync the button's label position
  *
  * @author Arthur
- * @date 23/12/16 - 27/12/17
+ * @date 23/12/16 - 04/01/18
  */
 void Button::syncLabelPosition()
 {
@@ -206,29 +201,24 @@ void Button::syncLabelPosition()
         switch (m_labelPosition)
         {
             case TOP:
-                m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
-                                                 getPosition().y - getGlobalBounds().height/2);
-                m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
+                m_label.setPositionSelfCentered(getX() + getWidth()/2, getY() - getHeight()/2);
+                m_label.setOrigin(0, m_label.getHeight()/2);
                 break;
             case RIGHT:
-                m_label.setPosition(getPosition().x + getGlobalBounds().width + 30,
-                                     getPosition().y + getGlobalBounds().height/2 - 7);
-                m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
+                m_label.setPosition(getX() + getWidth() + 30, getY() + getHeight()/2 - 7);
+                m_label.setOrigin(0, m_label.getHeight()/2);
                 break;
             case BOTTOM:
-                m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
-                                                 getPosition().y + getGlobalBounds().height + 50);
-                m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
+                m_label.setPositionSelfCentered(getX() + getWidth()/2, getY() + getHeight() + 50);
+                m_label.setOrigin(0, m_label.getHeight()/2);
                 break;
             case LEFT:
-                m_label.setPosition((getPosition().x - 30),
-                                     getPosition().y+getGlobalBounds().height/2 - 7);
-                m_label.setOrigin(m_label.getGlobalBounds().width, m_label.getGlobalBounds().height/2);
+                m_label.setPosition((getX() - 30), getY() + getHeight()/2 - 7);
+                m_label.setOrigin(m_label.getWidth(), m_label.getHeight()/2);
                 break;
             case CENTER:
-                m_label.setPositionSelfCentered(getPosition().x + getGlobalBounds().width/2,
-                                                 getPosition().y + getGlobalBounds().height/2);
-                m_label.setOrigin(0, m_label.getGlobalBounds().height/2);
+                m_label.setPositionSelfCentered(getX() + getWidth()/2, getY() + getHeight()/2+1);
+                m_label.setOrigin(0, m_label.getHeight()/2);
                 break;
         }
     }
@@ -253,7 +243,7 @@ void Button::retrieveAndSyncLabel(const DataBase &dataBase)
 
 
 /**
- * Draws the button and its label
+ * Draws the button and its label if visible
  *
  * @param window the app's window
  *

@@ -22,12 +22,12 @@ ShopItemCard::ShopItemCard(int num, ShopItem *item) :
     m_title.applyTextFont(ROBOTO_CONDENSED_FONT, 20, sf::Color::White);
     string utf8_string = item->getName();
     m_title.setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
-    m_title.setPositionSelfCentered(getPosition().x + m_width/2, getPosition().y + 20);
+    m_title.setPositionSelfCentered(getX() + m_width/2, getY() + 20);
 
     m_content.applyTextFont(ROBOTO_CONDENSED_FONT, 16, sf::Color::White);
     utf8_string = item->getDescription();
     m_content.setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
-    m_content.setPosition(getPosition().x + 30, getPosition().y + 190);
+    m_content.setPosition(getX() + 30, getY() + 190);
 
     hide();
 }
@@ -64,17 +64,17 @@ void ShopItemCard::loadImages()
     std::vector<sf::IntRect> clipRectGreen;
     clipRectGreen.emplace_back(GREEN_BUTTON_UP);
     clipRectGreen.emplace_back(GREEN_BUTTON_DOWN);
-    m_buyButton = new mdsf::Button(getPosition().x + m_width/2 - 75, getPosition().y + 250, 150, 80,
+    m_buyButton = new mdsf::Button(getX() + m_width/2 - 75, getY() + 250, 150, 40,
                                    "shop_purchasable", RECT_BUTTONS_IMAGE, clipRectGreen);
 
     std::vector<sf::IntRect> clipRectRed;
     clipRectRed.emplace_back(RED_BUTTON_UP);
     clipRectRed.emplace_back(RED_BUTTON_UP);
-    m_boughtButton = new mdsf::Button(getPosition().x + m_width/2 - 75, getPosition().y + 250, 150, 80,
+    m_boughtButton = new mdsf::Button(getX() + m_width/2 - 75, getY() + 250, 150, 40,
                                       "shop_bought", RECT_BUTTONS_IMAGE, clipRectRed);
     m_boughtButton->setEnabled(false);
 
-    setTextureFromImage(CARD_IMAGE);
+    loadAndApplyTextureFromImageFile(CARD_IMAGE);
 }
 
 

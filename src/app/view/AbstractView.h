@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@ limitations under the License.
 #define ABSTRACT_VIEW_H
 
 #include <SFML/Audio.hpp>
-#include "../../libs/MDC-SFML/Color.h"
-#include "../../libs/MDC-SFML/Button.h"
+#include "../../libs/MDC-SFML/src/Color.h"
+#include "../../libs/MDC-SFML/src/Button.h"
 #include "TextHandler.h"
 #include "ScrollingBackground.h"
 #include "AnimatedSprite.h"

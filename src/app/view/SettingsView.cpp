@@ -139,19 +139,19 @@ void SettingsView::loadImages()
     //=== Initialize Logo sprites
 
     m_logoIUT = new mdsf::Sprite(700, 160, 245, 210);
-    m_logoIUT->setTextureFromImage(IUT_LOGO_IMAGE);
+    m_logoIUT->loadAndApplyTextureFromImageFile(IUT_LOGO_IMAGE);
     m_logoIUT->resize(150, 130);
 
     m_logoSFML = new mdsf::Sprite(700, 350, 373, 113);
-    m_logoSFML->setTextureFromImage(SFML_LOGO_IMAGE);
+    m_logoSFML->loadAndApplyTextureFromImageFile(SFML_LOGO_IMAGE);
     m_logoSFML->resize(150, 45);
 
     //=== Initialize link icon
 
     m_iconRepoLink = new mdsf::Sprite(75, 276, 24, 24);
-    m_iconRepoLink->setTextureFromImage(IMAGE_FOLDER + "ui/ic_link.png");
+    m_iconRepoLink->loadAndApplyTextureFromImageFile(IMAGE_FOLDER + "ui/ic_link.png");
     m_iconEmailLink = new mdsf::Sprite(75, 368, 24, 24);
-    m_iconEmailLink->setTextureFromImage(IMAGE_FOLDER + "ui/ic_link.png");
+    m_iconEmailLink->loadAndApplyTextureFromImageFile(IMAGE_FOLDER + "ui/ic_link.png");
 }
 
 

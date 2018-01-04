@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ limitations under the License.
 #define BUTTON_H
 
 #include "LabelPosition.h"
-#include "../../app/model/DataBase.h" //FIXME : delete
+#include "../../../app/model/DataBase.h" //FIXME : delete
 #include "Sprite.h"
 #include "Text.h"
 
@@ -54,16 +54,14 @@ public:
 
     //=== GETTERS
     bool isPressed() const;
-    bool isSelected() const;
     bool isEnabled() const;
     LabelPosition getLabelPosition() const;
 
     //=== SETTERS
     void setPressed(bool pressed);
-    void setSelected(bool selected);
     void setEnabled(bool enabled);
     void setClipRectArray(std::vector<sf::IntRect> array);
-    void setPositionSelfCentered(double, double);
+    void setPositionSelfCentered(float, float);
     virtual void setLabelPosition(LabelPosition labelPosition);
 
     //=== METHODS
@@ -79,7 +77,6 @@ protected:
     std::vector<sf::IntRect> m_clipRectArray;
     unsigned int m_currentClipRect;
     bool m_isPressed;
-    bool m_isSelected;
     bool m_isEnabled;
     sf::Font m_font;
     Text m_label;

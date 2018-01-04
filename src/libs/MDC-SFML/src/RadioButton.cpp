@@ -1,3 +1,4 @@
+#include "Button.h"
 #include "RadioButton.h"
 
 using std::string;
@@ -22,11 +23,11 @@ namespace MaterialDesignComponentsForSFML
  * @date 23/12/16 - 02/01/18
  */
 RadioButton::RadioButton(float x, float y, float diameter) :
-        Button(x, y, diameter, diameter)
+        Button(x, y, diameter, diameter), m_isSelected{false}
 {
     m_labelPosition = RIGHT;
     setRadioClipRect();
-    setTextureFromImage(RADIO_BUTTONS_IMAGE);
+    loadAndApplyTextureFromImageFile(RADIO_BUTTONS_IMAGE);
     applyColor();
     resize(m_width, m_height);
 }
@@ -44,11 +45,11 @@ RadioButton::RadioButton(float x, float y, float diameter) :
  * @date 23/12/16 - 02/01/18
  */
 RadioButton::RadioButton(float x, float y, float diameter, const std::string &description) :
-        Button(x, y, diameter, diameter, description)
+        Button(x, y, diameter, diameter, description), m_isSelected{false}
 {
     m_labelPosition = RIGHT;
     setRadioClipRect();
-    setTextureFromImage(description == "indicator" ? INDICATOR_IMAGE : RADIO_BUTTONS_IMAGE);
+    loadAndApplyTextureFromImageFile(description == "indicator" ? INDICATOR_IMAGE : RADIO_BUTTONS_IMAGE);
     applyColor();
     resize(m_width, m_height);
 }
@@ -62,7 +63,9 @@ RadioButton::RadioButton(float x, float y, float diameter, const std::string &de
  * @author Arthur
  * @date 02/01/17
  */
-RadioButton::RadioButton(RadioButton const& other) = default;
+RadioButton::RadioButton(RadioButton const& other) :
+        Button(other), m_isSelected{other.m_isSelected}
+{}
 
 
 /**
@@ -91,6 +94,19 @@ void RadioButton::setLabelPosition(LabelPosition labelPosition)
             SimpleLogger::Logger::printErrorOnConsole("Not allowed label position");
     }
 }
+//------------------------------------------------
+//          GETTERS
+//------------------------------------------------
+
+bool RadioButton::isSelected() const { return m_isSelected; }
+
+
+//------------------------------------------------
+//          SETTERS
+//------------------------------------------------
+
+void RadioButton::setSelected(bool selected) { m_isSelected = selected; }
+
 
 //------------------------------------------------
 //          METHODS
@@ -137,12 +153,11 @@ void RadioButton::syncLabelPosition()
         switch (m_labelPosition)
         {
             case LEFT:
-                m_label.setPosition(getPosition().x - (m_label.getGlobalBounds().width + m_width),
-                        getPosition().y - 2);
+                m_label.setPosition(getX() - (m_label.getWidth() + getWidth()), getY() - 2);
                 m_label.setOrigin(0, 0);
                 break;
             case RIGHT:
-                m_label.setPosition(getPosition().x + 2 * m_width, getPosition().y - 2);
+                m_label.setPosition(getX() + 2 * getWidth(), getY() - 2);
                 m_label.setOrigin(0, 0);
                 break;
             default:

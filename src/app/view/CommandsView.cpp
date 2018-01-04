@@ -36,11 +36,11 @@ void CommandsView::loadImages()
     m_commandSprite = new mdsf::Sprite(m_width/2 - 220, m_height/2 - 150, 440, 300);
 
     if (m_commands->getDataBase()->getLanguage() == ENGLISH)
-        m_commandSprite->setTextureFromImage(COMMAND_EN_IMAGE);
+        m_commandSprite->loadAndApplyTextureFromImageFile(COMMAND_EN_IMAGE);
     else if (m_commands->getDataBase()->getLanguage() == FRENCH)
-        m_commandSprite->setTextureFromImage(COMMAND_FR_IMAGE);
+        m_commandSprite->loadAndApplyTextureFromImageFile(COMMAND_FR_IMAGE);
     else if (m_commands->getDataBase()->getLanguage() == SPANISH)
-        m_commandSprite->setTextureFromImage(COMMAND_ES_IMAGE);
+        m_commandSprite->loadAndApplyTextureFromImageFile(COMMAND_ES_IMAGE);
 
     //=== Initialize HOME form buttons
 

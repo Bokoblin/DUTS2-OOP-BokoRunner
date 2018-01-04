@@ -47,7 +47,7 @@ void ShopView::loadImages()
     //=== Initialize COIN Sprite
 
     m_coinSprite = new mdsf::Sprite(m_width/2-60, 53, 25, 25);
-    m_coinSprite->setTextureFromImage(BONUS_IMAGE, sf::IntRect(0, 0, 50, 50));
+    m_coinSprite->loadAndApplyTextureFromImageFile(BONUS_IMAGE, sf::IntRect(0, 0, 50, 50));
     m_coinSprite->resize(25, 25);
 
     //=== Initialize HOME form buttons

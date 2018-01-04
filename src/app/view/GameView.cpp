@@ -117,13 +117,13 @@ void GameView::loadImages()
     //=== Initialize UI elements
 
     m_lifeBoxImage = new mdsf::Sprite(105, 535, 200, 100);
-    m_lifeBoxImage->setTextureFromImage(LIFE_BOX_IMAGE, sf::IntRect(0, 0, 300, 50));
+    m_lifeBoxImage->loadAndApplyTextureFromImageFile(LIFE_BOX_IMAGE, sf::IntRect(0, 0, 300, 50));
 
     m_remainingLifeImage = new mdsf::Sprite(107, 535, 300, 50);
-    m_remainingLifeImage->setTextureFromImage(LIFE_BOX_IMAGE, sf::IntRect(0, 51, 300, 50));
+    m_remainingLifeImage->loadAndApplyTextureFromImageFile(LIFE_BOX_IMAGE, sf::IntRect(0, 51, 300, 50));
 
     m_distanceIcon = new mdsf::Sprite(30, 35, 25, 25);
-    m_distanceIcon->setTextureFromImage(GAME_BUTTONS_IMAGE, sf::IntRect(0, 150, 50, 50));
+    m_distanceIcon->loadAndApplyTextureFromImageFile(GAME_BUTTONS_IMAGE, sf::IntRect(0, 150, 50, 50));
     m_distanceIcon->resize(25, 25);
 
 
@@ -156,7 +156,7 @@ void GameView::loadImages()
     //=== Initialize COINS & BONUSES sprite
 
     m_shieldImage = new mdsf::Sprite(50, GAME_FLOOR, 40, 40);
-    m_shieldImage->setTextureFromImage(SHIELD_IMAGE);
+    m_shieldImage->loadAndApplyTextureFromImageFile(SHIELD_IMAGE);
     m_shieldImage->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_coin;
@@ -232,7 +232,7 @@ void GameView::loadImages()
     vector<sf::IntRect> clipRect_save;
     clipRect_save.emplace_back(0, 179, 150, 40);
     clipRect_save.emplace_back(151, 179, 150, 40);
-    m_saveScoreButton = new mdsf::Button(730, 350, m_width / 2 - 75, 430, "end_save_button",
+    m_saveScoreButton = new mdsf::Button(m_width / 2 - 75, 350, 150, 40, "end_save_button",
                                    RECT_BUTTONS_IMAGE, clipRect_save);
     m_controlMusicButton->setLabelPosition(mdsf::LabelPosition::CENTER);
     m_saveScoreButton->retrieveAndSyncLabel(*m_game->getDataBase());
@@ -276,7 +276,7 @@ void GameView::processZonesTransition()
 {
     //=== [Always] Set background speed and position
 
-    m_farTransitionBackground->setPosition(m_farTransitionBackground->getPosition().x - TRANSITION_SPEED, 0);
+    m_farTransitionBackground->setPosition(m_farTransitionBackground->getX() - TRANSITION_SPEED, 0);
     m_farScrollingBackground->setScrollingSpeed(TRANSITION_SPEED);
     m_nearScrollingBackground->decreaseAlpha(5);
     if (m_nearScrollingBackground->getAlpha() == 0)
@@ -286,18 +286,18 @@ void GameView::processZonesTransition()
 
     //=== [Transition half only] Update zone background image and position
 
-    if (m_farTransitionBackground->getPosition().x  <= 5
-        && m_farTransitionBackground->getPosition().x  >= -5)
+    if (m_farTransitionBackground->getX()  <= 5
+        && m_farTransitionBackground->getX()  >= -5)
     {
         if (m_game->getCurrentZone() == HILL)
         {
-            m_farScrollingBackground->setTextureFromImage(DEFAULT_FAR_PLAIN_BACKGROUND);
-            m_nearScrollingBackground->setTextureFromImage(DEFAULT_NEAR_PLAIN_BACKGROUND);
+            m_farScrollingBackground->loadAndApplyTextureFromImageFile(DEFAULT_FAR_PLAIN_BACKGROUND);
+            m_nearScrollingBackground->loadAndApplyTextureFromImageFile(DEFAULT_NEAR_PLAIN_BACKGROUND);
         }
         else
         {
-            m_farScrollingBackground->setTextureFromImage(DEFAULT_FAR_HILL_BACKGROUND);
-            m_nearScrollingBackground->setTextureFromImage(DEFAULT_NEAR_HILL_BACKGROUND);
+            m_farScrollingBackground->loadAndApplyTextureFromImageFile(DEFAULT_FAR_HILL_BACKGROUND);
+            m_nearScrollingBackground->loadAndApplyTextureFromImageFile(DEFAULT_NEAR_HILL_BACKGROUND);
         }
 
         m_farScrollingBackground->setPositions(-300, 0);
@@ -306,7 +306,7 @@ void GameView::processZonesTransition()
 
     //=== [Transition 3/4 until end] Update pixel creation of near background
 
-    if (m_farTransitionBackground->getPosition().x < m_width/2 && m_xPixelIntensity >= 0)
+    if (m_farTransitionBackground->getX() < m_width/2 && m_xPixelIntensity >= 0)
     {
         m_xPixelIntensity -= 0.009;
         m_yPixelIntensity -= 0.009;
@@ -315,7 +315,7 @@ void GameView::processZonesTransition()
 
     //=== [Transition end]
 
-    if (m_farTransitionBackground->getPosition().x
+    if (m_farTransitionBackground->getX()
         + m_farTransitionBackground->getLocalBounds().width <= 0)
     {
         //Update Transition status
@@ -323,12 +323,15 @@ void GameView::processZonesTransition()
         m_game->setTransitionPossibleState(false);
 
         //Set current zone and change pause background
-        if (m_game->getCurrentZone() == HILL) {
+        if (m_game->getCurrentZone() == HILL)
+        {
             m_game->setCurrentZone(PLAIN);
-            m_pauseBackground->setTextureFromImage(PAUSE_PLAIN_BACKGROUND);
-        } else {
+            m_pauseBackground->loadAndApplyTextureFromImageFile(PAUSE_PLAIN_BACKGROUND);
+        }
+        else
+        {
             m_game->setCurrentZone(HILL);
-            m_pauseBackground->setTextureFromImage(PAUSE_HILL_BACKGROUND);
+            m_pauseBackground->loadAndApplyTextureFromImageFile(PAUSE_HILL_BACKGROUND);
         }
     }
 }
@@ -349,12 +352,12 @@ void GameView::setupTransition()
     if (m_game->getCurrentZone() == HILL)
     {
         m_pixelShader->load(DEFAULT_NEAR_T1_BACKGROUND);
-        m_farTransitionBackground->setTextureFromImage(DEFAULT_FAR_T1_BACKGROUND);
+        m_farTransitionBackground->loadAndApplyTextureFromImageFile(DEFAULT_FAR_T1_BACKGROUND);
     }
     else
     {
         m_pixelShader->load(DEFAULT_NEAR_T2_BACKGROUND);
-        m_farTransitionBackground->setTextureFromImage(DEFAULT_FAR_T2_BACKGROUND);
+        m_farTransitionBackground->loadAndApplyTextureFromImageFile(DEFAULT_FAR_T2_BACKGROUND);
     }
 }
 
@@ -565,14 +568,14 @@ void GameView::handleMusic()
  */
 void GameView::drawRunningGame() const
 {
-    //=== Standalone GraphicElements drawing
+    //=== Standalone Sprites drawing
 
     m_farScrollingBackground->draw(m_window);
 
     if (m_game->isTransitionRunning())
     {
         m_window->draw(*m_farTransitionBackground);
-        if (m_farTransitionBackground->getPosition().x < m_width/2)
+        if (m_farTransitionBackground->getX() < m_width/2)
             m_window->draw(*m_pixelShader);
     }
 
@@ -581,7 +584,7 @@ void GameView::drawRunningGame() const
     m_window->draw(*m_remainingLifeImage);
     m_window->draw(*m_lifeBoxImage);
 
-    //=== Array's GraphicElements drawing
+    //=== Array's Sprites drawing
 
     for (const auto &it : m_movableElementToSpriteMap)
         it.second->draw(m_window);
@@ -602,7 +605,7 @@ void GameView::drawRunningGame() const
  */
 void GameView::drawPausedGame() const
 {
-    //=== Background drawing & GraphicElements drawing
+    //=== Background drawing & Sprites drawing
 
     m_window->draw(*m_pauseBackground);
     m_window->draw(*m_distanceIcon);

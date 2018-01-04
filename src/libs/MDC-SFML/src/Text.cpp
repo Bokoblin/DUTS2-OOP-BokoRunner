@@ -13,10 +13,11 @@ namespace MaterialDesignComponentsForSFML
 
 /**
  * Constructs a Text with a description
- * @author Arthur
- * @date 21/12/16 - 03/11/17
  *
  * @param description the description used to parse text string
+ *
+ * @author Arthur
+ * @date 21/12/16 - 03/11/17
  */
 Text::Text(const string &description) : m_description{description}, m_isVisible{true}
 {
@@ -27,11 +28,12 @@ Text::Text(const string &description) : m_description{description}, m_isVisible{
 
 /**
  * Constructs a Text with a description and a visible state
- * @author Arthur
- * @date 21/12/16 - 03/11/17
  *
  * @param description the description used to parse text string
  * @param isVisible defines if text is visible at instantiation
+ *
+ * @author Arthur
+ * @date 21/12/16 - 03/11/17
  */
 Text::Text(const string &description, bool isVisible) : Text(description)
 {
@@ -39,10 +41,25 @@ Text::Text(const string &description, bool isVisible) : Text(description)
 }
 
 
+/**
+ * Copy Constructor
+ *
+ * @param other another text object to copy
+ *
+ * @author Arthur
+ * @date 04/01/18
+ */
+Text::Text(Text const& other) :
+        sf::Text(other), m_font{other.m_font}, m_description{m_description}, m_isVisible{m_isVisible}
+{}
+
+
 //------------------------------------------------
 //          GETTERS
 //------------------------------------------------
 
+float Text::getWidth() const { return getGlobalBounds().width; };
+float Text::getHeight() const { return getGlobalBounds().height; };
 string Text::getDescription() const { return m_description; }
 bool Text::isVisible() const { return m_isVisible; }
 
@@ -52,11 +69,8 @@ bool Text::isVisible() const { return m_isVisible; }
 //------------------------------------------------
 
 void Text::setDescription(const string &description) { m_description = description; }
-void Text::setVisible(bool on) { m_isVisible = on; }
-void Text::setPositionSelfCentered(double x, double y) { setPosition(
-            (float)(x - getGlobalBounds().width / 2), //TODO : getWidth()
-            (float)(y - getGlobalBounds().height / 2));
-}
+void Text::setVisible(bool visible) { m_isVisible = visible; }
+void Text::setPositionSelfCentered(float x, float y) { setPosition(x - getWidth()/2, y - getHeight()/2); }
 void Text::setStringFromInt(int value) { setString(std::to_string(value)); }
 
 
@@ -66,24 +80,26 @@ void Text::setStringFromInt(int value) { setString(std::to_string(value)); }
 
 /**
  * Checks if a point of given coordinates
+ *
+ * @param x the x-axis coordinate
+ * @param y the y-axis coordinate
+ *
  * is contained in the text
  * @author Arthur
  * @date 23/12/16
- *
- * @param posX the text x position
- * @param posY the text y position
  */
-bool Text::contains(float posX, float posY) const
+bool Text::contains(float x, float y) const
 {
-    return getGlobalBounds().contains(sf::Vector2f(posX, posY));
+    return getGlobalBounds().contains(sf::Vector2f(x, y));
 }
 
 /**
- * Draws text on the window
- * @author Arthur
- * @date 02/01/17
+ * Draws text on the window if visible
  *
  * @param window the app's window
+ *
+ * @author Arthur
+ * @date 02/01/17
  */
 void Text::draw(sf::RenderWindow *window) const
 {

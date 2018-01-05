@@ -313,7 +313,7 @@ void TextHandler::syncMenuLeaderboardText()
 void TextHandler::syncShopText()
 {
     m_walletText->setPosition(m_width/2, TITLE_TEXT_X);
-    m_walletText->applyTextFont(ROBOTO_CONDENSED_FONT, DEFAULT_CHAR_SIZE, GOLD_COLOR);
+    m_walletText->applyTextFont(ROBOTO_CONDENSED_FONT, DEFAULT_CHAR_SIZE, AppColor::CoinGold);
     m_walletText->setStringFromInt(m_dataBase->getWallet());
 }
 
@@ -350,11 +350,11 @@ void TextHandler::syncPauseText()
     m_currentDistanceText->setPosition(PAUSE_TEXT_X, 30);
 
     m_currentCoinsNbText->setPosition(PAUSE_TEXT_X, 70);
-    m_currentCoinsNbText->setFillColor(GOLD_COLOR);
+    m_currentCoinsNbText->setFillColor(AppColor::CoinGold);
     m_currentCoinsNbText->setStringFromInt(m_dataBase->getCurrentCoinsNumber());
 
     m_flattenedEnemiesText->setPosition(PAUSE_TEXT_X, 110);
-    m_flattenedEnemiesText->setFillColor(ENEMY_BLUE_COLOR);
+    m_flattenedEnemiesText->setFillColor(AppColor::EnemyBlue);
     m_flattenedEnemiesText->setStringFromInt(m_dataBase->getCurrentFlattenedEnemies());
 }
 
@@ -373,25 +373,25 @@ void TextHandler::syncGameOverText(int gameSpeed)
 
     m_speedMultiplierLabel->setPosition(SUBTOTAL_LABEL_X, 170);
     m_speedMultiplierText->setPosition(SUBTOTAL_VALUE_X, 170);
-    m_speedMultiplierText->setFillColor(END_GREY_COLOR);
+    m_speedMultiplierText->setFillColor(AppColor::ScoreGrey);
     m_speedMultiplierText->setStringFromInt(gameSpeed);
 
     m_currentDistanceLabel->setPosition(SUBTOTAL_LABEL_X, 207);
     m_currentDistanceLabel->setFillColor(sf::Color::White);
     m_currentDistanceText->setPosition(SUBTOTAL_VALUE_X, 207);
-    m_currentDistanceText->setFillColor(END_GREY_COLOR);
+    m_currentDistanceText->setFillColor(AppColor::ScoreGrey);
     m_currentDistanceText->setString(to_string(m_dataBase->getCurrentDistance()) + " m");
 
     m_coinsCollectedLabel->setPosition(SUBTOTAL_LABEL_X, 245);
     m_currentCoinsNbText->setPosition(SUBTOTAL_VALUE_X, 245);
-    m_currentCoinsNbText->setFillColor(END_GREY_COLOR);
+    m_currentCoinsNbText->setFillColor(AppColor::ScoreGrey);
     m_currentCoinsNbText->setString(to_string(m_dataBase->getCurrentCoinsNumber()) + "  X  20");
     m_statsTotalCoinsNbText->setStringFromInt(m_dataBase->getTotalCoinsNumber());
 
     m_flattenedEnemiesLabel->setPosition(SUBTOTAL_LABEL_X, 290);
     m_flattenedEnemiesLabel->setFillColor(sf::Color::White);
     m_flattenedEnemiesText->setPosition(SUBTOTAL_VALUE_X, 290);
-    m_flattenedEnemiesText->setFillColor(END_GREY_COLOR);
+    m_flattenedEnemiesText->setFillColor(AppColor::ScoreGrey);
     m_flattenedEnemiesText->setStringFromInt(m_dataBase->getCurrentFlattenedEnemies());
 
     m_currentScoreLabel->setPosition(SUBTOTAL_LABEL_X, 350);
@@ -400,7 +400,7 @@ void TextHandler::syncGameOverText(int gameSpeed)
     m_currentScoreText->setFont(m_BoldFont);
     m_currentScoreText->setStringFromInt(m_dataBase->getCurrentScore());
 
-    m_walletText->applyTextFont(ROBOTO_CONDENSED_FONT, DEFAULT_CHAR_SIZE, GOLD_COLOR);
+    m_walletText->applyTextFont(ROBOTO_CONDENSED_FONT, DEFAULT_CHAR_SIZE, AppColor::CoinGold);
     m_walletText->setPosition(m_width/2-15, 535);
     m_walletText->setStringFromInt(m_dataBase->getWallet());
 }
@@ -546,9 +546,9 @@ void TextHandler::handleAboutLinks(sf::Event event, const SettingsModel &setting
     if (MOUSE_LEFT_PRESSED_EVENT)
     {
         if (m_aboutRepositoryLink->contains(MOUSE_POSITION))
-            m_aboutRepositoryLink->setFillColor(URL_RED_COLOR);
+            m_aboutRepositoryLink->setFillColor(AppColor::URLRed);
         if (m_aboutEmailLink->contains(MOUSE_POSITION))
-            m_aboutEmailLink->setFillColor(URL_RED_COLOR);
+            m_aboutEmailLink->setFillColor(AppColor::URLRed);
     }
 
     if (event.type == sf::Event::MouseButtonReleased)

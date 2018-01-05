@@ -19,6 +19,7 @@ limitations under the License.
 #include <SFML/Audio.hpp>
 #include "../../libs/MDC-SFML/src/Color.h"
 #include "../../libs/MDC-SFML/src/Button.h"
+#include "AppColor.h"
 #include "TextHandler.h"
 #include "ScrollingBackground.h"
 #include "AnimatedSprite.h"

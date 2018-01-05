@@ -20,14 +20,8 @@ limitations under the License.
  * TODO : remove a lot
  * Provides pre-processor definitions to view classes
  * @author Arthur
- * @date 16/04/17 - 02/01/18
+ * @date 16/04/17 - 05/01/18
  */
-
-//=== COLORS DEFINITIONS
-#define GOLD_COLOR sf::Color(255, 204, 0, 255)
-#define ENEMY_BLUE_COLOR sf::Color(0, 232, 209, 255)
-#define END_GREY_COLOR sf::Color(86, 103, 97, 255)
-#define URL_RED_COLOR sf::Color(255, 82, 82, 255)
 
 //=== SFML DEFINITIONS
 #define ENVIRONMENT_CENTER sf::Vector2i((sf::VideoMode::getDesktopMode().width - m_width)/2, \

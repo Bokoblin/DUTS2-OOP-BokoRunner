@@ -35,13 +35,6 @@ const sf::Color Color::MaterialBlueGrey(96, 125, 139); //#607D8B
 
 const sf::Color Color::MaterialGreenA700(0, 200, 83); //#00c853
 
-
-//------------------------------------------------
-//      STATIC MEMBER DATA : CUSTOM COLORS
-//------------------------------------------------
-
-const sf::Color Color::MaterialMine(51, 51, 51); //#333333
-
 //TODO : add More
 
 } //namespace MaterialDesignComponentsForSFML

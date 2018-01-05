@@ -21,6 +21,7 @@ limitations under the License.
 #include "../../libs/MDC-SFML/src/Text.h"
 #include "../model/SettingsModel.h"
 #include "../utils/definitions.h"
+#include "AppColor.h"
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 

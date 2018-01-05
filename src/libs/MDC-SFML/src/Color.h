@@ -62,9 +62,6 @@ public:
 
     //Additional colors
     static const sf::Color MaterialGreenA700;
-
-    //Lib custom colors
-    static const sf::Color MaterialMine;
 };
 
 } //namespace MaterialDesignComponentsForSFML

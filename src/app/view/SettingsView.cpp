@@ -208,7 +208,7 @@ void SettingsView::synchronize()
  */
 void SettingsView::draw() const
 {
-    m_window->clear(mdsf::Color::MaterialMine);
+    m_window->clear(AppColor::CoalMine);
 
     //=== Graphic Elements drawing
 

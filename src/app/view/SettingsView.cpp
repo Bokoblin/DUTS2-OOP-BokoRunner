@@ -37,7 +37,7 @@ SettingsView::SettingsView(sf::RenderWindow *window, TextHandler *textHandler, S
     m_buttonList.push_back(m_defaultBallSkinRadio);
     m_buttonList.push_back(m_morphBallSkinRadio);
     m_buttonList.push_back(m_capsuleBallSkinRadio);
-    m_buttonList.push_back(m_resetRectButton);
+    m_buttonList.push_back(m_resetDataRaisedButton);
     m_buttonList.push_back(m_menuMusicButton);
     m_buttonList.push_back(m_gameMusicButton);
 
@@ -80,7 +80,7 @@ SettingsView::~SettingsView()
 /**
  * Image Loading
  * @author Arthur
- * @date 20/05/16 - 02/01/18
+ * @date 20/05/16 - 04/01/18
  */
 void SettingsView::loadImages()
 {
@@ -130,10 +130,11 @@ void SettingsView::loadImages()
     //=== Initialize RESET button
 
     std::vector<sf::IntRect> clipRectReset;
-    clipRectReset.emplace_back(0, 100, 150, 40);
-    clipRectReset.emplace_back(151, 100, 150, 40);
-    m_resetRectButton = new mdsf::Button(m_width/2-75, 450, 150, 40, "stats_app_reset", RECT_BUTTONS_IMAGE, clipRectReset);
-    m_resetRectButton->resize(170, 45);
+    clipRectReset.emplace_back(RAISED_BUTTON_DEFAULT);
+    clipRectReset.emplace_back(RAISED_BUTTON_PRESSED);
+    m_resetDataRaisedButton = new mdsf::Button(m_width/2 - 75, 450, 150, 36, "stats_app_reset",
+                                         RECT_BUTTONS_IMAGE, clipRectReset);
+    m_resetDataRaisedButton->setColor(mdsf::Color::MaterialRed);
 
 
     //=== Initialize Logo sprites
@@ -231,7 +232,7 @@ void SettingsView::draw() const
     else if (m_settings->getCurrentPage() == STATS)
     {
         m_textHandler->drawMenuSettingsText(m_window, STATS);
-        m_resetRectButton->draw(m_window);
+        m_resetDataRaisedButton->draw(m_window);
         m_confirmDialog->draw(m_window);
     }
     else //ABOUT
@@ -433,7 +434,7 @@ bool SettingsView::handleEvents(sf::Event event)
         {
             if (!m_confirmDialog->isVisible())
             {
-                if (m_resetRectButton->contains(MOUSE_POSITION))
+                if (m_resetDataRaisedButton->contains(MOUSE_POSITION))
                 {
                     m_confirmDialog->show();
                 }

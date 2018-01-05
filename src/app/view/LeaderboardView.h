@@ -48,7 +48,7 @@ private:
 
     //UI components
     mdsf::Button *m_homeFormButton;
-    mdsf::Button *m_clearLbRectButton;
+    mdsf::Button *m_clearLeaderboardRaisedButton;
     mdsf::Dialog *m_confirmDialog;
 
     //=== METHODS

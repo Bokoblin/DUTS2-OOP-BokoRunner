@@ -230,12 +230,12 @@ void GameView::loadImages()
     m_controlMusicButton->retrieveAndSyncLabel(*m_game->getDataBase());
 
     vector<sf::IntRect> clipRect_save;
-    clipRect_save.emplace_back(0, 179, 150, 40);
-    clipRect_save.emplace_back(151, 179, 150, 40);
-    m_saveScoreButton = new mdsf::Button(m_width / 2 - 75, 350, 150, 40, "end_save_button",
+    clipRect_save.emplace_back(RAISED_BUTTON_DEFAULT);
+    clipRect_save.emplace_back(RAISED_BUTTON_PRESSED);
+    m_saveScoreButton = new mdsf::Button(m_width / 2 - 75, 350, 150, 36, "end_save_button",
                                    RECT_BUTTONS_IMAGE, clipRect_save);
-    m_controlMusicButton->setLabelPosition(mdsf::LabelPosition::CENTER);
     m_saveScoreButton->retrieveAndSyncLabel(*m_game->getDataBase());
+    m_saveScoreButton->setColor(mdsf::Color::MaterialGreenA700);
 
 
     //=== Associate element type to sprite

@@ -220,7 +220,7 @@ void Button::syncLabelPosition()
                 m_label.setOrigin(m_label.getWidth(), m_label.getHeight()/2);
                 break;
             case CENTER:
-                m_label.setPositionSelfCentered(getX() + getWidth()/2, getY() + getHeight()/2+1);
+                m_label.setPositionSelfCentered(getX() + getWidth()/2, getY() + getHeight()/2 + 2);
                 m_label.setOrigin(0, m_label.getHeight()/2);
                 break;
         }

@@ -56,7 +56,7 @@ private:
     mdsf::RadioButton *m_defaultBallSkinRadio;
     mdsf::RadioButton *m_morphBallSkinRadio;
     mdsf::RadioButton *m_capsuleBallSkinRadio;
-    mdsf::Button *m_resetRectButton;
+    mdsf::Button *m_resetDataRaisedButton;
     mdsf::Button *m_menuMusicButton;
     mdsf::Button *m_gameMusicButton;
     mdsf::Sprite *m_logoIUT;

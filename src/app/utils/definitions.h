@@ -43,9 +43,8 @@ limitations under the License.
 #define KEYBOARD_JUMP  (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) \
                        || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 
-#define RED_BUTTON_UP 0, 100, 150, 40
-#define GREEN_BUTTON_UP 0, 178, 150, 43
-#define GREEN_BUTTON_DOWN 151, 179, 150, 40
+#define RAISED_BUTTON_DEFAULT 0, 101, 150, 36
+#define RAISED_BUTTON_PRESSED 151, 101, 150, 36
 
 //=== URL DEFINITIONS
 #define REPOSITORY "https://github.com/Bokoblin/DUTS2-POO-ProjetRunner"

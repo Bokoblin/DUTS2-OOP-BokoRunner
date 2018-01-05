@@ -2,14 +2,24 @@
 
 using std::string;
 
+//------------------------------------------------
+//          CONSTRUCTORS / DESTRUCTOR
+//------------------------------------------------
+
 /**
- * Parameterized Constructor
+ * Constructs a ShopItemCard with a card number and a shop item
+ *
+ * @param num the card number
+ * @param item the item related
+ *
  * @author Arthur
- * @date 16/05/16 - 25/01/17
+ * @date 16/05/16 - 04/01/18
  */
 ShopItemCard::ShopItemCard(int num, ShopItem *item) :
         mdsf::Sprite(0, 150, 200, 300), m_id{num}, m_item{item}, m_title{""}, m_content{""}
 {
+    //=== Set position following card id
+
     if (num%3 == 0)
         setPosition(100, 150);
     else if (num%3 == 1)
@@ -17,7 +27,7 @@ ShopItemCard::ShopItemCard(int num, ShopItem *item) :
     else if (num%3 == 2)
         setPosition(600, 150);
 
-    loadImages();
+    //=== Init title and content
 
     m_title.applyTextFont(ROBOTO_CONDENSED_FONT, 20, sf::Color::White);
     string utf8_string = item->getName();
@@ -29,59 +39,47 @@ ShopItemCard::ShopItemCard(int num, ShopItem *item) :
     m_content.setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
     m_content.setPosition(getX() + 30, getY() + 190);
 
-    hide();
-}
+    //=== Init buy button
 
-
-/**
- * Destructor
- * @author Arthur
- * @date 16/05/16 - 04/01/17
- */
-ShopItemCard::~ShopItemCard()
-{
-    delete m_buyButton;
-    delete m_boughtButton;
-}
-
-
-//=== Getters
-
-int ShopItemCard::getId() const { return m_id; }
-mdsf::Button *ShopItemCard::getBuyButton() const { return m_buyButton; }
-ShopItem *ShopItemCard::getItem() const { return m_item; }
-
-
-/**
- * Image Loading
- * @author Arthur
- * @date 16/05/16 - 02/01/17
- */
-void ShopItemCard::loadImages()
-{
-    //=== Initialize BUY, BOUGHT Buttons
-
-    std::vector<sf::IntRect> clipRectGreen;
-    clipRectGreen.emplace_back(GREEN_BUTTON_UP);
-    clipRectGreen.emplace_back(GREEN_BUTTON_DOWN);
-    m_buyButton = new mdsf::Button(getX() + m_width/2 - 75, getY() + 250, 150, 40,
-                                   "shop_purchasable", RECT_BUTTONS_IMAGE, clipRectGreen);
-
-    std::vector<sf::IntRect> clipRectRed;
-    clipRectRed.emplace_back(RED_BUTTON_UP);
-    clipRectRed.emplace_back(RED_BUTTON_UP);
-    m_boughtButton = new mdsf::Button(getX() + m_width/2 - 75, getY() + 250, 150, 40,
-                                      "shop_bought", RECT_BUTTONS_IMAGE, clipRectRed);
-    m_boughtButton->setEnabled(false);
+    std::vector<sf::IntRect> flatButtonClipRect;
+    flatButtonClipRect.emplace_back(RAISED_BUTTON_DEFAULT);
+    flatButtonClipRect.emplace_back(RAISED_BUTTON_PRESSED);
+    m_buyButton = new mdsf::Button(getX() + m_width/2 - 75, getY() + 250, 150, 36,
+                                   RECT_BUTTONS_IMAGE, flatButtonClipRect);
 
     loadAndApplyTextureFromImageFile(CARD_IMAGE);
 }
 
 
 /**
- * Sync function
+ * Destructor
  * @author Arthur
- * @date 16/05/16 - 27/12/17
+ * @date 16/05/16 - 04/01/18
+ */
+ShopItemCard::~ShopItemCard()
+{
+    delete m_buyButton;
+}
+
+
+//------------------------------------------------
+//          GETTERS
+//------------------------------------------------
+
+int ShopItemCard::getId() const { return m_id; }
+mdsf::Button *ShopItemCard::getBuyButton() const { return m_buyButton; }
+ShopItem *ShopItemCard::getItem() const { return m_item; }
+
+
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
+
+/**
+ * Synchronizes sprite color and buy button state
+ *
+ * @author Arthur
+ * @date 16/05/16 - 04/01/18
  */
 void ShopItemCard::sync()
 {
@@ -89,53 +87,42 @@ void ShopItemCard::sync()
 
     if (m_item->isBought())
     {
-        m_buyButton->hide();
-        m_boughtButton->applyColor();
-        m_boughtButton->show();
-        m_boughtButton->sync();
+        m_buyButton->setEnabled(false);
+        m_buyButton->setColor(mdsf::Color::MaterialRed);
     }
     else
     {
-        m_boughtButton->hide();
-        m_buyButton->applyColor();
-        m_buyButton->show();
-        m_buyButton->sync();
+        m_buyButton->setEnabled(true);
+        m_buyButton->setColor(mdsf::Color::MaterialGreenA700);
     }
+
+    m_buyButton->sync();
 }
 
 
 /**
  * Syncs the card and retrieve content of buttons label
- * @author Arthur
- * @date 16/05/16 - 04/01/17
  *
  * @param dataBase the database for retrieval
+ *
+ * @author Arthur
+ * @date 16/05/16 - 04/01/18
  */
 void ShopItemCard::syncWithButtonLabelRetrieval(const DataBase &dataBase)
 {
-    if (m_item->isBought())
-    {
-        m_buyButton->hide();
-        m_boughtButton->applyColor();
-        m_boughtButton->show();
-        m_boughtButton->sync();
-        m_boughtButton->retrieveAndSyncLabel(dataBase);
-    }
-    else
-    {
-        m_boughtButton->hide();
-        m_buyButton->applyColor();
-        m_buyButton->show();
-        m_buyButton->sync();
-        m_buyButton->retrieveAndSyncLabel(dataBase);
-    }
+    sync();
+    m_buyButton->setLabelDescription(m_item->isBought() ? "shop_bought" : "shop_purchasable");
+    m_buyButton->retrieveAndSyncLabel(dataBase);
 }
 
 
 /**
- * Draw function
+ * Draws the ShopItemCard if visible
+ *
+ * @param window the app's window
+ *
  * @author Arthur
- * @date 16/05/16 - 02/01/17
+ * @date 16/05/16 - 04/01/18
  */
 void ShopItemCard::draw(sf::RenderWindow *window) const
 {
@@ -145,7 +132,6 @@ void ShopItemCard::draw(sf::RenderWindow *window) const
         window->draw(m_title);
         window->draw(m_content);
         m_buyButton->draw(window);
-        m_boughtButton->draw(window);
     }
 }
 

@@ -31,7 +31,7 @@ LeaderboardView::LeaderboardView(sf::RenderWindow *window, TextHandler *textHand
 LeaderboardView::~LeaderboardView()
 {
     delete m_homeFormButton;
-    delete m_clearLbRectButton;
+    delete m_clearLeaderboardRaisedButton;
     delete m_confirmDialog;
 }
 
@@ -39,25 +39,26 @@ LeaderboardView::~LeaderboardView()
 /**
  * Image Loading
  * @author Arthur
- * @date 20/05/16 - 02/01/17
+ * @date 20/05/16 - 04/01/18
  */
 void LeaderboardView::loadImages()
 {
     //=== Initialize CLEAR button
 
-    std::vector<sf::IntRect> clipRect_clear;
-    clipRect_clear.emplace_back(0, 100, 150, 40);
-    clipRect_clear.emplace_back(151, 100, 150, 40);
-    m_clearLbRectButton = new mdsf::Button(m_width / 2 - 75, 540, 150, 40, "leaderboard_clear_button",
-                                     RECT_BUTTONS_IMAGE, clipRect_clear);
-    m_clearLbRectButton->retrieveAndSyncLabel(*m_leaderboard->getDataBase());
+    std::vector<sf::IntRect> clipRectClear;
+    clipRectClear.emplace_back(RAISED_BUTTON_DEFAULT);
+    clipRectClear.emplace_back(RAISED_BUTTON_PRESSED);
+    m_clearLeaderboardRaisedButton = new mdsf::Button(m_width / 2 - 75, 540, 150, 36, "leaderboard_clear_button",
+                                     RECT_BUTTONS_IMAGE, clipRectClear);
+    m_clearLeaderboardRaisedButton->retrieveAndSyncLabel(*m_leaderboard->getDataBase());
+    m_clearLeaderboardRaisedButton->setColor(mdsf::Color::MaterialRed);
 
     //=== Initialize HOME form button
 
-    std::vector<sf::IntRect> clipRect_home;
-    clipRect_home.emplace_back(0, 50, 50, 50);
-    clipRect_home.emplace_back(51, 50, 50, 50);
-    m_homeFormButton = new mdsf::Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRect_home);
+    std::vector<sf::IntRect> clipRectHome;
+    clipRectHome.emplace_back(0, 50, 50, 50);
+    clipRectHome.emplace_back(51, 50, 50, 50);
+    m_homeFormButton = new mdsf::Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
 }
 
 
@@ -70,7 +71,7 @@ void LeaderboardView::synchronize()
 {
     m_homeFormButton->sync();
     m_homeFormButton->resize(FORM_BUTTONS_SIZE);
-    m_clearLbRectButton->sync();
+    m_clearLeaderboardRaisedButton->sync();
 
     m_textHandler->syncMenuLeaderboardText();
 }
@@ -88,7 +89,7 @@ void LeaderboardView::draw() const
     //=== Graphic Elements drawing
 
     m_window->draw(*m_homeFormButton);
-    m_clearLbRectButton->draw(m_window);
+    m_clearLeaderboardRaisedButton->draw(m_window);
     m_confirmDialog->draw(m_window);
 
     //=== TextHandler Drawing
@@ -115,8 +116,8 @@ bool LeaderboardView::handleEvents(sf::Event event)
 
         if (!m_confirmDialog->isVisible())
         {
-            if (m_clearLbRectButton->contains(MOUSE_POSITION))
-                m_clearLbRectButton->setPressed(true);
+            if (m_clearLeaderboardRaisedButton->contains(MOUSE_POSITION))
+                m_clearLeaderboardRaisedButton->setPressed(true);
         }
     }
 
@@ -125,7 +126,7 @@ bool LeaderboardView::handleEvents(sf::Event event)
         //=== Reset buttons
 
         m_homeFormButton->setPressed(false);
-        m_clearLbRectButton->setPressed(false);
+        m_clearLeaderboardRaisedButton->setPressed(false);
 
         //=== handle mouse up on a button
 
@@ -137,7 +138,7 @@ bool LeaderboardView::handleEvents(sf::Event event)
                 return false;
             }
 
-            if (m_clearLbRectButton->contains(MOUSE_POSITION))
+            if (m_clearLeaderboardRaisedButton->contains(MOUSE_POSITION))
             {
                 m_confirmDialog->show();
             }

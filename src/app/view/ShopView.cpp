@@ -72,6 +72,7 @@ void ShopView::createCards()
     {
         ShopItemCard *card = new ShopItemCard(i, item);
         card->syncWithButtonLabelRetrieval(*m_shop->getDataBase());
+        card->hide(); //to display by pages
         m_shopItemCardsArray.push_back(card);
         i++;
     }

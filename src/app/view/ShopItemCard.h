@@ -16,15 +16,20 @@ limitations under the License.
 #ifndef SHOP_ITEM_CARD_H
 #define SHOP_ITEM_CARD_H
 
-#include "../model/ShopItem.h"
 #include "../../libs/MDC-SFML/src/Button.h"
+#include "../../libs/MDC-SFML/src/Color.h"
+#include "../model/ShopItem.h"
 #include "TextHandler.h"
 #include "../utils/definitions.h"
 
 /**
- * ShopItemCard Class
+ * The ShopItemCard class inherits mdsf::Sprite.
+ * It defines a card for buying purpose.
+ * This card has item title and content and a buy button
+ * which action triggers a buying confirm dialog.
+ *
  * @author Arthur
- * @date 16/05/16 - 27/12/17
+ * @date 16/05/16 - 04/01/18
  */
 class ShopItemCard : public mdsf::Sprite
 {
@@ -38,8 +43,6 @@ public:
     mdsf::Button *getBuyButton() const;
     ShopItem *getItem() const;
 
-    //=== METHODS
-    void loadImages();
     void sync() override;
     void syncWithButtonLabelRetrieval(const DataBase &dataBase);
     void draw(sf::RenderWindow *window) const override;
@@ -51,7 +54,6 @@ private:
     mdsf::Text m_title;
     mdsf::Text m_content;
     mdsf::Button *m_buyButton;
-    mdsf::Button *m_boughtButton;
 };
 
 #endif

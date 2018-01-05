@@ -21,7 +21,7 @@ limitations under the License.
 #include "../../libs/MDC-SFML/src/Text.h"
 #include "../model/SettingsModel.h"
 #include "../utils/definitions.h"
-#include "AppColor.h"
+#include "../utils/AppColor.h"
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 
@@ -33,21 +33,28 @@ namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
  * Text objects branded as "Text" are loaded from parsed data
  *
  * @author Arthur
- * @date 02/04/16 - 25/01/17
+ * @date 02/04/16 - 06/01/18
  */
 class TextHandler
 {
     public:
     //=== CTORs / DTORs
-    TextHandler(DataBase *dataBase, float width, float height);
+    TextHandler(DataBase *dataBase, unsigned int width, unsigned int height);
     TextHandler(const TextHandler& myText) = delete;
     ~TextHandler();
 
+    //=== OPERATORS
+    void operator=(TextHandler const&) = delete;
+
     //=== METHODS
+    //Text utils
+    void handleAboutLinks(sf::Event event, const SettingsModel &settings) const;
     void updateWholeText();
 
+    //Text init
     void initMenuLeaderboardText();
 
+    //Text syncing
     void syncSplashScreenText(bool continueVisibility);
     void syncSettingsText(int currentPage);
     void syncMenuLeaderboardText();
@@ -56,6 +63,7 @@ class TextHandler
     void syncPauseText();
     void syncGameOverText(int gameSpeed);
 
+    //Text drawing
     void drawSplashScreenText(sf::RenderWindow *window) const;
     void drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const;
     void drawLeaderboardText(sf::RenderWindow *window) const;
@@ -63,11 +71,10 @@ class TextHandler
     void drawGameText(sf::RenderWindow *window) const;
     void drawPauseText(sf::RenderWindow *window) const;
     void drawGameOverText(sf::RenderWindow *window) const;
-    void handleAboutLinks(sf::Event event, const SettingsModel &settings) const;
 
 private:
     //=== ATTRIBUTES
-    float m_width, m_height;
+    unsigned int m_width, m_height;
     sf::Font m_regularFont;
     sf::Font m_condensedFont;
     sf::Font m_BoldFont;

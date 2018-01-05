@@ -7,13 +7,13 @@ using std::to_string;
  * Constructs a text handler with
  * app's database and size
  * @author Arthur
- * @date 02/04/16 - 02/11/17
+ * @date 02/04/16 - 06/01/18
  *
  * @param dataBase the app database
  * @param width the app width
  * @param height the app height
  */
-TextHandler::TextHandler(DataBase *dataBase, float width, float height) :
+TextHandler::TextHandler(DataBase *dataBase, unsigned int width, unsigned int height) :
         m_dataBase{dataBase}, m_width{width}, m_height{height}
 {
     m_regularFont.loadFromFile(ROBOTO_REGULAR_FONT);
@@ -31,8 +31,8 @@ TextHandler::TextHandler(DataBase *dataBase, float width, float height) :
  */
 TextHandler::~TextHandler()
 {
-    for (mdsf::Text *t : m_textList)
-        delete t;
+    for (mdsf::Text *text : m_textList)
+        delete text;
 }
 
 

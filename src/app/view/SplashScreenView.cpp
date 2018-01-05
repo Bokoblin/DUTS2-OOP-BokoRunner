@@ -3,7 +3,7 @@
 /**
  * Parameterized Constructor
  * @author Arthur
- * @date 27/03/16 - 02/11/17
+ * @date 27/03/16 - 05/01/17
  *
  * @param window the app's window
  * @param textHandler a text handler to display standalone text
@@ -13,7 +13,14 @@ SplashScreenView::SplashScreenView(sf::RenderWindow *window, TextHandler *textHa
         AbstractView(window, textHandler), m_splashModel{splashModel}
 {
     //Only on splash screen otherwise it overwrites user defined location at each menu/game restarting
-    m_window->setPosition(ENVIRONMENT_CENTER);
+
+    const unsigned int desktopWidth = sf::VideoMode::getDesktopMode().width;
+    const unsigned int desktopHeight = sf::VideoMode::getDesktopMode().height;
+
+    const unsigned int appPositionX = (desktopWidth - m_width)/2;
+    const unsigned int appPositionY = (desktopHeight - m_height)/2;
+
+    m_window->setPosition(sf::Vector2i(appPositionX, appPositionY));
 
     loadImages();
 }

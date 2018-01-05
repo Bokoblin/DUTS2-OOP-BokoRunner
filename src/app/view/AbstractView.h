@@ -19,7 +19,7 @@ limitations under the License.
 #include <SFML/Audio.hpp>
 #include "../../libs/MDC-SFML/src/Color.h"
 #include "../../libs/MDC-SFML/src/Button.h"
-#include "AppColor.h"
+#include "../utils/AppColor.h"
 #include "TextHandler.h"
 #include "ScrollingBackground.h"
 #include "AnimatedSprite.h"
@@ -30,14 +30,13 @@ limitations under the License.
  * by its inherited classes.
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 27/12/17
+ * @date 21/02/16 - 06/01/18
  */
 class AbstractView
 {
 public:
     //=== CTORs / DTORs
     AbstractView(sf::RenderWindow *window, TextHandler *textHandler);
-    AbstractView(float width, float height, sf::RenderWindow *window, TextHandler *textHandler);
     AbstractView(const AbstractView& myView) = delete;
     virtual ~AbstractView();
 
@@ -48,7 +47,7 @@ public:
 
 protected:
     //=== ATTRIBUTES
-    float m_width, m_height;
+    unsigned int m_width, m_height;
     sf::RenderWindow *m_window;
     TextHandler *m_textHandler;
 

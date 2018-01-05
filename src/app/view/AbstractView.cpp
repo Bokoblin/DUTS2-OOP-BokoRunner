@@ -21,26 +21,6 @@ AbstractView::AbstractView(sf::RenderWindow *window, TextHandler *textHandler) :
 
 
 /**
- * Parameterized Constructor called
- * by the inherited classes
- *
- * @author Arthur, Florian
- * @date 21/02/16 - 29/01/17
- *
- * @param width the app's width
- * @param height the app's height
- * @param window the app's window
- * @param textHandler a text handler
- *
- * @deprecated will me removed for 2.0 release if not used - TODO
- */
-[[deprecated]]
-AbstractView::AbstractView(float width, float height, sf::RenderWindow *window, TextHandler *textHandler) :
-    m_width{width}, m_height{height}, m_window{window}, m_textHandler{textHandler}
-{}
-
-
-/**
  * Destructor
  * @author Arthur, Florian
  * @date 21/02/16 - 29/01/17

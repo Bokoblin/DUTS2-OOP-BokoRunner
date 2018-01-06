@@ -1,22 +1,33 @@
 #include "LeaderboardView.h"
 
+//------------------------------------------------
+//          CONSTRUCTORS / DESTRUCTOR
+//------------------------------------------------
 
 /**
- * Parameterized Constructor
+ * Constructs the leaderboard view
+ * with the window, the text manager and its model counterpart
+ *
+ * @param window the app window
+ * @param textManager the text manager
+ * @param leaderboardModel the leaderboard model counterpart
+ *
  * @author Arthur
  * @date 21/05/16 - 02/01/18
  */
-LeaderboardView::LeaderboardView(sf::RenderWindow *window, TextHandler *textHandler, LeaderboardModel *leaderboardModel) :
-        AbstractView(window, textHandler), m_leaderboard{leaderboardModel}
+LeaderboardView::LeaderboardView(sf::RenderWindow *window, AppTextManager *textManager,
+                                 LeaderboardModel *leaderboardModel) :
+        AbstractView(window, textManager), m_leaderboard{leaderboardModel}
 {
     //=== Init images and text
 
     loadImages();
 
-    textHandler->initMenuLeaderboardText();
+    textManager->initMenuLeaderboardText();
 
     //=== Init confirm dialog
 
+    //TODO: No dialog init at startup
     m_confirmDialog = new mdsf::Dialog(m_width/2-140, m_height/2-120, 280, 200, "confirm_leaderboard_delete");
     m_confirmDialog->hide();
     DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, *m_leaderboard->getDataBase());
@@ -36,8 +47,13 @@ LeaderboardView::~LeaderboardView()
 }
 
 
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
+
 /**
- * Image Loading
+ * Loads all sprites used by the leaderboard screen
+ *
  * @author Arthur
  * @date 20/05/16 - 04/01/18
  */
@@ -63,7 +79,8 @@ void LeaderboardView::loadImages()
 
 
 /**
- * Synchronization function
+ * Synchronizes leaderboard elements
+ *
  * @author Arthur
  * @date 20/05/16 - 27/12/17
  */
@@ -73,12 +90,13 @@ void LeaderboardView::synchronize()
     m_homeFormButton->resize(FORM_BUTTONS_SIZE);
     m_clearLeaderboardRaisedButton->sync();
 
-    m_textHandler->syncMenuLeaderboardText();
+    m_textManager->syncMenuLeaderboardText();
 }
 
 
 /**
- * LeaderboardView Drawing
+ * Draws leaderboard elements on the window
+ *
  * @author Arthur
  * @date 21/05/16 - 02/01/18
  */
@@ -92,15 +110,17 @@ void LeaderboardView::draw() const
     m_clearLeaderboardRaisedButton->draw(m_window);
     m_confirmDialog->draw(m_window);
 
-    //=== TextHandler Drawing
+    //=== Text Drawing
 
-    m_textHandler->drawLeaderboardText(m_window);
+    m_textManager->drawLeaderboardText(m_window);
+
     m_window->display();
 }
 
 
 /**
  * Handles the user interaction events (mouse, keyboard, title bar buttons)
+ *
  * @param event sfml event object
  * @return true if app state is unchanged
  *
@@ -149,8 +169,8 @@ bool LeaderboardView::handleEvents(sf::Event event)
             {
                 m_confirmDialog->hide();
                 m_leaderboard->getDataBase()->clearLeaderboard();
-                m_textHandler->updateWholeText();
-                m_textHandler->syncMenuLeaderboardText();
+                m_textManager->updateWholeStandaloneTextContent();
+                m_textManager->syncMenuLeaderboardText();
             }
             else if (m_confirmDialog->getCancelButtonText().contains(MOUSE_POSITION)
                     || !m_confirmDialog->contains(MOUSE_POSITION))

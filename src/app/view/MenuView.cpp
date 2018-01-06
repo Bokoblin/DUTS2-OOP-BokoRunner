@@ -3,18 +3,23 @@
 using std::vector;
 using Bokoblin::SimpleLogger::Logger;
 
+//------------------------------------------------
+//          CONSTRUCTORS / DESTRUCTOR
+//------------------------------------------------
+
 /**
- * Constructs a Menu view with app's size for menu and game,
- * app's window, a text handler and menu's model
+ * Constructs the menu view
+ * with the window, the text manager and its model counterpart
+ *
+ * @param window the app window
+ * @param textManager the text manager
+ * @param menuModel the menu model counterpart
+ *
  * @author Arthur, Florian
  * @date 25/02/16 - 24/01/17
- *
- * @param window the app's window
- * @param textHandler a text handler to display standalone text
- * @param menuModel the menu's model part
  */
-MenuView::MenuView(sf::RenderWindow *window, TextHandler *textHandler, MenuModel *menuModel) :
-        AbstractView(window, textHandler), m_menu{menuModel},
+MenuView::MenuView(sf::RenderWindow *window, AppTextManager *textManager, MenuModel *menuModel) :
+        AbstractView(window, textManager), m_menu{menuModel},
         m_commandsView{nullptr}, m_leaderboardView{nullptr}, m_settingsView{nullptr}, m_shopView{nullptr}
 {
     loadMusic();
@@ -39,6 +44,10 @@ MenuView::~MenuView()
     delete m_shopFormButton;
 }
 
+
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
 
 /**
  * Loads the menu music at startup
@@ -65,7 +74,8 @@ void MenuView::loadMusic()
 
 
 /**
- * Image Loading
+ * Loads all sprites used by the menu screen
+ *
  * @author Arthur
  * @date 26/03/16 - 24/12/17
  */
@@ -119,7 +129,8 @@ void MenuView::loadImages()
 
 
 /**
- * Synchronization function
+ * Synchronizes menu elements
+ *
  * @author Arthur
  * @date 26/03/16 - 30/01/17
  */
@@ -193,7 +204,8 @@ void MenuView::synchronize()
 
 
 /**
- * Menu View Drawing
+ * Draws menu elements on the window
+ *
  * @author Arthur
  * @date 26/03/16 - 24/01/17
  */
@@ -231,6 +243,7 @@ void MenuView::draw() const
 
 /**
  * Handles Home screen events
+ *
  * @param event sfml event object
  * @return true if app state is unchanged
  *
@@ -285,19 +298,19 @@ bool MenuView::handleHomeEvents(const sf::Event &event)
         }
         else if (m_commandsFormButton->contains(MOUSE_POSITION))
         {
-            m_commandsView = new CommandsView(m_window, m_textHandler, m_menu->launchCommands());
+            m_commandsView = new CommandsView(m_window, m_textManager, m_menu->launchCommands());
         }
         else if (m_leaderboardFormButton->contains(MOUSE_POSITION))
         {
-            m_leaderboardView = new LeaderboardView(m_window, m_textHandler, m_menu->launchLeaderboard());
+            m_leaderboardView = new LeaderboardView(m_window, m_textManager, m_menu->launchLeaderboard());
         }
         else if (m_settingsFormButton->contains(MOUSE_POSITION))
         {
-            m_settingsView = new SettingsView(m_window, m_textHandler, m_menu->launchSettings());
+            m_settingsView = new SettingsView(m_window, m_textManager, m_menu->launchSettings());
         }
         else if (m_shopFormButton->contains(MOUSE_POSITION))
         {
-            m_shopView = new ShopView(m_window, m_textHandler, m_menu->launchShop());
+            m_shopView = new ShopView(m_window, m_textManager, m_menu->launchShop());
         }
     }
 
@@ -307,6 +320,7 @@ bool MenuView::handleHomeEvents(const sf::Event &event)
 
 /**
  * Handles the user interaction events (mouse, keyboard, title bar buttons)
+ *
  * @param event sfml event object
  * @return true if app state is unchanged
  *

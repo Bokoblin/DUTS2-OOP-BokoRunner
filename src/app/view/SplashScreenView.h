@@ -30,7 +30,7 @@ class SplashScreenView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    SplashScreenView(sf::RenderWindow *window, TextHandler *textHandler, SplashScreenModel *splashModel);
+    SplashScreenView(sf::RenderWindow *window, AppTextManager *textManager, SplashScreenModel *splashModel);
     ~SplashScreenView() override;
 
     //=== METHODS

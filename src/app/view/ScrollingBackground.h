@@ -54,7 +54,7 @@ public:
     bool contains(float x, float y) const override;
     void applyColor() override;
 
-    void loadAndApplyTextureFromImageFile(const std::string &image) override;
+    void loadAndApplyTextureFromImageFile(const std::string &imageFile) override;
 
 private:
     //=== ATTRIBUTES

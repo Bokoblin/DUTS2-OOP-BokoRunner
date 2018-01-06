@@ -20,7 +20,7 @@ limitations under the License.
 #include "../../libs/MDC-SFML/src/Color.h"
 #include "../../libs/MDC-SFML/src/Button.h"
 #include "../utils/AppColor.h"
-#include "TextHandler.h"
+#include "AppTextManager.h"
 #include "ScrollingBackground.h"
 #include "AnimatedSprite.h"
 
@@ -36,7 +36,7 @@ class AbstractView
 {
 public:
     //=== CTORs / DTORs
-    AbstractView(sf::RenderWindow *window, TextHandler *textHandler);
+    AbstractView(sf::RenderWindow *window, AppTextManager *textManager);
     AbstractView(const AbstractView& myView) = delete;
     virtual ~AbstractView();
 
@@ -49,7 +49,7 @@ protected:
     //=== ATTRIBUTES
     unsigned int m_width, m_height;
     sf::RenderWindow *m_window;
-    TextHandler *m_textHandler;
+    AppTextManager *m_textManager;
 
     //=== METHODS
     virtual void loadImages() = 0;

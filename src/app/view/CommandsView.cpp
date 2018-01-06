@@ -1,12 +1,22 @@
 #include "CommandsView.h"
 
+//------------------------------------------------
+//          CONSTRUCTORS / DESTRUCTOR
+//------------------------------------------------
+
 /**
- * Parameterized Constructor
+ * Constructs the commands view
+ * with the window, the text manager and its model counterpart
+ *
+ * @param window the app window
+ * @param textManager the text manager
+ * @param commandsModel the commands model counterpart
+ *
  * @author Arthur
  * @date 24/01/17 - 29/01/17
  */
-CommandsView::CommandsView(sf::RenderWindow *window, TextHandler *textHandler, CommandsModel *commandsModel) :
-        AbstractView(window, textHandler), m_commands{commandsModel}
+CommandsView::CommandsView(sf::RenderWindow *window, AppTextManager *textManager, CommandsModel *commandsModel) :
+        AbstractView(window, textManager), m_commands{commandsModel}
 {
     loadImages();
 }
@@ -24,8 +34,13 @@ CommandsView::~CommandsView()
 }
 
 
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
+
 /**
- * Image Loading
+ * Loads all sprites used by the commands screen
+ *
  * @author Arthur
  * @date 24/01/17
  */
@@ -52,7 +67,8 @@ void CommandsView::loadImages()
 
 
 /**
- * Synchronization function
+ * Synchronizes commands elements
+ *
  * @author Arthur
  * @date 24/01/17
  */
@@ -64,7 +80,8 @@ void CommandsView::synchronize()
 
 
 /**
- * Menu View Drawing
+ * Draws commands elements on the window
+ *
  * @author Arthur
  * @date 24/01/17
  */
@@ -83,6 +100,7 @@ void CommandsView::draw() const
 
 /**
  * Handles the user interaction events (mouse, keyboard, title bar buttons)
+ *
  * @param event sfml event object
  * @return true if app state is unchanged
  *

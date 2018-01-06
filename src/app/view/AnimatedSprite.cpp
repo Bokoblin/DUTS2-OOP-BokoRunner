@@ -1,5 +1,9 @@
 #include "AnimatedSprite.h"
 
+//------------------------------------------------
+//          CONSTRUCTORS / DESTRUCTOR
+//------------------------------------------------
+
 /**
  * Constructs a sprite with a position, a size,
  * an image containing different clips
@@ -26,10 +30,11 @@ AnimatedSprite::AnimatedSprite(float x, float y, float width, float height, cons
 
 /**
  * Copy Constructor
- * @author Arthur
- * @date 19/03/16 - 29/12/17
  *
  * @param other another sprite object to copy
+ *
+ * @author Arthur
+ * @date 19/03/16 - 29/12/17
  */
 AnimatedSprite::AnimatedSprite(const AnimatedSprite& other) :
         mdsf::Sprite(other), m_clipRectArray{other.m_clipRectArray},
@@ -58,7 +63,7 @@ void AnimatedSprite::setClipRectArray(std::vector<sf::IntRect> clipRectsArray)
 
 
 //------------------------------------------------
-//          CONSTRUCTORS / DESTRUCTOR
+//          METHODS
 //------------------------------------------------
 
 /**

@@ -8,6 +8,11 @@
  * Constructs a scrolling background with
  * a size, a scrolling speed and a background image.
  *
+ * @param width a width
+ * @param height a height
+ * @param scrollingSpeed a scrolling speed
+ * @param image an image to scroll
+ *
  * @author Arthur, Florian
  * @date 3/03/16 - 29/12/17
  */
@@ -71,7 +76,7 @@ void ScrollingBackground::setPositions(float x, float y) {
 //------------------------------------------------
 
 /**
- * Synchronization Function
+ * Synchronizes the scrolling background
  * @author Arthur
  * @date 3/03/16 - 29/12/17
  */
@@ -93,7 +98,10 @@ void ScrollingBackground::sync()
 
 
 /**
- * Drawing Function
+ * Draws the scrolling background on the window
+ *
+ * @param window the window
+ *
  * @author Arthur
  * @date 3/03/16 - 03/04/16
  */
@@ -106,6 +114,10 @@ void ScrollingBackground::draw(sf::RenderWindow *window) const
 
 /**
  * Resizing function
+ *
+ * @param width the new width
+ * @param height the new height
+ *
  * @author Arthur
  * @date 30/04/16
  */
@@ -153,8 +165,8 @@ void ScrollingBackground::applyColor()
  * @author Arthur
  * @date 02/01/17
  */
-void ScrollingBackground::loadAndApplyTextureFromImageFile(const std::string &image)
+void ScrollingBackground::loadAndApplyTextureFromImageFile(const std::string &imageFile)
 {
-    m_left->loadAndApplyTextureFromImageFile(image);
-    m_right->loadAndApplyTextureFromImageFile(image);
+    m_left->loadAndApplyTextureFromImageFile(imageFile);
+    m_right->loadAndApplyTextureFromImageFile(imageFile);
 }

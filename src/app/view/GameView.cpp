@@ -4,17 +4,23 @@ using std::string;
 using std::vector;
 using Bokoblin::SimpleLogger::Logger;
 
+//------------------------------------------------
+//          CONSTRUCTORS / DESTRUCTOR
+//------------------------------------------------
+
 /**
- * Parameterized Constructor
+ * Constructs the game view
+ * with the window, the text manager and its model counterpart
+ *
+ * @param window the app window
+ * @param textManager the text manager
+ * @param gameModel the game model counterpart
+ *
  * @author Arthur
  * @date 26/03/16 - 29/01/17
- *
- * @param window the app's window
- * @param textHandler a text handler to display standalone text
- * @param gameModel the game's model part
  */
-GameView::GameView(sf::RenderWindow *window, TextHandler *textHandler, GameModel *gameModel) :
-        AbstractView(window, textHandler), m_game{gameModel},
+GameView::GameView(sf::RenderWindow *window, AppTextManager *textManager, GameModel *gameModel) :
+        AbstractView(window, textManager), m_game{gameModel},
         m_xPixelIntensity{1}, m_yPixelIntensity{1}
 {
     loadImages();
@@ -95,8 +101,13 @@ GameView::~GameView()
 }
 
 
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
+
 /**
  * Loads all sprites used by the game (backgrounds, UI, elements)
+ *
  * @author Arthur
  * @date 26/03/16 - 25/01/17
  */
@@ -255,6 +266,7 @@ void GameView::loadImages()
 
 /**
  * Links a model movable element to new sprite matching its type
+ *
  * @author Arthur
  * @date 18/03/16 - 24/12/17
  */
@@ -269,6 +281,7 @@ void GameView::linkElements()
 
 /**
  * Processes the transition between zones
+ *
  * @author Arthur
  * @date 25/04/16 - 26/12/17
  */
@@ -339,6 +352,7 @@ void GameView::processZonesTransition()
 
 /**
 * Setups the transition between zones
+ *
 * @author Arthur
 * @date 25/04/16 - 26/12/17
 */
@@ -364,6 +378,7 @@ void GameView::setupTransition()
 
 /**
  * Updates elements of a running game
+ *
  * @author Arthur
  * @date 6/03/16 - 26/12/17
  */
@@ -418,6 +433,7 @@ void GameView::updateRunningGameElements()
 
 /**
  * Updates elements of a paused game
+ *
  * @author Arthur
  * @date 6/03/16 - 26/12/17
  */
@@ -436,6 +452,7 @@ void GameView::updatePausedGameElements()
 
 /**
  * Updates elements of a game over
+ *
  * @author Arthur
  * @date 6/03/16 - 24/12/17
  */
@@ -466,6 +483,7 @@ void GameView::updateGameOverElements()
  * Deletes the Sprite that collided with the player
  * We consider that the player only collide with one element per complete loop,
  * it allows to reduce average complexity instead doing n loops each time (worst case)
+ *
  * @author Arthur
  * @date 12/03/16 - 20/03/16
  */
@@ -497,7 +515,8 @@ void GameView::deleteElements()
 
 
 /**
- * Synchronizes game elements data
+ * Synchronizes game elements
+ *
  * @author Arthur
  * @date 26/03/16 - 30/01/17
  */
@@ -510,11 +529,11 @@ void GameView::synchronize()
             linkElements();
             deleteElements();
             updateRunningGameElements();
-            m_textHandler->syncGameText(m_game->getBonusTimeout());
+            m_textManager->syncRunningGameText(m_game->getBonusTimeout());
             break;
         case PAUSED:
             updatePausedGameElements();
-            m_textHandler->syncPauseText();
+            m_textManager->syncPausedGameText();
             sf::sleep(sf::milliseconds(140)); //limit CPU usage for this thread
             break;
         case OVER:
@@ -522,7 +541,7 @@ void GameView::synchronize()
             if (m_gameThemeMusic.getStatus() == sf::Music::Status::Playing)
                 m_gameThemeMusic.stop();
             updateGameOverElements();
-            m_textHandler->syncGameOverText((int) m_game->getGameSpeed());
+            m_textManager->syncGameOverText((int) m_game->getGameSpeed());
             break;
         default:
             break;
@@ -531,7 +550,125 @@ void GameView::synchronize()
 
 
 /**
+ * Draws elements of a running game
+ *
+ * @author Arthur
+ * @date 24/12/17
+ */
+void GameView::drawRunningGame() const
+{
+    //=== Standalone Sprites drawing
+
+    m_farScrollingBackground->draw(m_window);
+
+    if (m_game->isTransitionRunning())
+    {
+        m_window->draw(*m_farTransitionBackground);
+        if (m_farTransitionBackground->getX() < m_width/2)
+            m_window->draw(*m_pixelShader);
+    }
+
+    m_nearScrollingBackground->draw(m_window);
+    m_window->draw(*m_bottomBarImage);
+    m_window->draw(*m_remainingLifeImage);
+    m_window->draw(*m_lifeBoxImage);
+
+    //=== Array's Sprites drawing
+
+    for (const auto &it : m_movableElementToSpriteMap)
+        it.second->draw(m_window);
+
+    if (m_game->getPlayer()->getState() == SHIELD)
+        m_window->draw(*m_shieldImage);
+
+    //=== Standalone Text drawing
+
+    m_textManager->drawRunningGameText(m_window);
+}
+
+
+/**
+ * Draws elements of a paused game
+ *
+ * @author Arthur
+ * @date 24/12/17
+ */
+void GameView::drawPausedGame() const
+{
+    //=== Background drawing & Sprites drawing
+
+    m_window->draw(*m_pauseBackground);
+    m_window->draw(*m_distanceIcon);
+    m_window->draw(*m_coinSprite);
+    m_window->draw(*m_stdEnemySprite);
+
+    m_resumeGameButton->draw(m_window);
+    m_restartGameButton->draw(m_window);
+    m_goToHomeButton->draw(m_window);
+    m_controlMusicButton->draw(m_window);
+
+    //=== Standalone Text drawing
+
+    m_textManager->drawPausedGameText(m_window);
+}
+
+
+/**
+ * Draws elements of a game over
+ *
+ * @author Arthur
+ * @date 24/12/17
+ */
+void GameView::drawGameOver() const
+{
+    //=== Background drawing & Buttons drawing
+
+    m_window->draw(*m_endBackground);
+    m_window->draw(*m_coinSprite);
+
+    m_restartGameButton->draw(m_window);
+    m_goToHomeButton->draw(m_window);
+    m_saveScoreButton->draw(m_window);
+
+    //=== Standalone Text drawing
+
+    m_textManager->drawGameOverText(m_window);
+}
+
+
+/**
+ * Draws game elements on the window
+ *
+ * @author Arthur
+ * @date 26/03/16 - 24/12/17
+ */
+void GameView::draw() const
+{
+    m_window->clear();
+
+    switch(m_game->getGameState())
+    {
+        case RUNNING :
+        case RUNNING_SLOWLY :
+            drawRunningGame();
+            break;
+        case PAUSED:
+            drawPausedGame();
+            break;
+        case OVER:
+            drawGameOver();
+            break;
+        default:
+            break;
+    }
+
+    m_window->display();
+}
+
+
+/**
  * Handles music settings
+ *
  * @author Arthur
  * @date 25/01/17
  */
@@ -562,120 +699,8 @@ void GameView::handleMusic()
 
 
 /**
- * Draws elements of a running game
- * @author Arthur
- * @date 24/12/17
- */
-void GameView::drawRunningGame() const
-{
-    //=== Standalone Sprites drawing
-
-    m_farScrollingBackground->draw(m_window);
-
-    if (m_game->isTransitionRunning())
-    {
-        m_window->draw(*m_farTransitionBackground);
-        if (m_farTransitionBackground->getX() < m_width/2)
-            m_window->draw(*m_pixelShader);
-    }
-
-    m_nearScrollingBackground->draw(m_window);
-    m_window->draw(*m_bottomBarImage);
-    m_window->draw(*m_remainingLifeImage);
-    m_window->draw(*m_lifeBoxImage);
-
-    //=== Array's Sprites drawing
-
-    for (const auto &it : m_movableElementToSpriteMap)
-        it.second->draw(m_window);
-
-    if (m_game->getPlayer()->getState() == SHIELD)
-        m_window->draw(*m_shieldImage);
-
-    //=== TextHandler drawing
-
-    m_textHandler->drawGameText(m_window);
-}
-
-
-/**
- * Draws elements of a paused game
- * @author Arthur
- * @date 24/12/17
- */
-void GameView::drawPausedGame() const
-{
-    //=== Background drawing & Sprites drawing
-
-    m_window->draw(*m_pauseBackground);
-    m_window->draw(*m_distanceIcon);
-    m_window->draw(*m_coinSprite);
-    m_window->draw(*m_stdEnemySprite);
-
-    m_resumeGameButton->draw(m_window);
-    m_restartGameButton->draw(m_window);
-    m_goToHomeButton->draw(m_window);
-    m_controlMusicButton->draw(m_window);
-
-    //=== TextHandler drawing
-
-    m_textHandler->drawPauseText(m_window);
-}
-
-
-/**
- * Draws elements of a game over
- * @author Arthur
- * @date 24/12/17
- */
-void GameView::drawGameOver() const
-{
-    //=== Background drawing & Buttons drawing
-
-    m_window->draw(*m_endBackground);
-    m_window->draw(*m_coinSprite);
-
-    m_restartGameButton->draw(m_window);
-    m_goToHomeButton->draw(m_window);
-    m_saveScoreButton->draw(m_window);
-
-    //=== TextHandler drawing
-
-    m_textHandler->drawGameOverText(m_window);
-}
-
-
-/**
- * Draws game elements on the windows
- * @author Arthur
- * @date 26/03/16 - 24/12/17
- */
-void GameView::draw() const
-{
-    m_window->clear();
-
-    switch(m_game->getGameState())
-    {
-        case RUNNING :
-        case RUNNING_SLOWLY :
-            drawRunningGame();
-            break;
-        case PAUSED:
-            drawPausedGame();
-            break;
-        case OVER:
-            drawGameOver();
-            break;
-        default:
-            break;
-    }
-
-    m_window->display();
-}
-
-
-/**
  * Handle players inputs
+ *
  * @author Arthur
  * @date 26/12/17
  */
@@ -700,6 +725,7 @@ void GameView::handlePlayerInput() const
 
 /**
  * Handle running game events
+ *
  * @param event sfml event object
  * @return true if app state is unchanged
  *
@@ -715,6 +741,7 @@ bool GameView::handleRunningGameEvents(sf::Event event)
 
 /**
  * Handle paused game events
+ *
  * @param event sfml event object
  * @return true if app state is unchanged
  *
@@ -772,6 +799,7 @@ bool GameView::handlePausedGameEvents(sf::Event event)
 
 /**
  * Handle game over events
+ *
  * @param event sfml event object
  * @return true if app state is unchanged
  *
@@ -819,6 +847,7 @@ bool GameView::handleGameOverEvents(sf::Event event)
 
 /**
  * Handles the user interaction events (mouse, keyboard, title bar buttons)
+ *
  * @param event sfml event object
  * @return true if app state is unchanged
  *

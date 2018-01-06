@@ -34,7 +34,7 @@ class SettingsView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    SettingsView(sf::RenderWindow *window, TextHandler *textHandler, SettingsModel *settingsModel);
+    SettingsView(sf::RenderWindow *window, AppTextManager *textManager, SettingsModel *settingsModel);
     ~SettingsView() override;
 
     //=== METHODS

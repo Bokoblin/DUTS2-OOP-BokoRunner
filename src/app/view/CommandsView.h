@@ -32,7 +32,7 @@ class CommandsView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    CommandsView(sf::RenderWindow *window, TextHandler *textHandler, CommandsModel *commandsModel);
+    CommandsView(sf::RenderWindow *window, AppTextManager *textManager, CommandsModel *commandsModel);
     ~CommandsView() override;
 
     //=== METHODS

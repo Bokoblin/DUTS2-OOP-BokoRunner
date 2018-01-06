@@ -19,7 +19,7 @@ limitations under the License.
 #include "../../libs/MDC-SFML/src/Button.h"
 #include "../../libs/MDC-SFML/src/Color.h"
 #include "../model/ShopItem.h"
-#include "TextHandler.h"
+#include "AppTextManager.h"
 #include "../utils/definitions.h"
 
 /**

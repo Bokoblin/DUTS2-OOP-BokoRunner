@@ -1,16 +1,22 @@
 #include "SplashScreenView.h"
 
+//------------------------------------------------
+//          CONSTRUCTORS / DESTRUCTOR
+//------------------------------------------------
+
 /**
- * Parameterized Constructor
+ * Constructs the splash screen view
+ * with the window, the text manager and its model counterpart
+ *
+ * @param window the app window
+ * @param textManager the text manager
+ * @param splashModel the splash screen model counterpart
+ *
  * @author Arthur
  * @date 27/03/16 - 05/01/17
- *
- * @param window the app's window
- * @param textHandler a text handler to display standalone text
- * @param splashModel the splash screen's model part
  */
-SplashScreenView::SplashScreenView(sf::RenderWindow *window, TextHandler *textHandler, SplashScreenModel *splashModel) :
-        AbstractView(window, textHandler), m_splashModel{splashModel}
+SplashScreenView::SplashScreenView(sf::RenderWindow *window, AppTextManager *textManager, SplashScreenModel *splashModel) :
+        AbstractView(window, textManager), m_splashModel{splashModel}
 {
     //Only on splash screen otherwise it overwrites user defined location at each menu/game restarting
 
@@ -40,8 +46,12 @@ SplashScreenView::~SplashScreenView()
 }
 
 
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
+
 /**
- * Image Loading
+ * Loads all sprites used by the splash screen
  * @author Arthur
  * @date 27/03/16 - 24/12/17
  */
@@ -65,7 +75,8 @@ void SplashScreenView::loadImages()
 
 
 /**
- * Synchronization function
+ * Synchronizes splash screen elements
+ *
  * @author Arthur
  * @date 27/03/16 - 24/12/17
  */
@@ -73,7 +84,7 @@ void SplashScreenView::synchronize()
 {
     if (!m_splashModel->isInEndingPhase())
     {
-        m_textHandler->syncSplashScreenText(m_splashModel->isContinueVisible());
+        m_textManager->syncSplashScreenText(m_splashModel->isContinueVisible());
     }
     else
     {
@@ -98,7 +109,8 @@ void SplashScreenView::synchronize()
 
 
 /**
- * View Drawing
+ * Draws splash screen elements on the window
+ *
  * @author Arthur
  * @date 27/03/16 - 24/12/17
  */
@@ -112,7 +124,7 @@ void SplashScreenView::draw() const
     m_window->draw(*m_splashScreen);
 
     if (!m_splashModel->isInEndingPhase())
-        m_textHandler->drawSplashScreenText(m_window);
+        m_textManager->drawSplashScreenText(m_window);
 
     m_window->display();
 }
@@ -120,6 +132,7 @@ void SplashScreenView::draw() const
 
 /**
  * Handles the user interaction events (mouse, keyboard, title bar buttons)
+ *
  * @param event sfml event object
  * @return true if app state is unchanged
  *

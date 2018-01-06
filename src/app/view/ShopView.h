@@ -29,13 +29,13 @@ limitations under the License.
  * It handles the shop screen's rendering.
  *
  * @author Arthur
- * @date 11/05/16 - 29/12/17
+ * @date 11/05/16 - 06/01/18
  */
 class ShopView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    ShopView(sf::RenderWindow *window, TextHandler *textHandler, ShopModel *shopModel);
+    ShopView(sf::RenderWindow *window, AppTextManager *textManager, ShopModel *shopModel); //TODO: to delete with drawableList
     ~ShopView() override;
 
     //=== METHODS
@@ -52,7 +52,7 @@ private:
     //Graphic Elements
     mdsf::Sprite *m_coinSprite;
     mdsf::Button *m_homeFormButton;
-    ShopDialog *m_buyDialog;
+    mdsf::Dialog *m_buyDialog;
 
     //Containers
     std::vector<ShopItemCard *> m_shopItemCardsArray;

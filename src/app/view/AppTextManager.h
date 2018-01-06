@@ -26,7 +26,7 @@ limitations under the License.
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 
 /**
- * The TextHandler Class groups app's standalone texts
+ * The AppTextManager Class groups app's standalone texts
  * and handles them
  *
  * Text objects branded as "label" are loaded from string files
@@ -35,21 +35,21 @@ namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
  * @author Arthur
  * @date 02/04/16 - 06/01/18
  */
-class TextHandler
+class AppTextManager
 {
     public:
     //=== CTORs / DTORs
-    TextHandler(DataBase *dataBase, unsigned int width, unsigned int height);
-    TextHandler(const TextHandler& myText) = delete;
-    ~TextHandler();
+    AppTextManager(DataBase *dataBase, unsigned int width, unsigned int height);
+    AppTextManager(const AppTextManager& myText) = delete;
+    ~AppTextManager();
 
     //=== OPERATORS
-    void operator=(TextHandler const&) = delete;
+    void operator=(AppTextManager const&) = delete;
 
     //=== METHODS
     //Text utils
     void handleAboutLinks(sf::Event event, const SettingsModel &settings) const;
-    void updateWholeText();
+    void updateWholeStandaloneTextContent(); //TODO: modularize (divide in modules to reduce time complexity)
 
     //Text init
     void initMenuLeaderboardText();
@@ -59,8 +59,8 @@ class TextHandler
     void syncSettingsText(int currentPage);
     void syncMenuLeaderboardText();
     void syncShopText();
-    void syncGameText(int bonusTimeout);
-    void syncPauseText();
+    void syncRunningGameText(int bonusTimeout);
+    void syncPausedGameText();
     void syncGameOverText(int gameSpeed);
 
     //Text drawing
@@ -68,8 +68,8 @@ class TextHandler
     void drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const;
     void drawLeaderboardText(sf::RenderWindow *window) const;
     void drawMenuShopText(sf::RenderWindow *window) const;
-    void drawGameText(sf::RenderWindow *window) const;
-    void drawPauseText(sf::RenderWindow *window) const;
+    void drawRunningGameText(sf::RenderWindow *window) const;
+    void drawPausedGameText(sf::RenderWindow *window) const;
     void drawGameOverText(sf::RenderWindow *window) const;
 
 private:
@@ -150,7 +150,7 @@ private:
     const unsigned int CONTENT_CHAR_SIZE = 20;
 
     //=== METHODS
-    void loadText();
+    void loadText(); //TODO: Modularize with map instead (like in the past :) ) to only load what's needed
 };
 
 #endif

@@ -34,7 +34,7 @@ class LeaderboardView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    LeaderboardView(sf::RenderWindow *window, TextHandler *textHandler, LeaderboardModel *leaderboardModel);
+    LeaderboardView(sf::RenderWindow *window, AppTextManager *textManager, LeaderboardModel *leaderboardModel);
     ~LeaderboardView() override;
 
     //=== METHODS

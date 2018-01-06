@@ -1,5 +1,9 @@
 #include "PixelShader.h"
 
+//------------------------------------------------
+//          CONSTRUCTORS / DESTRUCTOR
+//------------------------------------------------
+
 /**
  * Default Constructor
  * @author Arthur
@@ -17,8 +21,15 @@ PixelShader::PixelShader() : m_isLoaded(false)
 PixelShader::~PixelShader() = default;
 
 
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
+
 /**
  * Load if shader available
+ *
+ * @param image the image to apply effects on
+ *
  * @author Arthur
  * @date 28/04/16
  */
@@ -30,6 +41,7 @@ void PixelShader::load(const std::string &image)
 
 /**
  * Action linked to load
+ *
  * @author Arthur
  * @date 28/04/16 - 27/10/17
  */
@@ -49,7 +61,11 @@ bool PixelShader::onLoad(const std::string &image)
 
 
 /**
- * Effect update
+ * Updates the effect
+ *
+ * @param x the x-axis intensity
+ * @param y the y-axis intensity
+ *
  * @author Arthur
  * @date 28/04/16 - 27/10/17
  */
@@ -63,7 +79,11 @@ void PixelShader::update(float x, float y)
 
 
 /**
- * Draw function
+ * Draws the effect on the rendering target
+ *
+ * @param target the rendering target
+ * @param states current render states
+ *
  * @author Arthur
  * @date 28/04/16
  */

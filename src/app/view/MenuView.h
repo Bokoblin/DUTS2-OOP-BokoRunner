@@ -32,7 +32,7 @@ class MenuView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    MenuView(sf::RenderWindow *window, TextHandler *textHandler, MenuModel *menuModel);
+    MenuView(sf::RenderWindow *window, AppTextManager *textManager, MenuModel *menuModel);
     ~MenuView() override;
 
     //=== METHODS

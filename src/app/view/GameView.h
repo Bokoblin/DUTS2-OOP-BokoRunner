@@ -30,7 +30,7 @@ class GameView : public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    GameView(sf::RenderWindow *window, TextHandler *textHandler, GameModel *gameModel);
+    GameView(sf::RenderWindow *window, AppTextManager *textManager, GameModel *gameModel);
     ~GameView() override;
 
     //=== METHODS
@@ -106,14 +106,14 @@ private:
     void drawPausedGame() const;
     void drawGameOver() const;
 
+    //Audio
+    void handleMusic();
+
     //Events
     void handlePlayerInput() const;
     bool handleRunningGameEvents(sf::Event event);
     bool handlePausedGameEvents(sf::Event event);
     bool handleGameOverEvents(sf::Event event);
-
-    //Audio
-    void handleMusic();
 };
 
 #endif

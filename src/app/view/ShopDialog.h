@@ -32,7 +32,6 @@ class ShopDialog : public mdsf::Dialog
 public:
     //=== CTORs / DTORs
     ShopDialog();
-    ShopDialog(float x, float y, float width, float height, const std::string &context);
     ShopDialog(float x, float y, float width, float height, const std::string &context, ShopItem *item);
     ShopDialog(const Dialog& d)=delete;
     ~ShopDialog() override;

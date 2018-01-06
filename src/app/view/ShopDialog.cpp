@@ -1,5 +1,8 @@
 #include "ShopDialog.h"
 
+//------------------------------------------------
+//          CONSTRUCTORS / DESTRUCTOR
+//------------------------------------------------
 
 ShopDialog::ShopDialog() : Dialog(), m_shopItem{nullptr}
 {
@@ -8,18 +11,16 @@ ShopDialog::ShopDialog() : Dialog(), m_shopItem{nullptr}
 
 
 /**
- * Constructs a dialog with x and y coordinates,
- * a textHandler and a description
- * @author Arthur
- * @date 16/04/17
- */
-ShopDialog::ShopDialog(float x, float y, float width, float height, const std::string &context) :
-        Dialog(x, y, width, height, context), m_shopItem{nullptr}
-{}
-
-/**
- * Constructs a dialog with x and y coordinates,
- * a shopItem, a textHandler and a description
+ * Constructs a dialog with coordinates, a size
+ * a context and a shopItem
+ *
+ * @param x the x-axis coordinate
+ * @param y the y-axis coordinate
+ * @param width the width
+ * @param height the height
+ * @param context the context to make a contextual dialog
+ * @param item the shop item to link
+ *
  * @author Arthur
  * @date 16/04/17
  */
@@ -37,6 +38,9 @@ ShopDialog::ShopDialog(float x, float y, float width, float height,
 ShopDialog::~ShopDialog() = default;
 
 
-//=== Getters
+//------------------------------------------------
+//          GETTERS
+//------------------------------------------------
+
 ShopItem *ShopDialog::getLinkedShopItem() const {return m_shopItem; }
 

@@ -36,12 +36,11 @@ int main()
     //=== Initialize app data and text
 
     DataBase dataBase;
-    TextHandler textHandler(&dataBase, SCREEN_WIDTH, SCREEN_HEIGHT);
+    AppTextManager textManager(&dataBase, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    //=== Initialize app state, random numbers and event object
+    //=== Initialize app state, and event object
 
     dataBase.setAppState(SPLASH);
-    srand((unsigned int) time(nullptr));
     sf::Event event = sf::Event();
 
     //=== Program loop
@@ -51,7 +50,7 @@ int main()
         if (dataBase.getAppState() == SPLASH)
         {
             SplashScreenModel splashModel(&dataBase);
-            SplashScreenView splashView(&window, &textHandler, &splashModel);
+            SplashScreenView splashView(&window, &textManager, &splashModel);
 
             while(dataBase.getAppState() == SPLASH && splashView.handleEvents(event))
             {
@@ -63,7 +62,7 @@ int main()
         if (dataBase.getAppState() == MENU)
         {
             MenuModel menuModel(&dataBase);
-            MenuView menuView(&window, &textHandler, &menuModel);
+            MenuView menuView(&window, &textManager, &menuModel);
 
             while(dataBase.getAppState() == MENU && menuView.handleEvents(event))
             {
@@ -75,7 +74,7 @@ int main()
         if (dataBase.getAppState() == GAME)
         {
             GameModel gameModel(SCREEN_WIDTH, SCREEN_HEIGHT, &dataBase);
-            GameView gameView(&window, &textHandler, &gameModel);
+            GameView gameView(&window, &textManager, &gameModel);
 
             while(dataBase.getAppState() == GAME && gameView.handleEvents(event))
             {
@@ -91,5 +90,5 @@ int main()
         }
     }
 
-    return EXIT_SUCCESS;
+    return 0;
 }

@@ -2,19 +2,23 @@
 
 using std::string;
 
+//------------------------------------------------
+//          CONSTRUCTORS / DESTRUCTOR
+//------------------------------------------------
 
 /**
- * Constructs a Settings view with
- * the window, a text handler and Settings model
+ * Constructs the settings view
+ * with the window, the text manager and its model counterpart
+ *
+ * @param window the app window
+ * @param textManager the text manager
+ * @param settingsModel the settings model counterpart
+ *
  * @author Arthur
  * @date 20/05/16 - 02/01/18
- *
- * @param window the current window which displays a settings view
- * @param textHandler the text handler to display standalone texts
- * @param settingsModel the settings model
  */
-SettingsView::SettingsView(sf::RenderWindow *window, TextHandler *textHandler, SettingsModel *settingsModel) :
-        AbstractView(window, textHandler), m_settings{settingsModel}, m_confirmDialog{nullptr}
+SettingsView::SettingsView(sf::RenderWindow *window, AppTextManager *textManager, SettingsModel *settingsModel) :
+        AbstractView(window, textManager), m_settings{settingsModel}, m_confirmDialog{nullptr}
 {
     loadImages();
 
@@ -77,8 +81,13 @@ SettingsView::~SettingsView()
 }
 
 
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
+
 /**
- * Image Loading
+ * Loads all sprites used by the settings screen
+ *
  * @author Arthur
  * @date 20/05/16 - 04/01/18
  */
@@ -106,14 +115,14 @@ void SettingsView::loadImages()
     clipRect_music.emplace_back(50, 200, 50, 50);
 
     m_menuMusicButton = new mdsf::Button(POS_COL_2, 420, 25, 25, "config_music_menu",
-                                   GAME_BUTTONS_IMAGE, clipRect_music);
+                                         GAME_BUTTONS_IMAGE, clipRect_music);
     //TODO: fix the resize explicit call (hint: correct size in ctor and resize in self.sync())
     //Resize should only be used by user of the lib when s.he actually want to change the size
     m_menuMusicButton->resize(25, 25);
     m_menuMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
 
     m_gameMusicButton = new mdsf::Button(POS_COL_2, 460, 25, 25, "config_music_game",
-                                   GAME_BUTTONS_IMAGE, clipRect_music);
+                                         GAME_BUTTONS_IMAGE, clipRect_music);
     m_gameMusicButton->resize(25, 25);
     m_gameMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
 
@@ -133,7 +142,7 @@ void SettingsView::loadImages()
     clipRectReset.emplace_back(RAISED_BUTTON_DEFAULT);
     clipRectReset.emplace_back(RAISED_BUTTON_PRESSED);
     m_resetDataRaisedButton = new mdsf::Button(m_width/2 - 75, 450, 150, 36, "stats_app_reset",
-                                         RECT_BUTTONS_IMAGE, clipRectReset);
+                                               RECT_BUTTONS_IMAGE, clipRectReset);
     m_resetDataRaisedButton->setColor(mdsf::Color::MaterialRed);
 
 
@@ -157,7 +166,8 @@ void SettingsView::loadImages()
 
 
 /**
- * Synchronization function
+ * Synchronizes settings elements
+ *
  * @author Arthur
  * @date 20/05/16 - 02/01/18
  */
@@ -177,7 +187,7 @@ void SettingsView::synchronize()
     m_morphBallSkinRadio->setEnabled(m_settings->isMorphSkinAvailable());
     m_capsuleBallSkinRadio->setEnabled(m_settings->isCapsuleSkinAvailable());
     m_defaultBallSkinRadio->setEnabled(m_settings->isMorphSkinAvailable()
-                                       || m_settings->isCapsuleSkinAvailable());
+                                               || m_settings->isCapsuleSkinAvailable());
 
 
     //=== Sync buttons
@@ -195,14 +205,15 @@ void SettingsView::synchronize()
     }
 
 
-    //=== TextHandler update
+    //=== Standalone Text update
 
-    m_textHandler->syncSettingsText(m_settings->getCurrentPage());
+    m_textManager->syncSettingsText(m_settings->getCurrentPage());
 }
 
 
 /**
- * Settings View Drawing
+ * Draws settings elements on the window
+ *
  * @author Arthur
  * @date 20/05/16 - 25/01/17
  */
@@ -227,11 +238,11 @@ void SettingsView::draw() const
         m_menuMusicButton->draw(m_window);
         m_gameMusicButton->draw(m_window);
 
-        m_textHandler->drawMenuSettingsText(m_window, CONFIG);
+        m_textManager->drawMenuSettingsText(m_window, CONFIG);
     }
     else if (m_settings->getCurrentPage() == STATS)
     {
-        m_textHandler->drawMenuSettingsText(m_window, STATS);
+        m_textManager->drawMenuSettingsText(m_window, STATS);
         m_resetDataRaisedButton->draw(m_window);
         m_confirmDialog->draw(m_window);
     }
@@ -241,7 +252,7 @@ void SettingsView::draw() const
         m_window->draw(*m_logoSFML);
         m_window->draw(*m_iconRepoLink);
         m_window->draw(*m_iconEmailLink);
-        m_textHandler->drawMenuSettingsText(m_window, ABOUT);
+        m_textManager->drawMenuSettingsText(m_window, ABOUT);
     }
 
     for(const auto &it : m_pageIndicators)
@@ -307,7 +318,7 @@ void SettingsView::handleMusic()
 void SettingsView::updateTextBasedComponents() const
 {
     //Update standalone text
-    m_textHandler->updateWholeText();
+    m_textManager->updateWholeStandaloneTextContent();
 
     //Update button text
     for (mdsf::Button *button : m_buttonList)
@@ -320,6 +331,7 @@ void SettingsView::updateTextBasedComponents() const
 
 /**
  * Handles the user interaction events (mouse, keyboard, title bar buttons)
+ *
  * @param event sfml event object
  * @return true if app state is unchanged
  *
@@ -332,7 +344,7 @@ bool SettingsView::handleEvents(sf::Event event)
     {
         if (m_settings->getCurrentPage() == ABOUT)
         {
-            m_textHandler->handleAboutLinks(event, *m_settings);
+            m_textManager->handleAboutLinks(event, *m_settings);
         }
 
         if (!m_confirmDialog->isVisible())
@@ -445,7 +457,7 @@ bool SettingsView::handleEvents(sf::Event event)
                 {
                     m_confirmDialog->hide();
                     m_settings->getDataBase()->clearAppData();
-                    m_textHandler->syncSettingsText(m_settings->getCurrentPage());
+                    m_textManager->syncSettingsText(m_settings->getCurrentPage());
                     m_settings->checkItemsAvailability();
                 }
                 else if (m_confirmDialog->getCancelButtonText().contains(MOUSE_POSITION)
@@ -457,7 +469,7 @@ bool SettingsView::handleEvents(sf::Event event)
         }
         else
         {
-            m_textHandler->handleAboutLinks(event, *m_settings);
+            m_textManager->handleAboutLinks(event, *m_settings);
         }
     }
 

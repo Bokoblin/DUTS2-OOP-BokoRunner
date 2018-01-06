@@ -1,15 +1,22 @@
 #include "ShopView.h"
 
+//------------------------------------------------
+//          CONSTRUCTORS / DESTRUCTOR
+//------------------------------------------------
+
 /**
- * Parameterized Constructor
+ * Constructs the shop view
+ * with the window, the text manager and its model counterpart
+ *
+ * @param window the app window
+ * @param textManager the text manager
+ * @param shopModel the shop model counterpart
+ *
  * @author Arthur
  * @date 16/05/16 - 29/01/17
- * @param window the app's window
- * @param textHandler the app's text handler
- * @param shopModel the shop's model object
  */
-ShopView::ShopView(sf::RenderWindow *window, TextHandler *textHandler, ShopModel *shopModel) :
-        AbstractView(window, textHandler),
+ShopView::ShopView(sf::RenderWindow *window, AppTextManager *textManager, ShopModel *shopModel) :
+        AbstractView(window, textManager),
     m_shop{shopModel}, m_currentIndicator{0}, m_totalIndicator{0}, m_buyDialog{nullptr}
 {
     loadImages();
@@ -37,8 +44,12 @@ ShopView::~ShopView()
 }
 
 
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
+
 /**
- * Image Loading
+ * Loads all sprites used by the shop screen
  * @author Arthur
  * @date 16/05/16 - 26/01/17
  */
@@ -61,6 +72,7 @@ void ShopView::loadImages()
 
 /**
  * Create Cards ans Indicators
+ *
  * @author Arthur
  * @date 16/05/16 - 02/01/18
  */
@@ -92,8 +104,9 @@ void ShopView::createCards()
 
 
 /**
- * sync cards and Shows/hides them
+ * Syncs cards and Shows/hides them
  * depending on the current page
+ *
  * @author Arthur
  * @date 16/05/16 - 02/01/17
  */
@@ -116,7 +129,8 @@ void ShopView::syncCards()
 
 
 /**
- * Synchronization function
+ * Synchronizes shop elements
+ *
  * @author Arthur
  * @date 16/05/16 - 02/01/18
  */
@@ -124,7 +138,7 @@ void ShopView::synchronize()
 {
     m_homeFormButton->sync();
 
-    m_textHandler->syncShopText();
+    m_textManager->syncShopText();
 
     syncCards();
 
@@ -137,7 +151,8 @@ void ShopView::synchronize()
 
 
 /**
- * Menu View Drawing
+ * Draws shop elements on the window
+ *
  * @author Arthur
  * @date 16/05/16 - 24/01/17
  */
@@ -156,9 +171,9 @@ void ShopView::draw() const
     m_window->draw(*m_coinSprite);
     m_buyDialog->draw(m_window);
 
-    //=== TextHandler Drawing
+    //=== Standalone Text Drawing
 
-    m_textHandler->drawMenuShopText(m_window);
+    m_textManager->drawMenuShopText(m_window);
 
     m_window->display();
 }
@@ -166,6 +181,7 @@ void ShopView::draw() const
 
 /**
  * Handles the user interaction events (mouse, keyboard, title bar buttons)
+ *
  * @param event sfml event object
  * @return true if app state is unchanged
  *
@@ -233,12 +249,13 @@ bool ShopView::handleEvents(sf::Event event)
             {
                 if (m_buyDialog->getContext() == "shopAskDialog") //TODO : Don't use strings
                 {
-                    ShopItem *shopItem = m_buyDialog->getLinkedShopItem();
+                    ShopItem *shopItem = dynamic_cast<ShopDialog *>(m_buyDialog)->getLinkedShopItem();
 
-                    delete m_buyDialog;
-                    //TODO : Don't use strings
+                    delete m_buyDialog; //TODO-1: As items are allocated with new we can allocate then in code
+                    // TODO-2: and add them to a drawable item list to draw them instead of keeping a pointer from ctor
+
                     const std::string operationResult = m_shop->buyItem(shopItem) ? "shopSuccess" : "shopFailure";
-                    m_buyDialog = new ShopDialog(m_width/2 - 125, m_height/2 - 50, 250, 100, operationResult);
+                    m_buyDialog = new mdsf::Dialog(m_width/2 - 125, m_height/2 - 50, 250, 100, operationResult);
                     DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, *m_shop->getDataBase());
 
                     if (operationResult == "shopSuccess")

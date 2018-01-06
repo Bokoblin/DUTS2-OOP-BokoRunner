@@ -1,19 +1,24 @@
-#include "TextHandler.h"
+#include "AppTextManager.h"
 
 using std::string;
 using std::to_string;
 
+//------------------------------------------------
+//          CONSTRUCTOR / DESTRUCTOR
+//------------------------------------------------
+
 /**
- * Constructs a text handler with
- * app's database and size
- * @author Arthur
- * @date 02/04/16 - 06/01/18
+ * Constructs a text manager with
+ * app's database and window size
  *
  * @param dataBase the app database
- * @param width the app width
- * @param height the app height
+ * @param width the window width
+ * @param height the window height
+ *
+ * @author Arthur
+ * @date 02/04/16 - 06/01/18
  */
-TextHandler::TextHandler(DataBase *dataBase, unsigned int width, unsigned int height) :
+AppTextManager::AppTextManager(DataBase *dataBase, unsigned int width, unsigned int height) :
         m_dataBase{dataBase}, m_width{width}, m_height{height}
 {
     m_regularFont.loadFromFile(ROBOTO_REGULAR_FONT);
@@ -29,19 +34,23 @@ TextHandler::TextHandler(DataBase *dataBase, unsigned int width, unsigned int he
  * @author Arthur
  * @date 02/04/16 - 07/01/17
  */
-TextHandler::~TextHandler()
+AppTextManager::~AppTextManager()
 {
     for (mdsf::Text *text : m_textList)
         delete text;
 }
 
 
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
+
 /**
- * Text Loading
+ * Loads all managed standalone text
  * @author Arthur
  * @date 02/04/16 - 31/10/17
  * */
-void TextHandler::loadText()
+void AppTextManager::loadText()
 {
     //=== Splash screen
 
@@ -113,17 +122,52 @@ void TextHandler::loadText()
     m_textList.push_back(m_currentScoreLabel = new mdsf::Text("end_score"));
     m_textList.push_back(m_currentScoreText = new mdsf::Text("end_score_value"));
 
-    updateWholeText();
+    updateWholeStandaloneTextContent();
 }
 
 
 /**
- * Changes Language
- * TODO: divide in modules to reduce time complexity (divide textList too)
+ * Handle events related to link texts
+ *
+ * @param event sfml event object
+ * @param settings the settings model
+ *
  * @author Arthur
- * @date 13/04/16 - 27/10/17
+ * @date 02/11/17
  */
-void TextHandler::updateWholeText()
+void AppTextManager::handleAboutLinks(sf::Event event, const SettingsModel &settings) const
+{
+    //TODO : Temporary until dedicated LinkButton class
+
+    if (MOUSE_LEFT_PRESSED_EVENT)
+    {
+        if (m_aboutRepositoryLink->contains(MOUSE_POSITION))
+            m_aboutRepositoryLink->setFillColor(AppColor::URLRed);
+        if (m_aboutEmailLink->contains(MOUSE_POSITION))
+            m_aboutEmailLink->setFillColor(AppColor::URLRed);
+    }
+
+    if (event.type == sf::Event::MouseButtonReleased)
+    {
+        m_aboutRepositoryLink->setFillColor(sf::Color::White);
+        m_aboutEmailLink->setFillColor(sf::Color::White);
+
+        if (m_aboutRepositoryLink->contains(MOUSE_POSITION))
+            settings.openURLinBrowser(REPOSITORY);
+        if (m_aboutEmailLink->contains(MOUSE_POSITION))
+            settings.openURLinBrowser(EMAIL);
+    }
+}
+
+
+/**
+ * Changes the content of all standalone texts
+ * following current language
+ *
+ * @author Arthur
+ * @date 13/04/16 - 06/01/17
+ */
+void AppTextManager::updateWholeStandaloneTextContent()
 {
     for (mdsf::Text* t : m_textList)
     {
@@ -137,13 +181,14 @@ void TextHandler::updateWholeText()
 
 
 /**
- * Splash screen Text Syncing
- * @author Arthur
- * @date 31/10/17
+ * Syncs splash screen standalone text
  *
  * @param continueVisibility the splash screen continue text visibility state
+ *
+ * @author Arthur
+ * @date 31/10/17
  */
-void TextHandler::syncSplashScreenText(bool continueVisibility)
+void AppTextManager::syncSplashScreenText(bool continueVisibility)
 {
     m_splashScreenContinueLabel->setVisible(continueVisibility);
     m_splashScreenContinueLabel->setCharacterSize(DEFAULT_CHAR_SIZE);
@@ -152,13 +197,14 @@ void TextHandler::syncSplashScreenText(bool continueVisibility)
 
 
 /**
- * Menu Settings Text Syncing
- * @author Arthur
- * @date 14/04/16 - 03/11/17
+ * Syncs settings standalone text
  *
  * @param currentPage the current settings page opened
+ *
+ * @author Arthur
+ * @date 14/04/16 - 03/11/17
  */
-void TextHandler::syncSettingsText(int currentPage)
+void AppTextManager::syncSettingsText(int currentPage)
 {
     if (currentPage == CONFIG)
     {
@@ -239,11 +285,12 @@ void TextHandler::syncSettingsText(int currentPage)
 
 
 /**
- * Menu Leaderboard Text Init
+ * Inits leaderboard standalone text
+ *
  * @author Arthur
  * @date 27/12/17
  */
-void TextHandler::initMenuLeaderboardText()
+void AppTextManager::initMenuLeaderboardText()
 {
     string scoresEasy = m_dataBase->loadLeaderboardScores(EASY);
     string scoresHard = m_dataBase->loadLeaderboardScores(HARD);
@@ -275,11 +322,12 @@ void TextHandler::initMenuLeaderboardText()
 
 
 /**
- * Menu Leaderboard Text Syncing
+ * Syncs leaderboard standalone text
+ *
  * @author Arthur
  * @date 19/04/16 - 30/01/17
  */
-void TextHandler::syncMenuLeaderboardText()
+void AppTextManager::syncMenuLeaderboardText()
 {
     if (m_dataBase->isScoreEasyArrayEmpty())
     {
@@ -306,11 +354,11 @@ void TextHandler::syncMenuLeaderboardText()
 
 
 /**
- * Menu Shop Text Syncing
+ * Syncs shop standalone text
  * @author Arthur
  * @date 16/05/16 - 07/01/17
  */
-void TextHandler::syncShopText()
+void AppTextManager::syncShopText()
 {
     m_walletText->setPosition(m_width/2, TITLE_TEXT_X);
     m_walletText->applyTextFont(ROBOTO_CONDENSED_FONT, DEFAULT_CHAR_SIZE, AppColor::CoinGold);
@@ -319,13 +367,14 @@ void TextHandler::syncShopText()
 
 
 /**
- * Game Screen Syncing
- * @author Arthur
- * @date 02/04/16 - 02/01/18
+ * Syncs running game standalone text
  *
  * @param bonusTimeout the current bonus timeout
+ *
+ * @author Arthur
+ * @date 02/04/16 - 02/01/18
  */
-void TextHandler::syncGameText(int bonusTimeout)
+void AppTextManager::syncRunningGameText(int bonusTimeout)
 {
     m_playerLifeLabel->setPosition(40, 545);
 
@@ -341,11 +390,12 @@ void TextHandler::syncGameText(int bonusTimeout)
 
 
 /**
- * Game Pause Screen Syncing
+ * Syncs paused game standalone text
+ *
  * @author Arthur
  * @date 02/04/16 - 27/10/17
  */
-void TextHandler::syncPauseText()
+void AppTextManager::syncPausedGameText()
 {
     m_currentDistanceText->setPosition(PAUSE_TEXT_X, 30);
 
@@ -360,13 +410,14 @@ void TextHandler::syncPauseText()
 
 
 /**
- * Game End Screen Syncing
- * @author Arthur
- * @date 02/04/16 - 27/10/17
+ * Syncs game over standalone text
  *
  * @param gameSpeed the last game speed before game over
+ *
+ * @author Arthur
+ * @date 02/04/16 - 27/10/17
  */
-void TextHandler::syncGameOverText(int gameSpeed)
+void AppTextManager::syncGameOverText(int gameSpeed)
 {
     m_endTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
     m_endTitleLabel->setFont(m_BoldFont);
@@ -408,27 +459,29 @@ void TextHandler::syncGameOverText(int gameSpeed)
 
 
 /**
- * Splash Screen Drawing
- * @author Arthur
- * @date 31/10/17
+ * Draws splash screen standalone text
  *
  * @param window the app's window
+ *
+ * @author Arthur
+ * @date 31/10/17
  */
-void TextHandler::drawSplashScreenText(sf::RenderWindow *window) const
+void AppTextManager::drawSplashScreenText(sf::RenderWindow *window) const
 {
     m_splashScreenContinueLabel->draw(window);
 }
 
 
 /**
- * Settings Screen Drawing
- * @author Arthur
- * @date 14/04/16 - 30/01/17
+ * Draws settings standalone text
  *
  * @param window the app's window
  * @param currentPage the current settings page opened
+ *
+ * @author Arthur
+ * @date 14/04/16 - 30/01/17
  */
-void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const
+void AppTextManager::drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const
 {
     switch(currentPage)
     {
@@ -454,13 +507,14 @@ void TextHandler::drawMenuSettingsText(sf::RenderWindow *window, int currentPage
 
 
 /**
- * Leaderboard Screen Drawing
- * @author Arthur
- * @date 19/04/16 - 30/01/17
+ * Draws leaderboard standalone text
  *
  * @param window the app's window
+ *
+ * @author Arthur
+ * @date 19/04/16 - 30/01/17
  */
-void TextHandler::drawLeaderboardText(sf::RenderWindow *window) const
+void AppTextManager::drawLeaderboardText(sf::RenderWindow *window) const
 {
     for (const auto &text : m_textList)
         if (text->getDescription().find("leaderboard") != string::npos)
@@ -469,26 +523,28 @@ void TextHandler::drawLeaderboardText(sf::RenderWindow *window) const
 
 
 /**
- * Shop Screen Drawing
- * @author Arthur
- * @date 16/05/16 - 04/01/17
+ * Draws shop standalone text
  *
  * @param window the app's window
+ *
+ * @author Arthur
+ * @date 16/05/16 - 04/01/17
  */
-void TextHandler::drawMenuShopText(sf::RenderWindow *window) const
+void AppTextManager::drawMenuShopText(sf::RenderWindow *window) const
 {
     m_walletText->draw(window);
 }
 
 
 /**
- * Game Screen Drawing
- * @author Arthur
- * @date 02/04/16 - 02/01/17
+ * Draws running game standalone text
  *
  * @param window the app's window
+ *
+ * @author Arthur
+ * @date 02/04/16 - 02/01/17
  */
-void TextHandler::drawGameText(sf::RenderWindow *window) const
+void AppTextManager::drawRunningGameText(sf::RenderWindow *window) const
 {
     m_playerLifeLabel->draw(window);
     m_currentDistanceLabel->draw(window);
@@ -498,13 +554,14 @@ void TextHandler::drawGameText(sf::RenderWindow *window) const
 
 
 /**
- * Pause Screen Drawing
- * @author Arthur
- * @date 02/04/16 - 02/01/17
+ * Draws paused game standalone text
  *
  * @param window the app's window
+ *
+ * @author Arthur
+ * @date 02/04/16 - 02/01/17
  */
-void TextHandler::drawPauseText(sf::RenderWindow *window) const
+void AppTextManager::drawPausedGameText(sf::RenderWindow *window) const
 {
     m_currentDistanceText->draw(window);
     m_currentCoinsNbText->draw(window);
@@ -513,52 +570,26 @@ void TextHandler::drawPauseText(sf::RenderWindow *window) const
 
 
 /**
- * End Screen Drawing
- * @author Arthur
- * @date 02/04/16 - 30/01/17
+ * Draws game over standalone text
  *
  * @param window the app's window
+ *
+ * @author Arthur
+ * @date 02/04/16 - 06/01/18
  */
-void TextHandler::drawGameOverText(sf::RenderWindow *window) const
+void AppTextManager::drawGameOverText(sf::RenderWindow *window) const
 {
-    for (const auto &text : m_textList)
-        if (text->getDescription().find("end") != string::npos)
-            text->draw(window);
-
+    //verbose but better for now as a for_all in m_textList cost a lot in complexity
+    m_endTitleLabel->draw(window);
+    m_speedMultiplierLabel->draw(window);
+    m_speedMultiplierText->draw(window);
+    m_currentDistanceLabel->draw(window);
+    m_coinsCollectedLabel->draw(window);
+    m_flattenedEnemiesLabel->draw(window);
+    m_flattenedEnemiesText->draw(window);
+    m_currentScoreLabel->draw(window);
+    m_currentScoreText->draw(window);
     m_currentDistanceText->draw(window);
     m_currentCoinsNbText->draw(window);
     m_walletText->draw(window);
-}
-
-
-/**
- * Treats events related to link texts
- * @author Arthur
- * @date 02/11/17
- *
- * @param event sfml event object
- * @param settings the settings model
- */
-void TextHandler::handleAboutLinks(sf::Event event, const SettingsModel &settings) const
-{
-    //TODO : Temporary until dedicated LinkButton class
-
-    if (MOUSE_LEFT_PRESSED_EVENT)
-    {
-        if (m_aboutRepositoryLink->contains(MOUSE_POSITION))
-            m_aboutRepositoryLink->setFillColor(AppColor::URLRed);
-        if (m_aboutEmailLink->contains(MOUSE_POSITION))
-            m_aboutEmailLink->setFillColor(AppColor::URLRed);
-    }
-
-    if (event.type == sf::Event::MouseButtonReleased)
-    {
-        m_aboutRepositoryLink->setFillColor(sf::Color::White);
-        m_aboutEmailLink->setFillColor(sf::Color::White);
-
-        if (m_aboutRepositoryLink->contains(MOUSE_POSITION))
-            settings.openURLinBrowser(REPOSITORY);
-        if (m_aboutEmailLink->contains(MOUSE_POSITION))
-            settings.openURLinBrowser(EMAIL);
-    }
 }

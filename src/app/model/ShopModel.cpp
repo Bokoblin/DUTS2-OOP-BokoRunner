@@ -89,8 +89,8 @@ void ShopModel::fetchBuyableItemsFromFile()
     {
         //Updates item's attributes
         string id = shopItem.attribute("id").value();
-        string name = m_dataBase->loadTextFromIdentifier(id + "_name");
-        string desc = m_dataBase->loadTextFromIdentifier(id + "_desc");
+        string name = m_dataBase->loadLocalizedString(id + "_name");
+        string desc = m_dataBase->loadLocalizedString(id + "_desc");
         int price = stoi(shopItem.attribute("price").value());
         bool isBought = ((string)shopItem.attribute("bought").value()) == "true";
 

@@ -175,16 +175,16 @@ void Button::sync()
 /**
  * Retrieves the button's label text
  *
- * @param dataBase the app's database //TODO: not for a lib
+ * @param stringsFilename the filename containing the string to look for
  *
  * @author Arthur
  * @date 23/12/16 - 27/12/17
  */
-void Button::retrieveLabel(const DataBase &dataBase)
+void Button::retrieveLabel(const string &stringsFilename)
 {
     if (!m_label.getDescription().empty())
     {
-        string utf8_string = dataBase.loadTextFromIdentifier(m_label.getDescription());
+        string utf8_string = XMLPersistenceHelper::loadLabeledString(stringsFilename, m_label.getDescription());
         m_label.setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
     }
 }
@@ -233,14 +233,14 @@ void Button::syncLabelPosition()
  * (updates position + displayed text)
  * Note: This function is only a combination of syncLabel() and retrieveLabel()
  *
- * @param dataBase the app's database
+ * @param stringsFilename the filename containing the string to look for
  *
  * @author Arthur
  * @date 27/12/17
  */
-void Button::retrieveAndSyncLabel(const DataBase &dataBase)
+void Button::retrieveAndSyncLabel(const string &stringsFilename)
 {
-    retrieveLabel(dataBase);
+    retrieveLabel(stringsFilename);
     syncLabelPosition();
 }
 

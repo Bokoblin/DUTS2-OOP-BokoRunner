@@ -48,7 +48,7 @@ SettingsView::SettingsView(sf::RenderWindow *window, AppTextManager *textManager
     //=== Init buttons
 
     for (mdsf::Button *button : m_buttonList)
-        button->retrieveAndSyncLabel(*m_settings->getDataBase());
+        button->retrieveAndSyncLabel(m_settings->getDataBase()->getLanguageFile());
 
     //=== Init confirm dialog
 
@@ -322,7 +322,7 @@ void SettingsView::updateTextBasedComponents() const
 
     //Update button text
     for (mdsf::Button *button : m_buttonList)
-        button->retrieveAndSyncLabel(*m_settings->getDataBase());
+        button->retrieveAndSyncLabel(m_settings->getDataBase()->getLanguageFile());
 
     //Update dialog text
     DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, *m_settings->getDataBase());

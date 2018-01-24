@@ -1,6 +1,9 @@
 #include "DataBase.h"
 
-using namespace std; //namespace instead of per sub-namespace -> to much used //TODO : check if same after split
+using std::string;
+using std::to_string;
+using std::stoi;
+using Bokoblin::SimpleLogger::Logger;
 
 /**
  * Constructs the app's database by initializing
@@ -68,7 +71,8 @@ void DataBase::setAppState(AppState state) { m_appState = state; }
 void DataBase::decreaseWallet(int amount) { m_wallet -= amount; }
 void DataBase::increaseCurrentCoinsCollected(int amount) { m_currentCoinsNumber += amount; }
 void DataBase::increaseCurrentDistance(float amount) { m_currentDistance += amount; }
-void DataBase::increaseCurrentFlattenedEnemies(int amount) {
+void DataBase::increaseCurrentFlattenedEnemies(int amount)
+{
     m_scoreBonusFlattenedEnemies += amount;
     m_currentFlattenedEnemies += 1;
 }
@@ -88,31 +92,31 @@ void DataBase::setCurrentScore(float speed)
 /**
  * (Re)creates config file
  * @author Arthur
- * @date 02/05/16 - 24/10/16
+ * @date 02/05/16 - 22/01/18
  */
 void DataBase::createConfigFile()
 {
-    fstream f;
-    f.open(CONFIG_FILE.c_str(), ios::out);
-    f << DEFAULT_CONFIG_CONTENT;
-    f.close();
+    XMLPersistenceHelper::createXMLFile(CONFIG_FILE, DEFAULT_CONFIG_CONTENT);
 }
 
 
 /**
+ * TODO : NON-TRIVIAL REWRITE with new structure
+ *
  * Checks if config file has been corrupted
  * by verifying file number of lines, number of each item
- * @author Arthur
- * @date 02/05/16 - 25/01/17
  *
  * @return a boolean indicating if file is corrupted
+ *
+ * @author Arthur
+ * @date 02/05/16 - 25/01/17
  */
 bool DataBase::checkConfigFileIntegrity() const
 {
-    fstream f;
+    std::fstream f;
     string line;
 
-    f.open(CONFIG_FILE.c_str(), ios::in);
+    f.open(CONFIG_FILE.c_str(), std::ios::in);
 
     //=== Opening test
     if (f.fail())
@@ -192,73 +196,79 @@ void DataBase::fetchConfigurationFromFile()
 
 /**
  * Updates variable values from file
+ *
  * @author Arthur
- * @date 24/10/16 - 24/12/17
+ * @date 24/10/16 - 23/01/18
  */
 void DataBase::fetchConfig()
 {
     pugi::xml_document doc;
-    doc.load_file(CONFIG_FILE.c_str());
-
-    pugi::xml_node runner = doc.child("runner");
-    pugi::xml_node config = runner.child("config");
-    pugi::xml_node stats = runner.child("stats");
-
-    //Generic function for getting value, checking and putting default if issue (separate class) :
-    //safeRetrieve(Type<T> attribute, std::string identifier, std::string regex, Type<T> default_value);
-
-    for (pugi::xml_node configItem: config.children("configItem"))
+    if (XMLPersistenceHelper::loadFile(doc, CONFIG_FILE))
     {
-        if (string(configItem.attribute("name").value()) == "language")
+        pugi::xml_node runner = doc.child("runner");
+        pugi::xml_node config = runner.child("config");
+        pugi::xml_node stats = runner.child("stats");
+
+        //TODO : Generic function for getting value, checking and putting default if issue (separate class) :
+        //TODO : safeRetrieve(Type<T> attribute, std::string identifier, std::string regex, Type<T> default_value);
+
+        for (pugi::xml_node configItem: config.children("configItem"))
         {
-            m_currentLanguage = configItem.attribute("value").value();
-            const regex r("en|fr|es");
-            smatch sm;
-            m_currentLanguage = regex_match(m_currentLanguage, sm, r) ? m_currentLanguage : ENGLISH;
+            if (string(configItem.attribute("name").value()) == "language")
+            {
+                m_currentLanguage = configItem.attribute("value").value();
+                const std::regex r("en|fr|es");
+                std::smatch sm;
+                m_currentLanguage = regex_match(m_currentLanguage, sm, r) ? m_currentLanguage : ENGLISH;
+            }
+            else if (string(configItem.attribute("name").value()) == "difficulty")
+            {
+                m_currentDifficulty = stoi(configItem.attribute("value").value());
+                m_currentDifficulty = (m_currentDifficulty == EASY) ? EASY : HARD; //prevent bad value
+            }
+            else if (string(configItem.attribute("name").value()) == "ball_skin")
+            {
+                m_currentBallSkin = configItem.attribute("value").value();
+                const std::regex r("default|morphing|capsule");
+                std::smatch sm;
+                m_currentBallSkin = regex_match(m_currentBallSkin, sm, r) ? m_currentBallSkin : "default";
+            }
+            else if (string(configItem.attribute("name").value()) == "wallet")
+            {
+                m_wallet = stoi(configItem.attribute("value").value());
+            }
+            else if (string(configItem.attribute("name").value()) == "menu_music")
+            {
+                string result = configItem.attribute("value").value();
+                if (result == "true") m_isMenuMusicEnabled = true;
+            }
+            else if (string(configItem.attribute("name").value()) == "game_music")
+            {
+                string result = configItem.attribute("value").value();
+                if (result == "true") m_isGameMusicEnabled = true;
+            }
         }
-        else if (string(configItem.attribute("name").value()) == "difficulty")
+
+        for (pugi::xml_node statItem: stats.children("statItem"))
         {
-            m_currentDifficulty = stoi(configItem.attribute("value").value());
-            m_currentDifficulty = (m_currentDifficulty == EASY) ? EASY : HARD; //prevent bad value
-        }
-        else if (string(configItem.attribute("name").value()) == "ball_skin")
-        {
-            m_currentBallSkin = configItem.attribute("value").value();
-            const regex r("default|morphing|capsule");
-            smatch sm;
-            m_currentBallSkin = regex_match(m_currentBallSkin, sm, r) ? m_currentBallSkin : "default";
-        }
-        else if (string(configItem.attribute("name").value()) == "wallet")
-            m_wallet = stoi(configItem.attribute("value").value());
-        else if (string(configItem.attribute("name").value()) == "menu_music")
-        {
-            string result = configItem.attribute("value").value();
-            if (result == "true") m_isMenuMusicEnabled=true;
-        }
-        else if (string(configItem.attribute("name").value()) == "game_music")
-        {
-            string result = configItem.attribute("value").value();
-            if (result == "true") m_isGameMusicEnabled=true;
+            if (string(statItem.attribute("name").value()) == "total_coins_collected")
+                m_totalCoinsCollected = stoi(statItem.attribute("value").value());
+            else if (string(statItem.attribute("name").value()) == "total_distance_travelled")
+                m_totalDistance = stoi(statItem.attribute("value").value());
+            else if (string(statItem.attribute("name").value()) == "total_enemies_destroyed")
+                m_totalFlattenedEnemies = stoi(statItem.attribute("value").value());
+            else if (string(statItem.attribute("name").value()) == "per_game_coins_collected")
+                m_perGameCoinsCollected = stoi(statItem.attribute("value").value());
+            else if (string(statItem.attribute("name").value()) == "per_game_distance_travelled")
+                m_perGameDistance = stoi(statItem.attribute("value").value());
+            else if (string(statItem.attribute("name").value()) == "per_game_enemies_destroyed")
+                m_perGameFlattenedEnemies = stoi(statItem.attribute("value").value());
+            else if (string(statItem.attribute("name").value()) == "total_games_played")
+                m_totalGamesPlayed = stoi(statItem.attribute("value").value());
         }
     }
-
-    for (pugi::xml_node statItem: stats.children("statItem"))
-    {
-        if (string(statItem.attribute("name").value()) == "total_coins_collected")
-            m_totalCoinsCollected = stoi(statItem.attribute("value").value());
-        else if (string(statItem.attribute("name").value()) == "total_distance_travelled")
-            m_totalDistance = stoi(statItem.attribute("value").value());
-        else if (string(statItem.attribute("name").value()) == "total_enemies_destroyed")
-            m_totalFlattenedEnemies = stoi(statItem.attribute("value").value());
-        else if (string(statItem.attribute("name").value()) == "per_game_coins_collected")
-            m_perGameCoinsCollected = stoi(statItem.attribute("value").value());
-        else if (string(statItem.attribute("name").value()) == "per_game_distance_travelled")
-            m_perGameDistance = stoi(statItem.attribute("value").value());
-        else if (string(statItem.attribute("name").value()) == "per_game_enemies_destroyed")
-            m_perGameFlattenedEnemies = stoi(statItem.attribute("value").value());
-        else if (string(statItem.attribute("name").value()) == "total_games_played")
-            m_totalGamesPlayed = stoi(statItem.attribute("value").value());
-    }
+    else
+        Logger::printErrorOnConsole("Configuration fetching failure");
 }
 
 
@@ -266,172 +276,181 @@ void DataBase::fetchConfig()
  * Updates each score array
  * with values from config file
  * @author Arthur
- * @date 23/10/16 - 24/12/17
+ * @date 23/10/16 - 23/01/18
  */
 void DataBase::fetchScore()
 {
     pugi::xml_document doc;
-    doc.load_file(CONFIG_FILE.c_str());
-
-    pugi::xml_node runner = doc.child("runner");
-    pugi::xml_node scoresEasy = runner.child("scoresEasy");
-    pugi::xml_node scoresHard = runner.child("scoresHard");
-
-    m_scoresEasyArray.clear();
-    m_scoresHardArray.clear();
-    for (pugi::xml_node scoreItem: scoresEasy.children("scoreItem"))
+    if (XMLPersistenceHelper::loadFile(doc, CONFIG_FILE))
     {
-        if (string(scoreItem.attribute("value").value()) != "0")
-            m_scoresEasyArray.insert(stoi(scoreItem.attribute("value").value()));
+        pugi::xml_node runner = doc.child("runner");
+        pugi::xml_node scoresEasy = runner.child("scoresEasy");
+        pugi::xml_node scoresHard = runner.child("scoresHard");
+
+        m_scoresEasyArray.clear();
+        m_scoresHardArray.clear();
+        for (pugi::xml_node scoreItem: scoresEasy.children("scoreItem"))
+        {
+            if (string(scoreItem.attribute("value").value()) != "0")
+                m_scoresEasyArray.insert(stoi(scoreItem.attribute("value").value()));
+        }
+        for (pugi::xml_node scoreItem: scoresHard.children("scoreItem"))
+        {
+            if (string(scoreItem.attribute("value").value()) != "0")
+                m_scoresHardArray.insert(stoi(scoreItem.attribute("value").value()));
+        }
     }
-    for (pugi::xml_node scoreItem: scoresHard.children("scoreItem"))
-    {
-        if (string(scoreItem.attribute("value").value()) != "0")
-            m_scoresHardArray.insert(stoi(scoreItem.attribute("value").value()));
-    }
+    else
+        Logger::printErrorOnConsole("Score fetching failure");
 }
 
 
 /**
  * Updates activated items array
  * @author Arthur
- * @date 14/05/16 - 24/10/16
+ * @date 14/05/16 - 23/01/18
  */
 void DataBase::fetchActivatedShopItems()
 {
     pugi::xml_document doc;
-    doc.load_file(CONFIG_FILE.c_str());
-
-    pugi::xml_node runner = doc.child("runner");
-    pugi::xml_node shop = runner.child("shop");
-
-    for (pugi::xml_node shopItem: shop.children("shopItem"))
+    if (XMLPersistenceHelper::loadFile(doc, CONFIG_FILE))
     {
-        if (string(shopItem.attribute("bought").value()) == "true")
-            m_activatedItemsArray.insert(shopItem.attribute("id").value());
+        pugi::xml_node runner = doc.child("runner");
+        pugi::xml_node shop = runner.child("shop");
+
+        for (pugi::xml_node shopItem: shop.children("shopItem"))
+        {
+            if (string(shopItem.attribute("bought").value()) == "true")
+                m_activatedItemsArray.insert(shopItem.attribute("id").value());
+        }
     }
+    else
+        Logger::printErrorOnConsole("Activated items fetching failure");
 }
 
 
 /**
  * Pushes Configuration data to file
  * @author Arthur
- * @date 02/05/16 - 24/01/17
+ * @date 02/05/16 - 23/01/18
  */
 void DataBase::pushConfigurationToFile() const
 {
     pugi::xml_document doc;
-    doc.load_file(CONFIG_FILE.c_str());
-
-    pugi::xml_node runner = doc.child("runner");
-    pugi::xml_node config = runner.child("config");
-    pugi::xml_node stats = runner.child("stats");
-    pugi::xml_node scoresEasy = runner.child("scoresEasy");
-    pugi::xml_node scoresHard = runner.child("scoresHard");
-
-    //Save config
-    for (pugi::xml_node configItem: config.children("configItem"))
+    if (XMLPersistenceHelper::loadFile(doc, CONFIG_FILE))
     {
-        if (string(configItem.attribute("name").value()) == "language")
-        {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
-            nodeValue.set_value(m_currentLanguage.c_str());
-        }
-        else if (string(configItem.attribute("name").value()) == "difficulty")
-        {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
-            nodeValue.set_value((to_string(m_currentDifficulty)).c_str());
-        }
-        else if (string(configItem.attribute("name").value()) == "ball_skin")
-        {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
-            nodeValue.set_value(m_currentBallSkin.c_str());
-        }
-        else if (string(configItem.attribute("name").value()) == "wallet")
-        {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
-            nodeValue.set_value((to_string(m_wallet)).c_str());
-        }
-        else if (string(configItem.attribute("name").value()) == "menu_music")
-        {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
-            nodeValue.set_value(m_isMenuMusicEnabled);
-        }
-        else if (string(configItem.attribute("name").value()) == "game_music")
-        {
-            pugi::xml_attribute nodeValue = configItem.attribute("value");
-            nodeValue.set_value(m_isGameMusicEnabled);
-        }
-    }
+        pugi::xml_node runner = doc.child("runner");
+        pugi::xml_node config = runner.child("config");
+        pugi::xml_node stats = runner.child("stats");
+        pugi::xml_node scoresEasy = runner.child("scoresEasy");
+        pugi::xml_node scoresHard = runner.child("scoresHard");
 
-    //Save stats
-    for (pugi::xml_node statItem: stats.children("statItem"))
-    {
-        if (string(statItem.attribute("name").value()) == "total_coins_collected")
+        //Save config
+        for (pugi::xml_node configItem: config.children("configItem"))
         {
-            pugi::xml_attribute nodeValue = statItem.attribute("value");
-            nodeValue.set_value((to_string(m_totalCoinsCollected)).c_str());
+            if (string(configItem.attribute("name").value()) == "language")
+            {
+                pugi::xml_attribute nodeValue = configItem.attribute("value");
+                nodeValue.set_value(m_currentLanguage.c_str());
+            }
+            else if (string(configItem.attribute("name").value()) == "difficulty")
+            {
+                pugi::xml_attribute nodeValue = configItem.attribute("value");
+                nodeValue.set_value((to_string(m_currentDifficulty)).c_str());
+            }
+            else if (string(configItem.attribute("name").value()) == "ball_skin")
+            {
+                pugi::xml_attribute nodeValue = configItem.attribute("value");
+                nodeValue.set_value(m_currentBallSkin.c_str());
+            }
+            else if (string(configItem.attribute("name").value()) == "wallet")
+            {
+                pugi::xml_attribute nodeValue = configItem.attribute("value");
+                nodeValue.set_value((to_string(m_wallet)).c_str());
+            }
+            else if (string(configItem.attribute("name").value()) == "menu_music")
+            {
+                pugi::xml_attribute nodeValue = configItem.attribute("value");
+                nodeValue.set_value(m_isMenuMusicEnabled);
+            }
+            else if (string(configItem.attribute("name").value()) == "game_music")
+            {
+                pugi::xml_attribute nodeValue = configItem.attribute("value");
+                nodeValue.set_value(m_isGameMusicEnabled);
+            }
         }
-        else if (string(statItem.attribute("name").value()) == "total_distance_travelled")
-        {
-            pugi::xml_attribute nodeValue = statItem.attribute("value");
-            nodeValue.set_value((to_string(m_totalDistance)).c_str());
-        }
-        else if (string(statItem.attribute("name").value()) == "total_enemies_destroyed")
-        {
-            pugi::xml_attribute nodeValue = statItem.attribute("value");
-            nodeValue.set_value((to_string(m_totalFlattenedEnemies)).c_str());
-        }
-        else if (string(statItem.attribute("name").value()) == "per_game_coins_collected")
-        {
-            pugi::xml_attribute nodeValue = statItem.attribute("value");
-            nodeValue.set_value((to_string(m_perGameCoinsCollected)).c_str());
-        }
-        else if (string(statItem.attribute("name").value()) == "per_game_distance_travelled")
-        {
-            pugi::xml_attribute nodeValue = statItem.attribute("value");
-            nodeValue.set_value((to_string(m_perGameDistance)).c_str());
-        }
-        else if (string(statItem.attribute("name").value()) == "per_game_enemies_destroyed")
-        {
-            pugi::xml_attribute nodeValue = statItem.attribute("value");
-            nodeValue.set_value((to_string(m_perGameFlattenedEnemies)).c_str());
-        }
-        else if (string(statItem.attribute("name").value()) == "total_games_played")
-        {
-            pugi::xml_attribute nodeValue = statItem.attribute("value");
-            nodeValue.set_value((to_string(m_totalGamesPlayed)).c_str());
-        }
-    }
 
-    //Save score
-    auto it = m_scoresEasyArray.begin();
-    for (pugi::xml_node scoreItem: scoresEasy.children("scoreItem"))
-    {
-        pugi::xml_attribute nodeValue = scoreItem.attribute("value");
-        if (it != m_scoresEasyArray.end())
+        //Save stats
+        for (pugi::xml_node statItem: stats.children("statItem"))
         {
-            nodeValue.set_value((to_string(*it)).c_str());
-            ++it;
+            if (string(statItem.attribute("name").value()) == "total_coins_collected")
+            {
+                pugi::xml_attribute nodeValue = statItem.attribute("value");
+                nodeValue.set_value((to_string(m_totalCoinsCollected)).c_str());
+            }
+            else if (string(statItem.attribute("name").value()) == "total_distance_travelled")
+            {
+                pugi::xml_attribute nodeValue = statItem.attribute("value");
+                nodeValue.set_value((to_string(m_totalDistance)).c_str());
+            }
+            else if (string(statItem.attribute("name").value()) == "total_enemies_destroyed")
+            {
+                pugi::xml_attribute nodeValue = statItem.attribute("value");
+                nodeValue.set_value((to_string(m_totalFlattenedEnemies)).c_str());
+            }
+            else if (string(statItem.attribute("name").value()) == "per_game_coins_collected")
+            {
+                pugi::xml_attribute nodeValue = statItem.attribute("value");
+                nodeValue.set_value((to_string(m_perGameCoinsCollected)).c_str());
+            }
+            else if (string(statItem.attribute("name").value()) == "per_game_distance_travelled")
+            {
+                pugi::xml_attribute nodeValue = statItem.attribute("value");
+                nodeValue.set_value((to_string(m_perGameDistance)).c_str());
+            }
+            else if (string(statItem.attribute("name").value()) == "per_game_enemies_destroyed")
+            {
+                pugi::xml_attribute nodeValue = statItem.attribute("value");
+                nodeValue.set_value((to_string(m_perGameFlattenedEnemies)).c_str());
+            }
+            else if (string(statItem.attribute("name").value()) == "total_games_played")
+            {
+                pugi::xml_attribute nodeValue = statItem.attribute("value");
+                nodeValue.set_value((to_string(m_totalGamesPlayed)).c_str());
+            }
         }
-        else
-            nodeValue.set_value("0");
-    }
 
-    it = m_scoresHardArray.begin();
-    for (pugi::xml_node scoreItem: scoresHard.children("scoreItem"))
-    {
-        pugi::xml_attribute nodeValue = scoreItem.attribute("value");
-        if (it != m_scoresHardArray.end())
+        //Save score
+        auto it = m_scoresEasyArray.begin();
+        for (pugi::xml_node scoreItem: scoresEasy.children("scoreItem"))
         {
-            nodeValue.set_value((to_string(*it)).c_str());
-            ++it;
+            pugi::xml_attribute nodeValue = scoreItem.attribute("value");
+            if (it != m_scoresEasyArray.end())
+            {
+                nodeValue.set_value((to_string(*it)).c_str());
+                ++it;
+            }
+            else
+                nodeValue.set_value("0");
         }
-        else
-            nodeValue.set_value("0");
-    }
 
-    doc.save_file(CONFIG_FILE.c_str());
+        it = m_scoresHardArray.begin();
+        for (pugi::xml_node scoreItem: scoresHard.children("scoreItem"))
+        {
+            pugi::xml_attribute nodeValue = scoreItem.attribute("value");
+            if (it != m_scoresHardArray.end())
+            {
+                nodeValue.set_value((to_string(*it)).c_str());
+                ++it;
+            }
+            else
+                nodeValue.set_value("0");
+        }
+
+        doc.save_file(CONFIG_FILE.c_str());
+    }
+    else
+        Logger::printErrorOnConsole("Configuration pushing failure");
 }
 
 
@@ -456,7 +475,10 @@ void DataBase::saveCurrentGame()
         m_perGameDistance = (int)m_currentDistance;
     if (m_currentFlattenedEnemies > m_perGameFlattenedEnemies)
         m_perGameFlattenedEnemies = m_currentFlattenedEnemies;
+
+    Logger::printInfoOnConsole("Current game saved");
 }
+
 
 /**
  * Adds a new score to the corresponding score array
@@ -472,12 +494,16 @@ void DataBase::addNewScore(int score)
         m_scoresEasyArray.insert(score);
         while (m_scoresEasyArray.size() > MAX_SCORES)
             m_scoresEasyArray.erase(m_scoresEasyArray.begin());
+
+        Logger::printInfoOnConsole("New score saved in EASY leaderboard");
     }
     else
     {
         m_scoresHardArray.insert(score);
         while (m_scoresHardArray.size() > MAX_SCORES)
             m_scoresHardArray.erase(m_scoresHardArray.begin());
+
+        Logger::printInfoOnConsole("New score saved in HARD leaderboard");
     }
 }
 
@@ -497,6 +523,7 @@ void DataBase::launchNewGame()
     m_currentScore = 0;
 }
 
+
 /**
  * Clears leaderboard composed of two score arrays
  * @author Arthur
@@ -506,7 +533,13 @@ void DataBase::clearLeaderboard()
 {
     m_scoresEasyArray.clear();
     m_scoresHardArray.clear();
+
+    if (m_scoresEasyArray.empty() && m_scoresHardArray.empty())
+        Logger::printInfoOnConsole("Successfully cleaned leaderboard");
+    else
+        Logger::printWarningOnConsole("Cleaning leaderboard operation failure");
 }
+
 
 /**
  * Clears app's all data
@@ -518,6 +551,8 @@ void DataBase::clearAppData()
     createConfigFile();
     fetchConfigurationFromFile();
     m_activatedItemsArray.clear();
+
+    Logger::printInfoOnConsole("App data was successfully cleared");
 }
 
 
@@ -529,7 +564,8 @@ void DataBase::clearAppData()
  * @param item the item to find
  * @return true if found
  */
-bool DataBase::findActivatedItem(const string &item) {
+bool DataBase::findActivatedItem(const string &item)
+{
     return m_activatedItemsArray.empty()
            ? false
            : m_activatedItemsArray.find(item) != m_activatedItemsArray.end();
@@ -537,64 +573,57 @@ bool DataBase::findActivatedItem(const string &item) {
 
 
 /**
- * Gets translated string
- * from a language file with given identifier
- * @author Arthur
- * @date 04/01/17
+ * Retrieves a localized string for a given label
  *
- * @param description to fetch corresponding content
- * @return text string
+ * @param label the label to describe the string
+ * @return the localized string
+ *
+ * @author Arthur
+ * @date 04/01/17 - 24/01/18
  */
-string DataBase::loadTextFromIdentifier(const string &description) const
+string DataBase::loadLocalizedString(const string &label) const
 {
-    pugi::xml_document doc;
-    doc.load_file(getLanguageFile().c_str());
-
-    pugi::xml_node resources = doc.child("resources");
-
-    for (pugi::xml_node item: resources.children("string"))
-    {
-        if (string(item.attribute("name").value()) == description)
-        {
-            return item.attribute("value").value();
-        }
-    }
-    return "unknown";
+    string currentLocaleFile = getLanguageFile();
+    return XMLPersistenceHelper::loadLabeledString(currentLocaleFile, label);
 }
+
 
 /**
  * Fills a string with the scores of a given difficulty,
  * extracted from a string array
- * @author Arthur
- * @date 23/10/16 - 31/10/17
  *
  * @param difficulty for the difficulty related scores
  * @return a string containing scores of a given difficulty
+ *
+ * @author Arthur
+ * @date 23/10/16 - 24/01/18
  */
 string DataBase::loadLeaderboardScores(Difficulty difficulty) const
 {
-    int scoreRank = 1;
     string result;
+    std::set<int> scoresArray;
 
     if (difficulty == EASY && !isScoreEasyArrayEmpty())
     {
-        result = loadTextFromIdentifier("config_easy_mode") + " :\n";
-        //add each case content in string
-        for (auto it = m_scoresEasyArray.rbegin(); it!=m_scoresEasyArray.rend(); ++it)
-        {
-            result += "\n" + to_string(scoreRank) + (scoreRank != 10 ? ".   " : ". ") + to_string(*it);
-            scoreRank++;
-        }
+        result = loadLocalizedString("config_easy_mode") + " :\n";
+        scoresArray = m_scoresEasyArray;
     }
     else if (difficulty == HARD && !isScoreHardArrayEmpty())
     {
-        result = loadTextFromIdentifier("config_hard_mode") + " :\n";
-        for (auto it = m_scoresHardArray.rbegin(); it!=m_scoresHardArray.rend(); ++it)
+        result = loadLocalizedString("config_hard_mode") + " :\n";
+        scoresArray = m_scoresHardArray;
+    }
+
+    if (!scoresArray.empty())
+    {
+        int scoreRank = 1;
+        for (auto it = scoresArray.rbegin(); it!=scoresArray.rend(); ++it)
         {
             result += "\n" + to_string(scoreRank) + (scoreRank != 10 ? ".   " : ". ") + to_string(*it);
             scoreRank++;
         }
     }
+
     return result;
 }
 

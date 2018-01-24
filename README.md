@@ -75,14 +75,17 @@ Use `update-alternatives` to change default g++ priority if needed.
 - **Ubuntu 16.04 LTS - Xenial**
 	- **Kernel**: x86_64 Linux 4.4.0-43-Microsoft
 	- **Compiler**: g++-4.9
-	- **Environment**: local (Windows Linux Subsystem)
+	- **Environment**: local (Windows Subsystem for Linux)
 	
 - **Ubuntu 14.04 LTS - Trusty**
 	- **Kernel**: ??
 	- **Compiler**: gcc-4.9 and clang-3.6
 	- **Environment**: Virtual machine on GCE (Travis CI)
 
-	
+Note: For WSL, only compilation works, running the app with an x-server 
+currently causes crashes due to a mutex lock state
+
+
 ### Licences ###
 
 Our project is mainly licensed under Apache License Version 2.0 but some elements have other licences.<br>

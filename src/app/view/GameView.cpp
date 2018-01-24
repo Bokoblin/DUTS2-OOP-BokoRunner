@@ -210,7 +210,7 @@ void GameView::loadImages()
                                     GAME_BUTTONS_IMAGE, clipRect_resume);
     m_resumeGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_resumeGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_resumeGameButton->retrieveAndSyncLabel(*m_game->getDataBase());
+    m_resumeGameButton->retrieveAndSyncLabel(m_game->getDataBase()->getLanguageFile());
 
     vector<sf::IntRect> clipRect_restart;
     clipRect_restart.emplace_back(0, 50, 50, 50);
@@ -219,7 +219,7 @@ void GameView::loadImages()
                                      GAME_BUTTONS_IMAGE, clipRect_restart);
     m_restartGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_restartGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_restartGameButton->retrieveAndSyncLabel(*m_game->getDataBase());
+    m_restartGameButton->retrieveAndSyncLabel(m_game->getDataBase()->getLanguageFile());
 
 
     vector<sf::IntRect> clipRect_home;
@@ -229,7 +229,7 @@ void GameView::loadImages()
                                   GAME_BUTTONS_IMAGE, clipRect_home);
     m_goToHomeButton->resize(PAUSE_BUTTONS_SIZE);
     m_goToHomeButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_goToHomeButton->retrieveAndSyncLabel(*m_game->getDataBase());
+    m_goToHomeButton->retrieveAndSyncLabel(m_game->getDataBase()->getLanguageFile());
 
     vector<sf::IntRect> clipRect_music;
     clipRect_music.emplace_back(0, 200, 50, 50);
@@ -238,14 +238,14 @@ void GameView::loadImages()
                                       GAME_BUTTONS_IMAGE, clipRect_music);
     m_controlMusicButton->resize(PAUSE_BUTTONS_SIZE);
     m_controlMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_controlMusicButton->retrieveAndSyncLabel(*m_game->getDataBase());
+    m_controlMusicButton->retrieveAndSyncLabel(m_game->getDataBase()->getLanguageFile());
 
     vector<sf::IntRect> clipRect_save;
     clipRect_save.emplace_back(RAISED_BUTTON_DEFAULT);
     clipRect_save.emplace_back(RAISED_BUTTON_PRESSED);
     m_saveScoreButton = new mdsf::Button(m_width / 2 - 75, 350, 150, 36, "end_save_button",
                                    RECT_BUTTONS_IMAGE, clipRect_save);
-    m_saveScoreButton->retrieveAndSyncLabel(*m_game->getDataBase());
+    m_saveScoreButton->retrieveAndSyncLabel(m_game->getDataBase()->getLanguageFile());
     m_saveScoreButton->setColor(mdsf::Color::MaterialGreenA700);
 
 

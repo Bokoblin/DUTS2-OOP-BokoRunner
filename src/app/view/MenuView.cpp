@@ -94,14 +94,14 @@ void MenuView::loadImages()
     clipRectPlay.emplace_back(151, 0, 150, 80);
     m_playRectButton = new mdsf::Button(m_width/2-75, (float) (m_height / 1.5), 150, 80, "menu_play_button",
                                   RECT_BUTTONS_IMAGE, clipRectPlay);
-    m_playRectButton->retrieveAndSyncLabel(*m_menu->getDataBase());
+    m_playRectButton->retrieveAndSyncLabel(m_menu->getDataBase()->getLanguageFile());
 
     vector<sf::IntRect> clipRectQuit;
     clipRectQuit.emplace_back(0, 0, 150, 80);
     clipRectQuit.emplace_back(151, 0, 150, 80);
     m_quitRectButton = new mdsf::Button(m_width/2-75, (float) (m_height / 1.2), 150, 80, "menu_quit_button",
                                   RECT_BUTTONS_IMAGE, clipRectQuit);
-    m_quitRectButton->retrieveAndSyncLabel(*m_menu->getDataBase());
+    m_quitRectButton->retrieveAndSyncLabel(m_menu->getDataBase()->getLanguageFile());
 
 
     //=== Initialize COMMANDS, SETTINGS, LEADERBOARD and SHOP form buttons
@@ -348,8 +348,8 @@ bool MenuView::handleEvents(sf::Event event)
                 )
         {
             m_menu->setMenuState(HOME);
-            m_playRectButton->retrieveAndSyncLabel(*m_menu->getDataBase());
-            m_quitRectButton->retrieveAndSyncLabel(*m_menu->getDataBase());
+            m_playRectButton->retrieveAndSyncLabel(m_menu->getDataBase()->getLanguageFile());
+            m_quitRectButton->retrieveAndSyncLabel(m_menu->getDataBase()->getLanguageFile());
         }
     }
     return true;

@@ -20,11 +20,11 @@ limitations under the License.
 #include <set>
 #include <fstream>
 #include <regex>
-#include "../../../ext-libs/pugixml-1.8/src/pugixml.hpp"
 #include "../../libs/Logger/Logger.h"
 #include "../utils/constants.h"
 #include "../enum/AppState.h"
 #include "../enum/Difficulty.h"
+#include "../../libs/XMLPersistenceHelper/XMLPersistenceHelper.h"
 
 /**
  * The DataBase class concentrates
@@ -90,7 +90,7 @@ public:
     void clearLeaderboard();
     void clearAppData();
     bool findActivatedItem(const std::string &item);
-    std::string loadTextFromIdentifier(const std::string &description) const;
+    std::string loadLocalizedString(const std::string &label) const;
     std::string loadLeaderboardScores(Difficulty difficulty) const;
     bool isScoreEasyArrayEmpty() const;
     bool isScoreHardArrayEmpty() const;

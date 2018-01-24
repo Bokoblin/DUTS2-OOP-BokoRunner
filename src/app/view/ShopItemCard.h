@@ -44,7 +44,7 @@ public:
     ShopItem *getItem() const;
 
     void sync() override;
-    void syncWithButtonLabelRetrieval(const DataBase &dataBase);
+    void syncWithButtonLabelRetrieval(const std::string &stringsFilename);
     void draw(sf::RenderWindow *window) const override;
 
 private:

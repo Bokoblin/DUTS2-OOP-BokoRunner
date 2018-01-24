@@ -103,16 +103,16 @@ void ShopItemCard::sync()
 /**
  * Syncs the card and retrieve content of buttons label
  *
- * @param dataBase the database for retrieval
+ * @param stringsFilename the file containing the string to look for
  *
  * @author Arthur
- * @date 16/05/16 - 04/01/18
+ * @date 16/05/16 - 23/01/18
  */
-void ShopItemCard::syncWithButtonLabelRetrieval(const DataBase &dataBase)
+void ShopItemCard::syncWithButtonLabelRetrieval(const string &stringsFilename)
 {
     sync();
     m_buyButton->setLabelDescription(m_item->isBought() ? "shop_bought" : "shop_purchasable");
-    m_buyButton->retrieveAndSyncLabel(dataBase);
+    m_buyButton->retrieveAndSyncLabel(stringsFilename);
 }
 
 

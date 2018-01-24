@@ -17,9 +17,9 @@ limitations under the License.
 #define MDC_SFML_BUTTON_H
 
 #include "LabelPosition.h"
-#include "../../../app/model/DataBase.h" //FIXME : delete
 #include "Sprite.h"
 #include "Text.h"
+#include "../../XMLPersistenceHelper/XMLPersistenceHelper.h"
 
 namespace Bokoblin
 {
@@ -67,9 +67,9 @@ public:
 
     //=== METHODS
     void sync() override;
-    virtual void retrieveLabel(const DataBase &dataBase);
+    virtual void retrieveLabel(const std::string &stringsFilename); //Or should we only allow setting label
     virtual void syncLabelPosition();
-    virtual void retrieveAndSyncLabel(const DataBase &dataBase);
+    virtual void retrieveAndSyncLabel(const std::string &stringsFilename);
     void draw(sf::RenderWindow *window) const override;
     bool contains(float x, float y) const override;
 

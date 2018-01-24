@@ -45,42 +45,42 @@ public:
             if (dialog->getContext() == "shopAskDialog")
             {
                 ShopDialog *shopDialog = dynamic_cast<ShopDialog*>(dialog);
-                utf8_titleString = dataBase.loadTextFromIdentifier("shop_dialog_title");
-                utf8_contentString = dataBase.loadTextFromIdentifier("shop_dialog_content");
+                utf8_titleString = dataBase.loadLocalizedString("shop_dialog_title");
+                utf8_contentString = dataBase.loadLocalizedString("shop_dialog_content");
                 utf8_contentString.replace(utf8_contentString.find("$NAME"), 5,
                                            shopDialog->getLinkedShopItem()->getName());
                 utf8_contentString.replace(utf8_contentString.find("$PRICE"), 6,
                                            std::to_string(shopDialog->getLinkedShopItem()->getPrice()));
-                utf8_cancelString = dataBase.loadTextFromIdentifier("dialog_cancel");
-                utf8_okString = dataBase.loadTextFromIdentifier("dialog_ok");
+                utf8_cancelString = dataBase.loadLocalizedString("dialog_cancel");
+                utf8_okString = dataBase.loadLocalizedString("dialog_ok");
             }
             else if (dialog->getContext() == "shopSuccess")
             {
                 utf8_titleString = "";
-                utf8_contentString = dataBase.loadTextFromIdentifier("shop_dialog_success");
+                utf8_contentString = dataBase.loadLocalizedString("shop_dialog_success");
                 utf8_cancelString = "";
-                utf8_okString = dataBase.loadTextFromIdentifier("dialog_ok");
+                utf8_okString = dataBase.loadLocalizedString("dialog_ok");
             }
             else if (dialog->getContext() == "shopFailure")
             {
                 utf8_titleString = "";
-                utf8_contentString = dataBase.loadTextFromIdentifier("shop_dialog_failure");
+                utf8_contentString = dataBase.loadLocalizedString("shop_dialog_failure");
                 utf8_cancelString = "";
-                utf8_okString = dataBase.loadTextFromIdentifier("dialog_ok");
+                utf8_okString = dataBase.loadLocalizedString("dialog_ok");
             }
             else if (dialog->getContext() == "confirm_data_delete")
             {
-                utf8_titleString = dataBase.loadTextFromIdentifier("confirm_data_delete_dialog_title");
-                utf8_contentString = dataBase.loadTextFromIdentifier("confirm_data_delete_dialog_content");
-                utf8_cancelString = dataBase.loadTextFromIdentifier("dialog_cancel");
-                utf8_okString = dataBase.loadTextFromIdentifier("dialog_ok");
+                utf8_titleString = dataBase.loadLocalizedString("confirm_data_delete_dialog_title");
+                utf8_contentString = dataBase.loadLocalizedString("confirm_data_delete_dialog_content");
+                utf8_cancelString = dataBase.loadLocalizedString("dialog_cancel");
+                utf8_okString = dataBase.loadLocalizedString("dialog_ok");
             }
             else if (dialog->getContext() == "confirm_leaderboard_delete")
             {
-                utf8_titleString = dataBase.loadTextFromIdentifier("confirm_leaderboard_delete_dialog_title");
-                utf8_contentString = dataBase.loadTextFromIdentifier("confirm_leaderboard_delete_dialog_content");
-                utf8_cancelString = dataBase.loadTextFromIdentifier("dialog_cancel");
-                utf8_okString = dataBase.loadTextFromIdentifier("dialog_ok");
+                utf8_titleString = dataBase.loadLocalizedString("confirm_leaderboard_delete_dialog_title");
+                utf8_contentString = dataBase.loadLocalizedString("confirm_leaderboard_delete_dialog_content");
+                utf8_cancelString = dataBase.loadLocalizedString("dialog_cancel");
+                utf8_okString = dataBase.loadLocalizedString("dialog_ok");
             }
             else
             {

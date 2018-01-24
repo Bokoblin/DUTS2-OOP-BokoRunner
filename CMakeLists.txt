@@ -25,13 +25,20 @@ file(GLOB MDC-SFML_LIB
         "src/libs/MDC-SFML/src/*.cpp"
         )
 
+
+set(XML_PERSISTENCE_LIB
+        src/libs/XMLPersistenceHelper/XMLPersistenceHelper.h
+        src/libs/XMLPersistenceHelper/XMLPersistenceHelper.cpp
+        )
+
+
 file(GLOB_RECURSE SOURCE_FILES
         "src/app/*.h"
         "src/app/*.cpp"
         )
 
 
-add_executable(${EXECUTABLE_NAME} ${PUGI_LIB} ${LOGGER_LIB} ${MDC-SFML_LIB} ${SOURCE_FILES})
+add_executable(${EXECUTABLE_NAME} ${PUGI_LIB} ${LOGGER_LIB} ${XML_PERSISTENCE_LIB} ${MDC-SFML_LIB} ${SOURCE_FILES})
 
 FIND_PACKAGE(SFML 2.4 COMPONENTS audio graphics window system REQUIRED)
 

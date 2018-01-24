@@ -174,7 +174,7 @@ void AppTextManager::updateWholeStandaloneTextContent()
         t->setCharacterSize(DEFAULT_CHAR_SIZE);
         t->setFont(m_condensedFont);
         t->setFillColor(sf::Color::White);
-        std::string utf8_string = m_dataBase->loadTextFromIdentifier(t->getDescription());
+        std::string utf8_string = m_dataBase->loadLocalizedString(t->getDescription());
         t->setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
     }
 }

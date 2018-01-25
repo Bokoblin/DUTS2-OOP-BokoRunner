@@ -17,8 +17,8 @@ limitations under the License.
 #define COMMANDS_VIEW_H
 
 #include "AbstractView.h"
-#include "../model/CommandsModel.h"
-#include "../utils/definitions.h"
+#include "app/model/CommandsModel.h"
+#include "app/utils/definitions.h"
 
 /**
  * The CommandsView class inherits AbstractView.

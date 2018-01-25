@@ -153,9 +153,9 @@ void AppTextManager::handleAboutLinks(sf::Event event, const SettingsModel &sett
         m_aboutEmailLink->setFillColor(sf::Color::White);
 
         if (m_aboutRepositoryLink->contains(MOUSE_POSITION))
-            settings.openURLinBrowser(REPOSITORY);
+            settings.openURLinBrowser(REPOSITORY_URL);
         if (m_aboutEmailLink->contains(MOUSE_POSITION))
-            settings.openURLinBrowser(EMAIL);
+            settings.openURLinBrowser(EMAIL_URL);
     }
 }
 

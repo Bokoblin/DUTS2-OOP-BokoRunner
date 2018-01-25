@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef ANIMATED_GRAPHIC_ELEMENT_H
 #define ANIMATED_GRAPHIC_ELEMENT_H
 
-#include "../../libs/MDC-SFML/src/Sprite.h"
+#include "libs/MDC-SFML/src/Sprite.h"
 #include <chrono>
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;

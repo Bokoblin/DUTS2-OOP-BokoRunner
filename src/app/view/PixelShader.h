@@ -57,7 +57,8 @@ External libraries used by SFML
 #ifndef PIXEL_SHADER_H
 #define PIXEL_SHADER_H
 
-#include "../../libs/MDC-SFML/src/Sprite.h"
+#include <SFML/Graphics/Shader.hpp>
+#include "libs/MDC-SFML/src/Sprite.h"
 
 
 /**

@@ -20,7 +20,7 @@ limitations under the License.
  * TODO : remove a lot
  * Provides pre-processor definitions to view classes
  * @author Arthur
- * @date 16/04/17 - 05/01/18
+ * @date 16/04/17 - 25/01/18
  */
 
 //=== SFML DEFINITIONS
@@ -35,12 +35,6 @@ limitations under the License.
 #define KEYBOARD_JUMP  (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) \
                        || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 
-#define RAISED_BUTTON_DEFAULT 0, 101, 150, 36
-#define RAISED_BUTTON_PRESSED 151, 101, 150, 36
-
-//=== URL DEFINITIONS
-#define REPOSITORY "https://github.com/Bokoblin/DUTS2-POO-ProjetRunner"
-#define EMAIL "mailto:pro.jolivetarthur@gmail.com"
 
 //=== OTHER DEFINITIONS
 #define TITLE_TEXT_X (m_height/12)
@@ -48,5 +42,7 @@ limitations under the License.
 #define RADIO_DIAMETER 25
 #define INDICATOR_DIAMETER 22
 #define PAUSE_BUTTONS_SIZE 25, 25
+#define RAISED_BUTTON_DEFAULT 0, 101, 150, 36
+#define RAISED_BUTTON_PRESSED 151, 101, 150, 36
 
 #endif

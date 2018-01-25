@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@ limitations under the License.
 #define PLAYER_H
 
 #include "MovableElement.h"
-#include "../enum/MovingDirection.h"
-#include "../enum/PlayerState.h"
-#include "../utils/constants.h"
+#include "app/enum/MovingDirection.h"
+#include "app/enum/PlayerState.h"
+#include "app/utils/constants.h"
 #include <cmath>
 #include <utility>
 

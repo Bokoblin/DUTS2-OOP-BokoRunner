@@ -16,8 +16,8 @@ limitations under the License.
 #ifndef MDC_SFML_CONFIG_H
 #define MDC_SFML_CONFIG_H
 
-#include "../../Logger/Logger.h"
 #include <string>
+#include "libs/Logger/Logger.h"
 
 namespace Bokoblin
 {

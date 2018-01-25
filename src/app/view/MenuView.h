@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@ limitations under the License.
 #ifndef MENU_VIEW_H
 #define MENU_VIEW_H
 
-#include "../model/MenuModel.h"
-#include "AbstractView.h"
-#include "CommandsView.h"
-#include "LeaderboardView.h"
-#include "SettingsView.h"
-#include "ShopView.h"
+#include "app/model/MenuModel.h"
+#include "app/view/AbstractView.h"
+#include "app/view/CommandsView.h"
+#include "app/view/LeaderboardView.h"
+#include "app/view/SettingsView.h"
+#include "app/view/ShopView.h"
 
 /**
  * MenuView Class

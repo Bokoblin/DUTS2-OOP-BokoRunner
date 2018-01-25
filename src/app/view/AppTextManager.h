@@ -17,11 +17,11 @@ limitations under the License.
 #define TEXT_HANDLER_H
 
 #include <SFML/Window/Event.hpp>
-#include "../model/DataBase.h"
-#include "../../libs/MDC-SFML/src/Text.h"
-#include "../model/SettingsModel.h"
-#include "../utils/definitions.h"
-#include "../utils/AppColor.h"
+#include "app/model/DataBase.h"
+#include "libs/MDC-SFML/src/Text.h"
+#include "app/model/SettingsModel.h"
+#include "app/utils/definitions.h"
+#include "app/utils/AppColor.h"
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 

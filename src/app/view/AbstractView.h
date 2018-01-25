@@ -16,10 +16,11 @@ limitations under the License.
 #ifndef ABSTRACT_VIEW_H
 #define ABSTRACT_VIEW_H
 
-#include <SFML/Audio.hpp>
-#include "../../libs/MDC-SFML/src/Color.h"
-#include "../../libs/MDC-SFML/src/Button.h"
-#include "../utils/AppColor.h"
+#include <SFML/Audio/Music.hpp>
+#include <SFML/System/Sleep.hpp>
+#include "libs/MDC-SFML/src/Color.h"
+#include "libs/MDC-SFML/src/Button.h"
+#include "app/utils/AppColor.h"
 #include "AppTextManager.h"
 #include "ScrollingBackground.h"
 #include "AnimatedSprite.h"

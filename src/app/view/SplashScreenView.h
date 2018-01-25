@@ -16,9 +16,9 @@ limitations under the License.
 #ifndef SPLASH_SCREEN_VIEW_H
 #define SPLASH_SCREEN_VIEW_H
 
-#include "AbstractView.h"
-#include "../model/SplashScreenModel.h"
-#include "../utils/definitions.h"
+#include "app/model/SplashScreenModel.h"
+#include "app/utils/definitions.h"
+#include "app/view/AbstractView.h"
 
 /**
  * The SplashScreenView class displays

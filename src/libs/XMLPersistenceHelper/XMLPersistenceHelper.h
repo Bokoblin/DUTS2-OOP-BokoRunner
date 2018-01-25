@@ -18,8 +18,8 @@ limitations under the License.
 
 #include <iostream>
 #include <fstream>
-#include "../../../ext-libs/pugixml-1.8/src/pugixml.hpp"
-#include "../Logger/Logger.h"
+#include "PUGIXML/pugixml.hpp"
+#include "libs/Logger/Logger.h"
 
 /**
  * The XMLPersistenceHelper class provides high-level methods
@@ -31,7 +31,6 @@ limitations under the License.
 class XMLPersistenceHelper
 {
 public:
-
     //=== METHODS
     static void createXMLFile(const std::string &filename, const std::string &content);
     static bool checkFileIntegrity(const std::string &filename);

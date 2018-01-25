@@ -74,7 +74,8 @@ void SettingsModel::checkItemsAvailability()
  * @author Arthur
  * @date 02/11/17
  */
-void SettingsModel::openURLinBrowser(const string &url) const {
+void SettingsModel::openURLinBrowser(const string &url) const
+{
 #if defined __linux__
     string command = "x-www-browser " + url;
     system(command.c_str());

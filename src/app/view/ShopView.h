@@ -16,12 +16,12 @@ limitations under the License.
 #ifndef SHOP_VIEW_H
 #define SHOP_VIEW_H
 
-#include "AbstractView.h"
-#include "../model/ShopModel.h"
-#include "ShopItemCard.h"
-#include "ShopDialog.h"
-#include "../utils/DialogBuilder.h"
-#include "../../libs/MDC-SFML/src/RadioButton.h"
+#include "libs/MDC-SFML/src/RadioButton.h"
+#include "app/model/ShopModel.h"
+#include "app/utils/DialogBuilder.h"
+#include "app/view/AbstractView.h"
+#include "app/view/ShopItemCard.h"
+#include "app/view/ShopDialog.h"
 
 /**
  * The ShopView class inherits AbstractView.

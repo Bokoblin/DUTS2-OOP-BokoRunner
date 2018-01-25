@@ -10,9 +10,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SFML_ROOT "${PROJECT_SOURCE_DIR}/ext-libs/SFML-2.4.2")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
 
-set(PUGI_LIB
-        ext-libs/pugixml-1.8/src/pugixml.hpp
-        ext-libs/pugixml-1.8/src/pugixml.cpp
+set(PUGIXML_ROOT "${PROJECT_SOURCE_DIR}/ext-libs/pugixml-1.8/src")
+set(PUGIXML_LIB
+        ${PUGIXML_ROOT}/PUGIXML/pugixml.hpp
+        ${PUGIXML_ROOT}/PUGIXML/pugixml.cpp
         )
 
 set(LOGGER_LIB
@@ -37,10 +38,20 @@ file(GLOB_RECURSE SOURCE_FILES
         "src/app/*.cpp"
         )
 
+add_library(PUGIXML ${PUGIXML_LIB})
 
-add_executable(${EXECUTABLE_NAME} ${PUGI_LIB} ${LOGGER_LIB} ${XML_PERSISTENCE_LIB} ${MDC-SFML_LIB} ${SOURCE_FILES})
+add_executable(
+        ${EXECUTABLE_NAME}
+        ${PUGIXML_LIB}
+        ${LOGGER_LIB}
+        ${XML_PERSISTENCE_LIB}
+        ${MDC-SFML_LIB}
+        ${SOURCE_FILES}
+)
 
 FIND_PACKAGE(SFML 2.4 COMPONENTS audio graphics window system REQUIRED)
 
+include_directories(${PUGIXML_ROOT})
 include_directories(${SFML_INCLUDE_DIR})
+include_directories(${PROJECT_SOURCE_DIR}/src)
 target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES})

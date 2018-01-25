@@ -16,11 +16,11 @@ limitations under the License.
 #ifndef SHOP_ITEM_CARD_H
 #define SHOP_ITEM_CARD_H
 
-#include "../../libs/MDC-SFML/src/Button.h"
-#include "../../libs/MDC-SFML/src/Color.h"
-#include "../model/ShopItem.h"
-#include "AppTextManager.h"
-#include "../utils/definitions.h"
+#include "libs/MDC-SFML/src/Button.h"
+#include "libs/MDC-SFML/src/Color.h"
+#include "app/model/ShopItem.h"
+#include "app/utils/definitions.h"
+#include "app/view/AppTextManager.h"
 
 /**
  * The ShopItemCard class inherits mdsf::Sprite.

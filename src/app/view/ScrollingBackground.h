@@ -16,8 +16,8 @@ limitations under the License.
 #ifndef SLIDING_BACKGROUND_H
 #define SLIDING_BACKGROUND_H
 
-#include "../utils/constants.h"
-#include "../../libs/MDC-SFML/src/Sprite.h"
+#include "libs/MDC-SFML/src/Sprite.h"
+#include "app/utils/constants.h"
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 

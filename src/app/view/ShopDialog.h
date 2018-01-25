@@ -16,8 +16,8 @@ limitations under the License.
 #ifndef SHOP_DIALOG_H
 #define SHOP_DIALOG_H
 
-#include "../../libs/MDC-SFML/src/Dialog.h"
-#include "../model/ShopItem.h"
+#include "libs/MDC-SFML/src/Dialog.h"
+#include "app/model/ShopItem.h"
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 

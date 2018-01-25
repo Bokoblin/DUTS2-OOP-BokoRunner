@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@ limitations under the License.
 #ifndef GAME_VIEW_H
 #define GAME_VIEW_H
 
-#include "PixelShader.h"
-#include "AbstractView.h"
-#include "../model/GameModel.h"
-#include "../utils/definitions.h"
+#include "app/model/GameModel.h"
+#include "app/utils/definitions.h"
+#include "app/view/AbstractView.h"
+#include "app/view/PixelShader.h"
 
 /**
  * GameView Class

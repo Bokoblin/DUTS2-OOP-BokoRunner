@@ -216,7 +216,6 @@ void GameModel::chooseTimeSpacing(int elementType)
  *
  * @param x element x-position
  * @param y element y-position
- *
  * @return a boolean indicating if parameterized position is free
  */
 bool GameModel::checkIfPositionFree(float x, float y) const
@@ -437,7 +436,8 @@ void GameModel::handleCoinCollision() const
  * @author Arthur, Florian
  * @date 25/02/16 - 27/12/17
  */
-void GameModel::handleBonusCollision(MovableElementType bonusType) {
+void GameModel::handleBonusCollision(MovableElementType bonusType)
+{
     if (bonusType == PV_PLUS_BONUS)
     {
         m_player->setLife(m_player->getLife() + PV_BONUS_INCREASE);

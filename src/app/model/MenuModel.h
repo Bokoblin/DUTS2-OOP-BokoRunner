@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@ limitations under the License.
 #ifndef MENU_MODEL_H
 #define MENU_MODEL_H
 
-#include "CommandsModel.h"
-#include "LeaderboardModel.h"
-#include "SettingsModel.h"
-#include "ShopModel.h"
-#include "../enum/MenuState.h"
 #include <chrono>
+#include "app/enum/MenuState.h"
+#include "app/model/CommandsModel.h"
+#include "app/model/LeaderboardModel.h"
+#include "app/model/SettingsModel.h"
+#include "app/model/ShopModel.h"
 
 /**
  * The MenuModel class inherits AbstractModel.

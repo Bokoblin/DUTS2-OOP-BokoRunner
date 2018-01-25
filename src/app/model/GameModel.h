@@ -1,4 +1,4 @@
-﻿/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+﻿/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,14 +16,14 @@ limitations under the License.
 #ifndef GAME_MODEL_H
 #define GAME_MODEL_H
 
-#include "AbstractModel.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "Coin.h"
-#include "Bonus.h"
-#include "../enum/GameState.h"
-#include "../enum/Zone.h"
 #include <chrono>
+#include "app/enum/GameState.h"
+#include "app/enum/Zone.h"
+#include "app/model/AbstractModel.h"
+#include "app/model/Bonus.h"
+#include "app/model/Coin.h"
+#include "app/model/Enemy.h"
+#include "app/model/Player.h"
 
 /**
  * The GameModel class handles the game's logic

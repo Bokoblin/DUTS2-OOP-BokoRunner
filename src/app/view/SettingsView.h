@@ -16,11 +16,11 @@ limitations under the License.
 #ifndef SETTINGS_VIEW_H
 #define SETTINGS_VIEW_H
 
-#include "AbstractView.h"
-#include "../utils/DialogBuilder.h"
-#include "../model/SettingsModel.h"
-#include "../../libs/MDC-SFML/src/RadioButton.h"
-#include "../../libs/MDC-SFML/src/Dialog.h"
+#include "libs/MDC-SFML/src/Dialog.h"
+#include "libs/MDC-SFML/src/RadioButton.h"
+#include "app/model/SettingsModel.h"
+#include "app/utils/DialogBuilder.h"
+#include "app/view/AbstractView.h"
 
 /**
  * The SettingsView class inherits AbstractView.

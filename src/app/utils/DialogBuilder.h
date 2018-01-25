@@ -16,10 +16,10 @@ limitations under the License.
 #ifndef DIALOG_BUILDER_H
 #define DIALOG_BUILDER_H
 
-#include "../model/DataBase.h"
-#include "../view/ShopDialog.h"
 #include <string>
-#include "../../libs/Logger/Logger.h"
+#include "libs/Logger/Logger.h"
+#include "app/model/DataBase.h"
+#include "app/view/ShopDialog.h"
 
 namespace sl = Bokoblin::SimpleLogger;
 

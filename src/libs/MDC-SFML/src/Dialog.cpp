@@ -12,6 +12,12 @@ namespace MaterialDesignComponentsForSFML
 //          CONSTRUCTORS / DESTRUCTOR
 //------------------------------------------------
 
+/**
+ * Constructs an empty dialog
+ *
+ * @author Arthur
+ * @date ??/??/16 - 29/12/17
+ */
 Dialog::Dialog() : Sprite(0, 0), m_context{""}, m_title{""}, m_content{""},
                    m_cancelButtonText{""}, m_okButtonText{""}
 {
@@ -20,8 +26,8 @@ Dialog::Dialog() : Sprite(0, 0), m_context{""}, m_title{""}, m_content{""},
 
 
 /**
- * Constructs a dialog with x and y coordinates,
- * a textHandler and a description
+ * Constructs a dialog with coordinates,
+ * a size and a context string
  *
  * @param x the x-axis coordinate
  * @param y the y-axis coordinate
@@ -30,7 +36,7 @@ Dialog::Dialog() : Sprite(0, 0), m_context{""}, m_title{""}, m_content{""},
  * @param context the context to make a contextual dialog
  *
  * @author Arthur
- * @date 02/01/2017 - 02/01/18
+ * @date 02/01/17 - 02/01/18
  */
 Dialog::Dialog(float x, float y, float width, float height, const string &context) :
         Sprite(x, y, width, height), m_context{context}, m_title{""}, m_content{""},

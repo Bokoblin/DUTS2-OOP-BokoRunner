@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef LEADERBOARD_H
 #define LEADERBOARD_H
 
-#include "AbstractModel.h"
+#include "app/model/AbstractModel.h"
 
 /**
  * The LeaderboardModel class inherits AbstractModel.

@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,9 +13,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "view/SplashScreenView.h"
-#include "view/MenuView.h"
-#include "view/GameView.h"
+#include "app/view/SplashScreenView.h"
+#include "app/view/MenuView.h"
+#include "app/view/GameView.h"
 
 /**
  * Initializes the application and controls its loop

@@ -1,4 +1,4 @@
-/* Copyright 2016-2017 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@ limitations under the License.
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include "AbstractModel.h"
-#include "../enum/SettingsPage.h"
-#include "../utils/definitions.h"
+#include "app/model/AbstractModel.h"
+#include "app/enum/SettingsPage.h"
+#include "app/utils/definitions.h"
 
 #if defined _WIN32
 #include <rpc.h>

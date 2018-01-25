@@ -21,7 +21,7 @@ limitations under the License.
 /**
  * Provides constants to model and view classes
  * @author Arthur
- * @date 23/10/16 - 06/01/18
+ * @date 23/10/16 - 25/01/18
  */
 
 //=== Ressources Folders
@@ -42,6 +42,8 @@ static const int SCREEN_WIDTH = 900;
 static const int SCREEN_HEIGHT = 600;
 static const int SCREEN_BPP = 32;
 static const int FRAMERATE = 30;
+static const std::string REPOSITORY_URL = "https://github.com/Bokoblin/DUTS2-POO-ProjetRunner";
+static const std::string EMAIL_URL = "mailto:pro.jolivetarthur@gmail.com";
 
 //=== Languages
 static const std::string ENGLISH = "en";

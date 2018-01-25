@@ -16,8 +16,10 @@ limitations under the License.
 #ifndef MDC_SFML_SPRITE_H
 #define MDC_SFML_SPRITE_H
 
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include "Config.h"
-#include <SFML/Graphics.hpp>
 
 namespace Bokoblin
 {
@@ -69,7 +71,7 @@ public:
 
     //=== METHODS
     virtual void sync();
-    virtual void draw(sf::RenderWindow *window) const;
+    virtual void draw(sf::RenderWindow *window) const; //TODO: change to rendering target ?
 
     virtual void resize(float width, float height);
     virtual bool contains(float x, float y) const;

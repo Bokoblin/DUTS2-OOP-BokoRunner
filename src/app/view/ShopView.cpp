@@ -238,8 +238,8 @@ bool ShopView::handleEvents(sf::Event event)
                 {
                     delete m_buyDialog;
                     m_buyDialog = new ShopDialog(m_width/2 - 125, m_height/2 - 100, 250, 200,
-                                                 "shopAskDialog", card->getItem());
-                    DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, *m_shop->getDataBase());
+                                                 "shop_item_details", card->getItem());
+                    DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, m_shop->getDataBase()->getLanguageFile());
                     m_buyDialog->show();
                 }
         }
@@ -247,18 +247,19 @@ bool ShopView::handleEvents(sf::Event event)
         {
             if (m_buyDialog->getOkButtonText().contains(MOUSE_POSITION))
             {
-                if (m_buyDialog->getContext() == "shopAskDialog") //TODO : Don't use strings
+                if (m_buyDialog->getContext() == "shop_item_details")
                 {
                     ShopItem *shopItem = dynamic_cast<ShopDialog *>(m_buyDialog)->getLinkedShopItem();
 
                     delete m_buyDialog; //TODO-1: As items are allocated with new we can allocate then in code
                     // TODO-2: and add them to a drawable item list to draw them instead of keeping a pointer from ctor
 
-                    const std::string operationResult = m_shop->buyItem(shopItem) ? "shopSuccess" : "shopFailure";
+                    const std::string operationResult = m_shop->buyItem(shopItem)
+                            ? "shop_buying_success" : "shop_buying_failure";
                     m_buyDialog = new mdsf::Dialog(m_width/2 - 125, m_height/2 - 50, 250, 100, operationResult);
-                    DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, *m_shop->getDataBase());
+                    DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, m_shop->getDataBase()->getLanguageFile());
 
-                    if (operationResult == "shopSuccess")
+                    if (operationResult == "shop_buying_success")
                     {
                         for (auto &card : m_shopItemCardsArray)
                             if (card->getItem() == shopItem)

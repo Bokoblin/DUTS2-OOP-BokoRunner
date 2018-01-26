@@ -54,7 +54,7 @@ SettingsView::SettingsView(sf::RenderWindow *window, AppTextManager *textManager
 
     m_confirmDialog = new mdsf::Dialog(m_width/2-140, m_height/2-120, 280, 200, "confirm_data_delete");
     m_confirmDialog->hide();
-    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, *m_settings->getDataBase());
+    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, m_settings->getDataBase()->getLanguageFile());
 
     //=== Init music
 
@@ -325,7 +325,7 @@ void SettingsView::updateTextBasedComponents() const
         button->retrieveAndSyncLabel(m_settings->getDataBase()->getLanguageFile());
 
     //Update dialog text
-    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, *m_settings->getDataBase());
+    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, m_settings->getDataBase()->getLanguageFile());
 }
 
 

@@ -30,7 +30,7 @@ LeaderboardView::LeaderboardView(sf::RenderWindow *window, AppTextManager *textM
     //TODO: No dialog init at startup
     m_confirmDialog = new mdsf::Dialog(m_width/2-140, m_height/2-120, 280, 200, "confirm_leaderboard_delete");
     m_confirmDialog->hide();
-    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, *m_leaderboard->getDataBase());
+    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, m_leaderboard->getDataBase()->getLanguageFile());
 }
 
 

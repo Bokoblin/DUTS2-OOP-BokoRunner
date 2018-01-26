@@ -18,6 +18,8 @@ limitations under the License.
 
 #include <iostream>
 #include <fstream>
+#include <regex>
+#include <type_traits>
 #include "PUGIXML/pugixml.hpp"
 #include "libs/Logger/Logger.h"
 
@@ -26,16 +28,70 @@ limitations under the License.
  * to work with an xml file handler object in order to read or write in the file
  *
  * @author Arthur
- * @date 22/01/18 - 23/01/18
+ * @date 22/01/18 - 26/01/18
  */
 class XMLPersistenceHelper
 {
 public:
     //=== METHODS
     static void createXMLFile(const std::string &filename, const std::string &content);
-    static bool checkFileIntegrity(const std::string &filename);
-    static bool loadFile(pugi::xml_document &xmlDocumentObject, const std::string &filename);
+    static bool checkXMLFileIntegrity(const std::string &filename);
+    static bool loadXMLFile(pugi::xml_document &xmlDocumentObject, const std::string &filename);
     static std::string loadLabeledString(const std::string &filename, const std::string &label);
+
+    /**
+     * Safe retrieves an xml value using a regex and a default value. \n
+     *
+     * This function supports, through specialization, the following types :
+     * strings, booleans, signed and unsigned integers. \n
+     *
+     * It is strongly advised to use an integer for enumeration.
+     * Passing other types than the above listed may lead into an undefined behaviour. \n
+     *
+     * You can specify an empty regex, the check won't be taken in account.
+     * You MUST specify a valid default value, otherwise you can encounter
+     * an undefined behaviour on retrieval failure.
+     *
+     * @param attribute the xml attribute containing the value
+     * @param regexString the regex to check against
+     * @param defaultValue a default value on regex failure
+     * @return a Type object
+     *
+     * @author Arthur
+     * @date 25/01/18 - 26/01/18
+     */
+    template <typename Type> static Type safeRetrieveXMLValue(const pugi::xml_attribute &attribute,
+                                                              const std::string &regexString, const Type &defaultValue)
+    {
+        //Implementation must be in-place due to C++ limitation
+
+        const std::string result = std::string(attribute.value());
+        const std::regex regex(regexString);
+
+        if (regexString.empty() || std::regex_match(result.c_str(), regex))
+        {
+            std::istringstream ss(result);
+            Type res;
+            ss >> res;
+            return res;
+        }
+        else
+        {
+            return defaultValue;
+        }
+    }
 };
+
+template<> bool XMLPersistenceHelper::safeRetrieveXMLValue<bool>
+        (const pugi::xml_attribute &attribute, const std::string &regexString, const bool &defaultValue);
+
+template<> int XMLPersistenceHelper::safeRetrieveXMLValue<int>
+        (const pugi::xml_attribute &attribute, const std::string &regexString, const int &defaultValue);
+
+template<> std::string XMLPersistenceHelper::safeRetrieveXMLValue<std::string>
+        (const pugi::xml_attribute &attribute, const std::string &regexString, const std::string &defaultValue);
+
+template<> unsigned int XMLPersistenceHelper::safeRetrieveXMLValue<unsigned int>
+        (const pugi::xml_attribute &attribute, const std::string &regexString, const unsigned int &defaultValue);
 
 #endif

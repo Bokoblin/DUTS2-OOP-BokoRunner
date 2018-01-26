@@ -47,10 +47,10 @@ Text::Text(const string &description, bool isVisible) : Text(description)
  * @param other another text object to copy
  *
  * @author Arthur
- * @date 04/01/18
+ * @date 04/01/18 - 26/01/18
  */
 Text::Text(Text const& other) :
-        sf::Text(other), m_font{other.m_font}, m_description{m_description}, m_isVisible{m_isVisible}
+        sf::Text(other), m_font{other.m_font}, m_description{other.m_description}, m_isVisible{other.m_isVisible}
 {}
 
 

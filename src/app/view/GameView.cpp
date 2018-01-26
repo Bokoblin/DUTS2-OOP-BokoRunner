@@ -730,12 +730,13 @@ void GameView::handlePlayerInput() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 26/12/17
+ * @date 26/12/17 - 26/01/18
  */
 bool GameView::handleRunningGameEvents(sf::Event event)
 {
     if (event.type == sf::Event::KeyReleased)
         m_game->getPlayer()->setDecelerationState(true);
+    return true;
 }
 
 

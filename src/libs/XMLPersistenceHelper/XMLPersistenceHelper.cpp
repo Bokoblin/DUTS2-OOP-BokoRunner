@@ -31,12 +31,14 @@ void XMLPersistenceHelper::createXMLFile(const std::string &filename, const std:
 /**
  * Checks if a file is valid and has not been corrupted
  *
+ * Structure checking is already done by PugiXML when loading the file
+ *
  * @return a boolean indicating if file has its integrity
  *
  * @author Arthur
  * @date ??
  */
-bool XMLPersistenceHelper::checkFileIntegrity(const std::string &filename)
+bool XMLPersistenceHelper::checkXMLFileIntegrity(const std::string &filename)
 {
     fstream f;
     string line;
@@ -46,10 +48,6 @@ bool XMLPersistenceHelper::checkFileIntegrity(const std::string &filename)
     //=== Opening test
     if (f.fail())
         return false;
-
-    //=== Validity test
-
-    //TODO : validity check (structure)
 
 
     //=== Integrity test
@@ -71,7 +69,7 @@ bool XMLPersistenceHelper::checkFileIntegrity(const std::string &filename)
  * @author Arthur
  * @date 22/01/18
  */
-bool XMLPersistenceHelper::loadFile(pugi::xml_document &xmlDocumentObject, const std::string &filename)
+bool XMLPersistenceHelper::loadXMLFile(pugi::xml_document &xmlDocumentObject, const std::string &filename)
 {
     pugi::xml_parse_result loadingResult = xmlDocumentObject.load_file(filename.c_str());
 
@@ -100,21 +98,122 @@ bool XMLPersistenceHelper::loadFile(pugi::xml_document &xmlDocumentObject, const
  */
 string XMLPersistenceHelper::loadLabeledString(const string &filename, const string &label)
 {
+    const string default_value = "<" + label + ">";
     pugi::xml_document doc;
-    if (XMLPersistenceHelper::loadFile(doc, filename))
+
+    if (XMLPersistenceHelper::loadXMLFile(doc, filename))
     {
         pugi::xml_node resources = doc.child("resources");
 
         for (pugi::xml_node item: resources.children("string"))
         {
             if (string(item.attribute("name").value()) == label) {
-                return item.attribute("value").value();
+                return safeRetrieveXMLValue<string>(item.attribute("value"), "", default_value);
             }
         }
         Logger::printWarningOnConsole("No string was find for expression \"" + label
                 + "\" in the file \"" + filename +"\"");
     }
 
-    return "<" + label + ">";
+    return default_value;
 }
 
+
+/**
+ * Safe retrieves an xml value using a regex and a default value. \n
+ * Specialization of template for booleans.
+ *
+ * @param attribute the xml attribute containing the value
+ * @param regexString the regex to check against
+ * @param defaultValue a default value on regex failure
+ * @return a boolean
+ *
+ * @author Arthur
+ * @date 26/01/18
+ */
+template<> bool XMLPersistenceHelper::safeRetrieveXMLValue<bool>
+        (const pugi::xml_attribute &attribute, const std::string &regexString, const bool &defaultValue)
+{
+    const std::string result = std::string(attribute.value());
+    const std::regex regex(regexString);
+
+    if (regexString.empty() || std::regex_match(result.c_str(), regex))
+        return attribute.as_bool(defaultValue);
+    else
+        return defaultValue;
+}
+
+
+/**
+ * Safe retrieves an xml value using a regex and a default value. \n
+ * Specialization of template for signed 32-bit integers.
+ *
+ * @param attribute the xml attribute containing the value
+ * @param regexString the regex to check against
+ * @param defaultValue a default value on regex failure
+ * @return a signed 32-bit integer
+ *
+ * @author Arthur
+ * @date 26/01/18
+ */
+template<> int XMLPersistenceHelper::safeRetrieveXMLValue<int>
+        (const pugi::xml_attribute &attribute, const std::string &regexString, const int &defaultValue)
+{
+    const std::string result = std::string(attribute.value());
+    const std::regex regex(regexString);
+
+    if (regexString.empty() || std::regex_match(result.c_str(), regex))
+        return attribute.as_int(defaultValue);
+    else
+        return defaultValue;
+}
+
+
+/**
+ * Safe retrieves an xml value using a regex and a default value. \n
+ * Specialization of template for strings.
+ *
+ * @param attribute the xml attribute containing the value
+ * @param regexString the regex to check against
+ * @param defaultValue a default value on regex failure
+ * @return a string
+ *
+ * @author Arthur
+ * @date 26/01/18
+ */
+template<> string XMLPersistenceHelper::safeRetrieveXMLValue<string>
+        (const pugi::xml_attribute &attribute, const std::string &regexString, const string &defaultValue)
+{
+    const std::string result = std::string(attribute.value());
+    const std::regex regex(regexString);
+
+    if (regexString.empty() || std::regex_match(result.c_str(), regex))
+        return attribute.as_string(defaultValue.c_str());
+    else
+        return defaultValue;
+}
+
+
+/**
+ * Safe retrieves an xml value using a regex and a default value. \n
+ * Specialization of template for unsigned 32-bit integers.
+ *
+ * @param attribute the xml attribute containing the value
+ * @param regexString the regex to check against
+ * @param defaultValue a default value on regex failure
+ * @return an unsigned 32-bit integer
+ *
+ * @author Arthur
+ * @date 26/01/18
+ */
+template<> unsigned int XMLPersistenceHelper::safeRetrieveXMLValue<unsigned int>
+        (const pugi::xml_attribute &attribute, const std::string &regexString, const unsigned int &defaultValue)
+{
+    const std::string result = std::string(attribute.value());
+    const std::regex regex(regexString);
+
+    if (regexString.empty() || std::regex_match(result.c_str(), regex))
+        return attribute.as_uint(defaultValue);
+    else
+        return defaultValue;
+}

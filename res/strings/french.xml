@@ -87,12 +87,12 @@
     <!--  ShopItems strings -->
     <string name="shop_doubler_name" value="Doubleur de pièce" />
     <string name="shop_doubler_desc" value="Double le nombre &#xA;de pieces collectées" />
-    <string name="shop_shieldPlus_name" value="Bouclier+" />
-    <string name="shop_shieldPlus_desc" value="Protege le joueur d'une &#xA;collision supplémentaire" />
-    <string name="shop_megaPlus_name" value="Mega+" />
-    <string name="shop_megaPlus_desc" value="Augmente la durée du &#xA;bonus de 5 secondes" />
-    <string name="shop_flyPlus_name" value="Vol+" />
-    <string name="shop_flyPlus_desc" value="Augmente la durée du &#xA;bonus de 5 secondes" />
+    <string name="shop_shield_plus_name" value="Bouclier+" />
+    <string name="shop_shield_plus_desc" value="Protege le joueur d'une &#xA;collision supplémentaire" />
+    <string name="shop_mega_plus_name" value="Mega+" />
+    <string name="shop_mega_plus_desc" value="Augmente la durée du &#xA;bonus de 5 secondes" />
+    <string name="shop_fly_plus_name" value="Vol+" />
+    <string name="shop_fly_plus_desc" value="Augmente la durée du &#xA;bonus de 5 secondes" />
     <string name="shop_morphing_name" value="Balle morphing" />
     <string name="shop_morphing_desc" value="Débloque l'apparence &#xA;morphing de la balle" />
     <string name="shop_capsule_name" value="Balle capsule" />

@@ -165,7 +165,7 @@ void AppTextManager::handleAboutLinks(sf::Event event, const SettingsModel &sett
  * following current language
  *
  * @author Arthur
- * @date 13/04/16 - 06/01/17
+ * @date 13/04/16 - 04/02/17
  */
 void AppTextManager::updateWholeStandaloneTextContent()
 {
@@ -174,7 +174,7 @@ void AppTextManager::updateWholeStandaloneTextContent()
         t->setCharacterSize(DEFAULT_CHAR_SIZE);
         t->setFont(m_condensedFont);
         t->setFillColor(sf::Color::White);
-        std::string utf8_string = m_dataBase->loadLocalizedString(t->getDescription());
+        std::string utf8_string = PersistenceManager::fetchLocalizedString(t->getDescription());
         t->setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
     }
 }
@@ -292,8 +292,8 @@ void AppTextManager::syncSettingsText(int currentPage)
  */
 void AppTextManager::initMenuLeaderboardText()
 {
-    string scoresEasy = m_dataBase->loadLeaderboardScores(EASY);
-    string scoresHard = m_dataBase->loadLeaderboardScores(HARD);
+    string scoresEasy = m_dataBase->stringifyLeaderboard(EASY);
+    string scoresHard = m_dataBase->stringifyLeaderboard(HARD);
 
     if (scoresEasy.empty())
     {

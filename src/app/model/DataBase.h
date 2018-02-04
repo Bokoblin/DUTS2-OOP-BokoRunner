@@ -16,14 +16,11 @@ limitations under the License.
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <iostream>
 #include <set>
-#include <fstream>
-#include <regex>
 #include "libs/Logger/Logger.h"
-#include "libs/XMLPersistenceHelper/XMLPersistenceHelper.h"
 #include "app/enum/AppState.h"
 #include "app/enum/Difficulty.h"
+#include "app/model/PersistenceManager.h"
 #include "app/utils/constants.h"
 
 /**
@@ -77,25 +74,20 @@ public:
     void setGameMusic(bool on);
 
     //=== METHODS
-    void createConfigFile();
-    bool checkConfigFileIntegrity() const;
-    void fetchConfigurationFromFile();
-    void fetchConfig();
-    void fetchActivatedShopItems();
-    void fetchScore();
-    void pushConfigurationToFile() const;
     void addNewScore(int score);
     void saveCurrentGame();
     void launchNewGame();
     void clearLeaderboard();
     void clearAppData();
-    bool findActivatedItem(const std::string &item);
-    std::string loadLocalizedString(const std::string &label) const;
-    std::string loadLeaderboardScores(Difficulty difficulty) const;
+    bool findActivatedItem(const std::string &itemLabel);
+    void addNewActivatedBonus(const std::string &itemLabel);
     bool isScoreEasyArrayEmpty() const;
     bool isScoreHardArrayEmpty() const;
+    std::string stringifyLeaderboard(Difficulty difficulty) const;
 
 private:
+    friend class PersistenceManager;
+
     //=== ATTRIBUTES
 
     //Global App
@@ -117,7 +109,7 @@ private:
     const int COIN_MULTIPLIER = 20;
     const int MAX_SCORES = 10;
 
-    //Current Game
+    //Current Game //TODO: can't be gameModel members only ?
     int m_currentCoinsNumber;
     float m_currentDistance;
     int m_currentFlattenedEnemies;
@@ -127,6 +119,9 @@ private:
     std::set<int> m_scoresEasyArray;
     std::set<int> m_scoresHardArray;
     std::set<std::string> m_activatedItemsArray;
+
+    //=== METHODS
+    void initWithDefaultValues();
 };
 
 #endif

@@ -85,12 +85,12 @@
     <!--  ShopItems strings -->
     <string name="shop_doubler_name" value="Coin Doubler" />
     <string name="shop_doubler_desc" value="Double the number &#xA;of coins collected" />
-    <string name="shop_shieldPlus_name" value="Shield+" />
-    <string name="shop_shieldPlus_desc" value="Protects the player &#xA;from another collision" />
-    <string name="shop_megaPlus_name" value="Mega+" />
-    <string name="shop_megaPlus_desc" value="Increase bonus duration &#xA;by 5 more seconds" />
-    <string name="shop_flyPlus_name" value="Fly+" />
-    <string name="shop_flyPlus_desc" value="Increase bonus duration &#xA;by 5 more seconds" />
+    <string name="shop_shield_plus_name" value="Shield+" />
+    <string name="shop_shield_plus_desc" value="Protects the player &#xA;from another collision" />
+    <string name="shop_mega_plus_name" value="Mega+" />
+    <string name="shop_mega_plus_desc" value="Increase bonus duration &#xA;by 5 more seconds" />
+    <string name="shop_fly_plus_name" value="Fly+" />
+    <string name="shop_fly_plus_desc" value="Increase bonus duration &#xA;by 5 more seconds" />
     <string name="shop_morphing_name" value="Ball - Morph skin" />
     <string name="shop_morphing_desc" value="Unlock ball's morph skin" />
     <string name="shop_capsule_name" value="Ball - Capsule skin" />

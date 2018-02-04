@@ -4,16 +4,23 @@ using std::string;
 using std::stoi;
 using std::vector;
 
+//------------------------------------------------
+//          CONSTRUCTOR / DESTRUCTOR
+//------------------------------------------------
+
 /**
  * Constructs a Settings model with database
- * @author Arthur
- * @date 11/05/16 - 29/01/16
  *
  * @param dataBase the common app's dataBase
+ *
+ * @author Arthur
+ * @date 11/05/16 - 04/02/18
  */
 ShopModel::ShopModel(DataBase *dataBase) :  AbstractModel(dataBase)
 {
-    fetchBuyableItemsFromFile();
+    PersistenceManager::fetchConfiguration();
+    PersistenceManager::fetchActivatedBonus();
+    fetchBuyableItemsFromFile(); //FIXME
 }
 
 
@@ -29,16 +36,24 @@ ShopModel::~ShopModel()
 }
 
 
-//=== Getters
+//------------------------------------------------
+//          GETTERS
+//------------------------------------------------
+
 vector<ShopItem*> ShopModel::getShopItemsArray() const { return m_shopItemsArray; }
 
 
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
+
 /**
- * Buys items
- * @author Arthur
- * @date 11/05/16 - 04/01/17
+ * Buys an item
  *
  * @param item the item to buy
+ *
+ * @author Arthur
+ * @date 11/05/16 - 04/01/17
  */
 bool ShopModel::buyItem(ShopItem *item)
 {
@@ -51,34 +66,25 @@ bool ShopModel::buyItem(ShopItem *item)
 
         //=== update config files
 
-        pugi::xml_document doc;
-        doc.load_file(CONFIG_FILE.c_str());
+        m_dataBase->addNewActivatedBonus(item->getId());
+        PersistenceManager::updatePersistence(); //FIXME: Needed by shopView for retrieval from file
 
-        pugi::xml_node runner = doc.child("runner");
-        pugi::xml_node shop = runner.child("shop");
-
-        for (pugi::xml_node shopItem: shop.children("shopItem"))
-        {
-            if (string(shopItem.attribute("id").value()) == item->getId())
-            {
-                shopItem.attribute("bought").set_value(true);
-                doc.save_file(CONFIG_FILE.c_str());
-            }
-        }
         return true;
     }
-    else
-        return false;
+
+    return false;
 }
 
 
 /**
  * Fetches Shop Items from file
+ *
  * @author Arthur
- * @date 11/05/16 - 24/12/17
+ * @date 11/05/16 - 04/02/18
  */
 void ShopModel::fetchBuyableItemsFromFile()
 {
+    //FIXME: No config file access should be allowed ! It breaks persistence abstraction !!
     //Opens config file with pugiXML library
     pugi::xml_document doc;
     doc.load_file(CONFIG_FILE.c_str());
@@ -89,18 +95,19 @@ void ShopModel::fetchBuyableItemsFromFile()
     {
         //Updates item's attributes
         string id = shopItem.attribute("id").value();
-        string name = m_dataBase->loadLocalizedString(id + "_name");
-        string desc = m_dataBase->loadLocalizedString(id + "_desc");
+        string name = PersistenceManager::fetchLocalizedString(id + "_name");
+        string desc = PersistenceManager::fetchLocalizedString(id + "_desc");
         int price = stoi(shopItem.attribute("price").value());
         bool isBought = ((string)shopItem.attribute("bought").value()) == "true";
 
         //Adds item to array
-        m_shopItemsArray.push_back(new ShopItem(name, desc, price, isBought));
+        m_shopItemsArray.push_back(new ShopItem(id, name, desc, price, isBought));
     }
 }
 
 /**
  * Next Step
+ *
  * @author Arthur
  * @date 29/01/17
  */
@@ -116,6 +123,6 @@ void ShopModel::nextStep()
  */
 void ShopModel::quit()
 {
-    m_dataBase->pushConfigurationToFile();
+    PersistenceManager::updatePersistence();
 }
 

@@ -19,8 +19,9 @@ limitations under the License.
 
 /**
  * Initializes the application and controls its loop
+ *
  * @author Arthur, Florian
- * @date 21/02/16 - 03/11/17
+ * @date 21/02/16 - 04/02/18
  */
 int main()
 {
@@ -36,6 +37,10 @@ int main()
     //=== Initialize app data and text
 
     DataBase dataBase;
+    PersistenceManager::initPersistenceManager(&dataBase);
+    PersistenceManager::checkPersistence();
+    PersistenceManager::fetchConfiguration();
+    PersistenceManager::fetchLeaderboard();
     AppTextManager textManager(&dataBase, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     //=== Initialize app state, and event object
@@ -85,10 +90,12 @@ int main()
         }
         if (dataBase.getAppState() == QUIT)
         {
-            dataBase.pushConfigurationToFile();
+            PersistenceManager::updatePersistence();
             window.close();
         }
     }
+
+    PersistenceManager::closePersistenceManager();
 
     return 0;
 }

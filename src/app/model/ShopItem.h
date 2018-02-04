@@ -24,13 +24,13 @@ limitations under the License.
  * Each item has a name, a description, a price
  * and a state to check if it has already been bought
  * @author Arthur
- * @date 11/05/16 - 04/01/17
+ * @date 11/05/16 - 04/02/17
  */
 class ShopItem
 {
 public:
     //=== CTORs / DTORs
-    ShopItem(const std::string &name, const std::string &description, int price, bool state);
+    ShopItem(const std::string &id, const std::string &name, const std::string &description, int price, bool state);
     ~ShopItem();
 
     //=== GETTERS

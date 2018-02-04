@@ -22,8 +22,8 @@ GameModel::GameModel(float width, float height, DataBase *dataBase) :
 {
     //=== Initialize new game
 
+    PersistenceManager::fetchActivatedBonus();
     m_dataBase->launchNewGame();
-    m_dataBase->fetchActivatedShopItems();
 
     addANewMovableElement(DEFAULT_PLAYER_X, GAME_FLOOR, PLAYER);
 
@@ -387,7 +387,7 @@ void GameModel::handleEnemyCollision(MovableElementType enemyType)
     else if (m_player->getState() == SHIELD
              && m_bonusTimeout.count() != milliseconds(SHIELD_TIMEOUT).count())
     {
-        if (m_dataBase->findActivatedItem("shieldPlus"))
+        if (m_dataBase->findActivatedItem("shield_plus"))
             m_bonusTimeout = milliseconds(SHIELD_TIMEOUT);
         else
             m_player->changeState(NORMAL);
@@ -445,14 +445,14 @@ void GameModel::handleBonusCollision(MovableElementType bonusType)
     else if (bonusType == MEGA_BONUS)
     {
         m_player->changeState(MEGA);
-        m_bonusTimeout = milliseconds(m_dataBase->findActivatedItem("megaPlus")
+        m_bonusTimeout = milliseconds(m_dataBase->findActivatedItem("mega_plus")
                                               ? MEGA_TIMEOUT + ADDITIONAL_TIMEOUT
                                               : MEGA_TIMEOUT);
     }
     else if (bonusType == FLY_BONUS)
     {
         m_player->changeState(FLY);
-        m_bonusTimeout = milliseconds(m_dataBase->findActivatedItem("flyPlus")
+        m_bonusTimeout = milliseconds(m_dataBase->findActivatedItem("fly_plus")
                                               ? FLY_TIMEOUT + ADDITIONAL_TIMEOUT
                                               : FLY_TIMEOUT);
     }

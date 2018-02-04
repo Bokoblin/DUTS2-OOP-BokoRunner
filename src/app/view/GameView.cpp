@@ -840,6 +840,7 @@ bool GameView::handleGameOverEvents(sf::Event event)
         {
             m_saveScoreButton->hide();
             m_game->getDataBase()->saveCurrentGame();
+            PersistenceManager::updatePersistence();
         }
     }
     return true;

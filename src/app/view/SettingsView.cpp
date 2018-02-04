@@ -457,8 +457,11 @@ bool SettingsView::handleEvents(sf::Event event)
                 {
                     m_confirmDialog->hide();
                     m_settings->getDataBase()->clearAppData();
+                    PersistenceManager::deletePersistence();
+                    PersistenceManager::initPersistence();
                     m_textManager->syncSettingsText(m_settings->getCurrentPage());
                     m_settings->checkItemsAvailability();
+                    handleMusic();
                 }
                 else if (m_confirmDialog->getCancelButtonText().contains(MOUSE_POSITION)
                         || !m_confirmDialog->contains(MOUSE_POSITION))

@@ -68,7 +68,7 @@ protected:
     Text m_okButtonText;
 
     //=== CONSTANTS
-    const std::string DIALOG_IMAGE = "../res/images/ui/dialog.png";
+    const std::string DIALOG_IMAGE = "../res/images/ui/dialog.png"; //FIXME: dialog image in res/
 };
 
 } //namespace MaterialDesignComponentsForSFML

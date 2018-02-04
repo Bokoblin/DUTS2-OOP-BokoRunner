@@ -16,16 +16,15 @@ limitations under the License.
 #ifndef XML_PERSISTENCE_HELPER_H
 #define XML_PERSISTENCE_HELPER_H
 
-#include <iostream>
 #include <fstream>
 #include <regex>
-#include <type_traits>
 #include "PUGIXML/pugixml.hpp"
 #include "libs/Logger/Logger.h"
 
 /**
  * The XMLPersistenceHelper class provides high-level methods
- * to work with an xml file handler object in order to read or write in the file
+ * to work with an xml file handler object in order to read or write in the file.
+ * It abstracts PugiXML usage from other classes visibility
  *
  * @author Arthur
  * @date 22/01/18 - 26/01/18

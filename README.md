@@ -60,9 +60,12 @@ Note : You may need to install some of the following packages, depending of your
 - libudev-dev
 - libudev1
 
-Note: sfml lib files were built with g++-4.9 <br>
-It may only works with this compiler or clang-3.6<br>
-Use `update-alternatives` to change default g++ priority if needed.
+Notes: 
+- The SFML library files were built with g++-4.9 <br>
+  So the project may only compile with g++-4.9 or clang (see next section for tested environments)<br>
+- You can use `update-alternatives` to change default g++ priority if needed.
+- On Windows, compiler and SFML version have to match 100%. <br>
+  So, you must use *mingw-w64-6.1.0* to compile the project.
 
 
 ### Tested environments ###
@@ -71,19 +74,22 @@ Use `update-alternatives` to change default g++ priority if needed.
 	- **Kernel**: Windows NT 10.0
 	- **Compiler**: mingw-w64-6.1.0
 	- **Environment**: local
+	- **Compilation**: OK
+	- **Execution**: OK
 	
 - **Ubuntu 16.04 LTS - Xenial**
 	- **Kernel**: x86_64 Linux 4.4.0-43-Microsoft
 	- **Compiler**: g++-4.9
 	- **Environment**: local (Windows Subsystem for Linux)
+	- **Compilation**: OK g++-4.9, KO clang 3.8.0 (sfml linking failure)
+	- **Execution**: Not possible (even with x-server)
 	
 - **Ubuntu 14.04 LTS - Trusty**
 	- **Kernel**: ??
-	- **Compiler**: gcc-4.9 and clang-3.6
+	- **Compiler**: gcc-4.9, clang-3.5, clang-3.9, clang 5.0
 	- **Environment**: Virtual machine on GCE (Travis CI)
-
-Note: For WSL, only compilation works, running the app with an x-server 
-currently causes crashes due to a mutex lock state
+	- **Compilation**: OK
+	- **Execution**: Can't be tested
 
 
 ### Licences ###

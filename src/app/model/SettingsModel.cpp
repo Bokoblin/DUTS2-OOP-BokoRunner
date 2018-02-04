@@ -2,16 +2,21 @@
 
 using std::string;
 
+//------------------------------------------------
+//          CONSTRUCTOR / DESTRUCTOR
+//------------------------------------------------
+
 /**
  * Constructs a Settings model with database
- * @author Arthur
- * @date 20/05/16 - 29/01/17
  *
  * @param dataBase the common app's dataBase
+ *
+ * @author Arthur
+ * @date 20/05/16 - 04/02/18
  */
 SettingsModel::SettingsModel(DataBase *dataBase) :  AbstractModel(dataBase), m_currentPage{CONFIG}
 {
-    m_dataBase->fetchActivatedShopItems();
+    PersistenceManager::fetchActivatedBonus();
     checkItemsAvailability();
 }
 
@@ -24,14 +29,25 @@ SettingsModel::SettingsModel(DataBase *dataBase) :  AbstractModel(dataBase), m_c
 SettingsModel::~SettingsModel() = default;
 
 
-//=== Getters & Setters
+//------------------------------------------------
+//          GETTERS
+//------------------------------------------------
 
 bool SettingsModel::isMorphSkinAvailable() const { return m_morphSkinIsAvailable; }
 bool SettingsModel::isCapsuleSkinAvailable() const { return m_capsuleSkinIsAvailable; }
 int SettingsModel::getCurrentPage() const { return m_currentPage; }
 
+
+//------------------------------------------------
+//          SETTERS
+//------------------------------------------------
+
 void SettingsModel::setCurrentPage(int page) { m_currentPage = page; }
 
+
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
 
 /**
  * Changes app language
@@ -104,6 +120,6 @@ void SettingsModel::nextStep()
  */
 void SettingsModel::quit()
 {
-    m_dataBase->pushConfigurationToFile();
+    PersistenceManager::updatePersistence();
 }
 

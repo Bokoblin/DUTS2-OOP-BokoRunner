@@ -17,7 +17,6 @@ limitations under the License.
 #define TEXT_HANDLER_H
 
 #include <SFML/Window/Event.hpp>
-#include "app/model/DataBase.h"
 #include "libs/MDC-SFML/src/Text.h"
 #include "app/model/SettingsModel.h"
 #include "app/utils/definitions.h"

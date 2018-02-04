@@ -30,7 +30,7 @@ class LeaderboardModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit LeaderboardModel(DataBase *dataBase);
+    explicit LeaderboardModel(AppCore *appCore);
     ~LeaderboardModel() override;
 
     //=== METHODS

@@ -36,59 +36,59 @@ int main()
 
     //=== Initialize app data and text
 
-    DataBase dataBase;
-    PersistenceManager::initPersistenceManager(&dataBase);
+    AppCore appCore;
+    PersistenceManager::initPersistenceManager(&appCore);
     PersistenceManager::checkPersistence();
     PersistenceManager::fetchConfiguration();
     PersistenceManager::fetchLeaderboard();
-    AppTextManager textManager(&dataBase, SCREEN_WIDTH, SCREEN_HEIGHT);
+    AppTextManager textManager(&appCore, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     //=== Initialize app state, and event object
 
-    dataBase.setAppState(SPLASH);
+    appCore.setAppState(SPLASH);
     sf::Event event = sf::Event();
 
     //=== Program loop
 
     while(window.isOpen())
     {
-        if (dataBase.getAppState() == SPLASH)
+        if (appCore.getAppState() == SPLASH)
         {
-            SplashScreenModel splashModel(&dataBase);
+            SplashScreenModel splashModel(&appCore);
             SplashScreenView splashView(&window, &textManager, &splashModel);
 
-            while(dataBase.getAppState() == SPLASH && splashView.handleEvents(event))
+            while(appCore.getAppState() == SPLASH && splashView.handleEvents(event))
             {
                 splashModel.nextStep();
                 splashView.synchronize();
                 splashView.draw();
             }
         }
-        if (dataBase.getAppState() == MENU)
+        if (appCore.getAppState() == MENU)
         {
-            MenuModel menuModel(&dataBase);
+            MenuModel menuModel(&appCore);
             MenuView menuView(&window, &textManager, &menuModel);
 
-            while(dataBase.getAppState() == MENU && menuView.handleEvents(event))
+            while(appCore.getAppState() == MENU && menuView.handleEvents(event))
             {
                 menuModel.nextStep();
                 menuView.synchronize();
                 menuView.draw();
             }
         }
-        if (dataBase.getAppState() == GAME)
+        if (appCore.getAppState() == GAME)
         {
-            GameModel gameModel(SCREEN_WIDTH, SCREEN_HEIGHT, &dataBase);
+            GameModel gameModel(SCREEN_WIDTH, SCREEN_HEIGHT, &appCore);
             GameView gameView(&window, &textManager, &gameModel);
 
-            while(dataBase.getAppState() == GAME && gameView.handleEvents(event))
+            while(appCore.getAppState() == GAME && gameView.handleEvents(event))
             {
                 gameModel.nextStep();
                 gameView.synchronize();
                 gameView.draw();
             }
         }
-        if (dataBase.getAppState() == QUIT)
+        if (appCore.getAppState() == QUIT)
         {
             PersistenceManager::updatePersistence();
             window.close();

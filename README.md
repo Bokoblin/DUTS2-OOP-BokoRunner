@@ -9,7 +9,7 @@ has to dodge each obstacles and collect bonuses to increase its score. The game 
 The project allowed us to put into practice the Object Oriented Programming notions that we learnt in S2.
 
 Initially made to be based on a Model-View architecture as requested, the project can be considered as 
-a Three-Tier Architecture with a Database, Models and Views. 
+a Multi-Tier Architecture with a persistence manager, an app core, models and views.
 
 Despite being initially a scholar project ended in May 2016, it is still receiving new features 
 and "under the hood" improvements from Bokoblin.

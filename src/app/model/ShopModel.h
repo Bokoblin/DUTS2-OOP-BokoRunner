@@ -33,7 +33,7 @@ class ShopModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit ShopModel(DataBase *dataBase);
+    explicit ShopModel(AppCore *appCore);
     ~ShopModel() override;
 
     //=== GETTERS

@@ -48,13 +48,13 @@ SettingsView::SettingsView(sf::RenderWindow *window, AppTextManager *textManager
     //=== Init buttons
 
     for (mdsf::Button *button : m_buttonList)
-        button->retrieveAndSyncLabel(m_settings->getDataBase()->getLanguageFile());
+        button->retrieveAndSyncLabel(m_settings->getAppCore()->getLanguageFile());
 
     //=== Init confirm dialog
 
     m_confirmDialog = new mdsf::Dialog(m_width/2-140, m_height/2-120, 280, 200, "confirm_data_delete");
     m_confirmDialog->hide();
-    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, m_settings->getDataBase()->getLanguageFile());
+    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, m_settings->getAppCore()->getLanguageFile());
 
     //=== Init music
 
@@ -175,14 +175,14 @@ void SettingsView::synchronize()
 {
     //=== Update Status of Radio buttons
 
-    m_englishLangRadio->setSelected(m_settings->getDataBase()->getLanguage() == ENGLISH);
-    m_frenchLangRadio->setSelected(m_settings->getDataBase()->getLanguage() == FRENCH);
-    m_spanishLangRadio->setSelected(m_settings->getDataBase()->getLanguage() == SPANISH);
-    m_easyModeRadio->setSelected(m_settings->getDataBase()->getDifficulty() == EASY);
-    m_hardModeRadio->setSelected(m_settings->getDataBase()->getDifficulty() == HARD);
-    m_defaultBallSkinRadio->setSelected(m_settings->getDataBase()->getBallSkin() == "default");
-    m_morphBallSkinRadio->setSelected(m_settings->getDataBase()->getBallSkin() == "morphing");
-    m_capsuleBallSkinRadio->setSelected(m_settings->getDataBase()->getBallSkin() == "capsule");
+    m_englishLangRadio->setSelected(m_settings->getAppCore()->getLanguage() == ENGLISH);
+    m_frenchLangRadio->setSelected(m_settings->getAppCore()->getLanguage() == FRENCH);
+    m_spanishLangRadio->setSelected(m_settings->getAppCore()->getLanguage() == SPANISH);
+    m_easyModeRadio->setSelected(m_settings->getAppCore()->getDifficulty() == EASY);
+    m_hardModeRadio->setSelected(m_settings->getAppCore()->getDifficulty() == HARD);
+    m_defaultBallSkinRadio->setSelected(m_settings->getAppCore()->getBallSkin() == "default");
+    m_morphBallSkinRadio->setSelected(m_settings->getAppCore()->getBallSkin() == "morphing");
+    m_capsuleBallSkinRadio->setSelected(m_settings->getAppCore()->getBallSkin() == "capsule");
 
     m_morphBallSkinRadio->setEnabled(m_settings->isMorphSkinAvailable());
     m_capsuleBallSkinRadio->setEnabled(m_settings->isCapsuleSkinAvailable());
@@ -272,7 +272,7 @@ void SettingsView::handleMusic()
 {
     //=== Change menu music volume
 
-    if (m_settings->getDataBase()->isMenuMusicEnabled())
+    if (m_settings->getAppCore()->isMenuMusicEnabled())
     {
         std::vector<sf::IntRect> clipRect;
         clipRect.emplace_back(0, 200, 50, 50);
@@ -289,7 +289,7 @@ void SettingsView::handleMusic()
 
     //=== Change game music volume
 
-    if (m_settings->getDataBase()->isGameMusicEnabled())
+    if (m_settings->getAppCore()->isGameMusicEnabled())
     {
         std::vector<sf::IntRect> clipRect;
         clipRect.emplace_back(0, 200, 50, 50);
@@ -322,10 +322,10 @@ void SettingsView::updateTextBasedComponents() const
 
     //Update button text
     for (mdsf::Button *button : m_buttonList)
-        button->retrieveAndSyncLabel(m_settings->getDataBase()->getLanguageFile());
+        button->retrieveAndSyncLabel(m_settings->getAppCore()->getLanguageFile());
 
     //Update dialog text
-    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, m_settings->getDataBase()->getLanguageFile());
+    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, m_settings->getAppCore()->getLanguageFile());
 }
 
 
@@ -413,11 +413,11 @@ bool SettingsView::handleEvents(sf::Event event)
             }
             else if (m_easyModeRadio->contains(MOUSE_POSITION))
             {
-                m_settings->getDataBase()->setDifficulty(EASY);
+                m_settings->getAppCore()->setDifficulty(EASY);
             }
             else if (m_hardModeRadio->contains(MOUSE_POSITION))
             {
-                m_settings->getDataBase()->setDifficulty(HARD);
+                m_settings->getAppCore()->setDifficulty(HARD);
             }
             else if (m_defaultBallSkinRadio->contains(MOUSE_POSITION))
             {
@@ -433,12 +433,12 @@ bool SettingsView::handleEvents(sf::Event event)
             }
             else if (m_menuMusicButton->contains(MOUSE_POSITION))
             {
-                m_settings->getDataBase()->setMenuMusic(!m_settings->getDataBase()->isMenuMusicEnabled());
+                m_settings->getAppCore()->setMenuMusic(!m_settings->getAppCore()->isMenuMusicEnabled());
                 handleMusic();
             }
             else if (m_gameMusicButton->contains(MOUSE_POSITION))
             {
-                m_settings->getDataBase()->setGameMusic(!m_settings->getDataBase()->isGameMusicEnabled());
+                m_settings->getAppCore()->setGameMusic(!m_settings->getAppCore()->isGameMusicEnabled());
                 handleMusic();
             }
         }
@@ -456,7 +456,7 @@ bool SettingsView::handleEvents(sf::Event event)
                 if (m_confirmDialog->getOkButtonText().contains(MOUSE_POSITION))
                 {
                     m_confirmDialog->hide();
-                    m_settings->getDataBase()->clearAppData();
+                    m_settings->getAppCore()->clearAppData();
                     PersistenceManager::deletePersistence();
                     PersistenceManager::initPersistence();
                     m_textManager->syncSettingsText(m_settings->getCurrentPage());

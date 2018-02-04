@@ -39,7 +39,7 @@ class GameModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    GameModel(float width, float height, DataBase *dataBase);
+    GameModel(float width, float height, AppCore *appCore);
     ~GameModel() override;
 
     //=== GETTERS

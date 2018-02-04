@@ -30,7 +30,7 @@ LeaderboardView::LeaderboardView(sf::RenderWindow *window, AppTextManager *textM
     //TODO: No dialog init at startup
     m_confirmDialog = new mdsf::Dialog(m_width/2-140, m_height/2-120, 280, 200, "confirm_leaderboard_delete");
     m_confirmDialog->hide();
-    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, m_leaderboard->getDataBase()->getLanguageFile());
+    DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog, m_leaderboard->getAppCore()->getLanguageFile());
 }
 
 
@@ -66,7 +66,7 @@ void LeaderboardView::loadImages()
     clipRectClear.emplace_back(RAISED_BUTTON_PRESSED);
     m_clearLeaderboardRaisedButton = new mdsf::Button(m_width / 2 - 75, 540, 150, 36, "leaderboard_clear_button",
                                      RECT_BUTTONS_IMAGE, clipRectClear);
-    m_clearLeaderboardRaisedButton->retrieveAndSyncLabel(m_leaderboard->getDataBase()->getLanguageFile());
+    m_clearLeaderboardRaisedButton->retrieveAndSyncLabel(m_leaderboard->getAppCore()->getLanguageFile());
     m_clearLeaderboardRaisedButton->setColor(mdsf::Color::MaterialRed);
 
     //=== Initialize HOME form button
@@ -168,7 +168,7 @@ bool LeaderboardView::handleEvents(sf::Event event)
             if (m_confirmDialog->getOkButtonText().contains(MOUSE_POSITION))
             {
                 m_confirmDialog->hide();
-                m_leaderboard->getDataBase()->clearLeaderboard();
+                m_leaderboard->getAppCore()->clearLeaderboard();
                 m_textManager->updateWholeStandaloneTextContent();
                 m_textManager->syncMenuLeaderboardText();
             }

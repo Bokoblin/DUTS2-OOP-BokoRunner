@@ -62,7 +62,7 @@ void MenuView::loadMusic()
         Logger::printErrorOnConsole("Music loading failed for \"" + MENU_MUSIC_THEME + "\"");
     else
     {
-        if (m_menu->getDataBase()->isMenuMusicEnabled())
+        if (m_menu->getAppCore()->isMenuMusicEnabled())
             m_menuMusic.setVolume(100);
         else
             m_menuMusic.setVolume(0);
@@ -94,14 +94,14 @@ void MenuView::loadImages()
     clipRectPlay.emplace_back(151, 0, 150, 80);
     m_playRectButton = new mdsf::Button(m_width/2-75, (float) (m_height / 1.5), 150, 80, "menu_play_button",
                                   RECT_BUTTONS_IMAGE, clipRectPlay);
-    m_playRectButton->retrieveAndSyncLabel(m_menu->getDataBase()->getLanguageFile());
+    m_playRectButton->retrieveAndSyncLabel(m_menu->getAppCore()->getLanguageFile());
 
     vector<sf::IntRect> clipRectQuit;
     clipRectQuit.emplace_back(0, 0, 150, 80);
     clipRectQuit.emplace_back(151, 0, 150, 80);
     m_quitRectButton = new mdsf::Button(m_width/2-75, (float) (m_height / 1.2), 150, 80, "menu_quit_button",
                                   RECT_BUTTONS_IMAGE, clipRectQuit);
-    m_quitRectButton->retrieveAndSyncLabel(m_menu->getDataBase()->getLanguageFile());
+    m_quitRectButton->retrieveAndSyncLabel(m_menu->getAppCore()->getLanguageFile());
 
 
     //=== Initialize COMMANDS, SETTINGS, LEADERBOARD and SHOP form buttons
@@ -136,7 +136,7 @@ void MenuView::loadImages()
  */
 void MenuView::synchronize()
 {
-    if (m_menu->getDataBase()->isMenuMusicEnabled())
+    if (m_menu->getAppCore()->isMenuMusicEnabled())
         m_menuMusic.setVolume(100);
     else
         m_menuMusic.setVolume(0);
@@ -286,14 +286,14 @@ bool MenuView::handleHomeEvents(const sf::Event &event)
         {
             if (m_menuMusic.getStatus() == sf::Music::Status::Playing)
                 m_menuMusic.stop();
-            m_menu->getDataBase()->setAppState(GAME);
+            m_menu->getAppCore()->setAppState(GAME);
             return false;
         }
         else if (m_quitRectButton->contains(MOUSE_POSITION))
         {
             if (m_menuMusic.getStatus() == sf::Music::Status::Playing)
                 m_menuMusic.stop();
-            m_menu->getDataBase()->setAppState(QUIT);
+            m_menu->getAppCore()->setAppState(QUIT);
             return false;
         }
         else if (m_commandsFormButton->contains(MOUSE_POSITION))
@@ -333,7 +333,7 @@ bool MenuView::handleEvents(sf::Event event)
     {
         if  (event.type == sf::Event::Closed)
         {
-            m_menu->getDataBase()->setAppState(QUIT);
+            m_menu->getAppCore()->setAppState(QUIT);
             return false;
         }
 
@@ -348,8 +348,8 @@ bool MenuView::handleEvents(sf::Event event)
                 )
         {
             m_menu->setMenuState(HOME);
-            m_playRectButton->retrieveAndSyncLabel(m_menu->getDataBase()->getLanguageFile());
-            m_quitRectButton->retrieveAndSyncLabel(m_menu->getDataBase()->getLanguageFile());
+            m_playRectButton->retrieveAndSyncLabel(m_menu->getAppCore()->getLanguageFile());
+            m_quitRectButton->retrieveAndSyncLabel(m_menu->getAppCore()->getLanguageFile());
         }
     }
     return true;

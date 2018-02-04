@@ -35,7 +35,7 @@ class MenuModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit MenuModel(DataBase *dataBase);
+    explicit MenuModel(AppCore *appCore);
     ~MenuModel() override;
 
     //=== GETTERS

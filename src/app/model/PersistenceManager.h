@@ -22,10 +22,10 @@ limitations under the License.
 #include "libs/XMLHelper/XMLHelper.h"
 #include "app/enum/AppState.h"
 #include "app/enum/Difficulty.h"
-#include "app/model/DataBase.h"
+#include "app/model/AppCore.h"
 #include "app/utils/constants.h"
 
-class DataBase;
+class AppCore;
 
 class PersistenceException
 {
@@ -50,7 +50,7 @@ class PersistenceManager
 {
 public:
     //=== METHODS
-    static void initPersistenceManager(DataBase *database);
+    static void initPersistenceManager(AppCore *appCore);
     static void closePersistenceManager();
     static void initPersistence();
     static void checkPersistence();
@@ -72,7 +72,7 @@ private:
 
     //=== ATTRIBUTES
     static bool m_isInit;
-    static DataBase *m_database;
+    static AppCore *m_appCore;
 };
 
 #endif

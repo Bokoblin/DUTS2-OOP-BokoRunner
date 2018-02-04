@@ -5,14 +5,14 @@
 //------------------------------------------------
 
 /**
- * Constructs a Leaderboard model with database
+ * Constructs a Leaderboard model with app core
  * @author Arthur
  * @date 19/04/16 - 04/02/18
  *
- * @param dataBase the common app's dataBase
+ * @param appCore the app's core singleton
  */
-LeaderboardModel::LeaderboardModel(DataBase *dataBase) :
-        AbstractModel(dataBase)
+LeaderboardModel::LeaderboardModel(AppCore *appCore) :
+        AbstractModel(appCore)
 {
     PersistenceManager::fetchLeaderboard();
 }

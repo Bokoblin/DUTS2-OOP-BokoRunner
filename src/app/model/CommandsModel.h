@@ -30,7 +30,7 @@ class CommandsModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit CommandsModel(DataBase *dataBase);
+    explicit CommandsModel(AppCore *appCore);
     ~CommandsModel() override;
 
     //=== METHODS

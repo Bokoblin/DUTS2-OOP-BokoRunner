@@ -184,6 +184,7 @@ void Button::retrieveLabel(const string &stringsFilename)
 {
     if (!m_label.getDescription().empty())
     {
+        //TODO: abstract with config file or make the app set it
         string utf8_string = XMLHelper::loadLabeledString(stringsFilename, m_label.getDescription());
         m_label.setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
     }

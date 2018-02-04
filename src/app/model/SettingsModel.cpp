@@ -7,14 +7,14 @@ using std::string;
 //------------------------------------------------
 
 /**
- * Constructs a Settings model with database
+ * Constructs a Settings model with app core
  *
- * @param dataBase the common app's dataBase
+ * @param appCore the app's core singleton
  *
  * @author Arthur
  * @date 20/05/16 - 04/02/18
  */
-SettingsModel::SettingsModel(DataBase *dataBase) :  AbstractModel(dataBase), m_currentPage{CONFIG}
+SettingsModel::SettingsModel(AppCore *appCore) :  AbstractModel(appCore), m_currentPage{CONFIG}
 {
     PersistenceManager::fetchActivatedBonus();
     checkItemsAvailability();
@@ -58,7 +58,7 @@ void SettingsModel::setCurrentPage(int page) { m_currentPage = page; }
  */
 void SettingsModel::changeLanguage(const string &language)
 {
-    m_dataBase->setLanguage(language);
+    m_appCore->setLanguage(language);
 }
 
 /**
@@ -70,7 +70,7 @@ void SettingsModel::changeLanguage(const string &language)
  */
 void SettingsModel::changeBallSkin(const string &skin)
 {
-    m_dataBase->setBallSkin(skin);
+    m_appCore->setBallSkin(skin);
 }
 
 
@@ -81,8 +81,8 @@ void SettingsModel::changeBallSkin(const string &skin)
  */
 void SettingsModel::checkItemsAvailability()
 {
-    m_morphSkinIsAvailable = m_dataBase->findActivatedItem("shop_morphing");
-    m_capsuleSkinIsAvailable = m_dataBase->findActivatedItem("shop_capsule");
+    m_morphSkinIsAvailable = m_appCore->findActivatedItem("shop_morphing");
+    m_capsuleSkinIsAvailable = m_appCore->findActivatedItem("shop_capsule");
 }
 
 /**

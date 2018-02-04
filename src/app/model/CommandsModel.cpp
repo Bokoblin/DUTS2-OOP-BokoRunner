@@ -1,14 +1,14 @@
 #include "CommandsModel.h"
 
 /**
- * Constructs a Commands model with database
+ * Constructs a Commands model with app core
  * @author Arthur
  * @date 24/01/17 - 30/01/17
  *
- * @param dataBase the common app's dataBase
+ * @param appCore the app's core singleton
  */
-CommandsModel::CommandsModel(DataBase *dataBase) :
-        AbstractModel{dataBase}
+CommandsModel::CommandsModel(AppCore *appCore) :
+        AbstractModel{appCore}
 {}
 
 

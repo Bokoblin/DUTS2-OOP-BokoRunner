@@ -8,10 +8,10 @@ using std::chrono::system_clock;
  * @author Arthur
  * @date 14/04/16 - 29/01/17
  *
- * @param dataBase the app dataBase
+ * @param appCore the app's core singleton
  */
-MenuModel::MenuModel(DataBase *dataBase) :
-    AbstractModel(dataBase), m_menuState{HOME}
+MenuModel::MenuModel(AppCore *appCore) :
+    AbstractModel(appCore), m_menuState{HOME}
 {
     m_commands = nullptr;
     m_settings = nullptr;
@@ -94,7 +94,7 @@ void MenuModel::nextStep()
 CommandsModel* MenuModel::launchCommands()
 {
     m_menuState = COMMANDS;
-    m_commands = new CommandsModel(m_dataBase);
+    m_commands = new CommandsModel(m_appCore);
     return m_commands;
 }
 
@@ -107,7 +107,7 @@ CommandsModel* MenuModel::launchCommands()
 LeaderboardModel* MenuModel::launchLeaderboard()
 {
     m_menuState = LEADERBOARD;
-    m_leaderboard = new LeaderboardModel(m_dataBase);
+    m_leaderboard = new LeaderboardModel(m_appCore);
     return m_leaderboard;
 }
 
@@ -120,7 +120,7 @@ LeaderboardModel* MenuModel::launchLeaderboard()
 ShopModel* MenuModel::launchShop()
 {
     m_menuState = SHOP;
-    m_shop = new ShopModel(m_dataBase);
+    m_shop = new ShopModel(m_appCore);
     return m_shop;
 }
 
@@ -133,6 +133,6 @@ ShopModel* MenuModel::launchShop()
 SettingsModel* MenuModel::launchSettings()
 {
     m_menuState = SETTINGS;
-    m_settings = new SettingsModel(m_dataBase);
+    m_settings = new SettingsModel(m_appCore);
     return m_settings;
 }

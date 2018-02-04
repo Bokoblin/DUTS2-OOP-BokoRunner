@@ -29,7 +29,7 @@ class SplashScreenModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit SplashScreenModel(DataBase *dataBase);
+    explicit SplashScreenModel(AppCore *appCore);
     ~SplashScreenModel() override;
 
     //=== METHODS

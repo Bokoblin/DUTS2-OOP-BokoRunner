@@ -9,14 +9,14 @@ using std::vector;
 //------------------------------------------------
 
 /**
- * Constructs a Settings model with database
+ * Constructs a Settings model with app core
  *
- * @param dataBase the common app's dataBase
+ * @param appCore the app's core singleton
  *
  * @author Arthur
  * @date 11/05/16 - 04/02/18
  */
-ShopModel::ShopModel(DataBase *dataBase) :  AbstractModel(dataBase)
+ShopModel::ShopModel(AppCore *appCore) :  AbstractModel(appCore)
 {
     PersistenceManager::fetchConfiguration();
     PersistenceManager::fetchActivatedBonus();
@@ -57,16 +57,16 @@ vector<ShopItem*> ShopModel::getShopItemsArray() const { return m_shopItemsArray
  */
 bool ShopModel::buyItem(ShopItem *item)
 {
-    if (!item->isBought() && item->getPrice() <= m_dataBase->getWallet())
+    if (!item->isBought() && item->getPrice() <= m_appCore->getWallet())
     {
         //=== update objects
 
-        m_dataBase->decreaseWallet(item->getPrice());
+        m_appCore->decreaseWallet(item->getPrice());
         item->buy();
 
         //=== update config files
 
-        m_dataBase->addNewActivatedBonus(item->getId());
+        m_appCore->addNewActivatedBonus(item->getId());
         PersistenceManager::updatePersistence(); //FIXME: Needed by shopView for retrieval from file
 
         return true;

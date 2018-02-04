@@ -12,10 +12,10 @@ using Bokoblin::SimpleLogger::Logger;
  *
  * @param width the app's width
  * @param height the app's height
- * @param dataBase the app's dataBase
+ * @param appCore the app's core singleton
  */
-GameModel::GameModel(float width, float height, DataBase *dataBase) :
-        AbstractModel(dataBase), m_width{width}, m_height{height}, m_gameState{RUNNING}, m_inTransition{false},
+GameModel::GameModel(float width, float height, AppCore *appCore) :
+        AbstractModel(appCore), m_width{width}, m_height{height}, m_gameState{RUNNING}, m_inTransition{false},
         m_isTransitionPossible{false}, m_currentZone{HILL}, m_gameSlowSpeed{0},
         m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},
         m_lastTime{system_clock::now()}, m_bonusTimeout{0}
@@ -23,11 +23,11 @@ GameModel::GameModel(float width, float height, DataBase *dataBase) :
     //=== Initialize new game
 
     PersistenceManager::fetchActivatedBonus();
-    m_dataBase->launchNewGame();
+    m_appCore->launchNewGame();
 
     addANewMovableElement(DEFAULT_PLAYER_X, GAME_FLOOR, PLAYER);
 
-    if (m_dataBase->getDifficulty() == EASY)
+    if (m_appCore->getDifficulty() == EASY)
         m_gameSpeed = DEFAULT_SPEED;
     else
         m_gameSpeed = 2 * DEFAULT_SPEED;
@@ -103,7 +103,7 @@ void GameModel::nextStep()
                 m_gameSpeed += SPEED_STEP;
             }
 
-            m_dataBase->increaseCurrentDistance(m_gameSpeed/5);
+            m_appCore->increaseCurrentDistance(m_gameSpeed/5);
 
 
             //=== Handle Movable Elements Creation & Deletion
@@ -138,8 +138,8 @@ void GameModel::nextStep()
 
             //=== Handle transition status
 
-            if (m_dataBase->getCurrentDistance() != 0
-                && m_dataBase->getCurrentDistance()%ZONE_CHANGING_DISTANCE == 0)
+            if (m_appCore->getCurrentDistance() != 0
+                && m_appCore->getCurrentDistance()%ZONE_CHANGING_DISTANCE == 0)
                 m_isTransitionPossible = true;
 
 
@@ -153,7 +153,7 @@ void GameModel::nextStep()
     }
     else if (m_gameState == OVER)
     {
-        m_dataBase->setCurrentScore(m_gameSpeed);
+        m_appCore->calculateFinalScore(m_gameSpeed);
     }
 }
 
@@ -179,7 +179,7 @@ void GameModel::chooseTimeSpacing(int elementType)
             else
                 m_chosenEnemyTimeSpacing = RandomUtils::getUniformRandomNumber(0, 40); //Between 0 and 40 meters
 
-            if (m_dataBase->getDifficulty() != EASY)
+            if (m_appCore->getDifficulty() != EASY)
                 m_chosenEnemyTimeSpacing /= 2;
         }
             break;
@@ -378,16 +378,16 @@ void GameModel::handleEnemyCollision(MovableElementType enemyType)
     if (m_player->getState() == MEGA) {
         //Earn points by flattening enemies
         if (enemyType == STANDARD_ENEMY)
-            m_dataBase->increaseCurrentFlattenedEnemies(MEGA_BONUS_FLATTENED_STD);
+            m_appCore->increaseCurrentFlattenedEnemies(MEGA_BONUS_FLATTENED_STD);
         else if (enemyType == TOTEM_ENEMY)
-            m_dataBase->increaseCurrentFlattenedEnemies(MEGA_BONUS_FLATTENED_TOTEM);
+            m_appCore->increaseCurrentFlattenedEnemies(MEGA_BONUS_FLATTENED_TOTEM);
         else
-            m_dataBase->increaseCurrentFlattenedEnemies(MEGA_BONUS_FLATTENED_BLOCK);
+            m_appCore->increaseCurrentFlattenedEnemies(MEGA_BONUS_FLATTENED_BLOCK);
     }
     else if (m_player->getState() == SHIELD
              && m_bonusTimeout.count() != milliseconds(SHIELD_TIMEOUT).count())
     {
-        if (m_dataBase->findActivatedItem("shield_plus"))
+        if (m_appCore->findActivatedItem("shield_plus"))
             m_bonusTimeout = milliseconds(SHIELD_TIMEOUT);
         else
             m_player->changeState(NORMAL);
@@ -397,7 +397,7 @@ void GameModel::handleEnemyCollision(MovableElementType enemyType)
         m_player->changeState(NORMAL);
     }
     else {
-        if (m_dataBase->getDifficulty() == EASY)
+        if (m_appCore->getDifficulty() == EASY)
         {
             if (enemyType == STANDARD_ENEMY)
                 m_player->setLife(m_player->getLife() - COLLISION_DAMAGE_STD);
@@ -426,8 +426,8 @@ void GameModel::handleEnemyCollision(MovableElementType enemyType)
  */
 void GameModel::handleCoinCollision() const
 {
-    m_dataBase->increaseCurrentCoinsCollected(
-            m_dataBase->findActivatedItem("doubler") ? 2 : 1);
+    m_appCore->increaseCurrentCoinsCollected(
+            m_appCore->findActivatedItem("doubler") ? 2 : 1);
 }
 
 
@@ -445,14 +445,14 @@ void GameModel::handleBonusCollision(MovableElementType bonusType)
     else if (bonusType == MEGA_BONUS)
     {
         m_player->changeState(MEGA);
-        m_bonusTimeout = milliseconds(m_dataBase->findActivatedItem("mega_plus")
+        m_bonusTimeout = milliseconds(m_appCore->findActivatedItem("mega_plus")
                                               ? MEGA_TIMEOUT + ADDITIONAL_TIMEOUT
                                               : MEGA_TIMEOUT);
     }
     else if (bonusType == FLY_BONUS)
     {
         m_player->changeState(FLY);
-        m_bonusTimeout = milliseconds(m_dataBase->findActivatedItem("fly_plus")
+        m_bonusTimeout = milliseconds(m_appCore->findActivatedItem("fly_plus")
                                               ? FLY_TIMEOUT + ADDITIONAL_TIMEOUT
                                               : FLY_TIMEOUT);
     }

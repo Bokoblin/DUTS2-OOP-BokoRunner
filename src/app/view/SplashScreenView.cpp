@@ -90,7 +90,7 @@ void SplashScreenView::synchronize()
     {
         if (m_farBackground->getLight() >= 245)
         {
-            m_splashModel->getDataBase()->setAppState(MENU);
+            m_splashModel->getAppCore()->setAppState(MENU);
         }
         else
         {
@@ -145,7 +145,7 @@ bool SplashScreenView::handleEvents(sf::Event event)
     {
         if  (event.type == sf::Event::Closed)
         {
-            m_splashModel->getDataBase()->setAppState(QUIT);
+            m_splashModel->getAppCore()->setAppState(QUIT);
             return false;
         }
 

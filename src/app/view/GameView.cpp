@@ -28,7 +28,7 @@ GameView::GameView(sf::RenderWindow *window, AppTextManager *textManager, GameMo
 
     //=== change default game music if in master mode
 
-    string game_music = (m_game->getDataBase()->getDifficulty() == EASY)
+    string game_music = (m_game->getAppCore()->getDifficulty() == EASY)
                         ? GAME_MUSIC_THEME_EASY_MODE
                         : GAME_MUSIC_THEME_HARD_MODE;
 
@@ -43,14 +43,14 @@ GameView::GameView(sf::RenderWindow *window, AppTextManager *textManager, GameMo
 
     //=== change ball skin if not default one
 
-    if (m_game->getDataBase()->getBallSkin() == "morphing")
+    if (m_game->getAppCore()->getBallSkin() == "morphing")
     {
         vector<sf::IntRect> clipRect;
         for (int i=0; i<8; i++)
             clipRect.emplace_back(50 * i, 50, 50, 50);
         m_playerSprite->setClipRectArray(clipRect);
     }
-    else if (m_game->getDataBase()->getBallSkin() == "capsule")
+    else if (m_game->getAppCore()->getBallSkin() == "capsule")
     {
         vector<sf::IntRect> clipRect;
         for (int i=0; i<8; i++)
@@ -210,7 +210,7 @@ void GameView::loadImages()
                                     GAME_BUTTONS_IMAGE, clipRect_resume);
     m_resumeGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_resumeGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_resumeGameButton->retrieveAndSyncLabel(m_game->getDataBase()->getLanguageFile());
+    m_resumeGameButton->retrieveAndSyncLabel(m_game->getAppCore()->getLanguageFile());
 
     vector<sf::IntRect> clipRect_restart;
     clipRect_restart.emplace_back(0, 50, 50, 50);
@@ -219,7 +219,7 @@ void GameView::loadImages()
                                      GAME_BUTTONS_IMAGE, clipRect_restart);
     m_restartGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_restartGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_restartGameButton->retrieveAndSyncLabel(m_game->getDataBase()->getLanguageFile());
+    m_restartGameButton->retrieveAndSyncLabel(m_game->getAppCore()->getLanguageFile());
 
 
     vector<sf::IntRect> clipRect_home;
@@ -229,7 +229,7 @@ void GameView::loadImages()
                                   GAME_BUTTONS_IMAGE, clipRect_home);
     m_goToHomeButton->resize(PAUSE_BUTTONS_SIZE);
     m_goToHomeButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_goToHomeButton->retrieveAndSyncLabel(m_game->getDataBase()->getLanguageFile());
+    m_goToHomeButton->retrieveAndSyncLabel(m_game->getAppCore()->getLanguageFile());
 
     vector<sf::IntRect> clipRect_music;
     clipRect_music.emplace_back(0, 200, 50, 50);
@@ -238,14 +238,14 @@ void GameView::loadImages()
                                       GAME_BUTTONS_IMAGE, clipRect_music);
     m_controlMusicButton->resize(PAUSE_BUTTONS_SIZE);
     m_controlMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_controlMusicButton->retrieveAndSyncLabel(m_game->getDataBase()->getLanguageFile());
+    m_controlMusicButton->retrieveAndSyncLabel(m_game->getAppCore()->getLanguageFile());
 
     vector<sf::IntRect> clipRect_save;
     clipRect_save.emplace_back(RAISED_BUTTON_DEFAULT);
     clipRect_save.emplace_back(RAISED_BUTTON_PRESSED);
     m_saveScoreButton = new mdsf::Button(m_width / 2 - 75, 350, 150, 36, "end_save_button",
                                    RECT_BUTTONS_IMAGE, clipRect_save);
-    m_saveScoreButton->retrieveAndSyncLabel(m_game->getDataBase()->getLanguageFile());
+    m_saveScoreButton->retrieveAndSyncLabel(m_game->getAppCore()->getLanguageFile());
     m_saveScoreButton->setColor(mdsf::Color::MaterialGreenA700);
 
 
@@ -675,7 +675,7 @@ void GameView::draw() const
 void GameView::handleMusic()
 {
     //change music volume
-    if (m_game->getDataBase()->isGameMusicEnabled())
+    if (m_game->getAppCore()->isGameMusicEnabled())
     {
         vector<sf::IntRect> clipRect;
         clipRect.emplace_back(0, 200, 50, 50);
@@ -785,12 +785,12 @@ bool GameView::handlePausedGameEvents(sf::Event event)
         }
         else if (m_goToHomeButton->contains(MOUSE_POSITION))
         {
-            m_game->getDataBase()->setAppState(MENU);
+            m_game->getAppCore()->setAppState(MENU);
             return false;
         }
         else if (m_controlMusicButton->contains(MOUSE_POSITION))
         {
-            m_game->getDataBase()->setGameMusic(!m_game->getDataBase()->isGameMusicEnabled());
+            m_game->getAppCore()->setGameMusic(!m_game->getAppCore()->isGameMusicEnabled());
             handleMusic();
         }
     }
@@ -833,13 +833,13 @@ bool GameView::handleGameOverEvents(sf::Event event)
         }
         else if (m_goToHomeButton->contains(MOUSE_POSITION))
         {
-            m_game->getDataBase()->setAppState(MENU);
+            m_game->getAppCore()->setAppState(MENU);
             return false;
         }
         else if (m_saveScoreButton->contains(MOUSE_POSITION))
         {
             m_saveScoreButton->hide();
-            m_game->getDataBase()->saveCurrentGame();
+            m_game->getAppCore()->saveCurrentGame();
             PersistenceManager::updatePersistence();
         }
     }
@@ -866,7 +866,7 @@ bool GameView::handleEvents(sf::Event event)
 
         if (event.type == sf::Event::Closed)
         {
-            m_game->getDataBase()->setAppState(QUIT);
+            m_game->getAppCore()->setAppState(QUIT);
             return false;
         }
 

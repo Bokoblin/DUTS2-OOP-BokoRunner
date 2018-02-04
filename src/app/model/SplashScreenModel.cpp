@@ -8,8 +8,8 @@ using std::chrono::system_clock;
  * @author Arthur
  * @date 29/01/17 - 24/12/17
  */
-SplashScreenModel::SplashScreenModel(DataBase *dataBase) :
-    AbstractModel(dataBase), m_isContinueVisible{true}, m_inEndingPhase{false},
+SplashScreenModel::SplashScreenModel(AppCore *appCore) :
+    AbstractModel(appCore), m_isContinueVisible{true}, m_inEndingPhase{false},
     m_lastTime{system_clock::now()}, m_continueBlinkingMonitor{0}
 {
     m_continueBlinkingMonitor = milliseconds(CONTINUE_VISIBLE_TIMEOUT);

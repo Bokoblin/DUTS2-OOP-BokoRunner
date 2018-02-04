@@ -38,7 +38,7 @@ class AppTextManager
 {
     public:
     //=== CTORs / DTORs
-    AppTextManager(DataBase *dataBase, unsigned int width, unsigned int height);
+    AppTextManager(AppCore *appCore, unsigned int width, unsigned int height);
     AppTextManager(const AppTextManager& myText) = delete;
     ~AppTextManager();
 
@@ -77,7 +77,7 @@ private:
     sf::Font m_regularFont;
     sf::Font m_condensedFont;
     sf::Font m_BoldFont;
-    DataBase *m_dataBase;
+    AppCore *m_appCore;
     std::vector<mdsf::Text*> m_textList;
 
     //Splash screen label

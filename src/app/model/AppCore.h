@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef DATABASE_H
-#define DATABASE_H
+#ifndef APP_CORE_H
+#define APP_CORE_H
 
 #include <set>
 #include "libs/Logger/Logger.h"
@@ -24,20 +24,24 @@ limitations under the License.
 #include "app/utils/constants.h"
 
 /**
- * The DataBase class concentrates
- * all the app's data for configuration,
- * statistics, buyable items, scores,
- * current game's values, etc.
+ * The AppCore class centralises app's state,
+ * configuration, statistics, bonus, scores,
+ * and current game's values. \n
+ * It allows accessing, modifying app data and state
+ * directly or for specific actions involving data changes
+ *
+ * to do specific actions to the app
+ *
  * @author Arthur
- * @date 02/05/16 - 27/12/17
+ * @date 02/05/16 - 04/02/18
  */
-class DataBase
+class AppCore
 {
 public:
     //=== CTORs / DTORs
-    DataBase();
-    DataBase(const DataBase& d)=delete;
-    ~DataBase();
+    AppCore();
+    AppCore(const AppCore& d)=delete;
+    ~AppCore();
 
     //=== GETTERS
     AppState getAppState() const;
@@ -56,9 +60,11 @@ public:
     int getDifficulty() const;
     bool isMenuMusicEnabled() const;
     bool isGameMusicEnabled() const;
+    bool isScoreEasyArrayEmpty() const;
+    bool isScoreHardArrayEmpty() const;
     std::string getLanguage() const;
     std::string getBallSkin() const;
-    std::string getLanguageFile() const;
+    std::string getLanguageFile() const; //TODO: move to persistence ?
 
     //=== SETTERS
     void setAppState(AppState state);
@@ -66,7 +72,6 @@ public:
     void increaseCurrentCoinsCollected(int amount);
     void increaseCurrentDistance(float amount);
     void increaseCurrentFlattenedEnemies(int amount);
-    void setCurrentScore(float speed);
     void setDifficulty(int difficulty);
     void setLanguage(const std::string &language);
     void setBallSkin(const std::string &skin);
@@ -81,8 +86,7 @@ public:
     void clearAppData();
     bool findActivatedItem(const std::string &itemLabel);
     void addNewActivatedBonus(const std::string &itemLabel);
-    bool isScoreEasyArrayEmpty() const;
-    bool isScoreHardArrayEmpty() const;
+    void calculateFinalScore(float speed);
     std::string stringifyLeaderboard(Difficulty difficulty) const;
 
 private:

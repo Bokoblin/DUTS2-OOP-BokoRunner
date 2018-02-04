@@ -37,7 +37,7 @@ class SettingsModel : public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit SettingsModel(DataBase *dataBase);
+    explicit SettingsModel(AppCore *appCore);
     ~SettingsModel() override;
 
     //=== GETTERS

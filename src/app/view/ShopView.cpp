@@ -83,7 +83,7 @@ void ShopView::createCards()
     for (ShopItem *item : m_shop->getShopItemsArray())
     {
         ShopItemCard *card = new ShopItemCard(i, item);
-        card->syncWithButtonLabelRetrieval(m_shop->getDataBase()->getLanguageFile());
+        card->syncWithButtonLabelRetrieval(m_shop->getAppCore()->getLanguageFile());
         card->hide(); //to display by pages
         m_shopItemCardsArray.push_back(card);
         i++;
@@ -239,7 +239,7 @@ bool ShopView::handleEvents(sf::Event event)
                     delete m_buyDialog;
                     m_buyDialog = new ShopDialog(m_width/2 - 125, m_height/2 - 100, 250, 200,
                                                  "shop_item_details", card->getItem());
-                    DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, m_shop->getDataBase()->getLanguageFile());
+                    DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, m_shop->getAppCore()->getLanguageFile());
                     m_buyDialog->show();
                 }
         }
@@ -257,13 +257,13 @@ bool ShopView::handleEvents(sf::Event event)
                     const std::string operationResult = m_shop->buyItem(shopItem)
                             ? "shop_buying_success" : "shop_buying_failure";
                     m_buyDialog = new mdsf::Dialog(m_width/2 - 125, m_height/2 - 50, 250, 100, operationResult);
-                    DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, m_shop->getDataBase()->getLanguageFile());
+                    DialogBuilder::retrieveCorrespondingStrings(m_buyDialog, m_shop->getAppCore()->getLanguageFile());
 
                     if (operationResult == "shop_buying_success")
                     {
                         for (auto &card : m_shopItemCardsArray)
                             if (card->getItem() == shopItem)
-                                card->syncWithButtonLabelRetrieval(m_shop->getDataBase()->getLanguageFile());
+                                card->syncWithButtonLabelRetrieval(m_shop->getAppCore()->getLanguageFile());
                     }
                 }
                 else

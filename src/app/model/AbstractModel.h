@@ -16,11 +16,11 @@ limitations under the License.
 #ifndef ABSTRACT_MODEL_H
 #define ABSTRACT_MODEL_H
 
-#include "app/model/DataBase.h"
+#include "app/model/AppCore.h"
 
 /**
  * The AbstractModel class provides
- * a database and a nextStep method
+ * an app core and a nextStep method
  * for its inherited classes.
  *
  * @author Arthur, Florian
@@ -30,18 +30,18 @@ class AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit AbstractModel(DataBase *dataBase);
+    explicit AbstractModel(AppCore *appCore);
     virtual ~AbstractModel();
 
     //=== GETTERS
-    DataBase *getDataBase() const;
+    AppCore *getAppCore() const;
 
     //=== METHODS
     virtual void nextStep()=0;
 
 protected:
     //=== ATTRIBUTES
-    DataBase *m_dataBase;
+    AppCore *m_appCore;
 };
 
 #endif

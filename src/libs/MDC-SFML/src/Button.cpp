@@ -184,7 +184,7 @@ void Button::retrieveLabel(const string &stringsFilename)
 {
     if (!m_label.getDescription().empty())
     {
-        string utf8_string = XMLPersistenceHelper::loadLabeledString(stringsFilename, m_label.getDescription());
+        string utf8_string = XMLHelper::loadLabeledString(stringsFilename, m_label.getDescription());
         m_label.setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
     }
 }

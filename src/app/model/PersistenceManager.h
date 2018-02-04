@@ -19,7 +19,7 @@ limitations under the License.
 #include <set>
 #include <fstream>
 #include "libs/Logger/Logger.h"
-#include "libs/XMLPersistenceHelper/XMLPersistenceHelper.h"
+#include "libs/XMLHelper/XMLHelper.h"
 #include "app/enum/AppState.h"
 #include "app/enum/Difficulty.h"
 #include "app/model/DataBase.h"
@@ -49,7 +49,6 @@ class PersistenceException
 class PersistenceManager
 {
 public:
-
     //=== METHODS
     static void initPersistenceManager(DataBase *database);
     static void closePersistenceManager();
@@ -63,6 +62,7 @@ public:
     static void deletePersistence();
 
 private:
+    //=== METHODS
     static void createConfigFile();
     static bool checkConfigFileIntegrity();
     static bool fetchConfigurationFromConfigFile();
@@ -70,6 +70,7 @@ private:
     static bool fetchLeaderboardFromConfigFile();
     static bool persistConfigurationToConfigFile();
 
+    //=== ATTRIBUTES
     static bool m_isInit;
     static DataBase *m_database;
 };

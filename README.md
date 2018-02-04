@@ -81,7 +81,7 @@ Notes:
 	- **Kernel**: x86_64 Linux 4.4.0-43-Microsoft
 	- **Compiler**: g++-4.9
 	- **Environment**: local (Windows Subsystem for Linux)
-	- **Compilation**: OK g++-4.9, KO clang 3.8.0 (sfml linking failure)
+	- **Compilation**: OK
 	- **Execution**: Not possible (even with x-server)
 	
 - **Ubuntu 14.04 LTS - Trusty**

@@ -1,4 +1,4 @@
-#include "XMLPersistenceHelper.h"
+#include "XMLHelper.h"
 
 using std::fstream;
 using std::string;
@@ -19,7 +19,7 @@ using Bokoblin::SimpleLogger::Logger;
  * @author Arthur
  * @date 02/05/16 - 22/01/18
  */
-void XMLPersistenceHelper::createXMLFile(const std::string &filename, const std::string &content)
+void XMLHelper::createXMLFile(const std::string &filename, const std::string &content)
 {
     fstream f;
     f.open(filename.c_str(), ios::out);
@@ -38,7 +38,7 @@ void XMLPersistenceHelper::createXMLFile(const std::string &filename, const std:
  * @author Arthur
  * @date ??
  */
-bool XMLPersistenceHelper::checkXMLFileIntegrity(const std::string &filename)
+bool XMLHelper::checkXMLFileIntegrity(const std::string &filename)
 {
     fstream f;
     string line;
@@ -69,7 +69,7 @@ bool XMLPersistenceHelper::checkXMLFileIntegrity(const std::string &filename)
  * @author Arthur
  * @date 22/01/18
  */
-bool XMLPersistenceHelper::loadXMLFile(pugi::xml_document &xmlDocumentObject, const std::string &filename)
+bool XMLHelper::loadXMLFile(pugi::xml_document &xmlDocumentObject, const std::string &filename)
 {
     pugi::xml_parse_result loadingResult = xmlDocumentObject.load_file(filename.c_str());
 
@@ -96,12 +96,12 @@ bool XMLPersistenceHelper::loadXMLFile(pugi::xml_document &xmlDocumentObject, co
  * @author Arthur
  * @date 04/01/17 - 25/01/18
  */
-string XMLPersistenceHelper::loadLabeledString(const string &filename, const string &label)
+string XMLHelper::loadLabeledString(const string &filename, const string &label)
 {
     const string default_value = "<" + label + ">";
     pugi::xml_document doc;
 
-    if (XMLPersistenceHelper::loadXMLFile(doc, filename))
+    if (XMLHelper::loadXMLFile(doc, filename))
     {
         pugi::xml_node resources = doc.child("resources");
 
@@ -131,7 +131,7 @@ string XMLPersistenceHelper::loadLabeledString(const string &filename, const str
  * @author Arthur
  * @date 26/01/18
  */
-template<> bool XMLPersistenceHelper::safeRetrieveXMLValue<bool>
+template<> bool XMLHelper::safeRetrieveXMLValue<bool>
         (const pugi::xml_attribute &attribute, const std::string &regexString, const bool &defaultValue)
 {
     const std::string result = std::string(attribute.value());
@@ -156,7 +156,7 @@ template<> bool XMLPersistenceHelper::safeRetrieveXMLValue<bool>
  * @author Arthur
  * @date 26/01/18
  */
-template<> int XMLPersistenceHelper::safeRetrieveXMLValue<int>
+template<> int XMLHelper::safeRetrieveXMLValue<int>
         (const pugi::xml_attribute &attribute, const std::string &regexString, const int &defaultValue)
 {
     const std::string result = std::string(attribute.value());
@@ -181,7 +181,7 @@ template<> int XMLPersistenceHelper::safeRetrieveXMLValue<int>
  * @author Arthur
  * @date 26/01/18
  */
-template<> string XMLPersistenceHelper::safeRetrieveXMLValue<string>
+template<> string XMLHelper::safeRetrieveXMLValue<string>
         (const pugi::xml_attribute &attribute, const std::string &regexString, const string &defaultValue)
 {
     const std::string result = std::string(attribute.value());
@@ -206,7 +206,7 @@ template<> string XMLPersistenceHelper::safeRetrieveXMLValue<string>
  * @author Arthur
  * @date 26/01/18
  */
-template<> unsigned int XMLPersistenceHelper::safeRetrieveXMLValue<unsigned int>
+template<> unsigned int XMLHelper::safeRetrieveXMLValue<unsigned int>
         (const pugi::xml_attribute &attribute, const std::string &regexString, const unsigned int &defaultValue)
 {
     const std::string result = std::string(attribute.value());

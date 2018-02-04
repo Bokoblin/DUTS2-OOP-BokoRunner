@@ -19,7 +19,7 @@ limitations under the License.
 #include "LabelPosition.h"
 #include "Sprite.h"
 #include "Text.h"
-#include "libs/XMLPersistenceHelper/XMLPersistenceHelper.h"
+#include "libs/XMLHelper/XMLHelper.h"
 
 namespace Bokoblin
 {

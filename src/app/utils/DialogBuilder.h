@@ -40,62 +40,58 @@ public:
      * @param stringsFilename the strings filename for localization
      *
      * @author Arthur
-     * @date 16/04/17 - 26/01/18
+     * @date 16/04/17 - 04/02/18
      */
     static void retrieveCorrespondingStrings(mdsf::Dialog *dialog, const std::string &stringsFilename)
     {
         if (dialog != nullptr)
         {
-            std::string utf8_titleString;
-            std::string utf8_contentString;
-            std::string utf8_cancelString;
-            std::string utf8_okString;
+            std::string utf8_dialog_title;
+            std::string utf8_dialog_content;
+            std::string utf8_dialog_cancel;
+            std::string utf8_dialog_ok;
 
             if (dialog->getContext() == "shop_item_details")
             {
                 ShopDialog *shopDialog = dynamic_cast<ShopDialog*>(dialog);
-                utf8_titleString = XMLPersistenceHelper::loadLabeledString(stringsFilename, "shop_dialog_title");
-                utf8_contentString = XMLPersistenceHelper::loadLabeledString(stringsFilename, "shop_dialog_content");
-                utf8_contentString.replace(utf8_contentString.find("$NAME"), 5,
-                                           shopDialog->getLinkedShopItem()->getName());
-                utf8_contentString.replace(utf8_contentString.find("$PRICE"), 6,
-                                           std::to_string(shopDialog->getLinkedShopItem()->getPrice()));
-                utf8_cancelString = XMLPersistenceHelper::loadLabeledString(stringsFilename, "dialog_cancel");
-                utf8_okString = XMLPersistenceHelper::loadLabeledString(stringsFilename, "dialog_ok");
+                utf8_dialog_title = XMLHelper::loadLabeledString(stringsFilename, "shop_dialog_title");
+                utf8_dialog_content = XMLHelper::loadLabeledString(stringsFilename, "shop_dialog_content");
+                utf8_dialog_content.replace(utf8_dialog_content.find("$NAME"), 5,
+                                            shopDialog->getLinkedShopItem()->getName());
+                utf8_dialog_content.replace(utf8_dialog_content.find("$PRICE"), 6,
+                                            std::to_string(shopDialog->getLinkedShopItem()->getPrice()));
+                utf8_dialog_cancel = XMLHelper::loadLabeledString(stringsFilename, "dialog_cancel");
+                utf8_dialog_ok = XMLHelper::loadLabeledString(stringsFilename, "dialog_ok");
             }
             else if (dialog->getContext() == "shop_buying_success")
             {
-                utf8_contentString = XMLPersistenceHelper::loadLabeledString(stringsFilename, "shop_dialog_success");
-                utf8_okString = XMLPersistenceHelper::loadLabeledString(stringsFilename, "dialog_ok");
+                utf8_dialog_content = XMLHelper::loadLabeledString(stringsFilename, "shop_dialog_success");
+                utf8_dialog_ok = XMLHelper::loadLabeledString(stringsFilename, "dialog_ok");
             }
             else if (dialog->getContext() == "shop_buying_failure")
             {
-                utf8_contentString = XMLPersistenceHelper::loadLabeledString(stringsFilename, "shop_dialog_failure");
-                utf8_okString = XMLPersistenceHelper::loadLabeledString(stringsFilename, "dialog_ok");
+                utf8_dialog_content = XMLHelper::loadLabeledString(stringsFilename, "shop_dialog_failure");
+                utf8_dialog_ok = XMLHelper::loadLabeledString(stringsFilename, "dialog_ok");
             }
             else if (dialog->getContext() == "confirm_data_delete")
             {
-                utf8_titleString = XMLPersistenceHelper::loadLabeledString(
-                        stringsFilename, "confirm_data_delete_dialog_title");
-                utf8_contentString = XMLPersistenceHelper::loadLabeledString(
-                        stringsFilename, "confirm_data_delete_dialog_content");
-                utf8_cancelString = XMLPersistenceHelper::loadLabeledString(stringsFilename, "dialog_cancel");
-                utf8_okString = XMLPersistenceHelper::loadLabeledString(stringsFilename, "dialog_ok");
+                utf8_dialog_title = XMLHelper::loadLabeledString(stringsFilename, "confirm_data_delete_dialog_title");
+                utf8_dialog_content = XMLHelper::loadLabeledString(stringsFilename, "confirm_data_delete_dialog_content");
+                utf8_dialog_cancel = XMLHelper::loadLabeledString(stringsFilename, "dialog_cancel");
+                utf8_dialog_ok = XMLHelper::loadLabeledString(stringsFilename, "dialog_ok");
             }
             else if (dialog->getContext() == "confirm_leaderboard_delete")
             {
-                utf8_titleString = XMLPersistenceHelper::loadLabeledString(
-                        stringsFilename, "confirm_leaderboard_delete_dialog_title");
-                utf8_contentString = XMLPersistenceHelper::loadLabeledString(
-                        stringsFilename, "confirm_leaderboard_delete_dialog_content");
-                utf8_cancelString = XMLPersistenceHelper::loadLabeledString(stringsFilename, "dialog_cancel");
-                utf8_okString = XMLPersistenceHelper::loadLabeledString(stringsFilename, "dialog_ok");
+                utf8_dialog_title = XMLHelper::loadLabeledString(stringsFilename, "confirm_leaderboard_delete_dialog_title");
+                utf8_dialog_content = XMLHelper::loadLabeledString(stringsFilename, "confirm_leaderboard_delete_dialog_content");
+                utf8_dialog_cancel = XMLHelper::loadLabeledString(stringsFilename, "dialog_cancel");
+                utf8_dialog_ok = XMLHelper::loadLabeledString(stringsFilename, "dialog_ok");
             }
 
-            dialog->setTitleText(sf::String::fromUtf8(utf8_titleString.begin(), utf8_titleString.end()));
-            dialog->setContentText(sf::String::fromUtf8(utf8_contentString.begin(), utf8_contentString.end()));
-            dialog->setCancelButtonText(sf::String::fromUtf8(utf8_cancelString.begin(), utf8_cancelString.end()));
-            dialog->setOkButtonText(sf::String::fromUtf8(utf8_okString.begin(), utf8_okString.end()));
+            dialog->setTitleText(sf::String::fromUtf8(utf8_dialog_title.begin(), utf8_dialog_title.end()));
+            dialog->setContentText(sf::String::fromUtf8(utf8_dialog_content.begin(), utf8_dialog_content.end()));
+            dialog->setCancelButtonText(sf::String::fromUtf8(utf8_dialog_cancel.begin(), utf8_dialog_cancel.end()));
+            dialog->setOkButtonText(sf::String::fromUtf8(utf8_dialog_ok.begin(), utf8_dialog_ok.end()));
         }
         else
             sl::Logger::printErrorOnConsole("NULL dialog passed in parameter");

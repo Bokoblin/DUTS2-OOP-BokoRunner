@@ -22,14 +22,14 @@ limitations under the License.
 #include "libs/Logger/Logger.h"
 
 /**
- * The XMLPersistenceHelper class provides high-level methods
+ * The XMLHelper class provides high-level methods
  * to work with an xml file handler object in order to read or write in the file.
  * It abstracts PugiXML usage from other classes visibility
  *
  * @author Arthur
- * @date 22/01/18 - 26/01/18
+ * @date 22/01/18 - 04/02/18
  */
-class XMLPersistenceHelper
+class XMLHelper
 {
 public:
     //=== METHODS
@@ -81,16 +81,16 @@ public:
     }
 };
 
-template<> bool XMLPersistenceHelper::safeRetrieveXMLValue<bool>
+template<> bool XMLHelper::safeRetrieveXMLValue<bool>
         (const pugi::xml_attribute &attribute, const std::string &regexString, const bool &defaultValue);
 
-template<> int XMLPersistenceHelper::safeRetrieveXMLValue<int>
+template<> int XMLHelper::safeRetrieveXMLValue<int>
         (const pugi::xml_attribute &attribute, const std::string &regexString, const int &defaultValue);
 
-template<> std::string XMLPersistenceHelper::safeRetrieveXMLValue<std::string>
+template<> std::string XMLHelper::safeRetrieveXMLValue<std::string>
         (const pugi::xml_attribute &attribute, const std::string &regexString, const std::string &defaultValue);
 
-template<> unsigned int XMLPersistenceHelper::safeRetrieveXMLValue<unsigned int>
+template<> unsigned int XMLHelper::safeRetrieveXMLValue<unsigned int>
         (const pugi::xml_attribute &attribute, const std::string &regexString, const unsigned int &defaultValue);
 
 #endif

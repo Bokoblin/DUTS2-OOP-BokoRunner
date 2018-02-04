@@ -55,7 +55,7 @@ void PersistenceManager::initPersistence()
 {
     pugi::xml_document doc; //TODO: Maybe use as member ?
 
-    if (XMLPersistenceHelper::loadXMLFile(doc, CONFIG_FILE))
+    if (XMLHelper::loadXMLFile(doc, CONFIG_FILE))
         Logger::printInfoOnConsole("Persistence loaded successfully");
     else
         createConfigFile();
@@ -158,7 +158,6 @@ void PersistenceManager::updatePersistence()
     {
         Logger::printErrorOnConsole("Persistence failure");
     }
-
 }
 
 /**
@@ -186,7 +185,7 @@ void PersistenceManager::deletePersistence()
  */
 void PersistenceManager::createConfigFile()
 {
-    XMLPersistenceHelper::createXMLFile(CONFIG_FILE, DEFAULT_CONFIG_CONTENT);
+    XMLHelper::createXMLFile(CONFIG_FILE, DEFAULT_CONFIG_CONTENT);
     Logger::printInfoOnConsole("Configuration file successfully created");
 }
 
@@ -282,7 +281,7 @@ bool PersistenceManager::checkConfigFileIntegrity()
 bool PersistenceManager::fetchConfigurationFromConfigFile()
 {
     pugi::xml_document doc;
-    if (XMLPersistenceHelper::loadXMLFile(doc, CONFIG_FILE))
+    if (XMLHelper::loadXMLFile(doc, CONFIG_FILE))
     {
         pugi::xml_node config = doc.child("runner").child("config");
         pugi::xml_node stats = doc.child("runner").child("stats");
@@ -292,32 +291,32 @@ bool PersistenceManager::fetchConfigurationFromConfigFile()
             //TODO: improve with multi-map ??
             if (string(configItem.attribute("name").value()) == "language")
             {
-                m_database->m_currentLanguage = XMLPersistenceHelper::safeRetrieveXMLValue<string>
+                m_database->m_currentLanguage = XMLHelper::safeRetrieveXMLValue<string>
                         (configItem.attribute("value"), "en|fr|es", ENGLISH);
             }
             else if (string(configItem.attribute("name").value()) == "difficulty")
             {
-                m_database->m_currentDifficulty = XMLPersistenceHelper::safeRetrieveXMLValue<int>
+                m_database->m_currentDifficulty = XMLHelper::safeRetrieveXMLValue<int>
                         (configItem.attribute("value"), "1|2", HARD);
             }
             else if (string(configItem.attribute("name").value()) == "ball_skin")
             {
-                m_database->m_currentBallSkin = XMLPersistenceHelper::safeRetrieveXMLValue<string>
+                m_database->m_currentBallSkin = XMLHelper::safeRetrieveXMLValue<string>
                         (configItem.attribute("value"), "default|morphing|capsule", "default");
             }
             else if (string(configItem.attribute("name").value()) == "wallet")
             {
-                m_database->m_wallet = XMLPersistenceHelper::safeRetrieveXMLValue<unsigned int>
+                m_database->m_wallet = XMLHelper::safeRetrieveXMLValue<unsigned int>
                         (configItem.attribute("value"), "^(0|[1-9][0-9]*)$", 0);
             }
             else if (string(configItem.attribute("name").value()) == "menu_music")
             {
-                m_database->m_isMenuMusicEnabled = XMLPersistenceHelper::safeRetrieveXMLValue<bool>
+                m_database->m_isMenuMusicEnabled = XMLHelper::safeRetrieveXMLValue<bool>
                         (configItem.attribute("value"), "true|false", false);
             }
             else if (string(configItem.attribute("name").value()) == "game_music")
             {
-                m_database->m_isGameMusicEnabled = XMLPersistenceHelper::safeRetrieveXMLValue<bool>
+                m_database->m_isGameMusicEnabled = XMLHelper::safeRetrieveXMLValue<bool>
                         (configItem.attribute("value"), "true|false", false);
             }
         }
@@ -326,37 +325,37 @@ bool PersistenceManager::fetchConfigurationFromConfigFile()
         {
             if (string(statItem.attribute("name").value()) == "total_coins_collected")
             {
-                m_database->m_totalCoinsCollected = XMLPersistenceHelper::safeRetrieveXMLValue<unsigned int>
+                m_database->m_totalCoinsCollected = XMLHelper::safeRetrieveXMLValue<unsigned int>
                         (statItem.attribute("value"), "^(0|[1-9][0-9]*)$", 0);
             }
             else if (string(statItem.attribute("name").value()) == "total_distance_travelled")
             {
-                m_database->m_totalDistance = XMLPersistenceHelper::safeRetrieveXMLValue<unsigned int>
+                m_database->m_totalDistance = XMLHelper::safeRetrieveXMLValue<unsigned int>
                         (statItem.attribute("value"), "^(0|[1-9][0-9]*)$", 0);
             }
             else if (string(statItem.attribute("name").value()) == "total_enemies_destroyed")
             {
-                m_database->m_totalFlattenedEnemies = XMLPersistenceHelper::safeRetrieveXMLValue<unsigned int>
+                m_database->m_totalFlattenedEnemies = XMLHelper::safeRetrieveXMLValue<unsigned int>
                         (statItem.attribute("value"), "^(0|[1-9][0-9]*)$", 0);
             }
             else if (string(statItem.attribute("name").value()) == "per_game_coins_collected")
             {
-                m_database->m_perGameCoinsCollected = XMLPersistenceHelper::safeRetrieveXMLValue<unsigned int>
+                m_database->m_perGameCoinsCollected = XMLHelper::safeRetrieveXMLValue<unsigned int>
                         (statItem.attribute("value"), "^(0|[1-9][0-9]*)$", 0);
             }
             else if (string(statItem.attribute("name").value()) == "per_game_distance_travelled")
             {
-                m_database->m_perGameDistance = XMLPersistenceHelper::safeRetrieveXMLValue<unsigned int>
+                m_database->m_perGameDistance = XMLHelper::safeRetrieveXMLValue<unsigned int>
                         (statItem.attribute("value"), "^(0|[1-9][0-9]*)$", 0);
             }
             else if (string(statItem.attribute("name").value()) == "per_game_enemies_destroyed")
             {
-                m_database->m_perGameFlattenedEnemies = XMLPersistenceHelper::safeRetrieveXMLValue<unsigned int>
+                m_database->m_perGameFlattenedEnemies = XMLHelper::safeRetrieveXMLValue<unsigned int>
                         (statItem.attribute("value"), "^(0|[1-9][0-9]*)$", 0);
             }
             else if (string(statItem.attribute("name").value()) == "total_games_played")
             {
-                m_database->m_totalGamesPlayed = XMLPersistenceHelper::safeRetrieveXMLValue<unsigned int>
+                m_database->m_totalGamesPlayed = XMLHelper::safeRetrieveXMLValue<unsigned int>
                         (statItem.attribute("value"), "^(0|[1-9][0-9]*)$", 0);
             }
         }
@@ -377,7 +376,7 @@ bool PersistenceManager::fetchConfigurationFromConfigFile()
 bool PersistenceManager::fetchLeaderboardFromConfigFile()
 {
     pugi::xml_document doc;
-    if (XMLPersistenceHelper::loadXMLFile(doc, CONFIG_FILE))
+    if (XMLHelper::loadXMLFile(doc, CONFIG_FILE))
     {
         pugi::xml_node scoresEasy = doc.child("runner").child("scoresEasy");
         pugi::xml_node scoresHard = doc.child("runner").child("scoresHard");
@@ -389,7 +388,7 @@ bool PersistenceManager::fetchLeaderboardFromConfigFile()
         {
             if (string(scoreItem.attribute("value").value()) != "0")
             {
-                m_database->m_scoresEasyArray.insert(XMLPersistenceHelper::safeRetrieveXMLValue<unsigned int>
+                m_database->m_scoresEasyArray.insert(XMLHelper::safeRetrieveXMLValue<unsigned int>
                                                              (scoreItem.attribute("value"), "^(0|[1-9][0-9]*)$", 0));
             }
         }
@@ -397,7 +396,7 @@ bool PersistenceManager::fetchLeaderboardFromConfigFile()
         {
             if (string(scoreItem.attribute("value").value()) != "0")
             {
-                m_database->m_scoresHardArray.insert(XMLPersistenceHelper::safeRetrieveXMLValue<unsigned int>
+                m_database->m_scoresHardArray.insert(XMLHelper::safeRetrieveXMLValue<unsigned int>
                                                              (scoreItem.attribute("value"), "^(0|[1-9][0-9]*)$", 0));
             }
         }
@@ -417,7 +416,7 @@ bool PersistenceManager::fetchLeaderboardFromConfigFile()
 bool PersistenceManager::fetchActivatedBonusFromConfigFile()
 {
     pugi::xml_document doc;
-    if (XMLPersistenceHelper::loadXMLFile(doc, CONFIG_FILE))
+    if (XMLHelper::loadXMLFile(doc, CONFIG_FILE))
     {
         pugi::xml_node shop = doc.child("runner").child("shop");
 
@@ -425,7 +424,7 @@ bool PersistenceManager::fetchActivatedBonusFromConfigFile()
         {
             if (string(shopItem.attribute("bought").value()) == "true")
             {
-                m_database->m_activatedItemsArray.insert(XMLPersistenceHelper::safeRetrieveXMLValue<string>
+                m_database->m_activatedItemsArray.insert(XMLHelper::safeRetrieveXMLValue<string>
                                                                  (shopItem.attribute("id"), "shop_[a-z|A-Z]+", ""));
             }
         }
@@ -446,7 +445,7 @@ bool PersistenceManager::fetchActivatedBonusFromConfigFile()
 bool PersistenceManager::persistConfigurationToConfigFile()
 {
     pugi::xml_document doc;
-    if (XMLPersistenceHelper::loadXMLFile(doc, CONFIG_FILE))
+    if (XMLHelper::loadXMLFile(doc, CONFIG_FILE))
     {
         pugi::xml_node config = doc.child("runner").child("config");
         pugi::xml_node stats = doc.child("runner").child("stats");
@@ -591,5 +590,5 @@ string PersistenceManager::fetchLocalizedString(const string &label)
 {
     //TODO: recover xml once instead
     string currentLocaleFile = m_database->getLanguageFile();
-    return XMLPersistenceHelper::loadLabeledString(currentLocaleFile, label);
+    return XMLHelper::loadLabeledString(currentLocaleFile, label);
 }

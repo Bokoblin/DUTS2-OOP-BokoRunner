@@ -27,9 +27,9 @@ file(GLOB MDC-SFML_LIB
         )
 
 
-set(XML_PERSISTENCE_LIB
-        src/libs/XMLPersistenceHelper/XMLPersistenceHelper.h
-        src/libs/XMLPersistenceHelper/XMLPersistenceHelper.cpp
+set(XML_HELPER_LIB
+        src/libs/XMLHelper/XMLHelper.h
+        src/libs/XMLHelper/XMLHelper.cpp
         )
 
 
@@ -44,7 +44,7 @@ add_executable(
         ${EXECUTABLE_NAME}
         ${PUGIXML_LIB}
         ${LOGGER_LIB}
-        ${XML_PERSISTENCE_LIB}
+        ${XML_HELPER_LIB}
         ${MDC-SFML_LIB}
         ${SOURCE_FILES}
 )

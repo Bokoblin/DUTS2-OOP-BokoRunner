@@ -71,12 +71,12 @@ public:
     void decreaseWallet(int amount);
     void increaseCurrentCoinsCollected(int amount);
     void increaseCurrentDistance(float amount);
-    void increaseCurrentFlattenedEnemies(int amount);
+    void increaseCurrentFlattenedEnemies();
     void setDifficulty(int difficulty);
     void setLanguage(const std::string &language);
     void setBallSkin(const std::string &skin);
-    void setMenuMusic(bool on);
-    void setGameMusic(bool on);
+    void toggleMenuMusic();
+    void toggleGameMusic();
 
     //=== METHODS
     void addNewScore(int score);
@@ -86,7 +86,7 @@ public:
     void clearAppData();
     bool findActivatedItem(const std::string &itemLabel);
     void addNewActivatedBonus(const std::string &itemLabel);
-    void calculateFinalScore(float speed);
+    void calculateFinalScore(float speed, int flattenedEnemiesBonus);
     std::string stringifyLeaderboard(Difficulty difficulty) const;
 
 private:
@@ -107,13 +107,12 @@ private:
     int m_currentDifficulty;
     bool m_isMenuMusicEnabled;
     bool m_isGameMusicEnabled;
-    int m_scoreBonusFlattenedEnemies;
     std::string m_currentLanguage;
     std::string m_currentBallSkin;
     const int COIN_MULTIPLIER = 20;
     const int MAX_SCORES = 10;
 
-    //Current Game //TODO: can't be gameModel members only ?
+    //Current Game
     int m_currentCoinsNumber;
     float m_currentDistance;
     int m_currentFlattenedEnemies;

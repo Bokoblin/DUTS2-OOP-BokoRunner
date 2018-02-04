@@ -55,7 +55,7 @@ public:
     //=== SETTERS
     void setGameState(GameState state);
     void setTransitionState(bool inTransition);
-    void setTransitionPossibleState(bool state);
+    void disableTransitionPossibility();
     void setCurrentZone(Zone z);
 
     //=== PUBLIC METHODS
@@ -78,6 +78,7 @@ private:
     int m_chosenEnemyTimeSpacing;
     int m_chosenCoinTimeSpacing;
     int m_chosenBonusTimeSpacing;
+    int m_scoreBonusFlattenedEnemies;
     std::chrono::system_clock::time_point m_lastTime;
     std::chrono::milliseconds m_bonusTimeout;
     Player *m_player;
@@ -93,7 +94,6 @@ private:
     const int NEXT_STEP_DELAY = 100;
     const int ZONE_CHANGING_DISTANCE = 500;
     const int BONUS_ROW = GAME_FLOOR - 100;
-    const int SHIELD_TIMEOUT = -581374;
     const int MEGA_TIMEOUT = 10000;
     const int FLY_TIMEOUT = 15000;
     const int SLOW_SPEED_TIMEOUT = 20000;
@@ -110,14 +110,18 @@ private:
     const int COLLISION_DAMAGE_BLOCK = 25;
 
     //=== PRIVATE METHODS
-    void chooseTimeSpacing(int elementType);
-    bool checkIfPositionFree(float x, float y) const;
+    void handleSpeedAndDistance();
     void handleMovableElementsCreation();
+    void handleMovableElementsCollisions();
+    void handleMovableElementsDeletion();
     void handleEnemyCollision(MovableElementType enemyType);
     void handleCoinCollision() const;
     void handleBonusCollision(MovableElementType bonusType);
-    void handleMovableElementsCollisions();
-    void handleMovableElementsDeletion();
+    void handleBonusTimeout();
+    void conditionallyAllowZoneTransition();
+    void conditionallyTriggerGameOver();
+    void chooseTimeSpacing(int elementType);
+    bool checkIfPositionFree(float x, float y) const;
     void addANewMovableElement(float posX, float posY, int type);
 };
 

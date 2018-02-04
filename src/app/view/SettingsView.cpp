@@ -336,7 +336,7 @@ void SettingsView::updateTextBasedComponents() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 20/05/16 - 02/01/18
+ * @date 20/05/16 - 04/02/18
  */
 bool SettingsView::handleEvents(sf::Event event)
 {
@@ -433,12 +433,12 @@ bool SettingsView::handleEvents(sf::Event event)
             }
             else if (m_menuMusicButton->contains(MOUSE_POSITION))
             {
-                m_settings->getAppCore()->setMenuMusic(!m_settings->getAppCore()->isMenuMusicEnabled());
+                m_settings->getAppCore()->toggleMenuMusic();
                 handleMusic();
             }
             else if (m_gameMusicButton->contains(MOUSE_POSITION))
             {
-                m_settings->getAppCore()->setGameMusic(!m_settings->getAppCore()->isGameMusicEnabled());
+                m_settings->getAppCore()->toggleGameMusic();
                 handleMusic();
             }
         }

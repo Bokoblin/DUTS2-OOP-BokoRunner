@@ -425,7 +425,7 @@ bool PersistenceManager::fetchActivatedBonusFromConfigFile()
             if (string(shopItem.attribute("bought").value()) == "true")
             {
                 m_appCore->m_activatedItemsArray.insert(XMLHelper::safeRetrieveXMLValue<string>
-                                                                 (shopItem.attribute("id"), "shop_[a-z|A-Z]+", ""));
+                                                        (shopItem.attribute("id"), "shop_[a-z]+[_]{0,1}[a-z]+", ""));
             }
         }
         return true;

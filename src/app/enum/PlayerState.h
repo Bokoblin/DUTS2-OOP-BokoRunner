@@ -18,16 +18,17 @@ limitations under the License.
 
 /**
  * The PlayerState enum defines the different
- * states that the app can take due to a bonus reaction.
+ * states that the player can take due to a bonus reaction.
  * @author Arthur
- * @date 30/01/17
+ * @date 30/01/17 - 04/02/18
  */
 enum PlayerState
 {
     NORMAL,
     MEGA,
-    FLY,
-    SHIELD
+    FLYING,
+    SHIELDED,
+    HARD_SHIELDED
 };
 
 #endif

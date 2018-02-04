@@ -41,10 +41,10 @@ int AppCore::getTotalGamesPlayed() const { return m_totalGamesPlayed; }
 int AppCore::getPerGameCoinsNumber() const { return m_perGameCoinsCollected; }
 int AppCore::getPerGameDistance() const { return m_perGameDistance; }
 int AppCore::getPerGameFlattenedEnemies() const { return m_perGameFlattenedEnemies; }
-int AppCore::getCurrentCoinsNumber() const { return m_currentCoinsNumber; }
+int AppCore::getCurrentCoinsNumber() const { return m_currentCoinsNumber; } //for display purpose
 int AppCore::getCurrentDistance() const { return (int)m_currentDistance; }
-int AppCore::getCurrentFlattenedEnemies() const { return m_currentFlattenedEnemies; }
-int AppCore::getCurrentScore() const { return m_currentScore; }
+int AppCore::getCurrentFlattenedEnemies() const { return m_currentFlattenedEnemies; } //for display purpose
+int AppCore::getCurrentScore() const { return m_currentScore; } //for display purpose
 int AppCore::getDifficulty() const { return m_currentDifficulty;}
 int AppCore::getWallet() const { return m_wallet;}
 bool AppCore::isMenuMusicEnabled() const { return m_isMenuMusicEnabled; }
@@ -71,19 +71,15 @@ string AppCore::getLanguageFile() const
 //------------------------------------------------
 
 void AppCore::setAppState(AppState state) { m_appState = state; }
-void AppCore::decreaseWallet(int amount) { m_wallet -= amount; }
-void AppCore::increaseCurrentCoinsCollected(int amount) { m_currentCoinsNumber += amount; }
-void AppCore::increaseCurrentDistance(float amount) { m_currentDistance += amount; }
-void AppCore::increaseCurrentFlattenedEnemies(int amount)
-{
-    m_scoreBonusFlattenedEnemies += amount;
-    m_currentFlattenedEnemies += 1;
-}
 void AppCore::setLanguage(const string &language) { m_currentLanguage = language; }
 void AppCore::setBallSkin(const string &skin) { m_currentBallSkin = skin; }
 void AppCore::setDifficulty(int difficulty) { m_currentDifficulty = difficulty; }
-void AppCore::setMenuMusic(bool on) { m_isMenuMusicEnabled = on; }
-void AppCore::setGameMusic(bool on) { m_isGameMusicEnabled = on; }
+void AppCore::decreaseWallet(int amount) { m_wallet -= amount; }
+void AppCore::increaseCurrentCoinsCollected(int amount) { m_currentCoinsNumber += amount; }
+void AppCore::increaseCurrentDistance(float amount) { m_currentDistance += amount; }
+void AppCore::increaseCurrentFlattenedEnemies() { m_currentFlattenedEnemies += 1; }
+void AppCore::toggleMenuMusic() { m_isMenuMusicEnabled = !m_isMenuMusicEnabled; }
+void AppCore::toggleGameMusic() { m_isGameMusicEnabled = !m_isGameMusicEnabled; }
 
 
 //------------------------------------------------
@@ -206,8 +202,8 @@ void AppCore::clearAppData()
 bool AppCore::findActivatedItem(const string &itemLabel)
 {
     return m_activatedItemsArray.empty()
-           ? false
-           : m_activatedItemsArray.find(itemLabel) != m_activatedItemsArray.end();
+            ? false
+            : m_activatedItemsArray.find(itemLabel) != m_activatedItemsArray.end();
 }
 
 
@@ -228,15 +224,16 @@ void AppCore::addNewActivatedBonus(const string &itemLabel)
  * Calculates the final score at game over
  *
  * @param speed the last game speed before game over
+ * @param flattenedEnemiesBonus the bonus for all enemies flattened in the last game
  *
  * @author Arthur
  * @date ?? - 04/02/18
  */
-void AppCore::calculateFinalScore(float speed)
+void AppCore::calculateFinalScore(float speed, int flattenedEnemiesBonus)
 {
     m_currentScore = (int)((speed * m_currentDistance)
             + (COIN_MULTIPLIER * m_currentCoinsNumber)
-            + m_scoreBonusFlattenedEnemies);
+            + flattenedEnemiesBonus);
 }
 
 
@@ -308,8 +305,6 @@ void AppCore::initWithDefaultValues()
     m_perGameCoinsCollected = 0;
     m_perGameDistance = 0;
     m_perGameFlattenedEnemies = 0;
-
-    m_scoreBonusFlattenedEnemies = 0;
 
     m_scoresEasyArray.clear();
     m_scoresHardArray.clear();

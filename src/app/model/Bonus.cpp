@@ -55,15 +55,15 @@ void Bonus::chooseBonusType()
 {
     int result = RandomUtils::getUniformRandomNumber(1, 100);
 
-    if (result <= 30)
-        m_elementType = PV_PLUS_BONUS;
-    else if (result <= 50)
-        m_elementType = MEGA_BONUS;
-    else if (result <= 65)
-        m_elementType = FLY_BONUS;
-    else if (result <= 75)
-        m_elementType = SLOW_SPEED_BONUS;
-    else
+    //if (result <= 30)
+    //    m_elementType = PV_PLUS_BONUS;
+    //else if (result <= 50)
+    //    m_elementType = MEGA_BONUS;
+    //else if (result <= 65)
+    //    m_elementType = FLY_BONUS;
+    //else if (result <= 75)
+    //    m_elementType = SLOW_SPEED_BONUS;
+    //else
         m_elementType = SHIELD_BONUS;
 }
 

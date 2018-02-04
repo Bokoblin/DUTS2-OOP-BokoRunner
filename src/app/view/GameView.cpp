@@ -109,7 +109,7 @@ GameView::~GameView()
  * Loads all sprites used by the game (backgrounds, UI, elements)
  *
  * @author Arthur
- * @date 26/03/16 - 25/01/17
+ * @date 26/03/16 - 04/02/18
  */
 void GameView::loadImages()
 {
@@ -333,7 +333,7 @@ void GameView::processZonesTransition()
     {
         //Update Transition status
         m_game->setTransitionState(false);
-        m_game->setTransitionPossibleState(false);
+        m_game->disableTransitionPossibility();
 
         //Set current zone and change pause background
         if (m_game->getCurrentZone() == HILL)
@@ -380,7 +380,7 @@ void GameView::setupTransition()
  * Updates elements of a running game
  *
  * @author Arthur
- * @date 6/03/16 - 26/12/17
+ * @date 6/03/16 - 04/02/18
  */
 void GameView::updateRunningGameElements()
 {
@@ -422,8 +422,13 @@ void GameView::updateRunningGameElements()
 
     //=== Update shield sprite
 
-    if (m_game->getPlayer()->getState() == SHIELD)
+    if (m_game->getPlayer()->getState() == SHIELDED || m_game->getPlayer()->getState() == HARD_SHIELDED)
     {
+        if (m_game->getPlayer()->getState() == SHIELDED)
+            m_shieldImage->setTextureRect(sf::IntRect(0, 0, 50, 50));
+        else
+            m_shieldImage->setTextureRect(sf::IntRect(50, 0, 50, 50));
+
         m_shieldImage->setPosition(m_game->getPlayer()->getPosX()-5,
                                    m_game->getPlayer()->getPosY()+5);
         m_shieldImage->resize(40, 40);
@@ -578,7 +583,7 @@ void GameView::drawRunningGame() const
     for (const auto &it : m_movableElementToSpriteMap)
         it.second->draw(m_window);
 
-    if (m_game->getPlayer()->getState() == SHIELD)
+    if (m_game->getPlayer()->getState() == SHIELDED || m_game->getPlayer()->getState() == HARD_SHIELDED)
         m_window->draw(*m_shieldImage);
 
     //=== Standalone Text drawing
@@ -747,7 +752,7 @@ bool GameView::handleRunningGameEvents(sf::Event event)
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 26/12/17
+ * @date 26/12/17 - 04/02/18
  */
 bool GameView::handlePausedGameEvents(sf::Event event)
 {
@@ -790,7 +795,7 @@ bool GameView::handlePausedGameEvents(sf::Event event)
         }
         else if (m_controlMusicButton->contains(MOUSE_POSITION))
         {
-            m_game->getAppCore()->setGameMusic(!m_game->getAppCore()->isGameMusicEnabled());
+            m_game->getAppCore()->toggleGameMusic();
             handleMusic();
         }
     }

@@ -119,16 +119,18 @@ void Player::move()
 
 /**
  * Changes player's state
- * @author Arthur
- * @date  11/04/16 - 21/05/16
  *
  * @param state the player's new state
+ *
+ * @author Arthur
+ * @date  11/04/16 - 04/02/18
  */
 void Player::changeState(PlayerState state)
 {
+    m_state = state;
+
     if (state == NORMAL)
     {
-        m_state = NORMAL;
         m_width = 30;
         m_height = 30;
         m_gravitation = 20.0;
@@ -136,31 +138,24 @@ void Player::changeState(PlayerState state)
     }
     else if (state == MEGA)
     {
-        m_state = MEGA;
         m_width = 70;
         m_height = 70;
         m_gravitation = 20.0;
         m_acceleration = 18.0;
     }
-    else if (state == FLY)
+    else if (state == FLYING)
     {
-        m_state = FLY;
         m_width = 30;
         m_height = 30;
         m_gravitation = 5.0;
         m_acceleration = 70.0;
     }
-    else if (state == SHIELD)
+    else if (state == SHIELDED || state == HARD_SHIELDED)
     {
-        m_state = SHIELD;
         m_width = 30;
         m_height = 30;
         m_gravitation = 20.0;
         m_acceleration = 18.0;
-    }
-    else
-    {
-        m_state = state;
     }
 }
 

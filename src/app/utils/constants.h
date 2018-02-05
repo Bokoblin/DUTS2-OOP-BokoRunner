@@ -21,7 +21,7 @@ limitations under the License.
 /**
  * Provides constants to model and view classes
  * @author Arthur
- * @date 23/10/16 - 25/01/18
+ * @date 23/10/16 - 05/02/18
  */
 
 //=== Ressources Folders
@@ -92,9 +92,6 @@ static const std::string SPLASH_SCREEN_IMAGE = IMAGE_FOLDER + "splash_screen.png
 static const std::string TITLE_IMAGE = IMAGE_FOLDER + "title.png";
 static const std::string IUT_LOGO_IMAGE = IMAGE_FOLDER + "logo_iut.png";
 static const std::string SFML_LOGO_IMAGE = IMAGE_FOLDER + "logo_sfml.png";
-static const std::string COMMAND_EN_IMAGE = IMAGE_FOLDER + "command_en.png"; //TODO-1 : only one image with translations
-static const std::string COMMAND_FR_IMAGE = IMAGE_FOLDER + "command_fr.png"; //TODO-2 : or in list without keyboard image
-static const std::string COMMAND_ES_IMAGE = IMAGE_FOLDER + "command_es.png"; //TODO-3 : in order to have configuration later
 
 //=== Musics files
 static const std::string MENU_MUSIC_THEME = AUDIO_FOLDER + "menu_sound.ogg";

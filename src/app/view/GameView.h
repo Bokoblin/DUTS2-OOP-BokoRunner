@@ -88,7 +88,7 @@ private:
     //=== METHODS
 
     //Sprite loading
-    void loadImages() override;
+    void loadSprites() override;
 
     //Zone transition
     void processZonesTransition();

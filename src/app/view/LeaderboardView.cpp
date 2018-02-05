@@ -21,7 +21,7 @@ LeaderboardView::LeaderboardView(sf::RenderWindow *window, AppTextManager *textM
 {
     //=== Init images and text
 
-    loadImages();
+    loadSprites();
 
     textManager->initMenuLeaderboardText();
 
@@ -57,7 +57,7 @@ LeaderboardView::~LeaderboardView()
  * @author Arthur
  * @date 20/05/16 - 04/01/18
  */
-void LeaderboardView::loadImages()
+void LeaderboardView::loadSprites()
 {
     //=== Initialize CLEAR button
 
@@ -112,7 +112,7 @@ void LeaderboardView::draw() const
 
     //=== Text Drawing
 
-    m_textManager->drawLeaderboardText(m_window);
+    m_textManager->drawMenuLeaderboardText(m_window);
 
     m_window->display();
 }

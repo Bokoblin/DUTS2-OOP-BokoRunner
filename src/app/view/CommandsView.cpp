@@ -18,18 +18,17 @@
 CommandsView::CommandsView(sf::RenderWindow *window, AppTextManager *textManager, CommandsModel *commandsModel) :
         AbstractView(window, textManager), m_commands{commandsModel}
 {
-    loadImages();
+    loadSprites();
 }
 
 
 /**
  * Destructor
  * @author Arthur
- * @date 24/01/17
+ * @date 24/01/17 - 05/02/18
  */
 CommandsView::~CommandsView()
 {
-    delete m_commandSprite;
     delete m_homeFormButton;
 }
 
@@ -42,21 +41,10 @@ CommandsView::~CommandsView()
  * Loads all sprites used by the commands screen
  *
  * @author Arthur
- * @date 24/01/17
+ * @date 24/01/17 - 05/02/18
  */
-void CommandsView::loadImages()
+void CommandsView::loadSprites()
 {
-    //=== Initialize Command image
-
-    m_commandSprite = new mdsf::Sprite(m_width/2 - 220, m_height/2 - 150, 440, 300);
-
-    if (m_commands->getAppCore()->getLanguage() == ENGLISH)
-        m_commandSprite->loadAndApplyTextureFromImageFile(COMMAND_EN_IMAGE);
-    else if (m_commands->getAppCore()->getLanguage() == FRENCH)
-        m_commandSprite->loadAndApplyTextureFromImageFile(COMMAND_FR_IMAGE);
-    else if (m_commands->getAppCore()->getLanguage() == SPANISH)
-        m_commandSprite->loadAndApplyTextureFromImageFile(COMMAND_ES_IMAGE);
-
     //=== Initialize HOME form buttons
 
     std::vector<sf::IntRect> clipRectHome;
@@ -70,12 +58,14 @@ void CommandsView::loadImages()
  * Synchronizes commands elements
  *
  * @author Arthur
- * @date 24/01/17
+ * @date 24/01/17 - 05/02/18
  */
 void CommandsView::synchronize()
 {
     m_homeFormButton->sync();
     m_homeFormButton->resize(FORM_BUTTONS_SIZE);
+
+    m_textManager->syncMenuCommandsText();
 }
 
 
@@ -83,7 +73,7 @@ void CommandsView::synchronize()
  * Draws commands elements on the window
  *
  * @author Arthur
- * @date 24/01/17
+ * @date 24/01/17 - 05/02/18
  */
 void CommandsView::draw() const
 {
@@ -92,7 +82,10 @@ void CommandsView::draw() const
     //=== Graphic Elements drawing
 
     m_window->draw(*m_homeFormButton);
-    m_window->draw(*m_commandSprite);
+
+    //=== Text Drawing
+
+    m_textManager->drawMenuCommandsText(m_window);
 
     m_window->display();
 }

@@ -19,7 +19,7 @@ ShopView::ShopView(sf::RenderWindow *window, AppTextManager *textManager, ShopMo
         AbstractView(window, textManager),
     m_shop{shopModel}, m_currentIndicator{0}, m_totalIndicator{0}, m_buyDialog{nullptr}
 {
-    loadImages();
+    loadSprites();
     createCards();
     m_buyDialog = new ShopDialog();
 }
@@ -53,7 +53,7 @@ ShopView::~ShopView()
  * @author Arthur
  * @date 16/05/16 - 26/01/17
  */
-void ShopView::loadImages()
+void ShopView::loadSprites()
 {
     //=== Initialize COIN Sprite
 
@@ -138,7 +138,7 @@ void ShopView::synchronize()
 {
     m_homeFormButton->sync();
 
-    m_textManager->syncShopText();
+    m_textManager->syncMenuShopText();
 
     syncCards();
 

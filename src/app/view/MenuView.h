@@ -64,7 +64,7 @@ private:
 
     //=== METHODS
     void loadMusic();
-    void loadImages() override;
+    void loadSprites() override;
     bool handleHomeEvents(const sf::Event &event);
 };
 

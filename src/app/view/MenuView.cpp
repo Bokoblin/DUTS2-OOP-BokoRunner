@@ -23,7 +23,7 @@ MenuView::MenuView(sf::RenderWindow *window, AppTextManager *textManager, MenuMo
         m_commandsView{nullptr}, m_leaderboardView{nullptr}, m_settingsView{nullptr}, m_shopView{nullptr}
 {
     loadMusic();
-    loadImages();
+    loadSprites();
 }
 
 /**
@@ -79,7 +79,7 @@ void MenuView::loadMusic()
  * @author Arthur
  * @date 26/03/16 - 24/12/17
  */
-void MenuView::loadImages()
+void MenuView::loadSprites()
 {
     m_farBackground = new ScrollingBackground(1200, m_height, 1, DEFAULT_FAR_HILL_BACKGROUND);
     m_nearBackground = new ScrollingBackground(1200, m_height, 2, DEFAULT_NEAR_HILL_BACKGROUND);

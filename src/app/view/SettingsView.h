@@ -70,7 +70,7 @@ private:
     std::vector<mdsf::Button*> m_buttonList;
 
     //=== METHODS
-    void loadImages() override;
+    void loadSprites() override;
     void handleMusic();
     void updateTextBasedComponents() const;
 };

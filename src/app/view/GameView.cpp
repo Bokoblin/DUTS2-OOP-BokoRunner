@@ -23,7 +23,7 @@ GameView::GameView(sf::RenderWindow *window, AppTextManager *textManager, GameMo
         AbstractView(window, textManager), m_game{gameModel},
         m_xPixelIntensity{1}, m_yPixelIntensity{1}
 {
-    loadImages();
+    loadSprites();
     m_pixelShader = new PixelShader();
 
     //=== change default game music if in master mode
@@ -111,7 +111,7 @@ GameView::~GameView()
  * @author Arthur
  * @date 26/03/16 - 04/02/18
  */
-void GameView::loadImages()
+void GameView::loadSprites()
 {
     //=== Initialize backgrounds
 
@@ -534,11 +534,11 @@ void GameView::synchronize()
             linkElements();
             deleteElements();
             updateRunningGameElements();
-            m_textManager->syncRunningGameText(m_game->getBonusTimeout());
+            m_textManager->syncGameRunningText(m_game->getBonusTimeout());
             break;
         case PAUSED:
             updatePausedGameElements();
-            m_textManager->syncPausedGameText();
+            m_textManager->syncGamePausedText();
             sf::sleep(sf::milliseconds(140)); //limit CPU usage for this thread
             break;
         case OVER:
@@ -588,7 +588,7 @@ void GameView::drawRunningGame() const
 
     //=== Standalone Text drawing
 
-    m_textManager->drawRunningGameText(m_window);
+    m_textManager->drawGameRunningText(m_window);
 }
 
 
@@ -614,7 +614,7 @@ void GameView::drawPausedGame() const
 
     //=== Standalone Text drawing
 
-    m_textManager->drawPausedGameText(m_window);
+    m_textManager->drawGamePausedText(m_window);
 }
 
 

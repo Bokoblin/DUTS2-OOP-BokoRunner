@@ -31,7 +31,7 @@ limitations under the License.
  * by its inherited classes.
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 06/01/18
+ * @date 21/02/16 - 05/02/18
  */
 class AbstractView
 {
@@ -53,7 +53,7 @@ protected:
     AppTextManager *m_textManager;
 
     //=== METHODS
-    virtual void loadImages() = 0;
+    virtual void loadSprites() = 0;
 };
 
 #endif

@@ -20,7 +20,7 @@ using std::string;
 SettingsView::SettingsView(sf::RenderWindow *window, AppTextManager *textManager, SettingsModel *settingsModel) :
         AbstractView(window, textManager), m_settings{settingsModel}, m_confirmDialog{nullptr}
 {
-    loadImages();
+    loadSprites();
 
     //=== Create Pages Indicator
 
@@ -91,7 +91,7 @@ SettingsView::~SettingsView()
  * @author Arthur
  * @date 20/05/16 - 04/01/18
  */
-void SettingsView::loadImages()
+void SettingsView::loadSprites()
 {
     //=== Initialize RADIOS buttons
 
@@ -207,7 +207,7 @@ void SettingsView::synchronize()
 
     //=== Standalone Text update
 
-    m_textManager->syncSettingsText(m_settings->getCurrentPage());
+    m_textManager->syncMenuSettingsText(m_settings->getCurrentPage());
 }
 
 
@@ -459,7 +459,7 @@ bool SettingsView::handleEvents(sf::Event event)
                     m_settings->getAppCore()->clearAppData();
                     PersistenceManager::deletePersistence();
                     PersistenceManager::initPersistence();
-                    m_textManager->syncSettingsText(m_settings->getCurrentPage());
+                    m_textManager->syncMenuSettingsText(m_settings->getCurrentPage());
                     m_settings->checkItemsAvailability();
                     handleMusic();
                 }

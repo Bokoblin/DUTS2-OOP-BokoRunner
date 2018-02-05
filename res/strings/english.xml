@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2016 Jolivet Arthur & Laronze Florian
+<!-- Copyright 2016-2018 Jolivet Arthur & Laronze Florian
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -18,12 +18,21 @@
     <!-- Splash screen strings -->
     <string name="splash_screen_continue" value="Press SPACE to start" />
 
-    <!-- Menu & Leaderboard strings -->
+    <!-- Home Menu strings -->
     <string name="menu_play_button" value="PLAY" />
     <string name="menu_quit_button" value="QUIT" />
+
+    <!-- Leaderboard strings -->
     <string name="leaderboard_title" value="Leaderboard" />
     <string name="leaderboard_content" value="No score yet" />
     <string name="leaderboard_clear_button" value="CLEAR" />
+
+    <!-- Commands strings -->
+    <string name="commands_title" value="Commands" />
+    <string name="commands_pause" value="ESCAPE&#009;&#009;&#009;&#009;&#009;&#009;&#009; To put the game in pause" />
+    <string name="commands_jump" value="W&#009;|&#009;ARROW-UP&#009;&#009;&#009;To make the player jump" />
+    <string name="commands_left" value="A&#009;|&#009;ARROW-LEFT&#009;&#009; To make the player go toward left" />
+    <string name="commands_right" value="D&#009;|&#009;ARROW-RIGHT&#009;   To make the player go toward right" />
 
     <!-- Settings strings -->
     <string name="config_title" value="Configuration" />

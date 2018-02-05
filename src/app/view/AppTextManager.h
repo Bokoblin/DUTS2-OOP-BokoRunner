@@ -32,7 +32,7 @@ namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
  * Text objects branded as "Text" are loaded from parsed data
  *
  * @author Arthur
- * @date 02/04/16 - 06/01/18
+ * @date 02/04/16 - 05/02/18
  */
 class AppTextManager
 {
@@ -47,29 +47,31 @@ class AppTextManager
 
     //=== METHODS
     //Text utils
-    void handleAboutLinks(sf::Event event, const SettingsModel &settings) const;
+    void handleAboutLinks(sf::Event event, const SettingsModel &settings) const; //TODO: Temporary until dedicated LinkButton class
     void updateWholeStandaloneTextContent(); //TODO: modularize (divide in modules to reduce time complexity)
 
-    //Text init
+    //Text init (to use once at screen loading)
     void initMenuLeaderboardText();
 
-    //Text syncing
-    void syncSplashScreenText(bool continueVisibility);
-    void syncSettingsText(int currentPage);
-    void syncMenuLeaderboardText();
-    void syncShopText();
-    void syncRunningGameText(int bonusTimeout);
-    void syncPausedGameText();
+    //Text syncing (to use in a loop)
     void syncGameOverText(int gameSpeed);
+    void syncGamePausedText();
+    void syncGameRunningText(int bonusTimeout);
+    void syncMenuCommandsText();
+    void syncMenuLeaderboardText();
+    void syncMenuSettingsText(int currentPage);
+    void syncMenuShopText();
+    void syncSplashScreenText(bool continueVisibility);
 
     //Text drawing
-    void drawSplashScreenText(sf::RenderWindow *window) const;
-    void drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const;
-    void drawLeaderboardText(sf::RenderWindow *window) const;
-    void drawMenuShopText(sf::RenderWindow *window) const;
-    void drawRunningGameText(sf::RenderWindow *window) const;
-    void drawPausedGameText(sf::RenderWindow *window) const;
     void drawGameOverText(sf::RenderWindow *window) const;
+    void drawGamePausedText(sf::RenderWindow *window) const;
+    void drawGameRunningText(sf::RenderWindow *window) const;
+    void drawMenuCommandsText(sf::RenderWindow *window) const;
+    void drawMenuLeaderboardText(sf::RenderWindow *window) const;
+    void drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const;
+    void drawMenuShopText(sf::RenderWindow *window) const;
+    void drawSplashScreenText(sf::RenderWindow *window) const;
 
 private:
     //=== ATTRIBUTES
@@ -85,6 +87,13 @@ private:
 
     //Leaderboard Labels
     mdsf::Text *m_leaderboardTitleLabel;
+
+    //Commands screen Labels
+    mdsf::Text *m_commandsTitleLabel;
+    mdsf::Text *m_commandsPauseLabel;
+    mdsf::Text *m_commandsJumpLabel;
+    mdsf::Text *m_commandsLeftLabel;
+    mdsf::Text *m_commandsRightLabel;
 
     //Settings Labels
     mdsf::Text *m_configTitleLabel;

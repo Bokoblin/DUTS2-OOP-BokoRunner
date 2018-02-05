@@ -49,7 +49,7 @@ private:
     mdsf::Sprite *m_appTitle;
 
     //=== METHODS
-    void loadImages() override;
+    void loadSprites() override;
 };
 
 #endif

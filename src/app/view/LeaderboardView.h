@@ -52,7 +52,7 @@ private:
     mdsf::Dialog *m_confirmDialog;
 
     //=== METHODS
-    void loadImages() override;
+    void loadSprites() override;
 };
 
 #endif

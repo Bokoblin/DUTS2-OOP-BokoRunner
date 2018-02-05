@@ -28,7 +28,7 @@ SplashScreenView::SplashScreenView(sf::RenderWindow *window, AppTextManager *tex
 
     m_window->setPosition(sf::Vector2i(appPositionX, appPositionY));
 
-    loadImages();
+    loadSprites();
 }
 
 
@@ -52,10 +52,11 @@ SplashScreenView::~SplashScreenView()
 
 /**
  * Loads all sprites used by the splash screen
+ *
  * @author Arthur
  * @date 27/03/16 - 24/12/17
  */
-void SplashScreenView::loadImages()
+void SplashScreenView::loadSprites()
 {
     m_splashScreen = new mdsf::Sprite(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     m_splashScreen->loadAndApplyTextureFromImageFile(SPLASH_SCREEN_IMAGE);
@@ -156,4 +157,3 @@ bool SplashScreenView::handleEvents(sf::Event event)
     }
     return true;
 }
-

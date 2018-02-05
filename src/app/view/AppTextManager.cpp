@@ -48,7 +48,7 @@ AppTextManager::~AppTextManager()
 /**
  * Loads all managed standalone text
  * @author Arthur
- * @date 02/04/16 - 31/10/17
+ * @date 02/04/16 - 05/02/18
  * */
 void AppTextManager::loadText()
 {
@@ -61,6 +61,14 @@ void AppTextManager::loadText()
     m_textList.push_back(m_leaderboardTitleLabel = new mdsf::Text("leaderboard_title"));
     m_textList.push_back(m_leaderboardContentEasyText = new mdsf::Text("leaderboard_content"));
     m_textList.push_back(m_leaderboardContentHardText = new mdsf::Text("leaderboard_content"));
+
+    //=== Commands
+
+    m_textList.push_back(m_commandsTitleLabel = new mdsf::Text("commands_title"));
+    m_textList.push_back(m_commandsPauseLabel = new mdsf::Text("commands_pause"));
+    m_textList.push_back(m_commandsJumpLabel = new mdsf::Text("commands_jump"));
+    m_textList.push_back(m_commandsLeftLabel = new mdsf::Text("commands_left"));
+    m_textList.push_back(m_commandsRightLabel = new mdsf::Text("commands_right"));
 
     //=== Shop
 
@@ -137,8 +145,6 @@ void AppTextManager::loadText()
  */
 void AppTextManager::handleAboutLinks(sf::Event event, const SettingsModel &settings) const
 {
-    //TODO : Temporary until dedicated LinkButton class
-
     if (MOUSE_LEFT_PRESSED_EVENT)
     {
         if (m_aboutRepositoryLink->contains(MOUSE_POSITION))
@@ -204,7 +210,7 @@ void AppTextManager::syncSplashScreenText(bool continueVisibility)
  * @author Arthur
  * @date 14/04/16 - 03/11/17
  */
-void AppTextManager::syncSettingsText(int currentPage)
+void AppTextManager::syncMenuSettingsText(int currentPage)
 {
     if (currentPage == CONFIG)
     {
@@ -354,11 +360,35 @@ void AppTextManager::syncMenuLeaderboardText()
 
 
 /**
+ * Syncs commands standalone text
+ *
+ * @author Arthur
+ * @date 05/02/18
+ */
+void AppTextManager::syncMenuCommandsText()
+{
+    m_commandsTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
+
+    m_commandsPauseLabel->setPosition(STAT_LABEL_X, 190);
+    m_commandsPauseLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+
+    m_commandsJumpLabel->setPosition(STAT_LABEL_X, 230);
+    m_commandsJumpLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+
+    m_commandsLeftLabel->setPosition(STAT_LABEL_X, 270);
+    m_commandsLeftLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+
+    m_commandsRightLabel->setPosition(STAT_LABEL_X, 310);
+    m_commandsRightLabel->setCharacterSize(CONTENT_CHAR_SIZE);
+}
+
+
+/**
  * Syncs shop standalone text
  * @author Arthur
  * @date 16/05/16 - 07/01/17
  */
-void AppTextManager::syncShopText()
+void AppTextManager::syncMenuShopText()
 {
     m_walletText->setPosition(m_width/2, TITLE_TEXT_X);
     m_walletText->applyTextFont(ROBOTO_CONDENSED_FONT, DEFAULT_CHAR_SIZE, AppColor::CoinGold);
@@ -374,7 +404,7 @@ void AppTextManager::syncShopText()
  * @author Arthur
  * @date 02/04/16 - 02/01/18
  */
-void AppTextManager::syncRunningGameText(int bonusTimeout)
+void AppTextManager::syncGameRunningText(int bonusTimeout)
 {
     m_playerLifeLabel->setPosition(40, 545);
 
@@ -395,7 +425,7 @@ void AppTextManager::syncRunningGameText(int bonusTimeout)
  * @author Arthur
  * @date 02/04/16 - 27/10/17
  */
-void AppTextManager::syncPausedGameText()
+void AppTextManager::syncGamePausedText()
 {
     m_currentDistanceText->setPosition(PAUSE_TEXT_X, 30);
 
@@ -512,13 +542,31 @@ void AppTextManager::drawMenuSettingsText(sf::RenderWindow *window, int currentP
  * @param window the app's window
  *
  * @author Arthur
- * @date 19/04/16 - 30/01/17
+ * @date 19/04/16 - 05/02/18
  */
-void AppTextManager::drawLeaderboardText(sf::RenderWindow *window) const
+void AppTextManager::drawMenuLeaderboardText(sf::RenderWindow *window) const
 {
-    for (const auto &text : m_textList)
-        if (text->getDescription().find("leaderboard") != string::npos)
-            text->draw(window);
+    m_leaderboardTitleLabel->draw(window);
+    m_leaderboardContentEasyText->draw(window);
+    m_leaderboardContentHardText->draw(window);
+}
+
+
+/**
+ * Draws commands standalone text
+ *
+ * @param window the app's window
+ *
+ * @author Arthur
+ * @date 05/02/18
+ */
+void AppTextManager::drawMenuCommandsText(sf::RenderWindow *window) const
+{
+    m_commandsTitleLabel->draw(window);
+    m_commandsPauseLabel->draw(window);
+    m_commandsJumpLabel->draw(window);
+    m_commandsLeftLabel->draw(window);
+    m_commandsRightLabel->draw(window);
 }
 
 
@@ -544,7 +592,7 @@ void AppTextManager::drawMenuShopText(sf::RenderWindow *window) const
  * @author Arthur
  * @date 02/04/16 - 02/01/17
  */
-void AppTextManager::drawRunningGameText(sf::RenderWindow *window) const
+void AppTextManager::drawGameRunningText(sf::RenderWindow *window) const
 {
     m_playerLifeLabel->draw(window);
     m_currentDistanceLabel->draw(window);
@@ -561,7 +609,7 @@ void AppTextManager::drawRunningGameText(sf::RenderWindow *window) const
  * @author Arthur
  * @date 02/04/16 - 02/01/17
  */
-void AppTextManager::drawPausedGameText(sf::RenderWindow *window) const
+void AppTextManager::drawGamePausedText(sf::RenderWindow *window) const
 {
     m_currentDistanceText->draw(window);
     m_currentCoinsNbText->draw(window);
@@ -579,7 +627,7 @@ void AppTextManager::drawPausedGameText(sf::RenderWindow *window) const
  */
 void AppTextManager::drawGameOverText(sf::RenderWindow *window) const
 {
-    //verbose but better for now as a for_all in m_textList cost a lot in complexity
+    //verbose but better than foreach loop in m_textList (O(n) -> O(1))
     m_endTitleLabel->draw(window);
     m_speedMultiplierLabel->draw(window);
     m_speedMultiplierText->draw(window);

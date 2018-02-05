@@ -26,7 +26,7 @@ limitations under the License.
  * It handles the commands screen's rendering.
  *
  * @author Arthur
- * @date 24/01/17 - 29/12/17
+ * @date 24/01/17 - 05/02/18
  */
 class CommandsView : public AbstractView
 {
@@ -43,11 +43,10 @@ public:
 private:
     //=== ATTRIBUTES
     CommandsModel *m_commands;
-    mdsf::Sprite *m_commandSprite;
     mdsf::Button *m_homeFormButton;
 
     //=== METHODS
-    void loadImages() override;
+    void loadSprites() override;
 };
 
 #endif

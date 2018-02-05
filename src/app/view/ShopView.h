@@ -59,7 +59,7 @@ private:
     std::map<int, mdsf::RadioButton *> m_pageIndicators;
 
     //=== METHODS
-    void loadImages() override;
+    void loadSprites() override;
     void syncCards();
     void createCards();
 };

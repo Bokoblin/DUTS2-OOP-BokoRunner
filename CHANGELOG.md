@@ -16,6 +16,10 @@ Current version : v2.0.0-dev
 - **Structure refactoring**
   - **abstraction inheritance**: introducing `AbstractModel` and `AbstractView` classes
   - **abstraction inheritance**: more classes inherit from abstract classes
+  - **app data handling**: Database split into three classes
+    - `AppCore` for app data and states
+    - `PersistenceManager` to persist and retrieve app data (make xml persistence abstracted)
+    - `XMLHelper` for generic XML operations
   - **ui components**: Generic UI components are now dissociated from app and grouped under *MDC-SFML'
   - **window**: life-cycle now handled only in `main.cpp`
   - **events**: 
@@ -38,6 +42,7 @@ Current version : v2.0.0-dev
     - `AnimatedGraphicElement` => `AnimatedSprite`
     - `PixelateEffect` => `PixelShader`
     - `SlidingBackground` => `ScrollingBackground`
+    - `TextHandler` => `AppTextManager`
     
 #### Features
 - **splash screen**: 
@@ -49,6 +54,7 @@ Current version : v2.0.0-dev
     - `ShopDialog` inherits from it for shop specific dialogs
 - **settings**: added support for hyperlinks (URL is opened in default browser) [tested on Ubuntu 14.04 and Windows 10]
 - **graphics**: support for changing graphic elements's light (using same principle as alpha)
+- **logging**: logging supported in the app (currently to console)
 
 #### Bug fixes
 - Style and spacing fixes
@@ -57,10 +63,13 @@ Current version : v2.0.0-dev
 #### Misc
 - **iconography**: added application icon (title bar and task bar)
 - **randomness**: switched to C++11 random functions
+- **colors**: Material and App custom colors with dedicated classes
 - **language**: more C++11 keywords and functions usage
 - **styling**: typo and code styling improvements
 - **changelog**: changed for `.md` and reformatted file accordingly
 - **script**: added a little bash `build.sh` script
+- **xml**: safe fetching, logging
+- **copyright**: Updated to 2018
  
 #### Library changes
 - **SFML**: updated SFML version ( 2.3.2 => 2.4.2)

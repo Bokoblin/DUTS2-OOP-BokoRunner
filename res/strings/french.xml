@@ -62,7 +62,7 @@
     <string name="stats_per_game_coins" value="Meilleurs ramassage de pieces" />
     <string name="stats_app_reset" value="RÉINITIALISER" />
     <string name="about_title" value="A propos" />
-    <string name="about_description" value=" Boko Runner est un projet C++ que nous avons realise en tant que projet
+    <string name="about_description" value=" Boko Runner est un projet C++ que nous avons réalisé en tant que projet
                   &#xA; de programmation du deuxième semestre de notre DUT. Le but était de
                   &#xA; mettre en pratique les notions de POO que nous avons apprises au cours
                   &#xA; du S2 et de développer avec celles-ci un jeu utilisant la bibliothèque SFML."/>

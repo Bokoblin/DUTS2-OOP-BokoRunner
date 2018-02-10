@@ -69,9 +69,10 @@ bool Text::isVisible() const { return m_isVisible; }
 //------------------------------------------------
 
 void Text::setDescription(const string &description) { m_description = description; }
-void Text::setVisible(bool visible) { m_isVisible = visible; }
 void Text::setPositionSelfCentered(float x, float y) { setPosition(x - getWidth()/2, y - getHeight()/2); }
 void Text::setStringFromInt(int value) { setString(std::to_string(value)); }
+void Text::setUtf8String(const string &content) { setString(sf::String::fromUtf8(content.begin(), content.end())); }
+void Text::setVisible(bool visible) { m_isVisible = visible; }
 
 
 //------------------------------------------------

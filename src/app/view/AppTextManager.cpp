@@ -180,8 +180,7 @@ void AppTextManager::updateWholeStandaloneTextContent()
         t->setCharacterSize(DEFAULT_CHAR_SIZE);
         t->setFont(m_condensedFont);
         t->setFillColor(sf::Color::White);
-        std::string utf8_string = PersistenceManager::fetchLocalizedString(t->getDescription());
-        t->setString(sf::String::fromUtf8(utf8_string.begin(), utf8_string.end()));
+        t->setUtf8String(PersistenceManager::fetchLocalizedString(t->getDescription()));
     }
 }
 
@@ -307,7 +306,7 @@ void AppTextManager::initMenuLeaderboardText()
     }
     else
     {
-        m_leaderboardContentEasyText->setString(sf::String::fromUtf8(scoresEasy.begin(), scoresEasy.end()));
+        m_leaderboardContentEasyText->setUtf8String(scoresEasy);
         m_leaderboardContentEasyText->setCharacterSize(26);
         m_leaderboardContentEasyText->setPositionSelfCentered(m_width/4, 300);
     }
@@ -318,7 +317,7 @@ void AppTextManager::initMenuLeaderboardText()
     }
     else
     {
-        m_leaderboardContentHardText->setString(sf::String::fromUtf8(scoresHard.begin(), scoresHard.end()));
+        m_leaderboardContentHardText->setUtf8String(scoresHard);
         m_leaderboardContentHardText->setCharacterSize(26);
         m_leaderboardContentHardText->setPositionSelfCentered(m_width/2+m_width/4, 300);
     }

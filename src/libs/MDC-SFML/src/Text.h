@@ -31,7 +31,7 @@ namespace MaterialDesignComponentsForSFML
  * It adds visibility, a text description (i.e. identifier) and a font tied to the text.
  *
  * @author Arthur
- * @date 21/12/16 - 04/01/18
+ * @date 21/12/16 - 10/02/18
  *
  * @see sf::Text
  */
@@ -53,6 +53,7 @@ public:
     void setDescription(const std::string &description);
     void setPositionSelfCentered(float x, float y);
     void setStringFromInt(int value);
+    void setUtf8String(const std::string &content);
     void setVisible(bool visible);
 
     //=== METHODS

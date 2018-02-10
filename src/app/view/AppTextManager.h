@@ -18,9 +18,10 @@ limitations under the License.
 
 #include <SFML/Window/Event.hpp>
 #include "libs/MDC-SFML/src/Text.h"
-#include "app/model/SettingsModel.h"
-#include "app/utils/definitions.h"
-#include "app/utils/AppColor.h"
+#include "app/model/models/SettingsModel.h"
+#include "app/view/utils/AppColor.h"
+#include "app/view/utils/ViewConstants.h"
+#include "app/view/utils/ViewDefinitions.h"
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 
@@ -87,6 +88,9 @@ private:
 
     //Leaderboard Labels
     mdsf::Text *m_leaderboardTitleLabel;
+
+    //Shop Labels
+    //mdsf::Text *m_shopNoBonusLabel; //TODO: when no bonus available
 
     //Commands screen Labels
     mdsf::Text *m_commandsTitleLabel;

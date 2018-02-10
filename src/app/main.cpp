@@ -13,22 +13,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "app/view/SplashScreenView.h"
-#include "app/view/MenuView.h"
-#include "app/view/GameView.h"
+#include "app/view/utils/ViewConstants.h"
+#include "app/view/views/SplashScreenView.h"
+#include "app/view/views/MenuView.h"
+#include "app/view/views/GameView.h"
+
+using Bokoblin::SimpleLogger::Logger;
 
 /**
  * Initializes the application and controls its loop
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 04/02/18
+ * @date 21/02/16 - 11/02/18
  */
-int main()
+int main() //TODO: App class with logic -- main must only uses it + check arguments
 {
     //=== Initialize window
 
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP), APP_TITLE, sf::Style::Close);
-    window.setFramerateLimit(FRAMERATE);
+    window.setFramerateLimit(APP_FRAMERATE);
 
     sf::Image appIcon;
     if (appIcon.loadFromFile(ICON_IMAGE))
@@ -38,9 +41,17 @@ int main()
 
     AppCore appCore;
     PersistenceManager::initPersistenceManager(&appCore);
-    PersistenceManager::checkPersistence();
-    PersistenceManager::fetchConfiguration();
-    PersistenceManager::fetchLeaderboard();
+
+    try {
+        PersistenceManager::checkPersistence();
+        PersistenceManager::fetchConfiguration();
+        PersistenceManager::fetchLeaderboard();
+    }
+    catch (const PersistenceException& e)
+    {
+        Logger::printErrorOnConsole(e.what() + std::string("Persistence checking failure"));
+    }
+
     AppTextManager textManager(&appCore, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     //=== Initialize app state, and event object

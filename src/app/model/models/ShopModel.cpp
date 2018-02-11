@@ -87,7 +87,7 @@ void ShopModel::fetchBuyableItemsFromFile()
 {
     try
     {
-        PersistenceManager::checkPersistence();
+        PersistenceManager::checkContext();
 
         //FIXME: No config file / xml access should be allowed ! It breaks persistence abstraction !!
         //TODO: populate a ShopItem list from app core in Persistence manager
@@ -101,8 +101,8 @@ void ShopModel::fetchBuyableItemsFromFile()
         {
             //Updates item's attributes
             string id = shopItem.attribute("id").value();
-            string name = PersistenceManager::fetchLocalizedString(id + "_name");
-            string desc = PersistenceManager::fetchLocalizedString(id + "_desc");
+            string name = LocalizationManager::fetchLocalizedString(id + "_name");
+            string desc = LocalizationManager::fetchLocalizedString(id + "_desc");
             int price = stoi(shopItem.attribute("price").value());
             bool isBought = ((string)shopItem.attribute("bought").value()) == "true";
 

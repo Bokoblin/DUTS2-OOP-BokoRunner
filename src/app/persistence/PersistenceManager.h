@@ -37,20 +37,19 @@ class AppCore;
  * The current persistence system uses an xml config file.
  *
  * @author Arthur
- * @date 27/01/18 - 04/02/18
+ * @date 27/01/18 - 11/02/18
  */
 class PersistenceManager
 {
 public:
     //=== METHODS
-    static void initPersistenceManager(AppCore *appCore);
-    static void closePersistenceManager();
+    static void initContext(AppCore *appCore);
+    static void closeContext();
+    static void checkContext();
     static void initPersistence();
-    static void checkPersistence();
     static void fetchConfiguration();
     static void fetchLeaderboard();
     static void fetchActivatedBonus();
-    static std::string fetchLocalizedString(const std::string &label); //FIXME: Split in LocalizationManager
     static void updatePersistence(); //TODO: global + split versions
     static void deletePersistence();
 

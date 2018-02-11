@@ -20,7 +20,7 @@ AbstractView::AbstractView(sf::RenderWindow *window, AppTextManager *textManager
     m_width = m_window->getSize().x;
     m_height = m_window->getSize().y;
 
-    m_window->setFramerateLimit(FRAMERATE);
+    m_window->setFramerateLimit(APP_FRAMERATE);
 }
 
 

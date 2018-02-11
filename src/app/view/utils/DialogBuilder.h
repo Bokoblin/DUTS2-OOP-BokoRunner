@@ -53,38 +53,38 @@ public:
             if (dialog->getContext() == "shop_item_details")
             {
                 ShopDialog *shopDialog = dynamic_cast<ShopDialog*>(dialog);
-                utf8_dialog_title = PersistenceManager::fetchLocalizedString("shop_dialog_title");
-                utf8_dialog_content = PersistenceManager::fetchLocalizedString("shop_dialog_content");
+                utf8_dialog_title = LocalizationManager::fetchLocalizedString("shop_dialog_title");
+                utf8_dialog_content = LocalizationManager::fetchLocalizedString("shop_dialog_content");
                 utf8_dialog_content.replace(utf8_dialog_content.find("$NAME"), 5,
                                             shopDialog->getLinkedShopItem()->getName());
                 utf8_dialog_content.replace(utf8_dialog_content.find("$PRICE"), 6,
                                             std::to_string(shopDialog->getLinkedShopItem()->getPrice()));
-                utf8_dialog_cancel = PersistenceManager::fetchLocalizedString("dialog_cancel");
-                utf8_dialog_ok = PersistenceManager::fetchLocalizedString("dialog_ok");
+                utf8_dialog_cancel = LocalizationManager::fetchLocalizedString("dialog_cancel");
+                utf8_dialog_ok = LocalizationManager::fetchLocalizedString("dialog_ok");
             }
             else if (dialog->getContext() == "shop_buying_success")
             {
-                utf8_dialog_content = PersistenceManager::fetchLocalizedString("shop_dialog_success");
-                utf8_dialog_ok = PersistenceManager::fetchLocalizedString("dialog_ok");
+                utf8_dialog_content = LocalizationManager::fetchLocalizedString("shop_dialog_success");
+                utf8_dialog_ok = LocalizationManager::fetchLocalizedString("dialog_ok");
             }
             else if (dialog->getContext() == "shop_buying_failure")
             {
-                utf8_dialog_content = PersistenceManager::fetchLocalizedString("shop_dialog_failure");
-                utf8_dialog_ok = PersistenceManager::fetchLocalizedString("dialog_ok");
+                utf8_dialog_content = LocalizationManager::fetchLocalizedString("shop_dialog_failure");
+                utf8_dialog_ok = LocalizationManager::fetchLocalizedString("dialog_ok");
             }
             else if (dialog->getContext() == "confirm_data_delete")
             {
-                utf8_dialog_title = PersistenceManager::fetchLocalizedString("confirm_data_delete_dialog_title");
-                utf8_dialog_content = PersistenceManager::fetchLocalizedString("confirm_data_delete_dialog_content");
-                utf8_dialog_cancel = PersistenceManager::fetchLocalizedString("dialog_cancel");
-                utf8_dialog_ok = PersistenceManager::fetchLocalizedString("dialog_ok");
+                utf8_dialog_title = LocalizationManager::fetchLocalizedString("confirm_data_delete_dialog_title");
+                utf8_dialog_content = LocalizationManager::fetchLocalizedString("confirm_data_delete_dialog_content");
+                utf8_dialog_cancel = LocalizationManager::fetchLocalizedString("dialog_cancel");
+                utf8_dialog_ok = LocalizationManager::fetchLocalizedString("dialog_ok");
             }
             else if (dialog->getContext() == "confirm_leaderboard_delete")
             {
-                utf8_dialog_title = PersistenceManager::fetchLocalizedString("confirm_leaderboard_delete_dialog_title");
-                utf8_dialog_content = PersistenceManager::fetchLocalizedString("confirm_leaderboard_delete_dialog_content");
-                utf8_dialog_cancel = PersistenceManager::fetchLocalizedString("dialog_cancel");
-                utf8_dialog_ok = PersistenceManager::fetchLocalizedString("dialog_ok");
+                utf8_dialog_title = LocalizationManager::fetchLocalizedString("confirm_leaderboard_delete_dialog_title");
+                utf8_dialog_content = LocalizationManager::fetchLocalizedString("confirm_leaderboard_delete_dialog_content");
+                utf8_dialog_cancel = LocalizationManager::fetchLocalizedString("dialog_cancel");
+                utf8_dialog_ok = LocalizationManager::fetchLocalizedString("dialog_ok");
             }
 
             dialog->setTitleText(sf::String::fromUtf8(utf8_dialog_title.begin(), utf8_dialog_title.end()));

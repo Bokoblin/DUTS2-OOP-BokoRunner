@@ -111,7 +111,7 @@ string XMLHelper::loadLabeledString(const string &filename, const string &label)
                 return safeRetrieveXMLValue<string>(item.attribute("value"), "", default_value);
             }
         }
-        Logger::printWarningOnConsole("No string was find for expression \"" + label
+        Logger::printWarningOnConsole("No string was found for expression \"" + label
                 + "\" in the file \"" + filename +"\"");
     }
 

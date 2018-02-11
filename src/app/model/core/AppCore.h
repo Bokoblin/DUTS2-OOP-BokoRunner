@@ -18,6 +18,7 @@ limitations under the License.
 
 #include <set>
 #include "libs/Logger/Logger.h"
+#include "app/localization/LocalizationManager.h"
 #include "app/model/enums/AppState.h"
 #include "app/model/enums/Difficulty.h"
 #include "app/persistence/PersistenceManager.h"
@@ -64,7 +65,6 @@ public:
     bool isScoreHardArrayEmpty() const;
     std::string getLanguage() const;
     std::string getBallSkin() const;
-    std::string getLanguageFile() const; //TODO: move to persistence ?
 
     //=== SETTERS
     void setAppState(AppState state);

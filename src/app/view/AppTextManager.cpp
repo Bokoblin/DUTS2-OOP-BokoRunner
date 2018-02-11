@@ -180,7 +180,7 @@ void AppTextManager::updateWholeStandaloneTextContent()
         t->setCharacterSize(DEFAULT_CHAR_SIZE);
         t->setFont(m_condensedFont);
         t->setFillColor(sf::Color::White);
-        t->setUtf8String(PersistenceManager::fetchLocalizedString(t->getDescription()));
+        t->setUtf8String(LocalizationManager::fetchLocalizedString(t->getDescription()));
     }
 }
 

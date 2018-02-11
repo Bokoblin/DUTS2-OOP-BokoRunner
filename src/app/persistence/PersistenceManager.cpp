@@ -23,7 +23,7 @@ AppCore* PersistenceManager::m_appCore = nullptr;
  * @author Arthur
  * @date 04/02/17
  */
-void PersistenceManager::initPersistenceManager(AppCore *appCore)
+void PersistenceManager::initContext(AppCore *appCore)
 {
     m_appCore = appCore;
     m_isInit = true;
@@ -37,7 +37,7 @@ void PersistenceManager::initPersistenceManager(AppCore *appCore)
  * @author Arthur
  * @date 04/02/17
  */
-void PersistenceManager::closePersistenceManager()
+void PersistenceManager::closeContext()
 {
     m_isInit = false;
     m_appCore = nullptr;
@@ -56,7 +56,7 @@ void PersistenceManager::initPersistence()
     pugi::xml_document doc; //TODO: Maybe use as member ?
 
     if (XMLHelper::loadXMLFile(doc, CONFIG_FILE))
-        Logger::printInfoOnConsole("Persistence loaded successfully");
+        Logger::printInfoOnConsole("Persistence context loaded successfully");
     else
         createConfigFile();
 }
@@ -69,13 +69,13 @@ void PersistenceManager::initPersistence()
  * @author Arthur
  * @date 04/02/17
  */
-void PersistenceManager::checkPersistence()
+void PersistenceManager::checkContext()
 {
     if (m_isInit && m_appCore != nullptr && checkConfigFileIntegrity())
-        Logger::printInfoOnConsole("Persistence verified");
+        Logger::printInfoOnConsole("Persistence context verified");
     else
     {
-        Logger::printErrorOnConsole("Persistence check failed, please init persistence first..."); //TODO change
+        Logger::printErrorOnConsole("Persistence context check failed, please init it first...");
         throw PersistenceException();
     }
 }
@@ -91,7 +91,7 @@ void PersistenceManager::fetchActivatedBonus()
 {
     try
     {
-        PersistenceManager::checkPersistence();
+        PersistenceManager::checkContext();
 
         if (fetchActivatedBonusFromConfigFile())
             Logger::printInfoOnConsole("Activated bonus successfully fetched");
@@ -116,7 +116,7 @@ void PersistenceManager::fetchConfiguration()
 {
     try
     {
-        PersistenceManager::checkPersistence();
+        PersistenceManager::checkContext();
 
         if (fetchConfigurationFromConfigFile())
             Logger::printInfoOnConsole("Configuration successfully fetched");
@@ -141,7 +141,7 @@ void PersistenceManager::fetchLeaderboard()
 {
     try
     {
-        PersistenceManager::checkPersistence();
+        PersistenceManager::checkContext();
 
         if (fetchLeaderboardFromConfigFile())
             Logger::printInfoOnConsole("Leaderboard successfully fetched");
@@ -165,7 +165,7 @@ void PersistenceManager::updatePersistence()
 {
     try
     {
-        PersistenceManager::checkPersistence();
+        PersistenceManager::checkContext();
 
         if (persistConfigurationToConfigFile())
             Logger::printInfoOnConsole("Configuration successfully persisted");
@@ -592,23 +592,4 @@ bool PersistenceManager::persistConfigurationToConfigFile()
     }
 
     return false;
-}
-
-
-/**
- * Retrieves a localized string for a given label.
- * Allows abstraction of the internationalization storage system
- *
- * @param label the label to describe the string
- * @return the localized string
- *
- * @author Arthur
- * @date 04/01/17 - 24/01/18
- */
-string PersistenceManager::fetchLocalizedString(const string &label)
-{
-    //TODO: recover xml once instead
-    //Have a "LocalizationManager" class ?
-    string currentLocaleFile = m_appCore->getLanguageFile();
-    return XMLHelper::loadLabeledString(currentLocaleFile, label);
 }

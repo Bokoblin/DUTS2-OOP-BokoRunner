@@ -39,6 +39,8 @@ public:
     static constexpr const char* DEFAULT_REGULAR_FONT = "../res/fonts/Roboto_Regular.ttf";
     static constexpr const char* DEFAULT_CONDENSED_FONT = "../res/fonts/Roboto_Condensed.ttf";
     static constexpr const char* DEFAULT_BOLD_FONT = "../res/fonts/Roboto_Bold.ttf";
+
+    //TODO: see injection for logger function pointer (abstraction)
 };
 
 } //namespace MaterialDesignComponentsForSFML

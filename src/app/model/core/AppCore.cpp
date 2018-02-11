@@ -53,17 +53,6 @@ bool AppCore::isScoreEasyArrayEmpty() const { return m_scoresEasyArray.empty(); 
 bool AppCore::isScoreHardArrayEmpty() const { return m_scoresHardArray.empty(); }
 string AppCore::getLanguage() const { return m_currentLanguage; }
 string AppCore::getBallSkin() const { return m_currentBallSkin; }
-string AppCore::getLanguageFile() const
-{
-    if (m_currentLanguage == ENGLISH)
-        return ENGLISH_STRINGS;
-    else if (m_currentLanguage == FRENCH)
-        return FRENCH_STRINGS;
-    else if (m_currentLanguage == SPANISH)
-        return SPANISH_STRINGS;
-    else
-        return ENGLISH_STRINGS; //Default
-}
 
 
 //------------------------------------------------
@@ -254,12 +243,12 @@ string AppCore::stringifyLeaderboard(Difficulty difficulty) const
 
     if (difficulty == EASY && !isScoreEasyArrayEmpty())
     {
-        result = PersistenceManager::fetchLocalizedString("config_easy_mode") + " :\n";
+        result = LocalizationManager::fetchLocalizedString("config_easy_mode") + " :\n";
         scoresArray = m_scoresEasyArray;
     }
     else if (difficulty == HARD && !isScoreHardArrayEmpty())
     {
-        result = PersistenceManager::fetchLocalizedString("config_hard_mode") + " :\n";
+        result = LocalizationManager::fetchLocalizedString("config_hard_mode") + " :\n";
         scoresArray = m_scoresHardArray;
     }
 

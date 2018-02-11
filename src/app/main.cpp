@@ -40,17 +40,10 @@ int main() //TODO: App class with logic -- main must only uses it + check argume
     //=== Initialize app data and text
 
     AppCore appCore;
-    PersistenceManager::initPersistenceManager(&appCore);
-
-    try {
-        PersistenceManager::checkPersistence();
-        PersistenceManager::fetchConfiguration();
-        PersistenceManager::fetchLeaderboard();
-    }
-    catch (const PersistenceException& e)
-    {
-        Logger::printErrorOnConsole(e.what() + std::string("Persistence checking failure"));
-    }
+    PersistenceManager::initContext(&appCore);
+    PersistenceManager::fetchConfiguration();
+    PersistenceManager::fetchLeaderboard();
+    LocalizationManager::initContext(&appCore);
 
     AppTextManager textManager(&appCore, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -106,7 +99,8 @@ int main() //TODO: App class with logic -- main must only uses it + check argume
         }
     }
 
-    PersistenceManager::closePersistenceManager();
+    PersistenceManager::closeContext();
+    LocalizationManager::closeContext();
 
     return 0;
 }

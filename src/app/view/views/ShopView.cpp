@@ -83,7 +83,7 @@ void ShopView::createCards()
     for (ShopItem *item : m_shop->getShopItemsArray())
     {
         ShopItemCard *card = new ShopItemCard(i, item);
-        card->syncWithButtonLabelRetrieval(m_shop->getAppCore()->getLanguageFile());
+        card->syncWithButtonLabelRetrieval(LocalizationManager::getLanguageFile());
         card->hide(); //to display by pages
         m_shopItemCardsArray.push_back(card);
         i++;
@@ -263,7 +263,7 @@ bool ShopView::handleEvents(sf::Event event)
                     {
                         for (auto &card : m_shopItemCardsArray)
                             if (card->getItem() == shopItem)
-                                card->syncWithButtonLabelRetrieval(m_shop->getAppCore()->getLanguageFile());
+                                card->syncWithButtonLabelRetrieval(LocalizationManager::getLanguageFile());
                     }
                 }
                 else

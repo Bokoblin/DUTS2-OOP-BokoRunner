@@ -23,8 +23,8 @@ namespace MaterialDesignComponentsForSFML
  * @date 02/01/17 - 01/01/18
  */
 Button::Button(float x, float y, float width, float height) :
-        Sprite(x, y, width, height), m_currentClipRect{0}, m_labelPosition{CENTER},
-        m_isPressed{false}, m_isEnabled{true}, m_label{""}
+        Sprite(x, y, width, height), m_currentClipRect{0},
+        m_isPressed{false}, m_isEnabled{true}, m_label{""}, m_labelPosition{CENTER}
 {
     m_font.loadFromFile(Config::DEFAULT_CONDENSED_FONT);
     m_label.setFont(m_font);
@@ -71,7 +71,7 @@ Button::Button(float x, float y, float width, float height, const string &descri
 Button::Button(float x, float y, float width, float height,
                const string &textureImage, const std::vector<sf::IntRect> &clipRect) :
         Sprite(x, y, width, height, textureImage), m_clipRectArray{clipRect}, m_currentClipRect{0},
-        m_isPressed{false}, m_isEnabled{true}, m_labelPosition{CENTER}, m_label{""}
+        m_isPressed{false}, m_isEnabled{true}, m_label{""}, m_labelPosition{CENTER}
 {
     this->setTextureRect(m_clipRectArray[m_currentClipRect]);
 

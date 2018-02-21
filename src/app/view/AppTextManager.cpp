@@ -19,7 +19,7 @@ using std::to_string;
  * @date 02/04/16 - 06/01/18
  */
 AppTextManager::AppTextManager(AppCore *appCore, unsigned int width, unsigned int height) :
-        m_appCore{appCore}, m_width{width}, m_height{height}
+        m_width{width}, m_height{height}, m_appCore{appCore}
 {
     m_regularFont.loadFromFile(ROBOTO_REGULAR_FONT);
     m_condensedFont.loadFromFile(ROBOTO_CONDENSED_FONT);

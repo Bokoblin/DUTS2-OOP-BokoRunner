@@ -110,7 +110,7 @@ private:
     std::string m_currentLanguage;
     std::string m_currentBallSkin;
     const int COIN_MULTIPLIER = 20;
-    const int MAX_SCORES = 10;
+    const unsigned int MAX_SCORES = 10;
 
     //Current Game
     int m_currentCoinsNumber;

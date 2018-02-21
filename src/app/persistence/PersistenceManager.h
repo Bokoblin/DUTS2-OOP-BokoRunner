@@ -27,7 +27,6 @@ limitations under the License.
 class AppCore;
 
 //TODO: maybe store config as static document xml instead of loading file each time
-//TODO: Especially useful for languages files accessed a dozen times
 //TODO: Try to reduce file size by factorising what is possible
 
 /**

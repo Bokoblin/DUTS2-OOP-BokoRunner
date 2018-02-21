@@ -22,9 +22,9 @@ using Bokoblin::SimpleLogger::Logger;
  */
 GameModel::GameModel(float width, float height, AppCore *appCore) :
         AbstractModel(appCore), m_width{width}, m_height{height}, m_gameState{RUNNING}, m_inTransition{false},
-        m_isTransitionPossible{false}, m_currentZone{HILL}, m_gameSlowSpeed{0},
+        m_isTransitionPossible{false}, m_gameSlowSpeed{0}, m_currentZone{HILL},
         m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},
-        m_lastTime{system_clock::now()}, m_bonusTimeout{0}, m_scoreBonusFlattenedEnemies{0}
+        m_scoreBonusFlattenedEnemies{0}, m_lastTime{system_clock::now()}, m_bonusTimeout{0}
 {
     //=== Initialize new game
 

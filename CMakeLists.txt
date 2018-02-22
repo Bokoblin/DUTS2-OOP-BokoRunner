@@ -1,57 +1,103 @@
 cmake_minimum_required(VERSION 2.8)
 
-#Configuration du projet
-set(PROJECT_NAME runner)
+#----------------------------------------------------------------------------------
+#           PROJECT CONFIGURATION
+#----------------------------------------------------------------------------------
+set(PROJECT_NAME DUTS2-POO-ProjetRunner)
+set(EXECUTABLE_NAME bokorunner)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11 -g -O0")
 project(${PROJECT_NAME})
-set(EXECUTABLE_NAME ${PROJECT_NAME})
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-#include libraries
-set(SFML_ROOT "${PROJECT_SOURCE_DIR}/ext-libs/SFML-2.4.2")
+#----------------------------------------------------------------------------------
+#           EXTERNAL LIBRARIES ROOT DIRECTORY CONFIGURATION
+#----------------------------------------------------------------------------------
+set(EXTERNAL_LIBS_ROOT "${PROJECT_SOURCE_DIR}/ext-libs")
+set(SFML_ROOT "${EXTERNAL_LIBS_ROOT}/SFML-2.4.2")
+set(PUGIXML_ROOT "${EXTERNAL_LIBS_ROOT}/pugixml-1.8/src")
+
+#----------------------------------------------------------------------------------
+#           INTERNAL LIBRARIES ROOT DIRECTORY CONFIGURATION
+#----------------------------------------------------------------------------------
+set(INTERNAL_LIBS_ROOT "${PROJECT_SOURCE_DIR}/src/libs")
+set(SIMPLE_LOGGER_ROOT "${INTERNAL_LIBS_ROOT}/Logger")
+set(MDC_SFML_ROOT "${INTERNAL_LIBS_ROOT}/MDC-SFML/src")
+set(XML_HELPER_ROOT "${INTERNAL_LIBS_ROOT}/XMLHelper")
+
+#----------------------------------------------------------------------------------
+#           EXTERNAL LIBRARIES SOURCES
+#----------------------------------------------------------------------------------
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
 
-set(PUGIXML_ROOT "${PROJECT_SOURCE_DIR}/ext-libs/pugixml-1.8/src")
 set(PUGIXML_LIB
         ${PUGIXML_ROOT}/PUGIXML/pugixml.hpp
         ${PUGIXML_ROOT}/PUGIXML/pugixml.cpp
         )
 
+#----------------------------------------------------------------------------------
+#           INTERNAL LIBRARIES SOURCES
+#----------------------------------------------------------------------------------
 set(LOGGER_LIB
         src/libs/Logger/Logger.h
         src/libs/Logger/Logger.cpp
         )
 
-file(GLOB MDC-SFML_LIB
-        "src/libs/MDC-SFML/src/*.h"
-        "src/libs/MDC-SFML/src/*.cpp"
+file(GLOB MDC_SFML_LIB
+        ${MDC_SFML_ROOT}/*.h
+        ${MDC_SFML_ROOT}/*.cpp
         )
-
 
 set(XML_HELPER_LIB
-        src/libs/XMLHelper/XMLHelper.h
-        src/libs/XMLHelper/XMLHelper.cpp
+        ${XML_HELPER_ROOT}/XMLHelper.h
+        ${XML_HELPER_ROOT}/XMLHelper.cpp
         )
 
-
+#----------------------------------------------------------------------------------
+#           APP SOURCE FILES
+#----------------------------------------------------------------------------------
+set(APP_ROOT "${PROJECT_SOURCE_DIR}/src/app")
 file(GLOB_RECURSE SOURCE_FILES
-        "src/app/*.h"
-        "src/app/*.cpp"
+        ${APP_ROOT}/*.h
+        ${APP_ROOT}/*.cpp
         )
 
-add_library(PUGIXML ${PUGIXML_LIB})
+#----------------------------------------------------------------------------------
+#           DIRECTORIES INCLUSION
+#----------------------------------------------------------------------------------
+include_directories(${SFML_INCLUDE_DIR})
+include_directories(${PUGIXML_ROOT})
+include_directories(${PROJECT_SOURCE_DIR}/src)
+
+#----------------------------------------------------------------------------------
+#           LIBRARIES BUILDING
+#----------------------------------------------------------------------------------
+add_library(pugi SHARED ${PUGIXML_LIB})
+add_library(slogger SHARED ${LOGGER_LIB})
+add_library(xmlhelper SHARED ${XML_HELPER_LIB})
+add_library(mdcsfml SHARED ${MDC_SFML_LIB})
+
+#----------------------------------------------------------------------------------
+#           LIBRARIES AND EXECUTABLE LINKAGE
+#----------------------------------------------------------------------------------
+#   Dependencies:
+#
+#   - pugi: Ø
+#   - slogger: Ø
+#   - xmlhelper: pugi, slogger -- FIXME: remove slogger dependency
+#   - mdcsfml: SFML, slogger, xmlhelper -- FIXME: remove xmlhelper and slogger dependency (use a wrapper in the app?)
+#   - executable: mdscsfml
+#----------------------------------------------------------------------------------
+FIND_PACKAGE(SFML 2.4 COMPONENTS audio graphics window system REQUIRED)
+
+target_link_libraries(xmlhelper pugi)
+target_link_libraries(xmlhelper slogger)
+target_link_libraries(mdcsfml ${SFML_LIBRARIES})
+target_link_libraries(mdcsfml slogger)
+target_link_libraries(mdcsfml xmlhelper)
 
 add_executable(
         ${EXECUTABLE_NAME}
-        ${PUGIXML_LIB}
-        ${LOGGER_LIB}
-        ${XML_HELPER_LIB}
-        ${MDC-SFML_LIB}
         ${SOURCE_FILES}
 )
 
-FIND_PACKAGE(SFML 2.4 COMPONENTS audio graphics window system REQUIRED)
-
-include_directories(${PUGIXML_ROOT})
-include_directories(${SFML_INCLUDE_DIR})
-include_directories(${PROJECT_SOURCE_DIR}/src)
-target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES})
+#target_link_libraries(${EXECUTABLE_NAME} xmlhelper) FIXME: above
+target_link_libraries(${EXECUTABLE_NAME} mdcsfml)

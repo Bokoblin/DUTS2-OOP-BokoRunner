@@ -16,9 +16,10 @@ Current version : v2.0.0-dev
 - **Structure refactoring**
   - **abstraction inheritance**: introducing `AbstractModel` and `AbstractView` classes
   - **abstraction inheritance**: more classes inherit from abstract classes
-  - **app data handling**: Database split into three classes
+  - **app data handling**: `Database` split into three classes
     - `AppCore` for app data and states
-    - `PersistenceManager` to persist and retrieve app data (make xml persistence abstracted)
+    - `PersistenceManager` to handle app data persistence and abstract data retrieval/saving
+    - `LocalizationManager` to handle localization and abstract strings retrieval
     - `XMLHelper` for generic XML operations
   - **ui components**: Generic UI components are now dissociated from app and grouped under *MDC-SFML'
   - **window**: life-cycle now handled only in `main.cpp`
@@ -50,6 +51,7 @@ Current version : v2.0.0-dev
     - layout has been changed : it now displays title, author and "powered by SFML" on grey background
     - "press START to continue" is now blinking periodically and compatible with multi-language
     - a transition to menu has been added
+- **commands**: replaced keyboard image by localized strings containing key(s) and description 
 - **dialogs**: rewritten `Dialog` class into a generic dialog class
     - `ShopDialog` inherits from it for shop specific dialogs
 - **settings**: added support for hyperlinks (URL is opened in default browser) [tested on Ubuntu 14.04 and Windows 10]
@@ -69,10 +71,15 @@ Current version : v2.0.0-dev
 - **changelog**: changed for `.md` and reformatted file accordingly
 - **script**: added a little bash `build.sh` script
 - **xml**: safe fetching, logging
+- **cmake**: reorganization with libraries usage
 - **copyright**: Updated to 2018
  
 #### Library changes
 - **SFML**: updated SFML version ( 2.3.2 => 2.4.2)
+- **splitting**: split out some components into libraries compiled separately:
+    - **slogger**: a simple logger for the app
+    - **xmlhelper**: an xml helper to abstract pugi usage
+    - **mdcsfml**: a UI lib implementing material components above SFML components
 
 <br>
 

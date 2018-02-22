@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.2)
 
 #----------------------------------------------------------------------------------
 #           PROJECT CONFIGURATION
@@ -76,7 +76,6 @@ add_library(mdcsfml SHARED ${MDC_SFML_LIB})
 include_directories(${SFML_INCLUDE_DIR})
 include_directories(${PUGIXML_ROOT})
 include_directories(${PROJECT_SOURCE_DIR}/src)
-target_include_directories(mdcsfml PUBLIC ${SFML_INCLUDE_DIR})
 
 #----------------------------------------------------------------------------------
 #           LIBRARIES AND EXECUTABLE LINKAGE
@@ -90,6 +89,8 @@ target_include_directories(mdcsfml PUBLIC ${SFML_INCLUDE_DIR})
 #   - executable: mdscsfml
 #----------------------------------------------------------------------------------
 FIND_PACKAGE(SFML 2.4 COMPONENTS audio graphics window system REQUIRED)
+
+target_include_directories(mdcsfml PUBLIC ${SFML_INCLUDE_DIR})
 
 target_link_libraries(xmlhelper pugi)
 target_link_libraries(xmlhelper slogger)

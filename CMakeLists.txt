@@ -5,7 +5,9 @@ cmake_minimum_required(VERSION 2.8)
 #----------------------------------------------------------------------------------
 set(PROJECT_NAME DUTS2-POO-ProjetRunner)
 set(EXECUTABLE_NAME bokorunner)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11 -g -O0")
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 project(${PROJECT_NAME})
 
 #----------------------------------------------------------------------------------
@@ -61,19 +63,20 @@ file(GLOB_RECURSE SOURCE_FILES
         )
 
 #----------------------------------------------------------------------------------
-#           DIRECTORIES INCLUSION
-#----------------------------------------------------------------------------------
-include_directories(${SFML_INCLUDE_DIR})
-include_directories(${PUGIXML_ROOT})
-include_directories(${PROJECT_SOURCE_DIR}/src)
-
-#----------------------------------------------------------------------------------
 #           LIBRARIES BUILDING
 #----------------------------------------------------------------------------------
 add_library(pugi SHARED ${PUGIXML_LIB})
 add_library(slogger SHARED ${LOGGER_LIB})
 add_library(xmlhelper SHARED ${XML_HELPER_LIB})
 add_library(mdcsfml SHARED ${MDC_SFML_LIB})
+
+#----------------------------------------------------------------------------------
+#           DIRECTORIES INCLUSION
+#----------------------------------------------------------------------------------
+include_directories(${SFML_INCLUDE_DIR})
+include_directories(${PUGIXML_ROOT})
+include_directories(${PROJECT_SOURCE_DIR}/src)
+target_include_directories(mdcsfml PUBLIC ${SFML_INCLUDE_DIR})
 
 #----------------------------------------------------------------------------------
 #           LIBRARIES AND EXECUTABLE LINKAGE

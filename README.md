@@ -23,7 +23,7 @@ and "under the hood" improvements from Bokoblin.
     * SFML 2.4.2
     * PugiXML 1.8
 * Continuous integration : Travis CI
-* Code review : Codacy
+* Code review : Codacy, CodeFactor
 
 
 ### Authors ###
@@ -40,29 +40,69 @@ The Doxygen documentation can be found at
 
 ### How to build ###
 
-Execute `build.sh` file or do, from Project folder :
-  - `mkdir build`
-  - `cd build`
-  - `cmake .. && make`
-  
-Note : You may need to install some of the following packages, depending of your configuration, before building : <br>
+#### Libraries requirements ####
+
+##### GNU/Linux #####
+
+You have two choices for GNU/Linux systems: 
+- either manually install needed packages and use provided SFML lib (but incompatibility issues can occur)
+- either manually install "libsfml-dev" and use it instead of the provided one, it should download all necessary libs.
+
+If you choose, the first option, you may need to install some of the following packages, depending of your configuration: <br>
 - g++-4.9
 - libopenal
 - libvorbis
-- libogg.so
-- libFLAC.so
-- libGL.so
-- libSM.so
-- libICE.so
-- libXrandr.so
+- libogg
+- libFLAC
+- libGL
+- libSM
+- libICE
+- libX11
+- libXext
+- libfreetype
+- libjpeg
+- libXrandr
 - libalut-dev
 - libxcb-image0
 - libudev-dev
 - libudev1
 
+If you choose the second option:
+- run `sudo apt-get install libsfml-dev` in your terminal (this should install SFML 2.4.2 and its dependencies)
+- comment the following line in CMakeLists.txt: `set(SFML_ROOT "${EXTERNAL_LIBS_ROOT}/SFML-2.4.2")`
+
+
+##### Windows #####
+
+You may need some libraries (.dll) to be installed in C:\Windows\System32 or put in same folder as executable:
+- OpenAL32.dll
+- sfml-graphics-2.dll or sfml-graphics-d-2.dll
+- sfml-window-2.dll or sfml-window-d-2.dll
+- sfml-audio-2.dll or sfml-audio-d-2.dll
+- sfml-system-2.dll or sfml-system-d-2.dll
+
+
+#### Building steps ####
+
+##### GNU/Linux #####
+
+Execute `build.sh` file or do, from Project folder :
+  - `mkdir build`
+  - `cd build`
+  - `cmake .. && make`
+  
+
+##### Windows #####
+
+Unless you have all needed packages for the commands below, 
+it is recommended to open the project in a cmake-based IDE like QTCreator or CLion, 
+and to use the built-in run option.
+  
+
+
 Notes: 
 - The SFML library files were built with g++-4.9 <br>
-  So the project may only compile with g++-4.9 or clang (see next section for tested environments)<br>
+  So the project may only compile with g++-4.9 or clang (see next section for tested environments).<br>
 - You can use `update-alternatives` to change default g++ priority if needed.
 - On Windows, compiler and SFML version have to match 100%. <br>
   So, you must use *mingw-w64-6.1.0* to compile the project.
@@ -70,7 +110,7 @@ Notes:
 
 ### Tested environments ###
 
-- **Windows 10 Home Version 1709 - Fall Creator Update**
+- **Windows 10 Home Version 1803 - April 2018 Update**
 	- **Kernel**: Windows NT 10.0
 	- **Compilers**: mingw-w64-6.1.0
 	- **Environment**: local
@@ -82,7 +122,14 @@ Notes:
 	- **Compilers**: g++-4.9
 	- **Environment**: local (Windows Subsystem for Linux)
 	- **Compilation**: OK
-	- **Execution**: Not possible (even with x-server)
+	- **Execution**: Splashscreen OK, MENU KO (crash related to mutex unlock failure)
+	
+- **Debian GNU/Linux 9 - Stretch**
+	- **Kernel**: x86_64 Linux 4.4.0-43-Microsoft
+	- **Compilers**: g++-4.9
+	- **Environment**: local (Windows Subsystem for Linux)
+	- **Compilation**: OK (used libsfml-dev from apt instead of provided one)
+	- **Execution**: Splashscreen OK, MENU KO (crash related to openal)
 	
 - **Ubuntu 14.04 LTS - Trusty**
 	- **Kernel**: 4.4.0-101-generic

@@ -14,3 +14,5 @@ cmake-build-release/
 res/config.xml
 /build/
 /tmp_doc/
+/misc/
+CMakeLists.txt.user

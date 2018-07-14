@@ -92,11 +92,14 @@ void SettingsModel::checkItemsAvailability()
  */
 void SettingsModel::openURLinBrowser(const string &url) const
 {
-#if defined __linux__
+#if defined __linux__ || __unix__ || defined(_POSIX_VERSION)
     string command = "x-www-browser " + url;
     system(command.c_str());
 #elif _WIN32
     ShellExecute(nullptr, nullptr, url.c_str(), nullptr, nullptr, SW_SHOW);
+#elif __APPLE__
+    string command = "open " + url;
+    system(command.c_str());
 #else
 #error Operation not supported on your platform
 #endif

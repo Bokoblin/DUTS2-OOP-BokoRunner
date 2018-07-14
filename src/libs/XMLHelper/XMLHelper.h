@@ -16,6 +16,9 @@ limitations under the License.
 #ifndef XML_PERSISTENCE_HELPER_H
 #define XML_PERSISTENCE_HELPER_H
 
+#include <string>
+#include <sstream>
+#include <iostream>
 #include <fstream>
 #include <regex>
 #include "PUGIXML/pugixml.hpp"

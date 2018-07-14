@@ -97,6 +97,10 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get install -y libxcb-image0 ; fi
   - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get install -y libudev-dev ; fi
   - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt install --reinstall libudev1 ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then wget http://www.sfml-dev.org/files/SFML-2.4.0-osx-clang.tar.gz; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then tar xf SFML-2.4.0-osx-clang.tar.gz; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo cp -r SFML-2.4.0-osx-clang/lib/* /usr/local/lib/.; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo cp -r SFML-2.4.0-osx-clang/include/* /usr/local/include/.; fi
 
   
 # Build steps

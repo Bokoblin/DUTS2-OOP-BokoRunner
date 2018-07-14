@@ -1,12 +1,11 @@
-dist: trusty
-sudo: required
 language: cpp
 
 matrix:
   include:
-    - os: osx
-      osx_image: xcode9.4
-    - compiler: gcc-4.9
+    - os: linux
+      dist: trusty
+      sudo: required
+      compiler: gcc-4.9
       addons:
         apt:
           sources:
@@ -14,7 +13,10 @@ matrix:
           packages:
             - g++-4.9
       env: MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
-    - compiler: gcc-5
+    - os: linux
+      dist: trusty
+      sudo: required
+      compiler: gcc-5
       addons:
         apt:
           sources:
@@ -22,7 +24,10 @@ matrix:
           packages:
             - g++-5
       env: MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
-    - compiler: gcc-6
+    - os: linux
+      dist: trusty
+      sudo: required
+      compiler: gcc-6
       addons:
         apt:
           sources:
@@ -30,7 +35,10 @@ matrix:
           packages:
             - g++-6
       env: MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
-    - compiler: gcc-7
+    - os: linux
+      dist: trusty
+      sudo: required
+      compiler: gcc-7
       addons:
         apt:
           sources:
@@ -38,7 +46,10 @@ matrix:
           packages:
             - g++-7
       env: MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
-    - compiler: clang-3.6
+    - os: linux
+      dist: trusty
+      sudo: required
+      compiler: clang-3.6
       addons:
         apt:
           sources:
@@ -48,7 +59,10 @@ matrix:
             - clang-3.6
       env:
         - MATRIX_EVAL="CC=clang-3.6 && CXX=clang++-3.6"
-    - compiler: clang-3.8
+    - os: linux
+      dist: trusty
+      sudo: required
+      compiler: clang-3.8
       addons:
         apt:
           sources:
@@ -58,7 +72,10 @@ matrix:
             - clang-3.8
       env:
         - MATRIX_EVAL="CC=clang-3.8 && CXX=clang++-3.8"
-    - compiler: clang-3.9
+    - os: linux
+      dist: trusty
+      sudo: required
+      compiler: clang-3.9
       addons:
         apt:
           sources:
@@ -68,7 +85,10 @@ matrix:
             - clang-3.9
       env:
         - MATRIX_EVAL="CC=clang-3.9 && CXX=clang++-3.9"
-    - compiler: clang-5.0
+    - os: linux
+      dist: trusty
+      sudo: required
+      compiler: clang-5.0
       addons:
         apt:
           sources:
@@ -78,14 +98,18 @@ matrix:
             - clang-5.0
       env:
         - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+    - os: osx
+      osx_image: xcode9
+    - os: osx
+      osx_image: xcode8
 
 before_install:
   - eval "${MATRIX_EVAL}"
-  - sudo apt-get update -qq
-  - sudo apt-get install -y libopenal-dev libalut-dev
-  - sudo apt-get install -y libxcb-image0
-  - sudo apt-get install -y libudev-dev
-  - sudo apt install --reinstall libudev1
+  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get update -qq ; fi
+  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get install -y libopenal-dev libalut-dev ; fi
+  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get install -y libxcb-image0 ; fi
+  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get install -y libudev-dev ; fi
+  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt install --reinstall libudev1 ; fi
 
   
 # Build steps

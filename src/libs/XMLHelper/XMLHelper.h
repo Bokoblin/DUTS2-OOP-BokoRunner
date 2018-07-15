@@ -22,7 +22,6 @@ limitations under the License.
 #include <fstream>
 #include <regex>
 #include "PUGIXML/pugixml.hpp"
-#include "libs/Logger/Logger.h"
 
 /**
  * The XMLHelper class provides high-level methods
@@ -50,7 +49,7 @@ public:
      * It is strongly advised to use an integer for enumeration.
      * Passing other types than the above listed may lead into an undefined behaviour. \n
      *
-     * You can specify an empty regex, the check won't be taken in account.
+     * You can specify an empty regex, the check won't be taken into account.
      * You MUST specify a valid default value, otherwise you can encounter
      * an undefined behaviour on retrieval failure.
      *
@@ -62,38 +61,40 @@ public:
      * @author Arthur
      * @date 25/01/18 - 26/01/18
      */
-    template <typename Type> static Type safeRetrieveXMLValue(const pugi::xml_attribute &attribute,
-                                                              const std::string &regexString, const Type &defaultValue)
+    template<typename Type>
+    static Type safeRetrieveXMLValue(const pugi::xml_attribute& attribute,
+                                     const std::string& regexString, const Type& defaultValue)
     {
         //Implementation must be in-place due to C++ limitation
 
         const std::string result = std::string(attribute.value());
         const std::regex regex(regexString);
 
-        if (regexString.empty() || std::regex_match(result.c_str(), regex))
-        {
+        if (regexString.empty() || std::regex_match(result.c_str(), regex)) {
             std::istringstream ss(result);
             Type res;
             ss >> res;
             return res;
-        }
-        else
-        {
+        } else {
             return defaultValue;
         }
     }
 };
 
-template<> bool XMLHelper::safeRetrieveXMLValue<bool>
-        (const pugi::xml_attribute &attribute, const std::string &regexString, const bool &defaultValue);
+template<>
+bool XMLHelper::safeRetrieveXMLValue<bool>
+        (const pugi::xml_attribute& attribute, const std::string& regexString, const bool& defaultValue);
 
-template<> int XMLHelper::safeRetrieveXMLValue<int>
-        (const pugi::xml_attribute &attribute, const std::string &regexString, const int &defaultValue);
+template<>
+int XMLHelper::safeRetrieveXMLValue<int>
+        (const pugi::xml_attribute& attribute, const std::string& regexString, const int& defaultValue);
 
-template<> std::string XMLHelper::safeRetrieveXMLValue<std::string>
-        (const pugi::xml_attribute &attribute, const std::string &regexString, const std::string &defaultValue);
+template<>
+std::string XMLHelper::safeRetrieveXMLValue<std::string>
+        (const pugi::xml_attribute& attribute, const std::string& regexString, const std::string& defaultValue);
 
-template<> unsigned int XMLHelper::safeRetrieveXMLValue<unsigned int>
-        (const pugi::xml_attribute &attribute, const std::string &regexString, const unsigned int &defaultValue);
+template<>
+unsigned int XMLHelper::safeRetrieveXMLValue<unsigned int>
+        (const pugi::xml_attribute& attribute, const std::string& regexString, const unsigned int& defaultValue);
 
 #endif

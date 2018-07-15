@@ -2,7 +2,7 @@
 
 mkdir -p build
 cd build
-rm -rf *
+rm -rf ./*
 
 if [ $# -eq 1 ] && ([ $1 == "-h" ] || [ $2 == "--help" ])
 then

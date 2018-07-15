@@ -42,7 +42,7 @@ class PersistenceManager
 {
 public:
     //=== METHODS
-    static void initContext(AppCore *appCore);
+    static void initContext(AppCore* appCore);
     static void closeContext();
     static void checkContext();
     static void initPersistence();
@@ -63,7 +63,8 @@ private:
 
     //=== ATTRIBUTES
     static bool m_isInit;
-    static AppCore *m_appCore;
+    static AppCore* m_appCore;
+    static pugi::xml_document m_doc;
 };
 
 #endif

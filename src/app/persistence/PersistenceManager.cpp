@@ -1,8 +1,12 @@
 #include "PersistenceManager.h"
+#include "app/model/utils/StringHash.h"
 
 using std::string;
 using std::to_string;
 using std::stoi;
+using pugi::xml_document;
+using pugi::xml_node;
+using pugi::xml_attribute;
 using Bokoblin::SimpleLogger::Logger;
 
 //------------------------------------------------
@@ -11,6 +15,7 @@ using Bokoblin::SimpleLogger::Logger;
 
 bool PersistenceManager::m_isInit = false;
 AppCore* PersistenceManager::m_appCore = nullptr;
+xml_document PersistenceManager::m_doc;
 
 //------------------------------------------------
 //          PUBLIC METHODS
@@ -23,13 +28,14 @@ AppCore* PersistenceManager::m_appCore = nullptr;
  * @author Arthur
  * @date 04/02/17
  */
-void PersistenceManager::initContext(AppCore *appCore)
+void PersistenceManager::initContext(AppCore* appCore)
 {
     m_appCore = appCore;
     m_isInit = true;
 
     initPersistence();
 }
+
 
 /**
  * Closes the persistence manager context
@@ -53,12 +59,12 @@ void PersistenceManager::closeContext()
  */
 void PersistenceManager::initPersistence()
 {
-    pugi::xml_document doc; //TODO: Maybe use as member ?
-
-    if (XMLHelper::loadXMLFile(doc, CONFIG_FILE))
+    if (XMLHelper::loadXMLFile(m_doc, CONFIG_FILE)) {
         Logger::printInfoOnConsole("Persistence context loaded successfully");
-    else
+    } else {
+        Logger::printErrorOnConsole("Persistence context loading failure");
         createConfigFile();
+    }
 }
 
 
@@ -71,14 +77,14 @@ void PersistenceManager::initPersistence()
  */
 void PersistenceManager::checkContext()
 {
-    if (m_isInit && m_appCore != nullptr && checkConfigFileIntegrity())
+    if (m_isInit && m_appCore != nullptr && checkConfigFileIntegrity()) {
         Logger::printInfoOnConsole("Persistence context verified");
-    else
-    {
+    } else {
         Logger::printErrorOnConsole("Persistence context check failed, please init it first...");
         throw PersistenceException();
     }
 }
+
 
 /**
  * Fetches the activated items
@@ -89,17 +95,15 @@ void PersistenceManager::checkContext()
  */
 void PersistenceManager::fetchActivatedBonus()
 {
-    try
-    {
+    try {
         PersistenceManager::checkContext();
 
-        if (fetchActivatedBonusFromConfigFile())
+        if (fetchActivatedBonusFromConfigFile()) {
             Logger::printInfoOnConsole("Activated bonus successfully fetched");
-        else
+        } else {
             Logger::printErrorOnConsole("Activated bonus fetching failure");
-    }
-    catch (const PersistenceException& e)
-    {
+        }
+    } catch (const PersistenceException& e) {
         Logger::printErrorOnConsole(e.what() + string("Persistence checking failure"));
     }
 }
@@ -114,17 +118,15 @@ void PersistenceManager::fetchActivatedBonus()
  */
 void PersistenceManager::fetchConfiguration()
 {
-    try
-    {
+    try {
         PersistenceManager::checkContext();
 
-        if (fetchConfigurationFromConfigFile())
+        if (fetchConfigurationFromConfigFile()) {
             Logger::printInfoOnConsole("Configuration successfully fetched");
-        else
+        } else {
             Logger::printErrorOnConsole("Configuration fetching failure");
-    }
-    catch (const PersistenceException& e)
-    {
+        }
+    } catch (const PersistenceException& e) {
         Logger::printErrorOnConsole(e.what() + string("Persistence checking failure"));
     }
 }
@@ -139,20 +141,19 @@ void PersistenceManager::fetchConfiguration()
  */
 void PersistenceManager::fetchLeaderboard()
 {
-    try
-    {
+    try {
         PersistenceManager::checkContext();
 
-        if (fetchLeaderboardFromConfigFile())
+        if (fetchLeaderboardFromConfigFile()) {
             Logger::printInfoOnConsole("Leaderboard successfully fetched");
-        else
+        } else {
             Logger::printErrorOnConsole("Leaderboard fetching failure");
-    }
-    catch (const PersistenceException& e)
-    {
+        }
+    } catch (const PersistenceException& e) {
         Logger::printErrorOnConsole(e.what() + string("Persistence checking failure"));
     }
 }
+
 
 /**
  * Updates the app configuration
@@ -163,20 +164,19 @@ void PersistenceManager::fetchLeaderboard()
  */
 void PersistenceManager::updatePersistence()
 {
-    try
-    {
+    try {
         PersistenceManager::checkContext();
 
-        if (persistConfigurationToConfigFile())
+        if (persistConfigurationToConfigFile()) {
             Logger::printInfoOnConsole("Configuration successfully persisted");
-        else
+        } else {
             Logger::printErrorOnConsole("Configuration persistence failure");
-    }
-    catch (const PersistenceException& e)
-    {
+        }
+    } catch (const PersistenceException& e) {
         Logger::printErrorOnConsole(e.what() + string("Persistence checking failure"));
     }
 }
+
 
 /**
  * Deletes the persistence context.
@@ -209,9 +209,6 @@ void PersistenceManager::createConfigFile()
 
 
 /**
- * TODO : NON-TRIVIAL REWRITE with new structure
- * see: https://pugixml.org/docs/manual.html#loading.errors in XMLHelper
- *
  * Checks if config file has been corrupted
  * by verifying file number of lines, number of each item
  *
@@ -222,14 +219,17 @@ void PersistenceManager::createConfigFile()
  */
 bool PersistenceManager::checkConfigFileIntegrity()
 {
+    //TODO : NON-TRIVIAL REWRITE with new structure
+    //see: https://pugixml.org/docs/manual.html#loading.errors in XMLHelper
     std::fstream f;
     string line;
 
     f.open(CONFIG_FILE.c_str(), std::ios::in);
 
     //=== Opening test
-    if (f.fail())
+    if (f.fail()) {
         return false;
+    }
 
     //=== Count lines / elements test
     bool isPresentConfig = false; //should be true
@@ -247,41 +247,16 @@ bool PersistenceManager::checkConfigFileIntegrity()
         getline(f, line, '\n');
         nbLines++;
 
-        unsigned long long int found = line.find("<config>");
-        if (found != string::npos)
-            isPresentConfig = true;
+        isPresentConfig = line.find("<config>") != string::npos ? true : isPresentConfig;
+        isPresentStats = line.find("<stats>") != string::npos ? true : isPresentStats;
+        isPresentShop = line.find("<shop>") != string::npos ? true : isPresentShop;
+        isPresentScoreEasy = line.find("<scoresEasy>") != string::npos ? true : isPresentScoreEasy;
+        isPresentScoreHard = line.find("<scoresHard>") != string::npos ? true : isPresentScoreHard;
 
-        found = line.find("<stats>");
-        if (found != string::npos)
-            isPresentStats = true;
-
-        found = line.find("<shop>");
-        if (found != string::npos)
-            isPresentShop = true;
-
-        found = line.find("<scoresEasy>");
-        if (found != string::npos)
-            isPresentScoreEasy = true;
-
-        found = line.find("<scoresHard>");
-        if (found != string::npos)
-            isPresentScoreHard = true;
-
-        found = line.find("<configItem");
-        if (found != string::npos)
-            nbConfigChildren++;
-
-        found = line.find("<statItem");
-        if (found != string::npos)
-            nbStatsChildren++;
-
-        found = line.find("<shopItem");
-        if (found != string::npos)
-            nbShopChildren++;
-
-        found = line.find("<scoreItem");
-        if (found != string::npos)
-            nbScoreChildren++;
+        nbConfigChildren = line.find("<configItem") != string::npos ? nbConfigChildren + 1 : nbConfigChildren;
+        nbStatsChildren = line.find("<statItem") != string::npos ? nbStatsChildren + 1 : nbStatsChildren;
+        nbShopChildren = line.find("<shopItem") != string::npos ? nbShopChildren + 1 : nbShopChildren;
+        nbScoreChildren = line.find("<scoreItem") != string::npos ? nbScoreChildren + 1 : nbScoreChildren;
     } while (!f.eof());
 
     return isPresentConfig && isPresentStats && isPresentShop && isPresentScoreEasy && isPresentScoreHard
@@ -298,89 +273,88 @@ bool PersistenceManager::checkConfigFileIntegrity()
  */
 bool PersistenceManager::fetchConfigurationFromConfigFile()
 {
-    pugi::xml_document doc;
-    if (XMLHelper::loadXMLFile(doc, CONFIG_FILE))
-    {
-        pugi::xml_node config = doc.child("runner").child("config");
-        pugi::xml_node stats = doc.child("runner").child("stats");
+    try {
+        PersistenceManager::checkContext();
 
-        for (pugi::xml_node configItem: config.children("configItem"))
-        {
-            //TODO: improve with multi-map ??
-            if (string(configItem.attribute("name").value()) == "language")
-            {
-                m_appCore->m_currentLanguage = XMLHelper::safeRetrieveXMLValue<string>
-                        (configItem.attribute("value"), "en|fr|es", ENGLISH);
-            }
-            else if (string(configItem.attribute("name").value()) == "difficulty")
-            {
-                m_appCore->m_currentDifficulty = XMLHelper::safeRetrieveXMLValue<int>
-                        (configItem.attribute("value"), "1|2", Difficulty::HARD);
-            }
-            else if (string(configItem.attribute("name").value()) == "ball_skin")
-            {
-                m_appCore->m_currentBallSkin = XMLHelper::safeRetrieveXMLValue<string>
-                        (configItem.attribute("value"), "default|morphing|capsule", "default");
-            }
-            else if (string(configItem.attribute("name").value()) == "wallet")
-            {
-                m_appCore->m_wallet = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (configItem.attribute("value"), INTEGER_REGEX, 0);
-            }
-            else if (string(configItem.attribute("name").value()) == "menu_music")
-            {
-                m_appCore->m_isMenuMusicEnabled = XMLHelper::safeRetrieveXMLValue<bool>
-                        (configItem.attribute("value"), BOOLEAN_REGEX, false);
-            }
-            else if (string(configItem.attribute("name").value()) == "game_music")
-            {
-                m_appCore->m_isGameMusicEnabled = XMLHelper::safeRetrieveXMLValue<bool>
-                        (configItem.attribute("value"), BOOLEAN_REGEX, false);
+        xml_node config = m_doc.child("runner").child("config");
+        xml_node stats = m_doc.child("runner").child("stats");
+
+        for (xml_node configItem: config.children("configItem")) {
+            string nodeKey = string(configItem.attribute("name").value());
+            xml_attribute nodeValue = configItem.attribute("value");
+
+            switch (hash(nodeKey)) {
+                case hash("language"):
+                    m_appCore->m_currentLanguage = XMLHelper::safeRetrieveXMLValue<string>
+                            (nodeValue, "en|fr|es", ENGLISH);
+                    break;
+                case hash("difficulty"):
+                    m_appCore->m_currentDifficulty = XMLHelper::safeRetrieveXMLValue<int>
+                            (nodeValue, "1|2", Difficulty::HARD);
+                    break;
+                case hash("ball_skin"):
+                    m_appCore->m_currentBallSkin = XMLHelper::safeRetrieveXMLValue<string>
+                            (nodeValue, "default|morphing|capsule", "default");
+                    break;
+                case hash("wallet"):
+                    m_appCore->m_currentBallSkin = XMLHelper::safeRetrieveXMLValue<string>
+                            (nodeValue, "default|morphing|capsule", "default");
+                    break;
+                case hash("menu_music"):
+                    m_appCore->m_isMenuMusicEnabled = XMLHelper::safeRetrieveXMLValue<bool>
+                            (nodeValue, BOOLEAN_REGEX, false);
+                    break;
+                case hash("game_music"):
+                    m_appCore->m_isGameMusicEnabled = XMLHelper::safeRetrieveXMLValue<bool>
+                            (nodeValue, BOOLEAN_REGEX, false);
+                    break;
+                default:
+                    break;
             }
         }
 
-        for (pugi::xml_node statItem: stats.children("statItem"))
-        {
-            if (string(statItem.attribute("name").value()) == "total_coins_collected")
-            {
-                m_appCore->m_totalCoinsCollected = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (statItem.attribute("value"), INTEGER_REGEX, 0);
-            }
-            else if (string(statItem.attribute("name").value()) == "total_distance_travelled")
-            {
-                m_appCore->m_totalDistance = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (statItem.attribute("value"), INTEGER_REGEX, 0);
-            }
-            else if (string(statItem.attribute("name").value()) == "total_enemies_destroyed")
-            {
-                m_appCore->m_totalFlattenedEnemies = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (statItem.attribute("value"), INTEGER_REGEX, 0);
-            }
-            else if (string(statItem.attribute("name").value()) == "per_game_coins_collected")
-            {
-                m_appCore->m_perGameCoinsCollected = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (statItem.attribute("value"), INTEGER_REGEX, 0);
-            }
-            else if (string(statItem.attribute("name").value()) == "per_game_distance_travelled")
-            {
-                m_appCore->m_perGameDistance = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (statItem.attribute("value"), INTEGER_REGEX, 0);
-            }
-            else if (string(statItem.attribute("name").value()) == "per_game_enemies_destroyed")
-            {
-                m_appCore->m_perGameFlattenedEnemies = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (statItem.attribute("value"), INTEGER_REGEX, 0);
-            }
-            else if (string(statItem.attribute("name").value()) == "total_games_played")
-            {
-                m_appCore->m_totalGamesPlayed = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (statItem.attribute("value"), INTEGER_REGEX, 0);
+        for (xml_node statItem: stats.children("statItem")) {
+            string nodeKey = string(statItem.attribute("name").value());
+            xml_attribute nodeValue = statItem.attribute("value");
+
+            switch (hash(nodeKey)) {
+                case hash("total_coins_collected"):
+                    m_appCore->m_totalCoinsCollected = XMLHelper::safeRetrieveXMLValue<unsigned int>
+                            (nodeValue, INTEGER_REGEX, 0);
+                    break;
+                case hash("total_distance_travelled"):
+                    m_appCore->m_totalDistance = XMLHelper::safeRetrieveXMLValue<unsigned int>
+                            (nodeValue, INTEGER_REGEX, 0);
+                    break;
+                case hash("total_enemies_destroyed"):
+                    m_appCore->m_totalFlattenedEnemies = XMLHelper::safeRetrieveXMLValue<unsigned int>
+                            (nodeValue, INTEGER_REGEX, 0);
+                    break;
+                case hash("per_game_coins_collected"):
+                    m_appCore->m_perGameCoinsCollected = XMLHelper::safeRetrieveXMLValue<unsigned int>
+                            (nodeValue, INTEGER_REGEX, 0);
+                    break;
+                case hash("per_game_distance_travelled"):
+                    m_appCore->m_perGameDistance = XMLHelper::safeRetrieveXMLValue<unsigned int>
+                            (nodeValue, INTEGER_REGEX, 0);
+                    break;
+                case hash("per_game_enemies_destroyed"):
+                    m_appCore->m_perGameFlattenedEnemies = XMLHelper::safeRetrieveXMLValue<unsigned int>
+                            (nodeValue, INTEGER_REGEX, 0);
+                    break;
+                case hash("total_games_played"):
+                    m_appCore->m_totalGamesPlayed = XMLHelper::safeRetrieveXMLValue<unsigned int>
+                            (nodeValue, INTEGER_REGEX, 0);
+                    break;
+                default:
+                    break;
             }
         }
         return true;
+    } catch (PersistenceException& e) {
+        Logger::printErrorOnConsole(e.what() + string("Persistence checking failure"));
+        return false;
     }
-
-    return false;
 }
 
 
@@ -393,35 +367,32 @@ bool PersistenceManager::fetchConfigurationFromConfigFile()
  */
 bool PersistenceManager::fetchLeaderboardFromConfigFile()
 {
-    pugi::xml_document doc;
-    if (XMLHelper::loadXMLFile(doc, CONFIG_FILE))
-    {
-        pugi::xml_node scoresEasy = doc.child("runner").child("scoresEasy");
-        pugi::xml_node scoresHard = doc.child("runner").child("scoresHard");
+    try {
+        PersistenceManager::checkContext();
+
+        xml_node scoresEasy = m_doc.child("runner").child("scoresEasy");
+        xml_node scoresHard = m_doc.child("runner").child("scoresHard");
 
         m_appCore->m_scoresEasyArray.clear();
         m_appCore->m_scoresHardArray.clear();
 
-        for (pugi::xml_node scoreItem: scoresEasy.children("scoreItem"))
-        {
-            if (string(scoreItem.attribute("value").value()) != "0")
-            {
+        for (xml_node scoreItem: scoresEasy.children("scoreItem")) {
+            if (string(scoreItem.attribute("value").value()) != "0") {
                 m_appCore->m_scoresEasyArray.insert(XMLHelper::safeRetrieveXMLValue<unsigned int>
                                                             (scoreItem.attribute("value"), INTEGER_REGEX, 0));
             }
         }
-        for (pugi::xml_node scoreItem: scoresHard.children("scoreItem"))
-        {
-            if (string(scoreItem.attribute("value").value()) != "0")
-            {
+        for (xml_node scoreItem: scoresHard.children("scoreItem")) {
+            if (string(scoreItem.attribute("value").value()) != "0") {
                 m_appCore->m_scoresHardArray.insert(XMLHelper::safeRetrieveXMLValue<unsigned int>
                                                             (scoreItem.attribute("value"), INTEGER_REGEX, 0));
             }
         }
         return true;
+    } catch (const PersistenceException& e) {
+        Logger::printErrorOnConsole(e.what() + string("Persistence checking failure"));
+        return false;
     }
-
-    return false;
 }
 
 
@@ -433,26 +404,24 @@ bool PersistenceManager::fetchLeaderboardFromConfigFile()
  */
 bool PersistenceManager::fetchActivatedBonusFromConfigFile()
 {
-    pugi::xml_document doc;
-    if (XMLHelper::loadXMLFile(doc, CONFIG_FILE))
-    {
-        pugi::xml_node shop = doc.child("runner").child("shop");
+    try {
+        PersistenceManager::checkContext();
 
-        for (pugi::xml_node shopItem: shop.children("shopItem"))
-        {
-            if (string(shopItem.attribute("bought").value()) == "true")
-            {
+        xml_node shop = m_doc.child("runner").child("shop");
+
+        for (xml_node shopItem: shop.children("shopItem")) {
+            if (string(shopItem.attribute("bought").value()) == "true") {
                 const string ITEM_REGEX = "shop_[a-z]+[_]{0,1}[a-z]+";
                 m_appCore->m_activatedItemsArray.insert(XMLHelper::safeRetrieveXMLValue<string>
                                                                 (shopItem.attribute("id"), ITEM_REGEX, ""));
             }
         }
         return true;
+    } catch (const PersistenceException& e) {
+        Logger::printErrorOnConsole(e.what() + string("Persistence checking failure"));
+        return false;
     }
-
-    return false;
 }
-
 
 
 /**
@@ -463,133 +432,113 @@ bool PersistenceManager::fetchActivatedBonusFromConfigFile()
  */
 bool PersistenceManager::persistConfigurationToConfigFile()
 {
-    pugi::xml_document doc;
-    if (XMLHelper::loadXMLFile(doc, CONFIG_FILE))
-    {
-        pugi::xml_node config = doc.child("runner").child("config");
-        pugi::xml_node stats = doc.child("runner").child("stats");
-        pugi::xml_node shop = doc.child("runner").child("shop");
-        pugi::xml_node scoresEasy = doc.child("runner").child("scoresEasy");
-        pugi::xml_node scoresHard = doc.child("runner").child("scoresHard");
+    try {
+        PersistenceManager::checkContext();
+
+        xml_node config = m_doc.child("runner").child("config");
+        xml_node stats = m_doc.child("runner").child("stats");
+        xml_node shop = m_doc.child("runner").child("shop");
+        xml_node scoresEasy = m_doc.child("runner").child("scoresEasy");
+        xml_node scoresHard = m_doc.child("runner").child("scoresHard");
 
         //=== Save configuration
 
-        for (pugi::xml_node configItem: config.children("configItem"))
-        {
-            if (string(configItem.attribute("name").value()) == "language")
-            {
-                pugi::xml_attribute nodeValue = configItem.attribute("value");
-                nodeValue.set_value(m_appCore->m_currentLanguage.c_str());
-            }
-            else if (string(configItem.attribute("name").value()) == "difficulty")
-            {
-                pugi::xml_attribute nodeValue = configItem.attribute("value");
-                nodeValue.set_value(to_string(m_appCore->m_currentDifficulty).c_str());
-            }
-            else if (string(configItem.attribute("name").value()) == "ball_skin")
-            {
-                pugi::xml_attribute nodeValue = configItem.attribute("value");
-                nodeValue.set_value(m_appCore->m_currentBallSkin.c_str());
-            }
-            else if (string(configItem.attribute("name").value()) == "wallet")
-            {
-                pugi::xml_attribute nodeValue = configItem.attribute("value");
-                nodeValue.set_value(to_string(m_appCore->m_wallet).c_str());
-            }
-            else if (string(configItem.attribute("name").value()) == "menu_music")
-            {
-                pugi::xml_attribute nodeValue = configItem.attribute("value");
-                nodeValue.set_value(m_appCore->m_isMenuMusicEnabled);
-            }
-            else if (string(configItem.attribute("name").value()) == "game_music")
-            {
-                pugi::xml_attribute nodeValue = configItem.attribute("value");
-                nodeValue.set_value(m_appCore->m_isGameMusicEnabled);
+        for (xml_node configItem: config.children("configItem")) {
+            string nodeKey = string(configItem.attribute("name").value());
+            xml_attribute nodeValue = configItem.attribute("value");
+
+            switch (hash(nodeKey)) {
+                case hash("language"):
+                    nodeValue.set_value(m_appCore->m_currentLanguage.c_str());
+                    break;
+                case hash("difficulty"):
+                    nodeValue.set_value(to_string(m_appCore->m_currentDifficulty).c_str());
+                    break;
+                case hash("ball_skin"):
+                    nodeValue.set_value(m_appCore->m_currentBallSkin.c_str());
+                    break;
+                case hash("wallet"):
+                    nodeValue.set_value(to_string(m_appCore->m_wallet).c_str());
+                    break;
+                case hash("menu_music"):
+                    nodeValue.set_value(m_appCore->m_isMenuMusicEnabled);
+                    break;
+                case hash("game_music"):
+                    nodeValue.set_value(m_appCore->m_isGameMusicEnabled);
+                    break;
+                default:
+                    break;
             }
         }
 
         //=== Save stats
 
-        for (pugi::xml_node statItem: stats.children("statItem"))
-        {
-            if (string(statItem.attribute("name").value()) == "total_coins_collected")
-            {
-                pugi::xml_attribute nodeValue = statItem.attribute("value");
-                nodeValue.set_value(to_string(m_appCore->m_totalCoinsCollected).c_str());
-            }
-            else if (string(statItem.attribute("name").value()) == "total_distance_travelled")
-            {
-                pugi::xml_attribute nodeValue = statItem.attribute("value");
-                nodeValue.set_value(to_string(m_appCore->m_totalDistance).c_str());
-            }
-            else if (string(statItem.attribute("name").value()) == "total_enemies_destroyed")
-            {
-                pugi::xml_attribute nodeValue = statItem.attribute("value");
-                nodeValue.set_value(to_string(m_appCore->m_totalFlattenedEnemies).c_str());
-            }
-            else if (string(statItem.attribute("name").value()) == "per_game_coins_collected")
-            {
-                pugi::xml_attribute nodeValue = statItem.attribute("value");
-                nodeValue.set_value(to_string(m_appCore->m_perGameCoinsCollected).c_str());
-            }
-            else if (string(statItem.attribute("name").value()) == "per_game_distance_travelled")
-            {
-                pugi::xml_attribute nodeValue = statItem.attribute("value");
-                nodeValue.set_value(to_string(m_appCore->m_perGameDistance).c_str());
-            }
-            else if (string(statItem.attribute("name").value()) == "per_game_enemies_destroyed")
-            {
-                pugi::xml_attribute nodeValue = statItem.attribute("value");
-                nodeValue.set_value(to_string(m_appCore->m_perGameFlattenedEnemies).c_str());
-            }
-            else if (string(statItem.attribute("name").value()) == "total_games_played")
-            {
-                pugi::xml_attribute nodeValue = statItem.attribute("value");
-                nodeValue.set_value(to_string(m_appCore->m_totalGamesPlayed).c_str());
+        for (xml_node statItem: stats.children("statItem")) {
+            string nodeKey = string(statItem.attribute("name").value());
+            xml_attribute nodeValue = statItem.attribute("value");
+
+            switch (hash(nodeKey)) {
+                case hash("total_coins_collected"):
+                    nodeValue.set_value(to_string(m_appCore->m_totalCoinsCollected).c_str());
+                    break;
+                case hash("total_distance_travelled"):
+                    nodeValue.set_value(to_string(m_appCore->m_totalDistance).c_str());
+                    break;
+                case hash("total_enemies_destroyed"):
+                    nodeValue.set_value(to_string(m_appCore->m_totalFlattenedEnemies).c_str());
+                    break;
+                case hash("per_game_coins_collected"):
+                    nodeValue.set_value(to_string(m_appCore->m_perGameCoinsCollected).c_str());
+                    break;
+                case hash("per_game_distance_travelled"):
+                    nodeValue.set_value(to_string(m_appCore->m_perGameDistance).c_str());
+                    break;
+                case hash("per_game_enemies_destroyed"):
+                    nodeValue.set_value(to_string(m_appCore->m_perGameFlattenedEnemies).c_str());
+                    break;
+                case hash("total_games_played"):
+                    nodeValue.set_value(to_string(m_appCore->m_totalGamesPlayed).c_str());
+                    break;
+                default:
+                    break;
             }
         }
 
         //=== Save shop activated items
 
-        for (pugi::xml_node shopItem: shop.children("shopItem"))
-        {
-            if (m_appCore->findActivatedItem(string(shopItem.attribute("id").value())))
-            {
+        for (xml_node shopItem: shop.children("shopItem")) {
+            if (m_appCore->findActivatedItem(string(shopItem.attribute("id").value()))) {
                 shopItem.attribute("bought").set_value(true);
-                doc.save_file(CONFIG_FILE.c_str());
             }
         }
 
         //=== Save leaderboard
 
         auto it = m_appCore->m_scoresEasyArray.begin();
-        for (pugi::xml_node scoreItem: scoresEasy.children("scoreItem"))
-        {
-            pugi::xml_attribute nodeValue = scoreItem.attribute("value");
-            if (it != m_appCore->m_scoresEasyArray.end())
-            {
+        for (xml_node scoreItem: scoresEasy.children("scoreItem")) {
+            xml_attribute nodeValue = scoreItem.attribute("value");
+            if (it != m_appCore->m_scoresEasyArray.end()) {
                 nodeValue.set_value(to_string(*it).c_str());
                 ++it;
-            }
-            else
+            } else {
                 nodeValue.set_value("0");
+            }
         }
 
         it = m_appCore->m_scoresHardArray.begin();
-        for (pugi::xml_node scoreItem: scoresHard.children("scoreItem"))
-        {
-            pugi::xml_attribute nodeValue = scoreItem.attribute("value");
-            if (it != m_appCore->m_scoresHardArray.end())
-            {
+        for (xml_node scoreItem: scoresHard.children("scoreItem")) {
+            xml_attribute nodeValue = scoreItem.attribute("value");
+            if (it != m_appCore->m_scoresHardArray.end()) {
                 nodeValue.set_value(to_string(*it).c_str());
                 ++it;
-            }
-            else
+            } else {
                 nodeValue.set_value("0");
+            }
         }
 
-        return doc.save_file(CONFIG_FILE.c_str());
+        return m_doc.save_file(CONFIG_FILE.c_str());
+    } catch (const PersistenceException& e) {
+        Logger::printErrorOnConsole(e.what() + string("Persistence checking failure"));
+        return false;
     }
-
-    return false;
 }

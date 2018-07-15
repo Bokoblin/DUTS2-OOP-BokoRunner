@@ -135,7 +135,14 @@ Notes:
 	- **Kernel**: 4.4.0-101-generic
 	- **Compilers**: gcc-4.9, gcc-5, gcc-6, gcc-7, clang-3.6, clang-3.8, clang-3.9, clang 5.0
 	- **Environment**: Virtual machine on GCE (Travis CI)
-	- **Compilation**: OK (all 8 working)
+	- **Compilation**: OK (all 7 working)
+	- **Execution**: Can't be tested
+	
+- **Mac OS X 10.11/12**
+	- **Kernel**: ??
+	- **Compilers**: xcode8: Apple LLVM v8.0.0 (clang-800.0.38), xcode8: Apple LLVM v9.0.0 (clang-900.0.37)
+	- **Environment**: Virtual machine on GCE (Travis CI)
+	- **Compilation**: OK (both working)
 	- **Execution**: Can't be tested
 
 

@@ -102,7 +102,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo cp -r SFML-2.4.0-osx-clang/lib/* /usr/local/lib/.; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo cp -r SFML-2.4.0-osx-clang/include/* /usr/local/include/.; fi
 
-  
+
 # Build steps
 script:
   - mkdir build

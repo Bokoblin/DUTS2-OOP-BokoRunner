@@ -52,7 +52,7 @@ bool PixelShader::onLoad(const std::string &image)
     m_sprite.setTexture(m_texture);
 
     // Load the shader
-    if (!m_shader.loadFromFile("../res/pixel_shader.frag", sf::Shader::Fragment))
+    if (!m_shader.loadFromFile("../res/shaders/pixel_shader.frag", sf::Shader::Fragment))
         return false;
     m_shader.setUniform("texture", sf::Shader::CurrentTexture);
 

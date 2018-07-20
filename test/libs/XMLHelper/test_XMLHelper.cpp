@@ -11,7 +11,6 @@ namespace
  */
 class XMLHelperTest: public ::testing::Test {
 protected:
-
     const std::string filename = "test.xml";
     const std::string validContent = R"(<?xml version="1.0"?><node></node>)";
 

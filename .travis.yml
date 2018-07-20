@@ -85,6 +85,19 @@ matrix:
             - clang-5.0
       env:
         - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+    - os: linux
+      dist: trusty
+      sudo: required
+      compiler: clang-6.0
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-6.0
+          packages:
+            - clang-6.0
+      env:
+        - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
     - os: osx
       osx_image: xcode9
     - os: osx
@@ -108,6 +121,7 @@ script:
   - mkdir build
   - cd build
   - cmake .. && make
+  - ./test/unit_tests
 
 
 

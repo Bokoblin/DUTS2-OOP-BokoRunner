@@ -29,21 +29,23 @@ limitations under the License.
  * It abstracts PugiXML usage from other classes visibility
  *
  * @author Arthur
- * @date 22/01/18 - 04/02/18
+ * @date 22/01/18 - 17/07/18
  */
 class XMLHelper
 {
 public:
     //=== METHODS
-    static void createXMLFile(const std::string &filename, const std::string &content);
-    static bool checkXMLFileIntegrity(const std::string &filename);
+    static bool createXMLFile(const std::string &filename, const std::string &content);
+    static bool removeXMLFile(const std::string &filename);
+    static bool checkXMLFileExistence(const std::string& filename);
+    static bool checkXMLStreamIntegrity(std::istream& content);
     static bool loadXMLFile(pugi::xml_document &xmlDocumentObject, const std::string &filename);
     static std::string loadLabeledString(const std::string &filename, const std::string &label);
 
     /**
-     * Safe retrieves an xml value using a regex and a default value. \n
+     * @brief Safe retrieves an xml value using a regex and a default value. \n
      *
-     * This function supports, through specialization, the following types :
+     * @details This function supports, through specialization, the following types :
      * strings, booleans, signed and unsigned integers. \n
      *
      * It is strongly advised to use an integer for enumeration.

@@ -22,6 +22,7 @@ and "under the hood" improvements from Bokoblin.
 * Libraries : 
     * SFML 2.4.2
     * PugiXML 1.8
+* Unit tests : Google Test
 * Continuous integration : Travis CI
 * Code review : Codacy, CodeFactor
 

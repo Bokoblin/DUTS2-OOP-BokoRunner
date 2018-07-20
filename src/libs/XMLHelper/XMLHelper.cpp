@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "XMLHelper.h"
 
 using std::fstream;
@@ -9,57 +10,80 @@ using std::ios;
 //------------------------------------------------
 
 /**
- * Creates a file with a content.
- * Alternatively overwrite an existing file with given content.
+ * @brief Creates a file with a content.
+ * @details Alternatively overwrite an existing file with given content.
  *
  * @param filename the file name
  * @param content the (new) content
+ * @return a boolean indicating if file was created
  *
  * @author Arthur
- * @date 02/05/16 - 22/01/18
+ * @date 02/05/16 - 16/07/18
  */
-void XMLHelper::createXMLFile(const std::string& filename, const std::string& content)
+bool XMLHelper::createXMLFile(const std::string& filename, const std::string& content)
 {
     fstream f;
     f.open(filename.c_str(), ios::out);
-    f << content;
-    f.close();
+    if (f.is_open() && !f.fail()) {
+        f << content;
+        f.close();
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * @brief Remove an XML file
+ *
+ * @param filename the file name
+ * @return a boolean indicating if file was removed
+ *
+ * @author Arthur
+ * @date 16/07/18
+ */
+bool XMLHelper::removeXMLFile(const std::string& filename)
+{
+    return remove(filename.c_str()) == EXIT_SUCCESS;
 }
 
 
 /**
- * Checks if a file is valid and has not been corrupted
+ * @brief Checks if a file is valid by trying to parse it
  *
- * Structure checking is already done by PugiXML when loading the file
- *
+ * @param content a string to check
  * @return a boolean indicating if file has its integrity
  *
  * @author Arthur
- * @date ??
+ * @date 16/07/18
  */
-bool XMLHelper::checkXMLFileIntegrity(const std::string& filename)
+bool XMLHelper::checkXMLStreamIntegrity(std::istream& content)
 {
-    fstream f;
-    string line;
-
-    f.open(filename.c_str(), ios::in);
-
-    //=== Opening test
-    if (f.fail()) {
-        return false;
-    }
-
-    //=== Integrity test
-
-    //TODO : integrity check (content)
-
-
-    return true;
+    pugi::xml_document doc;
+    return doc.load(content);
 }
 
 
 /**
- * Loads an XML file
+ * @brief Checks if an XML file exists
+ * @warning Does not check if XML is valid
+ *
+ * @param filename the file name
+ * @return a boolean
+ *
+ * @author Arthur
+ * @date 17/07/18
+ */
+bool XMLHelper::checkXMLFileExistence(const std::string& filename)
+{
+    return filename.substr(filename.rfind('.') + 1) == "xml"
+            && access(filename.c_str(), F_OK) != -1;
+}
+
+
+/**
+ * @brief Loads an XML file
+ * @details Performs checks while loading the document
  *
  * @param xmlDocumentObject the object to manipulate xml file more easily
  * @param filename the file name
@@ -76,11 +100,13 @@ bool XMLHelper::loadXMLFile(pugi::xml_document& xmlDocumentObject, const std::st
 
 
 /**
- * Retrieves a string matching a given label in a given file
+ * @brief Retrieves a string matching a given label in a given file
+ * @details the string must be contained in a line of this style:
+ * <string name="label" value="value" /> inside a root 'resources' node
  *
  * @param filename the file name
  * @param label the label to describe the string
- * @return the string if found or the label in brackets otherwise
+ * @return the string if found or the label between brackets: <> otherwise
  *
  * @author Arthur
  * @date 04/01/17 - 25/01/18
@@ -105,8 +131,8 @@ string XMLHelper::loadLabeledString(const string& filename, const string& label)
 
 
 /**
- * Safe retrieves an xml value using a regex and a default value. \n
- * Specialization of template for booleans.
+ * @brief Safe retrieves an xml value using a regex and a default value. \n
+ * @details Specialization of template for booleans.
  *
  * @param attribute the xml attribute containing the value
  * @param regexString the regex to check against
@@ -132,8 +158,8 @@ bool XMLHelper::safeRetrieveXMLValue<bool>
 
 
 /**
- * Safe retrieves an xml value using a regex and a default value. \n
- * Specialization of template for signed 32-bit integers.
+ * @brief Safe retrieves an xml value using a regex and a default value. \n
+ * @details Specialization of template for signed 32-bit integers.
  *
  * @param attribute the xml attribute containing the value
  * @param regexString the regex to check against
@@ -159,8 +185,8 @@ int XMLHelper::safeRetrieveXMLValue<int>
 
 
 /**
- * Safe retrieves an xml value using a regex and a default value. \n
- * Specialization of template for strings.
+ * @brief Safe retrieves an xml value using a regex and a default value. \n
+ * @details Specialization of template for strings.
  *
  * @param attribute the xml attribute containing the value
  * @param regexString the regex to check against
@@ -186,8 +212,8 @@ string XMLHelper::safeRetrieveXMLValue<string>
 
 
 /**
- * Safe retrieves an xml value using a regex and a default value. \n
- * Specialization of template for unsigned 32-bit integers.
+ * @brief Safe retrieves an xml value using a regex and a default value. \n
+ * @details Specialization of template for unsigned 32-bit integers.
  *
  * @param attribute the xml attribute containing the value
  * @param regexString the regex to check against

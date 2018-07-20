@@ -72,6 +72,7 @@ Current version : v2.0.0-dev
 - **script**: added a little bash `build.sh` script
 - **xml**: safe fetching, logging
 - **cmake**: reorganization with libraries usage
+- **unit tests**: reintroduced with Google Test
 - **copyright**: Updated to 2018
  
 #### Library changes

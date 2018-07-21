@@ -19,7 +19,6 @@ limitations under the License.
 #include "LabelPosition.h"
 #include "Sprite.h"
 #include "Text.h"
-#include "libs/XMLHelper/XMLHelper.h"
 
 namespace Bokoblin
 {
@@ -40,17 +39,21 @@ namespace MaterialDesignComponentsForSFML
  * @see Sprite
  * @see LabelPosition
  */
-class Button : public Sprite
+class Button: public Sprite
 {
 public:
     //=== CTORs / DTORs
     Button(float x, float y, float width, float height);
-    Button(float x, float y, float width, float height, const std::string &description);
-    Button(float x, float y, float width, float height, const std::string &textureImage, const std::vector<sf::IntRect> &clipRect);
-    Button(float x, float y, float width, float height, const std::string &description,
-           const std::string &textureImage, const std::vector<sf::IntRect> &clipRect);
+    Button(float x, float y, float width, float height, const std::string& description);
+    Button(float x, float y, float width, float height, const std::string& textureImage,
+           const std::vector<sf::IntRect>& clipRect);
+    Button(float x, float y, float width, float height, const std::string& description,
+           const std::string& textureImage, const std::vector<sf::IntRect>& clipRect);
     Button(Button const& other);
     ~Button() override;
+
+    //=== FUNCTION POINTERS
+    typedef std::string (* label_retrieval_func_t)(const std::string& label);
 
     //=== GETTERS
     bool isPressed() const;
@@ -62,15 +65,15 @@ public:
     void setEnabled(bool enabled);
     void setClipRectArray(std::vector<sf::IntRect> array);
     void setPositionSelfCentered(float x, float y);
-    void setLabelDescription(const std::string &description);
+    void setLabelDescription(const std::string& description);
     virtual void setLabelPosition(LabelPosition labelPosition);
 
     //=== METHODS
     void sync() override;
-    virtual void retrieveLabel(const std::string &stringsFilename); //Or should we only allow setting label
+    virtual void retrieveLabel(label_retrieval_func_t func);
     virtual void syncLabelPosition();
-    virtual void retrieveAndSyncLabel(const std::string &stringsFilename);
-    void draw(sf::RenderWindow *window) const override;
+    virtual void retrieveAndSyncLabel(label_retrieval_func_t func);
+    void draw(sf::RenderWindow* window) const override;
     bool contains(float x, float y) const override;
 
 protected:

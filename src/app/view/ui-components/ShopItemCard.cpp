@@ -101,16 +101,16 @@ void ShopItemCard::sync()
 /**
  * Syncs the card and retrieve content of buttons label
  *
- * @param stringsFilename the file containing the string to look for
+ * @param func the function used to retrieve the string given a label
  *
  * @author Arthur
  * @date 16/05/16 - 23/01/18
  */
-void ShopItemCard::syncWithButtonLabelRetrieval(const string &stringsFilename)
+void ShopItemCard::syncWithButtonLabelRetrieval(mdsf::Button::label_retrieval_func_t func)
 {
     sync();
     m_buyButton->setLabelDescription(m_item->isBought() ? "shop_bought" : "shop_purchasable");
-    m_buyButton->retrieveAndSyncLabel(stringsFilename);
+    m_buyButton->retrieveAndSyncLabel(func);
 }
 
 

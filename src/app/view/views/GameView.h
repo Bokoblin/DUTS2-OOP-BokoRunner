@@ -40,7 +40,7 @@ public:
 
 private:
     //=== ATTRIBUTES
-    GameModel *m_game; //to not delete in dtor
+    GameModel *m_game; //to not delete in ~GameView()
     PixelShader *m_pixelShader;
     float m_xPixelIntensity;
     float m_yPixelIntensity;

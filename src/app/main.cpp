@@ -24,9 +24,9 @@ using Bokoblin::SimpleLogger::Logger;
  * Initializes the application and controls its loop
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 11/02/18
+ * @date 21/02/16 - 17/07/18
  */
-int main() //TODO: App class with logic -- main must only uses it + check arguments
+int main() //TODO: App class with logic -- main must only uses it + check arguments (for CLI)
 {
     //=== Initialize window
 
@@ -34,14 +34,16 @@ int main() //TODO: App class with logic -- main must only uses it + check argume
     window.setFramerateLimit(APP_FRAMERATE);
 
     sf::Image appIcon;
-    if (appIcon.loadFromFile(ICON_IMAGE))
+    if (appIcon.loadFromFile(ICON_IMAGE)) {
         window.setIcon(appIcon.getSize().x, appIcon.getSize().y, appIcon.getPixelsPtr());
+    }
 
     //=== Initialize app data and text
 
     AppCore appCore;
     PersistenceManager::initContext(&appCore);
     PersistenceManager::fetchConfiguration();
+    PersistenceManager::fetchStatistics();
     PersistenceManager::fetchLeaderboard();
     LocalizationManager::initContext(&appCore);
 
@@ -102,5 +104,5 @@ int main() //TODO: App class with logic -- main must only uses it + check argume
     PersistenceManager::closeContext();
     LocalizationManager::closeContext();
 
-    return 0;
+    return EXIT_SUCCESS;
 }

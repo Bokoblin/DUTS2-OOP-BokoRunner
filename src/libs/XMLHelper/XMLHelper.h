@@ -35,12 +35,12 @@ class XMLHelper
 {
 public:
     //=== METHODS
-    static bool createXMLFile(const std::string &filename, const std::string &content);
-    static bool removeXMLFile(const std::string &filename);
+    static bool createXMLFile(const std::string& filename, const std::string& content);
+    static bool removeXMLFile(const std::string& filename);
     static bool checkXMLFileExistence(const std::string& filename);
     static bool checkXMLStreamIntegrity(std::istream& content);
-    static bool loadXMLFile(pugi::xml_document &xmlDocumentObject, const std::string &filename);
-    static std::string loadLabeledString(const std::string &filename, const std::string &label);
+    static bool loadXMLFile(pugi::xml_document& xmlDocumentObject, const std::string& filename);
+    static std::string loadLabeledString(const std::string& filename, const std::string& label);
 
     /**
      * @brief Safe retrieves an xml value using a regex and a default value. \n
@@ -67,7 +67,7 @@ public:
     static Type safeRetrieveXMLValue(const pugi::xml_attribute& attribute,
                                      const std::string& regexString, const Type& defaultValue)
     {
-        //Implementation must be in-place due to C++ limitation
+        //NOTE: Implementation must be in-place due to C++ limitation
 
         const std::string result = std::string(attribute.value());
         const std::regex regex(regexString);

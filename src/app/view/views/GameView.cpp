@@ -4,6 +4,8 @@ using std::string;
 using std::vector;
 using Bokoblin::SimpleLogger::Logger;
 
+// TODO: SPLIT FILE FOLLOWING GAME STATES (BUT KEEP AS SAME CLASS)
+
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
 //------------------------------------------------
@@ -210,7 +212,7 @@ void GameView::loadSprites()
                                     GAME_BUTTONS_IMAGE, clipRect_resume);
     m_resumeGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_resumeGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_resumeGameButton->retrieveAndSyncLabel(LocalizationManager::getLanguageFile());
+    m_resumeGameButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
 
     vector<sf::IntRect> clipRect_restart;
     clipRect_restart.emplace_back(0, 50, 50, 50);
@@ -219,7 +221,7 @@ void GameView::loadSprites()
                                      GAME_BUTTONS_IMAGE, clipRect_restart);
     m_restartGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_restartGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_restartGameButton->retrieveAndSyncLabel(LocalizationManager::getLanguageFile());
+    m_restartGameButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
 
 
     vector<sf::IntRect> clipRect_home;
@@ -229,7 +231,7 @@ void GameView::loadSprites()
                                   GAME_BUTTONS_IMAGE, clipRect_home);
     m_goToHomeButton->resize(PAUSE_BUTTONS_SIZE);
     m_goToHomeButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_goToHomeButton->retrieveAndSyncLabel(LocalizationManager::getLanguageFile());
+    m_goToHomeButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
 
     vector<sf::IntRect> clipRect_music;
     clipRect_music.emplace_back(0, 200, 50, 50);
@@ -238,14 +240,14 @@ void GameView::loadSprites()
                                       GAME_BUTTONS_IMAGE, clipRect_music);
     m_controlMusicButton->resize(PAUSE_BUTTONS_SIZE);
     m_controlMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_controlMusicButton->retrieveAndSyncLabel(LocalizationManager::getLanguageFile());
+    m_controlMusicButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
 
     vector<sf::IntRect> clipRect_save;
     clipRect_save.emplace_back(RAISED_BUTTON_DEFAULT);
     clipRect_save.emplace_back(RAISED_BUTTON_PRESSED);
     m_saveScoreButton = new mdsf::Button(m_width / 2 - 75, 350, 150, 36, "end_save_button",
                                    RECT_BUTTONS_IMAGE, clipRect_save);
-    m_saveScoreButton->retrieveAndSyncLabel(LocalizationManager::getLanguageFile());
+    m_saveScoreButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
     m_saveScoreButton->setColor(mdsf::Color::MaterialGreenA700);
 
 

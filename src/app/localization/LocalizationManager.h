@@ -25,7 +25,7 @@ class AppCore;
 
 //TODO: maybe store config as static document xml instead of loading file each time
 //TODO: Especially useful for languages files accessed a dozen times
-//TODO: Dynamic handling (adding a language file adds it to available languages if valid) [post 2.X?]
+//TODO: Dynamic language handling (adding a language file adds it to available languages if valid) [post 2.X?]
 
 /**
  * The LocalizationManager class manages the app localization. \n
@@ -34,22 +34,24 @@ class AppCore;
  * The current localization system uses an xml string file for each supported language.
  *
  * @author Arthur
- * @date 11/02/18
+ * @date 11/02/18 - 21/07/18
  */
 class LocalizationManager
 {
 public:
     //=== METHODS
-    static void initContext(AppCore *appCore);
+    static void initContext(AppCore* appCore);
     static void closeContext();
     static void checkContext();
-    static std::string fetchLocalizedString(const std::string &label);
-    static std::string getLanguageFile(); //FIXME: temporary public
+    static std::string fetchLocalizedString(const std::string& label);
 
 private:
     //=== ATTRIBUTES
     static bool m_isInit;
-    static AppCore *m_appCore;
+    static AppCore* m_appCore;
+
+    //=== METHODS
+    static std::string getLanguageFile();
 };
 
 #endif

@@ -63,7 +63,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 #   - pugi: Ø
 #   - slogger: Ø
 #   - xmlhelper: pugi
-#   - mdcsfml: SFML, slogger, xmlhelper -- FIXME: remove xmlhelper and slogger dependency (use a wrapper in the app?)
+#   - mdcsfml: SFML, slogger -- FIXME: remove slogger dependency? (use a wrapper/function pointer in the app?)
 #   - executable: mdscsfml
 #----------------------------------------------------------------------------------
 FIND_PACKAGE(SFML 2.4 COMPONENTS audio graphics window system REQUIRED)
@@ -73,12 +73,11 @@ target_include_directories(mdcsfml PUBLIC ${SFML_INCLUDE_DIR})
 target_link_libraries(xmlhelper pugi)
 target_link_libraries(mdcsfml ${SFML_LIBRARIES})
 target_link_libraries(mdcsfml slogger)
-target_link_libraries(mdcsfml xmlhelper)
 
 add_executable(
         ${EXECUTABLE_NAME}
         ${SOURCE_FILES}
 )
 
-#target_link_libraries(${EXECUTABLE_NAME} xmlhelper) FIXME: above
+target_link_libraries(${EXECUTABLE_NAME} xmlhelper)
 target_link_libraries(${EXECUTABLE_NAME} mdcsfml)

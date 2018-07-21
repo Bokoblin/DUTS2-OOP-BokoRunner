@@ -48,7 +48,7 @@ SettingsView::SettingsView(sf::RenderWindow *window, AppTextManager *textManager
     //=== Init buttons
 
     for (mdsf::Button *button : m_buttonList)
-        button->retrieveAndSyncLabel(LocalizationManager::getLanguageFile());
+        button->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
 
     //=== Init confirm dialog
 
@@ -322,7 +322,7 @@ void SettingsView::updateTextBasedComponents() const
 
     //Update button text
     for (mdsf::Button *button : m_buttonList)
-        button->retrieveAndSyncLabel(LocalizationManager::getLanguageFile());
+        button->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
 
     //Update dialog text
     DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog);
@@ -457,8 +457,7 @@ bool SettingsView::handleEvents(sf::Event event)
                 {
                     m_confirmDialog->hide();
                     m_settings->getAppCore()->clearAppData();
-                    PersistenceManager::deletePersistence();
-                    PersistenceManager::initPersistence();
+                    PersistenceManager::resetPersistence();
                     m_textManager->syncMenuSettingsText(m_settings->getCurrentPage());
                     m_settings->checkItemsAvailability();
                     handleMusic();

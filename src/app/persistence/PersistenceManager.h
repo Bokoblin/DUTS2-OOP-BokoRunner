@@ -26,8 +26,7 @@ limitations under the License.
 
 class AppCore;
 
-//TODO: maybe store config as static document xml instead of loading file each time
-//TODO: Try to reduce file size by factorising what is possible
+//TODO: Unit tests before commit
 
 /**
  * The PersistenceManager class manages the app persistence. \n
@@ -36,7 +35,7 @@ class AppCore;
  * The current persistence system uses an xml config file.
  *
  * @author Arthur
- * @date 27/01/18 - 11/02/18
+ * @date 27/01/18 - 17/07/18
  */
 class PersistenceManager
 {
@@ -47,16 +46,21 @@ public:
     static void checkContext();
     static void initPersistence();
     static void fetchConfiguration();
+    static void fetchStatistics();
     static void fetchLeaderboard();
     static void fetchActivatedBonus();
     static void updatePersistence(); //TODO: global + split versions
-    static void deletePersistence();
+    static void resetPersistence();
+    static void deletePersistence(); //TODO: use in CLI to clean the persistence
 
 private:
     //=== METHODS
-    static void createConfigFile();
-    static bool checkConfigFileIntegrity();
+    static bool createConfigFile();
+    static bool checkStreamIntegrity(std::istream& stream);
+    static bool checkStreamIntegrityFromConfigFile();
+    static bool checkStreamIntegrityFromXMLDocument();
     static bool fetchConfigurationFromConfigFile();
+    static bool fetchStatisticsFromConfigFile();
     static bool fetchActivatedBonusFromConfigFile();
     static bool fetchLeaderboardFromConfigFile();
     static bool persistConfigurationToConfigFile();

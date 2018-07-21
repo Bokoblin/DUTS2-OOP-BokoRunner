@@ -271,9 +271,11 @@ bool PersistenceManager::createConfigFile()
  */
 bool PersistenceManager::checkStreamIntegrity(std::istream& stream)
 {
+    /* FIXME: Checking it, empties it
     if (!XMLHelper::checkXMLStreamIntegrity(stream)) {
         return false;
     }
+    */
 
     string line;
 

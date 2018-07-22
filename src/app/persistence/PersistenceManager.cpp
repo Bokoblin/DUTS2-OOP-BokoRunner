@@ -267,16 +267,11 @@ bool PersistenceManager::createConfigFile()
  * @return a boolean indicating if file is corrupted
  *
  * @author Arthur
- * @date 02/05/16 - 18/07/18
+ * @date 02/05/16 - 22/07/18
  */
 bool PersistenceManager::checkStreamIntegrity(std::istream& stream)
 {
-    /* FIXME: Checking it, empties it
-    if (!XMLHelper::checkXMLStreamIntegrity(stream)) {
-        return false;
-    }
-    */
-
+    string content;
     string line;
 
     //=== Count lines / elements test
@@ -293,6 +288,7 @@ bool PersistenceManager::checkStreamIntegrity(std::istream& stream)
 
     do {
         getline(stream, line, '\n');
+        content.append(line);
         nbLines++;
 
         isPresentConfig = line.find("<config>") != string::npos ? true : isPresentConfig;
@@ -306,6 +302,13 @@ bool PersistenceManager::checkStreamIntegrity(std::istream& stream)
         nbShopChildren = line.find("<shopItem") != string::npos ? nbShopChildren + 1 : nbShopChildren;
         nbScoreChildren = line.find("<scoreItem") != string::npos ? nbScoreChildren + 1 : nbScoreChildren;
     } while (!stream.eof());
+
+    //To overcome the limitation of "stream" being emptied by XMLHelper::checkXMLStreamIntegrity()
+    std::stringstream ss;
+    ss << content.c_str();
+    if (!XMLHelper::checkXMLStreamIntegrity(ss)) {
+        return false;
+    }
 
     return isPresentConfig && isPresentStats && isPresentShop && isPresentScoreEasy && isPresentScoreHard
             && nbConfigChildren == 6 && nbStatsChildren == 7 && nbShopChildren == 6 && nbScoreChildren == 20

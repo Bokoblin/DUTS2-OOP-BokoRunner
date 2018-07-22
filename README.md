@@ -5,11 +5,11 @@
 
 Boko Runner is a C++ OOP project we've done as our DUT second semester's programming project.
 It consists in creating a "runner" game (an auto-scrolling platform game) where the player 
-has to dodge each obstacles and collect bonuses to increase its score. The game ends when the player's life bar is empty.
+has to dodge each obstacle and collect bonuses to increase its score. The game ends when the player's life bar is empty.
 The project allowed us to put into practice the Object Oriented Programming notions that we learnt in S2.
 
 Initially made to be based on a Model-View architecture as requested, the project can be considered as 
-a Multi-Tier Architecture with a persistence manager, an app core, models and views.
+a Multi-Tier Architecture with a persistence manager, an app core, models, and views.
 
 Despite being initially a scholar project ended in May 2016, it is still receiving new features 
 and "under the hood" improvements from Bokoblin.
@@ -24,7 +24,7 @@ and "under the hood" improvements from Bokoblin.
     * PugiXML 1.8
 * Unit tests : Google Test
 * Continuous integration : Travis CI
-* Code review : Codacy, CodeFactor
+* Code review : CodeFactor
 
 
 ### Authors ###
@@ -49,7 +49,7 @@ You have two choices for GNU/Linux systems:
 - either manually install needed packages and use provided SFML lib (but incompatibility issues can occur)
 - either manually install "libsfml-dev" and use it instead of the provided one, it should download all necessary libs.
 
-If you choose, the first option, you may need to install some of the following packages, depending of your configuration: <br>
+If you choose the first option, you may need to install some of the following packages, depending of your configuration: <br>
 - g++-4.9
 - libopenal
 - libvorbis
@@ -75,7 +75,7 @@ If you choose the second option:
 
 ##### Windows #####
 
-You may need some libraries (.dll) to be installed in C:\Windows\System32 or put in same folder as executable:
+You'll need to install some shared libraries (.dll) in C:\Windows\System32 or in the same folder as the executable:
 - OpenAL32.dll
 - sfml-graphics-2.dll or sfml-graphics-d-2.dll
 - sfml-window-2.dll or sfml-window-d-2.dll
@@ -97,7 +97,7 @@ Execute `build.sh` file or do, from Project folder :
 
 Unless you have all needed packages for the commands below, 
 it is recommended to open the project in a cmake-based IDE like QTCreator or CLion, 
-and to use the built-in run option.
+and to use the built-in `build` option.
   
 
 
@@ -109,6 +109,23 @@ Notes:
   So, you must use *mingw-w64-6.1.0* to compile the project.
 
 
+### How to run ###
+
+##### GNU/Linux #####
+
+The available executables are `bokorunner` and `unit_tests`. <br>
+You just have to launch them like you would do with other unix executables with: `$ ./${EXEC_NAME}`
+
+##### Windows #####
+
+The available executables are `bokorunner.exe` and `unit_tests.exe`. <br>
+You first have to correctly set the current working directory on your IDE (Run>Edit configurations... for Clion) :
+- For `bokorunner.exe`, it must be `${PROJECT_DIR}/${CMAKE_BUILD_DIR}`
+- For `unit_tests.exe`, it must be `${PROJECT_DIR}/${CMAKE_BUILD_DIR}/src`
+
+Then you can launch them with the built-in `run` option.
+
+
 ### Tested environments ###
 
 - **Windows 10 Home Version 1803 - April 2018 Update**
@@ -117,6 +134,7 @@ Notes:
 	- **Environment**: local
 	- **Compilation**: OK
 	- **Execution**: OK
+	- **Unit tests**: OK
 	
 - **Ubuntu 16.04 LTS - Xenial**
 	- **Kernel**: x86_64 Linux 4.4.0-43-Microsoft
@@ -124,6 +142,7 @@ Notes:
 	- **Environment**: local (Windows Subsystem for Linux)
 	- **Compilation**: OK
 	- **Execution**: Splashscreen OK, MENU KO (crash related to mutex unlock failure)
+	- **Unit tests**: OK
 	
 - **Debian GNU/Linux 9 - Stretch**
 	- **Kernel**: x86_64 Linux 4.4.0-43-Microsoft
@@ -131,32 +150,35 @@ Notes:
 	- **Environment**: local (Windows Subsystem for Linux)
 	- **Compilation**: OK (used libsfml-dev from apt instead of provided one)
 	- **Execution**: Splashscreen OK, MENU KO (crash related to openal)
+	- **Unit tests**: NOT TESTED YET
 	
-- **Ubuntu 14.04 LTS - Trusty**
+- **Travis CI: Ubuntu 14.04 LTS - Trusty**
 	- **Kernel**: 4.4.0-101-generic
-	- **Compilers**: gcc-4.9, gcc-5, gcc-6, gcc-7, clang-3.6, clang-3.8, clang-3.9, clang 5.0
+	- **Compilers**: gcc-4.9, gcc-5, gcc-6, gcc-7, clang-3.6, clang-3.8, clang-3.9, clang 5.0, clang 6.0
 	- **Environment**: Virtual machine on GCE (Travis CI)
 	- **Compilation**: OK (all 7 working)
 	- **Execution**: Can't be tested
+	- **Unit tests**: OK
 	
-- **Mac OS X 10.11/12**
+- **Travis CI: Mac OS X 10.11/12**
 	- **Kernel**: ??
-	- **Compilers**: xcode8: Apple LLVM v8.0.0 (clang-800.0.38), xcode8: Apple LLVM v9.0.0 (clang-900.0.37)
+	- **Compilers**: xcode8: Apple LLVM v8.0.0, xcode8: Apple LLVM v9.0.0
 	- **Environment**: Virtual machine on GCE (Travis CI)
 	- **Compilation**: OK (both working)
 	- **Execution**: Can't be tested
+	- **Unit tests**: OK
 
 
 ### Licences ###
 
-Our project is mainly licensed under Apache License Version 2.0 but some elements have other licences.<br>
+The project is mainly licensed under Apache License Version 2.0 but some elements have other licences.<br>
 Please take a look at the following paragraphs for more details.
 
 
 ##### Code #####
 
-Our code is licensed under Apache License Version 2.0.
-Our project include two libraries contained in /libs folder : 
+The code is licensed under Apache License Version 2.0.
+The project includes two external libraries contained in `/ext-libs` folder : 
 * PugiXML which is licensed by their creators under MIT Licence.
 * SFML which is licensed by their creators under zlib/png license.
 

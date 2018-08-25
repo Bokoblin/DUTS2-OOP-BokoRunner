@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+﻿/* Copyright 2018 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,36 +13,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef ABSTRACT_MODEL_H
-#define ABSTRACT_MODEL_H
+#ifndef TEST_CORE_H
+#define TEST_CORE_H
 
 #include "app/model/core/AppCore.h"
-#include "app/persistence/PersistenceManager.h"
 
 /**
- * The AbstractModel class provides
- * an app core and a nextStep method
- * for its inherited classes.
+ * The TestCore class inherits the AppCore for test purposes
  *
- * @author Arthur, Florian
- * @date 21/02/16 - 29/01/17
+ * @author Arthur
+ * @date 25/08/18
  */
-class AbstractModel
+class TestCore: public AppCore
 {
 public:
     //=== CTORs / DTORs
-    explicit AbstractModel(AppCore *appCore);
-    virtual ~AbstractModel();
+    TestCore();
+    ~TestCore() override;
 
     //=== GETTERS
-    AppCore *getAppCore() const;
-
-    //=== METHODS
-    virtual void nextStep()=0;
-
-protected:
-    //=== ATTRIBUTES
-    AppCore *m_appCore;
+    std::string getConfigFile() const override ;
 };
 
 #endif

@@ -53,6 +53,7 @@ bool AppCore::isScoreEasyArrayEmpty() const { return m_scoresEasyArray.empty(); 
 bool AppCore::isScoreHardArrayEmpty() const { return m_scoresHardArray.empty(); }
 string AppCore::getLanguage() const { return m_currentLanguage; }
 string AppCore::getBallSkin() const { return m_currentBallSkin; }
+string AppCore::getConfigFile() const { return CONFIG_FILE; }
 
 
 //------------------------------------------------
@@ -86,17 +87,20 @@ void AppCore::saveCurrentGame()
     //add current game values to total values
     m_totalCoinsCollected += m_currentCoinsNumber;
     m_wallet += m_currentCoinsNumber;
-    m_totalDistance += (int)m_currentDistance;
+    m_totalDistance += (int) m_currentDistance;
     m_totalFlattenedEnemies += m_currentFlattenedEnemies;
     addNewScore(m_currentScore);
 
     //update per game stats if better
-    if (m_currentCoinsNumber > m_perGameCoinsCollected)
+    if (m_currentCoinsNumber > m_perGameCoinsCollected) {
         m_perGameCoinsCollected = m_currentCoinsNumber;
-    if (m_currentDistance > m_perGameDistance)
-        m_perGameDistance = (int)m_currentDistance;
-    if (m_currentFlattenedEnemies > m_perGameFlattenedEnemies)
+    }
+    if (m_currentDistance > m_perGameDistance) {
+        m_perGameDistance = (int) m_currentDistance;
+    }
+    if (m_currentFlattenedEnemies > m_perGameFlattenedEnemies) {
         m_perGameFlattenedEnemies = m_currentFlattenedEnemies;
+    }
 
     Logger::printInfoOnConsole("Current game saved");
 }
@@ -112,19 +116,18 @@ void AppCore::saveCurrentGame()
  */
 void AppCore::addNewScore(int score)
 {
-    if (m_currentDifficulty == EASY)
-    {
+    if (m_currentDifficulty == EASY) {
         m_scoresEasyArray.insert(score);
-        while (m_scoresEasyArray.size() > MAX_SCORES)
+        while (m_scoresEasyArray.size() > MAX_SCORES) {
             m_scoresEasyArray.erase(m_scoresEasyArray.begin());
+        }
 
         Logger::printInfoOnConsole("New score saved in EASY leaderboard");
-    }
-    else
-    {
+    } else {
         m_scoresHardArray.insert(score);
-        while (m_scoresHardArray.size() > MAX_SCORES)
+        while (m_scoresHardArray.size() > MAX_SCORES) {
             m_scoresHardArray.erase(m_scoresHardArray.begin());
+        }
 
         Logger::printInfoOnConsole("New score saved in HARD leaderboard");
     }
@@ -159,10 +162,11 @@ void AppCore::clearLeaderboard()
     m_scoresEasyArray.clear();
     m_scoresHardArray.clear();
 
-    if (m_scoresEasyArray.empty() && m_scoresHardArray.empty())
+    if (m_scoresEasyArray.empty() && m_scoresHardArray.empty()) {
         Logger::printInfoOnConsole("Successfully cleaned leaderboard");
-    else
+    } else {
         Logger::printWarningOnConsole("Cleaning leaderboard operation failure");
+    }
 }
 
 
@@ -188,7 +192,7 @@ void AppCore::clearAppData()
  * @author Arthur
  * @date 31/10/17
  */
-bool AppCore::findActivatedItem(const string &itemLabel)
+bool AppCore::findActivatedItem(const string& itemLabel)
 {
     return m_activatedItemsArray.empty()
             ? false
@@ -204,7 +208,7 @@ bool AppCore::findActivatedItem(const string &itemLabel)
  * @author Arthur
  * @date 04/02/18
  */
-void AppCore::addNewActivatedBonus(const string &itemLabel)
+void AppCore::addNewActivatedBonus(const string& itemLabel)
 {
     m_activatedItemsArray.insert(itemLabel);
 }
@@ -220,7 +224,7 @@ void AppCore::addNewActivatedBonus(const string &itemLabel)
  */
 void AppCore::calculateFinalScore(float speed, int flattenedEnemiesBonus)
 {
-    m_currentScore = (int)((speed * m_currentDistance)
+    m_currentScore = (int) ((speed * m_currentDistance)
             + (COIN_MULTIPLIER * m_currentCoinsNumber)
             + flattenedEnemiesBonus);
 }
@@ -241,22 +245,17 @@ string AppCore::stringifyLeaderboard(Difficulty difficulty) const
     string result;
     std::set<int> scoresArray;
 
-    if (difficulty == EASY && !isScoreEasyArrayEmpty())
-    {
+    if (difficulty == EASY && !isScoreEasyArrayEmpty()) {
         result = LocalizationManager::fetchLocalizedString("config_easy_mode") + " :\n";
         scoresArray = m_scoresEasyArray;
-    }
-    else if (difficulty == HARD && !isScoreHardArrayEmpty())
-    {
+    } else if (difficulty == HARD && !isScoreHardArrayEmpty()) {
         result = LocalizationManager::fetchLocalizedString("config_hard_mode") + " :\n";
         scoresArray = m_scoresHardArray;
     }
 
-    if (!scoresArray.empty())
-    {
+    if (!scoresArray.empty()) {
         int scoreRank = 1;
-        for (auto it = scoresArray.rbegin(); it!=scoresArray.rend(); ++it)
-        {
+        for (auto it = scoresArray.rbegin(); it != scoresArray.rend(); ++it) {
             result += "\n" + to_string(scoreRank) + (scoreRank != 10 ? ".   " : ". ") + to_string(*it);
             scoreRank++;
         }

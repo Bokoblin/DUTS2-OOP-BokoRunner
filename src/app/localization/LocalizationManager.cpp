@@ -52,7 +52,7 @@ void LocalizationManager::checkContext()
         Logger::printInfoOnConsole("Localization context verified");
     } else {
         Logger::printErrorOnConsole("Localization context check failed, please init it first...");
-        throw PersistenceException();
+        throw LocalizationException();
     }
 }
 

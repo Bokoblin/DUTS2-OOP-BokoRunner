@@ -20,6 +20,7 @@ limitations under the License.
 #include <SFML/System/Sleep.hpp>
 #include "libs/MDC-SFML/src/Color.h"
 #include "libs/MDC-SFML/src/Button.h"
+#include "app/persistence/PersistenceManager.h"
 #include "app/view/AppTextManager.h"
 #include "app/view/ui-components/ScrollingBackground.h"
 #include "app/view/ui-components/AnimatedSprite.h"

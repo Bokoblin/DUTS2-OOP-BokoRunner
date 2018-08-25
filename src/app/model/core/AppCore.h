@@ -21,7 +21,7 @@ limitations under the License.
 #include "app/localization/LocalizationManager.h"
 #include "app/model/enums/AppState.h"
 #include "app/model/enums/Difficulty.h"
-#include "app/persistence/PersistenceManager.h"
+#include "app/persistence/FileBasedPersistence.h"
 #include "ModelConstants.h"
 
 /**
@@ -41,8 +41,8 @@ class AppCore
 public:
     //=== CTORs / DTORs
     AppCore();
-    AppCore(const AppCore& d)=delete;
-    ~AppCore();
+    AppCore(const AppCore& d) = delete;
+    virtual ~AppCore();
 
     //=== GETTERS
     AppState getAppState() const;
@@ -65,6 +65,7 @@ public:
     bool isScoreHardArrayEmpty() const;
     std::string getLanguage() const;
     std::string getBallSkin() const;
+    virtual std::string getConfigFile() const;
 
     //=== SETTERS
     void setAppState(AppState state);
@@ -73,8 +74,8 @@ public:
     void increaseCurrentDistance(float amount);
     void increaseCurrentFlattenedEnemies();
     void setDifficulty(int difficulty);
-    void setLanguage(const std::string &language);
-    void setBallSkin(const std::string &skin);
+    void setLanguage(const std::string& language);
+    void setBallSkin(const std::string& skin);
     void toggleMenuMusic();
     void toggleGameMusic();
 
@@ -84,16 +85,15 @@ public:
     void launchNewGame();
     void clearLeaderboard();
     void clearAppData();
-    bool findActivatedItem(const std::string &itemLabel);
-    void addNewActivatedBonus(const std::string &itemLabel);
+    bool findActivatedItem(const std::string& itemLabel);
+    void addNewActivatedBonus(const std::string& itemLabel);
     void calculateFinalScore(float speed, int flattenedEnemiesBonus);
     std::string stringifyLeaderboard(Difficulty difficulty) const;
 
-private:
-    friend class PersistenceManager;
-
+protected:
     //=== ATTRIBUTES
 
+    //TODO: Using a key value array in place of multiple attributes (to discuss)
     //Global App
     AppState m_appState;
     int m_totalCoinsCollected;
@@ -122,6 +122,9 @@ private:
     std::set<int> m_scoresEasyArray;
     std::set<int> m_scoresHardArray;
     std::set<std::string> m_activatedItemsArray;
+
+private:
+    friend class FileBasedPersistence;
 
     //=== METHODS
     void initWithDefaultValues();

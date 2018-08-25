@@ -50,7 +50,9 @@ static const std::string SPANISH_STRINGS = STRINGS_FOLDER + "spanish.xml";
 
 //=== Config
 static const std::string CONFIG_FILE = RESOURCES_FOLDER + "config.xml";
-static const std::string DEFAULT_CONFIG_CONTENT = "<?xml version=\"1.0\"?>\n"
+static const std::string TEST_CONFIG_FILE = "test_config.xml";
+static const std::string DEFAULT_CONFIG_CONTENT =
+        "<?xml version=\"1.0\"?>\n"
         "<runner>\n"
         "\t<config>\n"
         "\t\t<configItem type=\"string\" name=\"language\" value=\"en\"/>\n"

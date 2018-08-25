@@ -93,7 +93,7 @@ void ShopModel::fetchBuyableItemsFromFile()
         //TODO: populate a ShopItem list from app core in Persistence manager
 
         pugi::xml_document doc;
-        doc.load_file(CONFIG_FILE.c_str());
+        doc.load_file(m_appCore->getConfigFile().c_str());
 
         pugi::xml_node shop = doc.child("runner").child("shop");
 

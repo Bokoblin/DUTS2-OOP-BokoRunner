@@ -63,7 +63,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 #   - pugi: Ø
 #   - slogger: Ø
 #   - xmlhelper: pugi
-#   - mdcsfml: SFML, slogger -- FIXME: remove slogger dependency? (use a wrapper/function pointer in the app?)
+#   - mdcsfml: SFML, slogger -- TODO: keep slogger dependency: Generelize it to print in a defined location
 #   - executable: mdscsfml
 #----------------------------------------------------------------------------------
 FIND_PACKAGE(SFML 2.4 COMPONENTS audio graphics window system REQUIRED)

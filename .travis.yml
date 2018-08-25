@@ -120,7 +120,7 @@ before_install:
 script:
   - mkdir build
   - cd build
-  - cmake .. && make
+  - cmake -DENABLE_TESTING=ON .. && make
   - ./test/unit_tests
 
 

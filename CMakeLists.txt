@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 project(${PROJECT_NAME})
 
-option(ENABLE_TESTS "Enable unit tests"     ON)
+option(ENABLE_TESTS "Enable unit tests"     OFF)
 option(ENABLE_UI    "Enable user interface" ON) #In case your device can't support provided SFML
 
 #----------------------------------------------------------------------------------

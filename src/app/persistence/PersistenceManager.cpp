@@ -29,7 +29,7 @@ bool PersistenceManager::isInit(){ return m_isInit; }
  */
 void PersistenceManager::initContext(AppCore* appCore)
 {
-    FileBasedPersistence::m_appCore = appCore;
+    FileBasedPersistence::setAppCore(appCore);
     m_isInit = true;
 
     initPersistence();
@@ -45,7 +45,7 @@ void PersistenceManager::initContext(AppCore* appCore)
 void PersistenceManager::closeContext()
 {
     m_isInit = false;
-    FileBasedPersistence::m_appCore = nullptr;
+    FileBasedPersistence::setAppCore(nullptr);
 }
 
 
@@ -59,10 +59,12 @@ void PersistenceManager::closeContext()
 void PersistenceManager::initPersistence()
 {
     if (FileBasedPersistence::checkStreamIntegrityFromConfigFile() && FileBasedPersistence::loadConfigFile()) {
-        Logger::printInfoOnConsole("Persistence context loaded successfully");
+        Logger::printInfoOnConsole("Persistence init success");
     } else {
-        Logger::printErrorOnConsole("Persistence context loading failure");
-        FileBasedPersistence::createConfigFile();
+        Logger::printWarningOnConsole("Persistence context loading failure, creating it...");
+        if (FileBasedPersistence::createConfigFile()) {
+            PersistenceManager::initPersistence();
+        }
     }
 }
 
@@ -76,7 +78,7 @@ void PersistenceManager::initPersistence()
  */
 void PersistenceManager::checkContext() noexcept(false)
 {
-    if (m_isInit && FileBasedPersistence::m_appCore != nullptr
+    if (m_isInit && FileBasedPersistence::getAppCore() != nullptr
             && FileBasedPersistence::checkStreamIntegrityFromXMLDocument()) {
         Logger::printInfoOnConsole("Persistence context verified");
     } else {

@@ -67,11 +67,8 @@ TEST_F(PersistenceManagerTest, checkUninitializedContext)
 
 /**
  * Tests on PersistenceManager::checkContext() function after initialization
- * FIXME LATER -- TEST DISABLED FOR NOW
- * Test failure from FileBasedPersistence::checkStreamIntegrity
- * only finding 1 line in the config file in this particular context
  */
-TEST_F(PersistenceManagerTest, DISABLED_checkInitializedContext)
+TEST_F(PersistenceManagerTest, checkInitializedContext)
 {
     try {
         PersistenceManager::initContext(testCore);

@@ -34,10 +34,7 @@ class AppCore;
  * @date 25/08/18
  */
 class FileBasedPersistence {
-private:
-    friend class PersistenceManager;
-    friend class FileBasedPersistenceTest;
-
+public:
     //=== METHODS
     static bool createConfigFile();
     static bool loadConfigFile();
@@ -50,6 +47,14 @@ private:
     static bool fetchActivatedBonusFromConfigFile();
     static bool fetchLeaderboardFromConfigFile();
     static bool persistConfigurationToConfigFile();
+
+    //=== GETTERS / SETTERS
+    static AppCore* getAppCore();
+    static void setAppCore(AppCore* appCore); //NOTE: MUST BE CALLED AT LEAST ONCE BEFORE USING OTHER FUNCTIONS
+
+private:
+    //=== METHODS
+    static void nullSafeGuard();
 
     //=== ATTRIBUTES
     static AppCore* m_appCore;

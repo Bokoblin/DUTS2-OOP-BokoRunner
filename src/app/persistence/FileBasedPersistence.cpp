@@ -17,7 +17,20 @@ xml_document FileBasedPersistence::m_doc;
 
 
 //------------------------------------------------
-//          PRIVATE METHODS
+//          GETTERS
+//------------------------------------------------
+
+AppCore* FileBasedPersistence::getAppCore() { return m_appCore; }
+
+
+//------------------------------------------------
+//          SETTERS
+//------------------------------------------------
+
+void FileBasedPersistence::setAppCore(AppCore* appCore) { m_appCore = appCore; }
+
+//------------------------------------------------
+//          PUBLIC METHODS
 //------------------------------------------------
 
 /**
@@ -28,6 +41,8 @@ xml_document FileBasedPersistence::m_doc;
  */
 bool FileBasedPersistence::createConfigFile()
 {
+    nullSafeGuard();
+
     bool success = false;
     if (XMLHelper::checkXMLFileExistence(m_appCore->getConfigFile())) {
         Logger::printWarningOnConsole("Configuration file already exists, aborting...");
@@ -43,11 +58,13 @@ bool FileBasedPersistence::createConfigFile()
 
 bool FileBasedPersistence::loadConfigFile()
 {
+    nullSafeGuard();
     return XMLHelper::loadXMLFile(m_doc, m_appCore->getConfigFile());
 }
 
 bool FileBasedPersistence::removeConfigFile()
 {
+    nullSafeGuard();
     return XMLHelper::removeXMLFile(m_appCore->getConfigFile());
 }
 
@@ -118,6 +135,8 @@ bool FileBasedPersistence::checkStreamIntegrity(std::istream& stream)
  */
 bool FileBasedPersistence::checkStreamIntegrityFromConfigFile()
 {
+    nullSafeGuard();
+
     std::fstream f;
     f.open(m_appCore->getConfigFile().c_str(), std::ios::in);
 
@@ -154,6 +173,8 @@ bool FileBasedPersistence::checkStreamIntegrityFromXMLDocument()
  */
 bool FileBasedPersistence::fetchConfigurationFromConfigFile()
 {
+    nullSafeGuard();
+
     xml_node config = m_doc.child("runner").child("config");
 
     for (xml_node configItem: config.children("configItem")) {
@@ -202,6 +223,8 @@ bool FileBasedPersistence::fetchConfigurationFromConfigFile()
  */
 bool FileBasedPersistence::fetchStatisticsFromConfigFile()
 {
+    nullSafeGuard();
+
     xml_node stats = m_doc.child("runner").child("stats");
 
     for (xml_node statItem: stats.children("statItem")) {
@@ -255,6 +278,8 @@ bool FileBasedPersistence::fetchStatisticsFromConfigFile()
  */
 bool FileBasedPersistence::fetchLeaderboardFromConfigFile()
 {
+    nullSafeGuard();
+
     xml_node scoresEasy = m_doc.child("runner").child("scoresEasy");
     xml_node scoresHard = m_doc.child("runner").child("scoresHard");
 
@@ -287,6 +312,8 @@ bool FileBasedPersistence::fetchLeaderboardFromConfigFile()
  */
 bool FileBasedPersistence::fetchActivatedBonusFromConfigFile()
 {
+    nullSafeGuard();
+
     xml_node shop = m_doc.child("runner").child("shop");
 
     for (xml_node shopItem: shop.children("shopItem")) {
@@ -308,6 +335,8 @@ bool FileBasedPersistence::fetchActivatedBonusFromConfigFile()
  */
 bool FileBasedPersistence::persistConfigurationToConfigFile()
 {
+    nullSafeGuard();
+
     xml_node config = m_doc.child("runner").child("config");
     xml_node stats = m_doc.child("runner").child("stats");
     xml_node shop = m_doc.child("runner").child("shop");
@@ -410,4 +439,17 @@ bool FileBasedPersistence::persistConfigurationToConfigFile()
     }
 
     return m_doc.save_file(m_appCore->getConfigFile().c_str());
+}
+
+
+//------------------------------------------------
+//          PRIVATE METHODS
+//------------------------------------------------
+
+void FileBasedPersistence::nullSafeGuard()
+{
+    if (m_appCore == nullptr) {
+        Logger::printErrorOnConsole("Illegal usage of FileBasedPersistence class");
+        exit(EXIT_FAILURE);
+    }
 }

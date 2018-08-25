@@ -9,7 +9,6 @@ set(UNIT_TESTS unit_tests)
 #       SET TEST SOURCES
 #--------------------------------------------------------
 file(GLOB TESTED_SOURCE_FILES
-        "../src/libs/Logger/Logger.cpp"
         "../src/app/persistence/FileBasedPersistence.cpp"
         "../src/app/persistence/PersistenceManager.cpp"
         "../src/app/localization/LocalizationManager.cpp"
@@ -20,6 +19,7 @@ file(GLOB TESTED_SOURCE_FILES
 file(GLOB TEST_SOURCE_FILES
         "libs/XMLHelper/test_XMLHelper.cpp"
         "app/core/TestCore.cpp"
+        "app/persistence/test_FileBasedPersistence.cpp"
         "app/persistence/test_PersistenceManager.cpp"
         )
 
@@ -43,6 +43,7 @@ target_include_directories(${UNIT_TESTS} PUBLIC ${PROJECT_SOURCE_DIR}/src/libs)
 
 target_link_libraries(${UNIT_TESTS} gtest_main)
 target_link_libraries(${UNIT_TESTS} xmlhelper)
+target_link_libraries(${UNIT_TESTS} slogger)
 
 #--------------------------------------------------------
 #       CONFIGURE TESTS

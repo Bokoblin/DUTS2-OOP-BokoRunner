@@ -5,6 +5,8 @@ using std::chrono::system_clock;
 using std::string;
 using Bokoblin::SimpleLogger::Logger;
 
+// TODO: SPLIT FILE FOLLOWING GAME STATES (BUT KEEP AS SAME CLASS)
+
 //------------------------------------------------
 //          CONSTRUCTOR / DESTRUCTOR
 //------------------------------------------------
@@ -18,9 +20,9 @@ using Bokoblin::SimpleLogger::Logger;
  * @param appCore the app's core singleton
  *
  * @author Arthur
- * @date 26/03/16 - 29/12/17
+ * @date 26/03/16 - 05/09/18
  */
-GameModel::GameModel(float width, float height, AppCore *appCore) :
+GameModel::GameModel(float width, float height, AppCore* appCore) :
         AbstractModel(appCore), m_width{width}, m_height{height}, m_gameState{RUNNING}, m_inTransition{false},
         m_isTransitionPossible{false}, m_gameSlowSpeed{0}, m_currentZone{HILL},
         m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},
@@ -30,19 +32,15 @@ GameModel::GameModel(float width, float height, AppCore *appCore) :
 
     PersistenceManager::fetchActivatedBonus();
     m_appCore->launchNewGame();
-
+    m_gameSpeed = m_appCore->getDifficulty() * DEFAULT_SPEED;
     addANewMovableElement(DEFAULT_PLAYER_X, GAME_FLOOR, PLAYER);
 
-    if (m_appCore->getDifficulty() == EASY)
-        m_gameSpeed = DEFAULT_SPEED;
-    else
-        m_gameSpeed = 2 * DEFAULT_SPEED;
 
-    //=== Initialize elements apparition time-spacing
+    //=== Initialize elements spawn distance
 
-    m_chosenCoinTimeSpacing = RandomUtils::getUniformRandomNumber(0, 10);       //Between 0 and 10 meters
-    m_chosenEnemyTimeSpacing = RandomUtils::getUniformRandomNumber(10, 20);     //Between 10 and 20 meters
-    m_chosenBonusTimeSpacing = RandomUtils::getUniformRandomNumber(100, 150);   //Between 100 and 150 meters
+    m_nextCoinSpawnDistance = RandomUtils::getUniformRandomNumber(0, 10);       //Between 0 and 10 meters
+    m_nextEnemySpawnDistance = RandomUtils::getUniformRandomNumber(10, 20);     //Between 10 and 20 meters
+    m_nextBonusSpawnDistance = RandomUtils::getUniformRandomNumber(100, 150);   //Between 100 and 150 meters
 }
 
 
@@ -53,8 +51,9 @@ GameModel::GameModel(float width, float height, AppCore *appCore) :
  */
 GameModel::~GameModel()
 {
-    for (auto &element : m_movableElementsArray)
+    for (auto& element : m_movableElementsArray) {
         delete element;
+    }
 
     m_movableElementsArray.clear();
 }
@@ -97,15 +96,13 @@ void GameModel::disableTransitionPossibility() { m_isTransitionPossible = false;
  */
 void GameModel::nextStep()
 {
-    if (m_gameState == RUNNING || m_gameState == RUNNING_SLOWLY)
-    {
+    if (m_gameState == RUNNING || m_gameState == RUNNING_SLOWLY) {
         handleMovableElementsCollisions();
 
         system_clock::duration currentNextStepDelay = system_clock::now() - m_lastTime;
         system_clock::duration nextStepDelay = milliseconds(NEXT_STEP_DELAY);
 
-        if (currentNextStepDelay.count() > nextStepDelay.count())
-        {
+        if (currentNextStepDelay.count() > nextStepDelay.count()) {
             handleSpeedAndDistance();
             handleMovableElementsCreation();
             handleMovableElementsDeletion();
@@ -116,9 +113,7 @@ void GameModel::nextStep()
 
             m_lastTime = system_clock::now();
         }
-    }
-    else if (m_gameState == OVER)
-    {
+    } else if (m_gameState == OVER) {
         m_appCore->calculateFinalScore(m_gameSpeed, m_scoreBonusFlattenedEnemies);
     }
 }
@@ -131,13 +126,12 @@ void GameModel::nextStep()
  * @author Arthur
  * @date 06/03/16 - 26/03/16
  */
-void GameModel::moveMovableElement(MovableElement *currentElement)
+void GameModel::moveMovableElement(MovableElement* currentElement)
 {
-    if (currentElement == m_player)
+    if (currentElement == m_player) {
         currentElement->move();
-    else if (currentElement != nullptr)
-    {
-        currentElement->setMoveX(-1*m_gameSpeed);
+    } else if (currentElement != nullptr) {
+        currentElement->setMoveX(-1 * m_gameSpeed);
         currentElement->move();
     }
 }
@@ -163,16 +157,15 @@ void GameModel::clearNewMovableElementList()
  * Handles speed and distance increase
  *
  * @author Arthur
- * @date ?? - 04/02/18
+ * @date ?? - 04/09/18
  */
 void GameModel::handleSpeedAndDistance()
 {
-    if (m_gameSpeed < SPEED_LIMIT && m_gameState != RUNNING_SLOWLY)
-    {
+    if (m_gameSpeed < SPEED_LIMIT && m_gameState != RUNNING_SLOWLY) {
         m_gameSpeed += SPEED_STEP;
     }
 
-    m_appCore->increaseCurrentDistance(m_gameSpeed / 5);
+    m_appCore->increaseCurrentDistance(m_gameSpeed / SPEED_DISTANCE_RATIO);
 }
 
 
@@ -184,49 +177,42 @@ void GameModel::handleSpeedAndDistance()
  */
 void GameModel::handleMovableElementsCreation()
 {
-    if (!m_isTransitionPossible && checkIfPositionFree(m_width, GAME_FLOOR))
-    {
+    if (!m_isTransitionPossible && checkIfPositionFree(m_width, GAME_FLOOR)) {
         //=== Add new enemies
 
-        if (m_currentEnemyTimeSpacing >= m_chosenEnemyTimeSpacing)
-        {
+        if (m_currentEnemyTimeSpacing >= m_nextEnemySpawnDistance) {
             float pos_x = m_width;
             float pos_y = GAME_FLOOR;
             addANewMovableElement(pos_x, pos_y, STANDARD_ENEMY);
 
             m_currentEnemyTimeSpacing = 0;
-            chooseTimeSpacing(STANDARD_ENEMY);
+            m_nextEnemySpawnDistance = chooseSpawnDistance(STANDARD_ENEMY);
             return; //to not add another element if time-spacing valid
-        }
-        else m_currentEnemyTimeSpacing++;
+        } else m_currentEnemyTimeSpacing++;
 
         //=== Add new Coins
 
-        if (m_currentCoinTimeSpacing >= m_chosenCoinTimeSpacing)
-        {
+        if (m_currentCoinTimeSpacing >= m_nextCoinSpawnDistance) {
             float pos_x = m_width;
             float pos_y = GAME_FLOOR - RandomUtils::getUniformRandomNumber(0, 100);
             addANewMovableElement(pos_x, pos_y, COIN);
 
             m_currentCoinTimeSpacing = 0;
-            chooseTimeSpacing(COIN);
+            m_nextCoinSpawnDistance = chooseSpawnDistance(COIN);
             return;
-        }
-        else m_currentCoinTimeSpacing++;
+        } else m_currentCoinTimeSpacing++;
 
         //=== Add new Bonus
 
-        if (m_currentBonusTimeSpacing >= m_chosenBonusTimeSpacing)
-        {
+        if (m_currentBonusTimeSpacing >= m_nextBonusSpawnDistance) {
             float pos_x = m_width;
             float pos_y = BONUS_ROW;
             addANewMovableElement(pos_x, pos_y, PV_PLUS_BONUS);
 
             m_currentBonusTimeSpacing = 0;
-            chooseTimeSpacing(PV_PLUS_BONUS);
+            m_nextBonusSpawnDistance = chooseSpawnDistance(PV_PLUS_BONUS);
             return;
-        }
-        else m_currentBonusTimeSpacing++;
+        } else m_currentBonusTimeSpacing++;
     }
 }
 
@@ -241,15 +227,12 @@ void GameModel::handleMovableElementsCreation()
  */
 void GameModel::handleMovableElementsCollisions()
 {
-    for (MovableElement* element : m_movableElementsArray)
-    {
-        if (!element->isColliding() && element->getType() != PLAYER && m_player->collision(*element))
-        {
+    for (MovableElement* element : m_movableElementsArray) {
+        if (!element->isColliding() && element->getType() != PLAYER && m_player->collision(*element)) {
             element->setColliding(true);
 
             //Apply different behaviours following element type
-            switch (element->getType())
-            {
+            switch (element->getType()) {
                 case STANDARD_ENEMY:
                 case TOTEM_ENEMY:
                 case BLOCK_ENEMY:
@@ -284,15 +267,11 @@ void GameModel::handleMovableElementsCollisions()
 void GameModel::handleMovableElementsDeletion()
 {
     std::set<MovableElement*>::iterator it = m_movableElementsArray.begin();
-    while(it!=m_movableElementsArray.end())
-    {
-        if (((*it)->getPosX() + (*it)->getWidth()) < 0
-                || (*it)->isColliding())
-        {
+    while (it != m_movableElementsArray.end()) {
+        if (((*it)->getPosX() + (*it)->getWidth()) < 0 || (*it)->isColliding()) {
             m_movableElementsArray.erase(it);
             it = m_movableElementsArray.end();
-        }
-        else
+        } else
             ++it;
     }
 }
@@ -308,33 +287,28 @@ void GameModel::handleMovableElementsDeletion()
  */
 void GameModel::handleEnemyCollision(MovableElementType enemyType)
 {
-    if (m_player->getState() == MEGA)
-    {
+    if (m_player->getState() == MEGA) {
         //Earn points by flattening enemies
         m_appCore->increaseCurrentFlattenedEnemies();
-        if (enemyType == STANDARD_ENEMY)
+        if (enemyType == STANDARD_ENEMY) {
             m_scoreBonusFlattenedEnemies += MEGA_BONUS_FLATTENED_STD;
-        else if (enemyType == TOTEM_ENEMY)
+        } else if (enemyType == TOTEM_ENEMY) {
             m_scoreBonusFlattenedEnemies += MEGA_BONUS_FLATTENED_TOTEM;
-        else
+        } else {
             m_scoreBonusFlattenedEnemies += MEGA_BONUS_FLATTENED_BLOCK;
-    }
-    else if (m_player->getState() == HARD_SHIELDED)
-    {
+        }
+    } else if (m_player->getState() == HARD_SHIELDED) {
         m_player->changeState(SHIELDED);
-    }
-    else if (m_player->getState() == SHIELDED)
-    {
+    } else if (m_player->getState() == SHIELDED) {
         m_player->changeState(NORMAL);
-    }
-    else
-    {
-        if (enemyType == STANDARD_ENEMY)
+    } else {
+        if (enemyType == STANDARD_ENEMY) {
             m_player->setLife(m_player->getLife() - (COLLISION_DAMAGE_STD * m_appCore->getDifficulty()));
-        else if (enemyType == TOTEM_ENEMY)
+        } else if (enemyType == TOTEM_ENEMY) {
             m_player->setLife(m_player->getLife() - (COLLISION_DAMAGE_TOTEM * m_appCore->getDifficulty()));
-        else
+        } else {
             m_player->setLife(m_player->getLife() - (COLLISION_DAMAGE_BLOCK * m_appCore->getDifficulty()));
+        }
     }
 }
 
@@ -362,37 +336,26 @@ void GameModel::handleCoinCollision() const
  */
 void GameModel::handleBonusCollision(MovableElementType bonusType)
 {
-    if (bonusType == PV_PLUS_BONUS)
-    {
+    if (bonusType == PV_PLUS_BONUS) {
         m_player->setLife(m_player->getLife() + PV_BONUS_INCREASE);
-    }
-    else if (bonusType == MEGA_BONUS)
-    {
+    } else if (bonusType == MEGA_BONUS) {
         m_player->changeState(MEGA);
         m_bonusTimeout = milliseconds(m_appCore->findActivatedItem("shop_mega_plus")
                                               ? MEGA_TIMEOUT + ADDITIONAL_TIMEOUT
                                               : MEGA_TIMEOUT);
-    }
-    else if (bonusType == FLY_BONUS)
-    {
+    } else if (bonusType == FLY_BONUS) {
         m_player->changeState(FLYING);
         m_bonusTimeout = milliseconds(m_appCore->findActivatedItem("shop_fly_plus")
                                               ? FLY_TIMEOUT + ADDITIONAL_TIMEOUT
                                               : FLY_TIMEOUT);
-    }
-    else if (bonusType == SLOW_SPEED_TIMEOUT)
-    {
+    } else if (bonusType == SLOW_SPEED_TIMEOUT) {
         m_gameState = RUNNING_SLOWLY;
         m_gameSpeed /= SLOW_SPEED_BONUS_DIVIDER;
         m_gameSlowSpeed = m_gameSpeed;
         m_bonusTimeout = milliseconds(SLOW_SPEED_TIMEOUT);
-    }
-    else if (bonusType == SHIELD_BONUS)
-    {
-        m_player->changeState(m_appCore->findActivatedItem("shop_shield_plus")? HARD_SHIELDED : SHIELDED);
-    }
-    else
-    {
+    } else if (bonusType == SHIELD_BONUS) {
+        m_player->changeState(m_appCore->findActivatedItem("shop_shield_plus") ? HARD_SHIELDED : SHIELDED);
+    } else {
         Logger::printErrorOnConsole("Undefined bonus type");
     }
 }
@@ -407,19 +370,14 @@ void GameModel::handleBonusCollision(MovableElementType bonusType)
  */
 void GameModel::handleBonusTimeout()
 {
-    if (m_bonusTimeout.count() > milliseconds(0).count())
-    {
+    if (m_bonusTimeout.count() > milliseconds(0).count()) {
         m_bonusTimeout.operator-=(milliseconds(NEXT_STEP_DELAY));
-    }
-    else
-    {
-        if (m_player->getState() != SHIELDED && m_player->getState() != HARD_SHIELDED)
-        {
+    } else {
+        if (m_player->getState() != SHIELDED && m_player->getState() != HARD_SHIELDED) {
             m_player->changeState(NORMAL);
         }
 
-        if (m_gameState == RUNNING_SLOWLY)
-        {
+        if (m_gameState == RUNNING_SLOWLY) {
             m_gameState = RUNNING;
             if (m_gameSpeed == m_gameSlowSpeed)
                 m_gameSpeed *= 1.5;
@@ -439,7 +397,7 @@ void GameModel::conditionallyAllowZoneTransition()
 {
     if (!m_inTransition
             && m_appCore->getCurrentDistance() != 0
-            && m_appCore->getCurrentDistance()%ZONE_CHANGING_DISTANCE == 0)
+            && m_appCore->getCurrentDistance() % ZONE_CHANGING_DISTANCE == 0)
         m_isTransitionPossible = true;
 }
 
@@ -453,60 +411,67 @@ void GameModel::conditionallyAllowZoneTransition()
  */
 void GameModel::conditionallyTriggerGameOver()
 {
-    if (m_player->getLife() == 0)
+    if (m_player->getLife() == Player::MIN_LIFE)
         m_gameState = OVER;
 }
 
 
 /**
- * Calculates the time-spacing before creating
- * a new element of the same type
+ * Calculates the minimal distance between two elements
+ * for the next to spawn
  *
  * @param elementType the type of element that was just created
+ * @return the minimal spawn distance
  *
  * @author Arthur
- * @date 12/03/16 - 29/12/17
+ * @date 12/03/16 - 05/09/18
  */
-void GameModel::chooseTimeSpacing(int elementType)
+int GameModel::chooseSpawnDistance(int elementType)
 {
-    switch (elementType)
-    {
+    int spawnDistance = 0;
+
+    switch (elementType) {
         case STANDARD_ENEMY: //Any enemy though
         {
-            if (m_chosenEnemyTimeSpacing > 40)
-                m_chosenEnemyTimeSpacing = RandomUtils::getUniformRandomNumber(0, 30); //Between 0 and 30 meters
-            else if (m_chosenEnemyTimeSpacing < 10)
-                m_chosenEnemyTimeSpacing = RandomUtils::getUniformRandomNumber(10, 50); //Between 10 and 50 meters
-            else
-                m_chosenEnemyTimeSpacing = RandomUtils::getUniformRandomNumber(0, 40); //Between 0 and 40 meters
+            if (m_nextEnemySpawnDistance > 40) {
+                spawnDistance = RandomUtils::getUniformRandomNumber(0, 30); //Between 0 and 30 meters
+            } else if (m_nextEnemySpawnDistance < 10) {
+                spawnDistance = RandomUtils::getUniformRandomNumber(10, 50); //Between 10 and 50 meters
+            } else {
+                spawnDistance = RandomUtils::getUniformRandomNumber(0, 40); //Between 0 and 40 meters
+            }
 
-            if (m_appCore->getDifficulty() != EASY)
-                m_chosenEnemyTimeSpacing /= 2;
+            if (m_appCore->getDifficulty() != EASY) {
+                spawnDistance /= 2;
+            }
         }
             break;
-        case COIN:
-        {
-            if (m_chosenCoinTimeSpacing > 10)
-                m_chosenCoinTimeSpacing = RandomUtils::getUniformRandomNumber(0, 10); //0 to 10m
-            else if (m_chosenCoinTimeSpacing < 10)
-                m_chosenCoinTimeSpacing = RandomUtils::getUniformRandomNumber(10, 20); //10 to 20m
-            else
-                m_chosenCoinTimeSpacing = RandomUtils::getUniformRandomNumber(0, 20); //0 to 20m
+        case COIN: {
+            if (m_nextCoinSpawnDistance > 10) {
+                spawnDistance = RandomUtils::getUniformRandomNumber(0, 10); //0 to 10m
+            } else if (m_nextCoinSpawnDistance < 10) {
+                spawnDistance = RandomUtils::getUniformRandomNumber(10, 20); //10 to 20m
+            } else {
+                spawnDistance = RandomUtils::getUniformRandomNumber(0, 20); //0 to 20m }
+            }
         }
             break;
         case PV_PLUS_BONUS: //Any bonus though
         {
-            if (m_chosenBonusTimeSpacing > 300)
-                m_chosenBonusTimeSpacing = RandomUtils::getUniformRandomNumber(200, 300); //200 to 300m
-            else if (m_chosenBonusTimeSpacing < 275)
-                m_chosenBonusTimeSpacing = RandomUtils::getUniformRandomNumber(300, 400);  //300 to 400m
-            else
-                m_chosenBonusTimeSpacing = RandomUtils::getUniformRandomNumber(200, 400); //200 to 400m
+            if (m_nextBonusSpawnDistance > 300) {
+                spawnDistance = RandomUtils::getUniformRandomNumber(200, 300); //200 to 300m
+            } else if (m_nextBonusSpawnDistance < 275) {
+                spawnDistance = RandomUtils::getUniformRandomNumber(300, 400);  //300 to 400m
+            } else {
+                spawnDistance = RandomUtils::getUniformRandomNumber(200, 400); //200 to 400m }
+            }
         }
             break;
         default:
             break;
     }
+
+    return spawnDistance;
 }
 
 
@@ -522,15 +487,15 @@ void GameModel::chooseTimeSpacing(int elementType)
  */
 bool GameModel::checkIfPositionFree(float x, float y) const
 {
-    bool positionIsFree =true;
-    std::set<MovableElement*>::iterator it=m_movableElementsArray.begin();
+    bool positionIsFree = true;
+    auto it = m_movableElementsArray.begin();
 
-    while (positionIsFree &&  it != m_movableElementsArray.end())
-    {
-        if ((*it)->contains(x, y))
+    while (positionIsFree && it != m_movableElementsArray.end()) {
+        if ((*it)->contains(x, y)) {
             positionIsFree = false;
-        else
+        } else {
             ++it;
+        }
     }
 
     return positionIsFree;
@@ -549,37 +514,27 @@ bool GameModel::checkIfPositionFree(float x, float y) const
  */
 void GameModel::addANewMovableElement(float posX, float posY, int type)
 {
-    const float ELEMENT_MOVE_X = getGameSpeed()*(-1);
-    MovableElement *m_newMElement = nullptr;
+    const float ELEMENT_MOVE_X = getGameSpeed() * (-1);
+    MovableElement* m_newMElement = nullptr;
 
-    if (type == PLAYER)
-    {
-        m_player = new Player(posX, posY, 30, 30, 2.0, 18.0);
+    if (type == PLAYER) {
+        m_player = new Player(posX, posY, ELEMENT_SIZE, ELEMENT_SIZE, 2.0, 18.0, GAME_FLOOR, FIELD_WIDTH);
         m_newMElement = m_player;
-    }
-    else if (type == STANDARD_ENEMY)//any enemy, transformation in CTOR
+    } else if (type == STANDARD_ENEMY)//any enemy, transformation in CTOR
     {
-        m_newMElement = new Enemy(posX, posY, 30, 30, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
-    }
-    else if (type == COIN)
+        m_newMElement = new Enemy(posX, posY, ELEMENT_SIZE, ELEMENT_SIZE, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
+    } else if (type == COIN) {
+        m_newMElement = new Coin(posX, posY, ITEM_SIZE, ITEM_SIZE, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
+    } else if (type == PV_PLUS_BONUS) //any bonus, transformation in CTOR
     {
-        m_newMElement = new Coin(posX, posY, 25, 25, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
-    }
-    else if (type == PV_PLUS_BONUS) //any bonus, transformation in CTOR
-    {
-        m_newMElement = new Bonus(posX, posY, 25, 25, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
-    }
-    else
-    {
+        m_newMElement = new Bonus(posX, posY, ITEM_SIZE, ITEM_SIZE, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
+    } else {
         Logger::printErrorOnConsole("Undefined element type");
     }
 
-    if (m_newMElement == nullptr)
-    {
+    if (m_newMElement == nullptr) {
         Logger::printErrorOnConsole("NULL value : movable element can't be created");
-    }
-    else
-    {
+    } else {
         m_newMovableElementsArray.insert(m_newMElement);
         m_movableElementsArray.insert(m_newMElement);
     }

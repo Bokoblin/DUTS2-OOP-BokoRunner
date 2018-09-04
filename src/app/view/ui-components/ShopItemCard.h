@@ -54,6 +54,12 @@ private:
     mdsf::Text m_title;
     mdsf::Text m_content;
     mdsf::Button *m_buyButton;
+
+    static constexpr int INITIAL_POS_X = 0;
+    static constexpr int INITIAL_POS_Y = 150;
+    static constexpr int WIDTH = 200;
+    static constexpr int HEIGHT = 300;
+    static constexpr int EDGE_MARGIN = 100;
 };
 
 #endif

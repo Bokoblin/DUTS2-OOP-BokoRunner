@@ -23,7 +23,7 @@ limitations under the License.
  * @date 16/04/17 - 25/01/18
  */
 
-//FIXME: remove some definitions (consts in-class, custom objects), add other lost ones
+//FIXME: remove some definitions here (const in-class, custom objects, utils shortcut functions in MDSF), add other lost ones
 
 //=== SFML DEFINITIONS
 #define MOUSE_LEFT_PRESSED_EVENT event.type == sf::Event::MouseButtonPressed \
@@ -44,7 +44,8 @@ limitations under the License.
 #define RADIO_DIAMETER 25
 #define INDICATOR_DIAMETER 22
 #define PAUSE_BUTTONS_SIZE 25, 25
-#define RAISED_BUTTON_DEFAULT 0, 101, 150, 36
-#define RAISED_BUTTON_PRESSED 151, 101, 150, 36
+#define BUTTON_HEIGHT 36
+#define RAISED_BUTTON_DEFAULT 0, 101, 150, BUTTON_HEIGHT
+#define RAISED_BUTTON_PRESSED 151, 101, 150, BUTTON_HEIGHT
 
 #endif

@@ -120,7 +120,7 @@ void GameView::loadSprites()
     m_farScrollingBackground = new ScrollingBackground(1200, m_height, 1, DEFAULT_FAR_HILL_BACKGROUND);
     m_nearScrollingBackground = new ScrollingBackground(1200, m_height, 2, DEFAULT_NEAR_HILL_BACKGROUND);
 
-    m_farTransitionBackground = new mdsf::Sprite(900, m_height, m_width, m_height, DEFAULT_FAR_T1_BACKGROUND);
+    m_farTransitionBackground = new mdsf::Sprite(SCREEN_WIDTH, m_height, m_width, m_height, DEFAULT_FAR_T1_BACKGROUND);
     m_bottomBarImage = new mdsf::Sprite(0, 520, 1200, m_height, BOTTOM_BAR_IMAGE);
 
     m_pauseBackground = new mdsf::Sprite(0, 0, m_width, m_height, PAUSE_HILL_BACKGROUND);
@@ -144,7 +144,7 @@ void GameView::loadSprites()
 
     vector<sf::IntRect> clipRect;
     for (int i=0; i<8; i++) clipRect.emplace_back(50 * i, 0, 50, 50);
-    m_playerSprite = new AnimatedSprite(50, GAME_FLOOR, 30, 30, BALL_IMAGE, clipRect);
+    m_playerSprite = new AnimatedSprite(50, GameModel::GAME_FLOOR, 30, 30, BALL_IMAGE, clipRect);
     m_playerSprite->setOrigin(0, 50);
 
 
@@ -157,7 +157,7 @@ void GameView::loadSprites()
 
     vector<sf::IntRect> clipRectTotemEnemy;
     for (int i=0; i<2; i++) clipRectTotemEnemy.emplace_back(50 * i, 0, 50, 150);
-    m_totemEnemySprite = new AnimatedSprite(m_width, GAME_FLOOR, 30, 90, ENEMIES_IMAGE, clipRectTotemEnemy);
+    m_totemEnemySprite = new AnimatedSprite(m_width, GameModel::GAME_FLOOR, 30, 90, ENEMIES_IMAGE, clipRectTotemEnemy);
     m_totemEnemySprite->setOrigin(0, 150);
 
     vector<sf::IntRect> clipRectBlockEnemy;
@@ -168,7 +168,7 @@ void GameView::loadSprites()
 
     //=== Initialize COINS & BONUSES sprite
 
-    m_shieldImage = new mdsf::Sprite(50, GAME_FLOOR, 40, 40);
+    m_shieldImage = new mdsf::Sprite(50, GameModel::GAME_FLOOR, 40, 40);
     m_shieldImage->loadAndApplyTextureFromImageFile(SHIELD_IMAGE);
     m_shieldImage->setOrigin(0, 50);
 
@@ -179,7 +179,7 @@ void GameView::loadSprites()
 
     vector<sf::IntRect> clipRect_pv;
     for (int i=0; i<5; i++) clipRect_pv.emplace_back(50 * i, 50, 50, 50);
-    m_PVPlusBonusSprite = new AnimatedSprite(m_width, GAME_FLOOR, 25, 25, BONUS_IMAGE, clipRect_pv);
+    m_PVPlusBonusSprite = new AnimatedSprite(m_width, GameModel::GAME_FLOOR, 25, 25, BONUS_IMAGE, clipRect_pv);
     m_PVPlusBonusSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_mega;
@@ -245,7 +245,7 @@ void GameView::loadSprites()
     vector<sf::IntRect> clipRect_save;
     clipRect_save.emplace_back(RAISED_BUTTON_DEFAULT);
     clipRect_save.emplace_back(RAISED_BUTTON_PRESSED);
-    m_saveScoreButton = new mdsf::Button(m_width / 2 - 75, 350, 150, 36, "end_save_button",
+    m_saveScoreButton = new mdsf::Button(m_width / 2 - 75, 350, 150, BUTTON_HEIGHT, "end_save_button",
                                    RECT_BUTTONS_IMAGE, clipRect_save);
     m_saveScoreButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
     m_saveScoreButton->setColor(mdsf::Color::MaterialGreenA700);

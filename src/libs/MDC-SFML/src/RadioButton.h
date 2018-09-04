@@ -64,7 +64,7 @@ protected:
 
     //=== CONSTANTS
     const std::string RADIO_BUTTONS_IMAGE = "../res/images/ui/radio_buttons.png";
-    const std::string INDICATOR_IMAGE = "../res/images/ui/indicator_buttons.png";
+    const std::string INDICATOR_IMAGE = "../res/images/ui/indicator_buttons.png"; //TODO: split RADIO BUTTON FROM PAGE BUTTON (TBD)
 };
 
 } //namespace MaterialDesignComponentsForSFML

@@ -27,13 +27,13 @@ limitations under the License.
  * The Player class inherited from MovableElements
  * contains player's logic and behaviours
  * @author Arthur, Florian
- * @date 22/02/16 - 03/07/17
+ * @date 22/02/16 - 05/09/18
  */
 class Player : public MovableElement
 {
 public:
     //=== CTORs / DTORs
-    Player(float x, float y, float w, float h, float mvX, float mvY);
+    Player(float x, float y, float w, float h, float mvX, float mvY, int floor, int fieldWidth);
     ~Player() override;
 
     //=== GETTERS
@@ -50,9 +50,16 @@ public:
     void changeState(PlayerState state);
     void controlPlayerMovements(MovingDirection direction);
 
+    //Constants
+    static constexpr int MIN_LIFE = 0;
+
 private:
     PlayerState m_state;
     int m_life;
+    float m_initialWidth;
+    float m_initialHeight;
+    int m_floor_position;
+    int m_fieldWidth;
     float m_gravitation;
     float m_acceleration;
     bool m_isJumping;
@@ -61,8 +68,13 @@ private:
     std::pair<float, float> m_vectorBall;
 
     //Constants
-    const int JUMP_LIMIT = 380;
-    const float PRECISION = 1.0;
+    static constexpr int MAX_LIFE = 100;
+    static constexpr int JUMP_LIMIT = 380;
+    static constexpr int PLAYER_RATE = 30;
+    static constexpr int DIRECTION_PADDING = 10;
+    static constexpr float PRECISION = 1.0;
+    static constexpr float INITIAL_GRAVITATION = 20.0;
+    static constexpr float INITIAL_ACCELERATION = 18.0;
 };
 
 #endif

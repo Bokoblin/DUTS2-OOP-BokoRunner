@@ -38,11 +38,6 @@ static const std::string SPANISH = "es";
 static const std::string INTEGER_REGEX = "^(0|[1-9][0-9]*)$";
 static const std::string BOOLEAN_REGEX = "true|false";
 
-//=== Game values
-static const int MAX_LIFE = 100;
-static const int GAME_FLOOR = 480;
-static const int PLAYER_RATE = 30;
-
 //=== Language strings files
 static const std::string ENGLISH_STRINGS = STRINGS_FOLDER + "english.xml";
 static const std::string FRENCH_STRINGS = STRINGS_FOLDER + "french.xml";

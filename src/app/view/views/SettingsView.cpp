@@ -141,7 +141,7 @@ void SettingsView::loadSprites()
     std::vector<sf::IntRect> clipRectReset;
     clipRectReset.emplace_back(RAISED_BUTTON_DEFAULT);
     clipRectReset.emplace_back(RAISED_BUTTON_PRESSED);
-    m_resetDataRaisedButton = new mdsf::Button(m_width/2 - 75, 450, 150, 36, "stats_app_reset",
+    m_resetDataRaisedButton = new mdsf::Button(m_width/2 - 75, 450, 150, BUTTON_HEIGHT, "stats_app_reset",
                                                RECT_BUTTONS_IMAGE, clipRectReset);
     m_resetDataRaisedButton->setColor(mdsf::Color::MaterialRed);
 

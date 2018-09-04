@@ -33,7 +33,8 @@ class AppCore;
  * @author Arthur
  * @date 25/08/18
  */
-class FileBasedPersistence {
+class FileBasedPersistence
+{
 public:
     //=== METHODS
     static bool createConfigFile();

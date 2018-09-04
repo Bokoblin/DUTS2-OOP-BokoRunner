@@ -13,25 +13,27 @@ using std::string;
  * @param item the item related
  *
  * @author Arthur
- * @date 16/05/16 - 04/01/18
+ * @date 16/05/16 - 05/09/18
  */
-ShopItemCard::ShopItemCard(int num, ShopItem *item) :
-        mdsf::Sprite(0, 150, 200, 300), m_id{num}, m_item{item}, m_title{""}, m_content{""}
+ShopItemCard::ShopItemCard(int num, ShopItem* item) :
+        mdsf::Sprite(INITIAL_POS_X, INITIAL_POS_Y, WIDTH, HEIGHT),
+        m_id{num}, m_item{item}, m_title{""}, m_content{""}
 {
     //=== Set position following card id
 
-    if (num%3 == 0)
-        setPosition(100, 150);
-    else if (num%3 == 1)
-        setPosition(350, 150);
-    else if (num%3 == 2)
-        setPosition(600, 150);
+    if (num % 3 == 0) {
+        setPosition(EDGE_MARGIN, INITIAL_POS_Y);
+    } else if (num % 3 == 1) {
+        setPosition((SCREEN_WIDTH / 2) - (m_width / 2), INITIAL_POS_Y);
+    } else if (num % 3 == 2) {
+        setPosition(SCREEN_WIDTH - m_width - EDGE_MARGIN, INITIAL_POS_Y);
+    }
 
     //=== Init title and content
 
     m_title.applyTextFont(ROBOTO_CONDENSED_FONT, 20, sf::Color::White);
     m_title.setUtf8String(item->getName());
-    m_title.setPositionSelfCentered(getX() + m_width/2, getY() + 20);
+    m_title.setPositionSelfCentered(getX() + m_width / 2, getY() + 20);
 
     m_content.applyTextFont(ROBOTO_CONDENSED_FONT, 16, sf::Color::White);
     m_content.setUtf8String(item->getDescription());
@@ -42,8 +44,8 @@ ShopItemCard::ShopItemCard(int num, ShopItem *item) :
     std::vector<sf::IntRect> flatButtonClipRect;
     flatButtonClipRect.emplace_back(RAISED_BUTTON_DEFAULT);
     flatButtonClipRect.emplace_back(RAISED_BUTTON_PRESSED);
-    m_buyButton = new mdsf::Button(getX() + m_width/2 - 75, getY() + 250, 150, 36, //FIXME: hard values
-                                   RECT_BUTTONS_IMAGE, flatButtonClipRect);
+    m_buyButton = new mdsf::Button(getX() + m_width / 2 - 75, getY() + 250, static_cast<float>(0.75 * WIDTH),
+                                   BUTTON_HEIGHT, RECT_BUTTONS_IMAGE, flatButtonClipRect);
 
     loadAndApplyTextureFromImageFile(CARD_IMAGE);
 }
@@ -66,7 +68,7 @@ ShopItemCard::~ShopItemCard()
 
 int ShopItemCard::getId() const { return m_id; }
 mdsf::Button *ShopItemCard::getBuyButton() const { return m_buyButton; }
-ShopItem *ShopItemCard::getItem() const { return m_item; }
+ShopItem* ShopItemCard::getItem() const { return m_item; }
 
 
 //------------------------------------------------
@@ -83,13 +85,10 @@ void ShopItemCard::sync()
 {
     mdsf::Sprite::sync();
 
-    if (m_item->isBought())
-    {
+    if (m_item->isBought()) {
         m_buyButton->setEnabled(false);
         m_buyButton->setColor(mdsf::Color::MaterialRed);
-    }
-    else
-    {
+    } else {
         m_buyButton->setEnabled(true);
         m_buyButton->setColor(mdsf::Color::MaterialGreenA700);
     }
@@ -122,10 +121,9 @@ void ShopItemCard::syncWithButtonLabelRetrieval(mdsf::Button::label_retrieval_fu
  * @author Arthur
  * @date 16/05/16 - 04/01/18
  */
-void ShopItemCard::draw(sf::RenderWindow *window) const
+void ShopItemCard::draw(sf::RenderWindow* window) const
 {
-    if (isVisible())
-    {
+    if (isVisible()) {
         window->draw(*this);
         window->draw(m_title);
         window->draw(m_content);

@@ -33,13 +33,13 @@ limitations under the License.
  * calculating final score, etc.
  *
  * @author Arthur
- * @date 26/03/16 - 27/12/17
+ * @date 26/03/16 - 04/05/18
  */
-class GameModel : public AbstractModel
+class GameModel: public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    GameModel(float width, float height, AppCore *appCore);
+    GameModel(float width, float height, AppCore* appCore);
     ~GameModel() override;
 
     //=== GETTERS
@@ -58,10 +58,13 @@ public:
     void disableTransitionPossibility();
     void setCurrentZone(Zone z);
 
-    //=== PUBLIC METHODS
+    //=== METHODS
     void nextStep() override;
-    void moveMovableElement(MovableElement *element);
+    void moveMovableElement(MovableElement* element);
     void clearNewMovableElementList();
+
+    //=== CONSTANTS
+    static const int GAME_FLOOR = 480;
 
 private:
     //=== ATTRIBUTES
@@ -75,13 +78,13 @@ private:
     int m_currentEnemyTimeSpacing;
     int m_currentCoinTimeSpacing;
     int m_currentBonusTimeSpacing;
-    int m_chosenEnemyTimeSpacing;
-    int m_chosenCoinTimeSpacing;
-    int m_chosenBonusTimeSpacing;
+    int m_nextEnemySpawnDistance;
+    int m_nextCoinSpawnDistance;
+    int m_nextBonusSpawnDistance;
     int m_scoreBonusFlattenedEnemies;
     std::chrono::system_clock::time_point m_lastTime;
     std::chrono::milliseconds m_bonusTimeout;
-    Player *m_player;
+    Player* m_player;
 
     //Containers
     std::set<MovableElement*> m_movableElementsArray;
@@ -89,6 +92,8 @@ private:
 
     //Constant Variables
     const int DEFAULT_PLAYER_X = 50;
+    const int ELEMENT_SIZE = 30;
+    const int ITEM_SIZE = 25;
     const int ELEMENT_MOVE_Y = 0;
     const int SPEED_LIMIT = 20;
     const int NEXT_STEP_DELAY = 100;
@@ -108,6 +113,8 @@ private:
     const int COLLISION_DAMAGE_STD = 10;
     const int COLLISION_DAMAGE_TOTEM = 15;
     const int COLLISION_DAMAGE_BLOCK = 25;
+    const int SPEED_DISTANCE_RATIO = 5;
+    const int FIELD_WIDTH = 900;
 
     //=== PRIVATE METHODS
     void handleSpeedAndDistance();
@@ -120,7 +127,7 @@ private:
     void handleBonusTimeout();
     void conditionallyAllowZoneTransition();
     void conditionallyTriggerGameOver();
-    void chooseTimeSpacing(int elementType);
+    int chooseSpawnDistance(int elementType);
     bool checkIfPositionFree(float x, float y) const;
     void addANewMovableElement(float posX, float posY, int type);
 };

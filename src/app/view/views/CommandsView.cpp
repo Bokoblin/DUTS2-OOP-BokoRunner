@@ -15,7 +15,7 @@
  * @author Arthur
  * @date 24/01/17 - 29/01/17
  */
-CommandsView::CommandsView(sf::RenderWindow *window, AppTextManager *textManager, CommandsModel *commandsModel) :
+CommandsView::CommandsView(sf::RenderWindow* window, AppTextManager* textManager, CommandsModel* commandsModel) :
         AbstractView(window, textManager), m_commands{commandsModel}
 {
     loadSprites();
@@ -102,14 +102,13 @@ void CommandsView::draw() const
  */
 bool CommandsView::handleEvents(sf::Event event)
 {
-    if (MOUSE_LEFT_PRESSED_EVENT)
-    {
-        if (m_homeFormButton->contains(MOUSE_POSITION))
+    if (MOUSE_LEFT_PRESSED_EVENT) {
+        if (m_homeFormButton->contains(MOUSE_POSITION)) {
             m_homeFormButton->setPressed(true);
+        }
     }
 
-    if (event.type == sf::Event::MouseButtonReleased)
-    {
+    if (event.type == sf::Event::MouseButtonReleased) {
         //=== Reset buttons
 
         m_homeFormButton->setPressed(false);
@@ -117,8 +116,7 @@ bool CommandsView::handleEvents(sf::Event event)
 
         //=== handle mouse up on a button
 
-        if (m_homeFormButton->contains(MOUSE_POSITION))
-        {
+        if (m_homeFormButton->contains(MOUSE_POSITION)) {
             return false;
         }
     }

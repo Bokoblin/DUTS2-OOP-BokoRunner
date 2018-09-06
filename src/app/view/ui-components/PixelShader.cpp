@@ -33,7 +33,7 @@ PixelShader::~PixelShader() = default;
  * @author Arthur
  * @date 28/04/16
  */
-void PixelShader::load(const std::string &image)
+void PixelShader::load(const std::string& image)
 {
     m_isLoaded = sf::Shader::isAvailable() && onLoad(image);
 }
@@ -45,15 +45,17 @@ void PixelShader::load(const std::string &image)
  * @author Arthur
  * @date 28/04/16 - 27/10/17
  */
-bool PixelShader::onLoad(const std::string &image)
+bool PixelShader::onLoad(const std::string& image)
 {
-    if (!m_texture.loadFromFile(image))
+    if (!m_texture.loadFromFile(image)) {
         return false;
+    }
     m_sprite.setTexture(m_texture);
 
     // Load the shader
-    if (!m_shader.loadFromFile("../res/shaders/pixel_shader.frag", sf::Shader::Fragment))
+    if (!m_shader.loadFromFile("../res/shaders/pixel_shader.frag", sf::Shader::Fragment)) {
         return false;
+    }
     m_shader.setUniform("texture", sf::Shader::CurrentTexture);
 
     return true;
@@ -71,8 +73,7 @@ bool PixelShader::onLoad(const std::string &image)
  */
 void PixelShader::update(float x, float y)
 {
-    if (m_isLoaded)
-    {
+    if (m_isLoaded) {
         m_shader.setUniform("pixel_threshold", (x + y) / 30);
     }
 }
@@ -89,8 +90,7 @@ void PixelShader::update(float x, float y)
  */
 void PixelShader::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    if (m_isLoaded)
-    {
+    if (m_isLoaded) {
         states.shader = &m_shader;
         target.draw(m_sprite, states);
     }

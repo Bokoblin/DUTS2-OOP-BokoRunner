@@ -30,11 +30,11 @@ limitations under the License.
  * @author Arthur
  * @date 20/05/16 - 02/01/18
  */
-class SettingsView : public AbstractView
+class SettingsView: public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    SettingsView(sf::RenderWindow *window, AppTextManager *textManager, SettingsModel *settingsModel);
+    SettingsView(sf::RenderWindow* window, AppTextManager* textManager, SettingsModel* settingsModel);
     ~SettingsView() override;
 
     //=== METHODS
@@ -44,29 +44,29 @@ public:
 
 private:
     //=== ATTRIBUTES
-    SettingsModel *m_settings;
+    SettingsModel* m_settings;
 
     //UI components
-    mdsf::Button *m_homeFormButton;
-    mdsf::RadioButton *m_englishLangRadio;
-    mdsf::RadioButton *m_frenchLangRadio;
-    mdsf::RadioButton *m_spanishLangRadio;
-    mdsf::RadioButton *m_easyModeRadio;
-    mdsf::RadioButton *m_hardModeRadio;
-    mdsf::RadioButton *m_defaultBallSkinRadio;
-    mdsf::RadioButton *m_morphBallSkinRadio;
-    mdsf::RadioButton *m_capsuleBallSkinRadio;
-    mdsf::Button *m_resetDataRaisedButton;
-    mdsf::Button *m_menuMusicButton;
-    mdsf::Button *m_gameMusicButton;
-    mdsf::Sprite *m_logoIUT;
-    mdsf::Sprite *m_logoSFML;
-    mdsf::Sprite *m_iconRepoLink;
-    mdsf::Sprite *m_iconEmailLink;
-    mdsf::Dialog *m_confirmDialog;
+    mdsf::Button* m_homeFormButton;
+    mdsf::RadioButton* m_englishLangRadio;
+    mdsf::RadioButton* m_frenchLangRadio;
+    mdsf::RadioButton* m_spanishLangRadio;
+    mdsf::RadioButton* m_easyModeRadio;
+    mdsf::RadioButton* m_hardModeRadio;
+    mdsf::RadioButton* m_defaultBallSkinRadio;
+    mdsf::RadioButton* m_morphBallSkinRadio;
+    mdsf::RadioButton* m_capsuleBallSkinRadio;
+    mdsf::Button* m_resetDataRaisedButton;
+    mdsf::Button* m_menuMusicButton;
+    mdsf::Button* m_gameMusicButton;
+    mdsf::Sprite* m_logoIUT;
+    mdsf::Sprite* m_logoSFML;
+    mdsf::Sprite* m_iconRepoLink;
+    mdsf::Sprite* m_iconEmailLink;
+    mdsf::Dialog* m_confirmDialog;
 
     //Containers
-    std::map<int, mdsf::RadioButton *> m_pageIndicators;
+    std::map<int, mdsf::RadioButton*> m_pageIndicators;
     std::vector<mdsf::Button*> m_buttonList;
 
     //=== METHODS

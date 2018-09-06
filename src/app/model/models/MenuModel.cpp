@@ -10,8 +10,8 @@ using std::chrono::system_clock;
  *
  * @param appCore the app's core singleton
  */
-MenuModel::MenuModel(AppCore *appCore) :
-    AbstractModel(appCore), m_menuState{HOME}
+MenuModel::MenuModel(AppCore* appCore) :
+        AbstractModel(appCore), m_menuState{HOME}
 {
     m_commands = nullptr;
     m_settings = nullptr;
@@ -49,36 +49,31 @@ void MenuModel::nextStep()
 {
     system_clock::duration currentNextStepDelay = system_clock::now() - m_lastTime;
 
-    if (currentNextStepDelay > milliseconds(1500))
-    {
+    if (currentNextStepDelay > milliseconds(MENU_NEXT_STEP_DELAY)) {
         //=== Delete commands if not anymore current menu state
 
-        if (m_menuState != COMMANDS && m_commands != nullptr)
-        {
+        if (m_menuState != COMMANDS && m_commands != nullptr) {
             delete m_commands;
             m_commands = nullptr;
         }
 
         //=== Delete leaderboard if not anymore current menu state
 
-        if (m_menuState != LEADERBOARD && m_leaderboard != nullptr)
-        {
+        if (m_menuState != LEADERBOARD && m_leaderboard != nullptr) {
             delete m_leaderboard;
             m_leaderboard = nullptr;
         }
 
         //=== Delete shop if not anymore current menu state
 
-        if (m_menuState != SHOP && m_shop != nullptr)
-        {
+        if (m_menuState != SHOP && m_shop != nullptr) {
             delete m_shop;
             m_shop = nullptr;
         }
 
         //=== Delete settings if not anymore current menu state
 
-        if (m_menuState != SETTINGS && m_settings != nullptr)
-        {
+        if (m_menuState != SETTINGS && m_settings != nullptr) {
             delete m_settings;
             m_settings = nullptr;
         }

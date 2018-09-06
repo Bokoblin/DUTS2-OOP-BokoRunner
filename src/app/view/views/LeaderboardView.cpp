@@ -15,8 +15,8 @@
  * @author Arthur
  * @date 21/05/16 - 02/01/18
  */
-LeaderboardView::LeaderboardView(sf::RenderWindow *window, AppTextManager *textManager,
-                                 LeaderboardModel *leaderboardModel) :
+LeaderboardView::LeaderboardView(sf::RenderWindow* window, AppTextManager* textManager,
+                                 LeaderboardModel* leaderboardModel) :
         AbstractView(window, textManager), m_leaderboard{leaderboardModel}
 {
     //=== Init images and text
@@ -28,7 +28,7 @@ LeaderboardView::LeaderboardView(sf::RenderWindow *window, AppTextManager *textM
     //=== Init confirm dialog
 
     //TODO: No dialog init at startup
-    m_confirmDialog = new mdsf::Dialog(m_width/2-140, m_height/2-120, 280, 200, "confirm_leaderboard_delete");
+    m_confirmDialog = new mdsf::Dialog(m_width / 2 - 140, m_height / 2 - 120, 280, 200, "confirm_leaderboard_delete");
     m_confirmDialog->hide();
     DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog);
 }
@@ -65,7 +65,7 @@ void LeaderboardView::loadSprites()
     clipRectClear.emplace_back(RAISED_BUTTON_DEFAULT);
     clipRectClear.emplace_back(RAISED_BUTTON_PRESSED);
     m_clearLeaderboardRaisedButton = new mdsf::Button(m_width / 2 - 75, 540, 150, BUTTON_HEIGHT,
-            "leaderboard_clear_button", RECT_BUTTONS_IMAGE, clipRectClear);
+                                                      "leaderboard_clear_button", RECT_BUTTONS_IMAGE, clipRectClear);
     m_clearLeaderboardRaisedButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
     m_clearLeaderboardRaisedButton->setColor(mdsf::Color::MaterialRed);
 
@@ -129,20 +129,19 @@ void LeaderboardView::draw() const
  */
 bool LeaderboardView::handleEvents(sf::Event event)
 {
-    if (MOUSE_LEFT_PRESSED_EVENT)
-    {
-        if (m_homeFormButton->contains(MOUSE_POSITION))
+    if (MOUSE_LEFT_PRESSED_EVENT) {
+        if (m_homeFormButton->contains(MOUSE_POSITION)) {
             m_homeFormButton->setPressed(true);
+        }
 
-        if (!m_confirmDialog->isVisible())
-        {
-            if (m_clearLeaderboardRaisedButton->contains(MOUSE_POSITION))
+        if (!m_confirmDialog->isVisible()) {
+            if (m_clearLeaderboardRaisedButton->contains(MOUSE_POSITION)) {
                 m_clearLeaderboardRaisedButton->setPressed(true);
+            }
         }
     }
 
-    if (event.type == sf::Event::MouseButtonReleased)
-    {
+    if (event.type == sf::Event::MouseButtonReleased) {
         //=== Reset buttons
 
         m_homeFormButton->setPressed(false);
@@ -150,38 +149,29 @@ bool LeaderboardView::handleEvents(sf::Event event)
 
         //=== handle mouse up on a button
 
-        if (!m_confirmDialog->isVisible())
-        {
-            if (m_homeFormButton->contains(MOUSE_POSITION))
-            {
+        if (!m_confirmDialog->isVisible()) {
+            if (m_homeFormButton->contains(MOUSE_POSITION)) {
                 m_leaderboard->quit();
                 return false;
             }
 
-            if (m_clearLeaderboardRaisedButton->contains(MOUSE_POSITION))
-            {
+            if (m_clearLeaderboardRaisedButton->contains(MOUSE_POSITION)) {
                 m_confirmDialog->show();
             }
-        }
-        else
-        {
-            if (m_confirmDialog->getOkButtonText().contains(MOUSE_POSITION))
-            {
+        } else {
+            if (m_confirmDialog->getOkButtonText().contains(MOUSE_POSITION)) {
                 m_confirmDialog->hide();
                 m_leaderboard->getAppCore()->clearLeaderboard();
                 m_textManager->updateWholeStandaloneTextContent();
                 m_textManager->syncMenuLeaderboardText();
-            }
-            else if (m_confirmDialog->getCancelButtonText().contains(MOUSE_POSITION)
-                    || !m_confirmDialog->contains(MOUSE_POSITION))
-            {
+            } else if (m_confirmDialog->getCancelButtonText().contains(MOUSE_POSITION)
+                    || !m_confirmDialog->contains(MOUSE_POSITION)) {
                 m_confirmDialog->hide();
             }
         }
     }
 
-    if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
-    {
+    if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) {
         m_confirmDialog->hide();
     }
 

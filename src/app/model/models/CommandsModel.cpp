@@ -7,7 +7,7 @@
  *
  * @param appCore the app's core singleton
  */
-CommandsModel::CommandsModel(AppCore *appCore) :
+CommandsModel::CommandsModel(AppCore* appCore) :
         AbstractModel{appCore}
 {}
 

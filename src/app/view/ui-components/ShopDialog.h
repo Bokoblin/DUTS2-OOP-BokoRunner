@@ -27,21 +27,21 @@ namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
  * @author Arthur
  * @date 16/04/17
  */
-class ShopDialog : public mdsf::Dialog
+class ShopDialog: public mdsf::Dialog
 {
 public:
     //=== CTORs / DTORs
     ShopDialog();
-    ShopDialog(float x, float y, float width, float height, const std::string &context, ShopItem *item);
-    ShopDialog(const Dialog& d)=delete;
+    ShopDialog(float x, float y, float width, float height, const std::string& context, ShopItem* item);
+    ShopDialog(const Dialog& d) = delete;
     ~ShopDialog() override;
 
     //=== GETTERS
-    ShopItem *getLinkedShopItem() const;
+    ShopItem* getLinkedShopItem() const;
 
 private:
     //=== ATTRIBUTES
-    ShopItem *m_shopItem;
+    ShopItem* m_shopItem;
 };
 
 #endif

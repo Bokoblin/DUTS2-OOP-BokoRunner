@@ -14,13 +14,31 @@
  * @author Arthur, Florian
  * @date 29/01/17
  */
-AbstractView::AbstractView(sf::RenderWindow *window, AppTextManager *textManager) :
-    m_window{window}, m_textManager{textManager}
+AbstractView::AbstractView(sf::RenderWindow* window, AppTextManager* textManager) :
+        m_window{window}, m_textManager{textManager}
 {
     m_width = m_window->getSize().x;
     m_height = m_window->getSize().y;
 
     m_window->setFramerateLimit(APP_FRAMERATE);
+}
+
+/**
+ * Return the half position on the X axis
+ * @return an unsigned integer
+ */
+unsigned int AbstractView::getHalfXPosition() const
+{
+    return m_width / 2;
+}
+
+/**
+ * Return the half position on the Y axis
+ * @return an unsigned integer
+ */
+unsigned int AbstractView::getHalfYPosition() const
+{
+    return m_height / 2;
 }
 
 

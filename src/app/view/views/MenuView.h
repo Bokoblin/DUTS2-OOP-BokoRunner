@@ -28,11 +28,11 @@ limitations under the License.
  * @author Arthur, Florian
  * @date 26/03/16 - 27/12/17
  */
-class MenuView : public AbstractView
+class MenuView: public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    MenuView(sf::RenderWindow *window, AppTextManager *textManager, MenuModel *menuModel);
+    MenuView(sf::RenderWindow* window, AppTextManager* textManager, MenuModel* menuModel);
     ~MenuView() override;
 
     //=== METHODS
@@ -42,30 +42,39 @@ public:
 
 private:
     //=== ATTRIBUTES
-    MenuModel *m_menu;
-    CommandsView *m_commandsView;
-    LeaderboardView *m_leaderboardView;
-    SettingsView *m_settingsView;
-    ShopView *m_shopView;
+    MenuModel* m_menu;
+    CommandsView* m_commandsView;
+    LeaderboardView* m_leaderboardView;
+    SettingsView* m_settingsView;
+    ShopView* m_shopView;
 
     //Graphic Elements
-    ScrollingBackground *m_farBackground;
-    ScrollingBackground *m_nearBackground;
-    mdsf::Sprite *m_titleGraphic;
-    mdsf::Button *m_playRectButton;
-    mdsf::Button *m_quitRectButton;
-    mdsf::Button *m_commandsFormButton;
-    mdsf::Button *m_settingsFormButton;
-    mdsf::Button *m_leaderboardFormButton;
-    mdsf::Button *m_shopFormButton;
+    ScrollingBackground* m_farBackground;
+    ScrollingBackground* m_nearBackground;
+    mdsf::Sprite* m_titleGraphic;
+    mdsf::Button* m_playRectButton;
+    mdsf::Button* m_quitRectButton;
+    mdsf::Button* m_commandsFormButton;
+    mdsf::Button* m_settingsFormButton;
+    mdsf::Button* m_leaderboardFormButton;
+    mdsf::Button* m_shopFormButton;
 
     //Audio
     sf::Music m_menuMusic;
 
+    //Constants
+    const int MAIN_BUTTON_WIDTH = 150;
+    const int MAIN_BUTTON_HEIGHT = 80;
+    const int BACKGROUND_WIDTH = 1200;
+    const int FAR_SCROLL_SPEED = 1;
+    const int NEAR_SCROLL_SPEED = 2;
+    const int MUSIC_LOOP_START = 4851;
+    const int MUSIC_LOOP_END = 28840;
+
     //=== METHODS
     void loadMusic();
     void loadSprites() override;
-    bool handleHomeEvents(const sf::Event &event);
+    bool handleHomeEvents(const sf::Event& event);
 };
 
 #endif

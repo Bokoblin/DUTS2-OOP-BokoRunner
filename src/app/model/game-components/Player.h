@@ -29,7 +29,7 @@ limitations under the License.
  * @author Arthur, Florian
  * @date 22/02/16 - 05/09/18
  */
-class Player : public MovableElement
+class Player: public MovableElement
 {
 public:
     //=== CTORs / DTORs
@@ -50,10 +50,11 @@ public:
     void changeState(PlayerState state);
     void controlPlayerMovements(MovingDirection direction);
 
-    //Constants
+    //=== CONSTANTS
     static constexpr int MIN_LIFE = 0;
 
 private:
+    //=== ATTRIBUTES
     PlayerState m_state;
     int m_life;
     float m_initialWidth;

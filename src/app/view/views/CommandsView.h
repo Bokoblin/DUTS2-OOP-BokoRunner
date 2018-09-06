@@ -28,11 +28,11 @@ limitations under the License.
  * @author Arthur
  * @date 24/01/17 - 05/02/18
  */
-class CommandsView : public AbstractView
+class CommandsView: public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    CommandsView(sf::RenderWindow *window, AppTextManager *textManager, CommandsModel *commandsModel);
+    CommandsView(sf::RenderWindow* window, AppTextManager* textManager, CommandsModel* commandsModel);
     ~CommandsView() override;
 
     //=== METHODS
@@ -42,8 +42,8 @@ public:
 
 private:
     //=== ATTRIBUTES
-    CommandsModel *m_commands;
-    mdsf::Button *m_homeFormButton;
+    CommandsModel* m_commands;
+    mdsf::Button* m_homeFormButton;
 
     //=== METHODS
     void loadSprites() override;

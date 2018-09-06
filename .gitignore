@@ -10,6 +10,8 @@
 *.idea
 Thumbs.db
 cmake-build-debug/
+cmake-build-debug-cli/
+cmake-build-debug-wsl/
 cmake-build-release/
 res/config.xml
 /build/

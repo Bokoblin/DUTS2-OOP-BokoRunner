@@ -16,8 +16,8 @@
  * @author Arthur, Florian
  * @date 3/03/16 - 29/12/17
  */
-ScrollingBackground::ScrollingBackground(float width, float height, float scrollingSpeed, const std::string &image) :
-    Sprite(width, height), m_scrollingSpeed{scrollingSpeed}
+ScrollingBackground::ScrollingBackground(float width, float height, float scrollingSpeed, const std::string& image) :
+        Sprite(width, height), m_scrollingSpeed{scrollingSpeed}
 {
     m_left = new mdsf::Sprite(0, 0, width, height);
     m_left->loadAndApplyTextureFromImageFile(image);
@@ -45,18 +45,26 @@ ScrollingBackground::~ScrollingBackground()
 //          GETTERS
 //------------------------------------------------
 
-float ScrollingBackground::getWidth() const { return m_left->getWidth() + m_right->getWidth(); }
-float ScrollingBackground::getHeight() const { return m_left->getHeight() + m_right->getHeight(); }
-sf::Vector2f ScrollingBackground::getLeftPosition() const { return m_left->getPosition(); }
-float ScrollingBackground::getSeparationPositionX(unsigned int screenWidth) const {
+float ScrollingBackground::getWidth() const
+{return m_left->getWidth() + m_right->getWidth();}
+
+float ScrollingBackground::getHeight() const
+{return m_left->getHeight() + m_right->getHeight();}
+
+sf::Vector2f ScrollingBackground::getLeftPosition() const
+{return m_left->getPosition();}
+
+float ScrollingBackground::getSeparationPositionX(unsigned int screenWidth) const
+{
     /*
      * Depending on the current displaying (left-right or right-left),
      * it returns the visible separation position
      */
-    if (m_left->getX() >= -(4*screenWidth/3) && m_left->getX() <= screenWidth)
+    if (m_left->getX() >= -(4 * screenWidth / 3) && m_left->getX() <= screenWidth) {
         return m_left->getX() + m_left->getLocalBounds().width;
-    else
+    } else {
         return m_right->getX() + m_right->getLocalBounds().width;
+    }
 }
 
 
@@ -64,8 +72,11 @@ float ScrollingBackground::getSeparationPositionX(unsigned int screenWidth) cons
 //          SETTERS
 //------------------------------------------------
 
-void ScrollingBackground::setScrollingSpeed(float speed) { m_scrollingSpeed = speed; }
-void ScrollingBackground::setPositions(float x, float y) {
+void ScrollingBackground::setScrollingSpeed(float speed)
+{m_scrollingSpeed = speed;}
+
+void ScrollingBackground::setPositions(float x, float y)
+{
     m_left->setPosition(x, y);
     m_right->setPosition(x + m_left->getWidth(), y);
 }
@@ -87,8 +98,7 @@ void ScrollingBackground::sync()
     m_left->setPosition(m_left->getX() - m_scrollingSpeed, m_left->getY());
     m_right->setPosition(m_right->getX() - m_scrollingSpeed, m_right->getY());
 
-    if (m_left->getX() + m_left->getWidth() < 0)
-    {
+    if (m_left->getX() + m_left->getWidth() < 0) {
         m_left->setPosition(0, 0);
         m_right->setPosition(m_left->getWidth(), 0);
     }
@@ -105,7 +115,7 @@ void ScrollingBackground::sync()
  * @author Arthur
  * @date 3/03/16 - 03/04/16
  */
-void ScrollingBackground::draw(sf::RenderWindow *window) const
+void ScrollingBackground::draw(sf::RenderWindow* window) const
 {
     window->draw(*m_left);
     window->draw(*m_right);
@@ -140,7 +150,7 @@ void ScrollingBackground::resize(float width, float height)
  */
 bool ScrollingBackground::contains(float x, float y) const
 {
-    return m_left->contains(x, y) ||  m_right->contains(x, y);
+    return m_left->contains(x, y) || m_right->contains(x, y);
 }
 
 
@@ -165,7 +175,7 @@ void ScrollingBackground::applyColor()
  * @author Arthur
  * @date 02/01/17
  */
-void ScrollingBackground::loadAndApplyTextureFromImageFile(const std::string &imageFile)
+void ScrollingBackground::loadAndApplyTextureFromImageFile(const std::string& imageFile)
 {
     m_left->loadAndApplyTextureFromImageFile(imageFile);
     m_right->loadAndApplyTextureFromImageFile(imageFile);

@@ -44,40 +44,32 @@ int main() //TODO: Complete CLI app (maybe a App class can work differently if E
 
     //=== Program loop
 
-    while(appCore.getAppState() != QUIT)
-    {
-        if (appCore.getAppState() == SPLASH)
-        {
+    while (appCore.getAppState() != QUIT) {
+        if (appCore.getAppState() == SPLASH) {
             SplashScreenModel splashModel(&appCore);
 
-            while(appCore.getAppState() == SPLASH)
-            {
+            while (appCore.getAppState() == SPLASH) {
                 splashModel.nextStep();
                 appCore.setAppState(MENU);
             }
         }
-        if (appCore.getAppState() == MENU)
-        {
+        if (appCore.getAppState() == MENU) {
             MenuModel menuModel(&appCore);
 
-            while(appCore.getAppState() == MENU)
-            {
+            while (appCore.getAppState() == MENU) {
                 menuModel.nextStep();
                 appCore.setAppState(GAME);
             }
         }
-        if (appCore.getAppState() == GAME)
-        {
+        if (appCore.getAppState() == GAME) {
             GameModel gameModel(SCENE_WIDTH, SCENE_HEIGHT, &appCore);
 
-            while(appCore.getAppState() == GAME)
-            {
+            while (appCore.getAppState() == GAME) {
                 gameModel.nextStep();
                 appCore.setAppState(QUIT);
             }
         }
-        if (appCore.getAppState() == QUIT)
-        {
+        if (appCore.getAppState() == QUIT) {
             PersistenceManager::updatePersistence();
         }
     }

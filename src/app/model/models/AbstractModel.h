@@ -31,18 +31,18 @@ class AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit AbstractModel(AppCore *appCore);
+    explicit AbstractModel(AppCore* appCore);
     virtual ~AbstractModel();
 
     //=== GETTERS
-    AppCore *getAppCore() const;
+    AppCore* getAppCore() const;
 
     //=== METHODS
-    virtual void nextStep()=0;
+    virtual void nextStep() = 0;
 
 protected:
     //=== ATTRIBUTES
-    AppCore *m_appCore;
+    AppCore* m_appCore;
 };
 
 #endif

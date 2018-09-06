@@ -25,7 +25,7 @@ limitations under the License.
  * @author Arthur
  * @date 19/03/16
  */
-class Coin : public MovableElement
+class Coin: public MovableElement
 {
 public:
     //=== CTORs / DTORs

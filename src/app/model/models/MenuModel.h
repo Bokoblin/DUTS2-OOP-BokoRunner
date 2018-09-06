@@ -31,11 +31,11 @@ limitations under the License.
  * @author Arthur
  * @date 14/04/16 - 29/12/17
  */
-class MenuModel : public AbstractModel
+class MenuModel: public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit MenuModel(AppCore *appCore);
+    explicit MenuModel(AppCore* appCore);
     ~MenuModel() override;
 
     //=== GETTERS
@@ -54,11 +54,14 @@ public:
 private:
     //=== ATTRIBUTES
     MenuState m_menuState;
-    CommandsModel *m_commands;
-    LeaderboardModel *m_leaderboard;
-    SettingsModel *m_settings;
-    ShopModel *m_shop;
+    CommandsModel* m_commands;
+    LeaderboardModel* m_leaderboard;
+    SettingsModel* m_settings;
+    ShopModel* m_shop;
     std::chrono::system_clock::time_point m_lastTime;
+
+    //Constants
+    const int MENU_NEXT_STEP_DELAY = 1500;
 };
 
 #endif

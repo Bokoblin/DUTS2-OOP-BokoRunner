@@ -24,7 +24,7 @@ ShopItemCard::ShopItemCard(int num, ShopItem* item) :
     if (num % 3 == 0) {
         setPosition(EDGE_MARGIN, INITIAL_POS_Y);
     } else if (num % 3 == 1) {
-        setPosition((SCREEN_WIDTH / 2) - (m_width / 2), INITIAL_POS_Y);
+        setPosition(((float) SCREEN_WIDTH / 2) - (m_width / 2), INITIAL_POS_Y);
     } else if (num % 3 == 2) {
         setPosition(SCREEN_WIDTH - m_width - EDGE_MARGIN, INITIAL_POS_Y);
     }
@@ -67,7 +67,7 @@ ShopItemCard::~ShopItemCard()
 //------------------------------------------------
 
 int ShopItemCard::getId() const { return m_id; }
-mdsf::Button *ShopItemCard::getBuyButton() const { return m_buyButton; }
+mdsf::Button* ShopItemCard::getBuyButton() const { return m_buyButton; }
 ShopItem* ShopItemCard::getItem() const { return m_item; }
 
 

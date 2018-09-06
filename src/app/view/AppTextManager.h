@@ -22,6 +22,7 @@ limitations under the License.
 #include "app/view/utils/AppColor.h"
 #include "app/view/utils/ViewConstants.h"
 #include "app/view/utils/ViewDefinitions.h"
+#include "app/model/utils/PlatformUtils.h"
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 
@@ -37,9 +38,9 @@ namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
  */
 class AppTextManager
 {
-    public:
+public:
     //=== CTORs / DTORs
-    AppTextManager(AppCore *appCore, unsigned int width, unsigned int height);
+    AppTextManager(AppCore* appCore, unsigned int width, unsigned int height);
     AppTextManager(const AppTextManager& myText) = delete;
     ~AppTextManager();
 
@@ -48,8 +49,8 @@ class AppTextManager
 
     //=== METHODS
     //Text utils
-    void handleAboutLinks(sf::Event event, const SettingsModel &settings) const; //TODO: Temporary until dedicated LinkButton class
-    void updateWholeStandaloneTextContent(); //TODO: modularize (divide in modules to reduce time complexity)
+    void handleAboutLinks(sf::Event event, const SettingsModel& settings) const; //TODO: Temporary until dedicated LinkButton class
+    void updateWholeStandaloneTextContent(); //TODO: modularize (to reduce time complexity)
 
     //Text init (to use once at screen loading)
     void initMenuLeaderboardText();
@@ -65,14 +66,14 @@ class AppTextManager
     void syncSplashScreenText(bool continueVisibility);
 
     //Text drawing
-    void drawGameOverText(sf::RenderWindow *window) const;
-    void drawGamePausedText(sf::RenderWindow *window) const;
-    void drawGameRunningText(sf::RenderWindow *window) const;
-    void drawMenuCommandsText(sf::RenderWindow *window) const;
-    void drawMenuLeaderboardText(sf::RenderWindow *window) const;
-    void drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const;
-    void drawMenuShopText(sf::RenderWindow *window) const;
-    void drawSplashScreenText(sf::RenderWindow *window) const;
+    void drawGameOverText(sf::RenderWindow* window) const;
+    void drawGamePausedText(sf::RenderWindow* window) const;
+    void drawGameRunningText(sf::RenderWindow* window) const;
+    void drawMenuCommandsText(sf::RenderWindow* window) const;
+    void drawMenuLeaderboardText(sf::RenderWindow* window) const;
+    void drawMenuSettingsText(sf::RenderWindow* window, int currentPage) const;
+    void drawMenuShopText(sf::RenderWindow* window) const;
+    void drawSplashScreenText(sf::RenderWindow* window) const;
 
 private:
     //=== ATTRIBUTES
@@ -80,89 +81,85 @@ private:
     sf::Font m_regularFont;
     sf::Font m_condensedFont;
     sf::Font m_BoldFont;
-    AppCore *m_appCore;
+    AppCore* m_appCore;
     std::vector<mdsf::Text*> m_textList;
 
     //Splash screen label
-    mdsf::Text *m_splashScreenContinueLabel;
+    mdsf::Text* m_splashScreenContinueLabel;
 
     //Leaderboard Labels
-    mdsf::Text *m_leaderboardTitleLabel;
+    mdsf::Text* m_leaderboardTitleLabel;
 
     //Shop Labels
     //mdsf::Text *m_shopNoBonusLabel; //TODO: when no bonus available
 
     //Commands screen Labels
-    mdsf::Text *m_commandsTitleLabel;
-    mdsf::Text *m_commandsPauseLabel;
-    mdsf::Text *m_commandsJumpLabel;
-    mdsf::Text *m_commandsLeftLabel;
-    mdsf::Text *m_commandsRightLabel;
+    mdsf::Text* m_commandsTitleLabel;
+    mdsf::Text* m_commandsPauseLabel;
+    mdsf::Text* m_commandsJumpLabel;
+    mdsf::Text* m_commandsLeftLabel;
+    mdsf::Text* m_commandsRightLabel;
 
     //Settings Labels
-    mdsf::Text *m_configTitleLabel;
-    mdsf::Text *m_configLangTitleLabel;
-    mdsf::Text *m_configDifficultyTitleLabel;
-    mdsf::Text *m_configCustomTitleLabel;
-    mdsf::Text *m_configMusicTitleLabel;
-    mdsf::Text *m_statsTitleLabel;
-    mdsf::Text *m_statsOverallTitleLabel;
-    mdsf::Text *m_statsPerGameTitleLabel;
-    mdsf::Text *m_statsTotalDistanceLabel;
-    mdsf::Text *m_statsTotalEnemiesLabel;
-    mdsf::Text *m_statsTotalCoinsLabel;
-    mdsf::Text *m_statsTotalGamesLabel;
-    mdsf::Text *m_statsPerGameDistanceLabel;
-    mdsf::Text *m_statsPerGameEnemiesLabel;
-    mdsf::Text *m_statsPerGameCoinsLabel;
-    mdsf::Text *m_aboutTitleLabel;
-    mdsf::Text *m_aboutDescriptionLabel;
-    mdsf::Text *m_aboutRepositoryLabel;
-    mdsf::Text *m_aboutCopyrightLabel;
+    mdsf::Text* m_configTitleLabel;
+    mdsf::Text* m_configLangTitleLabel;
+    mdsf::Text* m_configDifficultyTitleLabel;
+    mdsf::Text* m_configCustomTitleLabel;
+    mdsf::Text* m_configMusicTitleLabel;
+    mdsf::Text* m_statsTitleLabel;
+    mdsf::Text* m_statsOverallTitleLabel;
+    mdsf::Text* m_statsPerGameTitleLabel;
+    mdsf::Text* m_statsTotalDistanceLabel;
+    mdsf::Text* m_statsTotalEnemiesLabel;
+    mdsf::Text* m_statsTotalCoinsLabel;
+    mdsf::Text* m_statsTotalGamesLabel;
+    mdsf::Text* m_statsPerGameDistanceLabel;
+    mdsf::Text* m_statsPerGameEnemiesLabel;
+    mdsf::Text* m_statsPerGameCoinsLabel;
+    mdsf::Text* m_aboutTitleLabel;
+    mdsf::Text* m_aboutDescriptionLabel;
+    mdsf::Text* m_aboutRepositoryLabel;
+    mdsf::Text* m_aboutCopyrightLabel;
 
     //Settings Links
-    mdsf::Text *m_aboutRepositoryLink;
-    mdsf::Text *m_aboutEmailLink;
+    mdsf::Text* m_aboutRepositoryLink;
+    mdsf::Text* m_aboutEmailLink;
 
     //Game (Main, Pause & End) Labels
-    mdsf::Text *m_playerLifeLabel;
-    mdsf::Text *m_currentDistanceLabel;
-    mdsf::Text *m_coinsCollectedLabel;
-    mdsf::Text *m_endTitleLabel;
-    mdsf::Text *m_speedMultiplierLabel;
-    mdsf::Text *m_flattenedEnemiesLabel;
-    mdsf::Text *m_currentScoreLabel;
+    mdsf::Text* m_playerLifeLabel;
+    mdsf::Text* m_currentDistanceLabel;
+    mdsf::Text* m_coinsCollectedLabel;
+    mdsf::Text* m_endTitleLabel;
+    mdsf::Text* m_speedMultiplierLabel;
+    mdsf::Text* m_flattenedEnemiesLabel;
+    mdsf::Text* m_currentScoreLabel;
 
     //Menu data-texts
-    mdsf::Text *m_statsTotalDistanceText;
-    mdsf::Text *m_statsTotalEnemiesText;
-    mdsf::Text *m_statsTotalGamesText;
-    mdsf::Text *m_statsTotalCoinsNbText;
-    mdsf::Text *m_statsPerGameDistanceText;
-    mdsf::Text *m_statsPerGameEnemiesText;
-    mdsf::Text *m_statsPerGameCoinsText;
-    mdsf::Text *m_leaderboardContentEasyText;
-    mdsf::Text *m_leaderboardContentHardText;
-    mdsf::Text *m_walletText;
+    mdsf::Text* m_statsTotalDistanceText;
+    mdsf::Text* m_statsTotalEnemiesText;
+    mdsf::Text* m_statsTotalGamesText;
+    mdsf::Text* m_statsTotalCoinsNbText;
+    mdsf::Text* m_statsPerGameDistanceText;
+    mdsf::Text* m_statsPerGameEnemiesText;
+    mdsf::Text* m_statsPerGameCoinsText;
+    mdsf::Text* m_leaderboardContentEasyText;
+    mdsf::Text* m_leaderboardContentHardText;
+    mdsf::Text* m_walletText;
 
     //In-Game data-texts
-    mdsf::Text *m_currentDistanceText;
-    mdsf::Text *m_bonusTimeoutText;
-    mdsf::Text *m_currentCoinsNbText;
-    mdsf::Text *m_speedMultiplierText;
-    mdsf::Text *m_flattenedEnemiesText;
-    mdsf::Text *m_currentScoreText;
+    mdsf::Text* m_currentDistanceText;
+    mdsf::Text* m_bonusTimeoutText;
+    mdsf::Text* m_currentCoinsNbText;
+    mdsf::Text* m_speedMultiplierText;
+    mdsf::Text* m_flattenedEnemiesText;
+    mdsf::Text* m_currentScoreText;
 
     //Constants
-    const int PAUSE_TEXT_X = 80;
-    const int STAT_LABEL_X = 60;
-    const int SUBTOTAL_LABEL_X = 220;
-    const int SUBTOTAL_VALUE_X = 580;
     const unsigned int DEFAULT_CHAR_SIZE = 24;
     const unsigned int CONTENT_CHAR_SIZE = 20;
 
     //=== METHODS
-    void loadText(); //TODO: Modularize with map instead (like in the past :) ) to only load what's needed
+    void loadText(); //TODO: Modularize with map instead to only load what's needed -- like in the past :)
 };
 
 #endif

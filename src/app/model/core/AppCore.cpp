@@ -61,8 +61,8 @@ string AppCore::getConfigFile() const { return CONFIG_FILE; }
 //------------------------------------------------
 
 void AppCore::setAppState(AppState state) { m_appState = state; }
-void AppCore::setLanguage(const string &language) { m_currentLanguage = language; }
-void AppCore::setBallSkin(const string &skin) { m_currentBallSkin = skin; }
+void AppCore::setLanguage(const string& language) { m_currentLanguage = language; }
+void AppCore::setBallSkin(const string& skin) { m_currentBallSkin = skin; }
 void AppCore::setDifficulty(int difficulty) { m_currentDifficulty = difficulty; }
 void AppCore::decreaseWallet(int amount) { m_wallet -= amount; }
 void AppCore::increaseCurrentCoinsCollected(int amount) { m_currentCoinsNumber += amount; }
@@ -256,7 +256,7 @@ string AppCore::stringifyLeaderboard(Difficulty difficulty) const
     if (!scoresArray.empty()) {
         int scoreRank = 1;
         for (auto it = scoresArray.rbegin(); it != scoresArray.rend(); ++it) {
-            result += "\n" + to_string(scoreRank) + (scoreRank != 10 ? ".   " : ". ") + to_string(*it);
+            result += "\n" + to_string(scoreRank) + (scoreRank < 10 ? ".   " : ". ") + to_string(*it);
             scoreRank++;
         }
     }

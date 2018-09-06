@@ -29,18 +29,18 @@ limitations under the License.
  * @author Arthur
  * @date 11/05/16 - 29/12/17
  */
-class ShopModel : public AbstractModel
+class ShopModel: public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit ShopModel(AppCore *appCore);
+    explicit ShopModel(AppCore* appCore);
     ~ShopModel() override;
 
     //=== GETTERS
     std::vector<ShopItem*> getShopItemsArray() const;
 
     //=== METHODS
-    bool buyItem(ShopItem *item);
+    bool buyItem(ShopItem* item);
     void nextStep() override;
     void quit();
 

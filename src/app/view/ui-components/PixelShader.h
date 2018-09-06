@@ -73,7 +73,7 @@ External libraries used by SFML
  * @author Arthur
  * @date 26/04/16 - 16/04/17
  */
-class PixelShader : public sf::Drawable
+class PixelShader: public sf::Drawable
 {
 public:
     //=== CTORs / DTORs
@@ -81,10 +81,10 @@ public:
     ~PixelShader() override;
 
     //=== METHODS
-    void load(const std::string &image);
+    void load(const std::string& image);
     void update(float x, float y);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    bool onLoad(const std::string &image);
+    bool onLoad(const std::string& image);
 
 private:
     //=== ATTRIBUTES

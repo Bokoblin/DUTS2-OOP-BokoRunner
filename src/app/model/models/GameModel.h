@@ -75,9 +75,9 @@ private:
     float m_gameSpeed;
     float m_gameSlowSpeed;
     Zone m_currentZone;
-    int m_currentEnemyTimeSpacing;
-    int m_currentCoinTimeSpacing;
-    int m_currentBonusTimeSpacing;
+    int m_currentEnemySpawnDistance;
+    int m_currentCoinSpawnDistance;
+    int m_currentBonusSpawnDistance;
     int m_nextEnemySpawnDistance;
     int m_nextCoinSpawnDistance;
     int m_nextBonusSpawnDistance;
@@ -90,7 +90,7 @@ private:
     std::set<MovableElement*> m_movableElementsArray;
     std::set<MovableElement*> m_newMovableElementsArray;
 
-    //Constant Variables
+    //Constants
     const int DEFAULT_PLAYER_X = 50;
     const int ELEMENT_SIZE = 30;
     const int ITEM_SIZE = 25;
@@ -127,7 +127,6 @@ private:
     void handleBonusTimeout();
     void conditionallyAllowZoneTransition();
     void conditionallyTriggerGameOver();
-    int chooseSpawnDistance(int elementType);
     bool checkIfPositionFree(float x, float y) const;
     void addANewMovableElement(float posX, float posY, int type);
 };

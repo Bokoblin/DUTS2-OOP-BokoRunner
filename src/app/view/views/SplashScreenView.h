@@ -26,11 +26,11 @@ limitations under the License.
  * @author Arthur
  * @date 27/03/16 - 27/12/17
  */
-class SplashScreenView : public AbstractView
+class SplashScreenView: public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    SplashScreenView(sf::RenderWindow *window, AppTextManager *textManager, SplashScreenModel *splashModel);
+    SplashScreenView(sf::RenderWindow* window, AppTextManager* textManager, SplashScreenModel* splashModel);
     ~SplashScreenView() override;
 
     //=== METHODS
@@ -40,13 +40,16 @@ public:
 
 private:
     //=== ATTRIBUTES
-    SplashScreenModel *m_splashModel;
-    mdsf::Sprite *m_splashScreen;
+    SplashScreenModel* m_splashModel;
+    mdsf::Sprite* m_splashScreen;
 
     //For transition
-    ScrollingBackground *m_farBackground;
-    ScrollingBackground *m_nearBackground;
-    mdsf::Sprite *m_appTitle;
+    ScrollingBackground* m_farBackground;
+    ScrollingBackground* m_nearBackground;
+    mdsf::Sprite* m_appTitle;
+
+    //Constants
+    static constexpr int BACKGROUND_WIDTH = 1200;
 
     //=== METHODS
     void loadSprites() override;

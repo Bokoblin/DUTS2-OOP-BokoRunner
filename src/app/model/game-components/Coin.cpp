@@ -14,7 +14,7 @@
  * @param mvY the y moving direction
  */
 Coin::Coin(float x, float y, float w, float h, float mvX, float mvY) :
-    MovableElement(x, y, w, h, mvX, mvY)
+        MovableElement(x, y, w, h, mvX, mvY)
 {
     m_elementType = COIN;
 }

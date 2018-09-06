@@ -30,11 +30,11 @@ limitations under the License.
  * @author Arthur
  * @date 21/05/16 - 02/01/18
  */
-class LeaderboardView : public AbstractView
+class LeaderboardView: public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    LeaderboardView(sf::RenderWindow *window, AppTextManager *textManager, LeaderboardModel *leaderboardModel);
+    LeaderboardView(sf::RenderWindow* window, AppTextManager* textManager, LeaderboardModel* leaderboardModel);
     ~LeaderboardView() override;
 
     //=== METHODS
@@ -44,12 +44,12 @@ public:
 
 private:
     //=== ATTRIBUTES
-    LeaderboardModel *m_leaderboard;
+    LeaderboardModel* m_leaderboard;
 
     //UI components
-    mdsf::Button *m_homeFormButton;
-    mdsf::Button *m_clearLeaderboardRaisedButton;
-    mdsf::Dialog *m_confirmDialog;
+    mdsf::Button* m_homeFormButton;
+    mdsf::Button* m_clearLeaderboardRaisedButton;
+    mdsf::Dialog* m_confirmDialog;
 
     //=== METHODS
     void loadSprites() override;

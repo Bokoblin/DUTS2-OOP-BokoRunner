@@ -26,7 +26,7 @@ limitations under the License.
  * @author Arthur
  * @date 11/04/16 - 12/04/16
  */
-class Bonus : public MovableElement
+class Bonus: public MovableElement
 {
 public:
     //=== CTORs / DTORs
@@ -37,4 +37,5 @@ public:
     void move() override;
     void chooseBonusType();
 };
+
 #endif

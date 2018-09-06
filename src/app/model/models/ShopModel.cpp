@@ -17,7 +17,7 @@ using Bokoblin::SimpleLogger::Logger;
  * @author Arthur
  * @date 11/05/16 - 04/02/18
  */
-ShopModel::ShopModel(AppCore *appCore) :  AbstractModel(appCore)
+ShopModel::ShopModel(AppCore* appCore) : AbstractModel(appCore)
 {
     PersistenceManager::fetchConfiguration();
     PersistenceManager::fetchActivatedBonus();
@@ -32,7 +32,7 @@ ShopModel::ShopModel(AppCore *appCore) :  AbstractModel(appCore)
  */
 ShopModel::~ShopModel()
 {
-    for (ShopItem *shopItem: m_shopItemsArray)
+    for (ShopItem* shopItem: m_shopItemsArray)
         delete shopItem;
 }
 
@@ -56,10 +56,9 @@ vector<ShopItem*> ShopModel::getShopItemsArray() const { return m_shopItemsArray
  * @author Arthur
  * @date 11/05/16 - 04/01/17
  */
-bool ShopModel::buyItem(ShopItem *item)
+bool ShopModel::buyItem(ShopItem* item)
 {
-    if (!item->isBought() && item->getPrice() <= m_appCore->getWallet())
-    {
+    if (!item->isBought() && item->getPrice() <= m_appCore->getWallet()) {
         //=== update objects
 
         m_appCore->decreaseWallet(item->getPrice());
@@ -85,8 +84,7 @@ bool ShopModel::buyItem(ShopItem *item)
  */
 void ShopModel::fetchBuyableItemsFromFile()
 {
-    try
-    {
+    try {
         PersistenceManager::checkContext();
 
         //FIXME: No config file / xml access should be allowed ! It breaks persistence abstraction !!
@@ -97,21 +95,19 @@ void ShopModel::fetchBuyableItemsFromFile()
 
         pugi::xml_node shop = doc.child("runner").child("shop");
 
-        for (pugi::xml_node shopItem: shop.children("shopItem"))
-        {
+        for (pugi::xml_node shopItem: shop.children("shopItem")) {
             //Updates item's attributes
             string id = shopItem.attribute("id").value();
             string name = LocalizationManager::fetchLocalizedString(id + "_name");
             string desc = LocalizationManager::fetchLocalizedString(id + "_desc");
             int price = stoi(shopItem.attribute("price").value());
-            bool isBought = ((string)shopItem.attribute("bought").value()) == "true";
+            bool isBought = ((string) shopItem.attribute("bought").value()) == "true";
 
             //Adds item to array
             m_shopItemsArray.push_back(new ShopItem(id, name, desc, price, isBought));
         }
     }
-    catch (const PersistenceException& e)
-    {
+    catch (const PersistenceException& e) {
         Logger::printErrorOnConsole(e.what() + string("Persistence checking failure, no bonus were fetched"));
     }
 }

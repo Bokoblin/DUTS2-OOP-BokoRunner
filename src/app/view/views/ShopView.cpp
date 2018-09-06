@@ -1,4 +1,5 @@
 #include "ShopView.h"
+#include <math.h>
 
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
@@ -15,9 +16,8 @@
  * @author Arthur
  * @date 16/05/16 - 29/01/17
  */
-ShopView::ShopView(sf::RenderWindow *window, AppTextManager *textManager, ShopModel *shopModel) :
-        AbstractView(window, textManager),
-    m_shop{shopModel}, m_currentIndicator{0}, m_totalIndicator{0}, m_buyDialog{nullptr}
+ShopView::ShopView(sf::RenderWindow* window, AppTextManager* textManager, ShopModel* shopModel) :
+        AbstractView(window, textManager), m_shop{shopModel}, m_currentIndicator{0}, m_buyDialog{nullptr}
 {
     loadSprites();
     createCards();
@@ -36,10 +36,10 @@ ShopView::~ShopView()
     delete m_homeFormButton;
     delete m_buyDialog;
 
-    for (auto &shopItemCard : m_shopItemCardsArray)
+    for (auto& shopItemCard : m_shopItemCardsArray)
         delete shopItemCard;
 
-    for (auto &it : m_pageIndicators)
+    for (auto& it : m_pageIndicators)
         delete it.second;
 }
 
@@ -57,9 +57,9 @@ void ShopView::loadSprites()
 {
     //=== Initialize COIN Sprite
 
-    m_coinSprite = new mdsf::Sprite(m_width/2-60, 53, 25, 25);
+    m_coinSprite = new mdsf::Sprite((float) m_width / 2 - 60, 53, COIN_SIZE, COIN_SIZE);
     m_coinSprite->loadAndApplyTextureFromImageFile(BONUS_IMAGE, sf::IntRect(0, 0, 50, 50));
-    m_coinSprite->resize(25, 25);
+    m_coinSprite->resize(COIN_SIZE, COIN_SIZE);
 
     //=== Initialize HOME form buttons
 
@@ -80,9 +80,8 @@ void ShopView::createCards()
 {
     //=== Create Item Cards
     int i = 0;
-    for (ShopItem *item : m_shop->getShopItemsArray())
-    {
-        ShopItemCard *card = new ShopItemCard(i, item);
+    for (ShopItem* item : m_shop->getShopItemsArray()) {
+        ShopItemCard* card = new ShopItemCard(i, item);
         card->syncWithButtonLabelRetrieval(LocalizationManager::fetchLocalizedString);
         card->hide(); //to display by pages
         m_shopItemCardsArray.push_back(card);
@@ -91,14 +90,12 @@ void ShopView::createCards()
 
     //=== Create Pages Indicator
 
-    m_totalIndicator = (int) (m_shop->getShopItemsArray().size() / 3);
-    if (m_shop->getShopItemsArray().size()%3 != 0)
-        m_totalIndicator++;
+    unsigned int pageNumber = (unsigned int) (ceil(1.0 * m_shop->getShopItemsArray().size() / 3));
 
-    for (int j=0; j < m_totalIndicator; j++)
-    {
-        m_pageIndicators[j] = new mdsf::RadioButton(0, 580, INDICATOR_DIAMETER, "indicator");
-        m_pageIndicators[j]->setPosition(m_width/2 - 10*m_totalIndicator + 24*j, 550);
+    for (unsigned int j = 0; j < pageNumber; j++) {
+        m_pageIndicators[j] = new mdsf::RadioButton(
+                getHalfXPosition() - (HALF_POSITION_OFFSET * pageNumber) + (INDICATOR_DIAMETER + INDICATOR_PADDING) * j,
+                PAGE_INDICATOR_Y_POSITION, INDICATOR_DIAMETER, "indicator");
     }
 }
 
@@ -113,17 +110,15 @@ void ShopView::createCards()
 void ShopView::syncCards()
 {
     //display only 3 cards linked to the current page indicator
-    for (ShopItemCard *card : m_shopItemCardsArray)
-    {
+    for (ShopItemCard* card : m_shopItemCardsArray) {
         card->sync();
-        if(card->getId() == 0 + 3 * m_currentIndicator
-            || card->getId() == 1 + 3 * m_currentIndicator
-            || card->getId() == 2 + 3 * m_currentIndicator)
-        {
+        if (card->getId() == 0 + CARDS_PER_PAGE * m_currentIndicator
+                || card->getId() == 1 + CARDS_PER_PAGE * m_currentIndicator
+                || card->getId() == 2 + CARDS_PER_PAGE * m_currentIndicator) {
             card->show();
-        }
-        else
+        } else {
             card->hide();
+        }
     }
 }
 
@@ -137,13 +132,10 @@ void ShopView::syncCards()
 void ShopView::synchronize()
 {
     m_homeFormButton->sync();
-
     m_textManager->syncMenuShopText();
-
     syncCards();
 
-    for (auto &it : m_pageIndicators)
-    {
+    for (auto& it : m_pageIndicators) {
         (it.second)->sync();
         (it.second)->setSelected(it.first == m_currentIndicator);
     }
@@ -162,11 +154,12 @@ void ShopView::draw() const
 
     //=== Graphic Elements drawing
 
-    for (ShopItemCard *card : m_shopItemCardsArray)
+    for (ShopItemCard* card : m_shopItemCardsArray)
         card->draw(m_window);
 
-    for (const auto &it : m_pageIndicators)
-            m_window->draw(*it.second);
+    for (const auto& it : m_pageIndicators)
+        m_window->draw(*it.second);
+
     m_window->draw(*m_homeFormButton);
     m_window->draw(*m_coinSprite);
     m_buyDialog->draw(m_window);
@@ -190,92 +183,133 @@ void ShopView::draw() const
  */
 bool ShopView::handleEvents(sf::Event event)
 {
-    if (MOUSE_LEFT_PRESSED_EVENT)
-    {
-        if (!m_buyDialog->isVisible())
-        {
-            if (m_homeFormButton->contains(MOUSE_POSITION))
+    if (MOUSE_LEFT_PRESSED_EVENT) {
+        if (!m_buyDialog->isVisible()) {
+            if (m_homeFormButton->contains(MOUSE_POSITION)) {
                 m_homeFormButton->setPressed(true);
+            }
 
-            for (auto &it : m_pageIndicators)
-                if (it.second->contains(MOUSE_POSITION))
+            for (auto& it : m_pageIndicators) {
+                if (it.second->contains(MOUSE_POSITION)) {
                     it.second->setPressed(true);
+                }
+            }
 
-            for (auto &card : m_shopItemCardsArray)
+            for (auto& card : m_shopItemCardsArray) {
                 if (card->getBuyButton()->contains(MOUSE_POSITION)
-                    && card->isVisible() && !m_buyDialog->isVisible())
+                        && card->isVisible() && !m_buyDialog->isVisible()) {
                     card->getBuyButton()->setPressed(true);
+                }
+            }
         }
     }
 
-    if (event.type == sf::Event::MouseButtonReleased)
-    {
+    if (event.type == sf::Event::MouseButtonReleased) {
         //=== Reset buttons
 
         m_homeFormButton->setPressed(false);
-        for (auto &card : m_shopItemCardsArray)
+        for (auto& card : m_shopItemCardsArray)
             card->getBuyButton()->setPressed(false);
-        for (auto &it : m_pageIndicators)
+        for (auto& it : m_pageIndicators)
             it.second->setPressed(false);
 
         //=== handle mouse up on a button
 
-        if (!m_buyDialog->isVisible())
-        {
-            if (m_homeFormButton->contains(MOUSE_POSITION))
-            {
+        if (!m_buyDialog->isVisible()) {
+            if (m_homeFormButton->contains(MOUSE_POSITION)) {
                 m_shop->quit();
                 return false;
             }
 
-            for (auto &it : m_pageIndicators)
-                if (it.second->contains(MOUSE_POSITION))
+            for (auto& it : m_pageIndicators) {
+                if (it.second->contains(MOUSE_POSITION)) {
                     m_currentIndicator = it.first;
+                }
+            }
 
-            for (auto &card : m_shopItemCardsArray)
+            for (auto& card : m_shopItemCardsArray) {
                 if (card->getBuyButton()->contains(MOUSE_POSITION)
-                     && card->isVisible() && !card->getItem()->isBought())
-                {
+                        && card->isVisible() && !card->getItem()->isBought()) {
                     delete m_buyDialog;
-                    m_buyDialog = new ShopDialog(m_width/2 - 125, m_height/2 - 100, 250, 200,
-                                                 "shop_item_details", card->getItem());
+                    m_buyDialog = new ShopDialog(
+                            getDialogXPosition(ITEM_DIALOG_WIDTH), getDialogYPosition(ITEM_DIALOG_HEIGHT),
+                            ITEM_DIALOG_WIDTH, ITEM_DIALOG_HEIGHT, "shop_item_details", card->getItem());
                     DialogBuilder::retrieveCorrespondingStrings(m_buyDialog);
                     m_buyDialog->show();
                 }
-        }
-        else
-        {
-            if (m_buyDialog->getOkButtonText().contains(MOUSE_POSITION))
-            {
-                if (m_buyDialog->getContext() == "shop_item_details")
-                {
-                    ShopItem *shopItem = dynamic_cast<ShopDialog *>(m_buyDialog)->getLinkedShopItem();
-
-                    delete m_buyDialog; //TODO-1: As items are allocated with new we can allocate then in code
-                    // TODO-2: and add them to a drawable item list to draw them instead of keeping a pointer from ctor
-
-                    const std::string operationResult = m_shop->buyItem(shopItem)
-                            ? "shop_buying_success" : "shop_buying_failure";
-                    m_buyDialog = new mdsf::Dialog(m_width/2 - 125, m_height/2 - 50, 250, 100, operationResult);
-                    DialogBuilder::retrieveCorrespondingStrings(m_buyDialog);
-
-                    if (operationResult == "shop_buying_success")
-                    {
-                        for (auto &card : m_shopItemCardsArray)
-                            if (card->getItem() == shopItem)
-                                card->syncWithButtonLabelRetrieval(LocalizationManager::fetchLocalizedString);
-                    }
-                }
-                else
-                    m_buyDialog->hide();
             }
-            else if (m_buyDialog->getCancelButtonText().contains(MOUSE_POSITION)
-                 || !m_buyDialog->contains(MOUSE_POSITION))
-            {
+        } else {
+            if (m_buyDialog->getOkButtonText().contains(MOUSE_POSITION)) {
+                processBuyConfirmOkAction();
+            } else if (m_buyDialog->getCancelButtonText().contains(MOUSE_POSITION)
+                    || !m_buyDialog->contains(MOUSE_POSITION)) {
                 m_buyDialog->hide();
             }
         }
     }
 
     return true;
+}
+
+/**
+ * Handles the Ok button of the shop item confirm
+ *
+ * @author Arthur
+ * @date 06/09/18
+ */
+void ShopView::processBuyConfirmOkAction()
+{
+    if (m_buyDialog->getContext() == "shop_item_details") {
+        ShopItem* shopItem = dynamic_cast<ShopDialog*>(m_buyDialog)->getLinkedShopItem();
+
+        delete m_buyDialog;
+        //TODO: As we initialize dialog with a new it can be added to an item group instead of declared in header file
+
+        const std::string operationResult = m_shop->buyItem(shopItem) ? "shop_buying_success" : "shop_buying_failure";
+
+        m_buyDialog = new Bokoblin::MaterialDesignComponentsForSFML::Dialog(
+                getDialogXPosition(CONFIRM_DIALOG_WIDTH), getDialogYPosition(CONFIRM_DIALOG_HEIGHT),
+                CONFIRM_DIALOG_WIDTH, CONFIRM_DIALOG_HEIGHT, operationResult);
+        DialogBuilder::retrieveCorrespondingStrings(m_buyDialog);
+
+        if (operationResult == "shop_buying_success") {
+            for (auto& card : m_shopItemCardsArray) {
+                if (card->getItem() == shopItem) {
+                    card->syncWithButtonLabelRetrieval(LocalizationManager::fetchLocalizedString);
+                }
+            }
+        }
+    } else {
+        m_buyDialog->hide();
+    }
+}
+
+
+/**
+ * Get dialog X position from the dialog width
+ *
+ * @param width the dialog width
+ * @return the X position
+ *
+ * @author Arthur
+ * @date 06/09/18
+ */
+float ShopView::getDialogXPosition(int width) const
+{
+    return getHalfXPosition() - (float) width / 2;
+}
+
+
+/**
+ * Get dialog Y position from the dialog height
+ *
+ * @param height the dialog height
+ * @return the Y position
+ *
+ * @author Arthur
+ * @date 06/09/18
+ */
+float ShopView::getDialogYPosition(int height) const
+{
+    return getHalfYPosition() - (float) height / 2;
 }

@@ -8,10 +8,9 @@ using std::chrono::system_clock;
  * @author Arthur
  * @date 29/01/17 - 24/12/17
  */
-SplashScreenModel::SplashScreenModel(AppCore *appCore) :
-    AbstractModel(appCore), m_lastTime{system_clock::now()}, m_continueBlinkingMonitor{0},
-    m_isContinueVisible{true}, m_inEndingPhase{false}
-
+SplashScreenModel::SplashScreenModel(AppCore* appCore) :
+        AbstractModel(appCore), m_lastTime{system_clock::now()}, m_continueBlinkingMonitor{0},
+        m_isContinueVisible{true}, m_inEndingPhase{false}
 {
     m_continueBlinkingMonitor = milliseconds(CONTINUE_VISIBLE_TIMEOUT);
 }
@@ -44,17 +43,15 @@ void SplashScreenModel::nextStep()
     system_clock::duration currentNextStepDelay = system_clock::now() - m_lastTime;
     system_clock::duration nextStepDelay = milliseconds(NEXT_STEP_DELAY);
 
-    if (!m_inEndingPhase && currentNextStepDelay.count() > nextStepDelay.count())
-    {
-        if (m_continueBlinkingMonitor.count() <= milliseconds(0).count())
-        {
+    if (!m_inEndingPhase && currentNextStepDelay.count() > nextStepDelay.count()) {
+        if (m_continueBlinkingMonitor.count() <= milliseconds(0).count()) {
             m_continueBlinkingMonitor = milliseconds(m_isContinueVisible
-                    ? CONTINUE_HIDDEN_TIMEOUT
-                    : CONTINUE_VISIBLE_TIMEOUT);
+                                                             ? CONTINUE_HIDDEN_TIMEOUT
+                                                             : CONTINUE_VISIBLE_TIMEOUT);
             m_isContinueVisible = !m_isContinueVisible;
-        }
-        else
+        } else {
             m_continueBlinkingMonitor.operator-=(milliseconds(NEXT_STEP_DELAY));
+        }
 
         m_lastTime = system_clock::now();
     }

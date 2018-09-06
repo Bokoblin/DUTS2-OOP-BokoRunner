@@ -25,11 +25,11 @@ limitations under the License.
  * @author Arthur
  * @date 29/01/17 - 24/12/17
  */
-class SplashScreenModel : public AbstractModel
+class SplashScreenModel: public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit SplashScreenModel(AppCore *appCore);
+    explicit SplashScreenModel(AppCore* appCore);
     ~SplashScreenModel() override;
 
     //=== METHODS
@@ -49,7 +49,7 @@ private:
     bool m_isContinueVisible;
     bool m_inEndingPhase;
 
-    //Constant Variables
+    //Constants
     const int NEXT_STEP_DELAY = 100;
     const int CONTINUE_VISIBLE_TIMEOUT = 1000;
     const int CONTINUE_HIDDEN_TIMEOUT = 500;

@@ -25,7 +25,7 @@ ShopDialog::ShopDialog() : Dialog(), m_shopItem{nullptr}
  * @date 16/04/17
  */
 ShopDialog::ShopDialog(float x, float y, float width, float height,
-                       const std::string &context, ShopItem *item) :
+                       const std::string& context, ShopItem* item) :
         Dialog(x, y, width, height, context), m_shopItem{item}
 {}
 

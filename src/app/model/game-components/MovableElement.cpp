@@ -14,8 +14,8 @@
  * @param mvY the y moving direction
  */
 MovableElement::MovableElement(float x, float y, float w, float h, float mvX, float mvY) :
-    m_posX{x}, m_posY{y}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY},
-    m_isColliding{false}, m_elementType{UNDEFINED}
+        m_posX{x}, m_posY{y}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY},
+        m_isColliding{false}, m_elementType{UNDEFINED}
 {}
 
 
@@ -55,8 +55,8 @@ void MovableElement::setColliding(bool on) { m_isColliding = on;}
  */
 bool MovableElement::contains(float posX, float posY) const
 {
-    float  maxX = m_posX + m_width;
-    float  maxY = m_posY + m_height;
+    float maxX = m_posX + m_width;
+    float maxY = m_posY + m_height;
 
     return (posX >= m_posX) && (posX < maxX) && (posY >= m_posY) && (posY < maxY);
 }

@@ -26,11 +26,11 @@ limitations under the License.
  * @author Arthur
  * @date  19/04/16 - 29/12/17
  */
-class LeaderboardModel : public AbstractModel
+class LeaderboardModel: public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit LeaderboardModel(AppCore *appCore);
+    explicit LeaderboardModel(AppCore* appCore);
     ~LeaderboardModel() override;
 
     //=== METHODS

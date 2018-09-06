@@ -20,10 +20,6 @@ limitations under the License.
 #include "app/view/utils/ViewDefinitions.h"
 #include "AbstractModel.h"
 
-#if defined _WIN32
-#include <rpc.h>
-#endif
-
 /**
  * The SettingsModel class inherits AbstractModel.
  * It is the model counterpart of the class SettingsView.
@@ -31,13 +27,13 @@ limitations under the License.
  * controlling current active page and checking item's availability
  *
  * @author Arthur
- * @date 20/05/16 - 30/12/17
+ * @date 20/05/16 - 06/09/18
  */
-class SettingsModel : public AbstractModel
+class SettingsModel: public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit SettingsModel(AppCore *appCore);
+    explicit SettingsModel(AppCore* appCore);
     ~SettingsModel() override;
 
     //=== GETTERS
@@ -49,10 +45,9 @@ public:
     void setCurrentPage(int page);
 
     //=== METHODS
-    void changeLanguage(const std::string &language);
-    void changeBallSkin(const std::string &skin);
+    void changeLanguage(const std::string& language);
+    void changeBallSkin(const std::string& skin);
     void checkItemsAvailability();
-    void openURLinBrowser(const std::string &url) const;
     void nextStep() override;
     void quit();
 

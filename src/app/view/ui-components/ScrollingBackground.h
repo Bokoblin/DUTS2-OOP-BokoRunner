@@ -27,11 +27,11 @@ namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
  * @author Arthur, Florian
  * @date 3/03/16 - 10/02/18
  */
-class ScrollingBackground : public mdsf::Sprite
+class ScrollingBackground: public mdsf::Sprite
 {
 public:
     //=== CTORs / DTORs
-    ScrollingBackground(float width, float height, float scrollingSpeed, const std::string &image);
+    ScrollingBackground(float width, float height, float scrollingSpeed, const std::string& image);
     ScrollingBackground(ScrollingBackground const& other) = delete;
     ~ScrollingBackground() override;
 
@@ -47,17 +47,17 @@ public:
 
     //=== METHODS
     void sync() override;
-    void draw(sf::RenderWindow *window) const override;
+    void draw(sf::RenderWindow* window) const override;
 
     void resize(float width, float height) override;
     bool contains(float x, float y) const override;
     void applyColor() override;
 
-    void loadAndApplyTextureFromImageFile(const std::string &imageFile) override;
+    void loadAndApplyTextureFromImageFile(const std::string& imageFile) override;
 
 private:
     //=== ATTRIBUTES
-    mdsf::Sprite *m_left, *m_right;
+    mdsf::Sprite* m_left, * m_right;
     float m_scrollingSpeed;
 };
 

@@ -8,7 +8,7 @@
  *
  * @param appCore the app's core singleton
  */
-AbstractModel::AbstractModel(AppCore *appCore) : m_appCore{appCore}
+AbstractModel::AbstractModel(AppCore* appCore) : m_appCore{appCore}
 {}
 
 

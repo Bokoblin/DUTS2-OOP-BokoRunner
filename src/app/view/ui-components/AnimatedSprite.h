@@ -32,12 +32,12 @@ namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
  *
  * @see mdsf::Sprite
  */
-class AnimatedSprite : public mdsf::Sprite
+class AnimatedSprite: public mdsf::Sprite
 {
 public:
     //=== CTORs / DTORs
-    AnimatedSprite(float x, float y, float width, float height, const std::string &image,
-           const std::vector<sf::IntRect> &clipRect);
+    AnimatedSprite(float x, float y, float width, float height, const std::string& image,
+                   const std::vector<sf::IntRect>& clipRect);
     AnimatedSprite(const AnimatedSprite& other);
     ~AnimatedSprite() override;
 

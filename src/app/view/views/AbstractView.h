@@ -32,13 +32,13 @@ limitations under the License.
  * by its inherited classes.
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 05/02/18
+ * @date 21/02/16 - 06/09/18
  */
 class AbstractView
 {
 public:
     //=== CTORs / DTORs
-    AbstractView(sf::RenderWindow *window, AppTextManager *textManager);
+    AbstractView(sf::RenderWindow* window, AppTextManager* textManager);
     AbstractView(const AbstractView& myView) = delete;
     virtual ~AbstractView();
 
@@ -46,12 +46,14 @@ public:
     virtual void synchronize() = 0;
     virtual void draw() const = 0;
     virtual bool handleEvents(sf::Event event) = 0;
+    unsigned int getHalfXPosition() const;
+    unsigned int getHalfYPosition() const;
 
 protected:
     //=== ATTRIBUTES
     unsigned int m_width, m_height;
-    sf::RenderWindow *m_window;
-    AppTextManager *m_textManager;
+    sf::RenderWindow* m_window;
+    AppTextManager* m_textManager;
 
     //=== METHODS
     virtual void loadSprites() = 0;

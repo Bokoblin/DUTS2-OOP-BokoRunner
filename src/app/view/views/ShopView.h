@@ -31,11 +31,11 @@ limitations under the License.
  * @author Arthur
  * @date 11/05/16 - 06/01/18
  */
-class ShopView : public AbstractView
+class ShopView: public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    ShopView(sf::RenderWindow *window, AppTextManager *textManager, ShopModel *shopModel); //TODO: to delete with drawableList
+    ShopView(sf::RenderWindow* window, AppTextManager* textManager, ShopModel* shopModel);
     ~ShopView() override;
 
     //=== METHODS
@@ -45,24 +45,36 @@ public:
 
 private:
     //=== ATTRIBUTES
-    ShopModel *m_shop;
+    ShopModel* m_shop;
     int m_currentIndicator;
-    int m_totalIndicator;
 
     //Graphic Elements
-    mdsf::Sprite *m_coinSprite;
-    mdsf::Button *m_homeFormButton;
-    mdsf::Dialog *m_buyDialog;
+    mdsf::Sprite* m_coinSprite;
+    mdsf::Button* m_homeFormButton;
+    mdsf::Dialog* m_buyDialog; //TODO: to delete with drawableList
 
     //Containers
-    std::vector<ShopItemCard *> m_shopItemCardsArray;
-    std::map<int, mdsf::RadioButton *> m_pageIndicators;
+    std::vector<ShopItemCard*> m_shopItemCardsArray;
+    std::map<int, mdsf::RadioButton*> m_pageIndicators;
 
     //=== METHODS
     void loadSprites() override;
     void syncCards();
     void createCards();
-};
+    void processBuyConfirmOkAction();
+    float getDialogXPosition(int width) const;
+    float getDialogYPosition(int height) const;
 
+    //=== CONSTANTS
+    static constexpr int CARDS_PER_PAGE = 3;
+    static constexpr int ITEM_DIALOG_WIDTH = 250;
+    static constexpr int ITEM_DIALOG_HEIGHT = 200;
+    static constexpr int CONFIRM_DIALOG_WIDTH = 250;
+    static constexpr int CONFIRM_DIALOG_HEIGHT = 100;
+    static constexpr int COIN_SIZE = 25;
+    static constexpr int HALF_POSITION_OFFSET = 10;
+    static constexpr int PAGE_INDICATOR_Y_POSITION = 550;
+    static constexpr int INDICATOR_PADDING = 2;
+};
 
 #endif

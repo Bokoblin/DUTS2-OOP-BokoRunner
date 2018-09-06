@@ -19,10 +19,10 @@
  * @author Arthur
  * @date 03/03/16 - 29/12/17
  */
-AnimatedSprite::AnimatedSprite(float x, float y, float width, float height, const std::string &image,
-               const std::vector<sf::IntRect> &clipRect) :
+AnimatedSprite::AnimatedSprite(float x, float y, float width, float height, const std::string& image,
+                               const std::vector<sf::IntRect>& clipRect) :
         mdsf::Sprite(x, y, width, height, image), m_clipRectArray{clipRect},
-        m_currentClipRect{0}, m_lastAnimationTime{std::chrono::system_clock::now() }
+        m_currentClipRect{0}, m_lastAnimationTime{std::chrono::system_clock::now()}
 {
     this->setTextureRect(m_clipRectArray[m_currentClipRect]);
 }
@@ -38,7 +38,7 @@ AnimatedSprite::AnimatedSprite(float x, float y, float width, float height, cons
  */
 AnimatedSprite::AnimatedSprite(const AnimatedSprite& other) :
         mdsf::Sprite(other), m_clipRectArray{other.m_clipRectArray},
-        m_currentClipRect{0}, m_lastAnimationTime{std::chrono::system_clock::now() }
+        m_currentClipRect{0}, m_lastAnimationTime{std::chrono::system_clock::now()}
 {
     this->setTextureRect(m_clipRectArray[m_currentClipRect]);
 }
@@ -78,12 +78,12 @@ void AnimatedSprite::sync()
 
     std::chrono::system_clock::duration duration = std::chrono::system_clock::now() - m_lastAnimationTime;
 
-    if (duration > std::chrono::milliseconds(ANIMATION_DELAY))
-    {
-        if (m_currentClipRect == m_clipRectArray.size()-1)
+    if (duration > std::chrono::milliseconds(ANIMATION_DELAY)) {
+        if (m_currentClipRect == m_clipRectArray.size() - 1) {
             m_currentClipRect = 0;
-        else
+        } else {
             m_currentClipRect++;
+        }
 
         this->setTextureRect(m_clipRectArray[m_currentClipRect]);
         m_lastAnimationTime = std::chrono::system_clock::now();

@@ -1,11 +1,10 @@
+#include <app/model/utils/GameUtils.h>
 #include "GameModel.h"
 
 using std::chrono::milliseconds;
 using std::chrono::system_clock;
 using std::string;
 using Bokoblin::SimpleLogger::Logger;
-
-// TODO: SPLIT FILE FOLLOWING GAME STATES (BUT KEEP AS SAME CLASS)
 
 //------------------------------------------------
 //          CONSTRUCTOR / DESTRUCTOR
@@ -25,7 +24,7 @@ using Bokoblin::SimpleLogger::Logger;
 GameModel::GameModel(float width, float height, AppCore* appCore) :
         AbstractModel(appCore), m_width{width}, m_height{height}, m_gameState{RUNNING}, m_inTransition{false},
         m_isTransitionPossible{false}, m_gameSlowSpeed{0}, m_currentZone{HILL},
-        m_currentEnemyTimeSpacing{0}, m_currentCoinTimeSpacing{0}, m_currentBonusTimeSpacing{0},
+        m_currentEnemySpawnDistance{0}, m_currentCoinSpawnDistance{0}, m_currentBonusSpawnDistance{0},
         m_scoreBonusFlattenedEnemies{0}, m_lastTime{system_clock::now()}, m_bonusTimeout{0}
 {
     //=== Initialize new game
@@ -180,39 +179,48 @@ void GameModel::handleMovableElementsCreation()
     if (!m_isTransitionPossible && checkIfPositionFree(m_width, GAME_FLOOR)) {
         //=== Add new enemies
 
-        if (m_currentEnemyTimeSpacing >= m_nextEnemySpawnDistance) {
+        if (m_currentEnemySpawnDistance >= m_nextEnemySpawnDistance) {
             float pos_x = m_width;
             float pos_y = GAME_FLOOR;
             addANewMovableElement(pos_x, pos_y, STANDARD_ENEMY);
 
-            m_currentEnemyTimeSpacing = 0;
-            m_nextEnemySpawnDistance = chooseSpawnDistance(STANDARD_ENEMY);
-            return; //to not add another element if time-spacing valid
-        } else m_currentEnemyTimeSpacing++;
+            m_currentEnemySpawnDistance = 0;
+            m_nextEnemySpawnDistance = GameUtils::chooseSpawnDistance(m_nextEnemySpawnDistance, STANDARD_ENEMY);
+            if (m_appCore->getDifficulty() != EASY) {
+                m_nextEnemySpawnDistance /= 2;
+            }
+            return; //to not add another element if spawn distance valid
+        } else {
+            m_currentEnemySpawnDistance++;
+        }
 
         //=== Add new Coins
 
-        if (m_currentCoinTimeSpacing >= m_nextCoinSpawnDistance) {
+        if (m_currentCoinSpawnDistance >= m_nextCoinSpawnDistance) {
             float pos_x = m_width;
             float pos_y = GAME_FLOOR - RandomUtils::getUniformRandomNumber(0, 100);
             addANewMovableElement(pos_x, pos_y, COIN);
 
-            m_currentCoinTimeSpacing = 0;
-            m_nextCoinSpawnDistance = chooseSpawnDistance(COIN);
+            m_currentCoinSpawnDistance = 0;
+            m_nextCoinSpawnDistance =  GameUtils::chooseSpawnDistance(m_nextCoinSpawnDistance, COIN);
             return;
-        } else m_currentCoinTimeSpacing++;
+        } else {
+            m_currentCoinSpawnDistance++;
+        }
 
         //=== Add new Bonus
 
-        if (m_currentBonusTimeSpacing >= m_nextBonusSpawnDistance) {
+        if (m_currentBonusSpawnDistance >= m_nextBonusSpawnDistance) {
             float pos_x = m_width;
             float pos_y = BONUS_ROW;
             addANewMovableElement(pos_x, pos_y, PV_PLUS_BONUS);
 
-            m_currentBonusTimeSpacing = 0;
-            m_nextBonusSpawnDistance = chooseSpawnDistance(PV_PLUS_BONUS);
+            m_currentBonusSpawnDistance = 0;
+            m_nextBonusSpawnDistance =  GameUtils::chooseSpawnDistance(m_nextBonusSpawnDistance, PV_PLUS_BONUS);
             return;
-        } else m_currentBonusTimeSpacing++;
+        } else {
+            m_currentBonusSpawnDistance++;
+        }
     }
 }
 
@@ -271,8 +279,9 @@ void GameModel::handleMovableElementsDeletion()
         if (((*it)->getPosX() + (*it)->getWidth()) < 0 || (*it)->isColliding()) {
             m_movableElementsArray.erase(it);
             it = m_movableElementsArray.end();
-        } else
+        } else {
             ++it;
+        }
     }
 }
 
@@ -379,8 +388,9 @@ void GameModel::handleBonusTimeout()
 
         if (m_gameState == RUNNING_SLOWLY) {
             m_gameState = RUNNING;
-            if (m_gameSpeed == m_gameSlowSpeed)
+            if (m_gameSpeed == m_gameSlowSpeed) {
                 m_gameSpeed *= 1.5;
+            }
         }
     }
 }
@@ -397,8 +407,9 @@ void GameModel::conditionallyAllowZoneTransition()
 {
     if (!m_inTransition
             && m_appCore->getCurrentDistance() != 0
-            && m_appCore->getCurrentDistance() % ZONE_CHANGING_DISTANCE == 0)
-        m_isTransitionPossible = true;
+            && m_appCore->getCurrentDistance() % ZONE_CHANGING_DISTANCE == 0) {
+                m_isTransitionPossible = true;
+    }
 }
 
 
@@ -411,67 +422,9 @@ void GameModel::conditionallyAllowZoneTransition()
  */
 void GameModel::conditionallyTriggerGameOver()
 {
-    if (m_player->getLife() == Player::MIN_LIFE)
+    if (m_player->getLife() == Player::MIN_LIFE) {
         m_gameState = OVER;
-}
-
-
-/**
- * Calculates the minimal distance between two elements
- * for the next to spawn
- *
- * @param elementType the type of element that was just created
- * @return the minimal spawn distance
- *
- * @author Arthur
- * @date 12/03/16 - 05/09/18
- */
-int GameModel::chooseSpawnDistance(int elementType)
-{
-    int spawnDistance = 0;
-
-    switch (elementType) {
-        case STANDARD_ENEMY: //Any enemy though
-        {
-            if (m_nextEnemySpawnDistance > 40) {
-                spawnDistance = RandomUtils::getUniformRandomNumber(0, 30); //Between 0 and 30 meters
-            } else if (m_nextEnemySpawnDistance < 10) {
-                spawnDistance = RandomUtils::getUniformRandomNumber(10, 50); //Between 10 and 50 meters
-            } else {
-                spawnDistance = RandomUtils::getUniformRandomNumber(0, 40); //Between 0 and 40 meters
-            }
-
-            if (m_appCore->getDifficulty() != EASY) {
-                spawnDistance /= 2;
-            }
-        }
-            break;
-        case COIN: {
-            if (m_nextCoinSpawnDistance > 10) {
-                spawnDistance = RandomUtils::getUniformRandomNumber(0, 10); //0 to 10m
-            } else if (m_nextCoinSpawnDistance < 10) {
-                spawnDistance = RandomUtils::getUniformRandomNumber(10, 20); //10 to 20m
-            } else {
-                spawnDistance = RandomUtils::getUniformRandomNumber(0, 20); //0 to 20m }
-            }
-        }
-            break;
-        case PV_PLUS_BONUS: //Any bonus though
-        {
-            if (m_nextBonusSpawnDistance > 300) {
-                spawnDistance = RandomUtils::getUniformRandomNumber(200, 300); //200 to 300m
-            } else if (m_nextBonusSpawnDistance < 275) {
-                spawnDistance = RandomUtils::getUniformRandomNumber(300, 400);  //300 to 400m
-            } else {
-                spawnDistance = RandomUtils::getUniformRandomNumber(200, 400); //200 to 400m }
-            }
-        }
-            break;
-        default:
-            break;
     }
-
-    return spawnDistance;
 }
 
 
@@ -515,27 +468,27 @@ bool GameModel::checkIfPositionFree(float x, float y) const
 void GameModel::addANewMovableElement(float posX, float posY, int type)
 {
     const float ELEMENT_MOVE_X = getGameSpeed() * (-1);
-    MovableElement* m_newMElement = nullptr;
+    MovableElement* newElement = nullptr;
 
     if (type == PLAYER) {
         m_player = new Player(posX, posY, ELEMENT_SIZE, ELEMENT_SIZE, 2.0, 18.0, GAME_FLOOR, FIELD_WIDTH);
-        m_newMElement = m_player;
+        newElement = m_player;
     } else if (type == STANDARD_ENEMY)//any enemy, transformation in CTOR
     {
-        m_newMElement = new Enemy(posX, posY, ELEMENT_SIZE, ELEMENT_SIZE, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
+        newElement = new Enemy(posX, posY, ELEMENT_SIZE, ELEMENT_SIZE, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
     } else if (type == COIN) {
-        m_newMElement = new Coin(posX, posY, ITEM_SIZE, ITEM_SIZE, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
+        newElement = new Coin(posX, posY, ITEM_SIZE, ITEM_SIZE, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
     } else if (type == PV_PLUS_BONUS) //any bonus, transformation in CTOR
     {
-        m_newMElement = new Bonus(posX, posY, ITEM_SIZE, ITEM_SIZE, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
+        newElement = new Bonus(posX, posY, ITEM_SIZE, ITEM_SIZE, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
     } else {
         Logger::printErrorOnConsole("Undefined element type");
     }
 
-    if (m_newMElement == nullptr) {
+    if (newElement == nullptr) {
         Logger::printErrorOnConsole("NULL value : movable element can't be created");
     } else {
-        m_newMovableElementsArray.insert(m_newMElement);
-        m_movableElementsArray.insert(m_newMElement);
+        m_newMovableElementsArray.insert(newElement);
+        m_movableElementsArray.insert(newElement);
     }
 }

@@ -26,7 +26,7 @@ limitations under the License.
  * @author Arthur
  * @date 13/03/16 - 11/04/16
  */
-class Enemy : public MovableElement
+class Enemy: public MovableElement
 {
 public:
     //=== CTORs / DTORs

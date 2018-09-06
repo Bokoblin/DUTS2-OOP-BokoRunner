@@ -15,7 +15,7 @@ using std::string;
  * @author Arthur
  * @date 11/05/16 - 04/02/18
  */
-ShopItem::ShopItem(const string &id, const string &name, const string &description, int price, bool state) :
+ShopItem::ShopItem(const string& id, const string& name, const string& description, int price, bool state) :
         m_id{id}, m_name{name}, m_description{description}, m_price{price}, m_isBought{state}
 {}
 

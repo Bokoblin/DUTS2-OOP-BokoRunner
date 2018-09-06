@@ -34,9 +34,9 @@ public:
     virtual ~MovableElement();
 
     //=== METHODS
-    virtual void move()=0;
-    bool contains(float posX, float posY) const ;
-    bool collision(const MovableElement &other) const ;
+    virtual void move() = 0;
+    bool contains(float posX, float posY) const;
+    bool collision(const MovableElement& other) const;
 
     //=== GETTERS
     float getPosX() const;

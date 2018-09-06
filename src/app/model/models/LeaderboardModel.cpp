@@ -11,7 +11,7 @@
  *
  * @param appCore the app's core singleton
  */
-LeaderboardModel::LeaderboardModel(AppCore *appCore) :
+LeaderboardModel::LeaderboardModel(AppCore* appCore) :
         AbstractModel(appCore)
 {
     PersistenceManager::fetchLeaderboard();

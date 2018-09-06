@@ -17,17 +17,16 @@ using std::string;
  * @author Arthur
  * @date 20/05/16 - 02/01/18
  */
-SettingsView::SettingsView(sf::RenderWindow *window, AppTextManager *textManager, SettingsModel *settingsModel) :
+SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager, SettingsModel* settingsModel) :
         AbstractView(window, textManager), m_settings{settingsModel}, m_confirmDialog{nullptr}
 {
     loadSprites();
 
     //=== Create Pages Indicator
 
-    for (int i=0; i < SettingsModel::PAGE_NUMBER; i++)
-    {
+    for (int i = 0; i < SettingsModel::PAGE_NUMBER; i++) {
         m_pageIndicators[i] = new mdsf::RadioButton(0, 580, INDICATOR_DIAMETER, "indicator");
-        m_pageIndicators[i]->setPosition(m_width/2 - 12*SettingsModel::PAGE_NUMBER + 24*i, 550);
+        m_pageIndicators[i]->setPosition(getHalfXPosition() - 12 * SettingsModel::PAGE_NUMBER + 24 * i, 550);
     }
 
     //=== Fill button list
@@ -47,12 +46,12 @@ SettingsView::SettingsView(sf::RenderWindow *window, AppTextManager *textManager
 
     //=== Init buttons
 
-    for (mdsf::Button *button : m_buttonList)
+    for (mdsf::Button* button : m_buttonList)
         button->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
 
     //=== Init confirm dialog
 
-    m_confirmDialog = new mdsf::Dialog(m_width/2-140, m_height/2-120, 280, 200, "confirm_data_delete");
+    m_confirmDialog = new mdsf::Dialog(m_width / 2 - 140, m_height / 2 - 120, 280, 200, "confirm_data_delete");
     m_confirmDialog->hide();
     DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog);
 
@@ -69,10 +68,10 @@ SettingsView::SettingsView(sf::RenderWindow *window, AppTextManager *textManager
  */
 SettingsView::~SettingsView()
 {
-    for (auto &button : m_buttonList)
+    for (auto& button : m_buttonList)
         delete button;
 
-    for (auto &it : m_pageIndicators)
+    for (auto& it : m_pageIndicators)
         delete it.second;
 
     delete m_logoIUT;
@@ -96,7 +95,7 @@ void SettingsView::loadSprites()
     //=== Initialize RADIOS buttons
 
     const int POS_COL_1 = 50; //Column 1 starting x-axis
-    const int POS_COL_2 = POS_COL_1 + (int)(m_width/2); //Column 2 starting x-axis
+    const int POS_COL_2 = POS_COL_1 + (int) (m_width / 2); //Column 2 starting x-axis
 
     m_englishLangRadio = new mdsf::RadioButton(POS_COL_1, 205, RADIO_DIAMETER, "config_lang_english");
     m_frenchLangRadio = new mdsf::RadioButton(POS_COL_1, 245, RADIO_DIAMETER, "config_lang_french");
@@ -141,7 +140,7 @@ void SettingsView::loadSprites()
     std::vector<sf::IntRect> clipRectReset;
     clipRectReset.emplace_back(RAISED_BUTTON_DEFAULT);
     clipRectReset.emplace_back(RAISED_BUTTON_PRESSED);
-    m_resetDataRaisedButton = new mdsf::Button(m_width/2 - 75, 450, 150, BUTTON_HEIGHT, "stats_app_reset",
+    m_resetDataRaisedButton = new mdsf::Button(m_width / 2 - 75, 450, 150, BUTTON_HEIGHT, "stats_app_reset",
                                                RECT_BUTTONS_IMAGE, clipRectReset);
     m_resetDataRaisedButton->setColor(mdsf::Color::MaterialRed);
 
@@ -192,14 +191,13 @@ void SettingsView::synchronize()
 
     //=== Sync buttons
 
-    for (mdsf::Button *button : m_buttonList)
+    for (mdsf::Button* button : m_buttonList)
         button->sync();
 
 
     //=== Update and sync indicators
 
-    for(auto &it : m_pageIndicators)
-    {
+    for (auto& it : m_pageIndicators) {
         (it.second)->sync();
         (it.second)->setSelected(it.first == m_settings->getCurrentPage());
     }
@@ -225,8 +223,7 @@ void SettingsView::draw() const
 
     m_window->draw(*m_homeFormButton);
 
-    if (m_settings->getCurrentPage() == CONFIG)
-    {
+    if (m_settings->getCurrentPage() == CONFIG) {
         m_englishLangRadio->draw(m_window);
         m_frenchLangRadio->draw(m_window);
         m_spanishLangRadio->draw(m_window);
@@ -239,14 +236,11 @@ void SettingsView::draw() const
         m_gameMusicButton->draw(m_window);
 
         m_textManager->drawMenuSettingsText(m_window, CONFIG);
-    }
-    else if (m_settings->getCurrentPage() == STATS)
-    {
+    } else if (m_settings->getCurrentPage() == STATS) {
         m_textManager->drawMenuSettingsText(m_window, STATS);
         m_resetDataRaisedButton->draw(m_window);
         m_confirmDialog->draw(m_window);
-    }
-    else //ABOUT
+    } else //ABOUT
     {
         m_window->draw(*m_logoIUT);
         m_window->draw(*m_logoSFML);
@@ -255,7 +249,7 @@ void SettingsView::draw() const
         m_textManager->drawMenuSettingsText(m_window, ABOUT);
     }
 
-    for(const auto &it : m_pageIndicators)
+    for (const auto& it : m_pageIndicators)
         it.second->draw(m_window);
 
     m_window->display();
@@ -272,15 +266,12 @@ void SettingsView::handleMusic()
 {
     //=== Change menu music volume
 
-    if (m_settings->getAppCore()->isMenuMusicEnabled())
-    {
+    if (m_settings->getAppCore()->isMenuMusicEnabled()) {
         std::vector<sf::IntRect> clipRect;
         clipRect.emplace_back(0, 200, 50, 50);
         clipRect.emplace_back(50, 200, 50, 50);
         m_menuMusicButton->setClipRectArray(clipRect);
-    }
-    else
-    {
+    } else {
         std::vector<sf::IntRect> clipRect;
         clipRect.emplace_back(0, 250, 50, 50);
         clipRect.emplace_back(50, 250, 50, 50);
@@ -289,15 +280,12 @@ void SettingsView::handleMusic()
 
     //=== Change game music volume
 
-    if (m_settings->getAppCore()->isGameMusicEnabled())
-    {
+    if (m_settings->getAppCore()->isGameMusicEnabled()) {
         std::vector<sf::IntRect> clipRect;
         clipRect.emplace_back(0, 200, 50, 50);
         clipRect.emplace_back(50, 200, 50, 50);
         m_gameMusicButton->setClipRectArray(clipRect);
-    }
-    else
-    {
+    } else {
         std::vector<sf::IntRect> clipRect;
         clipRect.emplace_back(0, 250, 50, 50);
         clipRect.emplace_back(50, 250, 50, 50);
@@ -321,7 +309,7 @@ void SettingsView::updateTextBasedComponents() const
     m_textManager->updateWholeStandaloneTextContent();
 
     //Update button text
-    for (mdsf::Button *button : m_buttonList)
+    for (mdsf::Button* button : m_buttonList)
         button->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
 
     //Update dialog text
@@ -340,28 +328,21 @@ void SettingsView::updateTextBasedComponents() const
  */
 bool SettingsView::handleEvents(sf::Event event)
 {
-    if (MOUSE_LEFT_PRESSED_EVENT)
-    {
-        if (m_settings->getCurrentPage() == ABOUT)
-        {
+    if (MOUSE_LEFT_PRESSED_EVENT) {
+        if (m_settings->getCurrentPage() == ABOUT) {
             m_textManager->handleAboutLinks(event, *m_settings);
         }
 
-        if (!m_confirmDialog->isVisible())
-        {
-            for (mdsf::Button *button : m_buttonList)
-            {
-                if (button->contains(MOUSE_POSITION))
-                {
+        if (!m_confirmDialog->isVisible()) {
+            for (mdsf::Button* button : m_buttonList) {
+                if (button->contains(MOUSE_POSITION)) {
                     button->setPressed(true);
                     break;
                 }
             }
 
-            for (auto &it : m_pageIndicators)
-            {
-                if (it.second->contains(MOUSE_POSITION))
-                {
+            for (auto& it : m_pageIndicators) {
+                if (it.second->contains(MOUSE_POSITION)) {
                     it.second->setPressed(true);
                     break;
                 }
@@ -369,114 +350,80 @@ bool SettingsView::handleEvents(sf::Event event)
         }
     }
 
-    if (event.type == sf::Event::MouseButtonReleased)
-    {
+    if (event.type == sf::Event::MouseButtonReleased) {
         //=== Reset buttons
 
-        for (mdsf::Button *button : m_buttonList)
+        for (mdsf::Button* button : m_buttonList)
             button->setPressed(false);
-        for(auto &it : m_pageIndicators)
+        for (auto& it : m_pageIndicators)
             it.second->setPressed(false);
 
 
         //=== handle mouse up on a button
 
-        if (!m_confirmDialog->isVisible())
-        {
-            if (m_homeFormButton->contains(MOUSE_POSITION))
-            {
+        if (!m_confirmDialog->isVisible()) {
+            if (m_homeFormButton->contains(MOUSE_POSITION)) {
                 m_settings->quit();
                 return false;
             }
 
-            for (auto &it : m_pageIndicators)
-                if (it.second->contains(MOUSE_POSITION))
+            for (auto& it : m_pageIndicators)
+                if (it.second->contains(MOUSE_POSITION)) {
                     m_settings->setCurrentPage(it.first);
+                }
         }
 
-        if (m_settings->getCurrentPage() == CONFIG)
-        {
-            if (m_englishLangRadio->contains(MOUSE_POSITION))
-            {
+        if (m_settings->getCurrentPage() == CONFIG) {
+            if (m_englishLangRadio->contains(MOUSE_POSITION)) {
                 m_settings->changeLanguage(ENGLISH);
                 updateTextBasedComponents();
-            }
-            else if (m_frenchLangRadio->contains(MOUSE_POSITION))
-            {
+            } else if (m_frenchLangRadio->contains(MOUSE_POSITION)) {
                 m_settings->changeLanguage(FRENCH);
                 updateTextBasedComponents();
-            }
-            else if (m_spanishLangRadio->contains(MOUSE_POSITION))
-            {
+            } else if (m_spanishLangRadio->contains(MOUSE_POSITION)) {
                 m_settings->changeLanguage(SPANISH);
                 updateTextBasedComponents();
-            }
-            else if (m_easyModeRadio->contains(MOUSE_POSITION))
-            {
+            } else if (m_easyModeRadio->contains(MOUSE_POSITION)) {
                 m_settings->getAppCore()->setDifficulty(EASY);
-            }
-            else if (m_hardModeRadio->contains(MOUSE_POSITION))
-            {
+            } else if (m_hardModeRadio->contains(MOUSE_POSITION)) {
                 m_settings->getAppCore()->setDifficulty(HARD);
-            }
-            else if (m_defaultBallSkinRadio->contains(MOUSE_POSITION))
-            {
+            } else if (m_defaultBallSkinRadio->contains(MOUSE_POSITION)) {
                 m_settings->changeBallSkin("default");
-            }
-            else if (m_morphBallSkinRadio->contains(MOUSE_POSITION))
-            {
+            } else if (m_morphBallSkinRadio->contains(MOUSE_POSITION)) {
                 m_settings->changeBallSkin("morphing");
-            }
-            else if (m_capsuleBallSkinRadio->contains(MOUSE_POSITION))
-            {
+            } else if (m_capsuleBallSkinRadio->contains(MOUSE_POSITION)) {
                 m_settings->changeBallSkin("capsule");
-            }
-            else if (m_menuMusicButton->contains(MOUSE_POSITION))
-            {
+            } else if (m_menuMusicButton->contains(MOUSE_POSITION)) {
                 m_settings->getAppCore()->toggleMenuMusic();
                 handleMusic();
-            }
-            else if (m_gameMusicButton->contains(MOUSE_POSITION))
-            {
+            } else if (m_gameMusicButton->contains(MOUSE_POSITION)) {
                 m_settings->getAppCore()->toggleGameMusic();
                 handleMusic();
             }
-        }
-        else if (m_settings->getCurrentPage() == STATS)
-        {
-            if (!m_confirmDialog->isVisible())
-            {
-                if (m_resetDataRaisedButton->contains(MOUSE_POSITION))
-                {
+        } else if (m_settings->getCurrentPage() == STATS) {
+            if (!m_confirmDialog->isVisible()) {
+                if (m_resetDataRaisedButton->contains(MOUSE_POSITION)) {
                     m_confirmDialog->show();
                 }
-            }
-            else
-            {
-                if (m_confirmDialog->getOkButtonText().contains(MOUSE_POSITION))
-                {
+            } else {
+                if (m_confirmDialog->getOkButtonText().contains(MOUSE_POSITION)) {
                     m_confirmDialog->hide();
                     m_settings->getAppCore()->clearAppData();
                     PersistenceManager::resetPersistence();
                     m_textManager->syncMenuSettingsText(m_settings->getCurrentPage());
                     m_settings->checkItemsAvailability();
                     handleMusic();
-                }
-                else if (m_confirmDialog->getCancelButtonText().contains(MOUSE_POSITION)
-                        || !m_confirmDialog->contains(MOUSE_POSITION))
-                {
+                } else if (m_confirmDialog->getCancelButtonText().contains(MOUSE_POSITION)
+                        || !m_confirmDialog->contains(MOUSE_POSITION)) {
                     m_confirmDialog->hide();
                 }
             }
-        }
-        else
-        {
+        } else {
             m_textManager->handleAboutLinks(event, *m_settings);
         }
     }
 
-    if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
-    {
+    if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) {
         m_confirmDialog->hide();
     }
 

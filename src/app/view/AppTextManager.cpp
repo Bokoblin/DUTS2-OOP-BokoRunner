@@ -18,7 +18,7 @@ using std::to_string;
  * @author Arthur
  * @date 02/04/16 - 06/01/18
  */
-AppTextManager::AppTextManager(AppCore *appCore, unsigned int width, unsigned int height) :
+AppTextManager::AppTextManager(AppCore* appCore, unsigned int width, unsigned int height) :
         m_width{width}, m_height{height}, m_appCore{appCore}
 {
     m_regularFont.loadFromFile(ROBOTO_REGULAR_FONT);
@@ -36,7 +36,7 @@ AppTextManager::AppTextManager(AppCore *appCore, unsigned int width, unsigned in
  */
 AppTextManager::~AppTextManager()
 {
-    for (mdsf::Text *text : m_textList)
+    for (mdsf::Text* text : m_textList)
         delete text;
 }
 
@@ -141,27 +141,29 @@ void AppTextManager::loadText()
  * @param settings the settings model
  *
  * @author Arthur
- * @date 02/11/17
+ * @date 02/11/17 - 06/09/18
  */
-void AppTextManager::handleAboutLinks(sf::Event event, const SettingsModel &settings) const
+void AppTextManager::handleAboutLinks(sf::Event event, const SettingsModel& settings) const
 {
-    if (MOUSE_LEFT_PRESSED_EVENT)
-    {
-        if (m_aboutRepositoryLink->contains(MOUSE_POSITION))
+    if (MOUSE_LEFT_PRESSED_EVENT) {
+        if (m_aboutRepositoryLink->contains(MOUSE_POSITION)) {
             m_aboutRepositoryLink->setFillColor(AppColor::URLRed);
-        if (m_aboutEmailLink->contains(MOUSE_POSITION))
+        }
+        if (m_aboutEmailLink->contains(MOUSE_POSITION)) {
             m_aboutEmailLink->setFillColor(AppColor::URLRed);
+        }
     }
 
-    if (event.type == sf::Event::MouseButtonReleased)
-    {
+    if (event.type == sf::Event::MouseButtonReleased) {
         m_aboutRepositoryLink->setFillColor(sf::Color::White);
         m_aboutEmailLink->setFillColor(sf::Color::White);
 
-        if (m_aboutRepositoryLink->contains(MOUSE_POSITION))
-            settings.openURLinBrowser(REPOSITORY_URL);
-        if (m_aboutEmailLink->contains(MOUSE_POSITION))
-            settings.openURLinBrowser(EMAIL_URL);
+        if (m_aboutRepositoryLink->contains(MOUSE_POSITION)) {
+            PlatformUtils::openURLinBrowser(REPOSITORY_URL);
+        }
+        if (m_aboutEmailLink->contains(MOUSE_POSITION)) {
+            PlatformUtils::openURLinBrowser(EMAIL_URL);
+        }
     }
 }
 
@@ -175,8 +177,7 @@ void AppTextManager::handleAboutLinks(sf::Event event, const SettingsModel &sett
  */
 void AppTextManager::updateWholeStandaloneTextContent()
 {
-    for (mdsf::Text* t : m_textList)
-    {
+    for (mdsf::Text* t : m_textList) {
         t->setCharacterSize(DEFAULT_CHAR_SIZE);
         t->setFont(m_condensedFont);
         t->setFillColor(sf::Color::White);
@@ -191,13 +192,13 @@ void AppTextManager::updateWholeStandaloneTextContent()
  * @param continueVisibility the splash screen continue text visibility state
  *
  * @author Arthur
- * @date 31/10/17
+ * @date 31/10/17 - 06/09/18
  */
 void AppTextManager::syncSplashScreenText(bool continueVisibility)
 {
     m_splashScreenContinueLabel->setVisible(continueVisibility);
     m_splashScreenContinueLabel->setCharacterSize(DEFAULT_CHAR_SIZE);
-    m_splashScreenContinueLabel->setPositionSelfCentered(m_width/2, 450);
+    m_splashScreenContinueLabel->setPositionSelfCentered(0.5f * m_width, 0.75f * m_height);
 }
 
 
@@ -207,82 +208,78 @@ void AppTextManager::syncSplashScreenText(bool continueVisibility)
  * @param currentPage the current settings page opened
  *
  * @author Arthur
- * @date 14/04/16 - 03/11/17
+ * @date 14/04/16 - 06/09/18
  */
 void AppTextManager::syncMenuSettingsText(int currentPage)
 {
-    if (currentPage == CONFIG)
-    {
-        m_configTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
-        m_configLangTitleLabel->setPosition(40, 150);
-        m_configDifficultyTitleLabel->setPosition(40, 370);
-        m_configCustomTitleLabel->setPosition(m_width/2+40, 150);
-        m_configMusicTitleLabel->setPosition(m_width/2 +40, 370);
-    }
-    else if (currentPage == STATS)
-    {
-        m_statsTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
-        m_statsOverallTitleLabel->setPosition(40, 130);
-        m_statsPerGameTitleLabel->setPosition(m_width/2 + 40, 130);
+    if (currentPage == CONFIG) {
+        m_configTitleLabel->setPositionSelfCentered(0.5f * m_width, 0.08f * m_height);
+        m_configLangTitleLabel->setPosition(0.05f * m_width, 0.25f * m_height);
+        m_configDifficultyTitleLabel->setPosition(0.05f * m_width, 0.6f * m_height);
+        m_configCustomTitleLabel->setPosition(0.55f * m_width, 0.25f * m_height);
+        m_configMusicTitleLabel->setPosition(0.55f * m_width, 0.6f * m_height);
+    } else if (currentPage == STATS) {
+        m_statsTitleLabel->setPositionSelfCentered(0.5f * m_width, 0.08f * m_height);
+        m_statsOverallTitleLabel->setPosition(0.05f * m_width, 0.2f * m_height);
+        m_statsPerGameTitleLabel->setPosition(0.55f * m_width, 0.2f * m_height);
 
-        m_statsTotalDistanceLabel->setPosition(STAT_LABEL_X, 190);
+        m_statsTotalDistanceLabel->setPosition(0.07f * m_width, 0.32f * m_height);
         m_statsTotalDistanceLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalDistanceText->setPosition(STAT_LABEL_X+250, 190);
+        m_statsTotalDistanceText->setPosition(0.35f * m_width, 0.32f * m_height);
         m_statsTotalDistanceText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalDistanceText->setString(to_string(m_appCore->getTotalDistance()) + " m");
 
-        m_statsTotalEnemiesLabel->setPosition(STAT_LABEL_X, 230);
+        m_statsTotalEnemiesLabel->setPosition(0.07f * m_width, 0.39f * m_height);
         m_statsTotalEnemiesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalEnemiesText->setPosition(STAT_LABEL_X+250, 230);
+        m_statsTotalEnemiesText->setPosition(0.35f * m_width, 0.39f * m_height);
         m_statsTotalEnemiesText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalEnemiesText->setStringFromInt(m_appCore->getTotalFlattenedEnemies());
 
-        m_statsTotalCoinsLabel->setPosition(STAT_LABEL_X, 270);
+        m_statsTotalCoinsLabel->setPosition(0.07f * m_width, 0.46f * m_height);
         m_statsTotalCoinsLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalCoinsNbText->setPosition(STAT_LABEL_X+250, 270);
+        m_statsTotalCoinsNbText->setPosition(0.35f * m_width, 0.46f * m_height);
         m_statsTotalCoinsNbText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalCoinsNbText->setFillColor(sf::Color::White);
         m_statsTotalCoinsNbText->setStringFromInt(m_appCore->getTotalCoinsNumber());
 
-        m_statsTotalGamesLabel->setPosition(STAT_LABEL_X, 310);
+        m_statsTotalGamesLabel->setPosition(0.07f * m_width, 0.53f * m_height);
         m_statsTotalGamesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalGamesText->setPosition(STAT_LABEL_X+250, 310);
+        m_statsTotalGamesText->setPosition(0.35f * m_width, 0.53f * m_height);
         m_statsTotalGamesText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalGamesText->setStringFromInt(m_appCore->getTotalGamesPlayed());
 
-        m_statsPerGameDistanceLabel->setPosition(m_width/2+STAT_LABEL_X, 190);
+        m_statsPerGameDistanceLabel->setPosition(0.57f * m_width, 0.32f * m_height);
         m_statsPerGameDistanceLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsPerGameDistanceText->setPosition(m_width-2*STAT_LABEL_X, 190);
+        m_statsPerGameDistanceText->setPosition(m_width - 2 * 0.07f * m_width, 0.32f * m_height);
         m_statsPerGameDistanceText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsPerGameDistanceText->setString(to_string(m_appCore->getPerGameDistance()) + " m");
 
-        m_statsPerGameEnemiesLabel->setPosition(m_width/2+STAT_LABEL_X, 230);
+        m_statsPerGameEnemiesLabel->setPosition(0.57f * m_width, 0.39f * m_height);
         m_statsPerGameEnemiesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsPerGameEnemiesText->setPosition(m_width-2*STAT_LABEL_X, 230);
+        m_statsPerGameEnemiesText->setPosition(m_width - 2 * 0.07f * m_width, 0.39f * m_height);
         m_statsPerGameEnemiesText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsPerGameEnemiesText->setStringFromInt(m_appCore->getPerGameFlattenedEnemies());
 
-        m_statsPerGameCoinsLabel->setPosition(m_width/2+STAT_LABEL_X, 270);
+        m_statsPerGameCoinsLabel->setPosition(0.57f * m_width, 0.46f * m_height);
         m_statsPerGameCoinsLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsPerGameCoinsText->setPosition(m_width-2*STAT_LABEL_X, 270);
+        m_statsPerGameCoinsText->setPosition(m_width - 2 * 0.07f * m_width, 0.46f * m_height);
         m_statsPerGameCoinsText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsPerGameCoinsText->setStringFromInt(m_appCore->getPerGameCoinsNumber());
-    }
-    else //ABOUT
+    } else //ABOUT
     {
-        m_aboutTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
-        m_aboutDescriptionLabel->setPosition(70, 150);
+        m_aboutTitleLabel->setPositionSelfCentered(0.5f * m_width, 0.08f * m_height);
+        m_aboutDescriptionLabel->setPosition(0.08f * m_width, 0.25f * m_height);
         m_aboutDescriptionLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_aboutRepositoryLabel->setPosition(70, 250);
+        m_aboutRepositoryLabel->setPosition(0.08f * m_width, 0.42f * m_height);
         m_aboutRepositoryLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_aboutCopyrightLabel->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_aboutCopyrightLabel->setPositionSelfCentered((int)m_width/2, 490);
+        m_aboutCopyrightLabel->setPositionSelfCentered(0.5f * m_width, 0.82f * m_height);
 
         //Hyperlinks
-        m_aboutRepositoryLink->setPosition(110, 275);
+        m_aboutRepositoryLink->setPosition(0.12f * m_width, 0.46f * m_height);
         m_aboutRepositoryLink->setCharacterSize(CONTENT_CHAR_SIZE);
         m_aboutRepositoryLink->setStyle(sf::Text::Style::Underlined);
-        m_aboutEmailLink->setPosition(110, 367);
+        m_aboutEmailLink->setPosition(0.12f * m_width, 0.61f * m_height);
         m_aboutEmailLink->setCharacterSize(CONTENT_CHAR_SIZE);
         m_aboutEmailLink->setStyle(sf::Text::Style::Underlined);
     }
@@ -293,36 +290,30 @@ void AppTextManager::syncMenuSettingsText(int currentPage)
  * Inits leaderboard standalone text
  *
  * @author Arthur
- * @date 27/12/17
+ * @date 27/12/17 - 06/09/18
  */
 void AppTextManager::initMenuLeaderboardText()
 {
     string scoresEasy = m_appCore->stringifyLeaderboard(EASY);
     string scoresHard = m_appCore->stringifyLeaderboard(HARD);
 
-    if (scoresEasy.empty())
-    {
-        m_leaderboardContentEasyText->setPositionSelfCentered(m_width/4, m_height/2);
-    }
-    else
-    {
+    if (scoresEasy.empty()) {
+        m_leaderboardContentEasyText->setPositionSelfCentered(0.25f * m_width, 0.5f * m_height);
+    } else {
         m_leaderboardContentEasyText->setUtf8String(scoresEasy);
         m_leaderboardContentEasyText->setCharacterSize(26);
-        m_leaderboardContentEasyText->setPositionSelfCentered(m_width/4, 300);
+        m_leaderboardContentEasyText->setPositionSelfCentered(0.25f * m_width, 300);
     }
 
-    if (scoresHard.empty())
-    {
-        m_leaderboardContentHardText->setPositionSelfCentered(m_width/2+m_width/4, m_height/2);
-    }
-    else
-    {
+    if (scoresHard.empty()) {
+        m_leaderboardContentHardText->setPositionSelfCentered(0.75f * m_width, 0.5f * m_height);
+    } else {
         m_leaderboardContentHardText->setUtf8String(scoresHard);
         m_leaderboardContentHardText->setCharacterSize(26);
-        m_leaderboardContentHardText->setPositionSelfCentered(m_width/2+m_width/4, 300);
+        m_leaderboardContentHardText->setPositionSelfCentered(0.75f * m_width, 300);
     }
 
-    m_leaderboardTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
+    m_leaderboardTitleLabel->setPositionSelfCentered(0.5f * m_width, 0.08f * m_height);
 }
 
 
@@ -330,31 +321,21 @@ void AppTextManager::initMenuLeaderboardText()
  * Syncs leaderboard standalone text
  *
  * @author Arthur
- * @date 19/04/16 - 30/01/17
+ * @date 19/04/16 - 06/09/18
  */
 void AppTextManager::syncMenuLeaderboardText()
 {
-    if (m_appCore->isScoreEasyArrayEmpty())
-    {
-        m_leaderboardContentEasyText->setPositionSelfCentered(m_width/4, m_height/2);
-    }
-    else
-    {
+    m_leaderboardTitleLabel->setPositionSelfCentered(0.5f * m_width, 0.08f * m_height);
+    m_leaderboardContentEasyText->setPositionSelfCentered(0.25f * m_width, 0.5f * m_height);
+    m_leaderboardContentHardText->setPositionSelfCentered(0.75f * m_width, 0.5f * m_height);
+
+    if (!m_appCore->isScoreEasyArrayEmpty()) {
         m_leaderboardContentEasyText->setCharacterSize(26);
-        m_leaderboardContentEasyText->setPositionSelfCentered(m_width/4, 300);
     }
 
-    if (m_appCore->isScoreHardArrayEmpty())
-    {
-        m_leaderboardContentHardText->setPositionSelfCentered(m_width/2+m_width/4, m_height/2);
-    }
-    else
-    {
+    if (!m_appCore->isScoreHardArrayEmpty()) {
         m_leaderboardContentHardText->setCharacterSize(26);
-        m_leaderboardContentHardText->setPositionSelfCentered(m_width/2+m_width/4, 300);
     }
-
-    m_leaderboardTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
 }
 
 
@@ -362,22 +343,22 @@ void AppTextManager::syncMenuLeaderboardText()
  * Syncs commands standalone text
  *
  * @author Arthur
- * @date 05/02/18
+ * @date 05/02/18 - 06/09/18
  */
 void AppTextManager::syncMenuCommandsText()
 {
-    m_commandsTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
+    m_commandsTitleLabel->setPositionSelfCentered(0.5f * m_width, 0.08f * m_height);
 
-    m_commandsPauseLabel->setPosition(STAT_LABEL_X, 190);
+    m_commandsPauseLabel->setPosition(0.07f * m_width, 0.32f * m_height);
     m_commandsPauseLabel->setCharacterSize(CONTENT_CHAR_SIZE);
 
-    m_commandsJumpLabel->setPosition(STAT_LABEL_X, 230);
+    m_commandsJumpLabel->setPosition(0.07f * m_width, 0.39f * m_height);
     m_commandsJumpLabel->setCharacterSize(CONTENT_CHAR_SIZE);
 
-    m_commandsLeftLabel->setPosition(STAT_LABEL_X, 270);
+    m_commandsLeftLabel->setPosition(0.07f * m_width, 0.46f * m_height);
     m_commandsLeftLabel->setCharacterSize(CONTENT_CHAR_SIZE);
 
-    m_commandsRightLabel->setPosition(STAT_LABEL_X, 310);
+    m_commandsRightLabel->setPosition(0.07f * m_width, 0.53f * m_height);
     m_commandsRightLabel->setCharacterSize(CONTENT_CHAR_SIZE);
 }
 
@@ -385,11 +366,11 @@ void AppTextManager::syncMenuCommandsText()
 /**
  * Syncs shop standalone text
  * @author Arthur
- * @date 16/05/16 - 07/01/17
+ * @date 16/05/16 - 06/09/18
  */
 void AppTextManager::syncMenuShopText()
 {
-    m_walletText->setPosition(m_width/2, TITLE_TEXT_X);
+    m_walletText->setPosition(0.5f * m_width, 0.08f * m_height);
     m_walletText->applyTextFont(ROBOTO_CONDENSED_FONT, DEFAULT_CHAR_SIZE, AppColor::CoinGold);
     m_walletText->setStringFromInt(m_appCore->getWallet());
 }
@@ -405,14 +386,14 @@ void AppTextManager::syncMenuShopText()
  */
 void AppTextManager::syncGameRunningText(int bonusTimeout)
 {
-    m_playerLifeLabel->setPosition(40, 545);
+    m_playerLifeLabel->setPosition(0.04f * m_width, 0.91f * m_height);
 
-    m_currentDistanceLabel->setPosition(440, 545);
-    m_currentDistanceText->setPosition(640, 545);
+    m_currentDistanceLabel->setPosition(0.49f * m_width, 0.91f * m_height);
+    m_currentDistanceText->setPosition(0.71f * m_width, 0.91f * m_height);
     m_currentDistanceText->setFillColor(sf::Color::White);
     m_currentDistanceText->setString(to_string(m_appCore->getCurrentDistance()) + " m");
 
-    m_bonusTimeoutText->setPosition(840, 545);
+    m_bonusTimeoutText->setPosition(0.93f * m_width, 0.91f * m_height);
     m_bonusTimeoutText->setVisible(bonusTimeout > 0);
     m_bonusTimeoutText->setStringFromInt(bonusTimeout);
 }
@@ -426,13 +407,13 @@ void AppTextManager::syncGameRunningText(int bonusTimeout)
  */
 void AppTextManager::syncGamePausedText()
 {
-    m_currentDistanceText->setPosition(PAUSE_TEXT_X, 30);
+    m_currentDistanceText->setPosition(0.09f * m_width, 0.05f * m_height);
 
-    m_currentCoinsNbText->setPosition(PAUSE_TEXT_X, 70);
+    m_currentCoinsNbText->setPosition(0.09f * m_width, 0.12f * m_height);
     m_currentCoinsNbText->setFillColor(AppColor::CoinGold);
     m_currentCoinsNbText->setStringFromInt(m_appCore->getCurrentCoinsNumber());
 
-    m_flattenedEnemiesText->setPosition(PAUSE_TEXT_X, 110);
+    m_flattenedEnemiesText->setPosition(0.09f * m_width, 0.18f * m_height);
     m_flattenedEnemiesText->setFillColor(AppColor::EnemyBlue);
     m_flattenedEnemiesText->setStringFromInt(m_appCore->getCurrentFlattenedEnemies());
 }
@@ -448,43 +429,42 @@ void AppTextManager::syncGamePausedText()
  */
 void AppTextManager::syncGameOverText(int gameSpeed)
 {
-    m_endTitleLabel->setPositionSelfCentered(m_width/2, TITLE_TEXT_X);
+    m_endTitleLabel->setPositionSelfCentered(0.5f * m_width, 0.08f * m_height);
     m_endTitleLabel->setFont(m_BoldFont);
 
-    m_speedMultiplierLabel->setPosition(SUBTOTAL_LABEL_X, 170);
-    m_speedMultiplierText->setPosition(SUBTOTAL_VALUE_X, 170);
+    m_speedMultiplierLabel->setPosition(0.25f * m_width, 0.28f * m_height);
+    m_speedMultiplierText->setPosition(0.65f * m_width, 0.28f * m_height);
     m_speedMultiplierText->setFillColor(AppColor::ScoreGrey);
     m_speedMultiplierText->setStringFromInt(gameSpeed);
 
-    m_currentDistanceLabel->setPosition(SUBTOTAL_LABEL_X, 207);
+    m_currentDistanceLabel->setPosition(0.25f * m_width, 0.345f * m_height);
     m_currentDistanceLabel->setFillColor(sf::Color::White);
-    m_currentDistanceText->setPosition(SUBTOTAL_VALUE_X, 207);
+    m_currentDistanceText->setPosition(0.65f * m_width, 0.345f * m_height);
     m_currentDistanceText->setFillColor(AppColor::ScoreGrey);
     m_currentDistanceText->setString(to_string(m_appCore->getCurrentDistance()) + " m");
 
-    m_coinsCollectedLabel->setPosition(SUBTOTAL_LABEL_X, 245);
-    m_currentCoinsNbText->setPosition(SUBTOTAL_VALUE_X, 245);
+    m_coinsCollectedLabel->setPosition(0.25f * m_width, 0.41f * m_height);
+    m_currentCoinsNbText->setPosition(0.65f * m_width, 0.41f * m_height);
     m_currentCoinsNbText->setFillColor(AppColor::ScoreGrey);
     m_currentCoinsNbText->setString(to_string(m_appCore->getCurrentCoinsNumber()) + "  X  20");
     m_statsTotalCoinsNbText->setStringFromInt(m_appCore->getTotalCoinsNumber());
 
-    m_flattenedEnemiesLabel->setPosition(SUBTOTAL_LABEL_X, 290);
+    m_flattenedEnemiesLabel->setPosition(0.25f * m_width, 0.48f * m_height);
     m_flattenedEnemiesLabel->setFillColor(sf::Color::White);
-    m_flattenedEnemiesText->setPosition(SUBTOTAL_VALUE_X, 290);
+    m_flattenedEnemiesText->setPosition(0.65f * m_width, 0.48f * m_height);
     m_flattenedEnemiesText->setFillColor(AppColor::ScoreGrey);
     m_flattenedEnemiesText->setStringFromInt(m_appCore->getCurrentFlattenedEnemies());
 
-    m_currentScoreLabel->setPosition(SUBTOTAL_LABEL_X, 350);
+    m_currentScoreLabel->setPosition(0.25f * m_width, 0.58f * m_height);
     m_currentScoreLabel->setFont(m_BoldFont);
-    m_currentScoreText->setPosition(SUBTOTAL_VALUE_X, 350);
+    m_currentScoreText->setPosition(0.65f * m_width, 0.58f * m_height);
     m_currentScoreText->setFont(m_BoldFont);
     m_currentScoreText->setStringFromInt(m_appCore->getCurrentScore());
 
     m_walletText->applyTextFont(ROBOTO_CONDENSED_FONT, DEFAULT_CHAR_SIZE, AppColor::CoinGold);
-    m_walletText->setPosition(m_width/2-15, 535);
+    m_walletText->setPosition(0.48f * m_width, 0.89f * m_height);
     m_walletText->setStringFromInt(m_appCore->getWallet());
 }
-
 
 
 /**
@@ -495,7 +475,7 @@ void AppTextManager::syncGameOverText(int gameSpeed)
  * @author Arthur
  * @date 31/10/17
  */
-void AppTextManager::drawSplashScreenText(sf::RenderWindow *window) const
+void AppTextManager::drawSplashScreenText(sf::RenderWindow* window) const
 {
     m_splashScreenContinueLabel->draw(window);
 }
@@ -510,24 +490,26 @@ void AppTextManager::drawSplashScreenText(sf::RenderWindow *window) const
  * @author Arthur
  * @date 14/04/16 - 30/01/17
  */
-void AppTextManager::drawMenuSettingsText(sf::RenderWindow *window, int currentPage) const
+void AppTextManager::drawMenuSettingsText(sf::RenderWindow* window, int currentPage) const
 {
-    switch(currentPage)
-    {
+    switch (currentPage) {
         case CONFIG:
-            for (const auto &text : m_textList)
-                if (text->getDescription().find("config") != string::npos)
+            for (const auto& text : m_textList)
+                if (text->getDescription().find("config") != string::npos) {
                     text->draw(window);
+                }
             break;
         case STATS:
-            for (const auto &text : m_textList)
-                if (text->getDescription().find("stats") != string::npos)
+            for (const auto& text : m_textList)
+                if (text->getDescription().find("stats") != string::npos) {
                     text->draw(window);
+                }
             break;
         case ABOUT:
-            for (const auto &text : m_textList)
-                if (text->getDescription().find("about") != string::npos)
+            for (const auto& text : m_textList)
+                if (text->getDescription().find("about") != string::npos) {
                     text->draw(window);
+                }
             break;
         default:
             break;
@@ -543,7 +525,7 @@ void AppTextManager::drawMenuSettingsText(sf::RenderWindow *window, int currentP
  * @author Arthur
  * @date 19/04/16 - 05/02/18
  */
-void AppTextManager::drawMenuLeaderboardText(sf::RenderWindow *window) const
+void AppTextManager::drawMenuLeaderboardText(sf::RenderWindow* window) const
 {
     m_leaderboardTitleLabel->draw(window);
     m_leaderboardContentEasyText->draw(window);
@@ -559,7 +541,7 @@ void AppTextManager::drawMenuLeaderboardText(sf::RenderWindow *window) const
  * @author Arthur
  * @date 05/02/18
  */
-void AppTextManager::drawMenuCommandsText(sf::RenderWindow *window) const
+void AppTextManager::drawMenuCommandsText(sf::RenderWindow* window) const
 {
     m_commandsTitleLabel->draw(window);
     m_commandsPauseLabel->draw(window);
@@ -577,7 +559,7 @@ void AppTextManager::drawMenuCommandsText(sf::RenderWindow *window) const
  * @author Arthur
  * @date 16/05/16 - 04/01/17
  */
-void AppTextManager::drawMenuShopText(sf::RenderWindow *window) const
+void AppTextManager::drawMenuShopText(sf::RenderWindow* window) const
 {
     m_walletText->draw(window);
 }
@@ -591,7 +573,7 @@ void AppTextManager::drawMenuShopText(sf::RenderWindow *window) const
  * @author Arthur
  * @date 02/04/16 - 02/01/17
  */
-void AppTextManager::drawGameRunningText(sf::RenderWindow *window) const
+void AppTextManager::drawGameRunningText(sf::RenderWindow* window) const
 {
     m_playerLifeLabel->draw(window);
     m_currentDistanceLabel->draw(window);
@@ -608,7 +590,7 @@ void AppTextManager::drawGameRunningText(sf::RenderWindow *window) const
  * @author Arthur
  * @date 02/04/16 - 02/01/17
  */
-void AppTextManager::drawGamePausedText(sf::RenderWindow *window) const
+void AppTextManager::drawGamePausedText(sf::RenderWindow* window) const
 {
     m_currentDistanceText->draw(window);
     m_currentCoinsNbText->draw(window);
@@ -624,7 +606,7 @@ void AppTextManager::drawGamePausedText(sf::RenderWindow *window) const
  * @author Arthur
  * @date 02/04/16 - 06/01/18
  */
-void AppTextManager::drawGameOverText(sf::RenderWindow *window) const
+void AppTextManager::drawGameOverText(sf::RenderWindow* window) const
 {
     //verbose but better than foreach loop in m_textList (O(n) -> O(1))
     m_endTitleLabel->draw(window);

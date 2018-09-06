@@ -56,46 +56,38 @@ int main() //TODO: App class with logic -- main must only uses it + check argume
 
     //=== Program loop
 
-    while(window.isOpen())
-    {
-        if (appCore.getAppState() == SPLASH)
-        {
+    while (window.isOpen()) {
+        if (appCore.getAppState() == SPLASH) {
             SplashScreenModel splashModel(&appCore);
             SplashScreenView splashView(&window, &textManager, &splashModel);
 
-            while(appCore.getAppState() == SPLASH && splashView.handleEvents(event))
-            {
+            while (appCore.getAppState() == SPLASH && splashView.handleEvents(event)) {
                 splashModel.nextStep();
                 splashView.synchronize();
                 splashView.draw();
             }
         }
-        if (appCore.getAppState() == MENU)
-        {
+        if (appCore.getAppState() == MENU) {
             MenuModel menuModel(&appCore);
             MenuView menuView(&window, &textManager, &menuModel);
 
-            while(appCore.getAppState() == MENU && menuView.handleEvents(event))
-            {
+            while (appCore.getAppState() == MENU && menuView.handleEvents(event)) {
                 menuModel.nextStep();
                 menuView.synchronize();
                 menuView.draw();
             }
         }
-        if (appCore.getAppState() == GAME)
-        {
+        if (appCore.getAppState() == GAME) {
             GameModel gameModel(SCREEN_WIDTH, SCREEN_HEIGHT, &appCore);
             GameView gameView(&window, &textManager, &gameModel);
 
-            while(appCore.getAppState() == GAME && gameView.handleEvents(event))
-            {
+            while (appCore.getAppState() == GAME && gameView.handleEvents(event)) {
                 gameModel.nextStep();
                 gameView.synchronize();
                 gameView.draw();
             }
         }
-        if (appCore.getAppState() == QUIT)
-        {
+        if (appCore.getAppState() == QUIT) {
             PersistenceManager::updatePersistence();
             window.close();
         }

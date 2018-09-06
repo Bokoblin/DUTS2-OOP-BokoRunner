@@ -21,7 +21,7 @@ using Bokoblin::SimpleLogger::Logger;
  * @author Arthur
  * @date 26/03/16 - 29/01/17
  */
-GameView::GameView(sf::RenderWindow *window, AppTextManager *textManager, GameModel *gameModel) :
+GameView::GameView(sf::RenderWindow* window, AppTextManager* textManager, GameModel* gameModel) :
         AbstractView(window, textManager), m_game{gameModel},
         m_xPixelIntensity{1}, m_yPixelIntensity{1}
 {
@@ -31,13 +31,12 @@ GameView::GameView(sf::RenderWindow *window, AppTextManager *textManager, GameMo
     //=== change default game music if in master mode
 
     string game_music = (m_game->getAppCore()->getDifficulty() == EASY)
-                        ? GAME_MUSIC_THEME_EASY_MODE
-                        : GAME_MUSIC_THEME_HARD_MODE;
+            ? GAME_MUSIC_THEME_EASY_MODE
+            : GAME_MUSIC_THEME_HARD_MODE;
 
-    if (!m_gameThemeMusic.openFromFile(game_music))
+    if (!m_gameThemeMusic.openFromFile(game_music)) {
         Logger::printErrorOnConsole("Music loading failed for \"" + game_music + "\"");
-    else
-    {
+    } else {
         handleMusic();
         m_gameThemeMusic.play();
         m_gameThemeMusic.setLoop(true);
@@ -45,26 +44,25 @@ GameView::GameView(sf::RenderWindow *window, AppTextManager *textManager, GameMo
 
     //=== change ball skin if not default one
 
-    if (m_game->getAppCore()->getBallSkin() == "morphing")
-    {
+    if (m_game->getAppCore()->getBallSkin() == "morphing") {
         vector<sf::IntRect> clipRect;
-        for (int i=0; i<8; i++)
+        for (int i = 0; i < 8; i++)
             clipRect.emplace_back(50 * i, 50, 50, 50);
         m_playerSprite->setClipRectArray(clipRect);
-    }
-    else if (m_game->getAppCore()->getBallSkin() == "capsule")
-    {
+    } else if (m_game->getAppCore()->getBallSkin() == "capsule") {
         vector<sf::IntRect> clipRect;
-        for (int i=0; i<8; i++)
+        for (int i = 0; i < 8; i++)
             clipRect.emplace_back(50 * i, 100, 50, 50);
         m_playerSprite->setClipRectArray(clipRect);
     }
 
-    if (!m_coinMusic.openFromFile(COINS_COLLECTED_MUSIC))
+    if (!m_coinMusic.openFromFile(COINS_COLLECTED_MUSIC)) {
         Logger::printErrorOnConsole("Music loading failed for \"" + COINS_COLLECTED_MUSIC + "\"");
+    }
 
-    if (!m_destructedEnemiesMusic.openFromFile(ENEMIES_DESTRUCTED_MUSIC))
+    if (!m_destructedEnemiesMusic.openFromFile(ENEMIES_DESTRUCTED_MUSIC)) {
         Logger::printErrorOnConsole("Music loading failed for \"" + ENEMIES_DESTRUCTED_MUSIC + "\"");
+    }
 }
 
 
@@ -85,9 +83,9 @@ GameView::~GameView()
     delete m_remainingLifeImage;
     delete m_shieldImage;
     delete m_pixelShader;
-    for (auto &it : m_typeToSpriteMap)
+    for (auto& it : m_typeToSpriteMap)
         delete it.second;
-    for (auto &it : m_movableElementToSpriteMap)
+    for (auto& it : m_movableElementToSpriteMap)
         delete it.second;
 
     //=== Delete Pause and End Elements
@@ -117,11 +115,11 @@ void GameView::loadSprites()
 {
     //=== Initialize backgrounds
 
-    m_farScrollingBackground = new ScrollingBackground(1200, m_height, 1, DEFAULT_FAR_HILL_BACKGROUND);
-    m_nearScrollingBackground = new ScrollingBackground(1200, m_height, 2, DEFAULT_NEAR_HILL_BACKGROUND);
+    m_farScrollingBackground = new ScrollingBackground(1200, m_height, 1, GAME_FAR_HILL_BACKGROUND);
+    m_nearScrollingBackground = new ScrollingBackground(1200, m_height, 2, GAME_NEAR_HILL_BACKGROUND);
 
-    m_farTransitionBackground = new mdsf::Sprite(SCREEN_WIDTH, m_height, m_width, m_height, DEFAULT_FAR_T1_BACKGROUND);
-    m_bottomBarImage = new mdsf::Sprite(0, 520, 1200, m_height, BOTTOM_BAR_IMAGE);
+    m_farTransitionBackground = new mdsf::Sprite(SCREEN_WIDTH, m_height, m_width, m_height, GAME_FAR_T1_BACKGROUND);
+    m_bottomBarImage = new mdsf::Sprite(0, 520, m_width, m_height, BOTTOM_BAR_IMAGE);
 
     m_pauseBackground = new mdsf::Sprite(0, 0, m_width, m_height, PAUSE_HILL_BACKGROUND);
     m_endBackground = new mdsf::Sprite(0, 0, m_width, m_height, END_SCREEN_BACKGROUND);
@@ -143,7 +141,7 @@ void GameView::loadSprites()
     //=== Initialize PLAYER sprite
 
     vector<sf::IntRect> clipRect;
-    for (int i=0; i<8; i++) clipRect.emplace_back(50 * i, 0, 50, 50);
+    for (int i = 0; i < 8; i++) clipRect.emplace_back(50 * i, 0, 50, 50);
     m_playerSprite = new AnimatedSprite(50, GameModel::GAME_FLOOR, 30, 30, BALL_IMAGE, clipRect);
     m_playerSprite->setOrigin(0, 50);
 
@@ -151,17 +149,17 @@ void GameView::loadSprites()
     //=== Initialize ENEMIES sprite
 
     vector<sf::IntRect> clipRectStdEnemy;
-    for (int i=0; i<2; i++) clipRectStdEnemy.emplace_back(50 * i, 0, 50, 50);
+    for (int i = 0; i < 2; i++) clipRectStdEnemy.emplace_back(50 * i, 0, 50, 50);
     m_stdEnemySprite = new AnimatedSprite(30, 135, 30, 30, ENEMIES_IMAGE, clipRectStdEnemy);
     m_stdEnemySprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRectTotemEnemy;
-    for (int i=0; i<2; i++) clipRectTotemEnemy.emplace_back(50 * i, 0, 50, 150);
+    for (int i = 0; i < 2; i++) clipRectTotemEnemy.emplace_back(50 * i, 0, 50, 150);
     m_totemEnemySprite = new AnimatedSprite(m_width, GameModel::GAME_FLOOR, 30, 90, ENEMIES_IMAGE, clipRectTotemEnemy);
     m_totemEnemySprite->setOrigin(0, 150);
 
     vector<sf::IntRect> clipRectBlockEnemy;
-    for (int i=0; i<2; i++) clipRectBlockEnemy.emplace_back(50 * i, 150, 50, 50);
+    for (int i = 0; i < 2; i++) clipRectBlockEnemy.emplace_back(50 * i, 150, 50, 50);
     m_blockEnemySprite = new AnimatedSprite(50, 95, 50, 50, ENEMIES_IMAGE, clipRectBlockEnemy);
     m_blockEnemySprite->setOrigin(0, 50);
 
@@ -173,32 +171,32 @@ void GameView::loadSprites()
     m_shieldImage->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_coin;
-    for (int i=0; i<5; i++) clipRect_coin.emplace_back(50 * i, 0, 50, 50);
+    for (int i = 0; i < 5; i++) clipRect_coin.emplace_back(50 * i, 0, 50, 50);
     m_coinSprite = new AnimatedSprite(30, 95, 25, 25, BONUS_IMAGE, clipRect_coin);
     m_coinSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_pv;
-    for (int i=0; i<5; i++) clipRect_pv.emplace_back(50 * i, 50, 50, 50);
+    for (int i = 0; i < 5; i++) clipRect_pv.emplace_back(50 * i, 50, 50, 50);
     m_PVPlusBonusSprite = new AnimatedSprite(m_width, GameModel::GAME_FLOOR, 25, 25, BONUS_IMAGE, clipRect_pv);
     m_PVPlusBonusSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_mega;
-    for (int i=0; i<5; i++) clipRect_mega.emplace_back(50*i, 100, 50, 50);
+    for (int i = 0; i < 5; i++) clipRect_mega.emplace_back(50 * i, 100, 50, 50);
     m_megaBonusSprite = new AnimatedSprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_mega);
     m_megaBonusSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_fly;
-    for (int i=0; i<5; i++) clipRect_fly.emplace_back(50 * i, 150, 50, 50);
+    for (int i = 0; i < 5; i++) clipRect_fly.emplace_back(50 * i, 150, 50, 50);
     m_flyBonusSprite = new AnimatedSprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_fly);
     m_flyBonusSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_slow;
-    for (int i=0; i<5; i++) clipRect_slow.emplace_back(50 * i, 200, 50, 50);
+    for (int i = 0; i < 5; i++) clipRect_slow.emplace_back(50 * i, 200, 50, 50);
     m_slowSpeedBonusSprite = new AnimatedSprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_slow);
     m_slowSpeedBonusSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_shield;
-    for (int i=0; i<5; i++) clipRect_shield.emplace_back(50 * i, 250, 50, 50);
+    for (int i = 0; i < 5; i++) clipRect_shield.emplace_back(50 * i, 250, 50, 50);
     m_shieldBonusSprite = new AnimatedSprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_shield);
     m_shieldBonusSprite->setOrigin(0, 50);
 
@@ -209,7 +207,7 @@ void GameView::loadSprites()
     clipRect_resume.emplace_back(0, 0, 50, 50);
     clipRect_resume.emplace_back(50, 0, 50, 50);
     m_resumeGameButton = new mdsf::Button(PAUSE_FORM_X, 355, 25, 25, "pause_resume",
-                                    GAME_BUTTONS_IMAGE, clipRect_resume);
+                                          GAME_BUTTONS_IMAGE, clipRect_resume);
     m_resumeGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_resumeGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_resumeGameButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
@@ -218,7 +216,7 @@ void GameView::loadSprites()
     clipRect_restart.emplace_back(0, 50, 50, 50);
     clipRect_restart.emplace_back(50, 50, 50, 50);
     m_restartGameButton = new mdsf::Button(PAUSE_FORM_X, 405, 25, 25, "pause_restart",
-                                     GAME_BUTTONS_IMAGE, clipRect_restart);
+                                           GAME_BUTTONS_IMAGE, clipRect_restart);
     m_restartGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_restartGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_restartGameButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
@@ -228,7 +226,7 @@ void GameView::loadSprites()
     clipRect_home.emplace_back(0, 100, 50, 50);
     clipRect_home.emplace_back(50, 100, 50, 50);
     m_goToHomeButton = new mdsf::Button(PAUSE_FORM_X, 455, 25, 25, "pause_go_to_home",
-                                  GAME_BUTTONS_IMAGE, clipRect_home);
+                                        GAME_BUTTONS_IMAGE, clipRect_home);
     m_goToHomeButton->resize(PAUSE_BUTTONS_SIZE);
     m_goToHomeButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_goToHomeButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
@@ -237,7 +235,7 @@ void GameView::loadSprites()
     clipRect_music.emplace_back(0, 200, 50, 50);
     clipRect_music.emplace_back(50, 200, 50, 50);
     m_controlMusicButton = new mdsf::Button(PAUSE_FORM_X, 535, 25, 25, "pause_music",
-                                      GAME_BUTTONS_IMAGE, clipRect_music);
+                                            GAME_BUTTONS_IMAGE, clipRect_music);
     m_controlMusicButton->resize(PAUSE_BUTTONS_SIZE);
     m_controlMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_controlMusicButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
@@ -245,8 +243,8 @@ void GameView::loadSprites()
     vector<sf::IntRect> clipRect_save;
     clipRect_save.emplace_back(RAISED_BUTTON_DEFAULT);
     clipRect_save.emplace_back(RAISED_BUTTON_PRESSED);
-    m_saveScoreButton = new mdsf::Button(m_width / 2 - 75, 350, 150, BUTTON_HEIGHT, "end_save_button",
-                                   RECT_BUTTONS_IMAGE, clipRect_save);
+    m_saveScoreButton = new mdsf::Button(getHalfXPosition() - 75, 350, 150, BUTTON_HEIGHT, "end_save_button",
+                                         RECT_BUTTONS_IMAGE, clipRect_save);
     m_saveScoreButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
     m_saveScoreButton->setColor(mdsf::Color::MaterialGreenA700);
 
@@ -274,7 +272,7 @@ void GameView::loadSprites()
  */
 void GameView::linkElements()
 {
-    for (auto &element : m_game->getNewMElementsArray())
+    for (auto& element : m_game->getNewMElementsArray())
         m_movableElementToSpriteMap[element] = new AnimatedSprite(*(m_typeToSpriteMap[element->getType()]));
 
     m_game->clearNewMovableElementList();
@@ -294,25 +292,22 @@ void GameView::processZonesTransition()
     m_farTransitionBackground->setPosition(m_farTransitionBackground->getX() - TRANSITION_SPEED, 0);
     m_farScrollingBackground->setScrollingSpeed(TRANSITION_SPEED);
     m_nearScrollingBackground->decreaseAlpha(5);
-    if (m_nearScrollingBackground->getAlpha() == 0)
+    if (m_nearScrollingBackground->getAlpha() == 0) {
         m_nearScrollingBackground->setScrollingSpeed(0);
-    else
+    } else {
         m_nearScrollingBackground->setScrollingSpeed(TRANSITION_SPEED);
+    }
 
     //=== [Transition half only] Update zone background image and position
 
-    if (m_farTransitionBackground->getX()  <= 5
-        && m_farTransitionBackground->getX()  >= -5)
-    {
-        if (m_game->getCurrentZone() == HILL)
-        {
-            m_farScrollingBackground->loadAndApplyTextureFromImageFile(DEFAULT_FAR_PLAIN_BACKGROUND);
-            m_nearScrollingBackground->loadAndApplyTextureFromImageFile(DEFAULT_NEAR_PLAIN_BACKGROUND);
-        }
-        else
-        {
-            m_farScrollingBackground->loadAndApplyTextureFromImageFile(DEFAULT_FAR_HILL_BACKGROUND);
-            m_nearScrollingBackground->loadAndApplyTextureFromImageFile(DEFAULT_NEAR_HILL_BACKGROUND);
+    if (m_farTransitionBackground->getX() <= 5
+            && m_farTransitionBackground->getX() >= -5) {
+        if (m_game->getCurrentZone() == HILL) {
+            m_farScrollingBackground->loadAndApplyTextureFromImageFile(GAME_FAR_PLAIN_BACKGROUND);
+            m_nearScrollingBackground->loadAndApplyTextureFromImageFile(GAME_NEAR_PLAIN_BACKGROUND);
+        } else {
+            m_farScrollingBackground->loadAndApplyTextureFromImageFile(GAME_FAR_HILL_BACKGROUND);
+            m_nearScrollingBackground->loadAndApplyTextureFromImageFile(GAME_NEAR_HILL_BACKGROUND);
         }
 
         m_farScrollingBackground->setPositions(-300, 0);
@@ -321,8 +316,7 @@ void GameView::processZonesTransition()
 
     //=== [Transition 3/4 until end] Update pixel creation of near background
 
-    if (m_farTransitionBackground->getX() < m_width/2 && m_xPixelIntensity >= 0)
-    {
+    if (m_farTransitionBackground->getX() < m_width / 2 && m_xPixelIntensity >= 0) {
         m_xPixelIntensity -= 0.009;
         m_yPixelIntensity -= 0.009;
         m_pixelShader->update(m_xPixelIntensity, m_yPixelIntensity);
@@ -331,20 +325,16 @@ void GameView::processZonesTransition()
     //=== [Transition end]
 
     if (m_farTransitionBackground->getX()
-        + m_farTransitionBackground->getLocalBounds().width <= 0)
-    {
+            + m_farTransitionBackground->getLocalBounds().width <= 0) {
         //Update Transition status
         m_game->setTransitionState(false);
         m_game->disableTransitionPossibility();
 
         //Set current zone and change pause background
-        if (m_game->getCurrentZone() == HILL)
-        {
+        if (m_game->getCurrentZone() == HILL) {
             m_game->setCurrentZone(PLAIN);
             m_pauseBackground->loadAndApplyTextureFromImageFile(PAUSE_PLAIN_BACKGROUND);
-        }
-        else
-        {
+        } else {
             m_game->setCurrentZone(HILL);
             m_pauseBackground->loadAndApplyTextureFromImageFile(PAUSE_HILL_BACKGROUND);
         }
@@ -365,15 +355,12 @@ void GameView::setupTransition()
     m_yPixelIntensity = 1;
     m_farTransitionBackground->setPosition(m_farScrollingBackground->getLeftPosition().x + 1200, 0);
 
-    if (m_game->getCurrentZone() == HILL)
-    {
-        m_pixelShader->load(DEFAULT_NEAR_T1_BACKGROUND);
-        m_farTransitionBackground->loadAndApplyTextureFromImageFile(DEFAULT_FAR_T1_BACKGROUND);
-    }
-    else
-    {
-        m_pixelShader->load(DEFAULT_NEAR_T2_BACKGROUND);
-        m_farTransitionBackground->loadAndApplyTextureFromImageFile(DEFAULT_FAR_T2_BACKGROUND);
+    if (m_game->getCurrentZone() == HILL) {
+        m_pixelShader->load(GAME_NEAR_T1_BACKGROUND);
+        m_farTransitionBackground->loadAndApplyTextureFromImageFile(GAME_FAR_T1_BACKGROUND);
+    } else {
+        m_pixelShader->load(GAME_NEAR_T2_BACKGROUND);
+        m_farTransitionBackground->loadAndApplyTextureFromImageFile(GAME_FAR_T2_BACKGROUND);
     }
 }
 
@@ -388,19 +375,17 @@ void GameView::updateRunningGameElements()
 {
     //=== Handle Transitions between zones
 
-    if (m_game->isTransitionRunning())
-    {
+    if (m_game->isTransitionRunning()) {
         processZonesTransition();
-    }
-    else
-    {
+    } else {
         m_farScrollingBackground->setScrollingSpeed((float) (0.5 * m_game->getGameSpeed()));
         m_nearScrollingBackground->setScrollingSpeed(m_game->getGameSpeed());
         m_nearScrollingBackground->setAlpha(255);
 
         if (m_game->isTransitionPossible()
-            && m_farScrollingBackground->getSeparationPositionX(m_width) > m_width - 100)
-            setupTransition();
+                && m_farScrollingBackground->getSeparationPositionX(m_width) > m_width - 100) {
+                    setupTransition();
+        }
     }
 
     //=== Update Game Elements
@@ -408,10 +393,9 @@ void GameView::updateRunningGameElements()
     m_farScrollingBackground->sync();
     m_nearScrollingBackground->sync();
 
-    m_remainingLifeImage->resize(3*m_game->getPlayer()->getLife(), 50);
+    m_remainingLifeImage->resize(3 * m_game->getPlayer()->getLife(), 50);
 
-    for(auto &it : m_movableElementToSpriteMap)
-    {
+    for (auto& it : m_movableElementToSpriteMap) {
         m_game->moveMovableElement(it.first);
 
         float position_x = (it.first)->getPosX();
@@ -424,15 +408,15 @@ void GameView::updateRunningGameElements()
 
     //=== Update shield sprite
 
-    if (m_game->getPlayer()->getState() == SHIELDED || m_game->getPlayer()->getState() == HARD_SHIELDED)
-    {
-        if (m_game->getPlayer()->getState() == SHIELDED)
+    if (m_game->getPlayer()->getState() == SHIELDED || m_game->getPlayer()->getState() == HARD_SHIELDED) {
+        if (m_game->getPlayer()->getState() == SHIELDED) {
             m_shieldImage->setTextureRect(sf::IntRect(0, 0, 50, 50));
-        else
+        } else {
             m_shieldImage->setTextureRect(sf::IntRect(50, 0, 50, 50));
+        }
 
-        m_shieldImage->setPosition(m_game->getPlayer()->getPosX()-5,
-                                   m_game->getPlayer()->getPosY()+5);
+        m_shieldImage->setPosition(m_game->getPlayer()->getPosX() - 5,
+                                   m_game->getPlayer()->getPosY() + 5);
         m_shieldImage->resize(40, 40);
     }
 }
@@ -472,7 +456,7 @@ void GameView::updateGameOverElements()
 
     m_coinSprite->sync();
     m_coinSprite->resize(25, 25);
-    m_coinSprite->setPosition((float)(m_width / 2.3), 563);
+    m_coinSprite->setPosition((float) (m_width / 2.3), 563);
 
     m_restartGameButton->sync();
     m_restartGameButton->resize(30, 30);
@@ -481,7 +465,7 @@ void GameView::updateGameOverElements()
     m_restartGameButton->syncLabelPosition();
 
     m_saveScoreButton->sync();
-    m_saveScoreButton->setPositionSelfCentered(m_width/2, 430);
+    m_saveScoreButton->setPositionSelfCentered(m_width / 2, 430);
     m_saveScoreButton->syncLabelPosition();
 }
 
@@ -499,24 +483,24 @@ void GameView::deleteElements()
     auto it = m_movableElementToSpriteMap.begin();
     bool found = false;
 
-    while (!found && it!=m_movableElementToSpriteMap.end())
-    {
-        if ((it->first)->isColliding())
-        {
-            if ((it->first)->getType() == COIN)
+    while (!found && it != m_movableElementToSpriteMap.end()) {
+        if ((it->first)->isColliding()) {
+            if ((it->first)->getType() == COIN) {
                 m_coinMusic.play();
+            }
 
             if ((it->first)->getType() == STANDARD_ENEMY
-                || (it->first)->getType() == TOTEM_ENEMY
-                || (it->first)->getType() == BLOCK_ENEMY)
-                m_destructedEnemiesMusic.play();
+                    || (it->first)->getType() == TOTEM_ENEMY
+                    || (it->first)->getType() == BLOCK_ENEMY) {
+                        m_destructedEnemiesMusic.play();
+            }
 
             delete it->second;
             m_movableElementToSpriteMap.erase(it);
             found = true;
-        }
-        else
+        } else {
             ++it;
+        }
     }
 }
 
@@ -529,8 +513,7 @@ void GameView::deleteElements()
  */
 void GameView::synchronize()
 {
-    switch(m_game->getGameState())
-    {
+    switch (m_game->getGameState()) {
         case RUNNING :
         case RUNNING_SLOWLY :
             linkElements();
@@ -545,8 +528,9 @@ void GameView::synchronize()
             break;
         case OVER:
             //Stop game music if still playing
-            if (m_gameThemeMusic.getStatus() == sf::Music::Status::Playing)
+            if (m_gameThemeMusic.getStatus() == sf::Music::Status::Playing) {
                 m_gameThemeMusic.stop();
+            }
             updateGameOverElements();
             m_textManager->syncGameOverText((int) m_game->getGameSpeed());
             break;
@@ -568,11 +552,11 @@ void GameView::drawRunningGame() const
 
     m_farScrollingBackground->draw(m_window);
 
-    if (m_game->isTransitionRunning())
-    {
+    if (m_game->isTransitionRunning()) {
         m_window->draw(*m_farTransitionBackground);
-        if (m_farTransitionBackground->getX() < m_width/2)
+        if (m_farTransitionBackground->getX() < m_width / 2) {
             m_window->draw(*m_pixelShader);
+        }
     }
 
     m_nearScrollingBackground->draw(m_window);
@@ -582,11 +566,12 @@ void GameView::drawRunningGame() const
 
     //=== Array's Sprites drawing
 
-    for (const auto &it : m_movableElementToSpriteMap)
+    for (const auto& it : m_movableElementToSpriteMap)
         it.second->draw(m_window);
 
-    if (m_game->getPlayer()->getState() == SHIELDED || m_game->getPlayer()->getState() == HARD_SHIELDED)
+    if (m_game->getPlayer()->getState() == SHIELDED || m_game->getPlayer()->getState() == HARD_SHIELDED) {
         m_window->draw(*m_shieldImage);
+    }
 
     //=== Standalone Text drawing
 
@@ -653,8 +638,7 @@ void GameView::draw() const
 {
     m_window->clear();
 
-    switch(m_game->getGameState())
-    {
+    switch (m_game->getGameState()) {
         case RUNNING :
         case RUNNING_SLOWLY :
             drawRunningGame();
@@ -682,8 +666,7 @@ void GameView::draw() const
 void GameView::handleMusic()
 {
     //change music volume
-    if (m_game->getAppCore()->isGameMusicEnabled())
-    {
+    if (m_game->getAppCore()->isGameMusicEnabled()) {
         vector<sf::IntRect> clipRect;
         clipRect.emplace_back(0, 200, 50, 50);
         clipRect.emplace_back(50, 200, 50, 50);
@@ -691,9 +674,7 @@ void GameView::handleMusic()
         m_gameThemeMusic.setVolume(100);
         m_coinMusic.setVolume(100);
         m_destructedEnemiesMusic.setVolume(100);
-    }
-    else
-    {
+    } else {
         vector<sf::IntRect> clipRect;
         clipRect.emplace_back(0, 250, 50, 50);
         clipRect.emplace_back(50, 250, 50, 50);
@@ -714,18 +695,18 @@ void GameView::handleMusic()
 void GameView::handlePlayerInput() const
 {
     if (m_game->getGameState() == RUNNING ||
-        m_game->getGameState() == RUNNING_SLOWLY)
-    {
+            m_game->getGameState() == RUNNING_SLOWLY) {
         //=== Player Controls in Game Screen
 
-        if (KEYBOARD_LEFT)
+        if (KEYBOARD_LEFT) {
             m_game->getPlayer()->controlPlayerMovements(MOVE_LEFT);
-
-        else if (KEYBOARD_RIGHT)
+        } else if (KEYBOARD_RIGHT) {
             m_game->getPlayer()->controlPlayerMovements(MOVE_RIGHT);
+        }
 
-        if (KEYBOARD_JUMP)
+        if (KEYBOARD_JUMP) {
             m_game->getPlayer()->setJumpState(true);
+        }
     }
 }
 
@@ -741,8 +722,9 @@ void GameView::handlePlayerInput() const
  */
 bool GameView::handleRunningGameEvents(sf::Event event)
 {
-    if (event.type == sf::Event::KeyReleased)
+    if (event.type == sf::Event::KeyReleased) {
         m_game->getPlayer()->setDecelerationState(true);
+    }
     return true;
 }
 
@@ -758,45 +740,35 @@ bool GameView::handleRunningGameEvents(sf::Event event)
  */
 bool GameView::handlePausedGameEvents(sf::Event event)
 {
-    if (MOUSE_LEFT_PRESSED_EVENT)
-    {
-        if (m_resumeGameButton->contains(MOUSE_POSITION))
+    if (MOUSE_LEFT_PRESSED_EVENT) {
+        if (m_resumeGameButton->contains(MOUSE_POSITION)) {
             m_resumeGameButton->setPressed(true);
-
-        else if (m_restartGameButton->contains(MOUSE_POSITION))
+        } else if (m_restartGameButton->contains(MOUSE_POSITION)) {
             m_restartGameButton->setPressed(true);
-
-        else if (m_goToHomeButton->contains(MOUSE_POSITION))
+        } else if (m_goToHomeButton->contains(MOUSE_POSITION)) {
             m_goToHomeButton->setPressed(true);
-
-        else if (m_controlMusicButton->contains(MOUSE_POSITION))
+        } else if (m_controlMusicButton->contains(MOUSE_POSITION)) {
             m_controlMusicButton->setPressed(true);
+        }
     }
 
-    if (event.type == sf::Event::MouseButtonReleased)
-    {
+    if (event.type == sf::Event::MouseButtonReleased) {
         m_resumeGameButton->setPressed(false);
         m_restartGameButton->setPressed(false);
         m_goToHomeButton->setPressed(false);
         m_controlMusicButton->setPressed(false);
 
-        if (m_resumeGameButton->contains(MOUSE_POSITION))
-        {
+        if (m_resumeGameButton->contains(MOUSE_POSITION)) {
             m_game->setGameState(RUNNING_SLOWLY);
-            if (m_gameThemeMusic.getStatus() == sf::Music::Status::Paused)
+            if (m_gameThemeMusic.getStatus() == sf::Music::Status::Paused) {
                 m_gameThemeMusic.play();
-        }
-        else if (m_restartGameButton->contains(MOUSE_POSITION))
-        {
+            }
+        } else if (m_restartGameButton->contains(MOUSE_POSITION)) {
             return false;
-        }
-        else if (m_goToHomeButton->contains(MOUSE_POSITION))
-        {
+        } else if (m_goToHomeButton->contains(MOUSE_POSITION)) {
             m_game->getAppCore()->setAppState(MENU);
             return false;
-        }
-        else if (m_controlMusicButton->contains(MOUSE_POSITION))
-        {
+        } else if (m_controlMusicButton->contains(MOUSE_POSITION)) {
             m_game->getAppCore()->toggleGameMusic();
             handleMusic();
         }
@@ -816,35 +788,27 @@ bool GameView::handlePausedGameEvents(sf::Event event)
  */
 bool GameView::handleGameOverEvents(sf::Event event)
 {
-    if (MOUSE_LEFT_PRESSED_EVENT)
-    {
-        if (m_restartGameButton->contains(MOUSE_POSITION))
+    if (MOUSE_LEFT_PRESSED_EVENT) {
+        if (m_restartGameButton->contains(MOUSE_POSITION)) {
             m_restartGameButton->setPressed(true);
-
-        else if (m_goToHomeButton->contains(MOUSE_POSITION))
+        } else if (m_goToHomeButton->contains(MOUSE_POSITION)) {
             m_goToHomeButton->setPressed(true);
-
-        else if (m_saveScoreButton->contains(MOUSE_POSITION))
+        } else if (m_saveScoreButton->contains(MOUSE_POSITION)) {
             m_saveScoreButton->setPressed(true);
+        }
     }
 
-    if (event.type == sf::Event::MouseButtonReleased)
-    {
+    if (event.type == sf::Event::MouseButtonReleased) {
         m_restartGameButton->setPressed(false);
         m_goToHomeButton->setPressed(false);
         m_saveScoreButton->setPressed(false);
 
-        if (m_restartGameButton->contains(MOUSE_POSITION))
-        {
+        if (m_restartGameButton->contains(MOUSE_POSITION)) {
             return false;
-        }
-        else if (m_goToHomeButton->contains(MOUSE_POSITION))
-        {
+        } else if (m_goToHomeButton->contains(MOUSE_POSITION)) {
             m_game->getAppCore()->setAppState(MENU);
             return false;
-        }
-        else if (m_saveScoreButton->contains(MOUSE_POSITION))
-        {
+        } else if (m_saveScoreButton->contains(MOUSE_POSITION)) {
             m_saveScoreButton->hide();
             m_game->getAppCore()->saveCurrentGame();
             PersistenceManager::updatePersistence();
@@ -867,22 +831,18 @@ bool GameView::handleEvents(sf::Event event)
 {
     handlePlayerInput();
 
-    while (m_window->pollEvent(event))
-    {
+    while (m_window->pollEvent(event)) {
         //=== Window event handling
 
-        if (event.type == sf::Event::Closed)
-        {
+        if (event.type == sf::Event::Closed) {
             m_game->getAppCore()->setAppState(QUIT);
             return false;
         }
 
         //=== Pause opening/quitting handling
 
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-        {
-            switch(m_game->getGameState())
-            {
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+            switch (m_game->getGameState()) {
                 case RUNNING :
                 case RUNNING_SLOWLY :
                     m_game->setGameState(PAUSED);
@@ -899,8 +859,7 @@ bool GameView::handleEvents(sf::Event event)
 
         //=== Specific game state handling
 
-        switch(m_game->getGameState())
-        {
+        switch (m_game->getGameState()) {
             case RUNNING :
             case RUNNING_SLOWLY :
                 return handleRunningGameEvents(event);

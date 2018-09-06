@@ -16,52 +16,56 @@
 
 <resources>
     <!-- Splash screen strings -->
-    <string name="splash_screen_continue" value="Appuyez sur ESPACE pour commencer" />
+    <string name="splash_screen_continue" value="Appuyez sur ESPACE pour commencer"/>
 
     <!-- Home Menu strings -->
-    <string name="menu_play_button" value="JOUER" />
-    <string name="menu_quit_button" value="QUITTER" />
+    <string name="menu_play_button" value="JOUER"/>
+    <string name="menu_quit_button" value="QUITTER"/>
 
     <!-- Leaderboard strings -->
-    <string name="leaderboard_title" value="Classement" />
-    <string name="leaderboard_content" value="Pas de scores" />
-    <string name="leaderboard_clear_button" value="EFFACER" />
+    <string name="leaderboard_title" value="Classement"/>
+    <string name="leaderboard_content" value="Pas de scores"/>
+    <string name="leaderboard_clear_button" value="EFFACER"/>
 
     <!-- Commands strings -->
-    <string name="commands_title" value="Commandes" />
-    <string name="commands_pause" value="Échap&#009;&#009;&#009;&#009;&#009;&#009;&#009;&#009;&#009;  Pour mettre le jeu en pause" />
-    <string name="commands_jump" value="W&#009;|&#009;Flèche du haut&#009;&#009;&#009;Pour faire sauter le joueur" />
-    <string name="commands_left" value="A&#009;|&#009;Flèche de gauche&#009;&#009;Pour déplacer le joueur vers la gauche" />
-    <string name="commands_right" value="D&#009;|&#009;Flèche de droite&#009;&#009;  Pour déplacer le joueur vers la droite" />
+    <string name="commands_title" value="Commandes"/>
+    <string name="commands_pause"
+            value="Échap&#009;&#009;&#009;&#009;&#009;&#009;&#009;&#009;&#009;  Pour mettre le jeu en pause /
+            &#xA; Pour fermer des boîtes de dialogue"/>
+    <string name="commands_jump" value="W&#009;|&#009;Flèche du haut&#009;&#009;&#009;Pour faire sauter le joueur"/>
+    <string name="commands_left"
+            value="A&#009;|&#009;Flèche de gauche&#009;&#009;Pour déplacer le joueur vers la gauche"/>
+    <string name="commands_right"
+            value="D&#009;|&#009;Flèche de droite&#009;&#009;  Pour déplacer le joueur vers la droite"/>
 
     <!-- Settings strings -->
-    <string name="config_title" value="Configuration" />
-    <string name="config_lang_title" value="Langues" />
-    <string name="config_lang_english" value="Anglais" />
-    <string name="config_lang_french" value="Français" />
-    <string name="config_lang_spanish" value="Espagnol" />
-    <string name="config_difficulty_title" value="Difficulté" />
-    <string name="config_easy_mode" value="Facile" />
-    <string name="config_hard_mode" value="Difficile" />
-    <string name="config_custom_title" value="Customisation de la balle" />
-    <string name="config_ball_default_skin" value="Apparence par défaut" />
-    <string name="config_ball_morph_skin" value="Apparence morphing" />
-    <string name="config_ball_capsule_skin" value="Apparence capsule" />
-    <string name="config_music_title" value="Musique" />
-    <string name="config_music_menu" value="Menu" />
-    <string name="config_music_game" value="Jeu" />
-    <string name="stats_title" value="Statistiques" />
-    <string name="stats_overall_title" value="Statistiques cumulés" />
-    <string name="stats_per_game_title" value="Statistiques par partie" />
-    <string name="stats_distance" value="Distance totale parcourue" />
-    <string name="stats_enemies" value="Total d'ennemies aplatis" />
-    <string name="stats_coins" value="Total de pieces collectées" />
-    <string name="stats_games_number" value="Nombre de parties lancées" />
-    <string name="stats_per_game_distance" value="Meilleure distance parcourue" />
-    <string name="stats_per_game_enemies" value="Meilleures ennemies aplatis" />
-    <string name="stats_per_game_coins" value="Meilleurs ramassage de pieces" />
-    <string name="stats_app_reset" value="RÉINITIALISER" />
-    <string name="about_title" value="A propos" />
+    <string name="config_title" value="Configuration"/>
+    <string name="config_lang_title" value="Langues"/>
+    <string name="config_lang_english" value="Anglais"/>
+    <string name="config_lang_french" value="Français"/>
+    <string name="config_lang_spanish" value="Espagnol"/>
+    <string name="config_difficulty_title" value="Difficulté"/>
+    <string name="config_easy_mode" value="Facile"/>
+    <string name="config_hard_mode" value="Difficile"/>
+    <string name="config_custom_title" value="Customisation de la balle"/>
+    <string name="config_ball_default_skin" value="Apparence par défaut"/>
+    <string name="config_ball_morph_skin" value="Apparence morphing"/>
+    <string name="config_ball_capsule_skin" value="Apparence capsule"/>
+    <string name="config_music_title" value="Musique"/>
+    <string name="config_music_menu" value="Menu"/>
+    <string name="config_music_game" value="Jeu"/>
+    <string name="stats_title" value="Statistiques"/>
+    <string name="stats_overall_title" value="Statistiques cumulés"/>
+    <string name="stats_per_game_title" value="Statistiques par partie"/>
+    <string name="stats_distance" value="Distance totale parcourue"/>
+    <string name="stats_enemies" value="Total d'ennemies aplatis"/>
+    <string name="stats_coins" value="Total de pieces collectées"/>
+    <string name="stats_games_number" value="Nombre de parties lancées"/>
+    <string name="stats_per_game_distance" value="Meilleure distance parcourue"/>
+    <string name="stats_per_game_enemies" value="Meilleures ennemies aplatis"/>
+    <string name="stats_per_game_coins" value="Meilleurs ramassage de pieces"/>
+    <string name="stats_app_reset" value="RÉINITIALISER"/>
+    <string name="about_title" value="A propos"/>
     <string name="about_description" value=" Boko Runner est un projet C++ que nous avons réalisé en tant que projet
                   &#xA; de programmation du deuxième semestre de notre DUT. Le but était de
                   &#xA; mettre en pratique les notions de POO que nous avons apprises au cours
@@ -70,59 +74,59 @@
                   &#xA;&#xA;
                   &#xA; Vous pouvez signaler des bugs dans la section ''Issues'' du dépôt,
                   &#xA; ou en envoyant un e-mail à l'adresse suivante :"/>
-    <string name="about_repo_address" value="https://github.com/Bokoblin/DUTS2-POO-ProjetRunner" />
-    <string name="about_email" value="pro.jolivetarthur@gmail.com." />
-    <string name="about_copyright" value="2016-2018 Jolivet Arthur &amp; Laronze Florian" />
+    <string name="about_repo_address" value="https://github.com/Bokoblin/DUTS2-POO-ProjetRunner"/>
+    <string name="about_email" value="pro.jolivetarthur@gmail.com."/>
+    <string name="about_copyright" value="2016-2018 Jolivet Arthur &amp; Laronze Florian"/>
 
     <!--  Shop strings -->
-    <string name="shop_bought" value="OBTENU" />
-    <string name="shop_purchasable" value="ACHETER" />
-    <string name="shop_dialog_title" value="Acheter cet objet ?" />
-    <string name="shop_dialog_content" value="Nom : $NAME &#xA;&#xA;Prix : $PRICE pieces" />
-    <string name="shop_dialog_success" value="Merci pour votre achat." />
-    <string name="shop_dialog_failure" value="L'achat a échoué." />
+    <string name="shop_bought" value="OBTENU"/>
+    <string name="shop_purchasable" value="ACHETER"/>
+    <string name="shop_dialog_title" value="Acheter cet objet ?"/>
+    <string name="shop_dialog_content" value="Nom : $NAME &#xA;&#xA;Prix : $PRICE pieces"/>
+    <string name="shop_dialog_success" value="Merci pour votre achat."/>
+    <string name="shop_dialog_failure" value="L'achat a échoué."/>
 
     <!-- Dialog strings -->
-    <string name="dialog_cancel" value="ANNULER" />
-    <string name="dialog_ok" value="OK" />
-    <string name="confirm_data_delete_dialog_title" value="Supprimer les données ?" />
+    <string name="dialog_cancel" value="ANNULER"/>
+    <string name="dialog_ok" value="OK"/>
+    <string name="confirm_data_delete_dialog_title" value="Supprimer les données ?"/>
     <string name="confirm_data_delete_dialog_content" value="Les données de cette application
                   &#xA;(paramètres, stats, scores, etc.)
-                  &#xA;seront définitivement supprimées." />
-    <string name="confirm_leaderboard_delete_dialog_title" value="Supprimer le classement ?" />
+                  &#xA;seront définitivement supprimées."/>
+    <string name="confirm_leaderboard_delete_dialog_title" value="Supprimer le classement ?"/>
     <string name="confirm_leaderboard_delete_dialog_content" value="Les deux niveaux de scores
-                  &#xA;seront définitivement supprimés." />
+                  &#xA;seront définitivement supprimés."/>
 
     <!--  ShopItems strings -->
-    <string name="shop_doubler_name" value="Doubleur de pièce" />
-    <string name="shop_doubler_desc" value="Double le nombre &#xA;de pieces collectées" />
-    <string name="shop_shield_plus_name" value="Bouclier+" />
-    <string name="shop_shield_plus_desc" value="Protege le joueur d'une &#xA;collision supplémentaire" />
-    <string name="shop_mega_plus_name" value="Mega+" />
-    <string name="shop_mega_plus_desc" value="Augmente la durée du &#xA;bonus de 5 secondes" />
-    <string name="shop_fly_plus_name" value="Vol+" />
-    <string name="shop_fly_plus_desc" value="Augmente la durée du &#xA;bonus de 5 secondes" />
-    <string name="shop_morphing_name" value="Balle morphing" />
-    <string name="shop_morphing_desc" value="Débloque l'apparence &#xA;morphing de la balle" />
-    <string name="shop_capsule_name" value="Balle capsule" />
-    <string name="shop_capsule_desc" value="Débloque l'apparence &#xA;capsule de la balle" />
+    <string name="shop_doubler_name" value="Doubleur de pièce"/>
+    <string name="shop_doubler_desc" value="Double le nombre &#xA;de pieces collectées"/>
+    <string name="shop_shield_plus_name" value="Bouclier+"/>
+    <string name="shop_shield_plus_desc" value="Protege le joueur d'une &#xA;collision supplémentaire"/>
+    <string name="shop_mega_plus_name" value="Mega+"/>
+    <string name="shop_mega_plus_desc" value="Augmente la durée du &#xA;bonus de 5 secondes"/>
+    <string name="shop_fly_plus_name" value="Vol+"/>
+    <string name="shop_fly_plus_desc" value="Augmente la durée du &#xA;bonus de 5 secondes"/>
+    <string name="shop_morphing_name" value="Balle morphing"/>
+    <string name="shop_morphing_desc" value="Débloque l'apparence &#xA;morphing de la balle"/>
+    <string name="shop_capsule_name" value="Balle capsule"/>
+    <string name="shop_capsule_desc" value="Débloque l'apparence &#xA;capsule de la balle"/>
 
     <!--  Game strings -->
-    <string name="game_player_life" value="Vie" />
+    <string name="game_player_life" value="Vie"/>
 
     <!--  Pause Screen strings -->
-    <string name="pause_resume" value="Reprendre" />
-    <string name="pause_restart" value="Recommencer" />
-    <string name="pause_go_to_home" value="Accueil" />
-    <string name="pause_music" value="Musique" />
+    <string name="pause_resume" value="Reprendre"/>
+    <string name="pause_restart" value="Recommencer"/>
+    <string name="pause_go_to_home" value="Accueil"/>
+    <string name="pause_music" value="Musique"/>
 
     <!--  End Screen strings -->
-    <string name="end_title" value="Votre score" />
-    <string name="end_speed_multiplier" value="Multiplicateur vitesse" />
-    <string name="end_current_distance" value="Distance parcourue" />
-    <string name="end_coins_collected" value="Pieces collectées" />
-    <string name="end_enemies" value="Bonus destruction ennemies" />
-    <string name="end_score" value="Total" />
-    <string name="end_save_button" value="SAUVER" />
+    <string name="end_title" value="Votre score"/>
+    <string name="end_speed_multiplier" value="Multiplicateur vitesse"/>
+    <string name="end_current_distance" value="Distance parcourue"/>
+    <string name="end_coins_collected" value="Pieces collectées"/>
+    <string name="end_enemies" value="Bonus destruction ennemies"/>
+    <string name="end_score" value="Total"/>
+    <string name="end_save_button" value="SAUVER"/>
 
 </resources>

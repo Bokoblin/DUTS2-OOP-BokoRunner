@@ -30,7 +30,7 @@ class ShopItem
 {
 public:
     //=== CTORs / DTORs
-    ShopItem(const std::string &id, const std::string &name, const std::string &description, int price, bool state);
+    ShopItem(const std::string& id, const std::string& name, const std::string& description, int price, bool state);
     ~ShopItem();
 
     //=== GETTERS

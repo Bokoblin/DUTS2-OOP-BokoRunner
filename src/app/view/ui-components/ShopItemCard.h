@@ -31,29 +31,29 @@ limitations under the License.
  * @author Arthur
  * @date 16/05/16 - 04/01/18
  */
-class ShopItemCard : public mdsf::Sprite
+class ShopItemCard: public mdsf::Sprite
 {
 public:
     //=== CTORs / DTORs
-    ShopItemCard(int id, ShopItem *item);
+    ShopItemCard(int id, ShopItem* item);
     ~ShopItemCard() override;
 
     //=== GETTERS
     int getId() const;
-    mdsf::Button *getBuyButton() const;
-    ShopItem *getItem() const;
+    mdsf::Button* getBuyButton() const;
+    ShopItem* getItem() const;
 
     void sync() override;
     void syncWithButtonLabelRetrieval(mdsf::Button::label_retrieval_func_t func);
-    void draw(sf::RenderWindow *window) const override;
+    void draw(sf::RenderWindow* window) const override;
 
 private:
     //=== ATTRIBUTES
     int m_id;
-    ShopItem *m_item;
+    ShopItem* m_item;
     mdsf::Text m_title;
     mdsf::Text m_content;
-    mdsf::Button *m_buyButton;
+    mdsf::Button* m_buyButton;
 
     static constexpr int INITIAL_POS_X = 0;
     static constexpr int INITIAL_POS_Y = 150;

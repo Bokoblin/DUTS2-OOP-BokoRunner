@@ -14,7 +14,7 @@ using std::string;
  * @author Arthur
  * @date 20/05/16 - 04/02/18
  */
-SettingsModel::SettingsModel(AppCore *appCore) :  AbstractModel(appCore), m_currentPage{CONFIG}
+SettingsModel::SettingsModel(AppCore* appCore) : AbstractModel(appCore), m_currentPage{CONFIG}
 {
     PersistenceManager::fetchActivatedBonus();
     checkItemsAvailability();
@@ -56,7 +56,7 @@ void SettingsModel::setCurrentPage(int page) { m_currentPage = page; }
  *
  * @param language the new language
  */
-void SettingsModel::changeLanguage(const string &language)
+void SettingsModel::changeLanguage(const string& language)
 {
     m_appCore->setLanguage(language);
 }
@@ -68,7 +68,7 @@ void SettingsModel::changeLanguage(const string &language)
  *
  * @param skin the new skin
  */
-void SettingsModel::changeBallSkin(const string &skin)
+void SettingsModel::changeBallSkin(const string& skin)
 {
     m_appCore->setBallSkin(skin);
 }
@@ -83,26 +83,6 @@ void SettingsModel::checkItemsAvailability()
 {
     m_morphSkinIsAvailable = m_appCore->findActivatedItem("shop_morphing");
     m_capsuleSkinIsAvailable = m_appCore->findActivatedItem("shop_capsule");
-}
-
-/**
- * Opens an URL in default browser
- * @author Arthur
- * @date 02/11/17
- */
-void SettingsModel::openURLinBrowser(const string &url) const
-{
-#if defined __linux__ || __unix__ || defined(_POSIX_VERSION)
-    string command = "x-www-browser " + url;
-    system(command.c_str());
-#elif _WIN32
-    ShellExecute(nullptr, nullptr, url.c_str(), nullptr, nullptr, SW_SHOW);
-#elif __APPLE__
-    string command = "open " + url;
-    system(command.c_str());
-#else
-#error Operation not supported on your platform
-#endif
 }
 
 
@@ -125,4 +105,3 @@ void SettingsModel::quit()
 {
     PersistenceManager::updatePersistence();
 }
-

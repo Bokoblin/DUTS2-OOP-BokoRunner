@@ -51,20 +51,15 @@ void Enemy::chooseEnemyType()
 {
     int result = RandomUtils::getUniformRandomNumber(1, 100);
 
-    if (result <= 55)
-    {
+    if (result <= 55) {
         m_elementType = STANDARD_ENEMY;
         m_width = 30;
         m_height = 30;
-    }
-    else if (result <= 80)
-    {
+    } else if (result <= 80) {
         m_elementType = TOTEM_ENEMY;
         m_width = 30;
         m_height = 90;
-    }
-    else
-    {
+    } else {
         m_elementType = BLOCK_ENEMY;
         m_width = 50;
         m_height = 50;

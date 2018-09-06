@@ -51,23 +51,23 @@ static const std::string ROBOTO_CONDENSED_FONT = FONTS_FOLDER + "Roboto_Condense
 static const std::string ROBOTO_BOLD_FONT = FONTS_FOLDER + "Roboto_Bold.ttf";
 
 //=== Images files : Backgrounds
-static const std::string DEFAULT_FAR_HILL_BACKGROUND = BACKGROUND_FOLDER + "/hill_far.png";
-static const std::string DEFAULT_NEAR_HILL_BACKGROUND = BACKGROUND_FOLDER + "/hill_near.png";
-static const std::string DEFAULT_FAR_PLAIN_BACKGROUND = BACKGROUND_FOLDER + "/plain_far.png";
-static const std::string DEFAULT_NEAR_PLAIN_BACKGROUND = BACKGROUND_FOLDER + "/plain_near.png";
-static const std::string DEFAULT_FAR_T1_BACKGROUND = BACKGROUND_FOLDER + "/t1_far.png";
-static const std::string DEFAULT_NEAR_T1_BACKGROUND = BACKGROUND_FOLDER + "/t1_near.png";
-static const std::string DEFAULT_FAR_T2_BACKGROUND = BACKGROUND_FOLDER + "/t2_far.png";
-static const std::string DEFAULT_NEAR_T2_BACKGROUND = BACKGROUND_FOLDER + "/t2_near.png";
+static const std::string GAME_FAR_HILL_BACKGROUND = BACKGROUND_FOLDER + "/hill_far.png";
+static const std::string GAME_NEAR_HILL_BACKGROUND = BACKGROUND_FOLDER + "/hill_near.png";
+static const std::string GAME_FAR_PLAIN_BACKGROUND = BACKGROUND_FOLDER + "/plain_far.png";
+static const std::string GAME_NEAR_PLAIN_BACKGROUND = BACKGROUND_FOLDER + "/plain_near.png";
+static const std::string GAME_FAR_T1_BACKGROUND = BACKGROUND_FOLDER + "/t1_far.png";
+static const std::string GAME_NEAR_T1_BACKGROUND = BACKGROUND_FOLDER + "/t1_near.png";
+static const std::string GAME_FAR_T2_BACKGROUND = BACKGROUND_FOLDER + "/t2_far.png";
+static const std::string GAME_NEAR_T2_BACKGROUND = BACKGROUND_FOLDER + "/t2_near.png";
 static const std::string PAUSE_HILL_BACKGROUND = BACKGROUND_FOLDER + "/pause_hill.png";
 static const std::string PAUSE_PLAIN_BACKGROUND = BACKGROUND_FOLDER + "/pause_plain.png";
 static const std::string END_SCREEN_BACKGROUND = BACKGROUND_FOLDER + "/end_background.png";
 
 //=== Images files : UI components
-static const std::string RECT_BUTTONS_IMAGE = UI_FOLDER +"rect_buttons.png";
-static const std::string SHAPE_BUTTONS_IMAGE = UI_FOLDER +"shape_buttons.png";
-static const std::string GAME_BUTTONS_IMAGE = UI_FOLDER +"game_buttons.png";
-static const std::string CARD_IMAGE = UI_FOLDER +"card.png";
+static const std::string RECT_BUTTONS_IMAGE = UI_FOLDER + "rect_buttons.png";
+static const std::string SHAPE_BUTTONS_IMAGE = UI_FOLDER + "shape_buttons.png";
+static const std::string GAME_BUTTONS_IMAGE = UI_FOLDER + "game_buttons.png";
+static const std::string CARD_IMAGE = UI_FOLDER + "card.png";
 
 //=== Images files : Game components
 static const std::string BALL_IMAGE = GAME_COMPONENTS_FOLDER + "ball.png";

@@ -42,8 +42,8 @@ int Player::getLife() const { return m_life; }
 
 //=== Setters
 
-void Player::setJumpState(bool state) {  m_isJumping = state; }
-void Player::setDecelerationState(bool state) {  m_isDecelerating = state; }
+void Player::setJumpState(bool state) { m_isJumping = state; }
+void Player::setDecelerationState(bool state) { m_isDecelerating = state; }
 void Player::setLife(int new_life)
 {
     m_life = new_life;

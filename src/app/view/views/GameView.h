@@ -26,11 +26,11 @@ limitations under the License.
  * @author Arthur, Florian
  * @date 21/02/16 - 27/12/17
  */
-class GameView : public AbstractView
+class GameView: public AbstractView
 {
 public:
     //=== CTORs / DTORs
-    GameView(sf::RenderWindow *window, AppTextManager *textManager, GameModel *gameModel);
+    GameView(sf::RenderWindow* window, AppTextManager* textManager, GameModel* gameModel);
     ~GameView() override;
 
     //=== METHODS
@@ -40,41 +40,41 @@ public:
 
 private:
     //=== ATTRIBUTES
-    GameModel *m_game; //to not delete in ~GameView()
-    PixelShader *m_pixelShader;
+    GameModel* m_game; //to not delete in ~GameView()
+    PixelShader* m_pixelShader;
     float m_xPixelIntensity;
     float m_yPixelIntensity;
     const int TRANSITION_SPEED = 10;
     const int PAUSE_FORM_X = 30;
 
     //Game Graphic Elements
-    ScrollingBackground *m_farScrollingBackground;
-    ScrollingBackground *m_nearScrollingBackground;
-    mdsf::Sprite *m_farTransitionBackground;
-    mdsf::Sprite *m_bottomBarImage;
-    mdsf::Sprite *m_lifeBoxImage;
-    mdsf::Sprite *m_remainingLifeImage;
-    mdsf::Sprite *m_shieldImage;
-    AnimatedSprite *m_playerSprite;
-    AnimatedSprite *m_stdEnemySprite;
-    AnimatedSprite *m_totemEnemySprite;
-    AnimatedSprite *m_blockEnemySprite;
-    AnimatedSprite *m_coinSprite;
-    AnimatedSprite *m_PVPlusBonusSprite;
-    AnimatedSprite *m_megaBonusSprite;
-    AnimatedSprite *m_flyBonusSprite;
-    AnimatedSprite *m_slowSpeedBonusSprite;
-    AnimatedSprite *m_shieldBonusSprite;
+    ScrollingBackground* m_farScrollingBackground;
+    ScrollingBackground* m_nearScrollingBackground;
+    mdsf::Sprite* m_farTransitionBackground;
+    mdsf::Sprite* m_bottomBarImage;
+    mdsf::Sprite* m_lifeBoxImage;
+    mdsf::Sprite* m_remainingLifeImage;
+    mdsf::Sprite* m_shieldImage;
+    AnimatedSprite* m_playerSprite;
+    AnimatedSprite* m_stdEnemySprite;
+    AnimatedSprite* m_totemEnemySprite;
+    AnimatedSprite* m_blockEnemySprite;
+    AnimatedSprite* m_coinSprite;
+    AnimatedSprite* m_PVPlusBonusSprite;
+    AnimatedSprite* m_megaBonusSprite;
+    AnimatedSprite* m_flyBonusSprite;
+    AnimatedSprite* m_slowSpeedBonusSprite;
+    AnimatedSprite* m_shieldBonusSprite;
 
     //Pause and End Graphic Elements
-    mdsf::Sprite *m_pauseBackground;
-    mdsf::Sprite *m_distanceIcon;
-    mdsf::Sprite *m_endBackground;
-    mdsf::Button *m_resumeGameButton;
-    mdsf::Button *m_restartGameButton;
-    mdsf::Button *m_goToHomeButton;
-    mdsf::Button *m_controlMusicButton;
-    mdsf::Button *m_saveScoreButton;
+    mdsf::Sprite* m_pauseBackground;
+    mdsf::Sprite* m_distanceIcon;
+    mdsf::Sprite* m_endBackground;
+    mdsf::Button* m_resumeGameButton;
+    mdsf::Button* m_restartGameButton;
+    mdsf::Button* m_goToHomeButton;
+    mdsf::Button* m_controlMusicButton;
+    mdsf::Button* m_saveScoreButton;
 
     //Audio
     sf::Music m_gameThemeMusic;
@@ -82,7 +82,7 @@ private:
     sf::Music m_destructedEnemiesMusic;
 
     //Containers
-    std::map<MovableElementType , AnimatedSprite*> m_typeToSpriteMap;
+    std::map<MovableElementType, AnimatedSprite*> m_typeToSpriteMap;
     std::map<MovableElement*, AnimatedSprite*> m_movableElementToSpriteMap;
 
     //=== METHODS

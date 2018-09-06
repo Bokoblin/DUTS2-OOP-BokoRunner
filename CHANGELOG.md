@@ -230,7 +230,7 @@ Current version : v2.0.0-dev
 - **code**: code enhancement
 
 #### Misc
-- **game**: added half-random y position for coins, lowered time-spacing
+- **game**: added half-random y position for coins, lowered spawn distance
 - **shop**: added buying results (success/failure)
 - **image**: shield image and element changes
 - **doc**: documentation updated

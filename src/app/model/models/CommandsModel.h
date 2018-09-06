@@ -26,11 +26,11 @@ limitations under the License.
  * @author Arthur
  * @date 24/01/17 - 29/12/17
  */
-class CommandsModel : public AbstractModel
+class CommandsModel: public AbstractModel
 {
 public:
     //=== CTORs / DTORs
-    explicit CommandsModel(AppCore *appCore);
+    explicit CommandsModel(AppCore* appCore);
     ~CommandsModel() override;
 
     //=== METHODS

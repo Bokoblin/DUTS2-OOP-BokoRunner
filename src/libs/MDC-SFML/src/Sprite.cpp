@@ -76,7 +76,7 @@ Sprite::Sprite(float x, float y, float width, float height, const string &image)
  * @date 25/02/16 - 27/12/17
  */
 Sprite::Sprite(Sprite const& other) :
-        sf::Sprite(), m_width(other.m_width), m_height(other.m_height),
+        sf::Sprite(other), m_width(other.m_width), m_height(other.m_height),
         m_isVisible{other.m_isVisible}, m_alpha{other.m_alpha}, m_light{other.m_light},
         m_textureFilename{other.m_textureFilename}
 {

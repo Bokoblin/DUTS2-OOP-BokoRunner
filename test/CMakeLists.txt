@@ -1,5 +1,3 @@
-if (ENABLE_TESTS)
-
 #--------------------------------------------------------
 #       SET TEST EXECUTABLES
 #--------------------------------------------------------
@@ -49,7 +47,3 @@ target_link_libraries(${UNIT_TESTS} slogger)
 #       CONFIGURE TESTS
 #--------------------------------------------------------
 add_test(NAME ${UNIT_TESTS} COMMAND make ${UNIT_TESTS})
-
-enable_testing()
-
-endif ()

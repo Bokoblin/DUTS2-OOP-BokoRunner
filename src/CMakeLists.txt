@@ -1,9 +1,10 @@
-# TODO: SPLIT MODEL & PERSISTENCE FROM VIEW & LOCALIZATION (SEE ENSEIRB SESSION CURRENT CODE - SSH DOWN UNTIL SEPTEMBER)
 #----------------------------------------------------------------------------------
 #           APP CONFIGURATION
 #----------------------------------------------------------------------------------
 set(EXECUTABLE_NAME bokorunner)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
+if (ENABLE_UI)
+    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
+endif ()
 
 #----------------------------------------------------------------------------------
 #           EXTERNAL LIBRARIES SOURCES
@@ -35,10 +36,24 @@ set(XML_HELPER_LIB
 #           APP SOURCE FILES
 #----------------------------------------------------------------------------------
 set(APP_ROOT "${PROJECT_SOURCE_DIR}/src/app")
-file(GLOB_RECURSE SOURCE_FILES
-        ${APP_ROOT}/*.h
-        ${APP_ROOT}/*.cpp
-        )
+
+if (ENABLE_UI)
+    file(GLOB_RECURSE SOURCE_FILES
+            ${APP_ROOT}/*/*.h
+            ${APP_ROOT}/*/*.cpp
+            ${APP_ROOT}/main.cpp
+            )
+else ()
+    file(GLOB_RECURSE SOURCE_FILES
+            ${APP_ROOT}/localization/*.h
+            ${APP_ROOT}/localization/*.cpp
+            ${APP_ROOT}/model/*.h
+            ${APP_ROOT}/model/*.cpp
+            ${APP_ROOT}/persistence/*.h
+            ${APP_ROOT}/persistence/*.cpp
+            ${APP_ROOT}/main_cli.cpp
+            )
+endif ()
 
 #----------------------------------------------------------------------------------
 #           LIBRARIES BUILDING
@@ -46,12 +61,17 @@ file(GLOB_RECURSE SOURCE_FILES
 add_library(pugi SHARED ${PUGIXML_LIB})
 add_library(slogger SHARED ${LOGGER_LIB})
 add_library(xmlhelper SHARED ${XML_HELPER_LIB})
-add_library(mdcsfml SHARED ${MDC_SFML_LIB})
+if (ENABLE_UI)
+    add_library(mdcsfml SHARED ${MDC_SFML_LIB})
+endif ()
 
 #----------------------------------------------------------------------------------
 #           DIRECTORIES INCLUSION
 #----------------------------------------------------------------------------------
-include_directories(${SFML_INCLUDE_DIR})
+if (ENABLE_UI)
+    include_directories(${SFML_INCLUDE_DIR})
+endif ()
+
 include_directories(${PUGIXML_ROOT})
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
@@ -63,21 +83,33 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 #   - pugi: Ø
 #   - slogger: Ø
 #   - xmlhelper: pugi
-#   - mdcsfml: SFML, slogger -- TODO: keep slogger dependency: Generelize it to print in a defined location
-#   - executable: mdscsfml
+#   - mdcsfml: SFML, slogger
+#   - executable: pugi, slogger, xmlhelper, mdcsfml [UI only for the latter]
 #----------------------------------------------------------------------------------
-FIND_PACKAGE(SFML 2.4 COMPONENTS audio graphics window system REQUIRED)
+if (ENABLE_UI)
+    FIND_PACKAGE(SFML 2.4 COMPONENTS audio graphics window system REQUIRED)
 
-target_include_directories(mdcsfml PUBLIC ${SFML_INCLUDE_DIR})
+    target_include_directories(mdcsfml PUBLIC ${SFML_INCLUDE_DIR})
 
-target_link_libraries(xmlhelper pugi)
-target_link_libraries(mdcsfml ${SFML_LIBRARIES})
-target_link_libraries(mdcsfml slogger)
+    target_link_libraries(xmlhelper pugi)
+    target_link_libraries(mdcsfml ${SFML_LIBRARIES})
+    target_link_libraries(mdcsfml slogger)
 
-add_executable(
-        ${EXECUTABLE_NAME}
-        ${SOURCE_FILES}
-)
+    add_executable(
+            ${EXECUTABLE_NAME}
+            ${SOURCE_FILES}
+    )
 
-target_link_libraries(${EXECUTABLE_NAME} xmlhelper)
-target_link_libraries(${EXECUTABLE_NAME} mdcsfml)
+    target_link_libraries(${EXECUTABLE_NAME} xmlhelper)
+    target_link_libraries(${EXECUTABLE_NAME} mdcsfml)
+else ()
+    target_link_libraries(xmlhelper pugi)
+
+    add_executable(
+            ${EXECUTABLE_NAME}
+            ${SOURCE_FILES}
+    )
+
+    target_link_libraries(${EXECUTABLE_NAME} xmlhelper)
+    target_link_libraries(${EXECUTABLE_NAME} slogger)
+endif ()

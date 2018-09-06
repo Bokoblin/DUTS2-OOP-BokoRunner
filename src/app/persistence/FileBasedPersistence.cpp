@@ -195,8 +195,8 @@ bool FileBasedPersistence::fetchConfigurationFromConfigFile()
                         (nodeValue, "default|morphing|capsule", "default");
                 break;
             case hash("wallet"):
-                m_appCore->m_currentBallSkin = XMLHelper::safeRetrieveXMLValue<string>
-                        (nodeValue, "default|morphing|capsule", "default");
+                m_appCore->m_wallet = XMLHelper::safeRetrieveXMLValue<int>
+                        (nodeValue, INTEGER_REGEX, 0);
                 break;
             case hash("menu_music"):
                 m_appCore->m_isMenuMusicEnabled = XMLHelper::safeRetrieveXMLValue<bool>

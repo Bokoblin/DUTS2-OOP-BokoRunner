@@ -58,7 +58,7 @@ SplashScreenView::~SplashScreenView()
  */
 void SplashScreenView::loadSprites()
 {
-    m_splashScreen = new mdsf::Sprite(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    m_splashScreen = new mdsf::Sprite(0, 0, m_width, m_height);
     m_splashScreen->loadAndApplyTextureFromImageFile(SPLASH_SCREEN_IMAGE);
 
     m_farBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, 0, GAME_FAR_HILL_BACKGROUND);

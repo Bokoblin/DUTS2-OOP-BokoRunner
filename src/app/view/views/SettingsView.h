@@ -69,10 +69,18 @@ private:
     std::map<int, mdsf::RadioButton*> m_pageIndicators;
     std::vector<mdsf::Button*> m_buttonList;
 
+    //Constants
+    const int OFFSET = 12;
+    const int INDICATOR_PADDING = 2;
+    const int CONFIRM_DIALOG_WIDTH = 320;
+    const int CONFIRM_DIALOG_HEIGHT = 200;
+
     //=== METHODS
     void loadSprites() override;
     void handleMusic();
     void updateTextBasedComponents() const;
+    float getDialogXPosition(int width) const;
+    float getDialogYPosition(int height) const;
 };
 
 

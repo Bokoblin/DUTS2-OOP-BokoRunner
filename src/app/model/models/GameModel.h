@@ -51,6 +51,7 @@ public:
     Zone getCurrentZone() const;
     const std::set<MovableElement*>& getNewMElementsArray() const;
     int getBonusTimeout() const;
+    unsigned int getGameFloorPosition() const;
 
     //=== SETTERS
     void setGameState(GameState state);
@@ -62,9 +63,6 @@ public:
     void nextStep() override;
     void moveMovableElement(MovableElement* element);
     void clearNewMovableElementList();
-
-    //=== CONSTANTS
-    static const int GAME_FLOOR = 480;
 
 private:
     //=== ATTRIBUTES
@@ -98,7 +96,6 @@ private:
     const int SPEED_LIMIT = 20;
     const int NEXT_STEP_DELAY = 100;
     const int ZONE_CHANGING_DISTANCE = 500;
-    const int BONUS_ROW = GAME_FLOOR - 100;
     const int MEGA_TIMEOUT = 10000;
     const int FLY_TIMEOUT = 15000;
     const int SLOW_SPEED_TIMEOUT = 20000;
@@ -114,7 +111,6 @@ private:
     const int COLLISION_DAMAGE_TOTEM = 15;
     const int COLLISION_DAMAGE_BLOCK = 25;
     const int SPEED_DISTANCE_RATIO = 5;
-    const int FIELD_WIDTH = 900;
 
     //=== PRIVATE METHODS
     void handleSpeedAndDistance();

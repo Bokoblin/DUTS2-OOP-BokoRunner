@@ -115,11 +115,11 @@ void GameView::loadSprites()
 {
     //=== Initialize backgrounds
 
-    m_farScrollingBackground = new ScrollingBackground(1200, m_height, 1, GAME_FAR_HILL_BACKGROUND);
-    m_nearScrollingBackground = new ScrollingBackground(1200, m_height, 2, GAME_NEAR_HILL_BACKGROUND);
+    m_farScrollingBackground = new ScrollingBackground(1.33f * m_width, m_height, 1, GAME_FAR_HILL_BACKGROUND);
+    m_nearScrollingBackground = new ScrollingBackground(1.33f * m_width, m_height, 2, GAME_NEAR_HILL_BACKGROUND);
 
-    m_farTransitionBackground = new mdsf::Sprite(SCREEN_WIDTH, m_height, m_width, m_height, GAME_FAR_T1_BACKGROUND);
-    m_bottomBarImage = new mdsf::Sprite(0, 520, m_width, m_height, BOTTOM_BAR_IMAGE);
+    m_farTransitionBackground = new mdsf::Sprite(m_width, m_height, m_width, m_height, GAME_FAR_T1_BACKGROUND);
+    m_bottomBarImage = new mdsf::Sprite(0, 0.87f * m_height, m_width, m_height, BOTTOM_BAR_IMAGE);
 
     m_pauseBackground = new mdsf::Sprite(0, 0, m_width, m_height, PAUSE_HILL_BACKGROUND);
     m_endBackground = new mdsf::Sprite(0, 0, m_width, m_height, END_SCREEN_BACKGROUND);
@@ -127,13 +127,13 @@ void GameView::loadSprites()
 
     //=== Initialize UI elements
 
-    m_lifeBoxImage = new mdsf::Sprite(105, 535, 200, 100);
+    m_lifeBoxImage = new mdsf::Sprite(0.117f * m_width, 0.89f * m_height, 200, 100);
     m_lifeBoxImage->loadAndApplyTextureFromImageFile(LIFE_BOX_IMAGE, sf::IntRect(0, 0, 300, 50));
 
-    m_remainingLifeImage = new mdsf::Sprite(107, 535, 300, 50);
+    m_remainingLifeImage = new mdsf::Sprite(0.118f * m_width, 0.89f * m_height, 300, 50);
     m_remainingLifeImage->loadAndApplyTextureFromImageFile(LIFE_BOX_IMAGE, sf::IntRect(0, 51, 300, 50));
 
-    m_distanceIcon = new mdsf::Sprite(30, 35, 25, 25);
+    m_distanceIcon = new mdsf::Sprite(0.033f * m_width, 0.058f * m_height, 25, 25);
     m_distanceIcon->loadAndApplyTextureFromImageFile(GAME_BUTTONS_IMAGE, sf::IntRect(0, 150, 50, 50));
     m_distanceIcon->resize(25, 25);
 
@@ -142,7 +142,7 @@ void GameView::loadSprites()
 
     vector<sf::IntRect> clipRect;
     for (int i = 0; i < 8; i++) clipRect.emplace_back(50 * i, 0, 50, 50);
-    m_playerSprite = new AnimatedSprite(50, GameModel::GAME_FLOOR, 30, 30, BALL_IMAGE, clipRect);
+    m_playerSprite = new AnimatedSprite(-1, -1, 30, 30, BALL_IMAGE, clipRect);
     m_playerSprite->setOrigin(0, 50);
 
 
@@ -150,54 +150,54 @@ void GameView::loadSprites()
 
     vector<sf::IntRect> clipRectStdEnemy;
     for (int i = 0; i < 2; i++) clipRectStdEnemy.emplace_back(50 * i, 0, 50, 50);
-    m_stdEnemySprite = new AnimatedSprite(30, 135, 30, 30, ENEMIES_IMAGE, clipRectStdEnemy);
+    m_stdEnemySprite = new AnimatedSprite(-1, -1, 30, 30, ENEMIES_IMAGE, clipRectStdEnemy);
     m_stdEnemySprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRectTotemEnemy;
     for (int i = 0; i < 2; i++) clipRectTotemEnemy.emplace_back(50 * i, 0, 50, 150);
-    m_totemEnemySprite = new AnimatedSprite(m_width, GameModel::GAME_FLOOR, 30, 90, ENEMIES_IMAGE, clipRectTotemEnemy);
+    m_totemEnemySprite = new AnimatedSprite(-1, -1, 30, 90, ENEMIES_IMAGE, clipRectTotemEnemy);
     m_totemEnemySprite->setOrigin(0, 150);
 
     vector<sf::IntRect> clipRectBlockEnemy;
     for (int i = 0; i < 2; i++) clipRectBlockEnemy.emplace_back(50 * i, 150, 50, 50);
-    m_blockEnemySprite = new AnimatedSprite(50, 95, 50, 50, ENEMIES_IMAGE, clipRectBlockEnemy);
+    m_blockEnemySprite = new AnimatedSprite(-1, -1, 50, 50, ENEMIES_IMAGE, clipRectBlockEnemy);
     m_blockEnemySprite->setOrigin(0, 50);
 
 
     //=== Initialize COINS & BONUSES sprite
 
-    m_shieldImage = new mdsf::Sprite(50, GameModel::GAME_FLOOR, 40, 40);
+    m_shieldImage = new mdsf::Sprite(-1, -1, 40, 40);
     m_shieldImage->loadAndApplyTextureFromImageFile(SHIELD_IMAGE);
     m_shieldImage->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_coin;
     for (int i = 0; i < 5; i++) clipRect_coin.emplace_back(50 * i, 0, 50, 50);
-    m_coinSprite = new AnimatedSprite(30, 95, 25, 25, BONUS_IMAGE, clipRect_coin);
+    m_coinSprite = new AnimatedSprite(-1, -1, 25, 25, BONUS_IMAGE, clipRect_coin);
     m_coinSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_pv;
     for (int i = 0; i < 5; i++) clipRect_pv.emplace_back(50 * i, 50, 50, 50);
-    m_PVPlusBonusSprite = new AnimatedSprite(m_width, GameModel::GAME_FLOOR, 25, 25, BONUS_IMAGE, clipRect_pv);
+    m_PVPlusBonusSprite = new AnimatedSprite(-1, -1, 25, 25, BONUS_IMAGE, clipRect_pv);
     m_PVPlusBonusSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_mega;
     for (int i = 0; i < 5; i++) clipRect_mega.emplace_back(50 * i, 100, 50, 50);
-    m_megaBonusSprite = new AnimatedSprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_mega);
+    m_megaBonusSprite = new AnimatedSprite(-1, -1, 25, 25, BONUS_IMAGE, clipRect_mega);
     m_megaBonusSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_fly;
     for (int i = 0; i < 5; i++) clipRect_fly.emplace_back(50 * i, 150, 50, 50);
-    m_flyBonusSprite = new AnimatedSprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_fly);
+    m_flyBonusSprite = new AnimatedSprite(-1, -1, 25, 25, BONUS_IMAGE, clipRect_fly);
     m_flyBonusSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_slow;
     for (int i = 0; i < 5; i++) clipRect_slow.emplace_back(50 * i, 200, 50, 50);
-    m_slowSpeedBonusSprite = new AnimatedSprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_slow);
+    m_slowSpeedBonusSprite = new AnimatedSprite(-1, -1, 25, 25, BONUS_IMAGE, clipRect_slow);
     m_slowSpeedBonusSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_shield;
     for (int i = 0; i < 5; i++) clipRect_shield.emplace_back(50 * i, 250, 50, 50);
-    m_shieldBonusSprite = new AnimatedSprite(100, 50, 25, 25, BONUS_IMAGE, clipRect_shield);
+    m_shieldBonusSprite = new AnimatedSprite(-1, -1, 25, 25, BONUS_IMAGE, clipRect_shield);
     m_shieldBonusSprite->setOrigin(0, 50);
 
 
@@ -251,6 +251,8 @@ void GameView::loadSprites()
 
     //=== Associate element type to sprite
 
+    //FIXME: Use AnimatedSprite Ctor with no posX and PosY above as useless
+    //FIXME: Replace unneeded members above by function variables
     m_typeToSpriteMap[PLAYER] = m_playerSprite;
     m_typeToSpriteMap[STANDARD_ENEMY] = m_stdEnemySprite;
     m_typeToSpriteMap[TOTEM_ENEMY] = m_totemEnemySprite;
@@ -316,7 +318,7 @@ void GameView::processZonesTransition()
 
     //=== [Transition 3/4 until end] Update pixel creation of near background
 
-    if (m_farTransitionBackground->getX() < m_width / 2 && m_xPixelIntensity >= 0) {
+    if (m_farTransitionBackground->getX() < 0.5f * m_width && m_xPixelIntensity >= 0) {
         m_xPixelIntensity -= 0.009;
         m_yPixelIntensity -= 0.009;
         m_pixelShader->update(m_xPixelIntensity, m_yPixelIntensity);
@@ -384,7 +386,7 @@ void GameView::updateRunningGameElements()
 
         if (m_game->isTransitionPossible()
                 && m_farScrollingBackground->getSeparationPositionX(m_width) > m_width - 100) {
-                    setupTransition();
+            setupTransition();
         }
     }
 
@@ -436,6 +438,8 @@ void GameView::updatePausedGameElements()
     m_controlMusicButton->sync();
     m_coinSprite->sync();
     m_coinSprite->resize(20, 20);
+    m_coinSprite->setPosition(0.033f * m_width, 0.16f * m_height);
+    m_stdEnemySprite->setPosition(0.033f * m_width, 0.225f * m_height);
     m_stdEnemySprite->sync();
     m_stdEnemySprite->resize(20, 20);
 }
@@ -451,21 +455,21 @@ void GameView::updateGameOverElements()
 {
     m_goToHomeButton->sync();
     m_goToHomeButton->resize(30, 30);
-    m_goToHomeButton->setPosition(30, 535);
+    m_goToHomeButton->setPosition(0.033f * m_width, 0.89f * m_height);
     m_goToHomeButton->syncLabelPosition();
 
     m_coinSprite->sync();
     m_coinSprite->resize(25, 25);
-    m_coinSprite->setPosition((float) (m_width / 2.3), 563);
+    m_coinSprite->setPosition(0.43f * m_width, 0.935f * m_height);
 
     m_restartGameButton->sync();
     m_restartGameButton->resize(30, 30);
-    m_restartGameButton->setPosition(840, 535);
+    m_restartGameButton->setPosition(0.933f * m_width, 0.89f * m_height);
     m_restartGameButton->setLabelPosition(mdsf::LabelPosition::LEFT);
     m_restartGameButton->syncLabelPosition();
 
     m_saveScoreButton->sync();
-    m_saveScoreButton->setPositionSelfCentered(m_width / 2, 430);
+    m_saveScoreButton->setPositionSelfCentered(0.5f * m_width, 0.72f * m_height);
     m_saveScoreButton->syncLabelPosition();
 }
 
@@ -492,7 +496,7 @@ void GameView::deleteElements()
             if ((it->first)->getType() == STANDARD_ENEMY
                     || (it->first)->getType() == TOTEM_ENEMY
                     || (it->first)->getType() == BLOCK_ENEMY) {
-                        m_destructedEnemiesMusic.play();
+                m_destructedEnemiesMusic.play();
             }
 
             delete it->second;
@@ -532,7 +536,7 @@ void GameView::synchronize()
                 m_gameThemeMusic.stop();
             }
             updateGameOverElements();
-            m_textManager->syncGameOverText((int) m_game->getGameSpeed());
+            m_textManager->syncGameOverText(static_cast<int>(m_game->getGameSpeed()));
             break;
         default:
             break;
@@ -554,7 +558,7 @@ void GameView::drawRunningGame() const
 
     if (m_game->isTransitionRunning()) {
         m_window->draw(*m_farTransitionBackground);
-        if (m_farTransitionBackground->getX() < m_width / 2) {
+        if (m_farTransitionBackground->getX() < (0.5f * m_width)) {
             m_window->draw(*m_pixelShader);
         }
     }

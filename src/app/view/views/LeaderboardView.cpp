@@ -87,7 +87,7 @@ void LeaderboardView::loadSprites()
 void LeaderboardView::synchronize()
 {
     m_homeFormButton->sync();
-    m_homeFormButton->resize(FORM_BUTTONS_SIZE);
+    m_homeFormButton->resize(SHAPE_BUTTONS_SIZE);
     m_clearLeaderboardRaisedButton->sync();
 
     m_textManager->syncMenuLeaderboardText();

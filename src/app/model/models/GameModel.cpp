@@ -32,7 +32,7 @@ GameModel::GameModel(float width, float height, AppCore* appCore) :
     PersistenceManager::fetchActivatedBonus();
     m_appCore->launchNewGame();
     m_gameSpeed = m_appCore->getDifficulty() * DEFAULT_SPEED;
-    addANewMovableElement(DEFAULT_PLAYER_X, GAME_FLOOR, PLAYER);
+    addANewMovableElement(DEFAULT_PLAYER_X, getGameFloorPosition(), PLAYER);
 
 
     //=== Initialize elements spawn distance
@@ -66,10 +66,11 @@ GameState GameModel::getGameState() const { return m_gameState; }
 bool GameModel::isTransitionRunning() const { return m_inTransition; }
 bool GameModel::isTransitionPossible() const { return m_isTransitionPossible; }
 float GameModel::getGameSpeed() const { return m_gameSpeed; }
-int GameModel::getBonusTimeout() const { return (int) (m_bonusTimeout.count() / 1000); } // return seconds
+int GameModel::getBonusTimeout() const { return static_cast<int>(m_bonusTimeout.count() / 1000); } // return seconds
 Zone GameModel::getCurrentZone() const { return m_currentZone; }
 Player* GameModel::getPlayer() const { return m_player; }
 const std::set<MovableElement*>& GameModel::getNewMElementsArray() const { return m_newMovableElementsArray; }
+unsigned int GameModel::getGameFloorPosition() const { return static_cast<unsigned int>(0.8f * m_height); }
 
 
 //------------------------------------------------
@@ -172,16 +173,16 @@ void GameModel::handleSpeedAndDistance()
  * Handles Elements Creation
  *
  * @author Arthur
- * @date 12/04/16 - 29/12/17
+ * @date 12/04/16 - 06/09/18
  */
 void GameModel::handleMovableElementsCreation()
 {
-    if (!m_isTransitionPossible && checkIfPositionFree(m_width, GAME_FLOOR)) {
+    if (!m_isTransitionPossible && checkIfPositionFree(m_width, getGameFloorPosition())) {
         //=== Add new enemies
 
         if (m_currentEnemySpawnDistance >= m_nextEnemySpawnDistance) {
             float pos_x = m_width;
-            float pos_y = GAME_FLOOR;
+            float pos_y = getGameFloorPosition();
             addANewMovableElement(pos_x, pos_y, STANDARD_ENEMY);
 
             m_currentEnemySpawnDistance = 0;
@@ -198,7 +199,7 @@ void GameModel::handleMovableElementsCreation()
 
         if (m_currentCoinSpawnDistance >= m_nextCoinSpawnDistance) {
             float pos_x = m_width;
-            float pos_y = GAME_FLOOR - RandomUtils::getUniformRandomNumber(0, 100);
+            float pos_y = getGameFloorPosition() - RandomUtils::getUniformRandomNumber(0, 100);
             addANewMovableElement(pos_x, pos_y, COIN);
 
             m_currentCoinSpawnDistance = 0;
@@ -212,7 +213,7 @@ void GameModel::handleMovableElementsCreation()
 
         if (m_currentBonusSpawnDistance >= m_nextBonusSpawnDistance) {
             float pos_x = m_width;
-            float pos_y = BONUS_ROW;
+            float pos_y = 0.63f * m_height;
             addANewMovableElement(pos_x, pos_y, PV_PLUS_BONUS);
 
             m_currentBonusSpawnDistance = 0;
@@ -463,7 +464,7 @@ bool GameModel::checkIfPositionFree(float x, float y) const
  * @param type the type of the new element
  *
  * @author Arthur, Florian
- * @date 25/02/16 - 29/12/17
+ * @date 25/02/16 - 06/09/18
  */
 void GameModel::addANewMovableElement(float posX, float posY, int type)
 {
@@ -471,7 +472,7 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
     MovableElement* newElement = nullptr;
 
     if (type == PLAYER) {
-        m_player = new Player(posX, posY, ELEMENT_SIZE, ELEMENT_SIZE, 2.0, 18.0, GAME_FLOOR, FIELD_WIDTH);
+        m_player = new Player(posX, posY, ELEMENT_SIZE, ELEMENT_SIZE, 2.0, 18.0, getGameFloorPosition(), (int) m_width);
         newElement = m_player;
     } else if (type == STANDARD_ENEMY)//any enemy, transformation in CTOR
     {

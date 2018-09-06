@@ -63,7 +63,7 @@ void CommandsView::loadSprites()
 void CommandsView::synchronize()
 {
     m_homeFormButton->sync();
-    m_homeFormButton->resize(FORM_BUTTONS_SIZE);
+    m_homeFormButton->resize(SHAPE_BUTTONS_SIZE);
 
     m_textManager->syncMenuCommandsText();
 }

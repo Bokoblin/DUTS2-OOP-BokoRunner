@@ -60,7 +60,7 @@ float ScrollingBackground::getSeparationPositionX(unsigned int screenWidth) cons
      * Depending on the current displaying (left-right or right-left),
      * it returns the visible separation position
      */
-    if (m_left->getX() >= -(4 * screenWidth / 3) && m_left->getX() <= screenWidth) {
+    if (m_left->getX() >= -(4.0f * screenWidth / 3) && m_left->getX() <= screenWidth) {
         return m_left->getX() + m_left->getLocalBounds().width;
     } else {
         return m_right->getX() + m_right->getLocalBounds().width;

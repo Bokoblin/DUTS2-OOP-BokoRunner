@@ -168,7 +168,7 @@ void Button::sync()
 {
     if (m_isEnabled) {
         //TODO: With RAISED BUTTON: perform a resize (or a Z-axis change) instead of changing the rectangle clip
-        this->setTextureRect(m_clipRectArray[(int) m_isPressed]);
+        this->setTextureRect(m_clipRectArray[static_cast<int>(m_isPressed)]);
     } else {
         this->setTextureRect(m_clipRectArray[0]);
     }

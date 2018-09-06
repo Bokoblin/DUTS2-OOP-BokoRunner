@@ -25,8 +25,9 @@ SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager
     //=== Create Pages Indicator
 
     for (int i = 0; i < SettingsModel::PAGE_NUMBER; i++) {
-        m_pageIndicators[i] = new mdsf::RadioButton(0, 580, INDICATOR_DIAMETER, "indicator");
-        m_pageIndicators[i]->setPosition(getHalfXPosition() - 12 * SettingsModel::PAGE_NUMBER + 24 * i, 550);
+        m_pageIndicators[i] = new mdsf::RadioButton(
+                getHalfXPosition() - OFFSET * SettingsModel::PAGE_NUMBER + (INDICATOR_DIAMETER + INDICATOR_PADDING) * i,
+                0.92f * m_height, INDICATOR_DIAMETER, "indicator");
     }
 
     //=== Fill button list
@@ -51,7 +52,9 @@ SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager
 
     //=== Init confirm dialog
 
-    m_confirmDialog = new mdsf::Dialog(m_width / 2 - 140, m_height / 2 - 120, 280, 200, "confirm_data_delete");
+    m_confirmDialog = new mdsf::Dialog(
+            getDialogXPosition(CONFIRM_DIALOG_WIDTH), getDialogYPosition(CONFIRM_DIALOG_HEIGHT),
+            CONFIRM_DIALOG_WIDTH, CONFIRM_DIALOG_HEIGHT, "confirm_data_delete");
     m_confirmDialog->hide();
     DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog);
 
@@ -88,14 +91,14 @@ SettingsView::~SettingsView()
  * Loads all sprites used by the settings screen
  *
  * @author Arthur
- * @date 20/05/16 - 04/01/18
+ * @date 20/05/16 - 06/09/18
  */
 void SettingsView::loadSprites()
 {
     //=== Initialize RADIOS buttons
 
-    const int POS_COL_1 = 50; //Column 1 starting x-axis
-    const int POS_COL_2 = POS_COL_1 + (int) (m_width / 2); //Column 2 starting x-axis
+    float POS_COL_1 = 0.06f * m_width; //Column 1 starting x-axis
+    float POS_COL_2 = POS_COL_1 + 0.5f * m_width; //Column 2 starting x-axis
 
     m_englishLangRadio = new mdsf::RadioButton(POS_COL_1, 205, RADIO_DIAMETER, "config_lang_english");
     m_frenchLangRadio = new mdsf::RadioButton(POS_COL_1, 245, RADIO_DIAMETER, "config_lang_french");
@@ -132,7 +135,7 @@ void SettingsView::loadSprites()
     clipRectHome.emplace_back(0, 50, 50, 50);
     clipRectHome.emplace_back(51, 50, 50, 50);
     m_homeFormButton = new mdsf::Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
-    m_homeFormButton->resize(FORM_BUTTONS_SIZE);
+    m_homeFormButton->resize(SHAPE_BUTTONS_SIZE);
 
 
     //=== Initialize RESET button
@@ -430,3 +433,32 @@ bool SettingsView::handleEvents(sf::Event event)
     return true;
 }
 
+
+/**
+ * Get dialog X position from the dialog width
+ *
+ * @param width the dialog width
+ * @return the X position
+ *
+ * @author Arthur
+ * @date 06/09/18
+ */
+float SettingsView::getDialogXPosition(int width) const
+{
+    return getHalfXPosition() - (float) width / 2;
+}
+
+
+/**
+ * Get dialog Y position from the dialog height
+ *
+ * @param height the dialog height
+ * @return the Y position
+ *
+ * @author Arthur
+ * @date 06/09/18
+ */
+float SettingsView::getDialogYPosition(int height) const
+{
+    return getHalfYPosition() - (float) height / 2;
+}

@@ -1,6 +1,8 @@
 #include "ShopView.h"
 #include <math.h>
 
+using Bokoblin::SimpleLogger::Logger;
+
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
 //------------------------------------------------
@@ -57,7 +59,7 @@ void ShopView::loadSprites()
 {
     //=== Initialize COIN Sprite
 
-    m_coinSprite = new mdsf::Sprite((float) m_width / 2 - 60, 53, COIN_SIZE, COIN_SIZE);
+    m_coinSprite = new mdsf::Sprite(0.45f * m_width, 0.2f * m_height, COIN_SIZE, COIN_SIZE);
     m_coinSprite->loadAndApplyTextureFromImageFile(BONUS_IMAGE, sf::IntRect(0, 0, 50, 50));
     m_coinSprite->resize(COIN_SIZE, COIN_SIZE);
 
@@ -67,21 +69,21 @@ void ShopView::loadSprites()
     clipRectHome.emplace_back(0, 50, 50, 50);
     clipRectHome.emplace_back(51, 50, 50, 50);
     m_homeFormButton = new mdsf::Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
-    m_homeFormButton->resize(FORM_BUTTONS_SIZE);
+    m_homeFormButton->resize(SHAPE_BUTTONS_SIZE);
 }
 
 /**
  * Create Cards ans Indicators
  *
  * @author Arthur
- * @date 16/05/16 - 02/01/18
+ * @date 16/05/16 - 06/09/18
  */
 void ShopView::createCards()
 {
     //=== Create Item Cards
     int i = 0;
     for (ShopItem* item : m_shop->getShopItemsArray()) {
-        ShopItemCard* card = new ShopItemCard(i, item);
+        ShopItemCard* card = new ShopItemCard(i, item, m_width, m_height, CARDS_PER_PAGE);
         card->syncWithButtonLabelRetrieval(LocalizationManager::fetchLocalizedString);
         card->hide(); //to display by pages
         m_shopItemCardsArray.push_back(card);
@@ -90,12 +92,12 @@ void ShopView::createCards()
 
     //=== Create Pages Indicator
 
-    unsigned int pageNumber = (unsigned int) (ceil(1.0 * m_shop->getShopItemsArray().size() / 3));
+    unsigned int pageNumber = (unsigned int) (ceil(1.0 * m_shop->getShopItemsArray().size() / CARDS_PER_PAGE));
 
     for (unsigned int j = 0; j < pageNumber; j++) {
         m_pageIndicators[j] = new mdsf::RadioButton(
                 getHalfXPosition() - (HALF_POSITION_OFFSET * pageNumber) + (INDICATOR_DIAMETER + INDICATOR_PADDING) * j,
-                PAGE_INDICATOR_Y_POSITION, INDICATOR_DIAMETER, "indicator");
+                0.92f * m_height, INDICATOR_DIAMETER, "indicator");
     }
 }
 
@@ -105,16 +107,14 @@ void ShopView::createCards()
  * depending on the current page
  *
  * @author Arthur
- * @date 16/05/16 - 02/01/17
+ * @date 16/05/16 - 06/09/18
  */
 void ShopView::syncCards()
 {
-    //display only 3 cards linked to the current page indicator
+    //display only cards linked to the current page indicator
     for (ShopItemCard* card : m_shopItemCardsArray) {
         card->sync();
-        if (card->getId() == 0 + CARDS_PER_PAGE * m_currentIndicator
-                || card->getId() == 1 + CARDS_PER_PAGE * m_currentIndicator
-                || card->getId() == 2 + CARDS_PER_PAGE * m_currentIndicator) {
+        if (card->getId() / CARDS_PER_PAGE == m_currentIndicator) {
             card->show();
         } else {
             card->hide();
@@ -166,7 +166,7 @@ void ShopView::draw() const
 
     //=== Standalone Text Drawing
 
-    m_textManager->drawMenuShopText(m_window);
+    m_textManager->drawMenuShopText(m_window, static_cast<unsigned int>(m_shop->getShopItemsArray().size()));
 
     m_window->display();
 }

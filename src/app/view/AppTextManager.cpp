@@ -72,6 +72,8 @@ void AppTextManager::loadText()
 
     //=== Shop
 
+    m_textList.push_back(m_shopTitleLabel = new mdsf::Text("shop_title"));
+    m_textList.push_back(m_shopNoItemsLabel = new mdsf::Text("shop_no_items"));
     m_textList.push_back(m_walletText = new mdsf::Text("wallet"));
 
     //=== Settings - configuration
@@ -370,7 +372,9 @@ void AppTextManager::syncMenuCommandsText()
  */
 void AppTextManager::syncMenuShopText()
 {
-    m_walletText->setPosition(0.5f * m_width, 0.08f * m_height);
+    m_shopTitleLabel->setPositionSelfCentered(0.5f * m_width, 0.08f * m_height);
+    m_shopNoItemsLabel->setPositionSelfCentered(0.5f * m_width, 0.5f * m_height);
+    m_walletText->setPosition(0.5f * m_width, 0.195f * m_height);
     m_walletText->applyTextFont(ROBOTO_CONDENSED_FONT, DEFAULT_CHAR_SIZE, AppColor::CoinGold);
     m_walletText->setStringFromInt(m_appCore->getWallet());
 }
@@ -559,9 +563,14 @@ void AppTextManager::drawMenuCommandsText(sf::RenderWindow* window) const
  * @author Arthur
  * @date 16/05/16 - 04/01/17
  */
-void AppTextManager::drawMenuShopText(sf::RenderWindow* window) const
+void AppTextManager::drawMenuShopText(sf::RenderWindow* window, unsigned int nbItems) const
 {
+    m_shopTitleLabel->draw(window);
     m_walletText->draw(window);
+
+    if (nbItems == 0) {
+        m_shopNoItemsLabel->draw(window);
+    }
 }
 
 

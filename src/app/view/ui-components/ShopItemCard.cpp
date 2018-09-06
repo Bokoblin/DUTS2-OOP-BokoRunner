@@ -11,40 +11,40 @@ using std::string;
  *
  * @param num the card number
  * @param item the item related
+ * @param screenWidth the screen width
+ * @param screenHeight the screen height
+ * @param cardsPerPage the number of cards per page to adjust x position
  *
  * @author Arthur
- * @date 16/05/16 - 05/09/18
+ * @date 16/05/16 - 06/09/18
  */
-ShopItemCard::ShopItemCard(int num, ShopItem* item) :
-        mdsf::Sprite(INITIAL_POS_X, INITIAL_POS_Y, WIDTH, HEIGHT),
+ShopItemCard::ShopItemCard(int num, ShopItem* item, float screenWidth, float screenHeight, int cardsPerPage) :
+        mdsf::Sprite(0, 0.17f * screenHeight, WIDTH, HEIGHT),
         m_id{num}, m_item{item}, m_title{""}, m_content{""}
 {
     //=== Set position following card id
 
-    if (num % 3 == 0) {
-        setPosition(EDGE_MARGIN, INITIAL_POS_Y);
-    } else if (num % 3 == 1) {
-        setPosition(((float) SCREEN_WIDTH / 2) - (m_width / 2), INITIAL_POS_Y);
-    } else if (num % 3 == 2) {
-        setPosition(SCREEN_WIDTH - m_width - EDGE_MARGIN, INITIAL_POS_Y);
-    }
+    const float INITIAL_POS_Y = 0.3f * screenHeight;
+    const float EDGE_MARGIN = 0.05f * screenWidth;
+    const float PAGE_MARGIN = (screenWidth - (cardsPerPage * m_width) - ((cardsPerPage - 1)) * EDGE_MARGIN) / 2;
+    setPosition(PAGE_MARGIN + (num % cardsPerPage) * (m_width + EDGE_MARGIN), INITIAL_POS_Y);
 
     //=== Init title and content
 
     m_title.applyTextFont(ROBOTO_CONDENSED_FONT, 20, sf::Color::White);
     m_title.setUtf8String(item->getName());
-    m_title.setPositionSelfCentered(getX() + m_width / 2, getY() + 20);
+    m_title.setPositionSelfCentered(getX() + m_width / 2, getY() + 0.067f * m_height);
 
     m_content.applyTextFont(ROBOTO_CONDENSED_FONT, 16, sf::Color::White);
     m_content.setUtf8String(item->getDescription());
-    m_content.setPosition(getX() + 30, getY() + 190);
+    m_content.setPosition(getX() + 0.15f * WIDTH, getY() + 0.633f * m_height);
 
     //=== Init buy button
 
     std::vector<sf::IntRect> flatButtonClipRect;
     flatButtonClipRect.emplace_back(RAISED_BUTTON_DEFAULT);
     flatButtonClipRect.emplace_back(RAISED_BUTTON_PRESSED);
-    m_buyButton = new mdsf::Button(getX() + m_width / 2 - 75, getY() + 250, static_cast<float>(0.75 * WIDTH),
+    m_buyButton = new mdsf::Button(getX() + 0.125f * m_width, getY() + 0.83f * m_height, 0.75f * m_width,
                                    BUTTON_HEIGHT, RECT_BUTTONS_IMAGE, flatButtonClipRect);
 
     loadAndApplyTextureFromImageFile(CARD_IMAGE);

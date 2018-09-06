@@ -79,6 +79,8 @@
     <string name="about_copyright" value="2016-2018 Jolivet Arthur &amp; Laronze Florian"/>
 
     <!--  Shop strings -->
+    <string name="shop_title" value="Boutique"/>
+    <string name="shop_no_items" value="Aucun objet n'est disponible à l'achat pour le moment"/>
     <string name="shop_bought" value="OBTENU"/>
     <string name="shop_purchasable" value="ACHETER"/>
     <string name="shop_dialog_title" value="Acheter cet objet ?"/>

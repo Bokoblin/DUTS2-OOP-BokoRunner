@@ -72,7 +72,7 @@ public:
     void drawMenuCommandsText(sf::RenderWindow* window) const;
     void drawMenuLeaderboardText(sf::RenderWindow* window) const;
     void drawMenuSettingsText(sf::RenderWindow* window, int currentPage) const;
-    void drawMenuShopText(sf::RenderWindow* window) const;
+    void drawMenuShopText(sf::RenderWindow* window, unsigned int nbItems) const;
     void drawSplashScreenText(sf::RenderWindow* window) const;
 
 private:
@@ -91,7 +91,8 @@ private:
     mdsf::Text* m_leaderboardTitleLabel;
 
     //Shop Labels
-    //mdsf::Text *m_shopNoBonusLabel; //TODO: when no bonus available
+    mdsf::Text* m_shopTitleLabel;
+    mdsf::Text *m_shopNoItemsLabel;
 
     //Commands screen Labels
     mdsf::Text* m_commandsTitleLabel;

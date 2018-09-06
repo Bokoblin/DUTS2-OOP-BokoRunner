@@ -39,7 +39,7 @@ limitations under the License.
 
 
 //=== OTHER DEFINITIONS
-#define FORM_BUTTONS_SIZE 30, 30
+#define SHAPE_BUTTONS_SIZE 30, 30
 #define RADIO_DIAMETER 25
 #define INDICATOR_DIAMETER 22
 #define PAUSE_BUTTONS_SIZE 25, 25

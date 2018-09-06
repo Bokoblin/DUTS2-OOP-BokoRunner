@@ -42,7 +42,7 @@ int AppCore::getPerGameCoinsNumber() const { return m_perGameCoinsCollected; }
 int AppCore::getPerGameDistance() const { return m_perGameDistance; }
 int AppCore::getPerGameFlattenedEnemies() const { return m_perGameFlattenedEnemies; }
 int AppCore::getCurrentCoinsNumber() const { return m_currentCoinsNumber; } //for display purpose
-int AppCore::getCurrentDistance() const { return (int)m_currentDistance; }
+int AppCore::getCurrentDistance() const { return static_cast<int>(m_currentDistance); }
 int AppCore::getCurrentFlattenedEnemies() const { return m_currentFlattenedEnemies; } //for display purpose
 int AppCore::getCurrentScore() const { return m_currentScore; } //for display purpose
 int AppCore::getDifficulty() const { return m_currentDifficulty;}
@@ -87,7 +87,7 @@ void AppCore::saveCurrentGame()
     //add current game values to total values
     m_totalCoinsCollected += m_currentCoinsNumber;
     m_wallet += m_currentCoinsNumber;
-    m_totalDistance += (int) m_currentDistance;
+    m_totalDistance += static_cast<int>(m_currentDistance);
     m_totalFlattenedEnemies += m_currentFlattenedEnemies;
     addNewScore(m_currentScore);
 
@@ -96,7 +96,7 @@ void AppCore::saveCurrentGame()
         m_perGameCoinsCollected = m_currentCoinsNumber;
     }
     if (m_currentDistance > m_perGameDistance) {
-        m_perGameDistance = (int) m_currentDistance;
+        m_perGameDistance = static_cast<int>(m_currentDistance);
     }
     if (m_currentFlattenedEnemies > m_perGameFlattenedEnemies) {
         m_perGameFlattenedEnemies = m_currentFlattenedEnemies;
@@ -224,9 +224,8 @@ void AppCore::addNewActivatedBonus(const string& itemLabel)
  */
 void AppCore::calculateFinalScore(float speed, int flattenedEnemiesBonus)
 {
-    m_currentScore = (int) ((speed * m_currentDistance)
-            + (COIN_MULTIPLIER * m_currentCoinsNumber)
-            + flattenedEnemiesBonus);
+    m_currentScore = static_cast<int>(
+            (speed * m_currentDistance) + (COIN_MULTIPLIER * m_currentCoinsNumber) + flattenedEnemiesBonus);
 }
 
 

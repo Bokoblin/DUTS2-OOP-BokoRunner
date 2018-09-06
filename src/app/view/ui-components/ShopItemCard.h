@@ -29,13 +29,13 @@ limitations under the License.
  * which action triggers a buying confirm dialog.
  *
  * @author Arthur
- * @date 16/05/16 - 04/01/18
+ * @date 16/05/16 - 06/09/18
  */
 class ShopItemCard: public mdsf::Sprite
 {
 public:
     //=== CTORs / DTORs
-    ShopItemCard(int id, ShopItem* item);
+    ShopItemCard(int num, ShopItem* item, float screenWidth, float screenHeight, int cardsPerPage);
     ~ShopItemCard() override;
 
     //=== GETTERS
@@ -55,11 +55,8 @@ private:
     mdsf::Text m_content;
     mdsf::Button* m_buyButton;
 
-    static constexpr int INITIAL_POS_X = 0;
-    static constexpr int INITIAL_POS_Y = 150;
     static constexpr int WIDTH = 200;
     static constexpr int HEIGHT = 300;
-    static constexpr int EDGE_MARGIN = 100;
 };
 
 #endif

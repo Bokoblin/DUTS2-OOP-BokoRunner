@@ -177,6 +177,20 @@ void Sprite::resize(float width, float height)
 
 
 /**
+ * Equally resizes the sprite with scaling
+ *
+ * @param size the new width and height
+ *
+ * @author Arthur
+ * @date 11/09/18
+ */
+void Sprite::resize(float size)
+{
+    this->resize(size, size);
+}
+
+
+/**
  * Checks if a point of given coordinates is contained
  * inside this element
  *

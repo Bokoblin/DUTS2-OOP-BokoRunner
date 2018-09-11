@@ -34,7 +34,7 @@ namespace MaterialDesignComponentsForSFML
  * Finally, it allows resize and position containing check.
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 04/01/18
+ * @date 21/02/16 - 11/09/18
  *
  * @see sf::Sprite
  */
@@ -74,6 +74,7 @@ public:
     virtual void draw(sf::RenderWindow *window) const; //TODO: change to rendering target ?
 
     virtual void resize(float width, float height);
+    virtual void resize(float size);
     virtual bool contains(float x, float y) const;
     virtual void applyColor();
 

@@ -68,6 +68,56 @@ Sprite::Sprite(float x, float y, float width, float height, const string &image)
 
 
 /**
+ * Constructs a Sprite with * a size
+ *
+ * @param size the size (same width and height)
+ *
+ * @author Arthur
+ * @date 11/09/18
+ */
+Sprite::Sprite(float size) :
+        Sprite(size, size)
+{}
+
+
+/**
+ * Constructs a Sprite with
+ * a position and a size
+ *
+ * @param x the x-axis coordinate
+ * @param y the y-axis coordinate
+ * @param size the size (same width and height)
+ *
+ * @author Arthur
+ * @date 11/09/18
+ */
+Sprite::Sprite(float x, float y, float size) :
+        Sprite(size, size)
+{
+    this->setPosition(x, y);
+}
+
+
+/**
+ * Constructs a Sprite with
+ * a position, an equal size and an image
+ *
+ * @param x the x-axis coordinate
+ * @param y the y-axis coordinate
+ * @param size the size (same width and height)
+ * @param image the image used for the texture
+ *
+ * @author Arthur
+ * @date 11/09/18
+ */
+Sprite::Sprite(float x, float y, float size, const string &image) :
+        Sprite(x, y, size, size)
+{
+    loadAndApplyTextureFromImageFile(image);
+}
+
+
+/**
  * Copy Constructor
  *
  * @param other another button object to copy

@@ -45,6 +45,9 @@ public:
     Sprite(float width, float height);
     Sprite(float x, float y, float width, float height);
     Sprite(float x, float y, float width, float height, const std::string &image);
+    Sprite(float size);
+    Sprite(float x, float y, float size);
+    Sprite(float x, float y, float size, const std::string &image);
     Sprite(Sprite const& other);
     ~Sprite() override;
 
@@ -71,7 +74,7 @@ public:
 
     //=== METHODS
     virtual void sync();
-    virtual void draw(sf::RenderWindow *window) const; //TODO: change to rendering target ?
+    virtual void draw(sf::RenderWindow *window) const;
 
     virtual void resize(float width, float height);
     virtual void resize(float size);

@@ -85,6 +85,9 @@ protected:
     sf::Font m_font;
     Text m_label;
     LabelPosition m_labelPosition;
+
+    //Constants
+    const int DEFAULT_CHAR_SIZE = 22;
 };
 
 } //namespace MaterialDesignComponentsForSFML

@@ -50,6 +50,8 @@ private:
 
     //Constants
     static constexpr int BACKGROUND_WIDTH = 1200;
+    static constexpr int TITLE_WIDTH = 400;
+    static constexpr int TITLE_HEIGHT = 200;
 
     //=== METHODS
     void loadSprites() override;

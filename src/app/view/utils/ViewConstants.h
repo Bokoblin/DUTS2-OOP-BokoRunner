@@ -23,7 +23,7 @@ limitations under the License.
  * Provides constants to view classes
  *
  * @author Arthur
- * @date 11/02/18
+ * @date 11/02/18 - 11/09/18
  */
 
 //=== Ressources Folders
@@ -68,6 +68,7 @@ static const std::string RECT_BUTTONS_IMAGE = UI_FOLDER + "rect_buttons.png";
 static const std::string SHAPE_BUTTONS_IMAGE = UI_FOLDER + "shape_buttons.png";
 static const std::string GAME_BUTTONS_IMAGE = UI_FOLDER + "game_buttons.png";
 static const std::string CARD_IMAGE = UI_FOLDER + "card.png";
+static const std::string HYPERLINK_IMAGE = UI_FOLDER + "ic_link.png";
 
 //=== Images files : Game components
 static const std::string BALL_IMAGE = GAME_COMPONENTS_FOLDER + "ball.png";

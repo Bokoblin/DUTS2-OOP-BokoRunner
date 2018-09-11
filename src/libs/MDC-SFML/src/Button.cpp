@@ -29,7 +29,7 @@ Button::Button(float x, float y, float width, float height) :
     m_font.loadFromFile(Config::DEFAULT_CONDENSED_FONT);
     m_label.setFont(m_font);
     m_label.setFillColor(sf::Color::White);
-    m_label.setCharacterSize(22);
+    m_label.setCharacterSize(DEFAULT_CHAR_SIZE);
 }
 
 
@@ -78,7 +78,7 @@ Button::Button(float x, float y, float width, float height,
     m_font.loadFromFile(Config::DEFAULT_CONDENSED_FONT);
     m_label.setFont(m_font);
     m_label.setFillColor(sf::Color::White);
-    m_label.setCharacterSize(22);
+    m_label.setCharacterSize(DEFAULT_CHAR_SIZE);
 }
 
 

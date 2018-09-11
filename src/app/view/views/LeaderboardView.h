@@ -28,7 +28,7 @@ limitations under the License.
  * It handles the leaderboard screen's rendering.
  *
  * @author Arthur
- * @date 21/05/16 - 02/01/18
+ * @date 21/05/16 - 10/09/18
  */
 class LeaderboardView: public AbstractView
 {
@@ -51,8 +51,17 @@ private:
     mdsf::Button* m_clearLeaderboardRaisedButton;
     mdsf::Dialog* m_confirmDialog;
 
+    //Constants
+    const int HOME_BUTTONS_SIZE = 30;
+    const int DIALOG_WIDTH = 280;
+    const int DIALOG_HEIGHT = 150;
+    const int RESET_BUTTON_WIDTH = 150;
+    const int RESET_BUTTON_HEIGHT = 36;
+
     //=== METHODS
     void loadSprites() override;
+    float getDialogXPosition(int width) const;
+    float getDialogYPosition(int height) const;
 };
 
 #endif

@@ -35,7 +35,7 @@
     <string name="commands_left" value="A&#009;|&#009;ARROW-LEFT&#009;&#009; To make the player go toward left"/>
     <string name="commands_right" value="D&#009;|&#009;ARROW-RIGHT&#009;   To make the player go toward right"/>
 
-    <!-- Settings strings -->
+    <!-- Settings config strings -->
     <string name="config_title" value="Configuration"/>
     <string name="config_lang_title" value="Languages"/>
     <string name="config_lang_english" value="English"/>
@@ -45,12 +45,16 @@
     <string name="config_easy_mode" value="Easy"/>
     <string name="config_hard_mode" value="Hard"/>
     <string name="config_custom_title" value="Ball customization"/>
-    <string name="config_ball_default_skin" value="Default skin"/>
-    <string name="config_ball_morph_skin" value="Morph skin"/>
-    <string name="config_ball_capsule_skin" value="Capsule skin"/>
     <string name="config_music_title" value="Music"/>
     <string name="config_music_menu" value="Menu"/>
     <string name="config_music_game" value="Game"/>
+
+    <!-- Settings player skins strings -->
+    <string name="player_skin_default" value="Default skin"/>
+    <string name="player_skin_morphing" value="Morph skin"/>
+    <string name="player_skin_capsule" value="Capsule skin"/>
+
+    <!-- Settings stats strings -->
     <string name="stats_title" value="Stats"/>
     <string name="stats_overall_title" value="Cumulative stats"/>
     <string name="stats_per_game_title" value="Per game stats"/>
@@ -62,6 +66,8 @@
     <string name="stats_per_game_enemies" value="Best flattened enemies"/>
     <string name="stats_per_game_coins" value="Best coins collected"/>
     <string name="stats_app_reset" value="CLEAR DATA"/>
+
+    <!-- Settings about strings -->
     <string name="about_title" value="About"/>
     <string name="about_description" value=" Boko Runner is a C++ project we've done as our DUT 2nd semester's
                   &#xA; programming project. Its goal was to put into practice the OOP notions
@@ -74,7 +80,7 @@
     <string name="about_email" value="pro.jolivetarthur@gmail.com"/>
     <string name="about_copyright" value="2016-2018 Jolivet Arthur &amp; Laronze Florian"/>
 
-    <!--  Shop strings -->
+    <!-- Shop strings -->
     <string name="shop_title" value="Shop"/>
     <string name="shop_no_items" value="There is no items to buy yet"/>
     <string name="shop_bought" value="BOUGHT"/>
@@ -94,7 +100,7 @@
     <string name="confirm_leaderboard_delete_dialog_content" value="Both scores difficulty levels
                   &#xA;will be deleted permanently."/>
 
-    <!--  ShopItems strings -->
+    <!-- ShopItems strings -->
     <string name="shop_doubler_name" value="Coin Doubler"/>
     <string name="shop_doubler_desc" value="Double the number &#xA;of coins collected"/>
     <string name="shop_shield_plus_name" value="Shield+"/>
@@ -108,16 +114,16 @@
     <string name="shop_capsule_name" value="Ball - Capsule skin"/>
     <string name="shop_capsule_desc" value="Unlock ball's capsule skin"/>
 
-    <!--  Game strings -->
+    <!-- Game strings -->
     <string name="game_player_life" value="Life"/>
 
-    <!--  Pause Screen strings -->
+    <!-- Pause Screen strings -->
     <string name="pause_resume" value="Resume"/>
     <string name="pause_restart" value="Restart"/>
     <string name="pause_go_to_home" value="Home"/>
     <string name="pause_music" value="Music"/>
 
-    <!--  End Screen strings -->
+    <!-- End Screen strings -->
     <string name="end_title" value="Your score"/>
     <string name="end_speed_multiplier" value="Speed multiplier"/>
     <string name="end_current_distance" value="Distance travelled"/>

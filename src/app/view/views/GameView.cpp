@@ -19,11 +19,11 @@ using Bokoblin::SimpleLogger::Logger;
  * @param gameModel the game model counterpart
  *
  * @author Arthur
- * @date 26/03/16 - 29/01/17
+ * @date 26/03/16 - 11/09/18
  */
 GameView::GameView(sf::RenderWindow* window, AppTextManager* textManager, GameModel* gameModel) :
         AbstractView(window, textManager), m_game{gameModel},
-        m_xPixelIntensity{1}, m_yPixelIntensity{1}
+        m_xPixelIntensity{INITIAL_PIXEL_INTENSITY}, m_yPixelIntensity{INITIAL_PIXEL_INTENSITY}
 {
     loadSprites();
     m_pixelShader = new PixelShader();
@@ -46,12 +46,12 @@ GameView::GameView(sf::RenderWindow* window, AppTextManager* textManager, GameMo
 
     if (m_game->getAppCore()->getBallSkin() == "morphing") {
         vector<sf::IntRect> clipRect;
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < NB_PLAYER_CLIPS; i++)
             clipRect.emplace_back(50 * i, 50, 50, 50);
         m_playerSprite->setClipRectArray(clipRect);
     } else if (m_game->getAppCore()->getBallSkin() == "capsule") {
         vector<sf::IntRect> clipRect;
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < NB_PLAYER_CLIPS; i++)
             clipRect.emplace_back(50 * i, 100, 50, 50);
         m_playerSprite->setClipRectArray(clipRect);
     }
@@ -69,7 +69,7 @@ GameView::GameView(sf::RenderWindow* window, AppTextManager* textManager, GameMo
 /**
  * Destructor
  * @author Arthur
- * @date 26/03/16 - 24/12/16
+ * @date 26/03/16 - 11/09/18
  */
 GameView::~GameView()
 {
@@ -98,6 +98,10 @@ GameView::~GameView()
     delete m_goToHomeButton;
     delete m_controlMusicButton;
     delete m_saveScoreButton;
+
+    //=== Remove game reference
+
+    m_game = nullptr; //Model memory mustn't be freed by the view
 }
 
 
@@ -109,7 +113,7 @@ GameView::~GameView()
  * Loads all sprites used by the game (backgrounds, UI, elements)
  *
  * @author Arthur
- * @date 26/03/16 - 04/02/18
+ * @date 26/03/16 - 11/09/18
  */
 void GameView::loadSprites()
 {
@@ -127,15 +131,16 @@ void GameView::loadSprites()
 
     //=== Initialize UI elements
 
-    m_lifeBoxImage = new mdsf::Sprite(0.117f * m_width, 0.89f * m_height, 200, 100);
+    m_lifeBoxImage = new mdsf::Sprite(0.117f * m_width, 0.89f * m_height, LIFE_BOX_WIDTH, LIFE_BOX_HEIGHT);
     m_lifeBoxImage->loadAndApplyTextureFromImageFile(LIFE_BOX_IMAGE, sf::IntRect(0, 0, 300, 50));
 
-    m_remainingLifeImage = new mdsf::Sprite(0.118f * m_width, 0.89f * m_height, 300, 50);
+    m_remainingLifeImage = new mdsf::Sprite(0.118f * m_width, 0.89f * m_height,
+                                            REMAINING_LIFE_WIDTH, REMAINING_LIFE_HEIGHT);
     m_remainingLifeImage->loadAndApplyTextureFromImageFile(LIFE_BOX_IMAGE, sf::IntRect(0, 51, 300, 50));
 
-    m_distanceIcon = new mdsf::Sprite(0.033f * m_width, 0.058f * m_height, 25, 25);
+    m_distanceIcon = new mdsf::Sprite(0.033f * m_width, 0.055f * m_height, ORIGINAL_DISTANCE_ICON_SIZE);
     m_distanceIcon->loadAndApplyTextureFromImageFile(GAME_BUTTONS_IMAGE, sf::IntRect(0, 150, 50, 50));
-    m_distanceIcon->resize(25, 25);
+    m_distanceIcon->resize(PAUSE_ICONS_SIZE); //TODO: Move resize call to ctor/sync() after setting the target size in ctor
 
 
     //=== Initialize PLAYER sprite
@@ -166,7 +171,7 @@ void GameView::loadSprites()
 
     //=== Initialize COINS & BONUSES sprite
 
-    m_shieldImage = new mdsf::Sprite(-1, -1, 40, 40);
+    m_shieldImage = new mdsf::Sprite(-1, -1, SHIELD_SIZE);
     m_shieldImage->loadAndApplyTextureFromImageFile(SHIELD_IMAGE);
     m_shieldImage->setOrigin(0, 50);
 
@@ -206,8 +211,8 @@ void GameView::loadSprites()
     vector<sf::IntRect> clipRect_resume;
     clipRect_resume.emplace_back(0, 0, 50, 50);
     clipRect_resume.emplace_back(50, 0, 50, 50);
-    m_resumeGameButton = new mdsf::Button(PAUSE_FORM_X, 355, 25, 25, "pause_resume",
-                                          GAME_BUTTONS_IMAGE, clipRect_resume);
+    m_resumeGameButton = new mdsf::Button(PAUSE_FORM_X, 0.592f * m_height, PAUSE_ICONS_SIZE, PAUSE_ICONS_SIZE,
+                                          "pause_resume", GAME_BUTTONS_IMAGE, clipRect_resume);
     m_resumeGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_resumeGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_resumeGameButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
@@ -215,8 +220,8 @@ void GameView::loadSprites()
     vector<sf::IntRect> clipRect_restart;
     clipRect_restart.emplace_back(0, 50, 50, 50);
     clipRect_restart.emplace_back(50, 50, 50, 50);
-    m_restartGameButton = new mdsf::Button(PAUSE_FORM_X, 405, 25, 25, "pause_restart",
-                                           GAME_BUTTONS_IMAGE, clipRect_restart);
+    m_restartGameButton = new mdsf::Button(PAUSE_FORM_X, 0.675f * m_height, PAUSE_ICONS_SIZE, PAUSE_ICONS_SIZE,
+                                           "pause_restart", GAME_BUTTONS_IMAGE, clipRect_restart);
     m_restartGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_restartGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_restartGameButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
@@ -225,8 +230,8 @@ void GameView::loadSprites()
     vector<sf::IntRect> clipRect_home;
     clipRect_home.emplace_back(0, 100, 50, 50);
     clipRect_home.emplace_back(50, 100, 50, 50);
-    m_goToHomeButton = new mdsf::Button(PAUSE_FORM_X, 455, 25, 25, "pause_go_to_home",
-                                        GAME_BUTTONS_IMAGE, clipRect_home);
+    m_goToHomeButton = new mdsf::Button(PAUSE_FORM_X, 0.758f * m_height, PAUSE_ICONS_SIZE, PAUSE_ICONS_SIZE,
+                                        "pause_go_to_home", GAME_BUTTONS_IMAGE, clipRect_home);
     m_goToHomeButton->resize(PAUSE_BUTTONS_SIZE);
     m_goToHomeButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_goToHomeButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
@@ -234,17 +239,17 @@ void GameView::loadSprites()
     vector<sf::IntRect> clipRect_music;
     clipRect_music.emplace_back(0, 200, 50, 50);
     clipRect_music.emplace_back(50, 200, 50, 50);
-    m_controlMusicButton = new mdsf::Button(PAUSE_FORM_X, 535, 25, 25, "pause_music",
-                                            GAME_BUTTONS_IMAGE, clipRect_music);
+    m_controlMusicButton = new mdsf::Button(PAUSE_FORM_X, 0.89f * m_height, PAUSE_ICONS_SIZE, PAUSE_ICONS_SIZE,
+                                            "pause_music", GAME_BUTTONS_IMAGE, clipRect_music);
     m_controlMusicButton->resize(PAUSE_BUTTONS_SIZE);
     m_controlMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_controlMusicButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
 
     vector<sf::IntRect> clipRect_save;
-    clipRect_save.emplace_back(RAISED_BUTTON_DEFAULT);
-    clipRect_save.emplace_back(RAISED_BUTTON_PRESSED);
-    m_saveScoreButton = new mdsf::Button(getHalfXPosition() - 75, 350, 150, BUTTON_HEIGHT, "end_save_button",
-                                         RECT_BUTTONS_IMAGE, clipRect_save);
+    clipRect_save.emplace_back(RAISED_BUTTON_CLIP_DEFAULT);
+    clipRect_save.emplace_back(RAISED_BUTTON_CLIP_PRESSED);
+    m_saveScoreButton = new mdsf::Button(getHalfXPosition() - 0.834f * m_width, 0.583f * m_height, BUTTON_WIDTH,
+                                         BUTTON_HEIGHT, "end_save_button", RECT_BUTTONS_IMAGE, clipRect_save);
     m_saveScoreButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
     m_saveScoreButton->setColor(mdsf::Color::MaterialGreenA700);
 
@@ -318,7 +323,7 @@ void GameView::processZonesTransition()
 
     //=== [Transition 3/4 until end] Update pixel creation of near background
 
-    if (m_farTransitionBackground->getX() < 0.5f * m_width && m_xPixelIntensity >= 0) {
+    if (m_farTransitionBackground->getX() < getHalfXPosition() && m_xPixelIntensity >= 0) {
         m_xPixelIntensity -= 0.009;
         m_yPixelIntensity -= 0.009;
         m_pixelShader->update(m_xPixelIntensity, m_yPixelIntensity);
@@ -371,7 +376,7 @@ void GameView::setupTransition()
  * Updates elements of a running game
  *
  * @author Arthur
- * @date 6/03/16 - 04/02/18
+ * @date 6/03/16 - 11/09/18
  */
 void GameView::updateRunningGameElements()
 {
@@ -395,7 +400,7 @@ void GameView::updateRunningGameElements()
     m_farScrollingBackground->sync();
     m_nearScrollingBackground->sync();
 
-    m_remainingLifeImage->resize(3 * m_game->getPlayer()->getLife(), 50);
+    m_remainingLifeImage->resize(0.01f * REMAINING_LIFE_WIDTH * m_game->getPlayer()->getLife(), REMAINING_LIFE_HEIGHT);
 
     for (auto& it : m_movableElementToSpriteMap) {
         m_game->moveMovableElement(it.first);
@@ -419,7 +424,7 @@ void GameView::updateRunningGameElements()
 
         m_shieldImage->setPosition(m_game->getPlayer()->getPosX() - 5,
                                    m_game->getPlayer()->getPosY() + 5);
-        m_shieldImage->resize(40, 40);
+        m_shieldImage->resize(SHIELD_SIZE);
     }
 }
 
@@ -428,7 +433,7 @@ void GameView::updateRunningGameElements()
  * Updates elements of a paused game
  *
  * @author Arthur
- * @date 6/03/16 - 26/12/17
+ * @date 6/03/16 - 11/09/18
  */
 void GameView::updatePausedGameElements()
 {
@@ -437,11 +442,11 @@ void GameView::updatePausedGameElements()
     m_goToHomeButton->sync();
     m_controlMusicButton->sync();
     m_coinSprite->sync();
-    m_coinSprite->resize(20, 20);
+    m_coinSprite->resize(INGAME_COIN_SIZE);
     m_coinSprite->setPosition(0.033f * m_width, 0.16f * m_height);
     m_stdEnemySprite->setPosition(0.033f * m_width, 0.225f * m_height);
     m_stdEnemySprite->sync();
-    m_stdEnemySprite->resize(20, 20);
+    m_stdEnemySprite->resize(ENEMY_SIZE);
 }
 
 
@@ -449,21 +454,21 @@ void GameView::updatePausedGameElements()
  * Updates elements of a game over
  *
  * @author Arthur
- * @date 6/03/16 - 24/12/17
+ * @date 6/03/16 - 11/09/18
  */
 void GameView::updateGameOverElements()
 {
     m_goToHomeButton->sync();
-    m_goToHomeButton->resize(30, 30);
+    m_goToHomeButton->resize(HOME_BUTTON_SIZE);
     m_goToHomeButton->setPosition(0.033f * m_width, 0.89f * m_height);
     m_goToHomeButton->syncLabelPosition();
 
     m_coinSprite->sync();
-    m_coinSprite->resize(25, 25);
+    m_coinSprite->resize(RESULTS_COIN_SIZE);
     m_coinSprite->setPosition(0.43f * m_width, 0.935f * m_height);
 
     m_restartGameButton->sync();
-    m_restartGameButton->resize(30, 30);
+    m_restartGameButton->resize(HOME_BUTTON_SIZE);
     m_restartGameButton->setPosition(0.933f * m_width, 0.89f * m_height);
     m_restartGameButton->setLabelPosition(mdsf::LabelPosition::LEFT);
     m_restartGameButton->syncLabelPosition();
@@ -548,7 +553,7 @@ void GameView::synchronize()
  * Draws elements of a running game
  *
  * @author Arthur
- * @date 24/12/17
+ * @date 24/12/17 - 11/09/18
  */
 void GameView::drawRunningGame() const
 {
@@ -558,7 +563,7 @@ void GameView::drawRunningGame() const
 
     if (m_game->isTransitionRunning()) {
         m_window->draw(*m_farTransitionBackground);
-        if (m_farTransitionBackground->getX() < (0.5f * m_width)) {
+        if (m_farTransitionBackground->getX() < getHalfXPosition()) {
             m_window->draw(*m_pixelShader);
         }
     }

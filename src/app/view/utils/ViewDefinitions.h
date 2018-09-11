@@ -20,7 +20,7 @@ limitations under the License.
  * Provides pre-processor definitions to view classes
  *
  * @author Arthur
- * @date 16/04/17 - 25/01/18
+ * @date 16/04/17 - 11/09/18
  */
 
 //FIXME: remove some definitions here (const in-class, custom objects, utils shortcut functions in MDSF), add other lost ones
@@ -39,13 +39,12 @@ limitations under the License.
 
 
 //=== OTHER DEFINITIONS
-#define SHAPE_BUTTONS_SIZE 30, 30
-#define RADIO_DIAMETER 25
-#define INDICATOR_DIAMETER 22
-#define PAUSE_BUTTONS_SIZE 25, 25
 #define BUTTON_WIDTH 150
 #define BUTTON_HEIGHT 36
-#define RAISED_BUTTON_DEFAULT 0, 101, BUTTON_WIDTH, BUTTON_HEIGHT
-#define RAISED_BUTTON_PRESSED 151, 101, BUTTON_WIDTH, BUTTON_HEIGHT
+#define ORIGINAL_HOME_BUTTONS_SIZE 50
+#define HOME_BUTTON_CLIP_DEFAULT 0, 50, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE
+#define HOME_BUTTON_CLIP_PRESSED 51, 50, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE
+#define RAISED_BUTTON_CLIP_DEFAULT 0, 101, BUTTON_WIDTH, BUTTON_HEIGHT
+#define RAISED_BUTTON_CLIP_PRESSED 151, 101, BUTTON_WIDTH, BUTTON_HEIGHT
 
 #endif

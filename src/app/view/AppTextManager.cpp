@@ -413,13 +413,13 @@ void AppTextManager::syncGamePausedText()
 {
     m_currentDistanceText->setPosition(0.09f * m_width, 0.05f * m_height);
 
-    m_currentCoinsNbText->setPosition(0.09f * m_width, 0.12f * m_height);
+    m_currentCoinsNbText->setPosition(0.09f * m_width, 0.115f * m_height);
     m_currentCoinsNbText->setFillColor(AppColor::CoinGold);
-    m_currentCoinsNbText->setStringFromInt(m_appCore->getCurrentCoinsNumber());
+    m_currentCoinsNbText->setString(to_string(m_appCore->getCurrentCoinsNumber()) + " coins");
 
     m_flattenedEnemiesText->setPosition(0.09f * m_width, 0.18f * m_height);
     m_flattenedEnemiesText->setFillColor(AppColor::EnemyBlue);
-    m_flattenedEnemiesText->setStringFromInt(m_appCore->getCurrentFlattenedEnemies());
+    m_flattenedEnemiesText->setString(to_string(m_appCore->getCurrentFlattenedEnemies()) + " flattened");
 }
 
 

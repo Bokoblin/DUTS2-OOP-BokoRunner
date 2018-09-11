@@ -74,6 +74,21 @@ private:
     const int INDICATOR_PADDING = 2;
     const int CONFIRM_DIALOG_WIDTH = 320;
     const int CONFIRM_DIALOG_HEIGHT = 200;
+    const int RESET_BUTTON_WIDTH = 150;
+    const int RESET_BUTTON_HEIGHT = 36;
+    const int MUTE_BUTTON_SIZE = 25;
+    const int ORIGINAL_IUT_LOGO_WIDTH = 245;
+    const int ORIGINAL_IUT_LOGO_HEIGHT = 210;
+    const int ORIGINAL_SFML_LOGO_WIDTH = 373;
+    const int ORIGINAL_SFML_LOGO_HEIGHT = 113;
+    const int HOME_BUTTON_SIZE = 30;
+    const int IUT_LOGO_WIDTH = 150;
+    const int IUT_LOGO_HEIGHT = 130;
+    const int SFML_LOGO_WIDTH = 150;
+    const int SFML_LOGO_HEIGHT = 45;
+    const int HYPERLINK_SIZE = 24;
+    const int RADIO_DIAMETER = 25;
+    const int INDICATOR_DIAMETER = 22;
 
     //=== METHODS
     void loadSprites() override;

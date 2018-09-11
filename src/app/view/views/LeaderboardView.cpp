@@ -28,7 +28,8 @@ LeaderboardView::LeaderboardView(sf::RenderWindow* window, AppTextManager* textM
     //=== Init confirm dialog
 
     //TODO: No dialog init at startup
-    m_confirmDialog = new mdsf::Dialog(m_width / 2 - 140, m_height / 2 - 120, 280, 200, "confirm_leaderboard_delete");
+    m_confirmDialog = new mdsf::Dialog(getDialogXPosition(DIALOG_WIDTH), getDialogYPosition(DIALOG_HEIGHT),
+                                       DIALOG_WIDTH, DIALOG_HEIGHT, "confirm_leaderboard_delete");
     m_confirmDialog->hide();
     DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog);
 }
@@ -62,9 +63,10 @@ void LeaderboardView::loadSprites()
     //=== Initialize CLEAR button
 
     std::vector<sf::IntRect> clipRectClear;
-    clipRectClear.emplace_back(RAISED_BUTTON_DEFAULT);
-    clipRectClear.emplace_back(RAISED_BUTTON_PRESSED);
-    m_clearLeaderboardRaisedButton = new mdsf::Button(m_width / 2 - 75, 540, 150, BUTTON_HEIGHT,
+    clipRectClear.emplace_back(RAISED_BUTTON_CLIP_DEFAULT);
+    clipRectClear.emplace_back(RAISED_BUTTON_CLIP_PRESSED);
+    m_clearLeaderboardRaisedButton = new mdsf::Button(getHalfXPosition() - 0.083f * m_width, 0.9f * m_height,
+                                                      RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT,
                                                       "leaderboard_clear_button", RECT_BUTTONS_IMAGE, clipRectClear);
     m_clearLeaderboardRaisedButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
     m_clearLeaderboardRaisedButton->setColor(mdsf::Color::MaterialRed);
@@ -74,7 +76,8 @@ void LeaderboardView::loadSprites()
     std::vector<sf::IntRect> clipRectHome;
     clipRectHome.emplace_back(0, 50, 50, 50);
     clipRectHome.emplace_back(51, 50, 50, 50);
-    m_homeFormButton = new mdsf::Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
+    m_homeFormButton = new mdsf::Button(10, 10, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE,
+                                        SHAPE_BUTTONS_IMAGE, clipRectHome);
 }
 
 
@@ -87,7 +90,7 @@ void LeaderboardView::loadSprites()
 void LeaderboardView::synchronize()
 {
     m_homeFormButton->sync();
-    m_homeFormButton->resize(SHAPE_BUTTONS_SIZE);
+    m_homeFormButton->resize(HOME_BUTTONS_SIZE);
     m_clearLeaderboardRaisedButton->sync();
 
     m_textManager->syncMenuLeaderboardText();
@@ -176,4 +179,33 @@ bool LeaderboardView::handleEvents(sf::Event event)
     }
 
     return true;
+}
+
+/**
+ * Get dialog X position from the dialog width
+ *
+ * @param width the dialog width
+ * @return the X position
+ *
+ * @author Arthur
+ * @date 10/09/18
+ */
+float LeaderboardView::getDialogXPosition(int width) const
+{
+    return getHalfXPosition() - (float) width / 2;
+}
+
+
+/**
+ * Get dialog Y position from the dialog height
+ *
+ * @param height the dialog height
+ * @return the Y position
+ *
+ * @author Arthur
+ * @date 10/09/18
+ */
+float LeaderboardView::getDialogYPosition(int height) const
+{
+    return getHalfYPosition() - (float) height / 2;
 }

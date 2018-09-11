@@ -38,7 +38,7 @@
     <string name="commands_right"
             value="D&#009;|&#009;Flèche de droite&#009;&#009;  Pour déplacer le joueur vers la droite"/>
 
-    <!-- Settings strings -->
+    <!-- Settings config strings -->
     <string name="config_title" value="Configuration"/>
     <string name="config_lang_title" value="Langues"/>
     <string name="config_lang_english" value="Anglais"/>
@@ -48,12 +48,16 @@
     <string name="config_easy_mode" value="Facile"/>
     <string name="config_hard_mode" value="Difficile"/>
     <string name="config_custom_title" value="Customisation de la balle"/>
-    <string name="config_ball_default_skin" value="Apparence par défaut"/>
-    <string name="config_ball_morph_skin" value="Apparence morphing"/>
-    <string name="config_ball_capsule_skin" value="Apparence capsule"/>
     <string name="config_music_title" value="Musique"/>
     <string name="config_music_menu" value="Menu"/>
     <string name="config_music_game" value="Jeu"/>
+
+    <!-- Settings player skins strings -->
+    <string name="player_skin_default" value="Apparence par défaut"/>
+    <string name="player_skin_morphing" value="Apparence morphing"/>
+    <string name="player_skin_capsule" value="Apparence capsule"/>
+
+    <!-- Settings stats strings -->
     <string name="stats_title" value="Statistiques"/>
     <string name="stats_overall_title" value="Statistiques cumulés"/>
     <string name="stats_per_game_title" value="Statistiques par partie"/>
@@ -65,6 +69,8 @@
     <string name="stats_per_game_enemies" value="Meilleures ennemies aplatis"/>
     <string name="stats_per_game_coins" value="Meilleurs ramassage de pieces"/>
     <string name="stats_app_reset" value="RÉINITIALISER"/>
+
+    <!-- Settings about strings -->
     <string name="about_title" value="A propos"/>
     <string name="about_description" value=" Boko Runner est un projet C++ que nous avons réalisé en tant que projet
                   &#xA; de programmation du deuxième semestre de notre DUT. Le but était de
@@ -78,7 +84,7 @@
     <string name="about_email" value="pro.jolivetarthur@gmail.com."/>
     <string name="about_copyright" value="2016-2018 Jolivet Arthur &amp; Laronze Florian"/>
 
-    <!--  Shop strings -->
+    <!-- Shop strings -->
     <string name="shop_title" value="Boutique"/>
     <string name="shop_no_items" value="Aucun objet n'est disponible à l'achat pour le moment"/>
     <string name="shop_bought" value="OBTENU"/>
@@ -99,7 +105,7 @@
     <string name="confirm_leaderboard_delete_dialog_content" value="Les deux niveaux de scores
                   &#xA;seront définitivement supprimés."/>
 
-    <!--  ShopItems strings -->
+    <!-- ShopItems strings -->
     <string name="shop_doubler_name" value="Doubleur de pièce"/>
     <string name="shop_doubler_desc" value="Double le nombre &#xA;de pieces collectées"/>
     <string name="shop_shield_plus_name" value="Bouclier+"/>
@@ -113,16 +119,16 @@
     <string name="shop_capsule_name" value="Balle capsule"/>
     <string name="shop_capsule_desc" value="Débloque l'apparence &#xA;capsule de la balle"/>
 
-    <!--  Game strings -->
+    <!-- Game strings -->
     <string name="game_player_life" value="Vie"/>
 
-    <!--  Pause Screen strings -->
+    <!-- Pause Screen strings -->
     <string name="pause_resume" value="Reprendre"/>
     <string name="pause_restart" value="Recommencer"/>
     <string name="pause_go_to_home" value="Accueil"/>
     <string name="pause_music" value="Musique"/>
 
-    <!--  End Screen strings -->
+    <!-- End Screen strings -->
     <string name="end_title" value="Votre score"/>
     <string name="end_speed_multiplier" value="Multiplicateur vitesse"/>
     <string name="end_current_distance" value="Distance parcourue"/>

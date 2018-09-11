@@ -53,13 +53,13 @@ ShopView::~ShopView()
 /**
  * Loads all sprites used by the shop screen
  * @author Arthur
- * @date 16/05/16 - 26/01/17
+ * @date 16/05/16 - 11/09/18
  */
 void ShopView::loadSprites()
 {
     //=== Initialize COIN Sprite
 
-    m_coinSprite = new mdsf::Sprite(0.45f * m_width, 0.2f * m_height, COIN_SIZE, COIN_SIZE);
+    m_coinSprite = new mdsf::Sprite(0.45f * m_width, 0.2f * m_height, COIN_SIZE);
     m_coinSprite->loadAndApplyTextureFromImageFile(BONUS_IMAGE, sf::IntRect(0, 0, 50, 50));
     m_coinSprite->resize(COIN_SIZE, COIN_SIZE);
 
@@ -69,7 +69,7 @@ void ShopView::loadSprites()
     clipRectHome.emplace_back(0, 50, 50, 50);
     clipRectHome.emplace_back(51, 50, 50, 50);
     m_homeFormButton = new mdsf::Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
-    m_homeFormButton->resize(SHAPE_BUTTONS_SIZE);
+    m_homeFormButton->resize(HOME_BUTTON_SIZE);
 }
 
 /**

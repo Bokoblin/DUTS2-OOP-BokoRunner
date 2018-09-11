@@ -42,8 +42,8 @@ ShopItemCard::ShopItemCard(int num, ShopItem* item, float screenWidth, float scr
     //=== Init buy button
 
     std::vector<sf::IntRect> flatButtonClipRect;
-    flatButtonClipRect.emplace_back(RAISED_BUTTON_DEFAULT);
-    flatButtonClipRect.emplace_back(RAISED_BUTTON_PRESSED);
+    flatButtonClipRect.emplace_back(RAISED_BUTTON_CLIP_DEFAULT);
+    flatButtonClipRect.emplace_back(RAISED_BUTTON_CLIP_PRESSED);
     m_buyButton = new mdsf::Button(getX() + 0.125f * m_width, getY() + 0.83f * m_height, 0.75f * m_width,
                                    BUTTON_HEIGHT, RECT_BUTTONS_IMAGE, flatButtonClipRect);
 

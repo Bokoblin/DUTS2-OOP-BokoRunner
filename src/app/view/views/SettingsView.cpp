@@ -1,7 +1,5 @@
 #include "SettingsView.h"
 
-using std::string;
-
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
 //------------------------------------------------
@@ -15,7 +13,7 @@ using std::string;
  * @param settingsModel the settings model counterpart
  *
  * @author Arthur
- * @date 20/05/16 - 02/01/18
+ * @date 20/05/16 - 06/09/18
  */
 SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager, SettingsModel* settingsModel) :
         AbstractView(window, textManager), m_settings{settingsModel}, m_confirmDialog{nullptr}
@@ -91,7 +89,7 @@ SettingsView::~SettingsView()
  * Loads all sprites used by the settings screen
  *
  * @author Arthur
- * @date 20/05/16 - 06/09/18
+ * @date 20/05/16 - 11/09/18
  */
 void SettingsView::loadSprites()
 {
@@ -100,14 +98,14 @@ void SettingsView::loadSprites()
     float POS_COL_1 = 0.06f * m_width; //Column 1 starting x-axis
     float POS_COL_2 = POS_COL_1 + 0.5f * m_width; //Column 2 starting x-axis
 
-    m_englishLangRadio = new mdsf::RadioButton(POS_COL_1, 205, RADIO_DIAMETER, "config_lang_english");
-    m_frenchLangRadio = new mdsf::RadioButton(POS_COL_1, 245, RADIO_DIAMETER, "config_lang_french");
-    m_spanishLangRadio = new mdsf::RadioButton(POS_COL_1, 285, RADIO_DIAMETER, "config_lang_spanish");
-    m_easyModeRadio = new mdsf::RadioButton(POS_COL_1, 420, RADIO_DIAMETER, "config_easy_mode");
-    m_hardModeRadio = new mdsf::RadioButton(POS_COL_1, 460, RADIO_DIAMETER, "config_hard_mode");
-    m_defaultBallSkinRadio = new mdsf::RadioButton(POS_COL_2, 205, RADIO_DIAMETER, "config_ball_default_skin");
-    m_morphBallSkinRadio = new mdsf::RadioButton(POS_COL_2, 245, RADIO_DIAMETER, "config_ball_morph_skin");
-    m_capsuleBallSkinRadio = new mdsf::RadioButton(POS_COL_2, 285, RADIO_DIAMETER, "config_ball_capsule_skin");
+    m_englishLangRadio = new mdsf::RadioButton(POS_COL_1, 0.342f * m_height, RADIO_DIAMETER, "config_lang_english");
+    m_frenchLangRadio = new mdsf::RadioButton(POS_COL_1, 0.408f * m_height, RADIO_DIAMETER, "config_lang_french");
+    m_spanishLangRadio = new mdsf::RadioButton(POS_COL_1, 0.475f * m_height, RADIO_DIAMETER, "config_lang_spanish");
+    m_easyModeRadio = new mdsf::RadioButton(POS_COL_1, 0.7f * m_height, RADIO_DIAMETER, "config_easy_mode");
+    m_hardModeRadio = new mdsf::RadioButton(POS_COL_1, 0.767f * m_height, RADIO_DIAMETER, "config_hard_mode");
+    m_defaultBallSkinRadio = new mdsf::RadioButton(POS_COL_2, 0.342f * m_height, RADIO_DIAMETER, "player_skin_default");
+    m_morphBallSkinRadio = new mdsf::RadioButton(POS_COL_2, 0.408f * m_height, RADIO_DIAMETER, "player_skin_morphing");
+    m_capsuleBallSkinRadio = new mdsf::RadioButton(POS_COL_2, 0.475f * m_height, RADIO_DIAMETER, "player_skin_capsule");
 
 
     //=== Initialize Music controls
@@ -116,54 +114,52 @@ void SettingsView::loadSprites()
     clipRect_music.emplace_back(0, 200, 50, 50);
     clipRect_music.emplace_back(50, 200, 50, 50);
 
-    m_menuMusicButton = new mdsf::Button(POS_COL_2, 420, 25, 25, "config_music_menu",
-                                         GAME_BUTTONS_IMAGE, clipRect_music);
-    //TODO: fix the resize explicit call (hint: correct size in ctor and resize in self.sync())
-    //Resize should only be used by user of the lib when s.he actually want to change the size
-    m_menuMusicButton->resize(25, 25);
+    m_menuMusicButton = new mdsf::Button(POS_COL_2, 0.7f * m_height, MUTE_BUTTON_SIZE, MUTE_BUTTON_SIZE,
+                                         "config_music_menu", GAME_BUTTONS_IMAGE, clipRect_music);
+    m_menuMusicButton->resize(MUTE_BUTTON_SIZE, MUTE_BUTTON_SIZE);
     m_menuMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
 
-    m_gameMusicButton = new mdsf::Button(POS_COL_2, 460, 25, 25, "config_music_game",
-                                         GAME_BUTTONS_IMAGE, clipRect_music);
-    m_gameMusicButton->resize(25, 25);
+    m_gameMusicButton = new mdsf::Button(POS_COL_2, 0.767f * m_height, MUTE_BUTTON_SIZE, MUTE_BUTTON_SIZE,
+                                         "config_music_game", GAME_BUTTONS_IMAGE, clipRect_music);
+    m_gameMusicButton->resize(MUTE_BUTTON_SIZE, MUTE_BUTTON_SIZE);
     m_gameMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
 
 
     //=== Initialize HOME form button
 
     std::vector<sf::IntRect> clipRectHome;
-    clipRectHome.emplace_back(0, 50, 50, 50);
-    clipRectHome.emplace_back(51, 50, 50, 50);
-    m_homeFormButton = new mdsf::Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
-    m_homeFormButton->resize(SHAPE_BUTTONS_SIZE);
+    clipRectHome.emplace_back(HOME_BUTTON_CLIP_DEFAULT);
+    clipRectHome.emplace_back(HOME_BUTTON_CLIP_PRESSED);
+    m_homeFormButton = new mdsf::Button(10, 10, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE,
+                                        SHAPE_BUTTONS_IMAGE, clipRectHome);
+    m_homeFormButton->resize(HOME_BUTTON_SIZE);
 
 
     //=== Initialize RESET button
 
     std::vector<sf::IntRect> clipRectReset;
-    clipRectReset.emplace_back(RAISED_BUTTON_DEFAULT);
-    clipRectReset.emplace_back(RAISED_BUTTON_PRESSED);
-    m_resetDataRaisedButton = new mdsf::Button(m_width / 2 - 75, 450, 150, BUTTON_HEIGHT, "stats_app_reset",
+    clipRectReset.emplace_back(RAISED_BUTTON_CLIP_DEFAULT);
+    clipRectReset.emplace_back(RAISED_BUTTON_CLIP_PRESSED);
+    m_resetDataRaisedButton = new mdsf::Button(getHalfXPosition() - 0.083f * m_width, 0.75f * m_height,
+                                               RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT, "stats_app_reset",
                                                RECT_BUTTONS_IMAGE, clipRectReset);
     m_resetDataRaisedButton->setColor(mdsf::Color::MaterialRed);
 
 
     //=== Initialize Logo sprites
 
-    m_logoIUT = new mdsf::Sprite(700, 160, 245, 210);
-    m_logoIUT->loadAndApplyTextureFromImageFile(IUT_LOGO_IMAGE);
-    m_logoIUT->resize(150, 130);
+    m_logoIUT = new mdsf::Sprite(0.77f * m_width, 0.267f * m_height,
+                                 ORIGINAL_IUT_LOGO_WIDTH, ORIGINAL_IUT_LOGO_HEIGHT, IUT_LOGO_IMAGE);
+    m_logoIUT->resize(IUT_LOGO_WIDTH, IUT_LOGO_HEIGHT);
 
-    m_logoSFML = new mdsf::Sprite(700, 350, 373, 113);
-    m_logoSFML->loadAndApplyTextureFromImageFile(SFML_LOGO_IMAGE);
-    m_logoSFML->resize(150, 45);
+    m_logoSFML = new mdsf::Sprite(0.77f * m_width, 0.58f * m_height,
+                                  ORIGINAL_SFML_LOGO_WIDTH, ORIGINAL_SFML_LOGO_HEIGHT, SFML_LOGO_IMAGE);
+    m_logoSFML->resize(SFML_LOGO_WIDTH, SFML_LOGO_HEIGHT);
 
     //=== Initialize link icon
 
-    m_iconRepoLink = new mdsf::Sprite(75, 276, 24, 24);
-    m_iconRepoLink->loadAndApplyTextureFromImageFile(IMAGE_FOLDER + "ui/ic_link.png");
-    m_iconEmailLink = new mdsf::Sprite(75, 368, 24, 24);
-    m_iconEmailLink->loadAndApplyTextureFromImageFile(IMAGE_FOLDER + "ui/ic_link.png");
+    m_iconRepoLink = new mdsf::Sprite(0.083f * m_width, 0.46f * m_height, HYPERLINK_SIZE, HYPERLINK_IMAGE);
+    m_iconEmailLink = new mdsf::Sprite(0.083f * m_width, 0.613f * m_height, HYPERLINK_SIZE, HYPERLINK_IMAGE);
 }
 
 

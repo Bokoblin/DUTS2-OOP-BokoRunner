@@ -24,7 +24,7 @@ limitations under the License.
 /**
  * GameView Class
  * @author Arthur, Florian
- * @date 21/02/16 - 27/12/17
+ * @date 21/02/16 - 11/09/18
  */
 class GameView: public AbstractView
 {
@@ -40,12 +40,28 @@ public:
 
 private:
     //=== ATTRIBUTES
-    GameModel* m_game; //to not delete in ~GameView()
+    GameModel* m_game;
     PixelShader* m_pixelShader;
     float m_xPixelIntensity;
     float m_yPixelIntensity;
+
+    //Constants
     const int TRANSITION_SPEED = 10;
     const int PAUSE_FORM_X = 30;
+    const int HOME_BUTTON_SIZE = 30;
+    const int PAUSE_BUTTONS_SIZE = 25;
+    const int INGAME_COIN_SIZE = 20;
+    const int RESULTS_COIN_SIZE = 25;
+    const int ENEMY_SIZE = 20;
+    const int SHIELD_SIZE = 40;
+    const int ORIGINAL_DISTANCE_ICON_SIZE = 50;
+    const int PAUSE_ICONS_SIZE = 25;
+    const int NB_PLAYER_CLIPS = 8;
+    const int LIFE_BOX_WIDTH = 200;
+    const int LIFE_BOX_HEIGHT = 100;
+    const int REMAINING_LIFE_WIDTH = 300;
+    const int REMAINING_LIFE_HEIGHT = 50;
+    static constexpr float INITIAL_PIXEL_INTENSITY = 1;
 
     //Game Graphic Elements
     ScrollingBackground* m_farScrollingBackground;

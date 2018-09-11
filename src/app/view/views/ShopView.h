@@ -66,14 +66,16 @@ private:
     float getDialogYPosition(int height) const;
 
     //=== CONSTANTS
-    static constexpr int CARDS_PER_PAGE = 3; //NOTE: Current screen ratio supports values from 1 to 3 (0 forbidden)
-    static constexpr int ITEM_DIALOG_WIDTH = 250;
-    static constexpr int ITEM_DIALOG_HEIGHT = 200;
-    static constexpr int CONFIRM_DIALOG_WIDTH = 250;
-    static constexpr int CONFIRM_DIALOG_HEIGHT = 100;
-    static constexpr int COIN_SIZE = 25;
-    static constexpr int HALF_POSITION_OFFSET = 10;
-    static constexpr int INDICATOR_PADDING = 2;
+    const int CARDS_PER_PAGE = 3; //NOTE: Current screen ratio supports values from 1 to 3 (0 forbidden)
+    const int ITEM_DIALOG_WIDTH = 250;
+    const int ITEM_DIALOG_HEIGHT = 200;
+    const int CONFIRM_DIALOG_WIDTH = 250;
+    const int CONFIRM_DIALOG_HEIGHT = 100;
+    const int COIN_SIZE = 25;
+    const int HALF_POSITION_OFFSET = 10;
+    const int INDICATOR_PADDING = 2;
+    const int INDICATOR_DIAMETER = 22;
+    const int HOME_BUTTON_SIZE = 30;
 };
 
 #endif

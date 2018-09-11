@@ -54,7 +54,7 @@ SplashScreenView::~SplashScreenView()
  * Loads all sprites used by the splash screen
  *
  * @author Arthur
- * @date 27/03/16 - 24/12/17
+ * @date 27/03/16 - 11/09/18
  */
 void SplashScreenView::loadSprites()
 {
@@ -68,7 +68,8 @@ void SplashScreenView::loadSprites()
     m_farBackground->applyColor();
     m_nearBackground->applyColor();
 
-    m_appTitle = new mdsf::Sprite(getHalfXPosition() - 180, (float) m_height / 6, 400, 200, TITLE_IMAGE);
+    m_appTitle = new mdsf::Sprite(getHalfXPosition() - 0.475f * m_width, 0.167f * m_height,
+                                  TITLE_WIDTH, TITLE_HEIGHT, TITLE_IMAGE);
     m_appTitle->resize(m_appTitle->getWidth() * 0.95f, m_appTitle->getHeight() * 0.95f);
     m_appTitle->setAlpha(0);
     m_appTitle->applyColor();

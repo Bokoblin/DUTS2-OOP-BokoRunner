@@ -26,7 +26,7 @@ limitations under the License.
 /**
  * MenuView Class
  * @author Arthur, Florian
- * @date 26/03/16 - 27/12/17
+ * @date 26/03/16 - 12/09/18
  */
 class MenuView: public AbstractView
 {
@@ -51,7 +51,7 @@ private:
     //Graphic Elements
     ScrollingBackground* m_farBackground;
     ScrollingBackground* m_nearBackground;
-    mdsf::Sprite* m_titleGraphic;
+    mdsf::Sprite* m_titleSprite;
     mdsf::Button* m_playRectButton;
     mdsf::Button* m_quitRectButton;
     mdsf::Button* m_commandsFormButton;
@@ -70,6 +70,9 @@ private:
     const int NEAR_SCROLL_SPEED = 2;
     const int MUSIC_LOOP_START = 4851;
     const int MUSIC_LOOP_END = 28840;
+    const int HOME_BUTTON_SIZE = 50;
+    const int TITLE_WIDTH = 400;
+    const int TITLE_HEIGHT = 200;
 
     //=== METHODS
     void loadMusic();

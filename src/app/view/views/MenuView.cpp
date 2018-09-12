@@ -35,7 +35,7 @@ MenuView::~MenuView()
 {
     delete m_farBackground;
     delete m_nearBackground;
-    delete m_titleGraphic;
+    delete m_titleSprite;
     delete m_playRectButton;
     delete m_quitRectButton;
     delete m_commandsFormButton;
@@ -76,22 +76,23 @@ void MenuView::loadMusic()
  * Loads all sprites used by the menu screen
  *
  * @author Arthur
- * @date 26/03/16 - 24/12/17
+ * @date 26/03/16 - 12/09/18
  */
 void MenuView::loadSprites()
 {
     m_farBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, FAR_SCROLL_SPEED, GAME_FAR_HILL_BACKGROUND);
     m_nearBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, NEAR_SCROLL_SPEED, GAME_NEAR_HILL_BACKGROUND);
 
-    m_titleGraphic = new mdsf::Sprite(getHalfXPosition() - (400 * 0.45f), (float) m_height / 6, 400, 200, TITLE_IMAGE);
-    m_titleGraphic->resize(m_titleGraphic->getWidth() * 0.95f, m_titleGraphic->getHeight() * 0.95f);
+    m_titleSprite = new mdsf::Sprite(getHalfXPosition() - (0.45f * TITLE_WIDTH), 0.167f * m_height,
+                                     TITLE_WIDTH, TITLE_HEIGHT, TITLE_IMAGE);
+    m_titleSprite->resize(m_titleSprite->getWidth() * 0.95f, m_titleSprite->getHeight() * 0.95f);
 
     //=== Initialize PLAY and QUIT buttons
 
     vector<sf::IntRect> clipRectPlay;
     clipRectPlay.emplace_back(0, 0, 150, 80);
     clipRectPlay.emplace_back(151, 0, 150, 80);
-    m_playRectButton = new mdsf::Button(getHalfXPosition() - (float) MAIN_BUTTON_WIDTH / 2, (float) (m_height / 1.5),
+    m_playRectButton = new mdsf::Button(getHalfXPosition() - 0.5f * MAIN_BUTTON_WIDTH, 0.667f * m_height,
                                         MAIN_BUTTON_WIDTH, MAIN_BUTTON_HEIGHT, "menu_play_button",
                                         RECT_BUTTONS_IMAGE, clipRectPlay);
     m_playRectButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
@@ -99,7 +100,7 @@ void MenuView::loadSprites()
     vector<sf::IntRect> clipRectQuit;
     clipRectQuit.emplace_back(0, 0, 150, 80);
     clipRectQuit.emplace_back(151, 0, 150, 80);
-    m_quitRectButton = new mdsf::Button(getHalfXPosition() - (float) MAIN_BUTTON_WIDTH / 2, (float) (m_height / 1.2),
+    m_quitRectButton = new mdsf::Button(getHalfXPosition() - 0.5f * MAIN_BUTTON_WIDTH, 0.833f * m_height,
                                         MAIN_BUTTON_WIDTH, MAIN_BUTTON_HEIGHT, "menu_quit_button",
                                         RECT_BUTTONS_IMAGE, clipRectQuit);
     m_quitRectButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
@@ -110,22 +111,26 @@ void MenuView::loadSprites()
     vector<sf::IntRect> clipRectCommands;
     clipRectCommands.emplace_back(0, 200, 50, 50);
     clipRectCommands.emplace_back(51, 200, 50, 50);
-    m_commandsFormButton = new mdsf::Button(20, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectCommands);
+    m_commandsFormButton = new mdsf::Button(20, 10, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
+                                            SHAPE_BUTTONS_IMAGE, clipRectCommands);
 
     vector<sf::IntRect> clipRectSettings;
     clipRectSettings.emplace_back(0, 0, 50, 50);
     clipRectSettings.emplace_back(51, 0, 50, 50);
-    m_settingsFormButton = new mdsf::Button(20, 530, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectSettings);
+    m_settingsFormButton = new mdsf::Button(20, 0.883f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
+                                            SHAPE_BUTTONS_IMAGE, clipRectSettings);
 
     vector<sf::IntRect> clipRectLeaderboard;
     clipRectLeaderboard.emplace_back(0, 100, 50, 50);
     clipRectLeaderboard.emplace_back(51, 100, 50, 50);
-    m_leaderboardFormButton = new mdsf::Button(830, 530, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectLeaderboard);
+    m_leaderboardFormButton = new mdsf::Button(0.922f * m_width, 0.883f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
+                                               SHAPE_BUTTONS_IMAGE, clipRectLeaderboard);
 
     vector<sf::IntRect> clipRectShop;
     clipRectShop.emplace_back(0, 150, 50, 50);
     clipRectShop.emplace_back(51, 150, 50, 50);
-    m_shopFormButton = new mdsf::Button(830, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectShop);
+    m_shopFormButton = new mdsf::Button(0.922f * m_width, 10, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
+                                        SHAPE_BUTTONS_IMAGE, clipRectShop);
 }
 
 
@@ -214,7 +219,7 @@ void MenuView::draw() const
 
         m_farBackground->draw(m_window);
         m_nearBackground->draw(m_window);
-        m_window->draw(*m_titleGraphic);
+        m_window->draw(*m_titleSprite);
         m_playRectButton->draw(m_window);
         m_quitRectButton->draw(m_window);
         m_window->draw(*m_commandsFormButton);

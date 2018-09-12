@@ -16,7 +16,7 @@ namespace MaterialDesignComponentsForSFML
  * Constructs an empty dialog
  *
  * @author Arthur
- * @date ??/??/16 - 29/12/17
+ * @date 16/05/16 - 29/12/17
  */
 Dialog::Dialog() : Sprite(0, 0), m_context{""}, m_title{""}, m_content{""},
                    m_cancelButtonText{""}, m_okButtonText{""}

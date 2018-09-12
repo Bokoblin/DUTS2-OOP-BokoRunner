@@ -118,7 +118,7 @@ void Text::draw(sf::RenderWindow *window) const
  * @param color the new color
  *
  * @author Arthur
- * @date ??/??/17 - 29/12/17
+ * @date 07/01/17 - 29/12/17
  */
 void Text::applyTextFont(const string &fontFileName, unsigned int charSize, sf::Color color)
 {

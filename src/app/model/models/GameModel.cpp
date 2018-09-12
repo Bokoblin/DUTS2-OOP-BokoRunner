@@ -157,7 +157,7 @@ void GameModel::clearNewMovableElementList()
  * Handles speed and distance increase
  *
  * @author Arthur
- * @date ?? - 04/09/18
+ * @date 04/02/18 - 05/09/18
  */
 void GameModel::handleSpeedAndDistance()
 {
@@ -376,7 +376,7 @@ void GameModel::handleBonusCollision(MovableElementType bonusType)
  * in order to decrease it or to process its expiration
  *
  * @author Arthur
- * @date ?? - 04/02/18
+ * @date 12/04/16 - 04/02/18
  */
 void GameModel::handleBonusTimeout()
 {
@@ -402,7 +402,7 @@ void GameModel::handleBonusTimeout()
  * to authorize a zone transition as soon as possible
  *
  * @author Arthur
- * @date ?? - 04/02/18
+ * @date 30/04/16 - 04/02/18
  */
 void GameModel::conditionallyAllowZoneTransition()
 {
@@ -419,7 +419,7 @@ void GameModel::conditionallyAllowZoneTransition()
  * player's life has ended
  *
  * @author Arthur
- * @date ?? - 04/02/18
+ * @date ??/0?/16 - 04/02/18
  */
 void GameModel::conditionallyTriggerGameOver()
 {

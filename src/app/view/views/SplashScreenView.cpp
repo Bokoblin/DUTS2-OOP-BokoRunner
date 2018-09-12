@@ -68,7 +68,7 @@ void SplashScreenView::loadSprites()
     m_farBackground->applyColor();
     m_nearBackground->applyColor();
 
-    m_appTitle = new mdsf::Sprite(getHalfXPosition() - 0.475f * m_width, 0.167f * m_height,
+    m_appTitle = new mdsf::Sprite(getHalfXPosition() - (0.45f * TITLE_WIDTH), 0.167f * m_height,
                                   TITLE_WIDTH, TITLE_HEIGHT, TITLE_IMAGE);
     m_appTitle->resize(m_appTitle->getWidth() * 0.95f, m_appTitle->getHeight() * 0.95f);
     m_appTitle->setAlpha(0);

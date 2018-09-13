@@ -268,14 +268,14 @@ void GameModel::handleMovableElementsCollisions()
 
 /**
  * Handles Movable Elements Deletion \n
- * Note : Pointers will only be deleted in Dtor
+ * Note : Pointers will only be deleted in destructor
  *
  * @author Arthur
- * @date 12/03/16 - 11/04/16
+ * @date 12/03/16 - 13/09/18
  */
 void GameModel::handleMovableElementsDeletion()
 {
-    std::set<MovableElement*>::iterator it = m_movableElementsArray.begin();
+    auto it = m_movableElementsArray.begin();
     while (it != m_movableElementsArray.end()) {
         if (((*it)->getPosX() + (*it)->getWidth()) < 0 || (*it)->isColliding()) {
             m_movableElementsArray.erase(it);

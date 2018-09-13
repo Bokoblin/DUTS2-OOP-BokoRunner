@@ -45,7 +45,7 @@ public:
     Sprite(float width, float height);
     Sprite(float x, float y, float width, float height);
     Sprite(float x, float y, float width, float height, const std::string &image);
-    Sprite(float size);
+    explicit Sprite(float size);
     Sprite(float x, float y, float size);
     Sprite(float x, float y, float size, const std::string &image);
     Sprite(Sprite const& other);

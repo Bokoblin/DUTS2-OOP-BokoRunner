@@ -87,7 +87,7 @@ protected:
     LabelPosition m_labelPosition;
 
     //Constants
-    const int DEFAULT_CHAR_SIZE = 22;
+    const unsigned int DEFAULT_CHAR_SIZE = 22;
 };
 
 } //namespace MaterialDesignComponentsForSFML

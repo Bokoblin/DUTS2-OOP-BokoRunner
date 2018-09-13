@@ -32,8 +32,9 @@ ShopModel::ShopModel(AppCore* appCore) : AbstractModel(appCore)
  */
 ShopModel::~ShopModel()
 {
-    for (ShopItem* shopItem: m_shopItemsArray)
+    for (ShopItem* shopItem: m_shopItemsArray) {
         delete shopItem;
+    }
 }
 
 

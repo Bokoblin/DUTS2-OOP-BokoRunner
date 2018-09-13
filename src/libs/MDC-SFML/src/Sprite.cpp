@@ -20,11 +20,11 @@ namespace MaterialDesignComponentsForSFML
  * @param height the height
  *
  * @author Arthur
- * @date 21/02/16 - 24/12/17
+ * @date 21/02/16 - 13/09/18
  */
 Sprite::Sprite(float width, float height) :
         m_width{width}, m_height{height}, m_isVisible{true},
-        m_alpha{255}, m_light{255}, m_textureFilename{""}
+        m_alpha{255}, m_light{100}, m_textureFilename{""}, m_initialColor{getColor()}
 {}
 
 
@@ -166,7 +166,7 @@ void Sprite::setVisible(bool visible) { m_isVisible = visible; }
 void Sprite::show() { setVisible(true); }
 void Sprite::hide() { setVisible(false); }
 void Sprite::setAlpha(int alpha) { m_alpha = static_cast<sf::Uint8>((alpha < 0) ? 0 : (alpha > 255) ? 255 : alpha); }
-void Sprite::setLight(int light) { m_light = static_cast<sf::Uint8>((light < 0) ? 0 : (light > 255) ? 255 : light); }
+void Sprite::setLight(int light) { m_light = static_cast<sf::Uint8>((light < 0) ? 0 : (light > 100) ? 100 : light); }
 void Sprite::increaseAlpha(int alphaLevel) { setAlpha(getAlpha() + alphaLevel); }
 void Sprite::decreaseAlpha(int alphaLevel) { setAlpha(getAlpha() - alphaLevel); }
 void Sprite::increaseLight(int lightLevel) { setLight(getLight() + lightLevel); }
@@ -259,11 +259,14 @@ bool Sprite::contains(float x, float y) const {
  * Applies light and alpha values to color
  *
  * @author Arthur
- * @date 24/12/17
+ * @date 24/12/17 - 13/09/18
  */
 void Sprite::applyColor()
 {
-    setColor(sf::Color(m_light, m_light, m_light, m_alpha));
+    setColor(sf::Color(static_cast<sf::Uint8>(m_initialColor.r * 0.01f * m_light),
+                       static_cast<sf::Uint8>(m_initialColor.g * 0.01f * m_light),
+                       static_cast<sf::Uint8>(m_initialColor.b * 0.01f * m_light),
+                       m_alpha));
 }
 
 

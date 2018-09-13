@@ -80,14 +80,14 @@ void SplashScreenView::loadSprites()
  * Synchronizes splash screen elements
  *
  * @author Arthur
- * @date 27/03/16 - 24/12/17
+ * @date 27/03/16 - 13/09/18
  */
 void SplashScreenView::synchronize()
 {
     if (!m_splashModel->isInEndingPhase()) {
         m_textManager->syncSplashScreenText(m_splashModel->isContinueVisible());
     } else {
-        if (m_farBackground->getLight() >= 245) {
+        if (m_farBackground->getLight() == 100) {
             m_splashModel->getAppCore()->setAppState(MENU);
         } else {
             m_splashScreen->decreaseAlpha(15);

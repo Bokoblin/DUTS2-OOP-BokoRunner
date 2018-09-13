@@ -13,6 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+//TODO: TO FIX DRAW WARNING: Don't use sf::Sprite as base (not advised in 2013), use it as member ?
+
 #ifndef MDC_SFML_SPRITE_H
 #define MDC_SFML_SPRITE_H
 
@@ -28,13 +30,13 @@ namespace MaterialDesignComponentsForSFML
 
 /**
  * The Sprite class inherits sf::Sprite.
- * It adds visibility, alpha and light control to a sprite. \n
+ * It adds visibility, alpha and light percentage control to a sprite. \n
  * It keeps the texture (and its filename) used to set sprite texture
  * for sync purpose in inherited classes.
  * Finally, it allows resize and position containing check.
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 11/09/18
+ * @date 21/02/16 - 13/09/18
  *
  * @see sf::Sprite
  */
@@ -95,6 +97,10 @@ protected:
     std::string m_textureFilename;
 
 private:
+    //=== ATTRIBUTES
+    sf::Color m_initialColor;
+
+    //=== METHODS
     void processTextureLoading(const std::string &imageFile);
 };
 

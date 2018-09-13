@@ -158,12 +158,18 @@ bool ScrollingBackground::contains(float x, float y) const
  * Applies light and alpha values to color
  *
  * @author Arthur
- * @date 24/12/17
+ * @date 24/12/17 - 13/09/18
  */
 void ScrollingBackground::applyColor()
 {
-    m_left->setColor(sf::Color(m_light, m_light, m_light, m_alpha));
-    m_right->setColor(sf::Color(m_light, m_light, m_light, m_alpha));
+    m_left->setColor(sf::Color(static_cast<sf::Uint8>(getColor().r * 0.01f * m_light),
+                               static_cast<sf::Uint8>(getColor().g * 0.01f * m_light),
+                               static_cast<sf::Uint8>(getColor().b * 0.01f * m_light),
+                               m_alpha));
+    m_right->setColor(sf::Color(static_cast<sf::Uint8>(getColor().r * 0.01f * m_light),
+                                static_cast<sf::Uint8>(getColor().g * 0.01f * m_light),
+                                static_cast<sf::Uint8>(getColor().b * 0.01f * m_light),
+                                m_alpha));
 }
 
 /**

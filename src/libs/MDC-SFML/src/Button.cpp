@@ -162,10 +162,12 @@ void Button::setLabelDescription(const std::string &description) { m_label.setDe
  * texture rect depending on pressed state)
  *
  * @author Arthur
- * @date 06/04/16 - 04/01/18
+ * @date 06/04/16 - 13/09/18
  */
 void Button::sync()
 {
+    Sprite::applyColor();
+
     if (m_isEnabled) {
         //TODO: With RAISED BUTTON: perform a resize (or a Z-axis change) instead of changing the rectangle clip
         this->setTextureRect(m_clipRectArray[static_cast<int>(m_isPressed)]);

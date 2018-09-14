@@ -87,12 +87,12 @@ void SplashScreenView::synchronize()
     if (!m_splashModel->isInEndingPhase()) {
         m_textManager->syncSplashScreenText(m_splashModel->isContinueVisible());
     } else {
-        if (m_farBackground->getLight() == 100) {
+        if (m_appTitle->getAlpha() >= 245) {
             m_splashModel->getAppCore()->setAppState(MENU);
         } else {
             m_splashScreen->decreaseAlpha(15);
-            m_farBackground->increaseLight(5);
-            m_nearBackground->increaseLight(5);
+            m_farBackground->increaseLight(3);
+            m_nearBackground->increaseLight(3);
             m_appTitle->increaseAlpha(5);
 
             m_splashScreen->sync();
@@ -116,8 +116,8 @@ void SplashScreenView::draw() const
 
     m_farBackground->draw(m_window);
     m_nearBackground->draw(m_window);
-    m_window->draw(*m_appTitle);
-    m_window->draw(*m_splashScreen);
+    m_appTitle->draw(m_window);
+    m_splashScreen->draw(m_window);
 
     if (!m_splashModel->isInEndingPhase()) {
         m_textManager->drawSplashScreenText(m_window);

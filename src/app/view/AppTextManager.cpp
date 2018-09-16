@@ -386,18 +386,18 @@ void AppTextManager::syncMenuShopText()
  * @param bonusTimeout the current bonus timeout
  *
  * @author Arthur
- * @date 02/04/16 - 02/01/18
+ * @date 02/04/16 - 16/09/18
  */
 void AppTextManager::syncGameRunningText(int bonusTimeout)
 {
-    m_playerLifeLabel->setPosition(0.04f * m_width, 0.91f * m_height);
+    m_playerLifeLabel->setPosition(0.035f * m_width, 0.91f * m_height);
 
-    m_currentDistanceLabel->setPosition(0.49f * m_width, 0.91f * m_height);
-    m_currentDistanceText->setPosition(0.71f * m_width, 0.91f * m_height);
+    m_currentDistanceLabel->setPosition(0.55f * m_width, 0.91f * m_height);
+    m_currentDistanceText->setPosition(0.78f * m_width, 0.91f * m_height);
     m_currentDistanceText->setFillColor(sf::Color::White);
     m_currentDistanceText->setString(to_string(m_appCore->getCurrentDistance()) + " m");
 
-    m_bonusTimeoutText->setPosition(0.93f * m_width, 0.91f * m_height);
+    m_bonusTimeoutText->setPosition(0.95f * m_width, 0.91f * m_height);
     m_bonusTimeoutText->setVisible(bonusTimeout > 0);
     m_bonusTimeoutText->setStringFromInt(bonusTimeout);
 }

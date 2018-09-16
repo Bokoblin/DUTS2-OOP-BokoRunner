@@ -89,7 +89,7 @@ SettingsView::~SettingsView()
  * Loads all sprites used by the settings screen
  *
  * @author Arthur
- * @date 20/05/16 - 11/09/18
+ * @date 20/05/16 - 16/09/18
  */
 void SettingsView::loadSprites()
 {
@@ -140,9 +140,9 @@ void SettingsView::loadSprites()
     std::vector<sf::IntRect> clipRectReset;
     clipRectReset.emplace_back(RAISED_BUTTON_CLIP_DEFAULT);
     clipRectReset.emplace_back(RAISED_BUTTON_CLIP_PRESSED);
-    m_resetDataRaisedButton = new mdsf::Button(getHalfXPosition() - 0.083f * m_width, 0.75f * m_height,
+    m_resetDataRaisedButton = new mdsf::Button(getHalfXPosition() - (0.5f * RESET_BUTTON_WIDTH), 0.75f * m_height,
                                                RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT, "stats_app_reset",
-                                               RECT_BUTTONS_IMAGE, clipRectReset);
+                                               RECT_BUTTONS_IMAGE, clipRectReset); //TODO: default image if not provided
     m_resetDataRaisedButton->setFillColor(mdsf::Color::MaterialRed);
 
 

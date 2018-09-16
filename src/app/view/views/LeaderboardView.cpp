@@ -56,7 +56,7 @@ LeaderboardView::~LeaderboardView()
  * Loads all sprites used by the leaderboard screen
  *
  * @author Arthur
- * @date 20/05/16 - 04/01/18
+ * @date 20/05/16 - 16/09/18
  */
 void LeaderboardView::loadSprites()
 {
@@ -65,7 +65,7 @@ void LeaderboardView::loadSprites()
     std::vector<sf::IntRect> clipRectClear;
     clipRectClear.emplace_back(RAISED_BUTTON_CLIP_DEFAULT);
     clipRectClear.emplace_back(RAISED_BUTTON_CLIP_PRESSED);
-    m_clearLeaderboardRaisedButton = new mdsf::Button(getHalfXPosition() - 0.083f * m_width, 0.9f * m_height,
+    m_clearLeaderboardRaisedButton = new mdsf::Button(getHalfXPosition() - (0.5f * RESET_BUTTON_WIDTH), 0.9f * m_height,
                                                       RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT,
                                                       "leaderboard_clear_button", RECT_BUTTONS_IMAGE, clipRectClear);
     m_clearLeaderboardRaisedButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);

@@ -54,12 +54,13 @@ SplashScreenView::~SplashScreenView()
  * Loads all sprites used by the splash screen
  *
  * @author Arthur
- * @date 27/03/16 - 11/09/18
+ * @date 27/03/16 - 16/09/18
  */
 void SplashScreenView::loadSprites()
 {
     m_splashScreen = new mdsf::Sprite(0, 0, m_width, m_height);
     m_splashScreen->loadAndApplyTextureFromImageFile(SPLASH_SCREEN_IMAGE);
+    m_splashScreen->resize(m_width, m_height);
 
     m_farBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, 0, GAME_FAR_HILL_BACKGROUND);
     m_nearBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, 0, GAME_NEAR_HILL_BACKGROUND);

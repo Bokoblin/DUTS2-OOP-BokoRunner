@@ -76,7 +76,7 @@ void MenuView::loadMusic()
  * Loads all sprites used by the menu screen
  *
  * @author Arthur
- * @date 26/03/16 - 12/09/18
+ * @date 26/03/16 - 16/09/18
  */
 void MenuView::loadSprites()
 {
@@ -111,25 +111,25 @@ void MenuView::loadSprites()
     vector<sf::IntRect> clipRectCommands;
     clipRectCommands.emplace_back(0, 200, 50, 50);
     clipRectCommands.emplace_back(51, 200, 50, 50);
-    m_commandsFormButton = new mdsf::Button(20, 10, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
+    m_commandsFormButton = new mdsf::Button(0.02f * m_width, 0.02f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
                                             SHAPE_BUTTONS_IMAGE, clipRectCommands);
 
     vector<sf::IntRect> clipRectSettings;
     clipRectSettings.emplace_back(0, 0, 50, 50);
     clipRectSettings.emplace_back(51, 0, 50, 50);
-    m_settingsFormButton = new mdsf::Button(20, 0.883f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
+    m_settingsFormButton = new mdsf::Button(0.02f * m_width, 0.89f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
                                             SHAPE_BUTTONS_IMAGE, clipRectSettings);
 
     vector<sf::IntRect> clipRectLeaderboard;
     clipRectLeaderboard.emplace_back(0, 100, 50, 50);
     clipRectLeaderboard.emplace_back(51, 100, 50, 50);
-    m_leaderboardFormButton = new mdsf::Button(0.922f * m_width, 0.883f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
+    m_leaderboardFormButton = new mdsf::Button(0.92f * m_width, 0.89f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
                                                SHAPE_BUTTONS_IMAGE, clipRectLeaderboard);
 
     vector<sf::IntRect> clipRectShop;
     clipRectShop.emplace_back(0, 150, 50, 50);
     clipRectShop.emplace_back(51, 150, 50, 50);
-    m_shopFormButton = new mdsf::Button(0.922f * m_width, 10, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
+    m_shopFormButton = new mdsf::Button(0.92f * m_width, 0.02f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
                                         SHAPE_BUTTONS_IMAGE, clipRectShop);
 }
 

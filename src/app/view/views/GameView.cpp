@@ -113,7 +113,7 @@ GameView::~GameView()
  * Loads all sprites used by the game (backgrounds, UI, elements)
  *
  * @author Arthur
- * @date 26/03/16 - 11/09/18
+ * @date 26/03/16 - 16/09/18
  */
 void GameView::loadSprites()
 {
@@ -124,9 +124,12 @@ void GameView::loadSprites()
 
     m_farTransitionBackground = new mdsf::Sprite(m_width, m_height, m_width, m_height, GAME_FAR_T1_BACKGROUND);
     m_bottomBarImage = new mdsf::Sprite(0, 0.87f * m_height, m_width, m_height, BOTTOM_BAR_IMAGE);
+    m_bottomBarImage->resize(m_width, m_height);
 
     m_pauseBackground = new mdsf::Sprite(0, 0, m_width, m_height, PAUSE_HILL_BACKGROUND);
+    m_pauseBackground->resize(m_width, m_height);
     m_endBackground = new mdsf::Sprite(0, 0, m_width, m_height, END_SCREEN_BACKGROUND);
+    m_endBackground->resize(m_width, m_height);
 
 
     //=== Initialize UI elements
@@ -134,8 +137,7 @@ void GameView::loadSprites()
     m_lifeBoxImage = new mdsf::Sprite(0.117f * m_width, 0.89f * m_height, LIFE_BOX_WIDTH, LIFE_BOX_HEIGHT);
     m_lifeBoxImage->loadAndApplyTextureFromImageFile(LIFE_BOX_IMAGE, sf::IntRect(0, 0, 300, 50));
 
-    m_remainingLifeImage = new mdsf::Sprite(0.118f * m_width, 0.89f * m_height,
-                                            REMAINING_LIFE_WIDTH, REMAINING_LIFE_HEIGHT);
+    m_remainingLifeImage = new mdsf::Sprite(0.118f * m_width, 0.89f * m_height, LIFE_LEVEL_WIDTH, LIFE_LEVEL_HEIGHT);
     m_remainingLifeImage->loadAndApplyTextureFromImageFile(LIFE_BOX_IMAGE, sf::IntRect(0, 51, 300, 50));
 
     m_distanceIcon = new mdsf::Sprite(0.033f * m_width, 0.055f * m_height, ORIGINAL_DISTANCE_ICON_SIZE);
@@ -248,7 +250,7 @@ void GameView::loadSprites()
     vector<sf::IntRect> clipRect_save;
     clipRect_save.emplace_back(RAISED_BUTTON_CLIP_DEFAULT);
     clipRect_save.emplace_back(RAISED_BUTTON_CLIP_PRESSED);
-    m_saveScoreButton = new mdsf::Button(getHalfXPosition() - 0.834f * m_width, 0.583f * m_height, BUTTON_WIDTH,
+    m_saveScoreButton = new mdsf::Button(getHalfXPosition() - (0.5f * BUTTON_WIDTH), 0.583f * m_height, BUTTON_WIDTH,
                                          BUTTON_HEIGHT, "end_save_button", RECT_BUTTONS_IMAGE, clipRect_save);
     m_saveScoreButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
     m_saveScoreButton->setFillColor(mdsf::Color::MaterialGreenA700);
@@ -400,7 +402,7 @@ void GameView::updateRunningGameElements()
     m_farScrollingBackground->sync();
     m_nearScrollingBackground->sync();
 
-    m_remainingLifeImage->resize(0.01f * REMAINING_LIFE_WIDTH * m_game->getPlayer()->getLife(), REMAINING_LIFE_HEIGHT);
+    m_remainingLifeImage->resize(0.01f * LIFE_LEVEL_WIDTH * m_game->getPlayer()->getLife(), LIFE_LEVEL_HEIGHT);
 
     for (auto& it : m_movableElementToSpriteMap) {
         m_game->moveMovableElement(it.first);
@@ -465,7 +467,7 @@ void GameView::updateGameOverElements()
 
     m_coinSprite->sync();
     m_coinSprite->resize(RESULTS_COIN_SIZE);
-    m_coinSprite->setPosition(0.43f * m_width, 0.935f * m_height);
+    m_coinSprite->setPosition(0.43f * m_width, 0.936f * m_height);
 
     m_restartGameButton->sync();
     m_restartGameButton->resize(HOME_BUTTON_SIZE);

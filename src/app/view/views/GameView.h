@@ -59,8 +59,8 @@ private:
     const int NB_PLAYER_CLIPS = 8;
     const int LIFE_BOX_WIDTH = 200;
     const int LIFE_BOX_HEIGHT = 100;
-    const int REMAINING_LIFE_WIDTH = 300;
-    const int REMAINING_LIFE_HEIGHT = 50;
+    const int LIFE_LEVEL_WIDTH = 300;
+    const int LIFE_LEVEL_HEIGHT = 50;
     static constexpr float INITIAL_PIXEL_INTENSITY = 1;
 
     //Game Graphic Elements

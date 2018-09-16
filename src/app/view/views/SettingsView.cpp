@@ -437,11 +437,11 @@ bool SettingsView::handleEvents(sf::Event event)
  * @return the X position
  *
  * @author Arthur
- * @date 06/09/18
+ * @date 06/09/18 - 16/09/18
  */
 float SettingsView::getDialogXPosition(int width) const
 {
-    return getHalfXPosition() - (float) width / 2;
+    return getHalfXPosition() - 0.5f * width;
 }
 
 
@@ -452,9 +452,9 @@ float SettingsView::getDialogXPosition(int width) const
  * @return the Y position
  *
  * @author Arthur
- * @date 06/09/18
+ * @date 06/09/18 - 16/09/18
  */
 float SettingsView::getDialogYPosition(int height) const
 {
-    return getHalfYPosition() - (float) height / 2;
+    return getHalfYPosition() - 0.5f * height;
 }

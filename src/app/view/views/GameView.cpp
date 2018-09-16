@@ -378,7 +378,7 @@ void GameView::setupTransition()
  * Updates elements of a running game
  *
  * @author Arthur
- * @date 6/03/16 - 11/09/18
+ * @date 6/03/16 - 16/09/18
  */
 void GameView::updateRunningGameElements()
 {
@@ -387,7 +387,7 @@ void GameView::updateRunningGameElements()
     if (m_game->isTransitionRunning()) {
         processZonesTransition();
     } else {
-        m_farScrollingBackground->setScrollingSpeed((float) (0.5 * m_game->getGameSpeed()));
+        m_farScrollingBackground->setScrollingSpeed(0.5f * m_game->getGameSpeed());
         m_nearScrollingBackground->setScrollingSpeed(m_game->getGameSpeed());
         m_nearScrollingBackground->setAlpha(255);
 

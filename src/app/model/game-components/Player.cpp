@@ -4,7 +4,7 @@
  * Constructs a player with
  * coordinates, a size, a moving vector
  * @author Arthur, Florian
- * @date 22/02/16 - 05/09/18
+ * @date 22/02/16 - 16/09/18
  *
  * @param x the x position
  * @param y the y position
@@ -14,10 +14,11 @@
  * @param mvY the y moving direction
  * @param floor the floor y position
  * @param fieldWidth the total field width
+ * @param jumpLimit the jump limit in height
  */
-Player::Player(float x, float y, float w, float h, float mvX, float mvY, const int floor, const int fieldWidth) :
+Player::Player(float x, float y, float w, float h, float mvX, float mvY, int floor, int fieldWidth, int jumpLimit) :
         MovableElement(x, y, w, h, mvX, mvY), m_state{NORMAL}, m_life{MAX_LIFE}, m_initialWidth{w}, m_initialHeight{h},
-        m_floor_position{floor}, m_fieldWidth{fieldWidth}, m_gravitation{INITIAL_GRAVITATION},
+        m_floorPosition{floor}, m_fieldWidth{fieldWidth}, m_jumpLimit{jumpLimit}, m_gravitation{INITIAL_GRAVITATION},
         m_acceleration{INITIAL_ACCELERATION}, m_isJumping{false}, m_isFlying{false}, m_isDecelerating{false}
 {
     m_elementType = PLAYER;
@@ -58,13 +59,13 @@ void Player::setLife(int new_life)
 /**
  * Player Moving
  * @author Florian
- * @date  12/03/16 - 05/09/18
+ * @date  12/03/16 - 16/09/18
  */
 void Player::move()
 {
-    m_isFlying = m_width < m_floor_position;
+    m_isFlying = m_width < m_floorPosition;
 
-    if (m_posY < JUMP_LIMIT) {
+    if (m_posY < m_jumpLimit) {
         m_isJumping = false;
     }
 
@@ -76,7 +77,7 @@ void Player::move()
         m_vectorBall.first /= 1 + m_moveX / PLAYER_RATE;
     }
 
-    if (m_isJumping && m_posY >= m_floor_position) {
+    if (m_isJumping && m_posY >= m_floorPosition) {
         m_vectorBall.second = -m_acceleration * m_gravitation / PLAYER_RATE;
         m_posY += m_vectorBall.second / PLAYER_RATE;
     }
@@ -86,14 +87,14 @@ void Player::move()
         m_posY += m_vectorBall.second / PLAYER_RATE;
     }
 
-    if (m_posY == m_floor_position && m_isFlying) {
+    if (m_posY == m_floorPosition && m_isFlying) {
         m_isFlying = false;
         m_isJumping = false;
-        m_posY = m_floor_position;
+        m_posY = m_floorPosition;
     }
-    if (m_posY > m_floor_position) {
+    if (m_posY > m_floorPosition) {
         m_vectorBall.second = 0;
-        m_posY = m_floor_position;
+        m_posY = m_floorPosition;
     }
 
     //=== Update player position
@@ -112,9 +113,9 @@ void Player::move()
 
     m_posY += m_vectorBall.second;
 
-    if (m_posY >= m_floor_position + PRECISION) {
+    if (m_posY >= m_floorPosition + PRECISION) {
         m_vectorBall.second = 0;
-        m_posY = m_floor_position;
+        m_posY = m_floorPosition;
     }
 }
 

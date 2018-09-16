@@ -36,7 +36,7 @@ Dialog::Dialog() : Sprite(0, 0), m_context{""}, m_title{""}, m_content{""},
  * @param context the context to make a contextual dialog
  *
  * @author Arthur
- * @date 02/01/17 - 02/01/18
+ * @date 02/01/17 - 16/09/18
  */
 Dialog::Dialog(float x, float y, float width, float height, const string& context) :
         Sprite(x, y, width, height), m_context{context}, m_title{""}, m_content{""},
@@ -56,10 +56,10 @@ Dialog::Dialog(float x, float y, float width, float height, const string& contex
     m_content.setPosition(x + 24, y + height / 3);
 
     m_cancelButtonText.applyTextFont(Config::DEFAULT_BOLD_FONT, 14, Color::MaterialTeal);
-    m_cancelButtonText.setPosition((float) (x + 0.5 * m_width), y + height - 30);
+    m_cancelButtonText.setPosition(x + 0.5f * m_width, y + height - 30);
 
     m_okButtonText.applyTextFont(Config::DEFAULT_BOLD_FONT, 14, Color::MaterialTeal);
-    m_okButtonText.setPosition((float) (x + 0.8 * m_width), y + height - 30);
+    m_okButtonText.setPosition(x + 0.8f * m_width, y + height - 30);
 }
 
 

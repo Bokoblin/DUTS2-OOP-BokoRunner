@@ -292,11 +292,11 @@ void ShopView::processBuyConfirmOkAction()
  * @return the X position
  *
  * @author Arthur
- * @date 06/09/18
+ * @date 06/09/18 - 16/09/18
  */
 float ShopView::getDialogXPosition(int width) const
 {
-    return getHalfXPosition() - (float) width / 2;
+    return getHalfXPosition() - 0.5f * width;
 }
 
 
@@ -307,9 +307,9 @@ float ShopView::getDialogXPosition(int width) const
  * @return the Y position
  *
  * @author Arthur
- * @date 06/09/18
+ * @date 06/09/18 - 16/09/18
  */
 float ShopView::getDialogYPosition(int height) const
 {
-    return getHalfYPosition() - (float) height / 2;
+    return getHalfYPosition() - 0.5f * height;
 }

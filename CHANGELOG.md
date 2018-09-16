@@ -1,8 +1,5 @@
 # Changelog #
 
-Project Name : Boko Runner<br>
-Developers   : Arthur JOLIVET and Florian LARONZE
-
 Current version : v2.0.0-dev
 
 ---
@@ -12,15 +9,18 @@ Current version : v2.0.0-dev
 <a name="v2.0.0-dev"></a>
 ## [v2.0.0-dev](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/release...dev)
 
+TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
+
 #### Breaking changes
 - **Structure refactoring**
   - **abstraction inheritance**: introducing `AbstractModel` and `AbstractView` classes
   - **abstraction inheritance**: more classes inherit from abstract classes
-  - **app data handling**: `Database` split into three classes
+  - **app data handling**: `Database` split into three classes and helpers
     - `AppCore` for app data and states
     - `PersistenceManager` to handle app data persistence and abstract data retrieval/saving
     - `LocalizationManager` to handle localization and abstract strings retrieval
     - `XMLHelper` for generic XML operations
+    - `FileBasedPersistence` for specialized persistence: text-based
   - **ui components**: Generic UI components are now dissociated from app and grouped under *MDC-SFML'
   - **window**: life-cycle now handled only in `main.cpp`
   - **events**: 
@@ -81,6 +81,10 @@ Current version : v2.0.0-dev
     - **slogger**: a simple logger for the app
     - **xmlhelper**: an xml helper to abstract pugi usage
     - **mdcsfml**: a UI lib implementing material components above SFML components
+
+#### Known issues
+- **Game**: Endless jump in fullscreen mode (unavailable currently)
+- **Game**: Endless transition in fullscreen mode (unavailable currently)
 
 <br>
 

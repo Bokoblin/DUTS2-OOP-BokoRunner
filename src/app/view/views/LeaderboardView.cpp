@@ -188,11 +188,11 @@ bool LeaderboardView::handleEvents(sf::Event event)
  * @return the X position
  *
  * @author Arthur
- * @date 10/09/18
+ * @date 10/09/18 - 16/09/18
  */
 float LeaderboardView::getDialogXPosition(int width) const
 {
-    return getHalfXPosition() - (float) width / 2;
+    return getHalfXPosition() - 0.5f * width;
 }
 
 
@@ -203,9 +203,9 @@ float LeaderboardView::getDialogXPosition(int width) const
  * @return the Y position
  *
  * @author Arthur
- * @date 10/09/18
+ * @date 10/09/18 - 16/09/18
  */
 float LeaderboardView::getDialogYPosition(int height) const
 {
-    return getHalfYPosition() - (float) height / 2;
+    return getHalfYPosition() - 0.5f * height;
 }

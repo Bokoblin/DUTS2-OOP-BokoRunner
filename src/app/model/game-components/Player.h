@@ -27,13 +27,13 @@ limitations under the License.
  * The Player class inherited from MovableElements
  * contains player's logic and behaviours
  * @author Arthur, Florian
- * @date 22/02/16 - 05/09/18
+ * @date 22/02/16 - 16/09/18
  */
 class Player: public MovableElement
 {
 public:
     //=== CTORs / DTORs
-    Player(float x, float y, float w, float h, float mvX, float mvY, int floor, int fieldWidth);
+    Player(float x, float y, float w, float h, float mvX, float mvY, int floor, int fieldWidth, int jumpLimit);
     ~Player() override;
 
     //=== GETTERS
@@ -59,8 +59,9 @@ private:
     int m_life;
     float m_initialWidth;
     float m_initialHeight;
-    int m_floor_position;
+    int m_floorPosition;
     int m_fieldWidth;
+    int m_jumpLimit;
     float m_gravitation;
     float m_acceleration;
     bool m_isJumping;
@@ -70,7 +71,6 @@ private:
 
     //Constants
     static constexpr int MAX_LIFE = 100;
-    static constexpr int JUMP_LIMIT = 380;
     static constexpr int PLAYER_RATE = 30;
     static constexpr int DIRECTION_PADDING = 10;
     static constexpr float PRECISION = 1.0;

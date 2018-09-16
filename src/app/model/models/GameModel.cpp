@@ -464,7 +464,7 @@ bool GameModel::checkIfPositionFree(float x, float y) const
  * @param type the type of the new element
  *
  * @author Arthur, Florian
- * @date 25/02/16 - 06/09/18
+ * @date 25/02/16 - 16/09/18
  */
 void GameModel::addANewMovableElement(float posX, float posY, int type)
 {
@@ -472,15 +472,14 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
     MovableElement* newElement = nullptr;
 
     if (type == PLAYER) {
-        m_player = new Player(posX, posY, ELEMENT_SIZE, ELEMENT_SIZE, 2.0, 18.0, getGameFloorPosition(), (int) m_width);
+        m_player = new Player(posX, posY, ELEMENT_SIZE, ELEMENT_SIZE, 2.0, 18.0, getGameFloorPosition(),
+                              static_cast<int>(m_width), static_cast<int>(0.515f * m_height));
         newElement = m_player;
-    } else if (type == STANDARD_ENEMY)//any enemy, transformation in CTOR
-    {
+    } else if (type == STANDARD_ENEMY) { //any enemy, transformation in CTOR
         newElement = new Enemy(posX, posY, ELEMENT_SIZE, ELEMENT_SIZE, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
     } else if (type == COIN) {
         newElement = new Coin(posX, posY, ITEM_SIZE, ITEM_SIZE, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
-    } else if (type == PV_PLUS_BONUS) //any bonus, transformation in CTOR
-    {
+    } else if (type == PV_PLUS_BONUS) { //any bonus, transformation in CTOR
         newElement = new Bonus(posX, posY, ITEM_SIZE, ITEM_SIZE, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
     } else {
         Logger::printErrorOnConsole("Undefined element type");

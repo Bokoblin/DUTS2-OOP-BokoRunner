@@ -162,11 +162,11 @@ bool ScrollingBackground::contains(float x, float y) const
  */
 void ScrollingBackground::applyColor()
 {
-    m_left->setColor(sf::Color(static_cast<sf::Uint8>(getColor().r * 0.01f * m_light),
+    m_left->setFillColor(sf::Color(static_cast<sf::Uint8>(getColor().r * 0.01f * m_light),
                                static_cast<sf::Uint8>(getColor().g * 0.01f * m_light),
                                static_cast<sf::Uint8>(getColor().b * 0.01f * m_light),
                                m_alpha));
-    m_right->setColor(sf::Color(static_cast<sf::Uint8>(getColor().r * 0.01f * m_light),
+    m_right->setFillColor(sf::Color(static_cast<sf::Uint8>(getColor().r * 0.01f * m_light),
                                 static_cast<sf::Uint8>(getColor().g * 0.01f * m_light),
                                 static_cast<sf::Uint8>(getColor().b * 0.01f * m_light),
                                 m_alpha));

@@ -123,12 +123,12 @@ Sprite::Sprite(float x, float y, float size, const string &image) :
  * @param other another button object to copy
  *
  * @author Arthur, Florian
- * @date 25/02/16 - 27/12/17
+ * @date 25/02/16 - 16/09/18
  */
 Sprite::Sprite(Sprite const& other) :
         sf::Sprite(other), m_width(other.m_width), m_height(other.m_height),
         m_isVisible{other.m_isVisible}, m_alpha{other.m_alpha}, m_light{other.m_light},
-        m_textureFilename{other.m_textureFilename}
+        m_textureFilename{other.m_textureFilename}, m_initialColor{other.m_initialColor}
 {
     this->setPosition(other.getPosition());
     this->setTexture(*other.getTexture(), true);
@@ -171,6 +171,11 @@ void Sprite::increaseAlpha(int alphaLevel) { setAlpha(getAlpha() + alphaLevel); 
 void Sprite::decreaseAlpha(int alphaLevel) { setAlpha(getAlpha() - alphaLevel); }
 void Sprite::increaseLight(int lightLevel) { setLight(getLight() + lightLevel); }
 void Sprite::decreaseLight(int lightLevel) { setLight(getLight() - lightLevel); }
+void Sprite::setFillColor(const sf::Color& color)
+{
+    m_initialColor = color;
+    sf::Sprite::setColor(color);
+}
 
 
 //------------------------------------------------
@@ -263,7 +268,7 @@ bool Sprite::contains(float x, float y) const {
  */
 void Sprite::applyColor()
 {
-    setColor(sf::Color(static_cast<sf::Uint8>(m_initialColor.r * 0.01f * m_light),
+    setFillColor(sf::Color(static_cast<sf::Uint8>(m_initialColor.r * 0.01f * m_light),
                        static_cast<sf::Uint8>(m_initialColor.g * 0.01f * m_light),
                        static_cast<sf::Uint8>(m_initialColor.b * 0.01f * m_light),
                        m_alpha));

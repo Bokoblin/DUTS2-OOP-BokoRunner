@@ -87,10 +87,10 @@ void ShopItemCard::sync()
 
     if (m_item->isBought()) {
         m_buyButton->setEnabled(false);
-        m_buyButton->setColor(mdsf::Color::MaterialRed);
+        m_buyButton->setFillColor(mdsf::Color::MaterialRed);
     } else {
         m_buyButton->setEnabled(true);
-        m_buyButton->setColor(mdsf::Color::MaterialGreenA700);
+        m_buyButton->setFillColor(mdsf::Color::MaterialGreenA700);
     }
 
     m_buyButton->sync();

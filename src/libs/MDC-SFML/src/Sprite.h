@@ -73,10 +73,12 @@ public:
     virtual void decreaseAlpha(int alphaLevel);
     virtual void increaseLight(int lightLevel);
     virtual void decreaseLight(int lightLevel);
+    void setColor(const sf::Color& color) = delete; //see above to fix
+    void setFillColor(const sf::Color& color);
 
     //=== METHODS
     virtual void sync();
-    virtual void draw(sf::RenderWindow *window) const;
+    virtual void draw(sf::RenderWindow *window) const; //see above to fix
 
     virtual void resize(float width, float height);
     virtual void resize(float size);

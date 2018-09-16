@@ -143,7 +143,7 @@ void SettingsView::loadSprites()
     m_resetDataRaisedButton = new mdsf::Button(getHalfXPosition() - 0.083f * m_width, 0.75f * m_height,
                                                RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT, "stats_app_reset",
                                                RECT_BUTTONS_IMAGE, clipRectReset);
-    m_resetDataRaisedButton->setColor(mdsf::Color::MaterialRed);
+    m_resetDataRaisedButton->setFillColor(mdsf::Color::MaterialRed);
 
 
     //=== Initialize Logo sprites

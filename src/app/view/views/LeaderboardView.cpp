@@ -69,7 +69,7 @@ void LeaderboardView::loadSprites()
                                                       RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT,
                                                       "leaderboard_clear_button", RECT_BUTTONS_IMAGE, clipRectClear);
     m_clearLeaderboardRaisedButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
-    m_clearLeaderboardRaisedButton->setColor(mdsf::Color::MaterialRed);
+    m_clearLeaderboardRaisedButton->setFillColor(mdsf::Color::MaterialRed);
 
     //=== Initialize HOME form button
 

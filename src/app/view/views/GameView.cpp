@@ -251,7 +251,7 @@ void GameView::loadSprites()
     m_saveScoreButton = new mdsf::Button(getHalfXPosition() - 0.834f * m_width, 0.583f * m_height, BUTTON_WIDTH,
                                          BUTTON_HEIGHT, "end_save_button", RECT_BUTTONS_IMAGE, clipRect_save);
     m_saveScoreButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
-    m_saveScoreButton->setColor(mdsf::Color::MaterialGreenA700);
+    m_saveScoreButton->setFillColor(mdsf::Color::MaterialGreenA700);
 
 
     //=== Associate element type to sprite

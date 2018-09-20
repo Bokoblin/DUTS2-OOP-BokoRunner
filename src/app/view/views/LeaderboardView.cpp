@@ -42,7 +42,7 @@ LeaderboardView::LeaderboardView(sf::RenderWindow* window, AppTextManager* textM
  */
 LeaderboardView::~LeaderboardView()
 {
-    delete m_homeFormButton;
+    delete m_homeButton;
     delete m_clearLeaderboardRaisedButton;
     delete m_confirmDialog;
 }
@@ -71,12 +71,12 @@ void LeaderboardView::loadSprites()
     m_clearLeaderboardRaisedButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
     m_clearLeaderboardRaisedButton->setFillColor(mdsf::Color::MaterialRed);
 
-    //=== Initialize HOME form button
+    //=== Initialize HOME button
 
     std::vector<sf::IntRect> clipRectHome;
     clipRectHome.emplace_back(0, 50, 50, 50);
     clipRectHome.emplace_back(51, 50, 50, 50);
-    m_homeFormButton = new mdsf::Button(10, 10, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE,
+    m_homeButton = new mdsf::Button(10, 10, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE,
                                         SHAPE_BUTTONS_IMAGE, clipRectHome);
 }
 
@@ -89,8 +89,8 @@ void LeaderboardView::loadSprites()
  */
 void LeaderboardView::synchronize()
 {
-    m_homeFormButton->sync();
-    m_homeFormButton->resize(HOME_BUTTONS_SIZE);
+    m_homeButton->sync();
+    m_homeButton->resize(HOME_BUTTONS_SIZE);
     m_clearLeaderboardRaisedButton->sync();
 
     m_textManager->syncMenuLeaderboardText();
@@ -109,7 +109,7 @@ void LeaderboardView::draw() const
 
     //=== Graphic Elements drawing
 
-    m_window->draw(*m_homeFormButton);
+    m_window->draw(*m_homeButton);
     m_clearLeaderboardRaisedButton->draw(m_window);
     m_confirmDialog->draw(m_window);
 
@@ -133,8 +133,8 @@ void LeaderboardView::draw() const
 bool LeaderboardView::handleEvents(sf::Event event)
 {
     if (MOUSE_LEFT_PRESSED_EVENT) {
-        if (m_homeFormButton->contains(MOUSE_POSITION)) {
-            m_homeFormButton->setPressed(true);
+        if (m_homeButton->contains(MOUSE_POSITION)) {
+            m_homeButton->setPressed(true);
         }
 
         if (!m_confirmDialog->isVisible()) {
@@ -147,13 +147,13 @@ bool LeaderboardView::handleEvents(sf::Event event)
     if (event.type == sf::Event::MouseButtonReleased) {
         //=== Reset buttons
 
-        m_homeFormButton->setPressed(false);
+        m_homeButton->setPressed(false);
         m_clearLeaderboardRaisedButton->setPressed(false);
 
         //=== handle mouse up on a button
 
         if (!m_confirmDialog->isVisible()) {
-            if (m_homeFormButton->contains(MOUSE_POSITION)) {
+            if (m_homeButton->contains(MOUSE_POSITION)) {
                 m_leaderboard->quit();
                 return false;
             }

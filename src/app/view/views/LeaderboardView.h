@@ -47,7 +47,7 @@ private:
     LeaderboardModel* m_leaderboard;
 
     //UI components
-    mdsf::Button* m_homeFormButton;
+    mdsf::Button* m_homeButton;
     mdsf::Button* m_clearLeaderboardRaisedButton;
     mdsf::Dialog* m_confirmDialog;
 

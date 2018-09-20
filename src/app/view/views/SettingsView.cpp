@@ -30,7 +30,7 @@ SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager
 
     //=== Fill button list
 
-    m_buttonList.push_back(m_homeFormButton);
+    m_buttonList.push_back(m_homeButton);
     m_buttonList.push_back(m_englishLangRadio);
     m_buttonList.push_back(m_frenchLangRadio);
     m_buttonList.push_back(m_spanishLangRadio);
@@ -125,14 +125,14 @@ void SettingsView::loadSprites()
     m_gameMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
 
 
-    //=== Initialize HOME form button
+    //=== Initialize HOME button
 
     std::vector<sf::IntRect> clipRectHome;
     clipRectHome.emplace_back(HOME_BUTTON_CLIP_DEFAULT);
     clipRectHome.emplace_back(HOME_BUTTON_CLIP_PRESSED);
-    m_homeFormButton = new mdsf::Button(10, 10, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE,
+    m_homeButton = new mdsf::Button(10, 10, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE,
                                         SHAPE_BUTTONS_IMAGE, clipRectHome);
-    m_homeFormButton->resize(HOME_BUTTON_SIZE);
+    m_homeButton->resize(HOME_BUTTON_SIZE);
 
 
     //=== Initialize RESET button
@@ -220,7 +220,7 @@ void SettingsView::draw() const
 
     //=== Graphic Elements drawing
 
-    m_window->draw(*m_homeFormButton);
+    m_window->draw(*m_homeButton);
 
     if (m_settings->getCurrentPage() == CONFIG) {
         m_englishLangRadio->draw(m_window);
@@ -361,7 +361,7 @@ bool SettingsView::handleEvents(sf::Event event)
         //=== handle mouse up on a button
 
         if (!m_confirmDialog->isVisible()) {
-            if (m_homeFormButton->contains(MOUSE_POSITION)) {
+            if (m_homeButton->contains(MOUSE_POSITION)) {
                 m_settings->quit();
                 return false;
             }

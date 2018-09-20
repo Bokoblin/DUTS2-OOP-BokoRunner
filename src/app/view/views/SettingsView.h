@@ -47,7 +47,7 @@ private:
     SettingsModel* m_settings;
 
     //UI components
-    mdsf::Button* m_homeFormButton;
+    mdsf::Button* m_homeButton;
     mdsf::RadioButton* m_englishLangRadio;
     mdsf::RadioButton* m_frenchLangRadio;
     mdsf::RadioButton* m_spanishLangRadio;

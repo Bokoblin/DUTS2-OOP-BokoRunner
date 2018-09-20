@@ -50,7 +50,7 @@ private:
 
     //Graphic Elements
     mdsf::Sprite* m_coinSprite;
-    mdsf::Button* m_homeFormButton;
+    mdsf::Button* m_homeButton;
     mdsf::Dialog* m_buyDialog; //TODO: to delete with drawableList
 
     //Containers

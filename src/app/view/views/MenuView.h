@@ -54,10 +54,10 @@ private:
     mdsf::Sprite* m_titleSprite;
     mdsf::Button* m_playRectButton;
     mdsf::Button* m_quitRectButton;
-    mdsf::Button* m_commandsFormButton;
-    mdsf::Button* m_settingsFormButton;
-    mdsf::Button* m_leaderboardFormButton;
-    mdsf::Button* m_shopFormButton;
+    mdsf::Button* m_commandsButton;
+    mdsf::Button* m_settingsButton;
+    mdsf::Button* m_leaderboardButton;
+    mdsf::Button* m_shopButton;
 
     //Audio
     sf::Music m_menuMusic;

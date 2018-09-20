@@ -29,7 +29,7 @@ CommandsView::CommandsView(sf::RenderWindow* window, AppTextManager* textManager
  */
 CommandsView::~CommandsView()
 {
-    delete m_homeFormButton;
+    delete m_homeButton;
 }
 
 
@@ -45,12 +45,12 @@ CommandsView::~CommandsView()
  */
 void CommandsView::loadSprites()
 {
-    //=== Initialize HOME form buttons
+    //=== Initialize HOME buttons
 
     std::vector<sf::IntRect> clipRectHome;
     clipRectHome.emplace_back(HOME_BUTTON_CLIP_DEFAULT);
     clipRectHome.emplace_back(HOME_BUTTON_CLIP_PRESSED);
-    m_homeFormButton = new mdsf::Button(10, 10, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE,
+    m_homeButton = new mdsf::Button(10, 10, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE,
                                         SHAPE_BUTTONS_IMAGE, clipRectHome);
 }
 
@@ -63,8 +63,8 @@ void CommandsView::loadSprites()
  */
 void CommandsView::synchronize()
 {
-    m_homeFormButton->sync();
-    m_homeFormButton->resize(HOME_BUTTONS_SIZE);
+    m_homeButton->sync();
+    m_homeButton->resize(HOME_BUTTONS_SIZE);
 
     m_textManager->syncMenuCommandsText();
 }
@@ -82,7 +82,7 @@ void CommandsView::draw() const
 
     //=== Graphic Elements drawing
 
-    m_window->draw(*m_homeFormButton);
+    m_window->draw(*m_homeButton);
 
     //=== Text Drawing
 
@@ -104,20 +104,20 @@ void CommandsView::draw() const
 bool CommandsView::handleEvents(sf::Event event)
 {
     if (MOUSE_LEFT_PRESSED_EVENT) {
-        if (m_homeFormButton->contains(MOUSE_POSITION)) {
-            m_homeFormButton->setPressed(true);
+        if (m_homeButton->contains(MOUSE_POSITION)) {
+            m_homeButton->setPressed(true);
         }
     }
 
     if (event.type == sf::Event::MouseButtonReleased) {
         //=== Reset buttons
 
-        m_homeFormButton->setPressed(false);
+        m_homeButton->setPressed(false);
 
 
         //=== handle mouse up on a button
 
-        if (m_homeFormButton->contains(MOUSE_POSITION)) {
+        if (m_homeButton->contains(MOUSE_POSITION)) {
             return false;
         }
     }

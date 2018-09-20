@@ -35,7 +35,7 @@ ShopView::ShopView(sf::RenderWindow* window, AppTextManager* textManager, ShopMo
 ShopView::~ShopView()
 {
     delete m_coinSprite;
-    delete m_homeFormButton;
+    delete m_homeButton;
     delete m_buyDialog;
 
     for (auto& shopItemCard : m_shopItemCardsArray)
@@ -63,13 +63,13 @@ void ShopView::loadSprites()
     m_coinSprite->loadAndApplyTextureFromImageFile(BONUS_IMAGE, sf::IntRect(0, 0, 50, 50));
     m_coinSprite->resize(COIN_SIZE, COIN_SIZE);
 
-    //=== Initialize HOME form buttons
+    //=== Initialize HOME buttons
 
     std::vector<sf::IntRect> clipRectHome;
     clipRectHome.emplace_back(0, 50, 50, 50);
     clipRectHome.emplace_back(51, 50, 50, 50);
-    m_homeFormButton = new mdsf::Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
-    m_homeFormButton->resize(HOME_BUTTON_SIZE);
+    m_homeButton = new mdsf::Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
+    m_homeButton->resize(HOME_BUTTON_SIZE);
 }
 
 /**
@@ -131,7 +131,7 @@ void ShopView::syncCards()
  */
 void ShopView::synchronize()
 {
-    m_homeFormButton->sync();
+    m_homeButton->sync();
     m_textManager->syncMenuShopText();
     syncCards();
 
@@ -160,7 +160,7 @@ void ShopView::draw() const
     for (const auto& it : m_pageIndicators)
         m_window->draw(*it.second);
 
-    m_window->draw(*m_homeFormButton);
+    m_window->draw(*m_homeButton);
     m_window->draw(*m_coinSprite);
     m_buyDialog->draw(m_window);
 
@@ -185,8 +185,8 @@ bool ShopView::handleEvents(sf::Event event)
 {
     if (MOUSE_LEFT_PRESSED_EVENT) {
         if (!m_buyDialog->isVisible()) {
-            if (m_homeFormButton->contains(MOUSE_POSITION)) {
-                m_homeFormButton->setPressed(true);
+            if (m_homeButton->contains(MOUSE_POSITION)) {
+                m_homeButton->setPressed(true);
             }
 
             for (auto& it : m_pageIndicators) {
@@ -207,7 +207,7 @@ bool ShopView::handleEvents(sf::Event event)
     if (event.type == sf::Event::MouseButtonReleased) {
         //=== Reset buttons
 
-        m_homeFormButton->setPressed(false);
+        m_homeButton->setPressed(false);
         for (auto& card : m_shopItemCardsArray)
             card->getBuyButton()->setPressed(false);
         for (auto& it : m_pageIndicators)
@@ -216,7 +216,7 @@ bool ShopView::handleEvents(sf::Event event)
         //=== handle mouse up on a button
 
         if (!m_buyDialog->isVisible()) {
-            if (m_homeFormButton->contains(MOUSE_POSITION)) {
+            if (m_homeButton->contains(MOUSE_POSITION)) {
                 m_shop->quit();
                 return false;
             }

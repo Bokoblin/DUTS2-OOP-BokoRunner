@@ -43,7 +43,7 @@ public:
 private:
     //=== ATTRIBUTES
     CommandsModel* m_commands;
-    mdsf::Button* m_homeFormButton;
+    mdsf::Button* m_homeButton;
 
     //Constants
     const int HOME_BUTTONS_SIZE = 30;

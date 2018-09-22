@@ -43,7 +43,7 @@ LeaderboardView::LeaderboardView(sf::RenderWindow* window, AppTextManager* textM
 LeaderboardView::~LeaderboardView()
 {
     delete m_homeButton;
-    delete m_clearLeaderboardRaisedButton;
+    delete m_clearLeaderboardButton;
     delete m_confirmDialog;
 }
 
@@ -56,28 +56,22 @@ LeaderboardView::~LeaderboardView()
  * Loads all sprites used by the leaderboard screen
  *
  * @author Arthur
- * @date 20/05/16 - 16/09/18
+ * @date 20/05/16 - 17/09/18
  */
 void LeaderboardView::loadSprites()
 {
     //=== Initialize CLEAR button
 
-    std::vector<sf::IntRect> clipRectClear;
-    clipRectClear.emplace_back(RAISED_BUTTON_CLIP_DEFAULT);
-    clipRectClear.emplace_back(RAISED_BUTTON_CLIP_PRESSED);
-    m_clearLeaderboardRaisedButton = new mdsf::Button(getHalfXPosition() - (0.5f * RESET_BUTTON_WIDTH), 0.9f * m_height,
-                                                      RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT,
-                                                      "leaderboard_clear_button", RECT_BUTTONS_IMAGE, clipRectClear);
-    m_clearLeaderboardRaisedButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
-    m_clearLeaderboardRaisedButton->setFillColor(mdsf::Color::MaterialRed);
+    m_clearLeaderboardButton = new mdsf::RaisedButton(getHalfXPosition() - (0.5f * RESET_BUTTON_WIDTH),
+                                                      0.9f * m_height, RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT,
+                                                      "leaderboard_clear_button", RAISED_BUTTON_IMAGE);
+    m_clearLeaderboardButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+    m_clearLeaderboardButton->setFillColor(mdsf::Color::MaterialRed);
 
     //=== Initialize HOME button
 
-    std::vector<sf::IntRect> clipRectHome;
-    clipRectHome.emplace_back(0, 50, 50, 50);
-    clipRectHome.emplace_back(51, 50, 50, 50);
-    m_homeButton = new mdsf::Button(10, 10, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE,
-                                        SHAPE_BUTTONS_IMAGE, clipRectHome);
+    m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, HOME_IMAGE);
+    m_homeButton->resize(HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
 }
 
 
@@ -85,13 +79,12 @@ void LeaderboardView::loadSprites()
  * Synchronizes leaderboard elements
  *
  * @author Arthur
- * @date 20/05/16 - 27/12/17
+ * @date 20/05/16 - 22/09/18
  */
 void LeaderboardView::synchronize()
 {
     m_homeButton->sync();
-    m_homeButton->resize(HOME_BUTTONS_SIZE);
-    m_clearLeaderboardRaisedButton->sync();
+    m_clearLeaderboardButton->sync();
 
     m_textManager->syncMenuLeaderboardText();
 }
@@ -109,8 +102,8 @@ void LeaderboardView::draw() const
 
     //=== Graphic Elements drawing
 
-    m_window->draw(*m_homeButton);
-    m_clearLeaderboardRaisedButton->draw(m_window);
+    m_homeButton->draw(m_window);
+    m_clearLeaderboardButton->draw(m_window);
     m_confirmDialog->draw(m_window);
 
     //=== Text Drawing
@@ -138,8 +131,8 @@ bool LeaderboardView::handleEvents(sf::Event event)
         }
 
         if (!m_confirmDialog->isVisible()) {
-            if (m_clearLeaderboardRaisedButton->contains(MOUSE_POSITION)) {
-                m_clearLeaderboardRaisedButton->setPressed(true);
+            if (m_clearLeaderboardButton->contains(MOUSE_POSITION)) {
+                m_clearLeaderboardButton->setPressed(true);
             }
         }
     }
@@ -148,7 +141,7 @@ bool LeaderboardView::handleEvents(sf::Event event)
         //=== Reset buttons
 
         m_homeButton->setPressed(false);
-        m_clearLeaderboardRaisedButton->setPressed(false);
+        m_clearLeaderboardButton->setPressed(false);
 
         //=== handle mouse up on a button
 
@@ -158,7 +151,7 @@ bool LeaderboardView::handleEvents(sf::Event event)
                 return false;
             }
 
-            if (m_clearLeaderboardRaisedButton->contains(MOUSE_POSITION)) {
+            if (m_clearLeaderboardButton->contains(MOUSE_POSITION)) {
                 m_confirmDialog->show();
             }
         } else {

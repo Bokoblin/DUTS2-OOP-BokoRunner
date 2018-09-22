@@ -39,7 +39,7 @@ SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager
     m_buttonList.push_back(m_defaultBallSkinRadio);
     m_buttonList.push_back(m_morphBallSkinRadio);
     m_buttonList.push_back(m_capsuleBallSkinRadio);
-    m_buttonList.push_back(m_resetDataRaisedButton);
+    m_buttonList.push_back(m_resetDataButton);
     m_buttonList.push_back(m_menuMusicButton);
     m_buttonList.push_back(m_gameMusicButton);
 
@@ -89,7 +89,7 @@ SettingsView::~SettingsView()
  * Loads all sprites used by the settings screen
  *
  * @author Arthur
- * @date 20/05/16 - 16/09/18
+ * @date 20/05/16 - 17/09/18
  */
 void SettingsView::loadSprites()
 {
@@ -127,23 +127,15 @@ void SettingsView::loadSprites()
 
     //=== Initialize HOME button
 
-    std::vector<sf::IntRect> clipRectHome;
-    clipRectHome.emplace_back(HOME_BUTTON_CLIP_DEFAULT);
-    clipRectHome.emplace_back(HOME_BUTTON_CLIP_PRESSED);
-    m_homeButton = new mdsf::Button(10, 10, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE,
-                                        SHAPE_BUTTONS_IMAGE, clipRectHome);
-    m_homeButton->resize(HOME_BUTTON_SIZE);
-
+    m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, HOME_IMAGE);
+    m_homeButton->resize(HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
 
     //=== Initialize RESET button
 
-    std::vector<sf::IntRect> clipRectReset;
-    clipRectReset.emplace_back(RAISED_BUTTON_CLIP_DEFAULT);
-    clipRectReset.emplace_back(RAISED_BUTTON_CLIP_PRESSED);
-    m_resetDataRaisedButton = new mdsf::Button(getHalfXPosition() - (0.5f * RESET_BUTTON_WIDTH), 0.75f * m_height,
+    m_resetDataButton = new mdsf::RaisedButton(getHalfXPosition() - (0.5f * RESET_BUTTON_WIDTH), 0.75f * m_height,
                                                RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT, "stats_app_reset",
-                                               RECT_BUTTONS_IMAGE, clipRectReset); //TODO: default image if not provided
-    m_resetDataRaisedButton->setFillColor(mdsf::Color::MaterialRed);
+                                               RAISED_BUTTON_IMAGE); //TODO: default image if not provided
+    m_resetDataButton->setFillColor(mdsf::Color::MaterialRed);
 
 
     //=== Initialize Logo sprites
@@ -220,7 +212,7 @@ void SettingsView::draw() const
 
     //=== Graphic Elements drawing
 
-    m_window->draw(*m_homeButton);
+    m_homeButton->draw(m_window);
 
     if (m_settings->getCurrentPage() == CONFIG) {
         m_englishLangRadio->draw(m_window);
@@ -237,7 +229,7 @@ void SettingsView::draw() const
         m_textManager->drawMenuSettingsText(m_window, CONFIG);
     } else if (m_settings->getCurrentPage() == STATS) {
         m_textManager->drawMenuSettingsText(m_window, STATS);
-        m_resetDataRaisedButton->draw(m_window);
+        m_resetDataButton->draw(m_window);
         m_confirmDialog->draw(m_window);
     } else //ABOUT
     {
@@ -401,7 +393,7 @@ bool SettingsView::handleEvents(sf::Event event)
             }
         } else if (m_settings->getCurrentPage() == STATS) {
             if (!m_confirmDialog->isVisible()) {
-                if (m_resetDataRaisedButton->contains(MOUSE_POSITION)) {
+                if (m_resetDataButton->contains(MOUSE_POSITION)) {
                     m_confirmDialog->show();
                 }
             } else {

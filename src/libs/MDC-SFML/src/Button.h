@@ -61,7 +61,7 @@ public:
     LabelPosition getLabelPosition() const;
 
     //=== SETTERS
-    void setPressed(bool pressed);
+    virtual void setPressed(bool pressed);
     void setEnabled(bool enabled);
     void setClipRectArray(std::vector<sf::IntRect> array);
     void setPositionSelfCentered(float x, float y);
@@ -78,8 +78,8 @@ public:
 
 protected:
     //=== ATTRIBUTES
-    std::vector<sf::IntRect> m_clipRectArray;
-    unsigned int m_currentClipRect;
+    std::vector<sf::IntRect> m_clipRectArray; //FIXME: Sprite::loadAndApplyTextureFromImageFile(const std::string &, sf::IntRect) is enough
+    unsigned int m_currentClipRect; //TODO: move to RadioButton and ToggleButton (as boolean) classes
     bool m_isPressed;
     bool m_isEnabled;
     sf::Font m_font;

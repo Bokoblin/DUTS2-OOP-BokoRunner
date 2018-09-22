@@ -17,6 +17,7 @@ limitations under the License.
 #define COMMANDS_VIEW_H
 
 #include "AbstractView.h"
+#include "libs/MDC-SFML/src/RaisedButton.h"
 #include "app/model/models/CommandsModel.h"
 #include "app/view/utils/ViewDefinitions.h"
 
@@ -26,7 +27,7 @@ limitations under the License.
  * It handles the commands screen's rendering.
  *
  * @author Arthur
- * @date 24/01/17 - 05/02/18
+ * @date 24/01/17 - 22/09/18
  */
 class CommandsView: public AbstractView
 {
@@ -43,10 +44,10 @@ public:
 private:
     //=== ATTRIBUTES
     CommandsModel* m_commands;
-    mdsf::Button* m_homeButton;
+    mdsf::RaisedButton* m_homeButton;
 
     //Constants
-    const int HOME_BUTTONS_SIZE = 30;
+    const int HOME_BUTTON_SIZE = 30;
 
     //=== METHODS
     void loadSprites() override;

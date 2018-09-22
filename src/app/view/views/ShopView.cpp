@@ -53,7 +53,7 @@ ShopView::~ShopView()
 /**
  * Loads all sprites used by the shop screen
  * @author Arthur
- * @date 16/05/16 - 11/09/18
+ * @date 16/05/16 - 17/09/18
  */
 void ShopView::loadSprites()
 {
@@ -65,11 +65,8 @@ void ShopView::loadSprites()
 
     //=== Initialize HOME buttons
 
-    std::vector<sf::IntRect> clipRectHome;
-    clipRectHome.emplace_back(0, 50, 50, 50);
-    clipRectHome.emplace_back(51, 50, 50, 50);
-    m_homeButton = new mdsf::Button(10, 10, 50, 50, SHAPE_BUTTONS_IMAGE, clipRectHome);
-    m_homeButton->resize(HOME_BUTTON_SIZE);
+    m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, HOME_IMAGE);
+    m_homeButton->resize(HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
 }
 
 /**
@@ -160,7 +157,7 @@ void ShopView::draw() const
     for (const auto& it : m_pageIndicators)
         m_window->draw(*it.second);
 
-    m_window->draw(*m_homeButton);
+    m_homeButton->draw(m_window);
     m_window->draw(*m_coinSprite);
     m_buyDialog->draw(m_window);
 

@@ -20,10 +20,10 @@ limitations under the License.
  * Provides pre-processor definitions to view classes
  *
  * @author Arthur
- * @date 16/04/17 - 11/09/18
+ * @date 16/04/17 - 13/09/18
  */
 
-//FIXME: remove some definitions here (const in-class, custom objects, utils shortcut functions in MDSF), add other lost ones
+//FIXME: remove some definitions here (custom objects, utils shortcut functions in MDSF),...
 
 //=== SFML DEFINITIONS
 #define MOUSE_LEFT_PRESSED_EVENT event.type == sf::Event::MouseButtonPressed \
@@ -39,12 +39,6 @@ limitations under the License.
 
 
 //=== OTHER DEFINITIONS
-#define BUTTON_WIDTH 150
-#define BUTTON_HEIGHT 36
-#define ORIGINAL_HOME_BUTTONS_SIZE 50
-#define HOME_BUTTON_CLIP_DEFAULT 0, 50, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE
-#define HOME_BUTTON_CLIP_PRESSED 51, 50, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE
-#define RAISED_BUTTON_CLIP_DEFAULT 0, 101, BUTTON_WIDTH, BUTTON_HEIGHT
-#define RAISED_BUTTON_CLIP_PRESSED 151, 101, BUTTON_WIDTH, BUTTON_HEIGHT
+#define DEFAULT_HOME_SIZE 50
 
 #endif

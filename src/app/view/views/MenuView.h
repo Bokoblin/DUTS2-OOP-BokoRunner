@@ -26,7 +26,7 @@ limitations under the License.
 /**
  * MenuView Class
  * @author Arthur, Florian
- * @date 26/03/16 - 12/09/18
+ * @date 26/03/16 - 22/09/18
  */
 class MenuView: public AbstractView
 {
@@ -52,12 +52,12 @@ private:
     ScrollingBackground* m_farBackground;
     ScrollingBackground* m_nearBackground;
     mdsf::Sprite* m_titleSprite;
-    mdsf::Button* m_playRectButton;
-    mdsf::Button* m_quitRectButton;
-    mdsf::Button* m_commandsButton;
-    mdsf::Button* m_settingsButton;
-    mdsf::Button* m_leaderboardButton;
-    mdsf::Button* m_shopButton;
+    mdsf::RaisedButton* m_playButton;
+    mdsf::RaisedButton* m_quitButton;
+    mdsf::RaisedButton* m_commandsButton;
+    mdsf::RaisedButton* m_settingsButton;
+    mdsf::RaisedButton* m_leaderboardButton;
+    mdsf::RaisedButton* m_shopButton;
 
     //Audio
     sf::Music m_menuMusic;

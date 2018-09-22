@@ -16,6 +16,7 @@ limitations under the License.
 #ifndef LEADERBOARD_VIEW_H
 #define LEADERBOARD_VIEW_H
 
+#include <libs/MDC-SFML/src/RaisedButton.h>
 #include "libs/MDC-SFML/src/Dialog.h"
 #include "app/model/models/LeaderboardModel.h"
 #include "app/view/utils/DialogBuilder.h"
@@ -28,7 +29,7 @@ limitations under the License.
  * It handles the leaderboard screen's rendering.
  *
  * @author Arthur
- * @date 21/05/16 - 10/09/18
+ * @date 21/05/16 - 22/09/18
  */
 class LeaderboardView: public AbstractView
 {
@@ -47,12 +48,12 @@ private:
     LeaderboardModel* m_leaderboard;
 
     //UI components
-    mdsf::Button* m_homeButton;
-    mdsf::Button* m_clearLeaderboardRaisedButton;
+    mdsf::RaisedButton* m_homeButton;
+    mdsf::RaisedButton* m_clearLeaderboardButton;
     mdsf::Dialog* m_confirmDialog;
 
     //Constants
-    const int HOME_BUTTONS_SIZE = 30;
+    const int HOME_BUTTON_SIZE = 30;
     const int DIALOG_WIDTH = 280;
     const int DIALOG_HEIGHT = 150;
     const int RESET_BUTTON_WIDTH = 150;

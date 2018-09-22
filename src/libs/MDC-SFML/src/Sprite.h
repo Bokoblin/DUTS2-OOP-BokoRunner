@@ -14,6 +14,7 @@ limitations under the License.
 */
 
 //TODO: TO FIX DRAW WARNING: Don't use sf::Sprite as base (not advised in 2013), use it as member ?
+//Keep Drawable inheritance to implement draw function though
 
 #ifndef MDC_SFML_SPRITE_H
 #define MDC_SFML_SPRITE_H

@@ -157,9 +157,7 @@ void Button::setLabelDescription(const std::string &description) { m_label.setDe
 //------------------------------------------------
 
 /**
- * @brief Synchronizes Button sprite
- * @details Animates its sprite by changing current
- * texture rect depending on pressed state)
+ * @brief Synchronizes button sprite
  *
  * @author Arthur
  * @date 06/04/16 - 13/09/18
@@ -168,11 +166,12 @@ void Button::sync()
 {
     Sprite::applyColor();
 
-    if (m_isEnabled) {
-        //TODO: With RAISED BUTTON: perform a resize (or a Z-axis change) instead of changing the rectangle clip
-        this->setTextureRect(m_clipRectArray[static_cast<int>(m_isPressed)]);
-    } else {
-        this->setTextureRect(m_clipRectArray[0]);
+    if (!m_clipRectArray.empty()) { //FIXME: temp until ToggleButton class
+        if (m_isEnabled && m_clipRectArray.size() == 2) {
+            this->setTextureRect(m_clipRectArray[static_cast<int>(m_isPressed)]);
+        } else {
+            this->setTextureRect(m_clipRectArray[0]);
+        }
     }
 }
 
@@ -196,7 +195,6 @@ void Button::retrieveLabel(label_retrieval_func_t func)
 
 /**
  * @brief Sync the button's label position
- * TODO: With RAISED BUTTON: adjust width to text
  *
  * @author Arthur
  * @date 23/12/16 - 04/01/18

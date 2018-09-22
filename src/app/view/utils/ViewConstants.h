@@ -64,10 +64,12 @@ static const std::string PAUSE_PLAIN_BACKGROUND = BACKGROUND_FOLDER + "/pause_pl
 static const std::string END_SCREEN_BACKGROUND = BACKGROUND_FOLDER + "/end_background.png";
 
 //=== Images files : UI components
-static const std::string RECT_BUTTONS_IMAGE = UI_FOLDER + "rect_buttons.png";
+static const std::string RAISED_BUTTON_IMAGE = UI_FOLDER + "raised_buttons.png";
+static const std::string MENU_BUTTON_IMAGE = UI_FOLDER + "menu_buttons.png";
 static const std::string SHAPE_BUTTONS_IMAGE = UI_FOLDER + "shape_buttons.png";
 static const std::string GAME_BUTTONS_IMAGE = UI_FOLDER + "game_buttons.png";
 static const std::string CARD_IMAGE = UI_FOLDER + "card.png";
+static const std::string HOME_IMAGE = UI_FOLDER + "ic_home.png";
 static const std::string HYPERLINK_IMAGE = UI_FOLDER + "ic_link.png";
 
 //=== Images files : Game components

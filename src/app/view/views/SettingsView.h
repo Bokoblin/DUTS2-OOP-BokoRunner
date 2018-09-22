@@ -18,6 +18,7 @@ limitations under the License.
 
 #include "libs/MDC-SFML/src/Dialog.h"
 #include "libs/MDC-SFML/src/RadioButton.h"
+#include "libs/MDC-SFML/src/RaisedButton.h"
 #include "app/model/models/SettingsModel.h"
 #include "app/view/utils/DialogBuilder.h"
 #include "AbstractView.h"
@@ -28,7 +29,7 @@ limitations under the License.
  * It handles the settings screen's rendering.
  *
  * @author Arthur
- * @date 20/05/16 - 02/01/18
+ * @date 20/05/16 - 22/09/18
  */
 class SettingsView: public AbstractView
 {
@@ -47,7 +48,7 @@ private:
     SettingsModel* m_settings;
 
     //UI components
-    mdsf::Button* m_homeButton;
+    mdsf::RaisedButton* m_homeButton;
     mdsf::RadioButton* m_englishLangRadio;
     mdsf::RadioButton* m_frenchLangRadio;
     mdsf::RadioButton* m_spanishLangRadio;
@@ -56,7 +57,7 @@ private:
     mdsf::RadioButton* m_defaultBallSkinRadio;
     mdsf::RadioButton* m_morphBallSkinRadio;
     mdsf::RadioButton* m_capsuleBallSkinRadio;
-    mdsf::Button* m_resetDataRaisedButton;
+    mdsf::RaisedButton* m_resetDataButton;
     mdsf::Button* m_menuMusicButton;
     mdsf::Button* m_gameMusicButton;
     mdsf::Sprite* m_logoIUT;
@@ -75,7 +76,7 @@ private:
     const int CONFIRM_DIALOG_WIDTH = 320;
     const int CONFIRM_DIALOG_HEIGHT = 200;
     const int RESET_BUTTON_WIDTH = 150;
-    const int RESET_BUTTON_HEIGHT = 36;
+    const int RESET_BUTTON_HEIGHT = 40;
     const int MUTE_BUTTON_SIZE = 25;
     const int ORIGINAL_IUT_LOGO_WIDTH = 245;
     const int ORIGINAL_IUT_LOGO_HEIGHT = 210;

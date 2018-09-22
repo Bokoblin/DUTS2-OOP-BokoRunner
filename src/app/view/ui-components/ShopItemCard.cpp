@@ -16,7 +16,7 @@ using std::string;
  * @param cardsPerPage the number of cards per page to adjust x position
  *
  * @author Arthur
- * @date 16/05/16 - 06/09/18
+ * @date 16/05/16 - 17/09/18
  */
 ShopItemCard::ShopItemCard(int num, ShopItem* item, float screenWidth, float screenHeight, int cardsPerPage) :
         mdsf::Sprite(0, 0.17f * screenHeight, WIDTH, HEIGHT),
@@ -41,11 +41,10 @@ ShopItemCard::ShopItemCard(int num, ShopItem* item, float screenWidth, float scr
 
     //=== Init buy button
 
-    std::vector<sf::IntRect> flatButtonClipRect;
-    flatButtonClipRect.emplace_back(RAISED_BUTTON_CLIP_DEFAULT);
-    flatButtonClipRect.emplace_back(RAISED_BUTTON_CLIP_PRESSED);
-    m_buyButton = new mdsf::Button(getX() + 0.125f * m_width, getY() + 0.83f * m_height, 0.75f * m_width,
-                                   BUTTON_HEIGHT, RECT_BUTTONS_IMAGE, flatButtonClipRect);
+    m_buyButton = new mdsf::RaisedButton(getX() + 0.125f * m_width, getY() + 0.83f * m_height, 0.75f * m_width,
+                                         0.133f * m_height, "shop_purchasable", RAISED_BUTTON_IMAGE);
+
+    //=== Init background
 
     loadAndApplyTextureFromImageFile(CARD_IMAGE);
 }
@@ -67,7 +66,7 @@ ShopItemCard::~ShopItemCard()
 //------------------------------------------------
 
 int ShopItemCard::getId() const { return m_id; }
-mdsf::Button* ShopItemCard::getBuyButton() const { return m_buyButton; }
+mdsf::RaisedButton* ShopItemCard::getBuyButton() const { return m_buyButton; }
 ShopItem* ShopItemCard::getItem() const { return m_item; }
 
 

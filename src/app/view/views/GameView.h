@@ -16,6 +16,7 @@ limitations under the License.
 #ifndef GAME_VIEW_H
 #define GAME_VIEW_H
 
+#include "libs/MDC-SFML/src/RaisedButton.h"
 #include "app/model/models/GameModel.h"
 #include "app/view/ui-components/PixelShader.h"
 #include "app/view/utils/ViewDefinitions.h"
@@ -24,7 +25,7 @@ limitations under the License.
 /**
  * GameView Class
  * @author Arthur, Florian
- * @date 21/02/16 - 11/09/18
+ * @date 21/02/16 - 22/09/18
  */
 class GameView: public AbstractView
 {
@@ -52,6 +53,8 @@ private:
     const int PAUSE_BUTTONS_SIZE = 25;
     const int INGAME_COIN_SIZE = 20;
     const int RESULTS_COIN_SIZE = 25;
+    const int BUTTON_WIDTH = 150;
+    const int BUTTON_HEIGHT = 40;
     const int ENEMY_SIZE = 20;
     const int SHIELD_SIZE = 40;
     const int ORIGINAL_DISTANCE_ICON_SIZE = 50;
@@ -90,7 +93,7 @@ private:
     mdsf::Button* m_restartGameButton;
     mdsf::Button* m_goToHomeButton;
     mdsf::Button* m_controlMusicButton;
-    mdsf::Button* m_saveScoreButton;
+    mdsf::RaisedButton* m_saveScoreButton;
 
     //Audio
     sf::Music m_gameThemeMusic;

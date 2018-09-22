@@ -36,8 +36,8 @@ MenuView::~MenuView()
     delete m_farBackground;
     delete m_nearBackground;
     delete m_titleSprite;
-    delete m_playRectButton;
-    delete m_quitRectButton;
+    delete m_playButton;
+    delete m_quitButton;
     delete m_commandsButton;
     delete m_settingsButton;
     delete m_leaderboardButton;
@@ -76,7 +76,7 @@ void MenuView::loadMusic()
  * Loads all sprites used by the menu screen
  *
  * @author Arthur
- * @date 26/03/16 - 16/09/18
+ * @date 26/03/16 - 20/09/18
  */
 void MenuView::loadSprites()
 {
@@ -89,48 +89,28 @@ void MenuView::loadSprites()
 
     //=== Initialize PLAY and QUIT buttons
 
-    vector<sf::IntRect> clipRectPlay;
-    clipRectPlay.emplace_back(0, 0, 150, 80);
-    clipRectPlay.emplace_back(151, 0, 150, 80);
-    m_playRectButton = new mdsf::Button(getHalfXPosition() - 0.5f * MAIN_BUTTON_WIDTH, 0.667f * m_height,
-                                        MAIN_BUTTON_WIDTH, MAIN_BUTTON_HEIGHT, "menu_play_button",
-                                        RECT_BUTTONS_IMAGE, clipRectPlay);
-    m_playRectButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+    m_playButton = new mdsf::RaisedButton(getHalfXPosition() - 0.5f * MAIN_BUTTON_WIDTH, 0.667f * m_height,
+                                          MAIN_BUTTON_WIDTH, MAIN_BUTTON_HEIGHT, "menu_play_button", MENU_BUTTON_IMAGE);
+    m_playButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
 
-    vector<sf::IntRect> clipRectQuit;
-    clipRectQuit.emplace_back(0, 0, 150, 80);
-    clipRectQuit.emplace_back(151, 0, 150, 80);
-    m_quitRectButton = new mdsf::Button(getHalfXPosition() - 0.5f * MAIN_BUTTON_WIDTH, 0.833f * m_height,
-                                        MAIN_BUTTON_WIDTH, MAIN_BUTTON_HEIGHT, "menu_quit_button",
-                                        RECT_BUTTONS_IMAGE, clipRectQuit);
-    m_quitRectButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+    m_quitButton = new mdsf::RaisedButton(getHalfXPosition() - 0.5f * MAIN_BUTTON_WIDTH, 0.833f * m_height,
+                                          MAIN_BUTTON_WIDTH, MAIN_BUTTON_HEIGHT, "menu_quit_button", MENU_BUTTON_IMAGE);
+    m_quitButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
 
 
     //=== Initialize COMMANDS, SETTINGS, LEADERBOARD and SHOP buttons
 
-    vector<sf::IntRect> clipRectCommands;
-    clipRectCommands.emplace_back(0, 200, 50, 50);
-    clipRectCommands.emplace_back(51, 200, 50, 50);
-    m_commandsButton = new mdsf::Button(0.02f * m_width, 0.02f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
-                                            SHAPE_BUTTONS_IMAGE, clipRectCommands);
+    m_commandsButton = new mdsf::RaisedButton(0.02f * m_width, 0.02f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
+    m_commandsButton->loadAndApplyTextureFromImageFile(SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 0, 50, 50));
 
-    vector<sf::IntRect> clipRectSettings;
-    clipRectSettings.emplace_back(0, 0, 50, 50);
-    clipRectSettings.emplace_back(51, 0, 50, 50);
-    m_settingsButton = new mdsf::Button(0.02f * m_width, 0.89f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
-                                            SHAPE_BUTTONS_IMAGE, clipRectSettings);
+    m_settingsButton = new mdsf::RaisedButton(0.02f * m_width, 0.89f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
+    m_settingsButton->loadAndApplyTextureFromImageFile(SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 50, 50, 50));
 
-    vector<sf::IntRect> clipRectLeaderboard;
-    clipRectLeaderboard.emplace_back(0, 100, 50, 50);
-    clipRectLeaderboard.emplace_back(51, 100, 50, 50);
-    m_leaderboardButton = new mdsf::Button(0.92f * m_width, 0.89f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
-                                               SHAPE_BUTTONS_IMAGE, clipRectLeaderboard);
+    m_shopButton = new mdsf::RaisedButton(0.92f * m_width, 0.02f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
+    m_shopButton->loadAndApplyTextureFromImageFile(SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 100, 50, 50));
 
-    vector<sf::IntRect> clipRectShop;
-    clipRectShop.emplace_back(0, 150, 50, 50);
-    clipRectShop.emplace_back(51, 150, 50, 50);
-    m_shopButton = new mdsf::Button(0.92f * m_width, 0.02f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE,
-                                        SHAPE_BUTTONS_IMAGE, clipRectShop);
+    m_leaderboardButton = new mdsf::RaisedButton(0.92f * m_width, 0.89f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
+    m_leaderboardButton->loadAndApplyTextureFromImageFile(SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 150, 50, 50));
 }
 
 
@@ -156,8 +136,8 @@ void MenuView::synchronize()
         case HOME:
             m_farBackground->sync();
             m_nearBackground->sync();
-            m_playRectButton->sync();
-            m_quitRectButton->sync();
+            m_playButton->sync();
+            m_quitButton->sync();
             m_commandsButton->sync();
             m_settingsButton->sync();
             m_leaderboardButton->sync();
@@ -210,7 +190,7 @@ void MenuView::synchronize()
  * Draws menu elements on the window
  *
  * @author Arthur
- * @date 26/03/16 - 24/01/17
+ * @date 26/03/16 - 20/09/18
  */
 void MenuView::draw() const
 {
@@ -219,13 +199,13 @@ void MenuView::draw() const
 
         m_farBackground->draw(m_window);
         m_nearBackground->draw(m_window);
-        m_window->draw(*m_titleSprite);
-        m_playRectButton->draw(m_window);
-        m_quitRectButton->draw(m_window);
-        m_window->draw(*m_commandsButton);
-        m_window->draw(*m_settingsButton);
-        m_window->draw(*m_leaderboardButton);
-        m_window->draw(*m_shopButton);
+        m_titleSprite->draw(m_window);
+        m_playButton->draw(m_window);
+        m_quitButton->draw(m_window);
+        m_commandsButton->draw(m_window);
+        m_settingsButton->draw(m_window);
+        m_leaderboardButton->draw(m_window);
+        m_shopButton->draw(m_window);
 
         m_window->display();
     } else if (m_menu->getMenuState() == COMMANDS) {
@@ -252,10 +232,11 @@ void MenuView::draw() const
 bool MenuView::handleHomeEvents(const sf::Event& event)
 {
     if (MOUSE_LEFT_PRESSED_EVENT) {
-        if (m_playRectButton->contains(MOUSE_POSITION)) {
-            m_playRectButton->setPressed(true);
-        } else if (m_quitRectButton->contains(MOUSE_POSITION)) {
-            m_quitRectButton->setPressed(true);
+        //FIXME: factorize
+        if (m_playButton->contains(MOUSE_POSITION)) {
+            m_playButton->setPressed(true);
+        } else if (m_quitButton->contains(MOUSE_POSITION)) {
+            m_quitButton->setPressed(true);
         } else if (m_commandsButton->contains(MOUSE_POSITION)) {
             m_commandsButton->setPressed(true);
         } else if (m_settingsButton->contains(MOUSE_POSITION)) {
@@ -268,20 +249,20 @@ bool MenuView::handleHomeEvents(const sf::Event& event)
     }
 
     if (event.type == sf::Event::MouseButtonReleased) {
-        m_playRectButton->setPressed(false);
-        m_quitRectButton->setPressed(false);
+        m_playButton->setPressed(false);
+        m_quitButton->setPressed(false);
         m_commandsButton->setPressed(false);
         m_settingsButton->setPressed(false);
         m_leaderboardButton->setPressed(false);
         m_shopButton->setPressed(false);
 
-        if (m_playRectButton->contains(MOUSE_POSITION)) {
+        if (m_playButton->contains(MOUSE_POSITION)) {
             if (m_menuMusic.getStatus() == sf::Music::Status::Playing) {
                 m_menuMusic.stop();
             }
             m_menu->getAppCore()->setAppState(GAME);
             return false;
-        } else if (m_quitRectButton->contains(MOUSE_POSITION)) {
+        } else if (m_quitButton->contains(MOUSE_POSITION)) {
             if (m_menuMusic.getStatus() == sf::Music::Status::Playing) {
                 m_menuMusic.stop();
             }
@@ -327,8 +308,8 @@ bool MenuView::handleEvents(sf::Event event)
                 || (m_menu->getMenuState() == SHOP && !m_shopView->handleEvents(event))
                 ) {
             m_menu->setMenuState(HOME);
-            m_playRectButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
-            m_quitRectButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+            m_playButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+            m_quitButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
         }
     }
     return true;

@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef SHOP_ITEM_CARD_H
 #define SHOP_ITEM_CARD_H
 
-#include "libs/MDC-SFML/src/Button.h"
+#include <libs/MDC-SFML/src/RaisedButton.h>
 #include "libs/MDC-SFML/src/Color.h"
 #include "app/model/menu-components/ShopItem.h"
 #include "app/view/utils/ViewDefinitions.h"
@@ -40,7 +40,7 @@ public:
 
     //=== GETTERS
     int getId() const;
-    mdsf::Button* getBuyButton() const;
+    mdsf::RaisedButton* getBuyButton() const;
     ShopItem* getItem() const;
 
     void sync() override;
@@ -53,7 +53,7 @@ private:
     ShopItem* m_item;
     mdsf::Text m_title;
     mdsf::Text m_content;
-    mdsf::Button* m_buyButton;
+    mdsf::RaisedButton* m_buyButton;
 
     static constexpr int WIDTH = 200;
     static constexpr int HEIGHT = 300;

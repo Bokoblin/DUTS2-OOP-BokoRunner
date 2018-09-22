@@ -247,11 +247,8 @@ void GameView::loadSprites()
     m_controlMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_controlMusicButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
 
-    vector<sf::IntRect> clipRect_save;
-    clipRect_save.emplace_back(RAISED_BUTTON_CLIP_DEFAULT);
-    clipRect_save.emplace_back(RAISED_BUTTON_CLIP_PRESSED);
-    m_saveScoreButton = new mdsf::Button(getHalfXPosition() - (0.5f * BUTTON_WIDTH), 0.583f * m_height, BUTTON_WIDTH,
-                                         BUTTON_HEIGHT, "end_save_button", RECT_BUTTONS_IMAGE, clipRect_save);
+    m_saveScoreButton = new mdsf::RaisedButton(getHalfXPosition() - (0.5f * BUTTON_WIDTH), 0.583f * m_height,
+                                               BUTTON_WIDTH, BUTTON_HEIGHT, "end_save_button", RAISED_BUTTON_IMAGE);
     m_saveScoreButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
     m_saveScoreButton->setFillColor(mdsf::Color::MaterialGreenA700);
 
@@ -440,9 +437,13 @@ void GameView::updateRunningGameElements()
 void GameView::updatePausedGameElements()
 {
     m_resumeGameButton->sync();
+    m_resumeGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_restartGameButton->sync();
+    m_restartGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_goToHomeButton->sync();
+    m_goToHomeButton->resize(PAUSE_BUTTONS_SIZE);
     m_controlMusicButton->sync();
+    m_controlMusicButton->resize(PAUSE_BUTTONS_SIZE);
     m_coinSprite->sync();
     m_coinSprite->resize(INGAME_COIN_SIZE);
     m_coinSprite->setPosition(0.033f * m_width, 0.16f * m_height);

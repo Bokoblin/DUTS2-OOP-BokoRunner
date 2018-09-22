@@ -409,7 +409,7 @@ void AppTextManager::syncGameRunningText(int bonusTimeout)
  * @author Arthur
  * @date 02/04/16 - 27/10/17
  */
-void AppTextManager::syncGamePausedText()
+void AppTextManager::syncGamePausedText() //FIXME: internationalization
 {
     m_currentDistanceText->setPosition(0.09f * m_width, 0.05f * m_height);
 

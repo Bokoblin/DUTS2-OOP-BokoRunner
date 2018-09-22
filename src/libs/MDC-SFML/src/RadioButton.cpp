@@ -116,11 +116,11 @@ void RadioButton::setLabelPosition(LabelPosition labelPosition)
  * (because texture overrides size)
  *
  * @author Arthur
- * @date 23/12/16 - 02/01/18
+ * @date 23/12/16 - 12/09/18
  */
 void RadioButton::sync()
 {
-    Sprite::sync();
+    applyColor();
 
     if (m_isEnabled && m_isSelected && !m_isPressed)
         this->setTextureRect(m_clipRectArray[0]);

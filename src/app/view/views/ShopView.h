@@ -17,6 +17,7 @@ limitations under the License.
 #define SHOP_VIEW_H
 
 #include "libs/MDC-SFML/src/RadioButton.h"
+#include "libs/MDC-SFML/src/RaisedButton.h"
 #include "app/model/models/ShopModel.h"
 #include "app/view/ui-components/ShopDialog.h"
 #include "app/view/ui-components/ShopItemCard.h"
@@ -29,7 +30,7 @@ limitations under the License.
  * It handles the shop screen's rendering.
  *
  * @author Arthur
- * @date 11/05/16 - 06/01/18
+ * @date 11/05/16 - 22/09/18
  */
 class ShopView: public AbstractView
 {
@@ -50,7 +51,7 @@ private:
 
     //Graphic Elements
     mdsf::Sprite* m_coinSprite;
-    mdsf::Button* m_homeButton;
+    mdsf::RaisedButton* m_homeButton;
     mdsf::Dialog* m_buyDialog; //TODO: to delete with drawableList
 
     //Containers

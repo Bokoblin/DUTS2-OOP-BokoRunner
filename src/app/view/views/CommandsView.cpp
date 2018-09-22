@@ -41,17 +41,14 @@ CommandsView::~CommandsView()
  * Loads all sprites used by the commands screen
  *
  * @author Arthur
- * @date 24/01/17 - 11/09/18
+ * @date 24/01/17 - 17/09/18
  */
 void CommandsView::loadSprites()
 {
-    //=== Initialize HOME buttons
+    //=== Initialize HOME button
 
-    std::vector<sf::IntRect> clipRectHome;
-    clipRectHome.emplace_back(HOME_BUTTON_CLIP_DEFAULT);
-    clipRectHome.emplace_back(HOME_BUTTON_CLIP_PRESSED);
-    m_homeButton = new mdsf::Button(10, 10, ORIGINAL_HOME_BUTTONS_SIZE, ORIGINAL_HOME_BUTTONS_SIZE,
-                                        SHAPE_BUTTONS_IMAGE, clipRectHome);
+    m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, HOME_IMAGE);
+    m_homeButton->resize(HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
 }
 
 
@@ -59,12 +56,11 @@ void CommandsView::loadSprites()
  * Synchronizes commands elements
  *
  * @author Arthur
- * @date 24/01/17 - 11/09/18
+ * @date 24/01/17 - 22/09/18
  */
 void CommandsView::synchronize()
 {
     m_homeButton->sync();
-    m_homeButton->resize(HOME_BUTTONS_SIZE);
 
     m_textManager->syncMenuCommandsText();
 }
@@ -82,7 +78,7 @@ void CommandsView::draw() const
 
     //=== Graphic Elements drawing
 
-    m_window->draw(*m_homeButton);
+    m_homeButton->draw(m_window);
 
     //=== Text Drawing
 

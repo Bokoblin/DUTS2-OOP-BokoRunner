@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8) #TODO: Check school version and ask to upgrade at least to 3.2
+cmake_minimum_required(VERSION 3.2)
 
 #--------------------------------------------------------
 #           PROJECT CONFIGURATION
@@ -7,7 +7,7 @@ set(PROJECT_NAME DUTS2-POO-ProjetRunner)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
-project(${PROJECT_NAME})
+project(${PROJECT_NAME} LANGUAGES CXX VERSION 2.0)
 
 option(ENABLE_TESTS "Enable unit tests" OFF)
 option(ENABLE_UI "Enable user interface" ON) #In case your device can't support provided SFML

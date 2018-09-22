@@ -176,19 +176,18 @@ void ShopView::draw() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 16/05/16 - 26/12/17
+ * @date 16/05/16 - 22/09/18
  */
 bool ShopView::handleEvents(sf::Event event)
 {
     if (MOUSE_LEFT_PRESSED_EVENT) {
         if (!m_buyDialog->isVisible()) {
-            if (m_homeButton->contains(MOUSE_POSITION)) {
-                m_homeButton->setPressed(true);
-            }
+            m_homeButton->setPressed(m_homeButton->contains(MOUSE_POSITION));
 
             for (auto& it : m_pageIndicators) {
                 if (it.second->contains(MOUSE_POSITION)) {
                     it.second->setPressed(true);
+                    break;
                 }
             }
 
@@ -196,6 +195,7 @@ bool ShopView::handleEvents(sf::Event event)
                 if (card->getBuyButton()->contains(MOUSE_POSITION)
                         && card->isVisible() && !m_buyDialog->isVisible()) {
                     card->getBuyButton()->setPressed(true);
+                    break;
                 }
             }
         }

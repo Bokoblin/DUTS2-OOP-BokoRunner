@@ -748,20 +748,15 @@ bool GameView::handleRunningGameEvents(sf::Event event)
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 26/12/17 - 04/02/18
+ * @date 26/12/17 - 22/09/18
  */
 bool GameView::handlePausedGameEvents(sf::Event event)
 {
     if (MOUSE_LEFT_PRESSED_EVENT) {
-        if (m_resumeGameButton->contains(MOUSE_POSITION)) {
-            m_resumeGameButton->setPressed(true);
-        } else if (m_restartGameButton->contains(MOUSE_POSITION)) {
-            m_restartGameButton->setPressed(true);
-        } else if (m_goToHomeButton->contains(MOUSE_POSITION)) {
-            m_goToHomeButton->setPressed(true);
-        } else if (m_controlMusicButton->contains(MOUSE_POSITION)) {
-            m_controlMusicButton->setPressed(true);
-        }
+        m_resumeGameButton->setPressed(m_resumeGameButton->contains(MOUSE_POSITION));
+        m_restartGameButton->setPressed(m_restartGameButton->contains(MOUSE_POSITION));
+        m_goToHomeButton->setPressed(m_goToHomeButton->contains(MOUSE_POSITION));
+        m_controlMusicButton->setPressed(m_controlMusicButton->contains(MOUSE_POSITION));
     }
 
     if (event.type == sf::Event::MouseButtonReleased) {
@@ -796,18 +791,14 @@ bool GameView::handlePausedGameEvents(sf::Event event)
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 26/12/17
+ * @date 26/12/17 - 22/09/18
  */
 bool GameView::handleGameOverEvents(sf::Event event)
 {
     if (MOUSE_LEFT_PRESSED_EVENT) {
-        if (m_restartGameButton->contains(MOUSE_POSITION)) {
-            m_restartGameButton->setPressed(true);
-        } else if (m_goToHomeButton->contains(MOUSE_POSITION)) {
-            m_goToHomeButton->setPressed(true);
-        } else if (m_saveScoreButton->contains(MOUSE_POSITION)) {
-            m_saveScoreButton->setPressed(true);
-        }
+        m_restartGameButton->setPressed(m_restartGameButton->contains(MOUSE_POSITION));
+        m_goToHomeButton->setPressed(m_goToHomeButton->contains(MOUSE_POSITION));
+        m_saveScoreButton->setPressed(m_saveScoreButton->contains(MOUSE_POSITION));
     }
 
     if (event.type == sf::Event::MouseButtonReleased) {

@@ -95,14 +95,12 @@ void CommandsView::draw() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 24/01/17 - 26/12/17
+ * @date 24/01/17 - 22/09/18
  */
 bool CommandsView::handleEvents(sf::Event event)
 {
     if (MOUSE_LEFT_PRESSED_EVENT) {
-        if (m_homeButton->contains(MOUSE_POSITION)) {
-            m_homeButton->setPressed(true);
-        }
+        m_homeButton->setPressed(m_homeButton->contains(MOUSE_POSITION));
     }
 
     if (event.type == sf::Event::MouseButtonReleased) {

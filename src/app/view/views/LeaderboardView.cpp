@@ -126,14 +126,10 @@ void LeaderboardView::draw() const
 bool LeaderboardView::handleEvents(sf::Event event)
 {
     if (MOUSE_LEFT_PRESSED_EVENT) {
-        if (m_homeButton->contains(MOUSE_POSITION)) {
-            m_homeButton->setPressed(true);
-        }
+        m_homeButton->setPressed(m_homeButton->contains(MOUSE_POSITION));
 
         if (!m_confirmDialog->isVisible()) {
-            if (m_clearLeaderboardButton->contains(MOUSE_POSITION)) {
-                m_clearLeaderboardButton->setPressed(true);
-            }
+            m_clearLeaderboardButton->setPressed(m_clearLeaderboardButton->contains(MOUSE_POSITION));
         }
     }
 

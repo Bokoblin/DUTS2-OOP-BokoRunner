@@ -227,25 +227,17 @@ void MenuView::draw() const
  * @return true if app state is unchanged
  *
  * @author Arthur, Florian
- * @date 25/03/16 - 27/12/17
+ * @date 25/03/16 - 22/09/18
  */
 bool MenuView::handleHomeEvents(const sf::Event& event)
 {
     if (MOUSE_LEFT_PRESSED_EVENT) {
-        //FIXME: factorize
-        if (m_playButton->contains(MOUSE_POSITION)) {
-            m_playButton->setPressed(true);
-        } else if (m_quitButton->contains(MOUSE_POSITION)) {
-            m_quitButton->setPressed(true);
-        } else if (m_commandsButton->contains(MOUSE_POSITION)) {
-            m_commandsButton->setPressed(true);
-        } else if (m_settingsButton->contains(MOUSE_POSITION)) {
-            m_settingsButton->setPressed(true);
-        } else if (m_leaderboardButton->contains(MOUSE_POSITION)) {
-            m_leaderboardButton->setPressed(true);
-        } else if (m_shopButton->contains(MOUSE_POSITION)) {
-            m_shopButton->setPressed(true);
-        }
+        m_playButton->setPressed(m_playButton->contains(MOUSE_POSITION));
+        m_quitButton->setPressed(m_quitButton->contains(MOUSE_POSITION));
+        m_commandsButton->setPressed(m_commandsButton->contains(MOUSE_POSITION));
+        m_settingsButton->setPressed(m_settingsButton->contains(MOUSE_POSITION));
+        m_leaderboardButton->setPressed(m_leaderboardButton->contains(MOUSE_POSITION));
+        m_shopButton->setPressed(m_shopButton->contains(MOUSE_POSITION));
     }
 
     if (event.type == sf::Event::MouseButtonReleased) {

@@ -219,7 +219,7 @@ bool FileBasedPersistence::fetchConfigurationFromConfigFile()
  * @brief Updates statistics values from file
  *
  * @author Arthur
- * @date 24/10/16 - 26/01/18
+ * @date 24/10/16 - 25/09/18
  */
 bool FileBasedPersistence::fetchStatisticsFromConfigFile()
 {
@@ -230,39 +230,7 @@ bool FileBasedPersistence::fetchStatisticsFromConfigFile()
     for (xml_node statItem: stats.children("statItem")) {
         string nodeKey = string(statItem.attribute("name").value());
         xml_attribute nodeValue = statItem.attribute("value");
-
-        switch (hash(nodeKey)) {
-            case hash("total_coins_collected"):
-                m_appCore->m_totalCoinsCollected = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (nodeValue, INTEGER_REGEX, 0);
-                break;
-            case hash("total_distance_travelled"):
-                m_appCore->m_totalDistance = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (nodeValue, INTEGER_REGEX, 0);
-                break;
-            case hash("total_enemies_destroyed"):
-                m_appCore->m_totalFlattenedEnemies = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (nodeValue, INTEGER_REGEX, 0);
-                break;
-            case hash("per_game_coins_collected"):
-                m_appCore->m_perGameCoinsCollected = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (nodeValue, INTEGER_REGEX, 0);
-                break;
-            case hash("per_game_distance_travelled"):
-                m_appCore->m_perGameDistance = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (nodeValue, INTEGER_REGEX, 0);
-                break;
-            case hash("per_game_enemies_destroyed"):
-                m_appCore->m_perGameFlattenedEnemies = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (nodeValue, INTEGER_REGEX, 0);
-                break;
-            case hash("total_games_played"):
-                m_appCore->m_totalGamesPlayed = XMLHelper::safeRetrieveXMLValue<unsigned int>
-                        (nodeValue, INTEGER_REGEX, 0);
-                break;
-            default:
-                break;
-        }
+        m_appCore->m_statsMap[nodeKey] = XMLHelper::safeRetrieveXMLValue<unsigned int>(nodeValue, INTEGER_REGEX, 0);
     }
 
     return true;
@@ -331,7 +299,7 @@ bool FileBasedPersistence::fetchActivatedBonusFromConfigFile()
  * @brief Pushes Configuration data to file
  *
  * @author Arthur
- * @date 02/05/16 - 26/01/18
+ * @date 02/05/16 - 25/09/18
  */
 bool FileBasedPersistence::persistConfigurationToConfigFile()
 {
@@ -377,33 +345,7 @@ bool FileBasedPersistence::persistConfigurationToConfigFile()
 
     for (xml_node statItem: stats.children("statItem")) {
         string nodeKey = string(statItem.attribute("name").value());
-        xml_attribute nodeValue = statItem.attribute("value");
-
-        switch (hash(nodeKey)) {
-            case hash("total_coins_collected"):
-                nodeValue.set_value(to_string(m_appCore->m_totalCoinsCollected).c_str());
-                break;
-            case hash("total_distance_travelled"):
-                nodeValue.set_value(to_string(m_appCore->m_totalDistance).c_str());
-                break;
-            case hash("total_enemies_destroyed"):
-                nodeValue.set_value(to_string(m_appCore->m_totalFlattenedEnemies).c_str());
-                break;
-            case hash("per_game_coins_collected"):
-                nodeValue.set_value(to_string(m_appCore->m_perGameCoinsCollected).c_str());
-                break;
-            case hash("per_game_distance_travelled"):
-                nodeValue.set_value(to_string(m_appCore->m_perGameDistance).c_str());
-                break;
-            case hash("per_game_enemies_destroyed"):
-                nodeValue.set_value(to_string(m_appCore->m_perGameFlattenedEnemies).c_str());
-                break;
-            case hash("total_games_played"):
-                nodeValue.set_value(to_string(m_appCore->m_totalGamesPlayed).c_str());
-                break;
-            default:
-                break;
-        }
+        statItem.attribute("value").set_value(to_string(m_appCore->m_statsMap[nodeKey]).c_str());
     }
 
     //=== Save shop activated items

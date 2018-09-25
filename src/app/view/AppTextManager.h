@@ -129,7 +129,7 @@ private:
     //Game (Main, Pause & End) Labels
     mdsf::Text* m_playerLifeLabel;
     mdsf::Text* m_currentDistanceLabel;
-    mdsf::Text* m_coinsCollectedLabel;
+    mdsf::Text* m_currentCoinsLabel;
     mdsf::Text* m_endTitleLabel;
     mdsf::Text* m_speedMultiplierLabel;
     mdsf::Text* m_flattenedEnemiesLabel;

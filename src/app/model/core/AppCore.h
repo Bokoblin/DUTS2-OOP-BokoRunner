@@ -34,7 +34,7 @@ limitations under the License.
  * to do specific actions to the app
  *
  * @author Arthur
- * @date 02/05/16 - 04/02/18
+ * @date 02/05/16 - 25/09/18
  */
 class AppCore
 {
@@ -46,13 +46,6 @@ public:
 
     //=== GETTERS
     AppState getAppState() const;
-    int getTotalCoinsNumber() const;
-    int getTotalDistance() const;
-    int getTotalFlattenedEnemies() const;
-    int getPerGameCoinsNumber() const;
-    int getPerGameDistance() const;
-    int getPerGameFlattenedEnemies() const;
-    int getTotalGamesPlayed() const;
     int getCurrentCoinsNumber() const;
     int getCurrentDistance() const;
     int getCurrentFlattenedEnemies() const;
@@ -61,6 +54,7 @@ public:
     int getDifficulty() const;
     bool isMenuMusicEnabled() const;
     bool isGameMusicEnabled() const;
+    std::map<std::string, int> getStatsMap() const;
     bool isScoreEasyArrayEmpty() const;
     bool isScoreHardArrayEmpty() const;
     std::string getLanguage() const;
@@ -93,16 +87,8 @@ public:
 protected:
     //=== ATTRIBUTES
 
-    //TODO: Using a key value array in place of multiple attributes (to discuss)
     //Global App
     AppState m_appState;
-    int m_totalCoinsCollected;
-    int m_totalDistance;
-    int m_totalFlattenedEnemies;
-    int m_totalGamesPlayed;
-    int m_perGameCoinsCollected;
-    int m_perGameDistance;
-    int m_perGameFlattenedEnemies;
     int m_wallet;
     int m_currentDifficulty;
     bool m_isMenuMusicEnabled;
@@ -122,6 +108,7 @@ protected:
     std::set<int> m_scoresEasyArray;
     std::set<int> m_scoresHardArray;
     std::set<std::string> m_activatedItemsArray;
+    std::map<std::string, int> m_statsMap;
 
 private:
     friend class FileBasedPersistence;

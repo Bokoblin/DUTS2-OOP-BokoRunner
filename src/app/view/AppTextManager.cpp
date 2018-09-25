@@ -126,7 +126,7 @@ void AppTextManager::loadText()
     m_textList.push_back(m_speedMultiplierLabel = new mdsf::Text("end_speed_multiplier"));
     m_textList.push_back(m_speedMultiplierText = new mdsf::Text("end_speed_multiplier_value"));
     m_textList.push_back(m_currentDistanceLabel = new mdsf::Text("end_current_distance"));
-    m_textList.push_back(m_coinsCollectedLabel = new mdsf::Text("end_coins_collected"));
+    m_textList.push_back(m_currentCoinsLabel = new mdsf::Text("end_coins_collected"));
     m_textList.push_back(m_flattenedEnemiesLabel = new mdsf::Text("end_enemies"));
     m_textList.push_back(m_flattenedEnemiesText = new mdsf::Text("end_enemies_value"));
     m_textList.push_back(m_currentScoreLabel = new mdsf::Text("end_score"));
@@ -210,7 +210,7 @@ void AppTextManager::syncSplashScreenText(bool continueVisibility)
  * @param currentPage the current settings page opened
  *
  * @author Arthur
- * @date 14/04/16 - 06/09/18
+ * @date 14/04/16 - 25/09/18
  */
 void AppTextManager::syncMenuSettingsText(int currentPage)
 {
@@ -229,46 +229,46 @@ void AppTextManager::syncMenuSettingsText(int currentPage)
         m_statsTotalDistanceLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalDistanceText->setPosition(0.35f * m_width, 0.32f * m_height);
         m_statsTotalDistanceText->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalDistanceText->setString(to_string(m_appCore->getTotalDistance()) + " m");
+        m_statsTotalDistanceText->setString(to_string(m_appCore->getStatsMap().at("total_distance_travelled")) + " m");
 
         m_statsTotalEnemiesLabel->setPosition(0.07f * m_width, 0.39f * m_height);
         m_statsTotalEnemiesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalEnemiesText->setPosition(0.35f * m_width, 0.39f * m_height);
         m_statsTotalEnemiesText->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalEnemiesText->setStringFromInt(m_appCore->getTotalFlattenedEnemies());
+        m_statsTotalEnemiesText->setStringFromInt(m_appCore->getStatsMap().at("total_enemies_destroyed"));
 
         m_statsTotalCoinsLabel->setPosition(0.07f * m_width, 0.46f * m_height);
         m_statsTotalCoinsLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalCoinsNbText->setPosition(0.35f * m_width, 0.46f * m_height);
         m_statsTotalCoinsNbText->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalCoinsNbText->setFillColor(sf::Color::White);
-        m_statsTotalCoinsNbText->setStringFromInt(m_appCore->getTotalCoinsNumber());
+        m_statsTotalCoinsNbText->setStringFromInt(m_appCore->getStatsMap().at("total_coins_collected"));
 
         m_statsTotalGamesLabel->setPosition(0.07f * m_width, 0.53f * m_height);
         m_statsTotalGamesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsTotalGamesText->setPosition(0.35f * m_width, 0.53f * m_height);
         m_statsTotalGamesText->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsTotalGamesText->setStringFromInt(m_appCore->getTotalGamesPlayed());
+        m_statsTotalGamesText->setStringFromInt(m_appCore->getStatsMap().at("total_games_played"));
 
         m_statsPerGameDistanceLabel->setPosition(0.57f * m_width, 0.32f * m_height);
         m_statsPerGameDistanceLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsPerGameDistanceText->setPosition(m_width - 2 * 0.07f * m_width, 0.32f * m_height);
         m_statsPerGameDistanceText->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsPerGameDistanceText->setString(to_string(m_appCore->getPerGameDistance()) + " m");
+        m_statsPerGameDistanceText->setString(
+                to_string(m_appCore->getStatsMap().at("per_game_distance_travelled")) + " m");
 
         m_statsPerGameEnemiesLabel->setPosition(0.57f * m_width, 0.39f * m_height);
         m_statsPerGameEnemiesLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsPerGameEnemiesText->setPosition(m_width - 2 * 0.07f * m_width, 0.39f * m_height);
         m_statsPerGameEnemiesText->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsPerGameEnemiesText->setStringFromInt(m_appCore->getPerGameFlattenedEnemies());
+        m_statsPerGameEnemiesText->setStringFromInt(m_appCore->getStatsMap().at("per_game_enemies_destroyed"));
 
         m_statsPerGameCoinsLabel->setPosition(0.57f * m_width, 0.46f * m_height);
         m_statsPerGameCoinsLabel->setCharacterSize(CONTENT_CHAR_SIZE);
         m_statsPerGameCoinsText->setPosition(m_width - 2 * 0.07f * m_width, 0.46f * m_height);
         m_statsPerGameCoinsText->setCharacterSize(CONTENT_CHAR_SIZE);
-        m_statsPerGameCoinsText->setStringFromInt(m_appCore->getPerGameCoinsNumber());
-    } else //ABOUT
-    {
+        m_statsPerGameCoinsText->setStringFromInt(m_appCore->getStatsMap().at("per_game_coins_collected"));
+    } else { //ABOUT
         m_aboutTitleLabel->setPositionSelfCentered(0.5f * m_width, 0.08f * m_height);
         m_aboutDescriptionLabel->setPosition(0.08f * m_width, 0.25f * m_height);
         m_aboutDescriptionLabel->setCharacterSize(CONTENT_CHAR_SIZE);
@@ -429,7 +429,7 @@ void AppTextManager::syncGamePausedText() //FIXME: internationalization
  * @param gameSpeed the last game speed before game over
  *
  * @author Arthur
- * @date 02/04/16 - 27/10/17
+ * @date 02/04/16 - 25/09/18
  */
 void AppTextManager::syncGameOverText(int gameSpeed)
 {
@@ -447,11 +447,11 @@ void AppTextManager::syncGameOverText(int gameSpeed)
     m_currentDistanceText->setFillColor(AppColor::ScoreGrey);
     m_currentDistanceText->setString(to_string(m_appCore->getCurrentDistance()) + " m");
 
-    m_coinsCollectedLabel->setPosition(0.25f * m_width, 0.41f * m_height);
+    m_currentCoinsLabel->setPosition(0.25f * m_width, 0.41f * m_height);
     m_currentCoinsNbText->setPosition(0.65f * m_width, 0.41f * m_height);
     m_currentCoinsNbText->setFillColor(AppColor::ScoreGrey);
     m_currentCoinsNbText->setString(to_string(m_appCore->getCurrentCoinsNumber()) + "  X  20");
-    m_statsTotalCoinsNbText->setStringFromInt(m_appCore->getTotalCoinsNumber());
+    m_statsTotalCoinsNbText->setStringFromInt(m_appCore->getStatsMap().at("total_coins_collected"));
 
     m_flattenedEnemiesLabel->setPosition(0.25f * m_width, 0.48f * m_height);
     m_flattenedEnemiesLabel->setFillColor(sf::Color::White);
@@ -622,7 +622,7 @@ void AppTextManager::drawGameOverText(sf::RenderWindow* window) const
     m_speedMultiplierLabel->draw(window);
     m_speedMultiplierText->draw(window);
     m_currentDistanceLabel->draw(window);
-    m_coinsCollectedLabel->draw(window);
+    m_currentCoinsLabel->draw(window);
     m_flattenedEnemiesLabel->draw(window);
     m_flattenedEnemiesText->draw(window);
     m_currentScoreLabel->draw(window);

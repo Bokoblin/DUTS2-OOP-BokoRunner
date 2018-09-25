@@ -34,13 +34,6 @@ AppCore::~AppCore() = default;
 //------------------------------------------------
 
 AppState AppCore::getAppState() const { return m_appState; }
-int AppCore::getTotalCoinsNumber() const { return m_totalCoinsCollected; }
-int AppCore::getTotalDistance() const { return m_totalDistance; }
-int AppCore::getTotalFlattenedEnemies() const { return m_totalFlattenedEnemies; }
-int AppCore::getTotalGamesPlayed() const { return m_totalGamesPlayed; }
-int AppCore::getPerGameCoinsNumber() const { return m_perGameCoinsCollected; }
-int AppCore::getPerGameDistance() const { return m_perGameDistance; }
-int AppCore::getPerGameFlattenedEnemies() const { return m_perGameFlattenedEnemies; }
 int AppCore::getCurrentCoinsNumber() const { return m_currentCoinsNumber; } //for display purpose
 int AppCore::getCurrentDistance() const { return static_cast<int>(m_currentDistance); }
 int AppCore::getCurrentFlattenedEnemies() const { return m_currentFlattenedEnemies; } //for display purpose
@@ -49,6 +42,7 @@ int AppCore::getDifficulty() const { return m_currentDifficulty;}
 int AppCore::getWallet() const { return m_wallet;}
 bool AppCore::isMenuMusicEnabled() const { return m_isMenuMusicEnabled; }
 bool AppCore::isGameMusicEnabled() const { return m_isGameMusicEnabled; }
+std::map<string, int> AppCore::getStatsMap() const { return m_statsMap; }
 bool AppCore::isScoreEasyArrayEmpty() const { return m_scoresEasyArray.empty(); }
 bool AppCore::isScoreHardArrayEmpty() const { return m_scoresHardArray.empty(); }
 string AppCore::getLanguage() const { return m_currentLanguage; }
@@ -80,26 +74,26 @@ void AppCore::toggleGameMusic() { m_isGameMusicEnabled = !m_isGameMusicEnabled; 
  * Saves the current game results to app data.
  *
  * @author Arthur
- * @date 02/05/16 - 14/01/17
+ * @date 02/05/16 - 25/09/18
  */
 void AppCore::saveCurrentGame()
 {
     //add current game values to total values
-    m_totalCoinsCollected += m_currentCoinsNumber;
+    m_statsMap["total_coins_collected"] += m_currentCoinsNumber;
     m_wallet += m_currentCoinsNumber;
-    m_totalDistance += static_cast<int>(m_currentDistance);
-    m_totalFlattenedEnemies += m_currentFlattenedEnemies;
+    m_statsMap["total_distance_travelled"] += static_cast<int>(m_currentDistance);
+    m_statsMap["total_enemies_destroyed"] += m_currentFlattenedEnemies;
     addNewScore(m_currentScore);
 
     //update per game stats if better
-    if (m_currentCoinsNumber > m_perGameCoinsCollected) {
-        m_perGameCoinsCollected = m_currentCoinsNumber;
+    if (m_currentCoinsNumber > m_statsMap["per_game_coins_collected"]) {
+        m_statsMap["per_game_coins_collected"] = m_currentCoinsNumber;
     }
-    if (m_currentDistance > m_perGameDistance) {
-        m_perGameDistance = static_cast<int>(m_currentDistance);
+    if (m_currentDistance > m_statsMap["per_game_distance_travelled"]) {
+        m_statsMap["per_game_distance_travelled"] = static_cast<int>(m_currentDistance);
     }
-    if (m_currentFlattenedEnemies > m_perGameFlattenedEnemies) {
-        m_perGameFlattenedEnemies = m_currentFlattenedEnemies;
+    if (m_currentFlattenedEnemies > m_statsMap["per_game_enemies_destroyed"]) {
+        m_statsMap["per_game_enemies_destroyed"] = m_currentFlattenedEnemies;
     }
 
     Logger::printInfoOnConsole("Current game saved");
@@ -138,12 +132,12 @@ void AppCore::addNewScore(int score)
  * Resets current game to create a new one
  *
  * @author Arthur
- * @date 02/05/16
+ * @date 02/05/16 - 25/09/18
  */
 void AppCore::launchNewGame()
 {
     //for launching a new game
-    m_totalGamesPlayed += 1;
+    m_statsMap["total_games_played"] += 1;
     m_currentCoinsNumber = 0;
     m_currentDistance = 0;
     m_currentFlattenedEnemies = 0;
@@ -274,7 +268,7 @@ string AppCore::stringifyLeaderboard(Difficulty difficulty) const
  * in case it hasn't been initialized
  *
  * @author Arthur
- * @date 04/02/18
+ * @date 04/02/18 - 25/09/18
  */
 void AppCore::initWithDefaultValues()
 {
@@ -285,13 +279,9 @@ void AppCore::initWithDefaultValues()
     m_isGameMusicEnabled = true;
     m_wallet = 0;
 
-    m_totalCoinsCollected = 0;
-    m_totalDistance = 0;
-    m_totalFlattenedEnemies = 0;
-    m_totalGamesPlayed = 0;
-    m_perGameCoinsCollected = 0;
-    m_perGameDistance = 0;
-    m_perGameFlattenedEnemies = 0;
+    for (auto elem : m_statsMap) {
+        elem.second = 0;
+    }
 
     m_scoresEasyArray.clear();
     m_scoresHardArray.clear();

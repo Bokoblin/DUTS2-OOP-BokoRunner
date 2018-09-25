@@ -113,7 +113,7 @@ GameView::~GameView()
  * Loads all sprites used by the game (backgrounds, UI, elements)
  *
  * @author Arthur
- * @date 26/03/16 - 16/09/18
+ * @date 26/03/16 - 25/09/18
  */
 void GameView::loadSprites()
 {
@@ -247,7 +247,7 @@ void GameView::loadSprites()
     m_controlMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_controlMusicButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
 
-    m_saveScoreButton = new mdsf::RaisedButton(getHalfXPosition() - (0.5f * BUTTON_WIDTH), 0.583f * m_height,
+    m_saveScoreButton = new mdsf::RaisedButton(getHalfXPosition() - (0.5f * BUTTON_WIDTH), 0.72f * m_height,
                                                BUTTON_WIDTH, BUTTON_HEIGHT, "end_save_button", RAISED_BUTTON_IMAGE);
     m_saveScoreButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
     m_saveScoreButton->setFillColor(mdsf::Color::MaterialGreenA700);
@@ -477,8 +477,6 @@ void GameView::updateGameOverElements()
     m_restartGameButton->syncLabelPosition();
 
     m_saveScoreButton->sync();
-    m_saveScoreButton->setPositionSelfCentered(0.5f * m_width, 0.72f * m_height);
-    m_saveScoreButton->syncLabelPosition();
 }
 
 

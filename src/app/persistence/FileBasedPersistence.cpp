@@ -56,17 +56,32 @@ bool FileBasedPersistence::createConfigFile()
     return success;
 }
 
+
+/**
+ * @brief Load the config file into an xml object
+ *
+ * @author Arthur
+ * @date 25/08/18
+ */
 bool FileBasedPersistence::loadConfigFile()
 {
     nullSafeGuard();
     return XMLHelper::loadXMLFile(m_doc, m_appCore->getConfigFile());
 }
 
+
+/**
+ * @brief Remove the config file
+ *
+ * @author Arthur
+ * @date 25/08/18
+ */
 bool FileBasedPersistence::removeConfigFile()
 {
     nullSafeGuard();
     return XMLHelper::removeXMLFile(m_appCore->getConfigFile());
 }
+
 
 /**
  * @brief Checks a stream integrity
@@ -242,7 +257,7 @@ bool FileBasedPersistence::fetchStatisticsFromConfigFile()
  * with values from config file
  *
  * @author Arthur
- * @date 23/10/16 - 26/01/18
+ * @date 23/10/16 - 25/09/18
  */
 bool FileBasedPersistence::fetchLeaderboardFromConfigFile()
 {
@@ -255,16 +270,10 @@ bool FileBasedPersistence::fetchLeaderboardFromConfigFile()
     m_appCore->m_scoresHardArray.clear();
 
     for (xml_node scoreItem: scoresEasy.children("scoreItem")) {
-        if (string(scoreItem.attribute("value").value()) != "0") {
-            m_appCore->m_scoresEasyArray.insert(XMLHelper::safeRetrieveXMLValue<unsigned int>
-                                                        (scoreItem.attribute("value"), INTEGER_REGEX, 0));
-        }
+        insertScore(m_appCore->m_scoresEasyArray, scoreItem);
     }
     for (xml_node scoreItem: scoresHard.children("scoreItem")) {
-        if (string(scoreItem.attribute("value").value()) != "0") {
-            m_appCore->m_scoresHardArray.insert(XMLHelper::safeRetrieveXMLValue<unsigned int>
-                                                        (scoreItem.attribute("value"), INTEGER_REGEX, 0));
-        }
+        insertScore(m_appCore->m_scoresHardArray, scoreItem);
     }
 
     return true;
@@ -308,8 +317,6 @@ bool FileBasedPersistence::persistConfigurationToConfigFile()
     xml_node config = m_doc.child("runner").child("config");
     xml_node stats = m_doc.child("runner").child("stats");
     xml_node shop = m_doc.child("runner").child("shop");
-    xml_node scoresEasy = m_doc.child("runner").child("scoresEasy");
-    xml_node scoresHard = m_doc.child("runner").child("scoresHard");
 
     //=== Save configuration
 
@@ -358,40 +365,64 @@ bool FileBasedPersistence::persistConfigurationToConfigFile()
 
     //=== Save leaderboard
 
-    auto it = m_appCore->m_scoresEasyArray.begin();
-    for (xml_node scoreItem: scoresEasy.children("scoreItem")) {
-        xml_attribute nodeValue = scoreItem.attribute("value");
-        if (it != m_appCore->m_scoresEasyArray.end()) {
-            nodeValue.set_value(to_string(*it).c_str());
-            ++it;
-        } else {
-            nodeValue.set_value("0");
-        }
-    }
-
-    it = m_appCore->m_scoresHardArray.begin();
-    for (xml_node scoreItem: scoresHard.children("scoreItem")) {
-        xml_attribute nodeValue = scoreItem.attribute("value");
-        if (it != m_appCore->m_scoresHardArray.end()) {
-            nodeValue.set_value(to_string(*it).c_str());
-            ++it;
-        } else {
-            nodeValue.set_value("0");
-        }
-    }
+    saveScores(m_appCore->m_scoresEasyArray, m_doc.child("runner").child("scoresEasy"));
+    saveScores(m_appCore->m_scoresHardArray, m_doc.child("runner").child("scoresHard"));
 
     return m_doc.save_file(m_appCore->getConfigFile().c_str());
 }
-
 
 //------------------------------------------------
 //          PRIVATE METHODS
 //------------------------------------------------
 
+/**
+ * @brief Checks if the app core is initialized.
+ * Takes appropriate actions otherwise.
+ *
+ * @author Arthur
+ * @date 25/08/18
+ */
 void FileBasedPersistence::nullSafeGuard()
 {
     if (m_appCore == nullptr) {
         Logger::printErrorOnConsole("Illegal usage of FileBasedPersistence class");
         exit(EXIT_FAILURE);
+    }
+}
+
+
+/**
+ * @brief Insert a score into an array,
+ * or a default value if the score is invalid
+ *
+ * @author Arthur
+ * @date 25/09/18
+ */
+void FileBasedPersistence::insertScore(std::set<int>& array, const xml_node& scoreItem)
+{
+    if (string(scoreItem.attribute("value").value()) != "0") {
+        array.insert(XMLHelper::safeRetrieveXMLValue<unsigned int>
+                             (scoreItem.attribute("value"), INTEGER_REGEX, 0));
+    }
+}
+
+
+/**
+ * @brief Save all scores of an array into an xml node
+ *
+ * @author Arthur
+ * @date 25/09/18
+ */
+void FileBasedPersistence::saveScores(const std::set<int>& array, const xml_node& scoreNode)
+{
+    auto it = array.begin();
+    for (xml_node scoreItem: scoreNode.children("scoreItem")) {
+        xml_attribute nodeValue = scoreItem.attribute("value");
+        if (it != array.end()) {
+            nodeValue.set_value(to_string(*it).c_str());
+            ++it;
+        } else {
+            nodeValue.set_value("0");
+        }
     }
 }

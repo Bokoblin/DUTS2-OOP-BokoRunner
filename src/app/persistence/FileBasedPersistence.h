@@ -31,7 +31,7 @@ class AppCore;
  * This persistence uses an xml config file.
  *
  * @author Arthur
- * @date 25/08/18
+ * @date 25/08/18 - 25/09/18
  */
 class FileBasedPersistence
 {
@@ -56,6 +56,8 @@ public:
 private:
     //=== METHODS
     static void nullSafeGuard();
+    static void insertScore(std::set<int>& array, const pugi::xml_node& scoreItem);
+    static void saveScores(const std::set<int>& array, const pugi::xml_node& scoreNode);
 
     //=== ATTRIBUTES
     static AppCore* m_appCore;

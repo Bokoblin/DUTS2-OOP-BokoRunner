@@ -63,8 +63,8 @@
     <string name="stats_coins" value="Overall coins collected"/>
     <string name="stats_games_number" value="Number of games played"/>
     <string name="stats_per_game_distance" value="Best distance travelled"/>
-    <string name="stats_per_game_enemies" value="Best flattened enemies"/>
-    <string name="stats_per_game_coins" value="Best coins collected"/>
+    <string name="stats_per_game_enemies" value="Max flattened enemies"/>
+    <string name="stats_per_game_coins" value="Max coins collected"/>
     <string name="stats_app_reset" value="CLEAR DATA"/>
 
     <!-- Settings about strings -->

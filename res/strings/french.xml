@@ -62,12 +62,12 @@
     <string name="stats_overall_title" value="Statistiques cumulés"/>
     <string name="stats_per_game_title" value="Statistiques par partie"/>
     <string name="stats_distance" value="Distance totale parcourue"/>
-    <string name="stats_enemies" value="Total d'ennemies aplatis"/>
-    <string name="stats_coins" value="Total de pieces collectées"/>
+    <string name="stats_enemies" value="Total d'ennemis aplatis"/>
+    <string name="stats_coins" value="Total de pièces collectées"/>
     <string name="stats_games_number" value="Nombre de parties lancées"/>
     <string name="stats_per_game_distance" value="Meilleure distance parcourue"/>
-    <string name="stats_per_game_enemies" value="Meilleures ennemies aplatis"/>
-    <string name="stats_per_game_coins" value="Meilleurs ramassage de pieces"/>
+    <string name="stats_per_game_enemies" value="Max d'ennemis aplatis"/>
+    <string name="stats_per_game_coins" value="Meilleur ramassage de pièces"/>
     <string name="stats_app_reset" value="RÉINITIALISER"/>
 
     <!-- Settings about strings -->
@@ -90,7 +90,7 @@
     <string name="shop_bought" value="OBTENU"/>
     <string name="shop_purchasable" value="ACHETER"/>
     <string name="shop_dialog_title" value="Acheter cet objet ?"/>
-    <string name="shop_dialog_content" value="Nom : $NAME &#xA;&#xA;Prix : $PRICE pieces"/>
+    <string name="shop_dialog_content" value="Nom : $NAME &#xA;&#xA;Prix : $PRICE pièces"/>
     <string name="shop_dialog_success" value="Merci pour votre achat."/>
     <string name="shop_dialog_failure" value="L'achat a échoué."/>
 
@@ -107,7 +107,7 @@
 
     <!-- ShopItems strings -->
     <string name="shop_doubler_name" value="Doubleur de pièce"/>
-    <string name="shop_doubler_desc" value="Double le nombre &#xA;de pieces collectées"/>
+    <string name="shop_doubler_desc" value="Double le nombre &#xA;de pièces collectées"/>
     <string name="shop_shield_plus_name" value="Bouclier+"/>
     <string name="shop_shield_plus_desc" value="Protege le joueur d'une &#xA;collision supplémentaire"/>
     <string name="shop_mega_plus_name" value="Mega+"/>
@@ -130,10 +130,10 @@
 
     <!-- End Screen strings -->
     <string name="end_title" value="Votre score"/>
-    <string name="end_speed_multiplier" value="Multiplicateur vitesse"/>
+    <string name="end_speed_multiplier" value="Multiplicateur de vitesse"/>
     <string name="end_current_distance" value="Distance parcourue"/>
-    <string name="end_coins_collected" value="Pieces collectées"/>
-    <string name="end_enemies" value="Bonus destruction ennemies"/>
+    <string name="end_coins_collected" value="Pièces collectées"/>
+    <string name="end_enemies" value="Bonus de destruction d'ennemis"/>
     <string name="end_score" value="Total"/>
     <string name="end_save_button" value="SAUVER"/>
 

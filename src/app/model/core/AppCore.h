@@ -17,6 +17,7 @@ limitations under the License.
 #define APP_CORE_H
 
 #include <set>
+#include <map>
 #include "libs/Logger/Logger.h"
 #include "app/localization/LocalizationManager.h"
 #include "app/model/enums/AppState.h"

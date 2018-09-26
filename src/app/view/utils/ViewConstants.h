@@ -71,6 +71,7 @@ static const std::string GAME_BUTTONS_IMAGE = UI_FOLDER + "game_buttons.png";
 static const std::string CARD_IMAGE = UI_FOLDER + "card.png";
 static const std::string HOME_IMAGE = UI_FOLDER + "ic_home.png";
 static const std::string HYPERLINK_IMAGE = UI_FOLDER + "ic_link.png";
+static const std::string PAGE_INDICATOR_IMAGE = UI_FOLDER + "indicator_buttons.png";
 
 //=== Images files : Game components
 static const std::string BALL_IMAGE = GAME_COMPONENTS_FOLDER + "ball.png";

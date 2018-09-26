@@ -31,7 +31,7 @@ namespace MaterialDesignComponentsForSFML
  * and a different label location than other buttons.
  *
  * @author Arthur
- * @date 23/12/16 - 04/01/18
+ * @date 23/12/16 - 25/09/18
  *
  * @see Button
  */
@@ -40,7 +40,8 @@ class RadioButton : public Button
 public:
     //=== CTORs / DTORs
     RadioButton(float x, float y, float diameter);
-    RadioButton(float x, float y, float diameter, const std::string &description);
+    RadioButton(float x, float y, float diameter, const std::string& label,
+                const std::string& customImage = Config::RADIO_BUTTON_IMAGE);
     RadioButton(const RadioButton& other);
     ~RadioButton() override;
 
@@ -61,10 +62,6 @@ protected:
 
     //=== METHODS
     void setRadioClipRect();
-
-    //=== CONSTANTS
-    const std::string RADIO_BUTTONS_IMAGE = "../res/images/ui/radio_buttons.png";
-    const std::string INDICATOR_IMAGE = "../res/images/ui/indicator_buttons.png"; //TODO: split RADIO BUTTON FROM PAGE BUTTON (TBD)
 };
 
 } //namespace MaterialDesignComponentsForSFML

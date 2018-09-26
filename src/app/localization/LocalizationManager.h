@@ -23,8 +23,8 @@ limitations under the License.
 
 class AppCore;
 
-//TODO: maybe store config as static document xml instead of loading file each time
-//TODO: Especially useful for languages files accessed a dozen times
+//TODO: Maybe store config as static document xml instead of loading file each time
+//      Especially useful for languages files accessed a dozen times
 //TODO: Dynamic language handling (adding a language file adds it to available languages if valid) [post 2.X?]
 
 /**

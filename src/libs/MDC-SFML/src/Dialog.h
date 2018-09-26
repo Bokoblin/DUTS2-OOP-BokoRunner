@@ -31,7 +31,7 @@ namespace MaterialDesignComponentsForSFML
  * containing a title, a content and up to two buttons.
  *
  * @author Arthur
- * @date 16/05/16 - 29/12/17
+ * @date 16/05/16 - 26/09/18
  *
  * @see Sprite
  * @see Text
@@ -66,9 +66,6 @@ protected:
     Text m_content;
     Text m_cancelButtonText;
     Text m_okButtonText;
-
-    //=== CONSTANTS
-    const std::string DIALOG_IMAGE = "../res/images/ui/dialog.png"; //FIXME: dialog image in res/
 };
 
 } //namespace MaterialDesignComponentsForSFML

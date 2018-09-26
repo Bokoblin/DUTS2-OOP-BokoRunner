@@ -25,7 +25,7 @@ SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager
     for (int i = 0; i < SettingsModel::PAGE_NUMBER; i++) {
         m_pageIndicators[i] = new mdsf::RadioButton(
                 getHalfXPosition() - OFFSET * SettingsModel::PAGE_NUMBER + (INDICATOR_DIAMETER + INDICATOR_PADDING) * i,
-                0.92f * m_height, INDICATOR_DIAMETER, "indicator");
+                0.92f * m_height, INDICATOR_DIAMETER, "", PAGE_INDICATOR_IMAGE);
     }
 
     //=== Fill button list

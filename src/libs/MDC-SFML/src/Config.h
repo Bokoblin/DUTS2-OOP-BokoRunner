@@ -16,6 +16,8 @@ limitations under the License.
 #ifndef MDC_SFML_CONFIG_H
 #define MDC_SFML_CONFIG_H
 
+#define RES_FOLDER "../res/" //FIXME: Move MDC-SFML resources to MDC-SFML/res/
+
 #include <string>
 #include "libs/Logger/Logger.h"
 
@@ -25,22 +27,24 @@ namespace MaterialDesignComponentsForSFML
 {
 
 /**
- * TODO : Temporary \n
- * The Config class currently implements a temporary config for MDC-SFML for stdout and stderr. \n
- * Moving forward it shall use values defined in an XML that user can change
+ * The Config class is designed to define needed resources locations,
+ * store a config for the logger. \n
+ * Moving forward it shall allow user configuration by using definitions
  *
  * @author Arthur
- * @date 29/12/17
+ * @date 29/12/17 - 26/09/18
  */
 class Config
 {
 public:
     //=== ATTRIBUTES
-    static constexpr const char* DEFAULT_REGULAR_FONT = "../res/fonts/Roboto_Regular.ttf";
-    static constexpr const char* DEFAULT_CONDENSED_FONT = "../res/fonts/Roboto_Condensed.ttf";
-    static constexpr const char* DEFAULT_BOLD_FONT = "../res/fonts/Roboto_Bold.ttf";
+    static constexpr const char* DEFAULT_REGULAR_FONT = RES_FOLDER"fonts/Roboto_Regular.ttf";
+    static constexpr const char* DEFAULT_CONDENSED_FONT = RES_FOLDER"fonts/Roboto_Condensed.ttf";
+    static constexpr const char* DEFAULT_BOLD_FONT = RES_FOLDER"fonts/Roboto_Bold.ttf";
+    static constexpr const char* RADIO_BUTTON_IMAGE = RES_FOLDER"images/ui/radio_buttons.png";
+    static constexpr const char* DIALOG_IMAGE = RES_FOLDER"images/ui/dialog.png";
 
-    //TODO: see injection for logger function pointer (abstraction)
+    //TODO: Abstract logger by setting function pointers instead of including SimpleLogger ?
 };
 
 } //namespace MaterialDesignComponentsForSFML

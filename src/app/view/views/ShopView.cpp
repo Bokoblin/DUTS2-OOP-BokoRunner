@@ -94,7 +94,7 @@ void ShopView::createCards()
     for (unsigned int j = 0; j < pageNumber; j++) {
         m_pageIndicators[j] = new mdsf::RadioButton(
                 getHalfXPosition() - (HALF_POSITION_OFFSET * pageNumber) + (INDICATOR_DIAMETER + INDICATOR_PADDING) * j,
-                0.92f * m_height, INDICATOR_DIAMETER, "indicator");
+                0.92f * m_height, INDICATOR_DIAMETER, "", PAGE_INDICATOR_IMAGE);
     }
 }
 

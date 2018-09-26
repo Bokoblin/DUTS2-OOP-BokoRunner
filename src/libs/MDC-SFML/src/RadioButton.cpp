@@ -27,7 +27,7 @@ RadioButton::RadioButton(float x, float y, float diameter) :
 {
     m_labelPosition = RIGHT;
     setRadioClipRect();
-    loadAndApplyTextureFromImageFile(RADIO_BUTTONS_IMAGE);
+    loadAndApplyTextureFromImageFile(Config::RADIO_BUTTON_IMAGE);
     applyColor();
     resize(m_width, m_height);
 }
@@ -39,17 +39,18 @@ RadioButton::RadioButton(float x, float y, float diameter) :
  * @param x the x-axis coordinate
  * @param y the y-axis coordinate
  * @param diameter the diameter
- * @param description the label's description
+ * @param label the radio label
+ * @param customImage a custom image (optional)
  *
  * @author Arthur
- * @date 23/12/16 - 02/01/18
+ * @date 23/12/16 - 26/09/18
  */
-RadioButton::RadioButton(float x, float y, float diameter, const std::string &description) :
-        Button(x, y, diameter, diameter, description), m_isSelected{false}
+RadioButton::RadioButton(float x, float y, float diameter, const string& label, const string& customImage) :
+        Button(x, y, diameter, diameter, label), m_isSelected{false}
 {
     m_labelPosition = RIGHT;
     setRadioClipRect();
-    loadAndApplyTextureFromImageFile(description == "indicator" ? INDICATOR_IMAGE : RADIO_BUTTONS_IMAGE);
+    loadAndApplyTextureFromImageFile(customImage);
     applyColor();
     resize(m_width, m_height);
 }

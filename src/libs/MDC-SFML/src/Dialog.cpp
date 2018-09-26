@@ -36,13 +36,13 @@ Dialog::Dialog() : Sprite(0, 0), m_context{""}, m_title{""}, m_content{""},
  * @param context the context to make a contextual dialog
  *
  * @author Arthur
- * @date 02/01/17 - 16/09/18
+ * @date 02/01/17 - 26/09/18
  */
 Dialog::Dialog(float x, float y, float width, float height, const string& context) :
         Sprite(x, y, width, height), m_context{context}, m_title{""}, m_content{""},
         m_cancelButtonText{""}, m_okButtonText{""}
 {
-    loadAndApplyTextureFromImageFile(DIALOG_IMAGE);
+    loadAndApplyTextureFromImageFile(Config::DIALOG_IMAGE);
     setPosition(x, y);
     resize(width, height);
     applyColor();

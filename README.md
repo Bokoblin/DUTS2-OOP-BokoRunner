@@ -3,9 +3,9 @@
 ### Branches ###
 | Branch name | Branch description |     CI     |   Code review    |
 | ----------- | ------------------ | ---------- | ---------------- |
-| **master**  | Stable builds merged from dev | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner.svg?branch=master)](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b75a85177a7e42e288b9df67f5a6c0db?branch=master)](https://www.codacy.com/app/Bokoblin/DUTS2-POO-ProjetRunner?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bokoblin/DUTS2-POO-ProjetRunner&amp;utm_campaign=Badge_Grade) [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-poo-projetrunner/badge/master)](https://www.codefactor.io/repository/github/bokoblin/duts2-poo-projetrunner/overview/master)
-| **release** | Release builds rebased from master | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner.svg?branch=release)](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b75a85177a7e42e288b9df67f5a6c0db?branch=release)](https://www.codacy.com/app/Bokoblin/DUTS2-POO-ProjetRunner?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bokoblin/DUTS2-POO-ProjetRunner&amp;utm_campaign=Badge_Grade) [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-poo-projetrunner/badge/release)](https://www.codefactor.io/repository/github/bokoblin/duts2-poo-projetrunner/overview/release)
-| **dev** | In-development unstable builds | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner.svg?branch=dev)](https://travis-ci.org/Bokoblin/DUTS2-POO-ProjetRunner) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b75a85177a7e42e288b9df67f5a6c0db?branch=dev)](https://www.codacy.com/app/Bokoblin/DUTS2-POO-ProjetRunner?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bokoblin/DUTS2-POO-ProjetRunner&amp;utm_campaign=Badge_Grade)  [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-poo-projetrunner/badge/dev)](https://www.codefactor.io/repository/github/bokoblin/duts2-poo-projetrunner/overview/dev) |
+| **master**  | Stable builds merged from dev | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-OOP-ProjectRunner.svg?branch=master)](https://travis-ci.org/Bokoblin/DUTS2-OOP-ProjectRunner) | [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-projectrunner/badge/master)](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-projectrunner/overview/master)
+| **[release](https://github.com/Bokoblin/DUTS2-OOP-ProjectRunner/tree/release)** | Release builds rebased from master | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-OOP-ProjectRunner.svg?branch=release)](https://travis-ci.org/Bokoblin/DUTS2-OOP-ProjectRunner) | [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-projectrunner/badge/release)](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-projectrunner/overview/release)
+| **[dev](https://github.com/Bokoblin/DUTS2-OOP-ProjectRunner/tree/dev)** | In-development unstable builds | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-OOP-ProjectRunner.svg?branch=dev)](https://travis-ci.org/Bokoblin/DUTS2-OOP-ProjectRunner) | [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-projectrunner/badge/dev)](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-projectrunner/overview/dev) |
 
 ### Description ###
 
@@ -41,7 +41,7 @@ and "under the hood" improvements from Bokoblin.
 ### Documentation ###
 
 The Doxygen documentation can be found at 
-[this address](https://bokoblin.github.io/DUTS2-POO-ProjetRunner/). It is aligned with master branch.
+[this address](https://bokoblin.github.io/DUTS2-OOP-ProjectRunner/). It is aligned with master branch.
 
 
 ### How to build ###

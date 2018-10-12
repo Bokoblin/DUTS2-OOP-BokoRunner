@@ -42,38 +42,19 @@ RaisedButton::RaisedButton(float x, float y, float width, float height) :
  * @param y the y-axis coordinate
  * @param width the width
  * @param height the height
- * @param texturePath the button's  texture file path
+ * @param label the label's description
+ * @param customImage a custom image (optional)
  *
  * @author Arthur
- * @date 50/09/18
+ * @date 12/09/18 - 12/10/18
  */
-RaisedButton::RaisedButton(float x, float y, float width, float height, const string& texturePath) :
+RaisedButton::RaisedButton(float x, float y, float width, float height, const string& label, const string& customImage) :
         RaisedButton(x, y, width, height)
 {
-    loadAndApplyTextureFromImageFile(texturePath);
-}
-
-
-/**
- * @brief Constructs a button with coordinates,
- * a size, a label and a texture image
- *
- * @param x the x-axis coordinate
- * @param y the y-axis coordinate
- * @param width the width
- * @param height the height
- * @param desc the label's description
- * @param texturePath the button's  texture file path
- *
- * @author Arthur
- * @date 12/09/18 - 20/09/18
- */
-RaisedButton::RaisedButton(float x, float y, float width, float height, const string& desc, const string& texturePath) :
-        RaisedButton(x, y, width, height)
-{
-    m_label.setDescription(desc);
+    m_label.setDescription(label);
     syncLabelPosition();
-    loadAndApplyTextureFromImageFile(texturePath);
+    loadAndApplyTextureFromImageFile(customImage);
+    applyColor();
 }
 
 

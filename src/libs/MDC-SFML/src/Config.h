@@ -42,6 +42,7 @@ public:
     static constexpr const char* DEFAULT_CONDENSED_FONT = RES_FOLDER"fonts/Roboto_Condensed.ttf";
     static constexpr const char* DEFAULT_BOLD_FONT = RES_FOLDER"fonts/Roboto_Bold.ttf";
     static constexpr const char* RADIO_BUTTON_IMAGE = RES_FOLDER"images/ui/radio_buttons.png";
+    static constexpr const char* RAISED_BUTTON_IMAGE = RES_FOLDER"images/ui/raised_buttons.png";
     static constexpr const char* DIALOG_IMAGE = RES_FOLDER"images/ui/dialog.png";
 
     //TODO: Abstract logger by setting function pointers instead of including SimpleLogger ?

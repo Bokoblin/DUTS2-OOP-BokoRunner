@@ -249,7 +249,7 @@ void GameView::loadSprites()
     m_controlMusicButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
 
     m_saveScoreButton = new mdsf::RaisedButton(getHalfXPosition() - (0.5f * BUTTON_WIDTH), 0.72f * m_height,
-                                               BUTTON_WIDTH, BUTTON_HEIGHT, "end_save_button", RAISED_BUTTON_IMAGE);
+                                               BUTTON_WIDTH, BUTTON_HEIGHT, "end_save_button");
     m_saveScoreButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
     m_saveScoreButton->setFillColor(mdsf::Color::MaterialGreenA700);
 

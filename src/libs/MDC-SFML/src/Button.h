@@ -78,7 +78,7 @@ public:
 
 protected:
     //=== ATTRIBUTES
-    std::vector<sf::IntRect> m_clipRectArray; //FIXME: Sprite::loadAndApplyTextureFromImageFile(const std::string &, sf::IntRect) is enough
+    std::vector<sf::IntRect> m_clipRectArray; //FIXME: Sprite::loadAndApplyTextureFromImageFile(const std::string &, sf::IntRect) is enough for this class
     unsigned int m_currentClipRect; //TODO: move to RadioButton and ToggleButton (as boolean) classes
     bool m_isPressed;
     bool m_isEnabled;

@@ -30,7 +30,7 @@ namespace MaterialDesignComponentsForSFML
  * which shrink when pressed
  *
  * @author Arthur
- * @date 12/09/18 - 17/09/18
+ * @date 12/09/18 - 12/10/18
  *
  * @see Button
  */
@@ -39,8 +39,8 @@ class RaisedButton : public Button
 public:
     //=== CTORs / DTORs
     RaisedButton(float x, float y, float width, float height);
-    RaisedButton(float x, float y, float width, float height, const std::string& texturePath);
-    RaisedButton(float x, float y, float width, float height, const std::string& desc, const std::string& texturePath);
+    RaisedButton(float x, float y, float width, float height, const std::string& label,
+                 const std::string& customImage = Config::RAISED_BUTTON_IMAGE);
     RaisedButton(RaisedButton const& other);
     ~RaisedButton() override;
 

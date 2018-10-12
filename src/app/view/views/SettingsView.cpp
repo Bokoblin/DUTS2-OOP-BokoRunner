@@ -127,14 +127,13 @@ void SettingsView::loadSprites()
 
     //=== Initialize HOME button
 
-    m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, HOME_IMAGE);
+    m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, "", HOME_IMAGE);
     m_homeButton->resize(HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
 
     //=== Initialize RESET button
 
     m_resetDataButton = new mdsf::RaisedButton(getHalfXPosition() - (0.5f * RESET_BUTTON_WIDTH), 0.75f * m_height,
-                                               RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT, "stats_app_reset",
-                                               RAISED_BUTTON_IMAGE); //TODO: default image if not provided
+                                               RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT, "stats_app_reset");
     m_resetDataButton->setFillColor(mdsf::Color::MaterialRed);
 
 

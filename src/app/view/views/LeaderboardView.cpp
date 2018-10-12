@@ -64,13 +64,13 @@ void LeaderboardView::loadSprites()
 
     m_clearLeaderboardButton = new mdsf::RaisedButton(getHalfXPosition() - (0.5f * RESET_BUTTON_WIDTH),
                                                       0.9f * m_height, RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT,
-                                                      "leaderboard_clear_button", RAISED_BUTTON_IMAGE);
+                                                      "leaderboard_clear_button");
     m_clearLeaderboardButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
     m_clearLeaderboardButton->setFillColor(mdsf::Color::MaterialRed);
 
     //=== Initialize HOME button
 
-    m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, HOME_IMAGE);
+    m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, "", HOME_IMAGE);
     m_homeButton->resize(HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
 }
 

@@ -41,8 +41,8 @@ ShopItemCard::ShopItemCard(int num, ShopItem* item, float screenWidth, float scr
 
     //=== Init buy button
 
-    m_buyButton = new mdsf::RaisedButton(getX() + 0.125f * m_width, getY() + 0.83f * m_height, 0.75f * m_width,
-                                         0.133f * m_height, "shop_purchasable", RAISED_BUTTON_IMAGE);
+    m_buyButton = new mdsf::RaisedButton(getX() + 0.125f * m_width, getY() + 0.83f * m_height,
+                                         0.75f * m_width, 0.133f * m_height, "shop_purchasable");
 
     //=== Init background
 

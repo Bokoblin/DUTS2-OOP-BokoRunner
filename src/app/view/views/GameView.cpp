@@ -35,7 +35,7 @@ GameView::GameView(sf::RenderWindow* window, AppTextManager* textManager, GameMo
             : GAME_MUSIC_THEME_HARD_MODE;
 
     if (!m_gameThemeMusic.openFromFile(game_music)) {
-        Logger::printErrorOnConsole("Music loading failed for \"" + game_music + "\"");
+        Logger::printError("Music loading failed for \"" + game_music + "\"");
     } else {
         handleMusic();
         m_gameThemeMusic.play();
@@ -57,11 +57,11 @@ GameView::GameView(sf::RenderWindow* window, AppTextManager* textManager, GameMo
     }
 
     if (!m_coinMusic.openFromFile(COINS_COLLECTED_MUSIC)) {
-        Logger::printErrorOnConsole("Music loading failed for \"" + COINS_COLLECTED_MUSIC + "\"");
+        Logger::printError("Music loading failed for \"" + COINS_COLLECTED_MUSIC + "\"");
     }
 
     if (!m_destructedEnemiesMusic.openFromFile(ENEMIES_DESTRUCTED_MUSIC)) {
-        Logger::printErrorOnConsole("Music loading failed for \"" + ENEMIES_DESTRUCTED_MUSIC + "\"");
+        Logger::printError("Music loading failed for \"" + ENEMIES_DESTRUCTED_MUSIC + "\"");
     }
 }
 
@@ -213,6 +213,7 @@ void GameView::loadSprites()
     vector<sf::IntRect> clipRect_resume;
     clipRect_resume.emplace_back(0, 0, 50, 50);
     clipRect_resume.emplace_back(50, 0, 50, 50);
+    //TODO : Convert to raised button
     m_resumeGameButton = new mdsf::Button(PAUSE_FORM_X, 0.592f * m_height, PAUSE_ICONS_SIZE, PAUSE_ICONS_SIZE,
                                           "pause_resume", GAME_BUTTONS_IMAGE, clipRect_resume);
     m_resumeGameButton->resize(PAUSE_BUTTONS_SIZE);

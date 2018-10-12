@@ -49,9 +49,9 @@ void LocalizationManager::closeContext()
 void LocalizationManager::checkContext()
 {
     if (m_isInit && m_appCore != nullptr) {
-        Logger::printInfoOnConsole("Localization context verified");
+        Logger::printInfo("Localization context verified");
     } else {
-        Logger::printErrorOnConsole("Localization context check failed, please init it first...");
+        Logger::printError("Localization context check failed, please init it first...");
         throw LocalizationException();
     }
 }
@@ -75,12 +75,12 @@ string LocalizationManager::fetchLocalizedString(const string& label)
         string currentLocaleFile = getLanguageFile();
         result = XMLHelper::loadLabeledString(currentLocaleFile, label);
     } catch (const LocalizationException& e) {
-        Logger::printErrorOnConsole(e.what() + string("Localization checking failure, applying default language"));
+        Logger::printError(e.what() + string("Localization checking failure, applying default language"));
         result = XMLHelper::loadLabeledString(ENGLISH_STRINGS, label);;
     }
 
     if (result == "<" + label + ">" || result == "UNDEFINED") {
-        Logger::printWarningOnConsole("No string was found for expression \"" + label + "\"");
+        Logger::printWarning("No string was found for expression \"" + label + "\"");
     }
 
     return result;

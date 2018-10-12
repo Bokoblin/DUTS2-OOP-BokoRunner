@@ -83,7 +83,7 @@ public:
             dialog->setCancelButtonText(sf::String::fromUtf8(utf8_dialog_cancel.begin(), utf8_dialog_cancel.end()));
             dialog->setOkButtonText(sf::String::fromUtf8(utf8_dialog_ok.begin(), utf8_dialog_ok.end()));
         } else {
-            sl::Logger::printErrorOnConsole("NULL dialog passed in parameter");
+            sl::Logger::printError("NULL dialog passed in parameter");
         }
     }
 };

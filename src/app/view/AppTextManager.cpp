@@ -559,6 +559,7 @@ void AppTextManager::drawMenuCommandsText(sf::RenderWindow* window) const
  * Draws shop standalone text
  *
  * @param window the app's window
+ * @param nbItems the number of items available
  *
  * @author Arthur
  * @date 16/05/16 - 04/01/17

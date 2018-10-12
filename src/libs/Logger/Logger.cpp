@@ -5,43 +5,129 @@ namespace Bokoblin
 namespace SimpleLogger
 {
 
+std::string Logger::loggerFilename;
+
+//------------------------------------------------
+//          PUBLIC METHODS
+//------------------------------------------------
+
 /**
- * Prints an info message on the console
+ * @brief Prints an info log line
  *
  * @param message the message to print along info tag
  *
  * @author Arthur
- * @date 01/01/18
+ * @date 12/10/2018
  */
-void Logger::printInfoOnConsole(const std::string &message)
+void Logger::printInfo(const std::string& message)
 {
-    std::cout << "[INFO] " << message << std::endl;
+#ifdef ENABLE_FILE_LOGGING
+    printToFile(loggerFilename.empty() ? DEFAULT_LOGGER_FILE : loggerFilename, INFO_PREFIX, message);
+#else
+    printToConsole(INFO_PREFIX, message);
+#endif
 }
 
 /**
- * Prints a warning message on the console
+ * @brief Prints a warning log line
  *
- * @param message the message to print along warning tag
+ * @param message the message to print along info tag
  *
  * @author Arthur
- * @date 28/12/17
+ * @date 12/10/2018
  */
-void Logger::printWarningOnConsole(const std::string &message)
+void Logger::printWarning(const std::string& message)
 {
-    std::cout << "[WARNING] " << message << std::endl;
+#ifdef ENABLE_FILE_LOGGING
+    printToFile(loggerFilename.empty() ? DEFAULT_LOGGER_FILE : loggerFilename, WARN_PREFIX, message);
+#else
+    printToConsole(WARN_PREFIX, message);
+#endif
 }
 
 /**
- * Prints an error message on the console
+ * @brief Prints an error log line
  *
- * @param message the message to print along error tag
+ * @param message the message to print along info tag
  *
  * @author Arthur
- * @date 28/12/17
+ * @date 12/10/2018
  */
-void Logger::printErrorOnConsole(const std::string &message)
+void Logger::printError(const std::string& message)
 {
-    std::cerr << "[ERROR] " << message << std::endl;
+#ifdef ENABLE_FILE_LOGGING
+    printToFile(loggerFilename.empty() ? DEFAULT_LOGGER_FILE : loggerFilename, ERROR_PREFIX, message);
+#else
+    printToConsole(ERROR_PREFIX, message);
+#endif
+}
+
+/**
+ * @brief Set the log file name and path
+ *
+ * @param filename the log file name
+ *
+ * @author Arthur
+ * @date 12/10/2018
+ */
+void Logger::setLoggerFile(const std::string& filename)
+{
+    loggerFilename = filename;
+
+    std::fstream f;
+    f.open(filename.c_str(), std::ios::out);
+
+    if (f.fail()) {
+        printToConsole(ERROR_PREFIX, "Couldn't write to log file");
+    } else {
+        std::time_t t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        f << std::ctime(&t) << std::endl;
+    }
+}
+
+
+//------------------------------------------------
+//          PRIVATE METHODS
+//------------------------------------------------
+
+/**
+ * @brief Prints a log line to the console
+ *
+ * @param message the message to print along info tag
+ * @param prefix the line prefix to indicate log category
+ *
+ * @author Arthur
+ * @date 01/01/18 - 12/10/2018
+ */
+void Logger::printToConsole(const std::string& prefix, const std::string& message)
+{
+    if (prefix == ERROR_PREFIX) {
+        std::cerr << prefix << message << std::endl;
+    } else {
+        std::cout << prefix << message << std::endl;
+    }
+}
+
+/**
+ * @brief Prints a log line to a file
+ *
+ * @param filename the file name
+ * @param message the message to print
+ * @param prefix the line prefix to indicate log category
+ *
+ * @author Arthur
+ * @date 12/10/2018
+ */
+void Logger::printToFile(const std::string& filename, const std::string& prefix, const std::string& message)
+{
+    std::fstream f;
+    f.open(filename.c_str(), std::ios::app);
+
+    if (f.fail()) {
+        printToConsole(ERROR_PREFIX, "Couldn't write to log file");
+    } else {
+        f << prefix << message << std::endl;
+    }
 }
 
 } //namespace SimpleLogger

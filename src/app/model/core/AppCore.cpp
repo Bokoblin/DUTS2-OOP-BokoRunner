@@ -96,7 +96,7 @@ void AppCore::saveCurrentGame()
         m_statsMap["per_game_enemies_destroyed"] = m_currentFlattenedEnemies;
     }
 
-    Logger::printInfoOnConsole("Current game saved");
+    Logger::printInfo("Current game saved");
 }
 
 
@@ -116,14 +116,14 @@ void AppCore::addNewScore(int score)
             m_scoresEasyArray.erase(m_scoresEasyArray.begin());
         }
 
-        Logger::printInfoOnConsole("New score saved in EASY leaderboard");
+        Logger::printInfo("New score saved in EASY leaderboard");
     } else {
         m_scoresHardArray.insert(score);
         while (m_scoresHardArray.size() > MAX_SCORES) {
             m_scoresHardArray.erase(m_scoresHardArray.begin());
         }
 
-        Logger::printInfoOnConsole("New score saved in HARD leaderboard");
+        Logger::printInfo("New score saved in HARD leaderboard");
     }
 }
 
@@ -157,9 +157,9 @@ void AppCore::clearLeaderboard()
     m_scoresHardArray.clear();
 
     if (m_scoresEasyArray.empty() && m_scoresHardArray.empty()) {
-        Logger::printInfoOnConsole("Successfully cleaned leaderboard");
+        Logger::printInfo("Successfully cleaned leaderboard");
     } else {
-        Logger::printWarningOnConsole("Cleaning leaderboard operation failure");
+        Logger::printWarning("Cleaning leaderboard operation failure");
     }
 }
 
@@ -173,7 +173,7 @@ void AppCore::clearLeaderboard()
 void AppCore::clearAppData()
 {
     initWithDefaultValues();
-    Logger::printInfoOnConsole("App data was successfully cleared");
+    Logger::Logger::printInfo("App data was successfully cleared");
 }
 
 

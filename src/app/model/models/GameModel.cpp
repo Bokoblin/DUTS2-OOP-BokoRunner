@@ -258,7 +258,7 @@ void GameModel::handleMovableElementsCollisions()
                     handleBonusCollision(element->getType());
                     break;
                 default:
-                    Logger::printErrorOnConsole("Undefined element type");
+                    Logger::printError("Undefined element type");
                     break;
             }
         }
@@ -366,7 +366,7 @@ void GameModel::handleBonusCollision(MovableElementType bonusType)
     } else if (bonusType == SHIELD_BONUS) {
         m_player->changeState(m_appCore->findActivatedItem("shop_shield_plus") ? HARD_SHIELDED : SHIELDED);
     } else {
-        Logger::printErrorOnConsole("Undefined bonus type");
+        Logger::printError("Undefined bonus type");
     }
 }
 
@@ -482,11 +482,11 @@ void GameModel::addANewMovableElement(float posX, float posY, int type)
     } else if (type == PV_PLUS_BONUS) { //any bonus, transformation in CTOR
         newElement = new Bonus(posX, posY, ITEM_SIZE, ITEM_SIZE, ELEMENT_MOVE_X, ELEMENT_MOVE_Y);
     } else {
-        Logger::printErrorOnConsole("Undefined element type");
+        Logger::printError("Undefined element type");
     }
 
     if (newElement == nullptr) {
-        Logger::printErrorOnConsole("NULL value : movable element can't be created");
+        Logger::printError("NULL value : movable element can't be created");
     } else {
         m_newMovableElementsArray.insert(newElement);
         m_movableElementsArray.insert(newElement);

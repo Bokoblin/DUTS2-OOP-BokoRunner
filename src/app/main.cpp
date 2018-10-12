@@ -24,7 +24,7 @@ using Bokoblin::SimpleLogger::Logger;
  * Initializes the application and controls its loop
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 17/07/18
+ * @date 21/02/16 - 12/10/18
  */
 int main() //TODO: App class with logic -- main must only uses it + check arguments (for CLI)
 {
@@ -41,6 +41,7 @@ int main() //TODO: App class with logic -- main must only uses it + check argume
     //=== Initialize app data and text
 
     AppCore appCore;
+    Logger::setLoggerFile("./boko_runner.log");
     PersistenceManager::initContext(&appCore);
     PersistenceManager::fetchConfiguration();
     PersistenceManager::fetchStatistics();

@@ -16,6 +16,8 @@ limitations under the License.
 #ifndef LOGGER_H
 #define LOGGER_H
 
+#include <chrono>
+#include <fstream>
 #include <iostream>
 
 namespace Bokoblin
@@ -24,19 +26,28 @@ namespace SimpleLogger
 {
 
 /**
- * The Logger class currently implements a temporary logger for stdout and stderr. \n
- * Moving forward to Boko Runner 2.0.x release, it should implement
- * a more complexe logger than just writing in program console
+ * The Logger class provides a log writing to the console or a file.
  *
  * @author Arthur
- * @date 28/12/17 - 01/01/18
+ * @date 28/12/17 - 12/10/18
  */
 class Logger
 {
 public:
-    static void printInfoOnConsole(const std::string &message);
-    static void printWarningOnConsole(const std::string &message);
-    static void printErrorOnConsole(const std::string &message);
+    static void printInfo(const std::string& message);
+    static void printWarning(const std::string& message);
+    static void printError(const std::string& message);
+    static void setLoggerFile(const std::string& filename);
+
+private:
+    static void printToConsole(const std::string& prefix, const std::string& message);
+    static void printToFile(const std::string& filename, const std::string& prefix, const std::string& message);
+
+    static std::string loggerFilename;
+    static constexpr const char* INFO_PREFIX = "[INFO] ";
+    static constexpr const char* WARN_PREFIX = "[WARNING] ";
+    static constexpr const char* ERROR_PREFIX = "[ERROR] ";
+    static constexpr const char* DEFAULT_LOGGER_FILE = "./app.log";
 };
 
 } //namespace SimpleLogger

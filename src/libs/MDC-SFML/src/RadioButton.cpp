@@ -100,7 +100,7 @@ void RadioButton::setLabelPosition(LabelPosition labelPosition)
             m_labelPosition = RIGHT;
             break;
         default:
-            SimpleLogger::Logger::printErrorOnConsole("Not allowed label position");
+            SimpleLogger::Logger::printError("Not allowed label position");
     }
 }
 
@@ -158,7 +158,7 @@ void RadioButton::syncLabelPosition()
                 m_label.setOrigin(0, 0);
                 break;
             default:
-                SimpleLogger::Logger::printErrorOnConsole("Not allowed label position");
+                SimpleLogger::Logger::printError("Not allowed label position");
         }
     }
 }

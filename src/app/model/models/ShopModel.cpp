@@ -109,7 +109,7 @@ void ShopModel::fetchBuyableItemsFromFile()
         }
     }
     catch (const PersistenceException& e) {
-        Logger::printErrorOnConsole(e.what() + string("Persistence checking failure, no bonus were fetched"));
+        Logger::printError(e.what() + string("Persistence checking failure, no bonus were fetched"));
     }
 }
 

@@ -45,12 +45,12 @@ bool FileBasedPersistence::createConfigFile()
 
     bool success = false;
     if (XMLHelper::checkXMLFileExistence(m_appCore->getConfigFile())) {
-        Logger::printWarningOnConsole("Configuration file already exists, aborting...");
+        Logger::printWarning("Configuration file already exists, aborting...");
     } else if (XMLHelper::createXMLFile(m_appCore->getConfigFile(), DEFAULT_CONFIG_CONTENT)) {
-        Logger::printInfoOnConsole("Configuration file successfully created");
+        Logger::printInfo("Configuration file successfully created");
         success = true;
     } else {
-        Logger::printErrorOnConsole("Configuration file creation failure");
+        Logger::printError("Configuration file creation failure");
     }
 
     return success;
@@ -385,7 +385,7 @@ bool FileBasedPersistence::persistConfigurationToConfigFile()
 void FileBasedPersistence::nullSafeGuard()
 {
     if (m_appCore == nullptr) {
-        Logger::printErrorOnConsole("Illegal usage of FileBasedPersistence class");
+        Logger::printError("Illegal usage of FileBasedPersistence class");
         exit(EXIT_FAILURE);
     }
 }

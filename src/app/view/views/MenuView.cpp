@@ -58,7 +58,7 @@ MenuView::~MenuView()
 void MenuView::loadMusic()
 {
     if (!m_menuMusic.openFromFile(MENU_MUSIC_THEME)) {
-        Logger::printErrorOnConsole("Music loading failed for \"" + MENU_MUSIC_THEME + "\"");
+        Logger::printError("Music loading failed for \"" + MENU_MUSIC_THEME + "\"");
     } else {
         if (m_menu->getAppCore()->isMenuMusicEnabled()) {
             m_menuMusic.setVolume(100);

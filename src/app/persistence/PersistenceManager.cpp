@@ -59,9 +59,9 @@ void PersistenceManager::closeContext()
 void PersistenceManager::initPersistence()
 {
     if (FileBasedPersistence::checkStreamIntegrityFromConfigFile() && FileBasedPersistence::loadConfigFile()) {
-        Logger::printInfoOnConsole("Persistence init success");
+        Logger::printInfo("Persistence init success");
     } else {
-        Logger::printWarningOnConsole("Persistence context loading failure, creating it...");
+        Logger::printWarning("Persistence context loading failure, creating it...");
         if (FileBasedPersistence::createConfigFile()) {
             PersistenceManager::initPersistence();
         }
@@ -80,9 +80,9 @@ void PersistenceManager::checkContext() noexcept(false)
 {
     if (m_isInit && FileBasedPersistence::getAppCore() != nullptr
             && FileBasedPersistence::checkStreamIntegrityFromXMLDocument()) {
-        Logger::printInfoOnConsole("Persistence context verified");
+        Logger::printInfo("Persistence context verified");
     } else {
-        Logger::printErrorOnConsole("Persistence context check failed, please init it first...");
+        Logger::printError("Persistence context check failed, please init it first...");
         throw PersistenceException();
     }
 }
@@ -101,12 +101,12 @@ void PersistenceManager::fetchActivatedBonus()
         PersistenceManager::checkContext();
 
         if (FileBasedPersistence::fetchActivatedBonusFromConfigFile()) {
-            Logger::printInfoOnConsole("Activated bonus successfully fetched");
+            Logger::printInfo("Activated bonus successfully fetched");
         } else {
-            Logger::printErrorOnConsole("Activated bonus fetching failure");
+            Logger::printError("Activated bonus fetching failure");
         }
     } catch (const PersistenceException& e) {
-        Logger::printErrorOnConsole(e.what() + string("Persistence context checking failure"));
+        Logger::printError(e.what() + string("Persistence context checking failure"));
     }
 }
 
@@ -124,12 +124,12 @@ void PersistenceManager::fetchConfiguration()
         PersistenceManager::checkContext();
 
         if (FileBasedPersistence::fetchConfigurationFromConfigFile()) {
-            Logger::printInfoOnConsole("Configuration successfully fetched");
+            Logger::printInfo("Configuration successfully fetched");
         } else {
-            Logger::printErrorOnConsole("Configuration fetching failure");
+            Logger::printError("Configuration fetching failure");
         }
     } catch (const PersistenceException& e) {
-        Logger::printErrorOnConsole(e.what() + string("Persistence context checking failure"));
+        Logger::printError(e.what() + string("Persistence context checking failure"));
     }
 }
 
@@ -147,12 +147,12 @@ void PersistenceManager::fetchStatistics()
         PersistenceManager::checkContext();
 
         if (FileBasedPersistence::fetchStatisticsFromConfigFile()) {
-            Logger::printInfoOnConsole("Statistics successfully fetched");
+            Logger::printInfo("Statistics successfully fetched");
         } else {
-            Logger::printErrorOnConsole("Statistics fetching failure");
+            Logger::printError("Statistics fetching failure");
         }
     } catch (const PersistenceException& e) {
-        Logger::printErrorOnConsole(e.what() + string("Persistence context checking failure"));
+        Logger::printError(e.what() + string("Persistence context checking failure"));
     }
 }
 
@@ -170,12 +170,12 @@ void PersistenceManager::fetchLeaderboard()
         PersistenceManager::checkContext();
 
         if (FileBasedPersistence::fetchLeaderboardFromConfigFile()) {
-            Logger::printInfoOnConsole("Leaderboard successfully fetched");
+            Logger::printInfo("Leaderboard successfully fetched");
         } else {
-            Logger::printErrorOnConsole("Leaderboard fetching failure");
+            Logger::printError("Leaderboard fetching failure");
         }
     } catch (const PersistenceException& e) {
-        Logger::printErrorOnConsole(e.what() + string("Persistence context checking failure"));
+        Logger::printError(e.what() + string("Persistence context checking failure"));
     }
 }
 
@@ -193,12 +193,12 @@ void PersistenceManager::updatePersistence()
         PersistenceManager::checkContext();
 
         if (FileBasedPersistence::persistConfigurationToConfigFile()) {
-            Logger::printInfoOnConsole("Configuration successfully persisted");
+            Logger::printInfo("Configuration successfully persisted");
         } else {
-            Logger::printErrorOnConsole("Configuration persistence failure");
+            Logger::printError("Configuration persistence failure");
         }
     } catch (const PersistenceException& e) {
-        Logger::printErrorOnConsole(e.what() + string("Persistence context checking failure"));
+        Logger::printError(e.what() + string("Persistence context checking failure"));
     }
 }
 
@@ -214,9 +214,9 @@ void PersistenceManager::resetPersistence()
     if (FileBasedPersistence::removeConfigFile()
             && FileBasedPersistence::createConfigFile()
             && FileBasedPersistence::loadConfigFile()) {
-        Logger::printInfoOnConsole("Persistence context successfully reset");
+        Logger::printInfo("Persistence context successfully reset");
     } else {
-        Logger::printErrorOnConsole("Persistence context reset failure");
+        Logger::printError("Persistence context reset failure");
     }
 }
 
@@ -230,8 +230,8 @@ void PersistenceManager::resetPersistence()
 void PersistenceManager::deletePersistence()
 {
     if (FileBasedPersistence::removeConfigFile()) {
-        Logger::printInfoOnConsole("Persistence context successfully deleted");
+        Logger::printInfo("Persistence context successfully deleted");
     } else {
-        Logger::printErrorOnConsole("Persistence context delete failure");
+        Logger::printError("Persistence context delete failure");
     }
 }

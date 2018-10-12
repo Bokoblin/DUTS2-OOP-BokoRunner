@@ -289,7 +289,7 @@ void Sprite::loadAndApplyTextureFromImageFile(const std::string &imageFile)
     if (m_texture.loadFromFile(imageFile))
         processTextureLoading(imageFile);
     else
-        Logger::printErrorOnConsole("Image loading failed for \"" + imageFile + "\"");
+        Logger::printError("Image loading failed for \"" + imageFile + "\"");
 }
 
 
@@ -307,7 +307,7 @@ void Sprite::loadAndApplyTextureFromImageFile(const string &imageFile, sf::IntRe
     if (m_texture.loadFromFile(imageFile, area))
         processTextureLoading(imageFile);
     else
-        Logger::printErrorOnConsole("Image loading failed for \"" + imageFile + "\" and the area ("
+        Logger::printError("Image loading failed for \"" + imageFile + "\" and the area ("
                 + to_string(area.left) + ", " + to_string(area.top) + ", "
                 + to_string(area.width) + ", " + to_string(area.height) + ")");
 }

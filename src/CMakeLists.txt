@@ -65,6 +65,8 @@ if (ENABLE_UI)
     add_library(mdcsfml SHARED ${MDC_SFML_LIB})
 endif ()
 
+target_compile_definitions(slogger PUBLIC ENABLE_FILE_LOGGING=1)
+
 #----------------------------------------------------------------------------------
 #           DIRECTORIES INCLUSION
 #----------------------------------------------------------------------------------

@@ -26,13 +26,14 @@ static const int SCENE_HEIGHT = 600;
  * Initializes the application and controls its loop
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 17/07/18
+ * @date 21/02/16 - 12/10/18
  */
 int main() //TODO: Complete CLI app (maybe a App class can work differently if ENABLE_UI is set in order to only have one main)
 {
     //=== Initialize app data and text
 
     AppCore appCore;
+    Logger::setLoggerFile("./boko_runner.log");
     PersistenceManager::initContext(&appCore);
     PersistenceManager::fetchConfiguration();
     PersistenceManager::fetchStatistics();

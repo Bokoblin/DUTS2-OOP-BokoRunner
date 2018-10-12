@@ -19,7 +19,7 @@ limitations under the License.
 #define RES_FOLDER "../res/" //FIXME: Move MDC-SFML resources to MDC-SFML/res/
 
 #include <string>
-#include "libs/Logger/Logger.h"
+#include <iostream>
 
 namespace Bokoblin
 {
@@ -28,11 +28,11 @@ namespace MaterialDesignComponentsForSFML
 
 /**
  * The Config class is designed to define needed resources locations,
- * store a config for the logger. \n
+ * and store function pointers for the logger. \n
  * Moving forward it shall allow user configuration by using definitions
  *
  * @author Arthur
- * @date 29/12/17 - 26/09/18
+ * @date 29/12/17 - 12/10/18
  */
 class Config
 {
@@ -45,7 +45,10 @@ public:
     static constexpr const char* RAISED_BUTTON_IMAGE = RES_FOLDER"images/ui/raised_buttons.png";
     static constexpr const char* DIALOG_IMAGE = RES_FOLDER"images/ui/dialog.png";
 
-    //TODO: Abstract logger by setting function pointers instead of including SimpleLogger ?
+    //Logger function pointer
+    typedef void (*logger_function)(const std::string&);
+    static logger_function printError;
+    static void defaultPrintErrorFunction(const std::string& message);
 };
 
 } //namespace MaterialDesignComponentsForSFML

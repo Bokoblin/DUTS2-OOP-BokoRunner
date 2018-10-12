@@ -85,7 +85,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 #   - pugi: Ø
 #   - slogger: Ø
 #   - xmlhelper: pugi
-#   - mdcsfml: SFML, slogger
+#   - mdcsfml: SFML
 #   - executable: pugi, slogger, xmlhelper, mdcsfml [UI only for the latter]
 #----------------------------------------------------------------------------------
 if (ENABLE_UI)
@@ -95,7 +95,6 @@ if (ENABLE_UI)
 
     target_link_libraries(xmlhelper pugi)
     target_link_libraries(mdcsfml ${SFML_LIBRARIES})
-    target_link_libraries(mdcsfml slogger)
 
     add_executable(
             ${EXECUTABLE_NAME}
@@ -104,6 +103,7 @@ if (ENABLE_UI)
 
     target_link_libraries(${EXECUTABLE_NAME} xmlhelper)
     target_link_libraries(${EXECUTABLE_NAME} mdcsfml)
+    target_link_libraries(${EXECUTABLE_NAME} slogger)
 else ()
     target_link_libraries(xmlhelper pugi)
 

@@ -48,6 +48,7 @@ int main() //TODO: App class with logic -- main must only uses it + check argume
     PersistenceManager::fetchLeaderboard();
     LocalizationManager::initContext(&appCore);
 
+    mdsf::Config::printError = Logger::printError;
     AppTextManager textManager(&appCore, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     //=== Initialize app state, and event object

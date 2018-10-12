@@ -1,7 +1,6 @@
 #include "Dialog.h"
 
 using std::string;
-using Bokoblin::SimpleLogger::Logger;
 
 namespace Bokoblin
 {

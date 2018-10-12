@@ -2,7 +2,6 @@
 
 using std::string;
 using std::to_string;
-using Bokoblin::SimpleLogger::Logger;
 
 namespace Bokoblin
 {
@@ -289,7 +288,7 @@ void Sprite::loadAndApplyTextureFromImageFile(const std::string &imageFile)
     if (m_texture.loadFromFile(imageFile))
         processTextureLoading(imageFile);
     else
-        Logger::printError("Image loading failed for \"" + imageFile + "\"");
+        Config::printError("Image loading failed for \"" + imageFile + "\"");
 }
 
 
@@ -307,7 +306,7 @@ void Sprite::loadAndApplyTextureFromImageFile(const string &imageFile, sf::IntRe
     if (m_texture.loadFromFile(imageFile, area))
         processTextureLoading(imageFile);
     else
-        Logger::printError("Image loading failed for \"" + imageFile + "\" and the area ("
+        Config::printError("Image loading failed for \"" + imageFile + "\" and the area ("
                 + to_string(area.left) + ", " + to_string(area.top) + ", "
                 + to_string(area.width) + ", " + to_string(area.height) + ")");
 }

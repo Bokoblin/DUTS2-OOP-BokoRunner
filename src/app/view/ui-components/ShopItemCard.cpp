@@ -108,7 +108,7 @@ void ShopItemCard::syncWithButtonLabelRetrieval(mdsf::Button::label_retrieval_fu
 {
     sync();
     m_buyButton->setLabelDescription(m_item->isBought() ? "shop_bought" : "shop_purchasable");
-    m_buyButton->retrieveAndSyncLabel(func);
+    m_buyButton->retrieveLabel(func);
 }
 
 

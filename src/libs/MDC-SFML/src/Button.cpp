@@ -178,6 +178,7 @@ void Button::sync()
 
 /**
  * @brief Retrieves the button's label text
+ * @details Also syncs the label position as it's content as changed
  *
  * @param func the function used to retrieve the string given a label
  *
@@ -190,6 +191,8 @@ void Button::retrieveLabel(label_retrieval_func_t func)
         string utf8_string = func(m_label.getDescription());
         m_label.setUtf8String(utf8_string);
     }
+
+    syncLabelPosition();
 }
 
 
@@ -229,23 +232,6 @@ void Button::syncLabelPosition()
 
 
 /**
- * @brief Retrieves and syncs the button's label
- * @details Updates position + displayed text
- * @note This function is only a combination of syncLabel() and retrieveLabel()
- *
- * @param func the function used to retrieve the string given a label
- *
- * @author Arthur
- * @date 27/12/17 - 21/07/18
- */
-void Button::retrieveAndSyncLabel(label_retrieval_func_t func)
-{
-    retrieveLabel(func);
-    syncLabelPosition();
-}
-
-
-/**
  * @brief Draws the button and its label if visible
  *
  * @param window the app's window
@@ -260,6 +246,7 @@ void Button::draw(sf::RenderWindow* window) const
         m_label.draw(window);
     }
 }
+
 
 /**
  * @brief Checks if a point of given coordinates is contained

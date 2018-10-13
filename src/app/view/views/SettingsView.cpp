@@ -46,7 +46,7 @@ SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager
     //=== Init buttons
 
     for (mdsf::Button* button : m_buttonList)
-        button->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+        button->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
     //=== Init confirm dialog
 
@@ -300,7 +300,7 @@ void SettingsView::updateTextBasedComponents() const
 
     //Update button text
     for (mdsf::Button* button : m_buttonList)
-        button->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+        button->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
     //Update dialog text
     DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog);

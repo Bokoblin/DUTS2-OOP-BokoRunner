@@ -91,11 +91,11 @@ void MenuView::loadSprites()
 
     m_playButton = new mdsf::RaisedButton(getHalfXPosition() - 0.5f * MAIN_BUTTON_WIDTH, 0.667f * m_height,
                                           MAIN_BUTTON_WIDTH, MAIN_BUTTON_HEIGHT, "menu_play_button", MENU_BUTTON_IMAGE);
-    m_playButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+    m_playButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
     m_quitButton = new mdsf::RaisedButton(getHalfXPosition() - 0.5f * MAIN_BUTTON_WIDTH, 0.833f * m_height,
                                           MAIN_BUTTON_WIDTH, MAIN_BUTTON_HEIGHT, "menu_quit_button", MENU_BUTTON_IMAGE);
-    m_quitButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+    m_quitButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
 
     //=== Initialize COMMANDS, SETTINGS, LEADERBOARD and SHOP buttons
@@ -300,8 +300,8 @@ bool MenuView::handleEvents(sf::Event event)
                 || (m_menu->getMenuState() == SHOP && !m_shopView->handleEvents(event))
                 ) {
             m_menu->setMenuState(HOME);
-            m_playButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
-            m_quitButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+            m_playButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
+            m_quitButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
         }
     }
     return true;

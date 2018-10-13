@@ -72,14 +72,13 @@ public:
     void sync() override;
     virtual void retrieveLabel(label_retrieval_func_t func);
     virtual void syncLabelPosition();
-    virtual void retrieveAndSyncLabel(label_retrieval_func_t func);
     void draw(sf::RenderWindow* window) const override;
     bool contains(float x, float y) const override;
 
 protected:
     //=== ATTRIBUTES
-    std::vector<sf::IntRect> m_clipRectArray; //FIXME: Sprite::loadAndApplyTextureFromImageFile(const std::string &, sf::IntRect) is enough for this class
-    unsigned int m_currentClipRect; //TODO: move to RadioButton and ToggleButton (as boolean) classes
+    std::vector<sf::IntRect> m_clipRectArray; //FIXME: Sprite::loadAndApplyTextureFromImageFile(const std::string &, sf::IntRect) is enough for this class -- Can be moved to RadioButton
+    unsigned int m_currentClipRect; //TODO: move to RadioButton and ToggleButton [the latter todo, as boolean]
     bool m_isPressed;
     bool m_isEnabled;
     sf::Font m_font;

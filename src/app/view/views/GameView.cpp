@@ -218,7 +218,7 @@ void GameView::loadSprites()
                                           "pause_resume", GAME_BUTTONS_IMAGE, clipRect_resume);
     m_resumeGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_resumeGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_resumeGameButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+    m_resumeGameButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
     vector<sf::IntRect> clipRect_restart;
     clipRect_restart.emplace_back(0, 50, 50, 50);
@@ -227,7 +227,7 @@ void GameView::loadSprites()
                                            "pause_restart", GAME_BUTTONS_IMAGE, clipRect_restart);
     m_restartGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_restartGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_restartGameButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+    m_restartGameButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
 
     vector<sf::IntRect> clipRect_home;
@@ -237,7 +237,7 @@ void GameView::loadSprites()
                                         "pause_go_to_home", GAME_BUTTONS_IMAGE, clipRect_home);
     m_goToHomeButton->resize(PAUSE_BUTTONS_SIZE);
     m_goToHomeButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_goToHomeButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+    m_goToHomeButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
     vector<sf::IntRect> clipRect_music;
     clipRect_music.emplace_back(0, 200, 50, 50);
@@ -246,11 +246,11 @@ void GameView::loadSprites()
                                             "pause_music", GAME_BUTTONS_IMAGE, clipRect_music);
     m_controlMusicButton->resize(PAUSE_BUTTONS_SIZE);
     m_controlMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-    m_controlMusicButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+    m_controlMusicButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
     m_saveScoreButton = new mdsf::RaisedButton(getHalfXPosition() - (0.5f * BUTTON_WIDTH), 0.72f * m_height,
                                                BUTTON_WIDTH, BUTTON_HEIGHT, "end_save_button");
-    m_saveScoreButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+    m_saveScoreButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
     m_saveScoreButton->setFillColor(mdsf::Color::MaterialGreenA700);
 
 

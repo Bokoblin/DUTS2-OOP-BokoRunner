@@ -65,7 +65,7 @@ void LeaderboardView::loadSprites()
     m_clearLeaderboardButton = new mdsf::RaisedButton(getHalfXPosition() - (0.5f * RESET_BUTTON_WIDTH),
                                                       0.9f * m_height, RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT,
                                                       "leaderboard_clear_button");
-    m_clearLeaderboardButton->retrieveAndSyncLabel(LocalizationManager::fetchLocalizedString);
+    m_clearLeaderboardButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
     m_clearLeaderboardButton->setFillColor(mdsf::Color::MaterialRed);
 
     //=== Initialize HOME button

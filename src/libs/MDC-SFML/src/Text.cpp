@@ -19,7 +19,7 @@ namespace MaterialDesignComponentsForSFML
  * @author Arthur
  * @date 21/12/16 - 03/11/17
  */
-Text::Text(const string &description) : m_description{description}, m_isVisible{true}
+Text::Text(const string& description) : m_description{description}, m_isVisible{true}
 {
     m_font.loadFromFile(Config::DEFAULT_REGULAR_FONT);
     setFont(m_font);
@@ -35,7 +35,7 @@ Text::Text(const string &description) : m_description{description}, m_isVisible{
  * @author Arthur
  * @date 21/12/16 - 03/11/17
  */
-Text::Text(const string &description, bool isVisible) : Text(description)
+Text::Text(const string& description, bool isVisible) : Text(description)
 {
     m_isVisible = isVisible;
 }
@@ -68,10 +68,10 @@ bool Text::isVisible() const { return m_isVisible; }
 //          SETTERS
 //------------------------------------------------
 
-void Text::setDescription(const string &description) { m_description = description; }
+void Text::setDescription(const string& description) { m_description = description; }
 void Text::setPositionSelfCentered(float x, float y) { setPosition(x - getWidth()/2, y - getHeight()/2); }
 void Text::setStringFromInt(int value) { setString(std::to_string(value)); }
-void Text::setUtf8String(const string &content) { setString(sf::String::fromUtf8(content.begin(), content.end())); }
+void Text::setUtf8String(const string& content) { setString(sf::String::fromUtf8(content.begin(), content.end())); }
 void Text::setVisible(bool visible) { m_isVisible = visible; }
 
 
@@ -102,10 +102,9 @@ bool Text::contains(float x, float y) const
  * @author Arthur
  * @date 02/01/17
  */
-void Text::draw(sf::RenderWindow *window) const
+void Text::draw(sf::RenderWindow* window) const
 {
-    if (isVisible())
-    {
+    if (isVisible()) {
         window->draw(*this);
     }
 }
@@ -120,7 +119,7 @@ void Text::draw(sf::RenderWindow *window) const
  * @author Arthur
  * @date 07/01/17 - 29/12/17
  */
-void Text::applyTextFont(const string &fontFileName, unsigned int charSize, sf::Color color)
+void Text::applyTextFont(const string& fontFileName, unsigned int charSize, sf::Color color)
 {
     m_font.loadFromFile(fontFileName);
     sf::Text::setCharacterSize(charSize);

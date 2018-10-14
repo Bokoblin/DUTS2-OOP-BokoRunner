@@ -237,12 +237,16 @@ bool ShopView::handleEvents(sf::Event event)
             }
         } else {
             if (m_buyDialog->getOkButtonText().contains(MOUSE_POSITION)) {
-                processBuyConfirmOkAction();
+                processBuyItemConfirmAction();
             } else if (m_buyDialog->getCancelButtonText().contains(MOUSE_POSITION)
                     || !m_buyDialog->contains(MOUSE_POSITION)) {
                 m_buyDialog->hide();
             }
         }
+    }
+
+    if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) {
+        m_buyDialog->hide();
     }
 
     return true;
@@ -254,7 +258,7 @@ bool ShopView::handleEvents(sf::Event event)
  * @author Arthur
  * @date 06/09/18
  */
-void ShopView::processBuyConfirmOkAction()
+void ShopView::processBuyItemConfirmAction()
 {
     if (m_buyDialog->getContext() == "shop_item_details") {
         ShopItem* shopItem = dynamic_cast<ShopDialog*>(m_buyDialog)->getLinkedShopItem();

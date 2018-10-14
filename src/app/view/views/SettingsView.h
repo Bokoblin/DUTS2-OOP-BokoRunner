@@ -29,7 +29,7 @@ limitations under the License.
  * It handles the settings screen's rendering.
  *
  * @author Arthur
- * @date 20/05/16 - 22/09/18
+ * @date 20/05/16 - 14/10/18
  */
 class SettingsView: public AbstractView
 {
@@ -97,6 +97,7 @@ private:
     void updateTextBasedComponents() const;
     float getDialogXPosition(int width) const;
     float getDialogYPosition(int height) const;
+    void processClearAppDataConfirmAction();
 };
 
 

@@ -397,12 +397,7 @@ bool SettingsView::handleEvents(sf::Event event)
                 }
             } else {
                 if (m_confirmDialog->getOkButtonText().contains(MOUSE_POSITION)) {
-                    m_confirmDialog->hide();
-                    m_settings->getAppCore()->clearAppData();
-                    PersistenceManager::resetPersistence();
-                    m_textManager->syncMenuSettingsText(m_settings->getCurrentPage());
-                    m_settings->checkItemsAvailability();
-                    handleMusic();
+                    processClearAppDataConfirmAction();
                 } else if (m_confirmDialog->getCancelButtonText().contains(MOUSE_POSITION)
                         || !m_confirmDialog->contains(MOUSE_POSITION)) {
                     m_confirmDialog->hide();
@@ -418,6 +413,22 @@ bool SettingsView::handleEvents(sf::Event event)
     }
 
     return true;
+}
+
+/**
+ * @brief Process  confirm action on clear app data
+ *
+ * @author Arthur
+ * @date 14/10/18
+ */
+void SettingsView::processClearAppDataConfirmAction()
+{
+    m_confirmDialog->hide();
+    m_settings->getAppCore()->clearAppData();
+    PersistenceManager::resetPersistence();
+    m_textManager->syncMenuSettingsText(m_settings->getCurrentPage());
+    m_settings->checkItemsAvailability();
+    handleMusic();
 }
 
 

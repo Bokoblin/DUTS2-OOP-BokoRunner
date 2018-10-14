@@ -62,7 +62,7 @@ private:
     void loadSprites() override;
     void syncCards();
     void createCards();
-    void processBuyConfirmOkAction();
+    void processBuyItemConfirmAction();
     float getDialogXPosition(int width) const;
     float getDialogYPosition(int height) const;
 

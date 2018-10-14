@@ -7,9 +7,16 @@ namespace
 {
 
 /**
- * This test class performs tests on the app class PersistenceManager
+ * The test class PersistenceManagerTest
+ * performs tests on the app class PersistenceManager
+ *
+ * @author Arthur
+ * @date 25/08/18
+ *
+ * @see PersistenceManager
  */
-class PersistenceManagerTest: public ::testing::Test {
+class PersistenceManagerTest: public ::testing::Test
+{
 protected:
     TestCore* testCore{};
 

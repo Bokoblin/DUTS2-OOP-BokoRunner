@@ -30,7 +30,7 @@ class AppCore;
  * The current persistence system used by this manager is a file-based config file.
  *
  * @author Arthur
- * @date 27/01/18 - 17/07/18
+ * @date 27/01/18 - 13/10/18
  */
 class PersistenceManager
 {
@@ -44,9 +44,10 @@ public:
     static void fetchStatistics();
     static void fetchLeaderboard();
     static void fetchActivatedBonus();
+    static void fetchShopItems();
     static void updatePersistence(); //TODO: global + split versions
     static void resetPersistence();
-    static void deletePersistence(); //TODO: use in CLI to clean the persistence
+    static void deletePersistence();
 
     //=== GETTERS
     static bool isInit();

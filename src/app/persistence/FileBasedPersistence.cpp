@@ -1,5 +1,4 @@
 #include "FileBasedPersistence.h"
-#include "app/model/utils/StringHash.h"
 
 using std::string;
 using std::to_string;
@@ -20,7 +19,7 @@ xml_document FileBasedPersistence::m_doc;
 //          GETTERS
 //------------------------------------------------
 
-AppCore* FileBasedPersistence::getAppCore() { return m_appCore; }
+bool FileBasedPersistence::isAppCoreInitialized() { return m_appCore != nullptr; }
 
 
 //------------------------------------------------
@@ -299,6 +298,34 @@ bool FileBasedPersistence::fetchActivatedBonusFromConfigFile()
             m_appCore->m_activatedItemsArray.insert(XMLHelper::safeRetrieveXMLValue<string>
                                                             (shopItem.attribute("id"), ITEM_REGEX, ""));
         }
+    }
+    return true;
+}
+
+
+/**
+ * @brief Updates shop items array
+ * with values from config file
+ *
+ * @author Arthur
+ * @date 13/10/18
+ */
+bool FileBasedPersistence::fetchShopItemsFromConfigFile()
+{
+    nullSafeGuard();
+
+    xml_node shop = m_doc.child("runner").child("shop");
+
+    for (pugi::xml_node shopItem: shop.children("shopItem")) {
+        //Updates item's attributes
+        string id = shopItem.attribute("id").value();
+        string name = LocalizationManager::fetchLocalizedString(id + "_name");
+        string desc = LocalizationManager::fetchLocalizedString(id + "_desc");
+        int price = std::stoi(shopItem.attribute("price").value());
+        bool isBought = ((string) shopItem.attribute("bought").value()) == "true";
+
+        //Adds item to array
+        m_appCore->m_shopItemsArray.push_back(new ShopItem(id, name, desc, price, isBought));
     }
     return true;
 }

@@ -15,34 +15,29 @@ using Bokoblin::SimpleLogger::Logger;
  * @param appCore the app's core singleton
  *
  * @author Arthur
- * @date 11/05/16 - 04/02/18
+ * @date 11/05/16 - 14/10/18
  */
 ShopModel::ShopModel(AppCore* appCore) : AbstractModel(appCore)
 {
     PersistenceManager::fetchConfiguration();
     PersistenceManager::fetchActivatedBonus();
-    fetchBuyableItemsFromFile(); //FIXME
+    PersistenceManager::fetchShopItems();
 }
 
 
 /**
  * Destructor
  * @author Arthur
- * @date 11/05/16 - 18/05/16
+ * @date 11/05/16 - 13/10/18
  */
-ShopModel::~ShopModel()
-{
-    for (ShopItem* shopItem: m_shopItemsArray) {
-        delete shopItem;
-    }
-}
+ShopModel::~ShopModel() = default;
 
 
 //------------------------------------------------
 //          GETTERS
 //------------------------------------------------
 
-vector<ShopItem*> ShopModel::getShopItemsArray() const { return m_shopItemsArray; }
+vector<ShopItem*> ShopModel::getShopItemsArray() const { return m_appCore->getShopItemsArray(); }
 
 
 //------------------------------------------------
@@ -68,7 +63,7 @@ bool ShopModel::buyItem(ShopItem* item)
         //=== update config files
 
         m_appCore->addNewActivatedBonus(item->getId());
-        PersistenceManager::updatePersistence(); //FIXME: Needed by shopView for retrieval from file
+        PersistenceManager::updatePersistence();
 
         return true;
     }
@@ -76,42 +71,6 @@ bool ShopModel::buyItem(ShopItem* item)
     return false;
 }
 
-
-/**
- * Fetches Shop Items from file
- *
- * @author Arthur
- * @date 11/05/16 - 11/02/18
- */
-void ShopModel::fetchBuyableItemsFromFile()
-{
-    try {
-        PersistenceManager::checkContext();
-
-        //FIXME: No config file / xml access should be allowed ! It breaks persistence abstraction !!
-        //TODO: populate a ShopItem list from app core in Persistence manager
-
-        pugi::xml_document doc;
-        doc.load_file(m_appCore->getConfigFile().c_str());
-
-        pugi::xml_node shop = doc.child("runner").child("shop");
-
-        for (pugi::xml_node shopItem: shop.children("shopItem")) {
-            //Updates item's attributes
-            string id = shopItem.attribute("id").value();
-            string name = LocalizationManager::fetchLocalizedString(id + "_name");
-            string desc = LocalizationManager::fetchLocalizedString(id + "_desc");
-            int price = stoi(shopItem.attribute("price").value());
-            bool isBought = ((string) shopItem.attribute("bought").value()) == "true";
-
-            //Adds item to array
-            m_shopItemsArray.push_back(new ShopItem(id, name, desc, price, isBought));
-        }
-    }
-    catch (const PersistenceException& e) {
-        Logger::printError(e.what() + string("Persistence checking failure, no bonus were fetched"));
-    }
-}
 
 /**
  * Next Step

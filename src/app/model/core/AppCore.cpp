@@ -24,9 +24,14 @@ AppCore::AppCore() : m_appState{SPLASH}
 /**
  * Destructor
  * @author Arthur
- * @date 26/11/17
+ * @date 26/11/17 - 13/10/18
  */
-AppCore::~AppCore() = default;
+AppCore::~AppCore()
+{
+    for (ShopItem* shopItem: m_shopItemsArray) {
+        delete shopItem;
+    }
+}
 
 
 //------------------------------------------------
@@ -42,6 +47,7 @@ int AppCore::getDifficulty() const { return m_currentDifficulty;}
 int AppCore::getWallet() const { return m_wallet;}
 bool AppCore::isMenuMusicEnabled() const { return m_isMenuMusicEnabled; }
 bool AppCore::isGameMusicEnabled() const { return m_isGameMusicEnabled; }
+std::vector<ShopItem*> AppCore::getShopItemsArray() const { return m_shopItemsArray; }
 std::map<string, int> AppCore::getStatsMap() const { return m_statsMap; }
 bool AppCore::isScoreEasyArrayEmpty() const { return m_scoresEasyArray.empty(); }
 bool AppCore::isScoreHardArrayEmpty() const { return m_scoresHardArray.empty(); }
@@ -268,7 +274,7 @@ string AppCore::stringifyLeaderboard(Difficulty difficulty) const
  * in case it hasn't been initialized
  *
  * @author Arthur
- * @date 04/02/18 - 25/09/18
+ * @date 04/02/18 - 13/10/18
  */
 void AppCore::initWithDefaultValues()
 {
@@ -285,6 +291,7 @@ void AppCore::initWithDefaultValues()
 
     m_scoresEasyArray.clear();
     m_scoresHardArray.clear();
+    m_shopItemsArray.clear();
     m_activatedItemsArray.clear();
 
     m_currentCoinsNumber = 0;

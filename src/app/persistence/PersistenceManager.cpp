@@ -74,11 +74,11 @@ void PersistenceManager::initPersistence()
  * @throws PersistenceException
  *
  * @author Arthur
- * @date 04/02/18 - 25/08/2018
+ * @date 04/02/18 - 14/10/2018
  */
 void PersistenceManager::checkContext() noexcept(false)
 {
-    if (m_isInit && FileBasedPersistence::getAppCore() != nullptr
+    if (m_isInit && FileBasedPersistence::isAppCoreInitialized()
             && FileBasedPersistence::checkStreamIntegrityFromXMLDocument()) {
         Logger::printInfo("Persistence context verified");
     } else {
@@ -181,6 +181,29 @@ void PersistenceManager::fetchLeaderboard()
 
 
 /**
+ * @brief Fetches the shop items
+ * from persistence system
+ *
+ * @author Arthur
+ * @date 13/10/2018
+ */
+void PersistenceManager::fetchShopItems()
+{
+    try {
+        PersistenceManager::checkContext();
+
+        if (FileBasedPersistence::fetchShopItemsFromConfigFile()) {
+            Logger::printInfo("Shop items successfully fetched");
+        } else {
+            Logger::printError("Shop items fetching failure");
+        }
+    } catch (const PersistenceException& e) {
+        Logger::printError(e.what() + string("Persistence context checking failure"));
+    }
+}
+
+
+/**
  * @brief Updates the app configuration
  * of the persistence system
  *
@@ -219,7 +242,6 @@ void PersistenceManager::resetPersistence()
         Logger::printError("Persistence context reset failure");
     }
 }
-
 
 /**
  * @brief Deletes the persistence context

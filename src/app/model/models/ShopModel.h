@@ -24,10 +24,9 @@ limitations under the License.
  * The ShopModel class inherits AbstractModel.
  * It is the model counterpart of the class ShopView.
  * It handles the shop screen's logic.
- * It fetches the list of selling-available items.
  *
  * @author Arthur
- * @date 11/05/16 - 29/12/17
+ * @date 11/05/16 - 13/10/18
  */
 class ShopModel: public AbstractModel
 {
@@ -43,13 +42,6 @@ public:
     bool buyItem(ShopItem* item);
     void nextStep() override;
     void quit();
-
-private:
-    //=== ATTRIBUTES
-    std::vector<ShopItem*> m_shopItemsArray;
-
-    //=== METHODS
-    void fetchBuyableItemsFromFile();
 };
 
 #endif

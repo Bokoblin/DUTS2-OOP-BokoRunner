@@ -22,6 +22,8 @@ limitations under the License.
 #include "libs/XMLHelper/XMLHelper.h"
 #include "app/model/core/AppCore.h"
 #include "app/model/core/ModelConstants.h"
+#include "app/model/menu-components/ShopItem.h"
+#include "app/model/utils/StringHash.h"
 
 class AppCore;
 
@@ -31,7 +33,7 @@ class AppCore;
  * This persistence uses an xml config file.
  *
  * @author Arthur
- * @date 25/08/18 - 25/09/18
+ * @date 25/08/18 - 13/10/18
  */
 class FileBasedPersistence
 {
@@ -46,11 +48,12 @@ public:
     static bool fetchConfigurationFromConfigFile();
     static bool fetchStatisticsFromConfigFile();
     static bool fetchActivatedBonusFromConfigFile();
+    static bool fetchShopItemsFromConfigFile();
     static bool fetchLeaderboardFromConfigFile();
     static bool persistConfigurationToConfigFile();
 
     //=== GETTERS / SETTERS
-    static AppCore* getAppCore();
+    static bool isAppCoreInitialized();
     static void setAppCore(AppCore* appCore); //NOTE: MUST BE CALLED AT LEAST ONCE BEFORE USING OTHER FUNCTIONS
 
 private:

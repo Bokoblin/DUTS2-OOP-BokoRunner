@@ -7,11 +7,12 @@ set(UNIT_TESTS unit_tests)
 #       SET TEST SOURCES
 #--------------------------------------------------------
 file(GLOB TESTED_SOURCE_FILES
-        "../src/app/persistence/FileBasedPersistence.cpp"
-        "../src/app/persistence/PersistenceManager.cpp"
         "../src/app/localization/LocalizationManager.cpp"
         "../src/app/model/core/AppCore.cpp"
         "../src/app/model/core/ModelConstants.h"
+        "../src/app/model/menu-components/ShopItem.cpp"
+        "../src/app/persistence/FileBasedPersistence.cpp"
+        "../src/app/persistence/PersistenceManager.cpp"
         )
 
 file(GLOB TEST_SOURCE_FILES

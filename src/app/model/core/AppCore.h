@@ -18,10 +18,12 @@ limitations under the License.
 
 #include <set>
 #include <map>
+#include <vector>
 #include "libs/Logger/Logger.h"
 #include "app/localization/LocalizationManager.h"
 #include "app/model/enums/AppState.h"
 #include "app/model/enums/Difficulty.h"
+#include "app/model/menu-components/ShopItem.h"
 #include "app/persistence/FileBasedPersistence.h"
 #include "ModelConstants.h"
 
@@ -55,6 +57,7 @@ public:
     int getDifficulty() const;
     bool isMenuMusicEnabled() const;
     bool isGameMusicEnabled() const;
+    std::vector<ShopItem*> getShopItemsArray() const;
     std::map<std::string, int> getStatsMap() const;
     bool isScoreEasyArrayEmpty() const;
     bool isScoreHardArrayEmpty() const;
@@ -108,6 +111,7 @@ protected:
     //Containers
     std::set<int> m_scoresEasyArray;
     std::set<int> m_scoresHardArray;
+    std::vector<ShopItem*> m_shopItemsArray;
     std::set<std::string> m_activatedItemsArray;
     std::map<std::string, int> m_statsMap;
 

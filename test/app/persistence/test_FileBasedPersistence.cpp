@@ -7,9 +7,16 @@ namespace
 {
 
 /**
- * This test class performs tests on the app class FileBasedPersistence
+ * The test class FileBasedPersistenceTest
+ * performs tests on the app class FileBasedPersistence
+ *
+ * @author Arthur
+ * @date 25/08/18 - 14/10/18
+ *
+ * @see FileBasedPersistence
  */
-class FileBasedPersistenceTest: public ::testing::Test {
+class FileBasedPersistenceTest: public ::testing::Test
+{
 protected:
     TestCore* testCore{};
 
@@ -163,6 +170,16 @@ TEST_F(FileBasedPersistenceTest, fetchActivatedBonusFromConfigFile)
     FileBasedPersistence::createConfigFile();
     FileBasedPersistence::loadConfigFile();
     ASSERT_TRUE(FileBasedPersistence::fetchActivatedBonusFromConfigFile());
+}
+
+/**
+ * Tests on FileBasedPersistence::fetchActivatedBonusFromConfigFile() function
+ */
+TEST_F(FileBasedPersistenceTest, fetchShopItemsFromConfigFile)
+{
+    FileBasedPersistence::createConfigFile();
+    FileBasedPersistence::loadConfigFile();
+    ASSERT_TRUE(FileBasedPersistence::fetchShopItemsFromConfigFile());
 }
 
 /**

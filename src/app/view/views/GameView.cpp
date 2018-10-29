@@ -30,7 +30,7 @@ GameView::GameView(sf::RenderWindow* window, AppTextManager* textManager, GameMo
 
     //=== change default game music if in master mode
 
-    string game_music = (m_game->getAppCore()->getDifficulty() == EASY)
+    string game_music = (m_game->getGameDifficulty() == EASY)
             ? GAME_MUSIC_THEME_EASY_MODE
             : GAME_MUSIC_THEME_HARD_MODE;
 
@@ -44,12 +44,12 @@ GameView::GameView(sf::RenderWindow* window, AppTextManager* textManager, GameMo
 
     //=== change ball skin if not default one
 
-    if (m_game->getAppCore()->getBallSkin() == "morphing") {
+    if (m_game->getPlayerSkin() == "morphing") {
         vector<sf::IntRect> clipRect;
         for (int i = 0; i < NB_PLAYER_CLIPS; i++)
             clipRect.emplace_back(50 * i, 50, 50, 50);
         m_playerSprite->setClipRectArray(clipRect);
-    } else if (m_game->getAppCore()->getBallSkin() == "capsule") {
+    } else if (m_game->getPlayerSkin() == "capsule") {
         vector<sf::IntRect> clipRect;
         for (int i = 0; i < NB_PLAYER_CLIPS; i++)
             clipRect.emplace_back(50 * i, 100, 50, 50);
@@ -677,7 +677,7 @@ void GameView::draw() const
 void GameView::handleMusic()
 {
     //change music volume
-    if (m_game->getAppCore()->isGameMusicEnabled()) {
+    if (m_game->isMusicEnabled()) {
         vector<sf::IntRect> clipRect;
         clipRect.emplace_back(0, 200, 50, 50);
         clipRect.emplace_back(50, 200, 50, 50);
@@ -772,10 +772,10 @@ bool GameView::handlePausedGameEvents(sf::Event event)
         } else if (m_restartGameButton->contains(MOUSE_POSITION)) {
             return false;
         } else if (m_goToHomeButton->contains(MOUSE_POSITION)) {
-            m_game->getAppCore()->setAppState(MENU);
+            m_game->setAppState(MENU);
             return false;
         } else if (m_controlMusicButton->contains(MOUSE_POSITION)) {
-            m_game->getAppCore()->toggleGameMusic();
+            m_game->toggleGameMusic();
             handleMusic();
         }
     }
@@ -808,11 +808,11 @@ bool GameView::handleGameOverEvents(sf::Event event)
         if (m_restartGameButton->contains(MOUSE_POSITION)) {
             return false;
         } else if (m_goToHomeButton->contains(MOUSE_POSITION)) {
-            m_game->getAppCore()->setAppState(MENU);
+            m_game->setAppState(MENU);
             return false;
         } else if (m_saveScoreButton->contains(MOUSE_POSITION)) {
             m_saveScoreButton->hide();
-            m_game->getAppCore()->saveCurrentGame();
+            m_game->saveCurrentGame();
             PersistenceManager::updatePersistence();
         }
     }
@@ -837,7 +837,7 @@ bool GameView::handleEvents(sf::Event event)
         //=== Window event handling
 
         if (event.type == sf::Event::Closed) {
-            m_game->getAppCore()->setAppState(QUIT);
+            m_game->setAppState(QUIT);
             return false;
         }
 

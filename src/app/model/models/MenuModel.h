@@ -29,7 +29,7 @@ limitations under the License.
  * It handles the menu screen's logic.
  *
  * @author Arthur
- * @date 14/04/16 - 29/12/17
+ * @date 14/04/16 - 29/10/18
  */
 class MenuModel: public AbstractModel
 {
@@ -40,6 +40,7 @@ public:
 
     //=== GETTERS
     MenuState getMenuState() const;
+    bool isMusicEnabled() const;
 
     //=== SETTERS
     void setMenuState(MenuState state);

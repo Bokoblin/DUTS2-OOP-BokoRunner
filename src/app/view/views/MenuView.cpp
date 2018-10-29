@@ -60,7 +60,7 @@ void MenuView::loadMusic()
     if (!m_menuMusic.openFromFile(MENU_MUSIC_THEME)) {
         Logger::printError("Music loading failed for \"" + MENU_MUSIC_THEME + "\"");
     } else {
-        if (m_menu->getAppCore()->isMenuMusicEnabled()) {
+        if (m_menu->isMusicEnabled()) {
             m_menuMusic.setVolume(100);
         } else {
             m_menuMusic.setVolume(0);
@@ -122,7 +122,7 @@ void MenuView::loadSprites()
  */
 void MenuView::synchronize()
 {
-    if (m_menu->getAppCore()->isMenuMusicEnabled()) {
+    if (m_menu->isMusicEnabled()) {
         m_menuMusic.setVolume(100);
     } else {
         m_menuMusic.setVolume(0);
@@ -252,13 +252,13 @@ bool MenuView::handleHomeEvents(const sf::Event& event)
             if (m_menuMusic.getStatus() == sf::Music::Status::Playing) {
                 m_menuMusic.stop();
             }
-            m_menu->getAppCore()->setAppState(GAME);
+            m_menu->setAppState(GAME);
             return false;
         } else if (m_quitButton->contains(MOUSE_POSITION)) {
             if (m_menuMusic.getStatus() == sf::Music::Status::Playing) {
                 m_menuMusic.stop();
             }
-            m_menu->getAppCore()->setAppState(QUIT);
+            m_menu->setAppState(QUIT);
             return false;
         } else if (m_commandsButton->contains(MOUSE_POSITION)) {
             m_commandsView = new CommandsView(m_window, m_textManager, m_menu->launchCommands());
@@ -288,7 +288,7 @@ bool MenuView::handleEvents(sf::Event event)
 {
     while (m_window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
-            m_menu->getAppCore()->setAppState(QUIT);
+            m_menu->setAppState(QUIT);
             return false;
         }
 

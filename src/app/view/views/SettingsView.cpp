@@ -164,14 +164,14 @@ void SettingsView::synchronize()
 {
     //=== Update Status of Radio buttons
 
-    m_englishLangRadio->setSelected(m_settings->getAppCore()->getLanguage() == ENGLISH);
-    m_frenchLangRadio->setSelected(m_settings->getAppCore()->getLanguage() == FRENCH);
-    m_spanishLangRadio->setSelected(m_settings->getAppCore()->getLanguage() == SPANISH);
-    m_easyModeRadio->setSelected(m_settings->getAppCore()->getDifficulty() == EASY);
-    m_hardModeRadio->setSelected(m_settings->getAppCore()->getDifficulty() == HARD);
-    m_defaultBallSkinRadio->setSelected(m_settings->getAppCore()->getBallSkin() == "default");
-    m_morphBallSkinRadio->setSelected(m_settings->getAppCore()->getBallSkin() == "morphing");
-    m_capsuleBallSkinRadio->setSelected(m_settings->getAppCore()->getBallSkin() == "capsule");
+    m_englishLangRadio->setSelected(m_settings->getLanguage() == ENGLISH);
+    m_frenchLangRadio->setSelected(m_settings->getLanguage() == FRENCH);
+    m_spanishLangRadio->setSelected(m_settings->getLanguage() == SPANISH);
+    m_easyModeRadio->setSelected(m_settings->getGameDifficulty() == EASY);
+    m_hardModeRadio->setSelected(m_settings->getGameDifficulty() == HARD);
+    m_defaultBallSkinRadio->setSelected(m_settings->getPlayerSkin() == "default");
+    m_morphBallSkinRadio->setSelected(m_settings->getPlayerSkin() == "morphing");
+    m_capsuleBallSkinRadio->setSelected(m_settings->getPlayerSkin() == "capsule");
 
     m_morphBallSkinRadio->setEnabled(m_settings->isMorphSkinAvailable());
     m_capsuleBallSkinRadio->setEnabled(m_settings->isCapsuleSkinAvailable());
@@ -256,7 +256,7 @@ void SettingsView::handleMusic()
 {
     //=== Change menu music volume
 
-    if (m_settings->getAppCore()->isMenuMusicEnabled()) {
+    if (m_settings->isMenuMusicEnabled()) {
         std::vector<sf::IntRect> clipRect;
         clipRect.emplace_back(0, 200, 50, 50);
         clipRect.emplace_back(50, 200, 50, 50);
@@ -270,7 +270,7 @@ void SettingsView::handleMusic()
 
     //=== Change game music volume
 
-    if (m_settings->getAppCore()->isGameMusicEnabled()) {
+    if (m_settings->isGameMusicEnabled()) {
         std::vector<sf::IntRect> clipRect;
         clipRect.emplace_back(0, 200, 50, 50);
         clipRect.emplace_back(50, 200, 50, 50);
@@ -374,9 +374,9 @@ bool SettingsView::handleEvents(sf::Event event)
                 m_settings->changeLanguage(SPANISH);
                 updateTextBasedComponents();
             } else if (m_easyModeRadio->contains(MOUSE_POSITION)) {
-                m_settings->getAppCore()->setDifficulty(EASY);
+                m_settings->setGameDifficulty(EASY);
             } else if (m_hardModeRadio->contains(MOUSE_POSITION)) {
-                m_settings->getAppCore()->setDifficulty(HARD);
+                m_settings->setGameDifficulty(HARD);
             } else if (m_defaultBallSkinRadio->contains(MOUSE_POSITION)) {
                 m_settings->changeBallSkin("default");
             } else if (m_morphBallSkinRadio->contains(MOUSE_POSITION)) {
@@ -384,10 +384,10 @@ bool SettingsView::handleEvents(sf::Event event)
             } else if (m_capsuleBallSkinRadio->contains(MOUSE_POSITION)) {
                 m_settings->changeBallSkin("capsule");
             } else if (m_menuMusicButton->contains(MOUSE_POSITION)) {
-                m_settings->getAppCore()->toggleMenuMusic();
+                m_settings->toggleMenuMusic();
                 handleMusic();
             } else if (m_gameMusicButton->contains(MOUSE_POSITION)) {
-                m_settings->getAppCore()->toggleGameMusic();
+                m_settings->toggleGameMusic();
                 handleMusic();
             }
         } else if (m_settings->getCurrentPage() == STATS) {
@@ -416,7 +416,7 @@ bool SettingsView::handleEvents(sf::Event event)
 }
 
 /**
- * @brief Process  confirm action on clear app data
+ * Processes confirm action on clear app data
  *
  * @author Arthur
  * @date 14/10/18
@@ -424,7 +424,7 @@ bool SettingsView::handleEvents(sf::Event event)
 void SettingsView::processClearAppDataConfirmAction()
 {
     m_confirmDialog->hide();
-    m_settings->getAppCore()->clearAppData();
+    m_settings->clearAppData();
     PersistenceManager::resetPersistence();
     m_textManager->syncMenuSettingsText(m_settings->getCurrentPage());
     m_settings->checkItemsAvailability();

@@ -34,9 +34,18 @@ MenuModel::~MenuModel()
 }
 
 
-//=== Getters & Setters
+//------------------------------------------------
+//          GETTERS
+//------------------------------------------------
 
 MenuState MenuModel::getMenuState() const { return m_menuState; }
+bool MenuModel::isMusicEnabled() const { return m_appCore->isMenuMusicEnabled(); }
+
+
+//------------------------------------------------
+//          SETTERS
+//------------------------------------------------
+
 void MenuModel::setMenuState(MenuState state){ m_menuState = state; }
 
 

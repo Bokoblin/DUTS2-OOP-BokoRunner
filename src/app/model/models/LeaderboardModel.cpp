@@ -50,3 +50,15 @@ void LeaderboardModel::quit()
     PersistenceManager::updatePersistence();
 }
 
+
+/**
+ * Clears the leaderboard data
+ *
+ * @author Arthur
+ * @date 29/10/18
+ */
+
+void LeaderboardModel::clearLeaderboardData()
+{
+    m_appCore->clearLeaderboard();
+}

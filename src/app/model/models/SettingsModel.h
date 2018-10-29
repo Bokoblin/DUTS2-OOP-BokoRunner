@@ -27,7 +27,7 @@ limitations under the License.
  * controlling current active page and checking item's availability
  *
  * @author Arthur
- * @date 20/05/16 - 06/09/18
+ * @date 20/05/16 - 30/10/18
  */
 class SettingsModel: public AbstractModel
 {
@@ -37,12 +37,20 @@ public:
     ~SettingsModel() override;
 
     //=== GETTERS
+    int getCurrentPage() const;
+    const std::string getLanguage() const;
+    int getGameDifficulty() const;
+    const std::string getPlayerSkin() const;
+    bool isMenuMusicEnabled() const;
+    bool isGameMusicEnabled() const;
     bool isMorphSkinAvailable() const;
     bool isCapsuleSkinAvailable() const;
-    int getCurrentPage() const;
 
     //=== SETTERS
     void setCurrentPage(int page);
+    void setGameDifficulty(Difficulty difficulty);
+    void toggleMenuMusic();
+    void toggleGameMusic();
 
     //=== METHODS
     void changeLanguage(const std::string& language);
@@ -50,6 +58,7 @@ public:
     void checkItemsAvailability();
     void nextStep() override;
     void quit();
+    void clearAppData();
 
     //=== ATTRIBUTES
     static const int PAGE_NUMBER = 3;

@@ -33,7 +33,7 @@ limitations under the License.
  * calculating final score, etc.
  *
  * @author Arthur
- * @date 26/03/16 - 04/05/18
+ * @date 26/03/16 - 30/10/18
  */
 class GameModel: public AbstractModel
 {
@@ -44,25 +44,30 @@ public:
 
     //=== GETTERS
     GameState getGameState() const;
-    bool isTransitionRunning() const;
-    bool isTransitionPossible() const;
+    int getGameDifficulty() const;
+    const std::string getPlayerSkin() const;
     Player* getPlayer() const;
     float getGameSpeed() const;
     Zone getCurrentZone() const;
     const std::set<MovableElement*>& getNewMElementsArray() const;
     int getBonusTimeout() const;
     unsigned int getGameFloorPosition() const;
+    bool isTransitionRunning() const;
+    bool isTransitionPossible() const;
+    bool isMusicEnabled() const;
 
     //=== SETTERS
     void setGameState(GameState state);
     void setTransitionState(bool inTransition);
-    void disableTransitionPossibility();
     void setCurrentZone(Zone z);
+    void disableTransitionPossibility();
+    void toggleGameMusic();
 
     //=== METHODS
     void nextStep() override;
     void moveMovableElement(MovableElement* element);
     void clearNewMovableElementList();
+    void saveCurrentGame();
 
 private:
     //=== ATTRIBUTES

@@ -24,7 +24,7 @@ limitations under the License.
  * It handles the leaderboard screen's logic.
  *
  * @author Arthur
- * @date  19/04/16 - 29/12/17
+ * @date  19/04/16 - 30/10/18
  */
 class LeaderboardModel: public AbstractModel
 {
@@ -36,6 +36,7 @@ public:
     //=== METHODS
     void nextStep() override;
     void quit();
+    void clearLeaderboardData();
 };
 
 #endif

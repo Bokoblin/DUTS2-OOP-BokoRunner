@@ -63,14 +63,17 @@ GameModel::~GameModel()
 //------------------------------------------------
 
 GameState GameModel::getGameState() const { return m_gameState; }
-bool GameModel::isTransitionRunning() const { return m_inTransition; }
-bool GameModel::isTransitionPossible() const { return m_isTransitionPossible; }
+int GameModel::getGameDifficulty() const { return m_appCore->getDifficulty(); }
+const string GameModel::getPlayerSkin() const { return m_appCore->getBallSkin(); }
 float GameModel::getGameSpeed() const { return m_gameSpeed; }
 int GameModel::getBonusTimeout() const { return static_cast<int>(m_bonusTimeout.count() / 1000); } // return seconds
 Zone GameModel::getCurrentZone() const { return m_currentZone; }
 Player* GameModel::getPlayer() const { return m_player; }
 const std::set<MovableElement*>& GameModel::getNewMElementsArray() const { return m_newMovableElementsArray; }
 unsigned int GameModel::getGameFloorPosition() const { return static_cast<unsigned int>(0.8f * m_height); }
+bool GameModel::isTransitionRunning() const { return m_inTransition; }
+bool GameModel::isTransitionPossible() const { return m_isTransitionPossible; }
+bool GameModel::isMusicEnabled() const { return m_appCore->isGameMusicEnabled(); }
 
 
 //------------------------------------------------
@@ -81,6 +84,7 @@ void GameModel::setGameState(GameState state) { m_gameState = state; }
 void GameModel::setCurrentZone(Zone z) { m_currentZone = z; }
 void GameModel::setTransitionState(bool inTransition) { m_inTransition = inTransition; }
 void GameModel::disableTransitionPossibility() { m_isTransitionPossible = false; }
+void GameModel::toggleGameMusic() { m_appCore->toggleGameMusic(); }
 
 
 //------------------------------------------------
@@ -117,6 +121,19 @@ void GameModel::nextStep()
         m_appCore->calculateFinalScore(m_gameSpeed, m_scoreBonusFlattenedEnemies);
     }
 }
+
+
+/**
+ * Saves current game progress
+ *
+ * @author Arthur
+ * @date 30/10/18
+ */
+void GameModel::saveCurrentGame()
+{
+    m_appCore->saveCurrentGame();
+}
+
 
 /**
  * Elements Moving (enemies, bonus, ...)

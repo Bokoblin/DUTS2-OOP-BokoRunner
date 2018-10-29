@@ -25,7 +25,7 @@ limitations under the License.
  * for its inherited classes.
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 29/01/17
+ * @date 21/02/16 - 29/10/17
  */
 class AbstractModel
 {
@@ -34,8 +34,8 @@ public:
     explicit AbstractModel(AppCore* appCore);
     virtual ~AbstractModel();
 
-    //=== GETTERS
-    AppCore* getAppCore() const;
+    //=== SETTERS
+    void setAppState(AppState state);
 
     //=== METHODS
     virtual void nextStep() = 0;

@@ -153,7 +153,7 @@ bool LeaderboardView::handleEvents(sf::Event event)
         } else {
             if (m_confirmDialog->getOkButtonText().contains(MOUSE_POSITION)) {
                 m_confirmDialog->hide();
-                m_leaderboard->getAppCore()->clearLeaderboard();
+                m_leaderboard->clearLeaderboardData();
                 m_textManager->updateWholeStandaloneTextContent();
                 m_textManager->syncMenuLeaderboardText();
             } else if (m_confirmDialog->getCancelButtonText().contains(MOUSE_POSITION)

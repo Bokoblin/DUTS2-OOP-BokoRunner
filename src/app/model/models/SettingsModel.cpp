@@ -33,9 +33,14 @@ SettingsModel::~SettingsModel() = default;
 //          GETTERS
 //------------------------------------------------
 
+int SettingsModel::getCurrentPage() const { return m_currentPage; }
+const string SettingsModel::getLanguage() const { return m_appCore->getLanguage(); }
+int SettingsModel::getGameDifficulty() const { return m_appCore->getDifficulty(); }
+const string SettingsModel::getPlayerSkin() const { return m_appCore->getBallSkin(); }
+bool SettingsModel::isMenuMusicEnabled() const { return m_appCore->isMenuMusicEnabled(); }
+bool SettingsModel::isGameMusicEnabled() const { return m_appCore->isGameMusicEnabled(); }
 bool SettingsModel::isMorphSkinAvailable() const { return m_morphSkinIsAvailable; }
 bool SettingsModel::isCapsuleSkinAvailable() const { return m_capsuleSkinIsAvailable; }
-int SettingsModel::getCurrentPage() const { return m_currentPage; }
 
 
 //------------------------------------------------
@@ -43,6 +48,9 @@ int SettingsModel::getCurrentPage() const { return m_currentPage; }
 //------------------------------------------------
 
 void SettingsModel::setCurrentPage(int page) { m_currentPage = page; }
+void SettingsModel::setGameDifficulty(Difficulty difficulty) { m_appCore->setDifficulty(difficulty); }
+void SettingsModel::toggleGameMusic() { m_appCore->toggleGameMusic(); }
+void SettingsModel::toggleMenuMusic() { m_appCore->toggleMenuMusic(); }
 
 
 //------------------------------------------------
@@ -104,4 +112,15 @@ void SettingsModel::nextStep()
 void SettingsModel::quit()
 {
     PersistenceManager::updatePersistence();
+}
+
+/**
+ * Clears all the application data
+ *
+ * @author Arthur
+ * @date 30/10/18
+ */
+void SettingsModel::clearAppData()
+{
+    m_appCore->clearAppData();
 }

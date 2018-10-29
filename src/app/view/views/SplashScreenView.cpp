@@ -89,7 +89,7 @@ void SplashScreenView::synchronize()
         m_textManager->syncSplashScreenText(m_splashModel->isContinueVisible());
     } else {
         if (m_appTitle->getAlpha() >= 245) {
-            m_splashModel->getAppCore()->setAppState(MENU);
+            m_splashModel->setAppState(MENU);
         } else {
             m_splashScreen->decreaseAlpha(15);
             m_farBackground->increaseLight(3);
@@ -141,7 +141,7 @@ bool SplashScreenView::handleEvents(sf::Event event)
 {
     while (m_window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
-            m_splashModel->getAppCore()->setAppState(QUIT);
+            m_splashModel->setAppState(QUIT);
             return false;
         }
 

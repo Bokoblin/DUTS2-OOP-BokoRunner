@@ -20,6 +20,11 @@ AbstractModel::AbstractModel(AppCore* appCore) : m_appCore{appCore}
 AbstractModel::~AbstractModel() = default;
 
 
-//=== Getters
+//------------------------------------------------
+//          SETTERS
+//------------------------------------------------
 
-AppCore *AbstractModel::getAppCore() const { return m_appCore; }
+void AbstractModel::setAppState(AppState state)
+{
+    m_appCore->setAppState(state);
+}

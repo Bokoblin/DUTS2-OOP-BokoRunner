@@ -407,19 +407,21 @@ void AppTextManager::syncGameRunningText(int bonusTimeout)
  * Syncs paused game standalone text
  *
  * @author Arthur
- * @date 02/04/16 - 27/10/17
+ * @date 02/04/16 - 30/10/18
  */
-void AppTextManager::syncGamePausedText() //FIXME: internationalization
+void AppTextManager::syncGamePausedText()
 {
     m_currentDistanceText->setPosition(0.09f * m_width, 0.05f * m_height);
 
     m_currentCoinsNbText->setPosition(0.09f * m_width, 0.115f * m_height);
     m_currentCoinsNbText->setFillColor(AppColor::CoinGold);
-    m_currentCoinsNbText->setString(to_string(m_appCore->getCurrentCoinsNumber()) + " coins");
+    m_currentCoinsNbText->setUtf8String(to_string(m_appCore->getCurrentCoinsNumber()).append(" ")
+                                                + LocalizationManager::fetchLocalizedString("game_coins"));
 
     m_flattenedEnemiesText->setPosition(0.09f * m_width, 0.18f * m_height);
     m_flattenedEnemiesText->setFillColor(AppColor::EnemyBlue);
-    m_flattenedEnemiesText->setString(to_string(m_appCore->getCurrentFlattenedEnemies()) + " flattened");
+    m_flattenedEnemiesText->setUtf8String(to_string(m_appCore->getCurrentFlattenedEnemies()).append(" ")
+                                                  + LocalizationManager::fetchLocalizedString("game_flattened"));
 }
 
 

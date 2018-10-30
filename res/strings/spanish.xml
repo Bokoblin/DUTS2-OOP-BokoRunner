@@ -122,6 +122,8 @@
 
     <!-- Game strings -->
     <string name="game_player_life" value="Vida"/>
+    <string name="game_coins" value="monedas"/>
+    <string name="game_flattened" value="destrucciones"/>
 
     <!-- Pause Screen strings -->
     <string name="pause_resume" value="Reanudar"/>

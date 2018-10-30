@@ -121,19 +121,19 @@ void LeaderboardView::draw() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 21/05/16 - 02/01/17
+ * @date 21/05/16 - 30/10/18
  */
 bool LeaderboardView::handleEvents(sf::Event event)
 {
-    if (MOUSE_LEFT_PRESSED_EVENT) {
-        m_homeButton->setPressed(m_homeButton->contains(MOUSE_POSITION));
+    if (EventUtils::wasMouseLeftPressed(event)) {
+        m_homeButton->setPressed(EventUtils::isMouseInside(*m_homeButton, event));
 
         if (!m_confirmDialog->isVisible()) {
-            m_clearLeaderboardButton->setPressed(m_clearLeaderboardButton->contains(MOUSE_POSITION));
+            m_clearLeaderboardButton->setPressed(EventUtils::isMouseInside(*m_clearLeaderboardButton, event));
         }
     }
 
-    if (event.type == sf::Event::MouseButtonReleased) {
+    if (EventUtils::wasMouseReleased(event)) {
         //=== Reset buttons
 
         m_homeButton->setPressed(false);
@@ -142,28 +142,28 @@ bool LeaderboardView::handleEvents(sf::Event event)
         //=== handle mouse up on a button
 
         if (!m_confirmDialog->isVisible()) {
-            if (m_homeButton->contains(MOUSE_POSITION)) {
+            if (EventUtils::isMouseInside(*m_homeButton, event)) {
                 m_leaderboard->quit();
                 return false;
             }
 
-            if (m_clearLeaderboardButton->contains(MOUSE_POSITION)) {
+            if (EventUtils::isMouseInside(*m_clearLeaderboardButton, event)) {
                 m_confirmDialog->show();
             }
         } else {
-            if (m_confirmDialog->getOkButtonText().contains(MOUSE_POSITION)) {
+            if (EventUtils::isMouseInside(m_confirmDialog->getOkButtonText(), event)) {
                 m_confirmDialog->hide();
                 m_leaderboard->clearLeaderboardData();
                 m_textManager->updateWholeStandaloneTextContent();
                 m_textManager->syncMenuLeaderboardText();
-            } else if (m_confirmDialog->getCancelButtonText().contains(MOUSE_POSITION)
-                    || !m_confirmDialog->contains(MOUSE_POSITION)) {
+            } else if (EventUtils::isMouseInside(m_confirmDialog->getCancelButtonText(), event)
+                    || !EventUtils::isMouseInside(*m_confirmDialog, event)) {
                 m_confirmDialog->hide();
             }
         }
     }
 
-    if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) {
+    if (EventUtils::wasKeyboardEscapePressed(event)) {
         m_confirmDialog->hide();
     }
 

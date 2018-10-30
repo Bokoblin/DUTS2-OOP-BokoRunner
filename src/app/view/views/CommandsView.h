@@ -19,7 +19,6 @@ limitations under the License.
 #include "AbstractView.h"
 #include "libs/MDC-SFML/src/RaisedButton.h"
 #include "app/model/models/CommandsModel.h"
-#include "app/view/utils/ViewDefinitions.h"
 
 /**
  * The CommandsView class inherits AbstractView.

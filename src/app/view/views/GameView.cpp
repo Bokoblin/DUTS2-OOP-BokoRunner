@@ -701,7 +701,7 @@ void GameView::handleMusic()
  * Handle players inputs
  *
  * @author Arthur
- * @date 26/12/17
+ * @date 26/12/17 - 30/10/18
  */
 void GameView::handlePlayerInput() const
 {
@@ -709,13 +709,13 @@ void GameView::handlePlayerInput() const
             m_game->getGameState() == RUNNING_SLOWLY) {
         //=== Player Controls in Game Screen
 
-        if (KEYBOARD_LEFT) {
+        if (EventUtils::wasKeyboardLeftPressed()) {
             m_game->getPlayer()->controlPlayerMovements(MOVE_LEFT);
-        } else if (KEYBOARD_RIGHT) {
+        } else if (EventUtils::wasKeyboardRightPressed()) {
             m_game->getPlayer()->controlPlayerMovements(MOVE_RIGHT);
         }
 
-        if (KEYBOARD_JUMP) {
+        if (EventUtils::wasKeyboardJumpPressed()) {
             m_game->getPlayer()->setJumpState(true);
         }
     }
@@ -751,30 +751,30 @@ bool GameView::handleRunningGameEvents(sf::Event event)
  */
 bool GameView::handlePausedGameEvents(sf::Event event)
 {
-    if (MOUSE_LEFT_PRESSED_EVENT) {
-        m_resumeGameButton->setPressed(m_resumeGameButton->contains(MOUSE_POSITION));
-        m_restartGameButton->setPressed(m_restartGameButton->contains(MOUSE_POSITION));
-        m_goToHomeButton->setPressed(m_goToHomeButton->contains(MOUSE_POSITION));
-        m_controlMusicButton->setPressed(m_controlMusicButton->contains(MOUSE_POSITION));
+    if (EventUtils::wasMouseLeftPressed(event)) {
+        m_resumeGameButton->setPressed(EventUtils::isMouseInside(*m_resumeGameButton, event));
+        m_restartGameButton->setPressed(EventUtils::isMouseInside(*m_restartGameButton, event));
+        m_goToHomeButton->setPressed(EventUtils::isMouseInside(*m_goToHomeButton, event));
+        m_controlMusicButton->setPressed(EventUtils::isMouseInside(*m_controlMusicButton, event));
     }
 
-    if (event.type == sf::Event::MouseButtonReleased) {
+    if (EventUtils::wasMouseReleased(event)) {
         m_resumeGameButton->setPressed(false);
         m_restartGameButton->setPressed(false);
         m_goToHomeButton->setPressed(false);
         m_controlMusicButton->setPressed(false);
 
-        if (m_resumeGameButton->contains(MOUSE_POSITION)) {
+        if (EventUtils::isMouseInside(*m_resumeGameButton, event)) {
             m_game->setGameState(RUNNING_SLOWLY);
             if (m_gameThemeMusic.getStatus() == sf::Music::Status::Paused) {
                 m_gameThemeMusic.play();
             }
-        } else if (m_restartGameButton->contains(MOUSE_POSITION)) {
+        } else if (EventUtils::isMouseInside(*m_restartGameButton, event)) {
             return false;
-        } else if (m_goToHomeButton->contains(MOUSE_POSITION)) {
+        } else if (EventUtils::isMouseInside(*m_goToHomeButton, event)) {
             m_game->setAppState(MENU);
             return false;
-        } else if (m_controlMusicButton->contains(MOUSE_POSITION)) {
+        } else if (EventUtils::isMouseInside(*m_controlMusicButton, event)) {
             m_game->toggleGameMusic();
             handleMusic();
         }
@@ -790,27 +790,27 @@ bool GameView::handlePausedGameEvents(sf::Event event)
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 26/12/17 - 22/09/18
+ * @date 26/12/17 - 30/10/18
  */
 bool GameView::handleGameOverEvents(sf::Event event)
 {
-    if (MOUSE_LEFT_PRESSED_EVENT) {
-        m_restartGameButton->setPressed(m_restartGameButton->contains(MOUSE_POSITION));
-        m_goToHomeButton->setPressed(m_goToHomeButton->contains(MOUSE_POSITION));
-        m_saveScoreButton->setPressed(m_saveScoreButton->contains(MOUSE_POSITION));
+    if (EventUtils::wasMouseLeftPressed(event)) {
+        m_restartGameButton->setPressed(EventUtils::isMouseInside(*m_restartGameButton, event));
+        m_goToHomeButton->setPressed(EventUtils::isMouseInside(*m_goToHomeButton, event));
+        m_saveScoreButton->setPressed(EventUtils::isMouseInside(*m_saveScoreButton, event));
     }
 
-    if (event.type == sf::Event::MouseButtonReleased) {
+    if (EventUtils::wasMouseReleased(event)) {
         m_restartGameButton->setPressed(false);
         m_goToHomeButton->setPressed(false);
         m_saveScoreButton->setPressed(false);
 
-        if (m_restartGameButton->contains(MOUSE_POSITION)) {
+        if (EventUtils::isMouseInside(*m_restartGameButton, event)) {
             return false;
-        } else if (m_goToHomeButton->contains(MOUSE_POSITION)) {
+        } else if (EventUtils::isMouseInside(*m_goToHomeButton, event)) {
             m_game->setAppState(MENU);
             return false;
-        } else if (m_saveScoreButton->contains(MOUSE_POSITION)) {
+        } else if (EventUtils::isMouseInside(*m_saveScoreButton, event)) {
             m_saveScoreButton->hide();
             m_game->saveCurrentGame();
             PersistenceManager::updatePersistence();
@@ -843,7 +843,7 @@ bool GameView::handleEvents(sf::Event event)
 
         //=== Pause opening/quitting handling
 
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+        if (EventUtils::wasKeyboardEscapePressed(event)) {
             switch (m_game->getGameState()) {
                 case RUNNING :
                 case RUNNING_SLOWLY :

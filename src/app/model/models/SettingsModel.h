@@ -17,7 +17,6 @@ limitations under the License.
 #define SETTINGS_H
 
 #include "app/model/enums/SettingsPage.h"
-#include "app/view/utils/ViewDefinitions.h"
 #include "AbstractModel.h"
 
 /**

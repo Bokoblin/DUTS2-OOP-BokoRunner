@@ -19,7 +19,6 @@ limitations under the License.
 #include <libs/MDC-SFML/src/RaisedButton.h>
 #include "libs/MDC-SFML/src/Color.h"
 #include "app/model/menu-components/ShopItem.h"
-#include "app/view/utils/ViewDefinitions.h"
 #include "app/view/AppTextManager.h"
 
 /**

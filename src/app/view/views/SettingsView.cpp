@@ -314,25 +314,25 @@ void SettingsView::updateTextBasedComponents() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 20/05/16 - 04/02/18
+ * @date 20/05/16 - 30/10/18
  */
 bool SettingsView::handleEvents(sf::Event event)
 {
-    if (MOUSE_LEFT_PRESSED_EVENT) {
+    if (EventUtils::wasMouseLeftPressed(event)) {
         if (m_settings->getCurrentPage() == ABOUT) {
             m_textManager->handleAboutLinks(event, *m_settings);
         }
 
         if (!m_confirmDialog->isVisible()) {
             for (mdsf::Button* button : m_buttonList) {
-                if (button->contains(MOUSE_POSITION)) {
+                if (EventUtils::isMouseInside(*button, event)) {
                     button->setPressed(true);
                     break;
                 }
             }
 
             for (auto& it : m_pageIndicators) {
-                if (it.second->contains(MOUSE_POSITION)) {
+                if (EventUtils::isMouseInside(*it.second, event)) {
                     it.second->setPressed(true);
                     break;
                 }
@@ -340,7 +340,7 @@ bool SettingsView::handleEvents(sf::Event event)
         }
     }
 
-    if (event.type == sf::Event::MouseButtonReleased) {
+    if (EventUtils::wasMouseReleased(event)) {
         //=== Reset buttons
 
         for (mdsf::Button* button : m_buttonList)
@@ -352,54 +352,54 @@ bool SettingsView::handleEvents(sf::Event event)
         //=== handle mouse up on a button
 
         if (!m_confirmDialog->isVisible()) {
-            if (m_homeButton->contains(MOUSE_POSITION)) {
+            if (EventUtils::isMouseInside(*m_homeButton, event)) {
                 m_settings->quit();
                 return false;
             }
 
             for (auto& it : m_pageIndicators)
-                if (it.second->contains(MOUSE_POSITION)) {
+                if (EventUtils::isMouseInside(*it.second, event)) {
                     m_settings->setCurrentPage(it.first);
                 }
         }
 
         if (m_settings->getCurrentPage() == CONFIG) {
-            if (m_englishLangRadio->contains(MOUSE_POSITION)) {
+            if (EventUtils::isMouseInside(*m_englishLangRadio, event)) {
                 m_settings->changeLanguage(ENGLISH);
                 updateTextBasedComponents();
-            } else if (m_frenchLangRadio->contains(MOUSE_POSITION)) {
+            } else if (EventUtils::isMouseInside(*m_frenchLangRadio, event)) {
                 m_settings->changeLanguage(FRENCH);
                 updateTextBasedComponents();
-            } else if (m_spanishLangRadio->contains(MOUSE_POSITION)) {
+            } else if (EventUtils::isMouseInside(*m_spanishLangRadio, event)) {
                 m_settings->changeLanguage(SPANISH);
                 updateTextBasedComponents();
-            } else if (m_easyModeRadio->contains(MOUSE_POSITION)) {
+            } else if (EventUtils::isMouseInside(*m_easyModeRadio, event)) {
                 m_settings->setGameDifficulty(EASY);
-            } else if (m_hardModeRadio->contains(MOUSE_POSITION)) {
+            } else if (EventUtils::isMouseInside(*m_hardModeRadio, event)) {
                 m_settings->setGameDifficulty(HARD);
-            } else if (m_defaultBallSkinRadio->contains(MOUSE_POSITION)) {
+            } else if (EventUtils::isMouseInside(*m_defaultBallSkinRadio, event)) {
                 m_settings->changeBallSkin("default");
-            } else if (m_morphBallSkinRadio->contains(MOUSE_POSITION)) {
+            } else if (EventUtils::isMouseInside(*m_morphBallSkinRadio, event)) {
                 m_settings->changeBallSkin("morphing");
-            } else if (m_capsuleBallSkinRadio->contains(MOUSE_POSITION)) {
+            } else if (EventUtils::isMouseInside(*m_capsuleBallSkinRadio, event)) {
                 m_settings->changeBallSkin("capsule");
-            } else if (m_menuMusicButton->contains(MOUSE_POSITION)) {
+            } else if (EventUtils::isMouseInside(*m_menuMusicButton, event)) {
                 m_settings->toggleMenuMusic();
                 handleMusic();
-            } else if (m_gameMusicButton->contains(MOUSE_POSITION)) {
+            } else if (EventUtils::isMouseInside(*m_gameMusicButton, event)) {
                 m_settings->toggleGameMusic();
                 handleMusic();
             }
         } else if (m_settings->getCurrentPage() == STATS) {
             if (!m_confirmDialog->isVisible()) {
-                if (m_resetDataButton->contains(MOUSE_POSITION)) {
+                if (EventUtils::isMouseInside(*m_resetDataButton, event)) {
                     m_confirmDialog->show();
                 }
             } else {
-                if (m_confirmDialog->getOkButtonText().contains(MOUSE_POSITION)) {
+                if (EventUtils::isMouseInside(m_confirmDialog->getOkButtonText(), event)) {
                     processClearAppDataConfirmAction();
-                } else if (m_confirmDialog->getCancelButtonText().contains(MOUSE_POSITION)
-                        || !m_confirmDialog->contains(MOUSE_POSITION)) {
+                } else if (EventUtils::isMouseInside(m_confirmDialog->getCancelButtonText(), event)
+                        || !EventUtils::isMouseInside(*m_confirmDialog, event)) {
                     m_confirmDialog->hide();
                 }
             }
@@ -408,7 +408,7 @@ bool SettingsView::handleEvents(sf::Event event)
         }
     }
 
-    if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) {
+    if (EventUtils::wasKeyboardEscapePressed(event)) {
         m_confirmDialog->hide();
     }
 

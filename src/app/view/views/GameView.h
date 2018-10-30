@@ -19,7 +19,6 @@ limitations under the License.
 #include "libs/MDC-SFML/src/RaisedButton.h"
 #include "app/model/models/GameModel.h"
 #include "app/view/ui-components/PixelShader.h"
-#include "app/view/utils/ViewDefinitions.h"
 #include "AbstractView.h"
 
 /**

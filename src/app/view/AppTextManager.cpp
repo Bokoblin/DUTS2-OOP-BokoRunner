@@ -143,27 +143,27 @@ void AppTextManager::loadText()
  * @param settings the settings model
  *
  * @author Arthur
- * @date 02/11/17 - 06/09/18
+ * @date 02/11/17 - 30/10/18
  */
 void AppTextManager::handleAboutLinks(sf::Event event, const SettingsModel& settings) const
 {
-    if (MOUSE_LEFT_PRESSED_EVENT) {
-        if (m_aboutRepositoryLink->contains(MOUSE_POSITION)) {
+    if (EventUtils::wasMouseLeftPressed(event)) {
+        if (EventUtils::isMouseInside(*m_aboutRepositoryLink, event)) {
             m_aboutRepositoryLink->setFillColor(AppColor::URLRed);
         }
-        if (m_aboutEmailLink->contains(MOUSE_POSITION)) {
+        if (EventUtils::isMouseInside(*m_aboutEmailLink, event)) {
             m_aboutEmailLink->setFillColor(AppColor::URLRed);
         }
     }
 
-    if (event.type == sf::Event::MouseButtonReleased) {
+    if (EventUtils::wasMouseReleased(event)) {
         m_aboutRepositoryLink->setFillColor(sf::Color::White);
         m_aboutEmailLink->setFillColor(sf::Color::White);
 
-        if (m_aboutRepositoryLink->contains(MOUSE_POSITION)) {
+        if (EventUtils::isMouseInside(*m_aboutRepositoryLink, event)) {
             PlatformUtils::openURLinBrowser(REPOSITORY_URL);
         }
-        if (m_aboutEmailLink->contains(MOUSE_POSITION)) {
+        if (EventUtils::isMouseInside(*m_aboutEmailLink, event)) {
             PlatformUtils::openURLinBrowser(EMAIL_URL);
         }
     }

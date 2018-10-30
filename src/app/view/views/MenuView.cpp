@@ -227,20 +227,20 @@ void MenuView::draw() const
  * @return true if app state is unchanged
  *
  * @author Arthur, Florian
- * @date 25/03/16 - 22/09/18
+ * @date 25/03/16 - 30/10/18
  */
 bool MenuView::handleHomeEvents(const sf::Event& event)
 {
-    if (MOUSE_LEFT_PRESSED_EVENT) {
-        m_playButton->setPressed(m_playButton->contains(MOUSE_POSITION));
-        m_quitButton->setPressed(m_quitButton->contains(MOUSE_POSITION));
-        m_commandsButton->setPressed(m_commandsButton->contains(MOUSE_POSITION));
-        m_settingsButton->setPressed(m_settingsButton->contains(MOUSE_POSITION));
-        m_leaderboardButton->setPressed(m_leaderboardButton->contains(MOUSE_POSITION));
-        m_shopButton->setPressed(m_shopButton->contains(MOUSE_POSITION));
+    if (EventUtils::wasMouseLeftPressed(event)) {
+        m_playButton->setPressed(EventUtils::isMouseInside(*m_playButton, event));
+        m_quitButton->setPressed(EventUtils::isMouseInside(*m_quitButton, event));
+        m_commandsButton->setPressed(EventUtils::isMouseInside(*m_commandsButton, event));
+        m_settingsButton->setPressed(EventUtils::isMouseInside(*m_settingsButton, event));
+        m_leaderboardButton->setPressed(EventUtils::isMouseInside(*m_leaderboardButton, event));
+        m_shopButton->setPressed(EventUtils::isMouseInside(*m_shopButton, event));
     }
 
-    if (event.type == sf::Event::MouseButtonReleased) {
+    if (EventUtils::wasMouseReleased(event)) {
         m_playButton->setPressed(false);
         m_quitButton->setPressed(false);
         m_commandsButton->setPressed(false);
@@ -248,25 +248,25 @@ bool MenuView::handleHomeEvents(const sf::Event& event)
         m_leaderboardButton->setPressed(false);
         m_shopButton->setPressed(false);
 
-        if (m_playButton->contains(MOUSE_POSITION)) {
+        if (EventUtils::isMouseInside(*m_playButton, event)) {
             if (m_menuMusic.getStatus() == sf::Music::Status::Playing) {
                 m_menuMusic.stop();
             }
             m_menu->setAppState(GAME);
             return false;
-        } else if (m_quitButton->contains(MOUSE_POSITION)) {
+        } else if (EventUtils::isMouseInside(*m_quitButton, event)) {
             if (m_menuMusic.getStatus() == sf::Music::Status::Playing) {
                 m_menuMusic.stop();
             }
             m_menu->setAppState(QUIT);
             return false;
-        } else if (m_commandsButton->contains(MOUSE_POSITION)) {
+        } else if (EventUtils::isMouseInside(*m_commandsButton, event)) {
             m_commandsView = new CommandsView(m_window, m_textManager, m_menu->launchCommands());
-        } else if (m_leaderboardButton->contains(MOUSE_POSITION)) {
+        } else if (EventUtils::isMouseInside(*m_leaderboardButton, event)) {
             m_leaderboardView = new LeaderboardView(m_window, m_textManager, m_menu->launchLeaderboard());
-        } else if (m_settingsButton->contains(MOUSE_POSITION)) {
+        } else if (EventUtils::isMouseInside(*m_settingsButton, event)) {
             m_settingsView = new SettingsView(m_window, m_textManager, m_menu->launchSettings());
-        } else if (m_shopButton->contains(MOUSE_POSITION)) {
+        } else if (EventUtils::isMouseInside(*m_shopButton, event)) {
             m_shopView = new ShopView(m_window, m_textManager, m_menu->launchShop());
         }
     }

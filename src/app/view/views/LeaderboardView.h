@@ -20,7 +20,6 @@ limitations under the License.
 #include "libs/MDC-SFML/src/Dialog.h"
 #include "app/model/models/LeaderboardModel.h"
 #include "app/view/utils/DialogBuilder.h"
-#include "app/view/utils/ViewDefinitions.h"
 #include "AbstractView.h"
 
 /**

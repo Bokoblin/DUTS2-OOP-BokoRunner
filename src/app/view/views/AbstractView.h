@@ -25,6 +25,7 @@ limitations under the License.
 #include "app/view/ui-components/ScrollingBackground.h"
 #include "app/view/ui-components/AnimatedSprite.h"
 #include "app/view/utils/AppColor.h"
+#include "app/view/utils/EventUtils.h"
 
 /**
  * The AbstractView class provides common
@@ -54,6 +55,9 @@ protected:
     unsigned int m_width, m_height;
     sf::RenderWindow* m_window;
     AppTextManager* m_textManager;
+
+    //Constants
+    const int DEFAULT_HOME_SIZE = 50;
 
     //=== METHODS
     virtual void loadSprites() = 0;

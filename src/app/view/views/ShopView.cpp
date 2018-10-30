@@ -176,23 +176,23 @@ void ShopView::draw() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 16/05/16 - 22/09/18
+ * @date 16/05/16 - 30/10/18
  */
 bool ShopView::handleEvents(sf::Event event)
 {
-    if (MOUSE_LEFT_PRESSED_EVENT) {
+    if (EventUtils::wasMouseLeftPressed(event)) {
         if (!m_buyDialog->isVisible()) {
-            m_homeButton->setPressed(m_homeButton->contains(MOUSE_POSITION));
+            m_homeButton->setPressed(EventUtils::isMouseInside(*m_homeButton, event));
 
             for (auto& it : m_pageIndicators) {
-                if (it.second->contains(MOUSE_POSITION)) {
+                if (EventUtils::isMouseInside(*it.second, event)) {
                     it.second->setPressed(true);
                     break;
                 }
             }
 
             for (auto& card : m_shopItemCardsArray) {
-                if (card->getBuyButton()->contains(MOUSE_POSITION)
+                if (EventUtils::isMouseInside(*card->getBuyButton(), event)
                         && card->isVisible() && !m_buyDialog->isVisible()) {
                     card->getBuyButton()->setPressed(true);
                     break;
@@ -201,7 +201,7 @@ bool ShopView::handleEvents(sf::Event event)
         }
     }
 
-    if (event.type == sf::Event::MouseButtonReleased) {
+    if (EventUtils::wasMouseReleased(event)) {
         //=== Reset buttons
 
         m_homeButton->setPressed(false);
@@ -213,19 +213,19 @@ bool ShopView::handleEvents(sf::Event event)
         //=== handle mouse up on a button
 
         if (!m_buyDialog->isVisible()) {
-            if (m_homeButton->contains(MOUSE_POSITION)) {
+            if (EventUtils::isMouseInside(*m_homeButton, event)) {
                 m_shop->quit();
                 return false;
             }
 
             for (auto& it : m_pageIndicators) {
-                if (it.second->contains(MOUSE_POSITION)) {
+                if (EventUtils::isMouseInside(*it.second, event)) {
                     m_currentIndicator = it.first;
                 }
             }
 
             for (auto& card : m_shopItemCardsArray) {
-                if (card->getBuyButton()->contains(MOUSE_POSITION)
+                if (EventUtils::isMouseInside(*card->getBuyButton(), event)
                         && card->isVisible() && !card->getItem()->isBought()) {
                     delete m_buyDialog;
                     m_buyDialog = new ShopDialog(
@@ -236,16 +236,16 @@ bool ShopView::handleEvents(sf::Event event)
                 }
             }
         } else {
-            if (m_buyDialog->getOkButtonText().contains(MOUSE_POSITION)) {
+            if (EventUtils::isMouseInside(m_buyDialog->getOkButtonText(), event)) {
                 processBuyItemConfirmAction();
-            } else if (m_buyDialog->getCancelButtonText().contains(MOUSE_POSITION)
-                    || !m_buyDialog->contains(MOUSE_POSITION)) {
+            } else if (EventUtils::isMouseInside(m_buyDialog->getCancelButtonText(), event)
+                    || !EventUtils::isMouseInside(*m_buyDialog, event)) {
                 m_buyDialog->hide();
             }
         }
     }
 
-    if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) {
+    if (EventUtils::wasKeyboardEscapePressed(event)) {
         m_buyDialog->hide();
     }
 

@@ -135,7 +135,7 @@ void SplashScreenView::draw() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 27/03/16 - 26/12/17
+ * @date 27/03/16 - 30/10/18
  */
 bool SplashScreenView::handleEvents(sf::Event event)
 {
@@ -145,7 +145,7 @@ bool SplashScreenView::handleEvents(sf::Event event)
             return false;
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        if (EventUtils::wasKeyboardContinuePressed()) {
             m_splashModel->setEndingPhase(true);
         }
     }

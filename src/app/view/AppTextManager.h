@@ -19,10 +19,10 @@ limitations under the License.
 #include <SFML/Window/Event.hpp>
 #include "libs/MDC-SFML/src/Text.h"
 #include "app/model/models/SettingsModel.h"
-#include "app/view/utils/AppColor.h"
-#include "app/view/utils/ViewConstants.h"
-#include "app/view/utils/ViewDefinitions.h"
 #include "app/model/utils/PlatformUtils.h"
+#include "app/view/utils/AppColor.h"
+#include "app/view/utils/EventUtils.h"
+#include "app/view/utils/ViewConstants.h"
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 

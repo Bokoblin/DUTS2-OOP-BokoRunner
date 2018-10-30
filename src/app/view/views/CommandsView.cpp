@@ -95,15 +95,15 @@ void CommandsView::draw() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 24/01/17 - 22/09/18
+ * @date 24/01/17 - 30/10/18
  */
 bool CommandsView::handleEvents(sf::Event event)
 {
-    if (MOUSE_LEFT_PRESSED_EVENT) {
-        m_homeButton->setPressed(m_homeButton->contains(MOUSE_POSITION));
+    if (EventUtils::wasMouseLeftPressed(event)) {
+        m_homeButton->setPressed(EventUtils::isMouseInside(*m_homeButton, event));
     }
 
-    if (event.type == sf::Event::MouseButtonReleased) {
+    if (EventUtils::wasMouseReleased(event)) {
         //=== Reset buttons
 
         m_homeButton->setPressed(false);
@@ -111,7 +111,7 @@ bool CommandsView::handleEvents(sf::Event event)
 
         //=== handle mouse up on a button
 
-        if (m_homeButton->contains(MOUSE_POSITION)) {
+        if (EventUtils::isMouseInside(*m_homeButton, event)) {
             return false;
         }
     }

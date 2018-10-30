@@ -175,15 +175,12 @@ void SettingsView::synchronize()
 
     m_morphBallSkinRadio->setEnabled(m_settings->isMorphSkinAvailable());
     m_capsuleBallSkinRadio->setEnabled(m_settings->isCapsuleSkinAvailable());
-    m_defaultBallSkinRadio->setEnabled(m_settings->isMorphSkinAvailable()
-                                               || m_settings->isCapsuleSkinAvailable());
-
+    m_defaultBallSkinRadio->setEnabled(m_settings->isMorphSkinAvailable() || m_settings->isCapsuleSkinAvailable());
 
     //=== Sync buttons
 
     for (mdsf::Button* button : m_buttonList)
         button->sync();
-
 
     //=== Update and sync indicators
 
@@ -191,7 +188,6 @@ void SettingsView::synchronize()
         (it.second)->sync();
         (it.second)->setSelected(it.first == m_settings->getCurrentPage());
     }
-
 
     //=== Standalone Text update
 
@@ -203,7 +199,7 @@ void SettingsView::synchronize()
  * Draws settings elements on the window
  *
  * @author Arthur
- * @date 20/05/16 - 25/01/17
+ * @date 20/05/16 - 30/10/18
  */
 void SettingsView::draw() const
 {
@@ -213,34 +209,38 @@ void SettingsView::draw() const
 
     m_homeButton->draw(m_window);
 
-    if (m_settings->getCurrentPage() == CONFIG) {
-        m_englishLangRadio->draw(m_window);
-        m_frenchLangRadio->draw(m_window);
-        m_spanishLangRadio->draw(m_window);
-        m_easyModeRadio->draw(m_window);
-        m_hardModeRadio->draw(m_window);
-        m_defaultBallSkinRadio->draw(m_window);
-        m_morphBallSkinRadio->draw(m_window);
-        m_capsuleBallSkinRadio->draw(m_window);
-        m_menuMusicButton->draw(m_window);
-        m_gameMusicButton->draw(m_window);
-
-        m_textManager->drawMenuSettingsText(m_window, CONFIG);
-    } else if (m_settings->getCurrentPage() == STATS) {
-        m_textManager->drawMenuSettingsText(m_window, STATS);
-        m_resetDataButton->draw(m_window);
-        m_confirmDialog->draw(m_window);
-    } else //ABOUT
-    {
-        m_window->draw(*m_logoIUT);
-        m_window->draw(*m_logoSFML);
-        m_window->draw(*m_iconRepoLink);
-        m_window->draw(*m_iconEmailLink);
-        m_textManager->drawMenuSettingsText(m_window, ABOUT);
-    }
-
     for (const auto& it : m_pageIndicators)
         it.second->draw(m_window);
+
+    switch (m_settings->getCurrentPage()) {
+        case CONFIG:
+            m_englishLangRadio->draw(m_window);
+            m_frenchLangRadio->draw(m_window);
+            m_spanishLangRadio->draw(m_window);
+            m_easyModeRadio->draw(m_window);
+            m_hardModeRadio->draw(m_window);
+            m_defaultBallSkinRadio->draw(m_window);
+            m_morphBallSkinRadio->draw(m_window);
+            m_capsuleBallSkinRadio->draw(m_window);
+            m_menuMusicButton->draw(m_window);
+            m_gameMusicButton->draw(m_window);
+            m_textManager->drawMenuSettingsText(m_window, CONFIG);
+            break;
+        case STATS:
+            m_resetDataButton->draw(m_window);
+            m_textManager->drawMenuSettingsText(m_window, STATS);
+            m_confirmDialog->draw(m_window); //Must be above everything
+            break;
+        case ABOUT:
+            m_logoIUT->draw(m_window);
+            m_logoSFML->draw(m_window);
+            m_iconRepoLink->draw(m_window);
+            m_iconEmailLink->draw(m_window);
+            m_textManager->drawMenuSettingsText(m_window, ABOUT);
+            break;
+        default:
+            break;
+    }
 
     m_window->display();
 }
@@ -319,10 +319,6 @@ void SettingsView::updateTextBasedComponents() const
 bool SettingsView::handleEvents(sf::Event event)
 {
     if (EventUtils::wasMouseLeftPressed(event)) {
-        if (m_settings->getCurrentPage() == ABOUT) {
-            m_textManager->handleAboutLinks(event, *m_settings);
-        }
-
         if (!m_confirmDialog->isVisible()) {
             for (mdsf::Button* button : m_buttonList) {
                 if (EventUtils::isMouseInside(*button, event)) {
@@ -348,7 +344,6 @@ bool SettingsView::handleEvents(sf::Event event)
         for (auto& it : m_pageIndicators)
             it.second->setPressed(false);
 
-
         //=== handle mouse up on a button
 
         if (!m_confirmDialog->isVisible()) {
@@ -357,62 +352,118 @@ bool SettingsView::handleEvents(sf::Event event)
                 return false;
             }
 
-            for (auto& it : m_pageIndicators)
+            for (auto& it : m_pageIndicators) {
                 if (EventUtils::isMouseInside(*it.second, event)) {
                     m_settings->setCurrentPage(it.first);
+                    break;
                 }
-        }
-
-        if (m_settings->getCurrentPage() == CONFIG) {
-            if (EventUtils::isMouseInside(*m_englishLangRadio, event)) {
-                m_settings->changeLanguage(ENGLISH);
-                updateTextBasedComponents();
-            } else if (EventUtils::isMouseInside(*m_frenchLangRadio, event)) {
-                m_settings->changeLanguage(FRENCH);
-                updateTextBasedComponents();
-            } else if (EventUtils::isMouseInside(*m_spanishLangRadio, event)) {
-                m_settings->changeLanguage(SPANISH);
-                updateTextBasedComponents();
-            } else if (EventUtils::isMouseInside(*m_easyModeRadio, event)) {
-                m_settings->setGameDifficulty(EASY);
-            } else if (EventUtils::isMouseInside(*m_hardModeRadio, event)) {
-                m_settings->setGameDifficulty(HARD);
-            } else if (EventUtils::isMouseInside(*m_defaultBallSkinRadio, event)) {
-                m_settings->changeBallSkin("default");
-            } else if (EventUtils::isMouseInside(*m_morphBallSkinRadio, event)) {
-                m_settings->changeBallSkin("morphing");
-            } else if (EventUtils::isMouseInside(*m_capsuleBallSkinRadio, event)) {
-                m_settings->changeBallSkin("capsule");
-            } else if (EventUtils::isMouseInside(*m_menuMusicButton, event)) {
-                m_settings->toggleMenuMusic();
-                handleMusic();
-            } else if (EventUtils::isMouseInside(*m_gameMusicButton, event)) {
-                m_settings->toggleGameMusic();
-                handleMusic();
             }
-        } else if (m_settings->getCurrentPage() == STATS) {
-            if (!m_confirmDialog->isVisible()) {
-                if (EventUtils::isMouseInside(*m_resetDataButton, event)) {
-                    m_confirmDialog->show();
-                }
-            } else {
-                if (EventUtils::isMouseInside(m_confirmDialog->getOkButtonText(), event)) {
-                    processClearAppDataConfirmAction();
-                } else if (EventUtils::isMouseInside(m_confirmDialog->getCancelButtonText(), event)
-                        || !EventUtils::isMouseInside(*m_confirmDialog, event)) {
-                    m_confirmDialog->hide();
-                }
+        }
+    }
+
+    switch (m_settings->getCurrentPage()) {
+        case CONFIG:
+            handleConfigEvents(event);
+            break;
+        case STATS:
+            handleStatsEvents(event);
+            break;
+        case ABOUT:
+            handleAboutEvents(event);
+            break;
+        default:
+            break;
+    }
+
+    return true;
+}
+
+
+/**
+ * Handles the user interaction events for config page
+ *
+ * @param event sfml event object
+ *
+ * @author Arthur
+ * @date 20/05/16 - 30/10/18
+ */
+void SettingsView::handleConfigEvents(const sf::Event& event)
+{
+    if (EventUtils::wasMouseReleased(event)) {
+        if (EventUtils::isMouseInside(*m_englishLangRadio, event)) {
+            m_settings->changeLanguage(ENGLISH);
+            updateTextBasedComponents();
+        } else if (EventUtils::isMouseInside(*m_frenchLangRadio, event)) {
+            m_settings->changeLanguage(FRENCH);
+            updateTextBasedComponents();
+        } else if (EventUtils::isMouseInside(*m_spanishLangRadio, event)) {
+            m_settings->changeLanguage(SPANISH);
+            updateTextBasedComponents();
+        } else if (EventUtils::isMouseInside(*m_easyModeRadio, event)) {
+            m_settings->setGameDifficulty(EASY);
+        } else if (EventUtils::isMouseInside(*m_hardModeRadio, event)) {
+            m_settings->setGameDifficulty(HARD);
+        } else if (EventUtils::isMouseInside(*m_defaultBallSkinRadio, event)) {
+            m_settings->changeBallSkin("default");
+        } else if (EventUtils::isMouseInside(*m_morphBallSkinRadio, event)) {
+            m_settings->changeBallSkin("morphing");
+        } else if (EventUtils::isMouseInside(*m_capsuleBallSkinRadio, event)) {
+            m_settings->changeBallSkin("capsule");
+        } else if (EventUtils::isMouseInside(*m_menuMusicButton, event)) {
+            m_settings->toggleMenuMusic();
+            handleMusic();
+        } else if (EventUtils::isMouseInside(*m_gameMusicButton, event)) {
+            m_settings->toggleGameMusic();
+            handleMusic();
+        }
+    }
+}
+
+
+/**
+ * Handles the user interaction events for stats page
+ *
+ * @param event sfml event object
+ *
+ * @author Arthur
+ * @date 20/05/16 - 30/10/18
+ */
+void SettingsView::handleStatsEvents(const sf::Event& event)
+{
+    if (EventUtils::wasMouseReleased(event)) {
+        if (m_confirmDialog->isVisible()) {
+            if (EventUtils::isMouseInside(m_confirmDialog->getOkButtonText(), event)) {
+                processClearAppDataConfirmAction();
+            } else if (EventUtils::isMouseInside(m_confirmDialog->getCancelButtonText(), event)
+                    || !EventUtils::isMouseInside(*m_confirmDialog, event)) {
+                m_confirmDialog->hide();
             }
         } else {
-            m_textManager->handleAboutLinks(event, *m_settings);
+            if (EventUtils::isMouseInside(*m_resetDataButton, event)) {
+                m_confirmDialog->show();
+            }
         }
     }
 
     if (EventUtils::wasKeyboardEscapePressed(event)) {
         m_confirmDialog->hide();
     }
+}
 
-    return true;
+
+/**
+ * Handles the user interaction events for about page
+ *
+ * @param event sfml event object
+ *
+ * @author Arthur
+ * @date 20/05/16 - 30/10/18
+ */
+void SettingsView::handleAboutEvents(const sf::Event& event) const
+{
+    if (EventUtils::wasMouseLeftPressed(event) || EventUtils::wasMouseReleased(event)) {
+        m_textManager->handleAboutLinks(event, *m_settings);
+    }
 }
 
 /**

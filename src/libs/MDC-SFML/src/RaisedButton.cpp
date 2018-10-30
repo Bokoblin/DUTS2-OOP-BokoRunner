@@ -126,13 +126,18 @@ void RaisedButton::sync()
  * @brief Sync the raised button's label position and wrap the text if it is too long
  *
  * @author Arthur
- * @date 12/09/18
+ * @date 12/09/18 - 30/10/18
  */
 void RaisedButton::syncLabelPosition()
 {
     Button::syncLabelPosition();
 
-    //TODO: adjust label width to text
+    //Adapt text size to button (with a margin considered)
+    while (m_label.getWidth() > (getWidth() - 0.1f * getWidth())
+            || m_label.getHeight() > (getHeight() - 0.1f * getHeight())) {
+        m_label.setCharacterSize(m_label.getCharacterSize() - 1);
+        m_label.setPositionSelfCentered(getX() + 0.5f * getWidth(), getY() + 0.5f * getHeight());
+    }
 }
 
 

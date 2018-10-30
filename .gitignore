@@ -8,6 +8,13 @@
 *.map
 *.md5
 *.idea
+*.log
+*.db
+CMakeLists.txt.user
+res/config.xml
 build/
 cmake-build-debug/
-res/config.xml
+cmake-build-debug-cli/
+cmake-build-debug-wsl/
+cmake-build-release/
+misc/

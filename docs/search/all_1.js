@@ -13,5 +13,5 @@ var searchData=
   ['button_2eh',['Button.h',['../a00101.html',1,'']]],
   ['buy',['buy',['../a00804.html#a3848bbe4f87ab64a0bcfa0ccc6b6ffd7',1,'ShopItem']]],
   ['buyitem',['buyItem',['../a00800.html#aef1c20ee37022738efcc863d2d9e9364',1,'Shop']]],
-  ['boko_20runner',['Boko Runner',['../index.html',1,'']]]
+  ['boko_20runner_20v1_2e8_2e3',['Boko Runner v1.8.3',['../index.html',1,'']]]
 ];

@@ -6,6 +6,7 @@ using pugi::xml_document;
 using pugi::xml_node;
 using pugi::xml_attribute;
 using Bokoblin::SimpleLogger::Logger;
+using Bokoblin::XMLUtils::XMLHelper;
 
 //------------------------------------------------
 //          STATIC MEMBERS

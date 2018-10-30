@@ -23,6 +23,11 @@ limitations under the License.
 #include <regex>
 #include "PUGIXML/pugixml.hpp"
 
+namespace Bokoblin
+{
+namespace XMLUtils
+{
+
 /**
  * The XMLHelper class provides high-level methods
  * to work with an xml file handler object in order to read or write in the file.
@@ -98,5 +103,8 @@ std::string XMLHelper::safeRetrieveXMLValue<std::string>
 template<>
 unsigned int XMLHelper::safeRetrieveXMLValue<unsigned int>
         (const pugi::xml_attribute& attribute, const std::string& regexString, const unsigned int& defaultValue);
+
+} //namespace XMLUtils
+} //namespace Bokoblin
 
 #endif

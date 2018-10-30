@@ -1,6 +1,11 @@
 #include <unistd.h>
 #include "XMLHelper.h"
 
+namespace Bokoblin
+{
+namespace XMLUtils
+{
+
 using std::fstream;
 using std::string;
 using std::ios;
@@ -236,3 +241,6 @@ unsigned int XMLHelper::safeRetrieveXMLValue<unsigned int>
         return defaultValue;
     }
 }
+
+} //namespace XMLUtils
+} //namespace Bokoblin

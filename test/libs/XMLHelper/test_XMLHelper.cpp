@@ -2,6 +2,8 @@
 #include <model/core/ModelConstants.h>
 #include "XMLHelper/XMLHelper.h"
 
+using Bokoblin::XMLUtils::XMLHelper;
+
 namespace
 {
 

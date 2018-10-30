@@ -2,6 +2,7 @@
 
 using std::string;
 using Bokoblin::SimpleLogger::Logger;
+using Bokoblin::XMLUtils::XMLHelper;
 
 //------------------------------------------------
 //          STATIC MEMBERS

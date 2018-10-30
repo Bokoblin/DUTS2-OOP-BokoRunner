@@ -3,6 +3,8 @@
 #include "persistence/PersistenceManager.h"
 #include "../core/TestCore.h"
 
+using Bokoblin::XMLUtils::XMLHelper;
+
 namespace
 {
 

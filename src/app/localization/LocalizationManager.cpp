@@ -65,7 +65,7 @@ void LocalizationManager::checkContext()
  * @return the localized string
  *
  * @author Arthur
- * @date 04/01/17 - 17/07/18
+ * @date 04/01/17 - 14/01/19
  */
 string LocalizationManager::fetchLocalizedString(const string& label)
 {
@@ -76,7 +76,7 @@ string LocalizationManager::fetchLocalizedString(const string& label)
         string currentLocaleFile = getLanguageFile();
         result = XMLHelper::loadLabeledString(currentLocaleFile, label);
     } catch (const LocalizationException& e) {
-        Logger::printError(e.what() + string("Localization checking failure, applying default language"));
+        Logger::printWarning(e.what() + string("Localization checking failure, applying default language"));
         result = XMLHelper::loadLabeledString(ENGLISH_STRINGS, label);;
     }
 

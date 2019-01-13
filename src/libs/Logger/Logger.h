@@ -1,4 +1,4 @@
-/* Copyright 2017-2018 Jolivet Arthur
+/* Copyright 2017-2019 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,7 +26,16 @@ namespace SimpleLogger
 {
 
 /**
- * The Logger class provides a log writing to the console or a file.
+ * The Logger class provides a trivial static logging system
+ * by allowing writing either to the console or a file.
+ *
+ * The selection of the writing method is handles by a compile flag: ENABLE_FILE_LOGGING.
+ * When enabled, in a CmakeLists.txt file for example, all print functions writes to
+ * a predefined file which name and path is defined by the constant: DEFAULT_LOGGER_FILE.
+ * When disabled, all print functions defaults to stdout for info and warnings or stderr for errors.
+ *
+ * It is also possible to change the log file name and path by calling the following function:
+ * Logger::setLoggerFile().
  *
  * @author Arthur
  * @date 28/12/17 - 12/10/18

@@ -31,7 +31,7 @@ void Logger::printInfo(const std::string& message)
 /**
  * @brief Prints a warning log line
  *
- * @param message the message to print along info tag
+ * @param message the message to print along warning tag
  *
  * @author Arthur
  * @date 12/10/2018
@@ -48,7 +48,7 @@ void Logger::printWarning(const std::string& message)
 /**
  * @brief Prints an error log line
  *
- * @param message the message to print along info tag
+ * @param message the message to print along error tag
  *
  * @author Arthur
  * @date 12/10/2018
@@ -64,22 +64,24 @@ void Logger::printError(const std::string& message)
 
 /**
  * @brief Set the log file name and path
+ * @details Before setting the value, the function attempts to
+ * open the file with write access, rolling back on failure
  *
  * @param filename the log file name
  *
  * @author Arthur
- * @date 12/10/2018
+ * @date 12/10/2018 - 13/01/2019
  */
 void Logger::setLoggerFile(const std::string& filename)
 {
-    loggerFilename = filename;
-
     std::fstream f;
     f.open(filename.c_str(), std::ios::out);
 
     if (f.fail()) {
-        printToConsole(ERROR_PREFIX, "Couldn't write to log file");
+        printToConsole(ERROR_PREFIX, "Couldn't set the log file, keeping: "
+        + (loggerFilename.empty() ? DEFAULT_LOGGER_FILE : loggerFilename));
     } else {
+        loggerFilename = filename;
         std::time_t t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
         f << std::ctime(&t) << std::endl;
     }
@@ -97,7 +99,7 @@ void Logger::setLoggerFile(const std::string& filename)
  * @param prefix the line prefix to indicate log category
  *
  * @author Arthur
- * @date 01/01/18 - 12/10/2018
+ * @date 01/01/2018 - 12/10/2018
  */
 void Logger::printToConsole(const std::string& prefix, const std::string& message)
 {

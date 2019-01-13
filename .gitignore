@@ -10,6 +10,7 @@
 *.idea
 *.log
 *.db
+*.ini
 CMakeLists.txt.user
 res/config.xml
 build/

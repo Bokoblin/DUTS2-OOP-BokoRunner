@@ -11,6 +11,7 @@ project(${PROJECT_NAME} LANGUAGES CXX VERSION 2.0)
 
 option(ENABLE_TESTS "Enable unit tests" OFF)
 option(ENABLE_UI "Enable user interface" ON) #In case your device can't support provided SFML
+option(ENABLE_FILE_LOG "Enable logging to a file, default is stdout" OFF)
 
 #----------------------------------------------------------------------------------
 #           EXTERNAL LIBRARIES ROOT DIRECTORY CONFIGURATION

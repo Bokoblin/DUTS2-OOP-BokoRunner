@@ -314,52 +314,31 @@ void SettingsView::updateTextBasedComponents() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 20/05/16 - 13/01/19
+ * @date 20/05/16 - 14/01/19
  */
 bool SettingsView::handleEvents(sf::Event& event)
 {
-    if (EventUtils::wasMouseLeftPressed(event)) {
-        if (!m_confirmDialog->isVisible()) {
-            for (mdsf::Button* button : m_buttonList) {
-                if (EventUtils::isMouseInside(*button, event)) {
-                    button->setPressed(true);
-                    break;
-                }
-            }
-
-            for (auto& it : m_pageIndicators) {
-                if (EventUtils::isMouseInside(*it.second, event)) {
-                    it.second->setPressed(true);
-                    break;
-                }
+    if (EventUtils::wasMouseLeftPressed(event) && !m_confirmDialog->isVisible()) {
+        for (mdsf::Button* button : m_buttonList) {
+            if (EventUtils::isMouseInside(*button, event)) {
+                button->setPressed(true);
+                break;
             }
         }
     }
 
     if (EventUtils::wasMouseReleased(event)) {
-        //=== Reset buttons
-
-        for (mdsf::Button* button : m_buttonList)
+        for (mdsf::Button* button : m_buttonList) { //Reset all buttons
             button->setPressed(false);
-        for (auto& it : m_pageIndicators)
-            it.second->setPressed(false);
+        }
 
-        //=== handle mouse up on a button
-
-        if (!m_confirmDialog->isVisible()) {
-            if (EventUtils::isMouseInside(*m_homeButton, event)) {
-                m_settings->quit();
-                return false;
-            }
-
-            for (auto& it : m_pageIndicators) {
-                if (EventUtils::isMouseInside(*it.second, event)) {
-                    m_settings->setCurrentPage(it.first);
-                    break;
-                }
-            }
+        if (!m_confirmDialog->isVisible() && EventUtils::isMouseInside(*m_homeButton, event)) {
+            m_settings->quit();
+            return false;
         }
     }
+
+    handlePageIndicatorsEvents(event);
 
     switch (m_settings->getCurrentPage()) {
         case CONFIG:
@@ -465,6 +444,43 @@ void SettingsView::handleAboutEvents(const sf::Event& event) const
         m_textManager->handleAboutLinks(event, *m_settings);
     }
 }
+
+
+/**
+ * Handles events for the page indicators
+ *
+ * @param event sfml event object
+ *
+ * @author Arthur
+ * @date 14/01/19
+ */
+void SettingsView::handlePageIndicatorsEvents(const sf::Event& event)
+{
+    if (EventUtils::wasMouseLeftPressed(event) && !m_confirmDialog->isVisible()) {
+        for (auto& it : m_pageIndicators) {
+            if (EventUtils::isMouseInside(*it.second, event)) {
+                it.second->setPressed(true);
+                break;
+            }
+        }
+    }
+
+    if (EventUtils::wasMouseReleased(event)) {
+        for (auto& it : m_pageIndicators) {
+            it.second->setPressed(false);
+        }
+
+        if (!m_confirmDialog->isVisible()) {
+            for (auto& it : m_pageIndicators) {
+                if (EventUtils::isMouseInside(*it.second, event)) {
+                    m_settings->setCurrentPage(it.first);
+                    break;
+                }
+            }
+        }
+    }
+}
+
 
 /**
  * Processes confirm action on clear app data

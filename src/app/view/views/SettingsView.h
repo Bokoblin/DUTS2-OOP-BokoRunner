@@ -29,7 +29,7 @@ limitations under the License.
  * It handles the settings screen's rendering.
  *
  * @author Arthur
- * @date 20/05/16 - 13/01/19
+ * @date 20/05/16 - 14/01/19
  */
 class SettingsView: public AbstractView
 {
@@ -101,6 +101,7 @@ private:
     void handleConfigEvents(const sf::Event& event);
     void handleStatsEvents(const sf::Event& event);
     void handleAboutEvents(const sf::Event& event) const;
+    void handlePageIndicatorsEvents(const sf::Event& event);
 };
 
 

@@ -176,9 +176,9 @@ void ShopView::draw() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 16/05/16 - 30/10/18
+ * @date 16/05/16 - 13/01/19
  */
-bool ShopView::handleEvents(sf::Event event)
+bool ShopView::handleEvents(sf::Event& event)
 {
     if (EventUtils::wasMouseLeftPressed(event)) {
         if (!m_buyDialog->isVisible()) {

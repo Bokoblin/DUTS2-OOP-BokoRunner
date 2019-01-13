@@ -121,9 +121,9 @@ void LeaderboardView::draw() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 21/05/16 - 30/10/18
+ * @date 21/05/16 - 13/01/19
  */
-bool LeaderboardView::handleEvents(sf::Event event)
+bool LeaderboardView::handleEvents(sf::Event& event)
 {
     if (EventUtils::wasMouseLeftPressed(event)) {
         m_homeButton->setPressed(EventUtils::isMouseInside(*m_homeButton, event));

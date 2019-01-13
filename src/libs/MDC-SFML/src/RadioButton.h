@@ -54,7 +54,7 @@ public:
     //=== METHODS
     void sync() override;
     void syncLabelPosition() override;
-    void setLabelPosition(LabelPosition labelPosition) override; //TOP, CENTER and BOTTOM are unexpected behaviours
+    void setLabelPosition(const LabelPosition& labelPosition) override; //TOP, CENTER and BOTTOM are unexpected behaviours
 
 protected:
     //=== ATTRIBUTES

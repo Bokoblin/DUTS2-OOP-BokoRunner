@@ -1,4 +1,4 @@
-﻿/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+﻿/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ limitations under the License.
  * calculating final score, etc.
  *
  * @author Arthur
- * @date 26/03/16 - 30/10/18
+ * @date 26/03/16 - 13/01/19
  */
 class GameModel: public AbstractModel
 {
@@ -57,9 +57,9 @@ public:
     bool isMusicEnabled() const;
 
     //=== SETTERS
-    void setGameState(GameState state);
+    void setGameState(const GameState& state);
     void setTransitionState(bool inTransition);
-    void setCurrentZone(Zone z);
+    void setCurrentZone(const Zone& z);
     void disableTransitionPossibility();
     void toggleGameMusic();
 
@@ -122,9 +122,9 @@ private:
     void handleMovableElementsCreation();
     void handleMovableElementsCollisions();
     void handleMovableElementsDeletion();
-    void handleEnemyCollision(MovableElementType enemyType);
+    void handleEnemyCollision(const MovableElementType& enemyType);
     void handleCoinCollision() const;
-    void handleBonusCollision(MovableElementType bonusType);
+    void handleBonusCollision(const MovableElementType& bonusType);
     void handleBonusTimeout();
     void conditionallyAllowZoneTransition();
     void conditionallyTriggerGameOver();

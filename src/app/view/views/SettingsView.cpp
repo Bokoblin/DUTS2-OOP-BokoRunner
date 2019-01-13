@@ -314,9 +314,9 @@ void SettingsView::updateTextBasedComponents() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 20/05/16 - 30/10/18
+ * @date 20/05/16 - 13/01/19
  */
-bool SettingsView::handleEvents(sf::Event event)
+bool SettingsView::handleEvents(sf::Event& event)
 {
     if (EventUtils::wasMouseLeftPressed(event)) {
         if (!m_confirmDialog->isVisible()) {

@@ -70,7 +70,7 @@ void Logger::printError(const std::string& message)
  * @param filename the log file name
  *
  * @author Arthur
- * @date 12/10/2018 - 13/01/2019
+ * @date 12/10/18 - 13/01/19
  */
 void Logger::setLoggerFile(const std::string& filename)
 {

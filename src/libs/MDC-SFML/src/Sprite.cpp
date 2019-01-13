@@ -300,9 +300,9 @@ void Sprite::loadAndApplyTextureFromImageFile(const std::string &imageFile)
  * @param area the image area to use
  *
  * @author Arthur
- * @date 02/01/17 - 29/12/17
+ * @date 02/01/17 - 13/01/19
  */
-void Sprite::loadAndApplyTextureFromImageFile(const string &imageFile, sf::IntRect area) {
+void Sprite::loadAndApplyTextureFromImageFile(const string& imageFile, const sf::IntRect& area) {
     if (m_texture.loadFromFile(imageFile, area))
         processTextureLoading(imageFile);
     else

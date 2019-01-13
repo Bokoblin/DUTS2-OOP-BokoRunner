@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ limitations under the License.
  * It handles the commands screen's rendering.
  *
  * @author Arthur
- * @date 24/01/17 - 22/09/18
+ * @date 24/01/17 - 13/01/19
  */
 class CommandsView: public AbstractView
 {
@@ -38,7 +38,7 @@ public:
     //=== METHODS
     void synchronize() override;
     void draw() const override;
-    bool handleEvents(sf::Event event) override;
+    bool handleEvents(sf::Event& event) override;
 
 private:
     //=== ATTRIBUTES

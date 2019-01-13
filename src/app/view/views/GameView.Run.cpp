@@ -155,8 +155,7 @@ void GameView::updateRunningGameElements()
             m_shieldImage->setTextureRect(sf::IntRect(50, 0, 50, 50));
         }
 
-        m_shieldImage->setPosition(m_game->getPlayer()->getPosX() - 5,
-                                   m_game->getPlayer()->getPosY() + 5);
+        m_shieldImage->setPosition(m_game->getPlayer()->getPosX() - 5, m_game->getPlayer()->getPosY() + 5);
         m_shieldImage->resize(SHIELD_SIZE);
     }
 }
@@ -243,12 +242,12 @@ void GameView::drawRunningGame() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 26/12/17 - 26/01/18
+ * @date 26/12/17 - 13/01/19
  */
-bool GameView::handleRunningGameEvents(sf::Event event)
+bool GameView::handleRunningGameEvents(const sf::Event& event)
 {
     if (event.type == sf::Event::KeyReleased) {
-        m_game->getPlayer()->setDecelerationState(true);
+        m_game->getPlayer()->decelerate();
     }
     return true;
 }

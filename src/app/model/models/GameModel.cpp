@@ -80,8 +80,8 @@ bool GameModel::isMusicEnabled() const { return m_appCore->isGameMusicEnabled();
 //          SETTERS
 //------------------------------------------------
 
-void GameModel::setGameState(GameState state) { m_gameState = state; }
-void GameModel::setCurrentZone(Zone z) { m_currentZone = z; }
+void GameModel::setGameState(const GameState& state) { m_gameState = state; }
+void GameModel::setCurrentZone(const Zone& z) { m_currentZone = z; }
 void GameModel::setTransitionState(bool inTransition) { m_inTransition = inTransition; }
 void GameModel::disableTransitionPossibility() { m_isTransitionPossible = false; }
 void GameModel::toggleGameMusic() { m_appCore->toggleGameMusic(); }
@@ -116,9 +116,15 @@ void GameModel::nextStep()
             conditionallyTriggerGameOver();
 
             m_lastTime = system_clock::now();
-        }
+        } //FIXME: else sf::sleep to reduce CPU ?? (but not sfml implementation as breaking MVC, a more language close one : C++ or C)
+        //      (in theory yes, but it may conflict with the view, so architecture must be different with a different thread for the view.
+        //      Other solution would be maybe to trigger the view update at the end of inner if but the current architecture can't permit that without a controller)
+        //--> It may be possible to do so using C signals (seen in SysProgramming), with that we can assign a function to a received signal,
+        //      which would allow to send that signal with system() to order the view to refresh (but the app is multi-platform, a DOS and OSX
+        //      alternative must exist also to implement that)
+        //PS: Same for other models
     } else if (m_gameState == OVER) {
-        m_appCore->calculateFinalScore(m_gameSpeed, m_scoreBonusFlattenedEnemies);
+        m_appCore->calculateFinalScore(m_gameSpeed, m_scoreBonusFlattenedEnemies); //FIXME: should be done once, no ? ^^ (check log)
     }
 }
 
@@ -310,9 +316,9 @@ void GameModel::handleMovableElementsDeletion()
  * @param enemyType the enemy type
  *
  * @author Arthur, Florian
- * @date 25/02/16 - 04/02/18
+ * @date 25/02/16 - 13/01/19
  */
-void GameModel::handleEnemyCollision(MovableElementType enemyType)
+void GameModel::handleEnemyCollision(const MovableElementType& enemyType)
 {
     if (m_player->getState() == MEGA) {
         //Earn points by flattening enemies
@@ -330,11 +336,11 @@ void GameModel::handleEnemyCollision(MovableElementType enemyType)
         m_player->changeState(NORMAL);
     } else {
         if (enemyType == STANDARD_ENEMY) {
-            m_player->setLife(m_player->getLife() - (COLLISION_DAMAGE_STD * m_appCore->getDifficulty()));
+            m_player->takeDamages(COLLISION_DAMAGE_STD * m_appCore->getDifficulty());
         } else if (enemyType == TOTEM_ENEMY) {
-            m_player->setLife(m_player->getLife() - (COLLISION_DAMAGE_TOTEM * m_appCore->getDifficulty()));
+            m_player->takeDamages(COLLISION_DAMAGE_TOTEM * m_appCore->getDifficulty());
         } else {
-            m_player->setLife(m_player->getLife() - (COLLISION_DAMAGE_BLOCK * m_appCore->getDifficulty()));
+            m_player->takeDamages(COLLISION_DAMAGE_BLOCK * m_appCore->getDifficulty());
         }
     }
 }
@@ -359,12 +365,12 @@ void GameModel::handleCoinCollision() const
  * @param bonusType the type of bonus having collided with player
  *
  * @author Arthur, Florian
- * @date 25/02/16 - 04/02/18
+ * @date 25/02/16 - 13/01/19
  */
-void GameModel::handleBonusCollision(MovableElementType bonusType)
+void GameModel::handleBonusCollision(const MovableElementType& bonusType)
 {
     if (bonusType == PV_PLUS_BONUS) {
-        m_player->setLife(m_player->getLife() + PV_BONUS_INCREASE);
+        m_player->heal(PV_BONUS_INCREASE);
     } else if (bonusType == MEGA_BONUS) {
         m_player->changeState(MEGA);
         m_bonusTimeout = milliseconds(m_appCore->findActivatedItem("shop_mega_plus")
@@ -419,13 +425,13 @@ void GameModel::handleBonusTimeout()
  * to authorize a zone transition as soon as possible
  *
  * @author Arthur
- * @date 30/04/16 - 04/02/18
+ * @date 30/04/16 - 13/01/19
  */
 void GameModel::conditionallyAllowZoneTransition()
 {
     if (!m_inTransition
-            && m_appCore->getCurrentDistance() != 0
-            && m_appCore->getCurrentDistance() % ZONE_CHANGING_DISTANCE == 0) {
+            && m_appCore->getGameMap().at("distance") != 0
+            && m_appCore->getGameMap().at("distance") % ZONE_CHANGING_DISTANCE == 0) {
                 m_isTransitionPossible = true;
     }
 }
@@ -440,7 +446,7 @@ void GameModel::conditionallyAllowZoneTransition()
  */
 void GameModel::conditionallyTriggerGameOver()
 {
-    if (m_player->getLife() == Player::MIN_LIFE) {
+    if (m_player->getLife() == Player::MIN_ENERGY) {
         m_gameState = OVER;
     }
 }

@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur
+/* Copyright 2016-2019 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ namespace MaterialDesignComponentsForSFML
  * It adds visibility, a text description (i.e. identifier) and a font tied to the text.
  *
  * @author Arthur
- * @date 21/12/16 - 10/02/18
+ * @date 21/12/16 - 13/01/19
  *
  * @see sf::Text
  */
@@ -59,7 +59,7 @@ public:
     //=== METHODS
     void draw(sf::RenderWindow *window) const;
     bool contains(float x, float y) const;
-    void applyTextFont(const std::string &fontFileName, unsigned int charSize, sf::Color color);
+    void applyTextFont(const std::string& fontFileName, unsigned int charSize, const sf::Color& color);
 
 private:
     //=== ATTRIBUTES

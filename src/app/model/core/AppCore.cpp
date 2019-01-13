@@ -39,16 +39,13 @@ AppCore::~AppCore()
 //------------------------------------------------
 
 AppState AppCore::getAppState() const { return m_appState; }
-int AppCore::getCurrentCoinsNumber() const { return m_currentCoinsNumber; } //for display purpose
-int AppCore::getCurrentDistance() const { return static_cast<int>(m_currentDistance); }
-int AppCore::getCurrentFlattenedEnemies() const { return m_currentFlattenedEnemies; } //for display purpose
-int AppCore::getCurrentScore() const { return m_currentScore; } //for display purpose
 int AppCore::getDifficulty() const { return m_currentDifficulty;}
 int AppCore::getWallet() const { return m_wallet;}
 bool AppCore::isMenuMusicEnabled() const { return m_isMenuMusicEnabled; }
 bool AppCore::isGameMusicEnabled() const { return m_isGameMusicEnabled; }
 std::vector<ShopItem*> AppCore::getShopItemsArray() const { return m_shopItemsArray; }
 std::map<string, int> AppCore::getStatsMap() const { return m_statsMap; }
+std::map<string, int> AppCore::getGameMap() const { return m_gameMap; }
 bool AppCore::isScoreEasyArrayEmpty() const { return m_scoresEasyArray.empty(); }
 bool AppCore::isScoreHardArrayEmpty() const { return m_scoresHardArray.empty(); }
 string AppCore::getLanguage() const { return m_currentLanguage; }
@@ -60,16 +57,10 @@ string AppCore::getConfigFile() const { return CONFIG_FILE; }
 //          SETTERS
 //------------------------------------------------
 
-void AppCore::setAppState(AppState state) { m_appState = state; }
+void AppCore::setAppState(const AppState& state) { m_appState = state; }
 void AppCore::setLanguage(const string& language) { m_currentLanguage = language; }
 void AppCore::setBallSkin(const string& skin) { m_currentBallSkin = skin; }
-void AppCore::setDifficulty(int difficulty) { m_currentDifficulty = difficulty; }
-void AppCore::decreaseWallet(int amount) { m_wallet -= amount; }
-void AppCore::increaseCurrentCoinsCollected(int amount) { m_currentCoinsNumber += amount; }
-void AppCore::increaseCurrentDistance(float amount) { m_currentDistance += amount; }
-void AppCore::increaseCurrentFlattenedEnemies() { m_currentFlattenedEnemies += 1; }
-void AppCore::toggleMenuMusic() { m_isMenuMusicEnabled = !m_isMenuMusicEnabled; }
-void AppCore::toggleGameMusic() { m_isGameMusicEnabled = !m_isGameMusicEnabled; }
+void AppCore::setDifficulty(const Difficulty& difficulty) { m_currentDifficulty = difficulty; }
 
 
 //------------------------------------------------
@@ -80,27 +71,24 @@ void AppCore::toggleGameMusic() { m_isGameMusicEnabled = !m_isGameMusicEnabled; 
  * Saves the current game results to app data.
  *
  * @author Arthur
- * @date 02/05/16 - 25/09/18
+ * @date 02/05/16 - 13/01/19
  */
 void AppCore::saveCurrentGame()
 {
     //add current game values to total values
-    m_statsMap["total_coins_collected"] += m_currentCoinsNumber;
-    m_wallet += m_currentCoinsNumber;
-    m_statsMap["total_distance_travelled"] += static_cast<int>(m_currentDistance);
-    m_statsMap["total_enemies_destroyed"] += m_currentFlattenedEnemies;
-    addNewScore(m_currentScore);
+    m_statsMap["total_coins_collected"] += m_gameMap["coin_number"];
+    m_statsMap["total_distance_travelled"] += m_gameMap["distance"];
+    m_statsMap["total_enemies_destroyed"] += m_gameMap["enemies_destroyed"];
+    m_wallet += m_gameMap["coin_number"];
+    addNewScore(m_gameMap["score"]);
 
     //update per game stats if better
-    if (m_currentCoinsNumber > m_statsMap["per_game_coins_collected"]) {
-        m_statsMap["per_game_coins_collected"] = m_currentCoinsNumber;
-    }
-    if (m_currentDistance > m_statsMap["per_game_distance_travelled"]) {
-        m_statsMap["per_game_distance_travelled"] = static_cast<int>(m_currentDistance);
-    }
-    if (m_currentFlattenedEnemies > m_statsMap["per_game_enemies_destroyed"]) {
-        m_statsMap["per_game_enemies_destroyed"] = m_currentFlattenedEnemies;
-    }
+    m_statsMap["per_game_coins_collected"] =
+            std::max(m_gameMap["coin_number"], m_statsMap["per_game_coins_collected"]);
+    m_statsMap["per_game_distance_travelled"] =
+            std::max(m_gameMap["distance"], m_statsMap["per_game_distance_travelled"]);
+    m_statsMap["per_game_enemies_destroyed"] =
+            std::max(m_gameMap["enemies_destroyed"], m_statsMap["per_game_enemies_destroyed"]);
 
     Logger::printInfo("Current game saved");
 }
@@ -138,16 +126,16 @@ void AppCore::addNewScore(int score)
  * Resets current game to create a new one
  *
  * @author Arthur
- * @date 02/05/16 - 25/09/18
+ * @date 02/05/16 - 13/01/19
  */
 void AppCore::launchNewGame()
 {
     //for launching a new game
     m_statsMap["total_games_played"] += 1;
-    m_currentCoinsNumber = 0;
-    m_currentDistance = 0;
-    m_currentFlattenedEnemies = 0;
-    m_currentScore = 0;
+    m_gameMap["coin_number"] = 0;
+    m_gameMap["distance"] = 0;
+    m_gameMap["enemies_destroyed"] = 0;
+    m_gameMap["score"] = 0;
 }
 
 
@@ -220,12 +208,13 @@ void AppCore::addNewActivatedBonus(const string& itemLabel)
  * @param flattenedEnemiesBonus the bonus for all enemies flattened in the last game
  *
  * @author Arthur
- * @date ?? - 04/02/18
+ * @date ?? - 13/01/19
  */
 void AppCore::calculateFinalScore(float speed, int flattenedEnemiesBonus)
 {
-    m_currentScore = static_cast<int>(
-            (speed * m_currentDistance) + (COIN_MULTIPLIER * m_currentCoinsNumber) + flattenedEnemiesBonus);
+    float distanceSubScore = speed * m_gameMap.at("distance");
+    int coinSubScore = COIN_MULTIPLIER * m_gameMap.at("coin_number");
+    m_gameMap.at("score") = static_cast<int>(distanceSubScore + coinSubScore + flattenedEnemiesBonus);
 }
 
 
@@ -237,9 +226,9 @@ void AppCore::calculateFinalScore(float speed, int flattenedEnemiesBonus)
  * @return a string containing scores of a given difficulty
  *
  * @author Arthur
- * @date 23/10/16 - 24/01/18
+ * @date 23/10/16 - 13/01/19
  */
-string AppCore::stringifyLeaderboard(Difficulty difficulty) const
+string AppCore::stringifyLeaderboard(const Difficulty& difficulty) const
 {
     string result;
     std::set<int> scoresArray;
@@ -274,7 +263,7 @@ string AppCore::stringifyLeaderboard(Difficulty difficulty) const
  * in case it hasn't been initialized
  *
  * @author Arthur
- * @date 04/02/18 - 13/10/18
+ * @date 04/02/18 - 13/01/19
  */
 void AppCore::initWithDefaultValues()
 {
@@ -289,13 +278,79 @@ void AppCore::initWithDefaultValues()
         elem.second = 0;
     }
 
+    for (auto elem : m_gameMap) {
+        elem.second = 0;
+    }
+
     m_scoresEasyArray.clear();
     m_scoresHardArray.clear();
     m_shopItemsArray.clear();
     m_activatedItemsArray.clear();
-
-    m_currentCoinsNumber = 0;
-    m_currentDistance = 0;
-    m_currentFlattenedEnemies = 0;
-    m_currentScore = 0;
 }
+
+
+/**
+ * Decreases the wallet amount
+ * @param amount the amount to remove
+ *
+ * @author Arthur
+ * @date 02/05/16 - 13/01/19
+ */
+void AppCore::decreaseWallet(int amount)
+{
+    if (m_wallet - amount > 0) {
+        m_wallet -= amount;
+    } else {
+        m_wallet = 0;
+    }
+}
+
+
+/**
+ * Increases the amount of collected coins
+ * in the current game
+ * @param amount the amount to add
+ *
+ * @author Arthur
+ * @date 02/05/16 - 13/01/19
+ */
+void AppCore::increaseCurrentCoinsCollected(int amount) { m_gameMap.at("coin_number") += amount; }
+
+
+/**
+ * Increases the distance in the current game
+ * @param amount the amount to add
+ *
+ * @author Arthur
+ * @date 02/05/16 - 13/01/19
+ */
+void AppCore::increaseCurrentDistance(float amount) {
+    Logger::printWarning(to_string(amount));
+    m_gameMap.at("distance") += static_cast<int>(amount); }
+
+
+/**
+ * Increases the number of enemies killed
+ *
+ * @author Arthur
+ * @date 02/05/16 - 13/01/19
+ */
+void AppCore::increaseCurrentFlattenedEnemies() {m_gameMap.at("enemies_destroyed")++; }
+
+
+/**
+ * Toggles the menu music
+ *
+ * @author Arthur
+ * @date 02/05/16 - 04/02/2018
+ */
+void AppCore::toggleMenuMusic() { m_isMenuMusicEnabled = !m_isMenuMusicEnabled; }
+
+
+/**
+ * Toggles the game music
+ *
+ * @author Arthur
+ * @date 02/05/16 - 04/02/2018
+ */
+void AppCore::toggleGameMusic() { m_isGameMusicEnabled = !m_isGameMusicEnabled; }

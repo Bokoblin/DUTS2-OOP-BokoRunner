@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ limitations under the License.
  * It handles the shop screen's rendering.
  *
  * @author Arthur
- * @date 11/05/16 - 22/09/18
+ * @date 11/05/16 - 13/01/19
  */
 class ShopView: public AbstractView
 {
@@ -42,7 +42,7 @@ public:
     //=== METHODS
     void synchronize() override;
     void draw() const override;
-    bool handleEvents(sf::Event event) override;
+    bool handleEvents(sf::Event& event) override;
 
 private:
     //=== ATTRIBUTES

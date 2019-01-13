@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ public:
     //=== METHODS
     void synchronize() override;
     void draw() const override;
-    bool handleEvents(sf::Event event) override;
+    bool handleEvents(sf::Event& event) override;
 
 private:
     //=== ATTRIBUTES
@@ -129,9 +129,9 @@ private:
 
     //Events
     void handlePlayerInput() const;
-    bool handleRunningGameEvents(sf::Event event);
-    bool handlePausedGameEvents(sf::Event event);
-    bool handleGameOverEvents(sf::Event event);
+    bool handleRunningGameEvents(const sf::Event& event);
+    bool handlePausedGameEvents(const sf::Event& event);
+    bool handleGameOverEvents(const sf::Event& event);
 };
 
 #endif

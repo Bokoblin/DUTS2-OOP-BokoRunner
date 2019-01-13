@@ -1,4 +1,4 @@
-﻿/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+﻿/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ limitations under the License.
  * to do specific actions to the app
  *
  * @author Arthur
- * @date 02/05/16 - 25/09/18
+ * @date 02/05/16 - 13/01/19
  */
 class AppCore
 {
@@ -49,16 +49,13 @@ public:
 
     //=== GETTERS
     AppState getAppState() const;
-    int getCurrentCoinsNumber() const;
-    int getCurrentDistance() const;
-    int getCurrentFlattenedEnemies() const;
-    int getCurrentScore() const;
     int getWallet() const;
     int getDifficulty() const;
     bool isMenuMusicEnabled() const;
     bool isGameMusicEnabled() const;
     std::vector<ShopItem*> getShopItemsArray() const;
     std::map<std::string, int> getStatsMap() const;
+    std::map<std::string, int> getGameMap() const;
     bool isScoreEasyArrayEmpty() const;
     bool isScoreHardArrayEmpty() const;
     std::string getLanguage() const;
@@ -66,16 +63,10 @@ public:
     virtual std::string getConfigFile() const;
 
     //=== SETTERS
-    void setAppState(AppState state);
-    void decreaseWallet(int amount);
-    void increaseCurrentCoinsCollected(int amount);
-    void increaseCurrentDistance(float amount);
-    void increaseCurrentFlattenedEnemies();
-    void setDifficulty(int difficulty);
+    void setAppState(const AppState& state);
+    void setDifficulty(const Difficulty& difficulty);
     void setLanguage(const std::string& language);
     void setBallSkin(const std::string& skin);
-    void toggleMenuMusic();
-    void toggleGameMusic();
 
     //=== METHODS
     void addNewScore(int score);
@@ -86,7 +77,13 @@ public:
     bool findActivatedItem(const std::string& itemLabel);
     void addNewActivatedBonus(const std::string& itemLabel);
     void calculateFinalScore(float speed, int flattenedEnemiesBonus);
-    std::string stringifyLeaderboard(Difficulty difficulty) const;
+    std::string stringifyLeaderboard(const Difficulty& difficulty) const;
+    void decreaseWallet(int amount);
+    void increaseCurrentCoinsCollected(int amount);
+    void increaseCurrentDistance(float amount);
+    void increaseCurrentFlattenedEnemies();
+    void toggleMenuMusic();
+    void toggleGameMusic();
 
 protected:
     //=== ATTRIBUTES
@@ -102,21 +99,16 @@ protected:
     const int COIN_MULTIPLIER = 20;
     const unsigned int MAX_SCORES = 10;
 
-    //Current Game
-    int m_currentCoinsNumber;
-    float m_currentDistance;
-    int m_currentFlattenedEnemies;
-    int m_currentScore;
-
     //Containers
     std::set<int> m_scoresEasyArray;
     std::set<int> m_scoresHardArray;
     std::vector<ShopItem*> m_shopItemsArray;
     std::set<std::string> m_activatedItemsArray;
     std::map<std::string, int> m_statsMap;
+    std::map<std::string, int> m_gameMap;
 
 private:
-    friend class FileBasedPersistence;
+    friend class FileBasedPersistence; //TODO: Be friend with an abstraction of persistence instead
 
     //=== METHODS
     void initWithDefaultValues();

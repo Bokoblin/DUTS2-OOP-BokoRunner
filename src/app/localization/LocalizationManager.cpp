@@ -22,9 +22,9 @@ AppCore* LocalizationManager::m_appCore = nullptr;
  * @author Arthur
  * @date 04/02/17
  */
-void LocalizationManager::initContext(AppCore* appCore)
+void LocalizationManager::initContext(AppCore& appCore)
 {
-    m_appCore = appCore;
+    m_appCore = &appCore;
     m_isInit = true;
 }
 
@@ -98,9 +98,9 @@ string LocalizationManager::fetchLocalizedString(const string& label)
  * @return the adequate language file
  *
  * @author Arthur
- * @date 11/02/18
+ * @date 11/02/18 - 13/01/19
  */
-string LocalizationManager::getLanguageFile()
+const string& LocalizationManager::getLanguageFile()
 {
     if (m_appCore->getLanguage() == ENGLISH) {
         return ENGLISH_STRINGS;

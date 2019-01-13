@@ -61,9 +61,9 @@ bool EventUtils::wasKeyboardContinuePressed()
  * @return true, if action was triggered 
  *
  * @author Arthur
- * @date 30/10/18
+ * @date 30/10/18 - 13/01/19
  */
-bool EventUtils::wasKeyboardEscapePressed(sf::Event event)
+bool EventUtils::wasKeyboardEscapePressed(const sf::Event& event)
 {
     return event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape;
 }
@@ -74,9 +74,9 @@ bool EventUtils::wasKeyboardEscapePressed(sf::Event event)
  * @return true, if action was triggered 
  *
  * @author Arthur
- * @date 30/10/18
+ * @date 30/10/18 - 13/01/19
  */
-bool EventUtils::wasMouseLeftPressed(sf::Event event)
+bool EventUtils::wasMouseLeftPressed(const sf::Event& event)
 {
     return event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left;
 }
@@ -87,9 +87,9 @@ bool EventUtils::wasMouseLeftPressed(sf::Event event)
  * @return true, if action was triggered 
  *
  * @author Arthur
- * @date 30/10/18
+ * @date 30/10/18 - 13/01/19
  */
-bool EventUtils::wasMouseReleased(sf::Event event)
+bool EventUtils::wasMouseReleased(const sf::Event& event)
 {
     return event.type == sf::Event::MouseButtonReleased;
 }
@@ -100,9 +100,9 @@ bool EventUtils::wasMouseReleased(sf::Event event)
  * @return true, if action was triggered 
  *
  * @author Arthur
- * @date 30/10/18
+ * @date 30/10/18 - 13/01/19
  */
-bool EventUtils::isMouseInside(const mdsf::Sprite& sprite, sf::Event event)
+bool EventUtils::isMouseInside(const mdsf::Sprite& sprite, const sf::Event& event)
 {
     return sprite.contains(event.mouseButton.x, event.mouseButton.y);
 }
@@ -113,9 +113,9 @@ bool EventUtils::isMouseInside(const mdsf::Sprite& sprite, sf::Event event)
  * @return true, if action was triggered 
  *
  * @author Arthur
- * @date 30/10/18
+ * @date 30/10/18 - 13/01/19
  */
-bool EventUtils::isMouseInside(const mdsf::Text& text, sf::Event event)
+bool EventUtils::isMouseInside(const mdsf::Text& text, const sf::Event& event)
 {
     return text.contains(event.mouseButton.x, event.mouseButton.y);
 }

@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ limitations under the License.
  * The Player class inherited from MovableElements
  * contains player's logic and behaviours
  * @author Arthur, Florian
- * @date 22/02/16 - 16/09/18
+ * @date 22/02/16 - 13/01/19
  */
 class Player: public MovableElement
 {
@@ -40,23 +40,22 @@ public:
     PlayerState getState() const;
     int getLife() const;
 
-    //=== SETTERS
-    void setLife(int new_life);
-    void setJumpState(bool state);
-    void setDecelerationState(bool state);
-
     //=== METHODS
     void move() override;
-    void changeState(PlayerState state);
-    void controlPlayerMovements(MovingDirection direction);
+    void takeDamages(int amount);
+    void heal(int energy);
+    void jump();
+    void decelerate();
+    void changeState(const PlayerState& state);
+    void controlPlayerMovements(const MovingDirection& direction);
 
     //=== CONSTANTS
-    static constexpr int MIN_LIFE = 0;
+    static constexpr int MIN_ENERGY = 0;
 
 private:
     //=== ATTRIBUTES
     PlayerState m_state;
-    int m_life;
+    int m_energy;
     float m_initialWidth;
     float m_initialHeight;
     int m_floorPosition;
@@ -70,7 +69,7 @@ private:
     std::pair<float, float> m_vectorBall;
 
     //Constants
-    static constexpr int MAX_LIFE = 100;
+    static constexpr int MAX_ENERGY = 100;
     static constexpr int PLAYER_RATE = 30;
     static constexpr int DIRECTION_PADDING = 10;
     static constexpr float PRECISION = 1.0;

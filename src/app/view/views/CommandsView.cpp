@@ -95,9 +95,9 @@ void CommandsView::draw() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 24/01/17 - 30/10/18
+ * @date 24/01/17 - 13/01/19
  */
-bool CommandsView::handleEvents(sf::Event event)
+bool CommandsView::handleEvents(sf::Event& event)
 {
     if (EventUtils::wasMouseLeftPressed(event)) {
         m_homeButton->setPressed(EventUtils::isMouseInside(*m_homeButton, event));

@@ -48,7 +48,7 @@ bool SettingsModel::isCapsuleSkinAvailable() const { return m_capsuleSkinIsAvail
 //------------------------------------------------
 
 void SettingsModel::setCurrentPage(int page) { m_currentPage = page; }
-void SettingsModel::setGameDifficulty(Difficulty difficulty) { m_appCore->setDifficulty(difficulty); }
+void SettingsModel::setGameDifficulty(const Difficulty& difficulty) { m_appCore->setDifficulty(difficulty); }
 void SettingsModel::toggleGameMusic() { m_appCore->toggleGameMusic(); }
 void SettingsModel::toggleMenuMusic() { m_appCore->toggleMenuMusic(); }
 

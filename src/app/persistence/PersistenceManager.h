@@ -1,4 +1,4 @@
-﻿/* Copyright 2018 Jolivet Arthur
+﻿/* Copyright 2018-2019 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ class PersistenceManager
 {
 public:
     //=== METHODS
-    static void initContext(AppCore* appCore);
+    static void initContext(AppCore& appCore);
     static void closeContext();
     static void checkContext();
     static void initPersistence();

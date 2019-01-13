@@ -61,9 +61,9 @@ void GameView::drawGameOver() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 26/12/17 - 30/10/18
+ * @date 26/12/17 - 13/01/19
  */
-bool GameView::handleGameOverEvents(sf::Event event)
+bool GameView::handleGameOverEvents(const sf::Event& event)
 {
     if (EventUtils::wasMouseLeftPressed(event)) {
         m_restartGameButton->setPressed(EventUtils::isMouseInside(*m_restartGameButton, event));

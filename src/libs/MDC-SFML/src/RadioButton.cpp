@@ -89,7 +89,7 @@ bool RadioButton::isSelected() const { return m_isSelected; }
 //------------------------------------------------
 
 void RadioButton::setSelected(bool selected) { m_isSelected = selected; }
-void RadioButton::setLabelPosition(LabelPosition labelPosition)
+void RadioButton::setLabelPosition(const LabelPosition& labelPosition)
 {
     switch (labelPosition)
     {

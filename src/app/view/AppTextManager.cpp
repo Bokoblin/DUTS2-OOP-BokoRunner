@@ -143,9 +143,9 @@ void AppTextManager::loadText()
  * @param settings the settings model
  *
  * @author Arthur
- * @date 02/11/17 - 30/10/18
+ * @date 02/11/17 - 13/01/19
  */
-void AppTextManager::handleAboutLinks(sf::Event event, const SettingsModel& settings) const
+void AppTextManager::handleAboutLinks(const sf::Event& event, const SettingsModel& settings) const
 {
     if (EventUtils::wasMouseLeftPressed(event)) {
         if (EventUtils::isMouseInside(*m_aboutRepositoryLink, event)) {
@@ -386,7 +386,7 @@ void AppTextManager::syncMenuShopText()
  * @param bonusTimeout the current bonus timeout
  *
  * @author Arthur
- * @date 02/04/16 - 16/09/18
+ * @date 02/04/16 - 13/01/19
  */
 void AppTextManager::syncGameRunningText(int bonusTimeout)
 {
@@ -395,7 +395,7 @@ void AppTextManager::syncGameRunningText(int bonusTimeout)
     m_currentDistanceLabel->setPosition(0.55f * m_width, 0.91f * m_height);
     m_currentDistanceText->setPosition(0.78f * m_width, 0.91f * m_height);
     m_currentDistanceText->setFillColor(sf::Color::White);
-    m_currentDistanceText->setString(to_string(m_appCore->getCurrentDistance()) + " m");
+    m_currentDistanceText->setString(to_string(m_appCore->getGameMap().at("distance")) + " m");
 
     m_bonusTimeoutText->setPosition(0.95f * m_width, 0.91f * m_height);
     m_bonusTimeoutText->setVisible(bonusTimeout > 0);
@@ -407,7 +407,7 @@ void AppTextManager::syncGameRunningText(int bonusTimeout)
  * Syncs paused game standalone text
  *
  * @author Arthur
- * @date 02/04/16 - 30/10/18
+ * @date 02/04/16 - 13/01/19
  */
 void AppTextManager::syncGamePausedText()
 {
@@ -415,12 +415,12 @@ void AppTextManager::syncGamePausedText()
 
     m_currentCoinsNbText->setPosition(0.09f * m_width, 0.115f * m_height);
     m_currentCoinsNbText->setFillColor(AppColor::CoinGold);
-    m_currentCoinsNbText->setUtf8String(to_string(m_appCore->getCurrentCoinsNumber()).append(" ")
+    m_currentCoinsNbText->setUtf8String(to_string(m_appCore->getGameMap().at("coin_number")).append(" ")
                                                 + LocalizationManager::fetchLocalizedString("game_coins"));
 
     m_flattenedEnemiesText->setPosition(0.09f * m_width, 0.18f * m_height);
     m_flattenedEnemiesText->setFillColor(AppColor::EnemyBlue);
-    m_flattenedEnemiesText->setUtf8String(to_string(m_appCore->getCurrentFlattenedEnemies()).append(" ")
+    m_flattenedEnemiesText->setUtf8String(to_string(m_appCore->getGameMap().at("enemies_destroyed")).append(" ")
                                                   + LocalizationManager::fetchLocalizedString("game_flattened"));
 }
 
@@ -431,7 +431,7 @@ void AppTextManager::syncGamePausedText()
  * @param gameSpeed the last game speed before game over
  *
  * @author Arthur
- * @date 02/04/16 - 25/09/18
+ * @date 02/04/16 - 13/01/19
  */
 void AppTextManager::syncGameOverText(int gameSpeed)
 {
@@ -447,25 +447,25 @@ void AppTextManager::syncGameOverText(int gameSpeed)
     m_currentDistanceLabel->setFillColor(sf::Color::White);
     m_currentDistanceText->setPosition(0.65f * m_width, 0.345f * m_height);
     m_currentDistanceText->setFillColor(AppColor::ScoreGrey);
-    m_currentDistanceText->setString(to_string(m_appCore->getCurrentDistance()) + " m");
+    m_currentDistanceText->setString(to_string(m_appCore->getGameMap().at("distance")) + " m");
 
     m_currentCoinsLabel->setPosition(0.25f * m_width, 0.41f * m_height);
     m_currentCoinsNbText->setPosition(0.65f * m_width, 0.41f * m_height);
     m_currentCoinsNbText->setFillColor(AppColor::ScoreGrey);
-    m_currentCoinsNbText->setString(to_string(m_appCore->getCurrentCoinsNumber()) + "  X  20");
+    m_currentCoinsNbText->setString(to_string(m_appCore->getGameMap().at("coin_number")) + "  X  20");
     m_statsTotalCoinsNbText->setStringFromInt(m_appCore->getStatsMap().at("total_coins_collected"));
 
     m_flattenedEnemiesLabel->setPosition(0.25f * m_width, 0.48f * m_height);
     m_flattenedEnemiesLabel->setFillColor(sf::Color::White);
     m_flattenedEnemiesText->setPosition(0.65f * m_width, 0.48f * m_height);
     m_flattenedEnemiesText->setFillColor(AppColor::ScoreGrey);
-    m_flattenedEnemiesText->setStringFromInt(m_appCore->getCurrentFlattenedEnemies());
+    m_flattenedEnemiesText->setStringFromInt(m_appCore->getGameMap().at("enemies_destroyed"));
 
     m_currentScoreLabel->setPosition(0.25f * m_width, 0.58f * m_height);
     m_currentScoreLabel->setFont(m_BoldFont);
     m_currentScoreText->setPosition(0.65f * m_width, 0.58f * m_height);
     m_currentScoreText->setFont(m_BoldFont);
-    m_currentScoreText->setStringFromInt(m_appCore->getCurrentScore());
+    m_currentScoreText->setStringFromInt(m_appCore->getGameMap().at("score"));
 
     m_walletText->applyTextFont(ROBOTO_CONDENSED_FONT, DEFAULT_CHAR_SIZE, AppColor::CoinGold);
     m_walletText->setPosition(0.48f * m_width, 0.89f * m_height);

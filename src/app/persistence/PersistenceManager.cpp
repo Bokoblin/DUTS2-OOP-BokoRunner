@@ -25,11 +25,11 @@ bool PersistenceManager::isInit(){ return m_isInit; }
  * and the persistence system
  *
  * @author Arthur
- * @date 04/02/18 - 25/08/2018
+ * @date 04/02/18 - 13/01/19
  */
-void PersistenceManager::initContext(AppCore* appCore)
+void PersistenceManager::initContext(AppCore& appCore)
 {
-    FileBasedPersistence::setAppCore(appCore);
+    FileBasedPersistence::setAppCore(&appCore);
     m_isInit = true;
 
     initPersistence();
@@ -45,7 +45,6 @@ void PersistenceManager::initContext(AppCore* appCore)
 void PersistenceManager::closeContext()
 {
     m_isInit = false;
-    FileBasedPersistence::setAppCore(nullptr);
 }
 
 

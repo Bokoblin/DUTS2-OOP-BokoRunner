@@ -1,4 +1,4 @@
-﻿/* Copyright 2018 Jolivet Arthur
+﻿/* Copyright 2018-2019 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -34,13 +34,13 @@ class AppCore;
  * The current localization system uses an xml string file for each supported language.
  *
  * @author Arthur
- * @date 11/02/18 - 21/07/18
+ * @date 11/02/18 - 13/01/19
  */
 class LocalizationManager
 {
 public:
     //=== METHODS
-    static void initContext(AppCore* appCore);
+    static void initContext(AppCore& appCore);
     static void closeContext();
     static void checkContext();
     static std::string fetchLocalizedString(const std::string& label);
@@ -51,7 +51,7 @@ private:
     static AppCore* m_appCore;
 
     //=== METHODS
-    static std::string getLanguageFile();
+    static const std::string& getLanguageFile();
 };
 
 #endif

@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -42,11 +42,11 @@ int main() //TODO: App class with logic -- main must only uses it + check argume
 
     AppCore appCore;
     Logger::setLoggerFile("./boko_runner.log");
-    PersistenceManager::initContext(&appCore);
+    PersistenceManager::initContext(appCore);
     PersistenceManager::fetchConfiguration();
     PersistenceManager::fetchStatistics();
     PersistenceManager::fetchLeaderboard();
-    LocalizationManager::initContext(&appCore);
+    LocalizationManager::initContext(appCore);
 
     mdsf::Config::printError = Logger::printError;
     AppTextManager textManager(&appCore, SCREEN_WIDTH, SCREEN_HEIGHT);

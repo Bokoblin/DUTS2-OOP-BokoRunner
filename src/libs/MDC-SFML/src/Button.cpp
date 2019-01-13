@@ -148,7 +148,7 @@ void Button::setPressed(bool pressed) { m_isPressed = pressed; }
 void Button::setEnabled(bool enabled) { m_isEnabled = enabled; }
 void Button::setClipRectArray(std::vector<sf::IntRect> array) { m_clipRectArray = std::move(array); }
 void Button::setPositionSelfCentered(float x, float y) { setPosition(x - m_width / 2, y); }
-void Button::setLabelPosition(LabelPosition labelPosition) { m_labelPosition = labelPosition; }
+void Button::setLabelPosition(const LabelPosition& labelPosition) { m_labelPosition = labelPosition; }
 void Button::setLabelDescription(const std::string &description) { m_label.setDescription(description); }
 
 

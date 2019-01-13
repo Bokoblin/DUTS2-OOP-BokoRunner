@@ -282,9 +282,9 @@ bool MenuView::handleHomeEvents(const sf::Event& event)
  * @return true if app state is unchanged
  *
  * @author Arthur, Florian
- * @date 25/03/16 - 27/12/17
+ * @date 25/03/16 - 13/01/19
  */
-bool MenuView::handleEvents(sf::Event event)
+bool MenuView::handleEvents(sf::Event& event)
 {
     while (m_window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {

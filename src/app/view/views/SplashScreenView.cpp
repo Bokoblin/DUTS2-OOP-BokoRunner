@@ -135,9 +135,9 @@ void SplashScreenView::draw() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 27/03/16 - 30/10/18
+ * @date 27/03/16 - 13/01/19
  */
-bool SplashScreenView::handleEvents(sf::Event event)
+bool SplashScreenView::handleEvents(sf::Event& event)
 {
     while (m_window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {

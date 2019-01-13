@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
  * Text objects branded as "Text" are loaded from parsed data
  *
  * @author Arthur
- * @date 02/04/16 - 05/02/18
+ * @date 02/04/16 - 13/01/19
  */
 class AppTextManager
 {
@@ -49,7 +49,7 @@ public:
 
     //=== METHODS
     //Text utils
-    void handleAboutLinks(sf::Event event, const SettingsModel& settings) const; //TODO: Temporary until dedicated LinkButton class
+    void handleAboutLinks(const sf::Event& event, const SettingsModel& settings) const; //TODO: Temporary until dedicated LinkButton class
     void updateWholeStandaloneTextContent(); //TODO: modularize (to reduce time complexity)
 
     //Text init (to use once at screen loading)

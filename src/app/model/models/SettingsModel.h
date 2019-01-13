@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ limitations under the License.
  * controlling current active page and checking item's availability
  *
  * @author Arthur
- * @date 20/05/16 - 30/10/18
+ * @date 20/05/16 - 13/01/19
  */
 class SettingsModel: public AbstractModel
 {
@@ -47,7 +47,7 @@ public:
 
     //=== SETTERS
     void setCurrentPage(int page);
-    void setGameDifficulty(Difficulty difficulty);
+    void setGameDifficulty(const Difficulty& difficulty);
     void toggleMenuMusic();
     void toggleGameMusic();
 

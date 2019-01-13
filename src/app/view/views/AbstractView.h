@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ limitations under the License.
  * by its inherited classes.
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 06/09/18
+ * @date 21/02/16 - 13/01/19
  */
 class AbstractView
 {
@@ -46,7 +46,7 @@ public:
     //=== METHODS
     virtual void synchronize() = 0;
     virtual void draw() const = 0;
-    virtual bool handleEvents(sf::Event event) = 0;
+    virtual bool handleEvents(sf::Event& event) = 0;
     unsigned int getHalfXPosition() const;
     unsigned int getHalfYPosition() const;
 

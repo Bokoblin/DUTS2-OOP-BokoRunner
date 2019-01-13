@@ -62,9 +62,9 @@ void GameView::drawPausedGame() const
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 26/12/17 - 22/09/18
+ * @date 26/12/17 - 13/01/19
  */
-bool GameView::handlePausedGameEvents(sf::Event event)
+bool GameView::handlePausedGameEvents(const sf::Event& event)
 {
     if (EventUtils::wasMouseLeftPressed(event)) {
         m_resumeGameButton->setPressed(EventUtils::isMouseInside(*m_resumeGameButton, event));

@@ -381,7 +381,7 @@ void GameView::handlePlayerInput() const
         }
 
         if (EventUtils::wasKeyboardJumpPressed()) {
-            m_game->getPlayer()->setJumpState(true);
+            m_game->getPlayer()->jump();
         }
     }
 }
@@ -394,9 +394,9 @@ void GameView::handlePlayerInput() const
  * @return true if app state is unchanged
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 26/12/17
+ * @date 21/02/16 - 13/01/19
  */
-bool GameView::handleEvents(sf::Event event)
+bool GameView::handleEvents(sf::Event& event)
 {
     handlePlayerInput();
 

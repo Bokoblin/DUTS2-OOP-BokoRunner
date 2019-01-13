@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ limitations under the License.
  * for its inherited classes.
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 29/10/17
+ * @date 21/02/16 - 13/01/19
  */
 class AbstractModel
 {
@@ -35,7 +35,7 @@ public:
     virtual ~AbstractModel();
 
     //=== SETTERS
-    void setAppState(AppState state);
+    void setAppState(const AppState& state);
 
     //=== METHODS
     virtual void nextStep() = 0;

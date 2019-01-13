@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur
+/* Copyright 2016-2019 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ namespace MaterialDesignComponentsForSFML
  * and to update it using a string file thanks to its description (i.e. id)
  *
  * @author Arthur
- * @date 06/04/16 - 02/01/18
+ * @date 06/04/16 - 13/01/19
  *
  * @see Sprite
  * @see LabelPosition
@@ -66,7 +66,7 @@ public:
     void setClipRectArray(std::vector<sf::IntRect> array);
     void setPositionSelfCentered(float x, float y);
     void setLabelDescription(const std::string& description);
-    virtual void setLabelPosition(LabelPosition labelPosition);
+    virtual void setLabelPosition(const LabelPosition& labelPosition);
 
     //=== METHODS
     void sync() override;
@@ -78,7 +78,7 @@ public:
 protected:
     //=== ATTRIBUTES
     std::vector<sf::IntRect> m_clipRectArray; //FIXME: Sprite::loadAndApplyTextureFromImageFile(const std::string &, sf::IntRect) is enough for this class -- Can be moved to RadioButton
-    unsigned int m_currentClipRect; //TODO: move to RadioButton and ToggleButton [the latter todo, as boolean]
+    unsigned int m_currentClipRect; //TODO: move to RadioButton and ToggleButton [the latter todo, as boolean], don't allow get/set but add, remove, clear
     bool m_isPressed;
     bool m_isEnabled;
     sf::Font m_font;

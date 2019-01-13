@@ -1,4 +1,4 @@
-/* Copyright 2018 Jolivet Arthur
+/* Copyright 2018-2019 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
  * The EventUtils class defines simple events accessible to the application.
  *
  * @author Arthur
- * @date 30/10/2018
+ * @date 30/10/2018 - 13/01/19
  */
 class EventUtils
 {
@@ -37,11 +37,11 @@ public:
     static bool wasKeyboardRightPressed();
     static bool wasKeyboardJumpPressed();
     static bool wasKeyboardContinuePressed();
-    static bool wasKeyboardEscapePressed(sf::Event event);
-    static bool wasMouseLeftPressed(sf::Event event);
-    static bool wasMouseReleased(sf::Event event);
-    static bool isMouseInside(const mdsf::Sprite& sprite, sf::Event event);
-    static bool isMouseInside(const mdsf::Text& text, sf::Event event);
+    static bool wasKeyboardEscapePressed(const sf::Event& event);
+    static bool wasMouseLeftPressed(const sf::Event& event);
+    static bool wasMouseReleased(const sf::Event& event);
+    static bool isMouseInside(const mdsf::Sprite& sprite, const sf::Event& event);
+    static bool isMouseInside(const mdsf::Text& text, const sf::Event& event);
 };
 
 #endif

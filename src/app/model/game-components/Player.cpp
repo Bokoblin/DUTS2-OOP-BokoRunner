@@ -1,5 +1,7 @@
 #include "Player.h"
 
+constexpr int Player::MAX_ENERGY;
+
 /**
  * Constructs a player with
  * coordinates, a size, a moving vector
@@ -17,12 +19,11 @@
  * @param jumpLimit the jump limit in height
  */
 Player::Player(float x, float y, float w, float h, float mvX, float mvY, int floor, int fieldWidth, int jumpLimit) :
-        MovableElement(x, y, w, h, mvX, mvY), m_state{NORMAL}, m_life{MAX_LIFE}, m_initialWidth{w}, m_initialHeight{h},
+        MovableElement(x, y, w, h, mvX, mvY), m_state{NORMAL}, m_energy{MAX_ENERGY}, m_initialWidth{w}, m_initialHeight{h},
         m_floorPosition{floor}, m_fieldWidth{fieldWidth}, m_jumpLimit{jumpLimit}, m_gravitation{INITIAL_GRAVITATION},
         m_acceleration{INITIAL_ACCELERATION}, m_isJumping{false}, m_isFlying{false}, m_isDecelerating{false}
 {
     m_elementType = PLAYER;
-    m_life = MAX_LIFE;
     m_vectorBall.first = 0;
     m_vectorBall.second = 0;
 }
@@ -38,22 +39,7 @@ Player::~Player() = default;
 //=== Getters
 
 PlayerState Player::getState() const { return m_state; }
-int Player::getLife() const { return m_life; }
-
-
-//=== Setters
-
-void Player::setJumpState(bool state) { m_isJumping = state; }
-void Player::setDecelerationState(bool state) { m_isDecelerating = state; }
-void Player::setLife(int new_life)
-{
-    m_life = new_life;
-    if (m_life > MAX_LIFE) {
-        m_life = MAX_LIFE;
-    } else if (m_life < MIN_LIFE) {
-        m_life = MIN_LIFE;
-    }
-}
+int Player::getLife() const { return m_energy; }
 
 
 /**
@@ -119,6 +105,51 @@ void Player::move()
     }
 }
 
+/**
+ * Takes damages by reducing energy
+ * @param amount the amount to remove
+ *
+ * @author Arthur
+ * @date  13/01/19
+ */
+void Player::takeDamages(int amount)
+{
+    m_energy = std::max(0, m_energy - amount);
+}
+
+/**
+ * Restores some energy to the player
+ * @param energy the energy to add
+ *
+ * @author Arthur
+ * @date  13/01/19
+ */
+void Player::heal(int energy)
+{
+    m_energy = std::min(MAX_ENERGY, m_energy + energy);
+}
+
+/**
+ * Allows the player to jump
+ *
+ * @author Arthur
+ * @date  13/01/19
+ */
+void Player::jump()
+{
+    m_isJumping = true;
+}
+
+/**
+ * Allows the player to decelerate
+ *
+ * @author Arthur
+ * @date  13/01/19
+ */
+void Player::decelerate()
+{
+    m_isDecelerating = true;
+}
 
 /**
  * Changes player's state
@@ -128,7 +159,7 @@ void Player::move()
  * @author Arthur
  * @date  11/04/16 - 05/09/18
  */
-void Player::changeState(PlayerState state)
+void Player::changeState(const PlayerState& state)
 {
     m_state = state;
 
@@ -162,7 +193,7 @@ void Player::changeState(PlayerState state)
  *
  * @param direction the new direction
  */
-void Player::controlPlayerMovements(MovingDirection direction)
+void Player::controlPlayerMovements(const MovingDirection& direction)
 {
     m_isDecelerating = false;
 
@@ -172,4 +203,3 @@ void Player::controlPlayerMovements(MovingDirection direction)
         m_vectorBall.first += m_moveX * m_acceleration / PLAYER_RATE;
     }
 }
-

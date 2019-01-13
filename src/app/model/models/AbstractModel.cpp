@@ -24,7 +24,7 @@ AbstractModel::~AbstractModel() = default;
 //          SETTERS
 //------------------------------------------------
 
-void AbstractModel::setAppState(AppState state)
+void AbstractModel::setAppState(const AppState& state)
 {
     m_appCore->setAppState(state);
 }

@@ -183,9 +183,9 @@ void Button::sync()
  * @param func the function used to retrieve the string given a label
  *
  * @author Arthur
- * @date 23/12/16 - 21/07/18
+ * @date 23/12/16 - 14/01/19
  */
-void Button::retrieveLabel(label_retrieval_func_t func)
+void Button::retrieveLabel(const label_retrieval_func_t& func)
 {
     if (!m_label.getDescription().empty()) {
         string utf8_string = func(m_label.getDescription());

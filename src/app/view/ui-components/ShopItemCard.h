@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ limitations under the License.
  * which action triggers a buying confirm dialog.
  *
  * @author Arthur
- * @date 16/05/16 - 06/09/18
+ * @date 16/05/16 - 14/01/19
  */
 class ShopItemCard: public mdsf::Sprite
 {
@@ -43,7 +43,7 @@ public:
     ShopItem* getItem() const;
 
     void sync() override;
-    void syncWithButtonLabelRetrieval(mdsf::Button::label_retrieval_func_t func);
+    void syncWithButtonLabelRetrieval(const mdsf::Button::label_retrieval_func_t& func);
     void draw(sf::RenderWindow* window) const override;
 
 private:

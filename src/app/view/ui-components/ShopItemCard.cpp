@@ -102,9 +102,9 @@ void ShopItemCard::sync()
  * @param func the function used to retrieve the string given a label
  *
  * @author Arthur
- * @date 16/05/16 - 23/01/18
+ * @date 16/05/16 - 14/01/19
  */
-void ShopItemCard::syncWithButtonLabelRetrieval(mdsf::Button::label_retrieval_func_t func)
+void ShopItemCard::syncWithButtonLabelRetrieval(const mdsf::Button::label_retrieval_func_t& func)
 {
     sync();
     m_buyButton->setLabelDescription(m_item->isBought() ? "shop_bought" : "shop_purchasable");

@@ -19,6 +19,7 @@ limitations under the License.
 #include "LabelPosition.h"
 #include "Sprite.h"
 #include "Text.h"
+#include <functional>
 
 namespace Bokoblin
 {
@@ -34,7 +35,7 @@ namespace MaterialDesignComponentsForSFML
  * and to update it using a string file thanks to its description (i.e. id)
  *
  * @author Arthur
- * @date 06/04/16 - 13/01/19
+ * @date 06/04/16 - 14/01/19
  *
  * @see Sprite
  * @see LabelPosition
@@ -53,7 +54,7 @@ public:
     ~Button() override;
 
     //=== FUNCTION POINTERS
-    typedef std::string (* label_retrieval_func_t)(const std::string& label);
+    typedef std::function<std::string(const std::string& label)> label_retrieval_func_t;
 
     //=== GETTERS
     bool isPressed() const;
@@ -70,7 +71,7 @@ public:
 
     //=== METHODS
     void sync() override;
-    virtual void retrieveLabel(label_retrieval_func_t func);
+    virtual void retrieveLabel(const label_retrieval_func_t& func);
     virtual void syncLabelPosition();
     void draw(sf::RenderWindow* window) const override;
     bool contains(float x, float y) const override;

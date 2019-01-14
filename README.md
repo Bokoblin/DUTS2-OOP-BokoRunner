@@ -12,7 +12,7 @@ Initially made to be based on a Model-View architecture as requested, the projec
 a Multi-Tier Architecture with a persistence manager, an app core, models, and views.
 
 Despite being initially a scholar project ended in May 2016, it is still receiving new features 
-and "under the hood" improvements from Bokoblin.
+and "under the hood" improvements.
 
 
 ### Tools used ###
@@ -50,7 +50,7 @@ You have two choices for GNU/Linux systems:
 - either manually install "libsfml-dev" and use it instead of the provided one, it should download all necessary libs.
 
 If you choose the first option, you may need to install some of the following packages, depending of your configuration: <br>
-- g++-4.9
+- g++ / clang
 - libopenal
 - libvorbis
 - libogg
@@ -75,7 +75,7 @@ If you choose the second option:
 
 ##### Windows #####
 
-You'll need to install some shared libraries (.dll) in C:\Windows\System32 or in the same folder as the executable:
+You'll need to put some shared libraries (.dll) in C:\Windows\System32 or in the same folder as the executable:
 - OpenAL32.dll
 - sfml-graphics-2.dll or sfml-graphics-d-2.dll
 - sfml-window-2.dll or sfml-window-d-2.dll
@@ -102,9 +102,8 @@ and to use the built-in `build` option.
 
 
 Notes: 
-- The SFML library files were built with g++-4.9 <br>
-  So the project may only compile with g++-4.9 or clang (see next section for tested environments).<br>
-- You can use `update-alternatives` to change default g++ priority if needed.
+- The SFML library files were built with a specific version of g++ but it shouldn't be a problem on GNU/Linux.<br>
+- However, you can use `update-alternatives` to change default g++ priority if needed.
 - On Windows, compiler and SFML version have to match 100%. <br>
   So, you must use *mingw-w64-6.1.0* to compile the project.
 
@@ -136,12 +135,12 @@ Then you can launch them with the built-in `run` option.
 	- **Execution**: OK
 	- **Unit tests**: OK
 	
-- **Ubuntu 16.04 LTS - Xenial**
-	- **Kernel**: x86_64 Linux 4.4.0-43-Microsoft
-	- **Compilers**: g++-4.9
+- **Ubuntu 18.04 LTS - Bionic**
+	- **Kernel**: x86_64 Linux 4.4.0-17134-Microsoft
+	- **Compilers**: g++7.3, clang 6.0
 	- **Environment**: local (Windows Subsystem for Linux)
 	- **Compilation**: OK
-	- **Execution**: Splashscreen OK, MENU KO (crash related to mutex unlock failure)
+	- **Execution**: Splashscreen OK, MENU unstable, GAME KO (via a windows X server)
 	- **Unit tests**: OK
 	
 - **Debian GNU/Linux 9 - Stretch**

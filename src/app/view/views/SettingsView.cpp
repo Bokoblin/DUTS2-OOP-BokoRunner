@@ -1,5 +1,8 @@
 #include "SettingsView.h"
 
+namespace ModelResources = Bokoblin::BokoRunner::Resources::Model;
+namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
+
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
 //------------------------------------------------
@@ -25,7 +28,7 @@ SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager
     for (int i = 0; i < SettingsModel::PAGE_NUMBER; i++) {
         m_pageIndicators[i] = new mdsf::RadioButton(
                 getHalfXPosition() - OFFSET * SettingsModel::PAGE_NUMBER + (INDICATOR_DIAMETER + INDICATOR_PADDING) * i,
-                0.92f * m_height, INDICATOR_DIAMETER, "", PAGE_INDICATOR_IMAGE);
+                0.92f * m_height, INDICATOR_DIAMETER, "", ViewResources::PAGE_INDICATOR_IMAGE);
     }
 
     //=== Fill button list
@@ -45,8 +48,9 @@ SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager
 
     //=== Init buttons
 
-    for (mdsf::Button* button : m_buttonList)
+    for (mdsf::Button* button : m_buttonList) {
         button->retrieveLabel(LocalizationManager::fetchLocalizedString);
+    }
 
     //=== Init confirm dialog
 
@@ -69,11 +73,13 @@ SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager
  */
 SettingsView::~SettingsView()
 {
-    for (auto& button : m_buttonList)
+    for (auto& button : m_buttonList) {
         delete button;
+    }
 
-    for (auto& it : m_pageIndicators)
+    for (auto& it : m_pageIndicators) {
         delete it.second;
+    }
 
     delete m_logoIUT;
     delete m_logoSFML;
@@ -115,19 +121,19 @@ void SettingsView::loadSprites()
     clipRect_music.emplace_back(50, 200, 50, 50);
 
     m_menuMusicButton = new mdsf::Button(POS_COL_2, 0.7f * m_height, MUTE_BUTTON_SIZE, MUTE_BUTTON_SIZE,
-                                         "config_music_menu", GAME_BUTTONS_IMAGE, clipRect_music);
+                                         "config_music_menu", ViewResources::GAME_BUTTONS_IMAGE, clipRect_music);
     m_menuMusicButton->resize(MUTE_BUTTON_SIZE, MUTE_BUTTON_SIZE);
     m_menuMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
 
     m_gameMusicButton = new mdsf::Button(POS_COL_2, 0.767f * m_height, MUTE_BUTTON_SIZE, MUTE_BUTTON_SIZE,
-                                         "config_music_game", GAME_BUTTONS_IMAGE, clipRect_music);
+                                         "config_music_game", ViewResources::GAME_BUTTONS_IMAGE, clipRect_music);
     m_gameMusicButton->resize(MUTE_BUTTON_SIZE, MUTE_BUTTON_SIZE);
     m_gameMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
 
 
     //=== Initialize HOME button
 
-    m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, "", HOME_IMAGE);
+    m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, "", ViewResources::HOME_IMAGE);
     m_homeButton->resize(HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
 
     //=== Initialize RESET button
@@ -140,17 +146,17 @@ void SettingsView::loadSprites()
     //=== Initialize Logo sprites
 
     m_logoIUT = new mdsf::Sprite(0.77f * m_width, 0.267f * m_height,
-                                 ORIGINAL_IUT_LOGO_WIDTH, ORIGINAL_IUT_LOGO_HEIGHT, IUT_LOGO_IMAGE);
+                                 ORIGINAL_IUT_LOGO_WIDTH, ORIGINAL_IUT_LOGO_HEIGHT, ViewResources::IUT_LOGO_IMAGE);
     m_logoIUT->resize(IUT_LOGO_WIDTH, IUT_LOGO_HEIGHT);
 
     m_logoSFML = new mdsf::Sprite(0.77f * m_width, 0.58f * m_height,
-                                  ORIGINAL_SFML_LOGO_WIDTH, ORIGINAL_SFML_LOGO_HEIGHT, SFML_LOGO_IMAGE);
+                                  ORIGINAL_SFML_LOGO_WIDTH, ORIGINAL_SFML_LOGO_HEIGHT, ViewResources::SFML_LOGO_IMAGE);
     m_logoSFML->resize(SFML_LOGO_WIDTH, SFML_LOGO_HEIGHT);
 
     //=== Initialize link icon
 
-    m_iconRepoLink = new mdsf::Sprite(0.083f * m_width, 0.46f * m_height, HYPERLINK_SIZE, HYPERLINK_IMAGE);
-    m_iconEmailLink = new mdsf::Sprite(0.083f * m_width, 0.613f * m_height, HYPERLINK_SIZE, HYPERLINK_IMAGE);
+    m_iconRepoLink = new mdsf::Sprite(0.083f * m_width, 0.46f * m_height, HYPERLINK_SIZE, ViewResources::HYPERLINK_IMAGE);
+    m_iconEmailLink = new mdsf::Sprite(0.083f * m_width, 0.613f * m_height, HYPERLINK_SIZE, ViewResources::HYPERLINK_IMAGE);
 }
 
 
@@ -164,9 +170,9 @@ void SettingsView::synchronize()
 {
     //=== Update Status of Radio buttons
 
-    m_englishLangRadio->setSelected(m_settings->getLanguage() == ENGLISH);
-    m_frenchLangRadio->setSelected(m_settings->getLanguage() == FRENCH);
-    m_spanishLangRadio->setSelected(m_settings->getLanguage() == SPANISH);
+    m_englishLangRadio->setSelected(m_settings->getLanguage() == ModelResources::ENGLISH);
+    m_frenchLangRadio->setSelected(m_settings->getLanguage() == ModelResources::FRENCH);
+    m_spanishLangRadio->setSelected(m_settings->getLanguage() == ModelResources::SPANISH);
     m_easyModeRadio->setSelected(m_settings->getGameDifficulty() == EASY);
     m_hardModeRadio->setSelected(m_settings->getGameDifficulty() == HARD);
     m_defaultBallSkinRadio->setSelected(m_settings->getPlayerSkin() == "default");
@@ -179,8 +185,9 @@ void SettingsView::synchronize()
 
     //=== Sync buttons
 
-    for (mdsf::Button* button : m_buttonList)
+    for (mdsf::Button* button : m_buttonList) {
         button->sync();
+    }
 
     //=== Update and sync indicators
 
@@ -209,8 +216,9 @@ void SettingsView::draw() const
 
     m_homeButton->draw(m_window);
 
-    for (const auto& it : m_pageIndicators)
+    for (const auto& it : m_pageIndicators) {
         it.second->draw(m_window);
+    }
 
     switch (m_settings->getCurrentPage()) {
         case CONFIG:
@@ -299,8 +307,9 @@ void SettingsView::updateTextBasedComponents() const
     m_textManager->updateWholeStandaloneTextContent();
 
     //Update button text
-    for (mdsf::Button* button : m_buttonList)
+    for (mdsf::Button* button : m_buttonList) {
         button->retrieveLabel(LocalizationManager::fetchLocalizedString);
+    }
 
     //Update dialog text
     DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog);
@@ -370,13 +379,13 @@ void SettingsView::handleConfigEvents(const sf::Event& event)
 {
     if (EventUtils::wasMouseReleased(event)) {
         if (EventUtils::isMouseInside(*m_englishLangRadio, event)) {
-            m_settings->changeLanguage(ENGLISH);
+            m_settings->changeLanguage(ModelResources::ENGLISH);
             updateTextBasedComponents();
         } else if (EventUtils::isMouseInside(*m_frenchLangRadio, event)) {
-            m_settings->changeLanguage(FRENCH);
+            m_settings->changeLanguage(ModelResources::FRENCH);
             updateTextBasedComponents();
         } else if (EventUtils::isMouseInside(*m_spanishLangRadio, event)) {
-            m_settings->changeLanguage(SPANISH);
+            m_settings->changeLanguage(ModelResources::SPANISH);
             updateTextBasedComponents();
         } else if (EventUtils::isMouseInside(*m_easyModeRadio, event)) {
             m_settings->setGameDifficulty(EASY);

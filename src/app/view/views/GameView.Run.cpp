@@ -1,5 +1,7 @@
 #include "GameView.h"
 
+namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
+
 //------------------------------------------------
 //          METHODS
 //------------------------------------------------
@@ -12,8 +14,9 @@
  */
 void GameView::linkElements()
 {
-    for (auto& element : m_game->getNewMElementsArray())
+    for (auto& element : m_game->getNewMElementsArray()) {
         m_movableElementToSpriteMap[element] = new AnimatedSprite(*(m_typeToSpriteMap[element->getType()]));
+    }
 
     m_game->clearNewMovableElementList();
 }
@@ -43,11 +46,11 @@ void GameView::processZonesTransition()
     if (m_farTransitionBackground->getX() <= 5
             && m_farTransitionBackground->getX() >= -5) {
         if (m_game->getCurrentZone() == HILL) {
-            m_farScrollingBackground->loadAndApplyTextureFromImageFile(GAME_FAR_PLAIN_BACKGROUND);
-            m_nearScrollingBackground->loadAndApplyTextureFromImageFile(GAME_NEAR_PLAIN_BACKGROUND);
+            m_farScrollingBackground->loadAndApplyTextureFromImageFile(ViewResources::GAME_FAR_PLAIN_BACKGROUND);
+            m_nearScrollingBackground->loadAndApplyTextureFromImageFile(ViewResources::GAME_NEAR_PLAIN_BACKGROUND);
         } else {
-            m_farScrollingBackground->loadAndApplyTextureFromImageFile(GAME_FAR_HILL_BACKGROUND);
-            m_nearScrollingBackground->loadAndApplyTextureFromImageFile(GAME_NEAR_HILL_BACKGROUND);
+            m_farScrollingBackground->loadAndApplyTextureFromImageFile(ViewResources::GAME_FAR_HILL_BACKGROUND);
+            m_nearScrollingBackground->loadAndApplyTextureFromImageFile(ViewResources::GAME_NEAR_HILL_BACKGROUND);
         }
 
         m_farScrollingBackground->setPositions(-300, 0);
@@ -73,10 +76,10 @@ void GameView::processZonesTransition()
         //Set current zone and change pause background
         if (m_game->getCurrentZone() == HILL) {
             m_game->setCurrentZone(PLAIN);
-            m_pauseBackground->loadAndApplyTextureFromImageFile(PAUSE_PLAIN_BACKGROUND);
+            m_pauseBackground->loadAndApplyTextureFromImageFile(ViewResources::PAUSE_PLAIN_BACKGROUND);
         } else {
             m_game->setCurrentZone(HILL);
-            m_pauseBackground->loadAndApplyTextureFromImageFile(PAUSE_HILL_BACKGROUND);
+            m_pauseBackground->loadAndApplyTextureFromImageFile(ViewResources::PAUSE_HILL_BACKGROUND);
         }
     }
 }
@@ -96,11 +99,11 @@ void GameView::setupTransition()
     m_farTransitionBackground->setPosition(m_farScrollingBackground->getLeftPosition().x + 1200, 0);
 
     if (m_game->getCurrentZone() == HILL) {
-        m_pixelShader->load(GAME_NEAR_T1_BACKGROUND);
-        m_farTransitionBackground->loadAndApplyTextureFromImageFile(GAME_FAR_T1_BACKGROUND);
+        m_pixelShader->load(ViewResources::GAME_NEAR_T1_BACKGROUND);
+        m_farTransitionBackground->loadAndApplyTextureFromImageFile(ViewResources::GAME_FAR_T1_BACKGROUND);
     } else {
-        m_pixelShader->load(GAME_NEAR_T2_BACKGROUND);
-        m_farTransitionBackground->loadAndApplyTextureFromImageFile(GAME_FAR_T2_BACKGROUND);
+        m_pixelShader->load(ViewResources::GAME_NEAR_T2_BACKGROUND);
+        m_farTransitionBackground->loadAndApplyTextureFromImageFile(ViewResources::GAME_FAR_T2_BACKGROUND);
     }
 }
 
@@ -222,8 +225,9 @@ void GameView::drawRunningGame() const
 
     //=== Array's Sprites drawing
 
-    for (const auto& it : m_movableElementToSpriteMap)
+    for (const auto& it : m_movableElementToSpriteMap) {
         it.second->draw(m_window);
+    }
 
     if (m_game->getPlayer()->getState() == SHIELDED || m_game->getPlayer()->getState() == HARD_SHIELDED) {
         m_window->draw(*m_shieldImage);

@@ -1,6 +1,7 @@
 #include "ShopItemCard.h"
 
 using std::string;
+namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
 
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
@@ -31,11 +32,11 @@ ShopItemCard::ShopItemCard(int num, ShopItem* item, float screenWidth, float scr
 
     //=== Init title and content
 
-    m_title.applyTextFont(ROBOTO_CONDENSED_FONT, 20, sf::Color::White);
+    m_title.applyTextFont(ViewResources::ROBOTO_CONDENSED_FONT, 20, sf::Color::White);
     m_title.setUtf8String(item->getName());
     m_title.setPositionSelfCentered(getX() + m_width / 2, getY() + 0.067f * m_height);
 
-    m_content.applyTextFont(ROBOTO_CONDENSED_FONT, 16, sf::Color::White);
+    m_content.applyTextFont(ViewResources::ROBOTO_CONDENSED_FONT, 16, sf::Color::White);
     m_content.setUtf8String(item->getDescription());
     m_content.setPosition(getX() + 0.15f * WIDTH, getY() + 0.633f * m_height);
 
@@ -46,7 +47,7 @@ ShopItemCard::ShopItemCard(int num, ShopItem* item, float screenWidth, float scr
 
     //=== Init background
 
-    loadAndApplyTextureFromImageFile(CARD_IMAGE);
+    loadAndApplyTextureFromImageFile(ViewResources::CARD_IMAGE);
 }
 
 

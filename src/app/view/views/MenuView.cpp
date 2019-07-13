@@ -2,6 +2,7 @@
 
 using std::vector;
 using Bokoblin::SimpleLogger::Logger;
+namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
 
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
@@ -57,8 +58,8 @@ MenuView::~MenuView()
  */
 void MenuView::loadMusic()
 {
-    if (!m_menuMusic.openFromFile(MENU_MUSIC_THEME)) {
-        Logger::printError("Music loading failed for \"" + MENU_MUSIC_THEME + "\"");
+    if (!m_menuMusic.openFromFile(ViewResources::MENU_MUSIC_THEME)) {
+        Logger::printError("Music loading failed for \"" + ViewResources::MENU_MUSIC_THEME + "\"");
     } else {
         if (m_menu->isMusicEnabled()) {
             m_menuMusic.setVolume(100);
@@ -80,37 +81,37 @@ void MenuView::loadMusic()
  */
 void MenuView::loadSprites()
 {
-    m_farBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, FAR_SCROLL_SPEED, GAME_FAR_HILL_BACKGROUND);
-    m_nearBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, NEAR_SCROLL_SPEED, GAME_NEAR_HILL_BACKGROUND);
+    m_farBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, FAR_SCROLL_SPEED, ViewResources::GAME_FAR_HILL_BACKGROUND);
+    m_nearBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, NEAR_SCROLL_SPEED, ViewResources::GAME_NEAR_HILL_BACKGROUND);
 
     m_titleSprite = new mdsf::Sprite(getHalfXPosition() - (0.45f * TITLE_WIDTH), 0.167f * m_height,
-                                     TITLE_WIDTH, TITLE_HEIGHT, TITLE_IMAGE);
+                                     TITLE_WIDTH, TITLE_HEIGHT, ViewResources::TITLE_IMAGE);
     m_titleSprite->resize(m_titleSprite->getWidth() * 0.95f, m_titleSprite->getHeight() * 0.95f);
 
     //=== Initialize PLAY and QUIT buttons
 
     m_playButton = new mdsf::RaisedButton(getHalfXPosition() - 0.5f * MAIN_BUTTON_WIDTH, 0.667f * m_height,
-                                          MAIN_BUTTON_WIDTH, MAIN_BUTTON_HEIGHT, "menu_play_button", MENU_BUTTON_IMAGE);
+                                          MAIN_BUTTON_WIDTH, MAIN_BUTTON_HEIGHT, "menu_play_button", ViewResources::MENU_BUTTON_IMAGE);
     m_playButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
     m_quitButton = new mdsf::RaisedButton(getHalfXPosition() - 0.5f * MAIN_BUTTON_WIDTH, 0.833f * m_height,
-                                          MAIN_BUTTON_WIDTH, MAIN_BUTTON_HEIGHT, "menu_quit_button", MENU_BUTTON_IMAGE);
+                                          MAIN_BUTTON_WIDTH, MAIN_BUTTON_HEIGHT, "menu_quit_button", ViewResources::MENU_BUTTON_IMAGE);
     m_quitButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
 
     //=== Initialize COMMANDS, SETTINGS, LEADERBOARD and SHOP buttons
 
     m_commandsButton = new mdsf::RaisedButton(0.02f * m_width, 0.02f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
-    m_commandsButton->loadAndApplyTextureFromImageFile(SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 0, 50, 50));
+    m_commandsButton->loadAndApplyTextureFromImageFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 0, 50, 50));
 
     m_settingsButton = new mdsf::RaisedButton(0.02f * m_width, 0.89f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
-    m_settingsButton->loadAndApplyTextureFromImageFile(SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 50, 50, 50));
+    m_settingsButton->loadAndApplyTextureFromImageFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 50, 50, 50));
 
     m_shopButton = new mdsf::RaisedButton(0.92f * m_width, 0.02f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
-    m_shopButton->loadAndApplyTextureFromImageFile(SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 100, 50, 50));
+    m_shopButton->loadAndApplyTextureFromImageFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 100, 50, 50));
 
     m_leaderboardButton = new mdsf::RaisedButton(0.92f * m_width, 0.89f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
-    m_leaderboardButton->loadAndApplyTextureFromImageFile(SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 150, 50, 50));
+    m_leaderboardButton->loadAndApplyTextureFromImageFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 150, 50, 50));
 }
 
 

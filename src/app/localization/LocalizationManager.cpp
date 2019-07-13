@@ -3,6 +3,7 @@
 using std::string;
 using Bokoblin::SimpleLogger::Logger;
 using Bokoblin::XMLUtils::XMLHelper;
+namespace ViewResources = Bokoblin::BokoRunner::Resources::Model;
 
 //------------------------------------------------
 //          STATIC MEMBERS
@@ -77,7 +78,7 @@ string LocalizationManager::fetchLocalizedString(const string& label)
         result = XMLHelper::loadLabeledString(currentLocaleFile, label);
     } catch (const LocalizationException& e) {
         Logger::printWarning(e.what() + string("Localization checking failure, applying default language"));
-        result = XMLHelper::loadLabeledString(ENGLISH_STRINGS, label);;
+        result = XMLHelper::loadLabeledString(ViewResources::ENGLISH_STRINGS, label);
     }
 
     if (result == "<" + label + ">" || result == "UNDEFINED") {
@@ -102,13 +103,13 @@ string LocalizationManager::fetchLocalizedString(const string& label)
  */
 const string& LocalizationManager::getLanguageFile()
 {
-    if (m_appCore->getLanguage() == ENGLISH) {
-        return ENGLISH_STRINGS;
-    } else if (m_appCore->getLanguage() == FRENCH) {
-        return FRENCH_STRINGS;
-    } else if (m_appCore->getLanguage() == SPANISH) {
-        return SPANISH_STRINGS;
+    if (m_appCore->getLanguage() == ViewResources::ENGLISH) {
+        return ViewResources::ENGLISH_STRINGS;
+    } else if (m_appCore->getLanguage() == ViewResources::FRENCH) {
+        return ViewResources::FRENCH_STRINGS;
+    } else if (m_appCore->getLanguage() == ViewResources::SPANISH) {
+        return ViewResources::SPANISH_STRINGS;
     } else {
-        return ENGLISH_STRINGS; //Default
+        return ViewResources::ENGLISH_STRINGS; //Default
     }
 }

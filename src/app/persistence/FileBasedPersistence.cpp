@@ -7,6 +7,7 @@ using pugi::xml_node;
 using pugi::xml_attribute;
 using Bokoblin::SimpleLogger::Logger;
 using Bokoblin::XMLUtils::XMLHelper;
+namespace ModelResources = Bokoblin::BokoRunner::Resources::Model;
 
 //------------------------------------------------
 //          STATIC MEMBERS
@@ -46,7 +47,7 @@ bool FileBasedPersistence::createConfigFile()
     bool success = false;
     if (XMLHelper::checkXMLFileExistence(m_appCore->getConfigFile())) {
         Logger::printWarning("Configuration file already exists, aborting...");
-    } else if (XMLHelper::createXMLFile(m_appCore->getConfigFile(), DEFAULT_CONFIG_CONTENT)) {
+    } else if (XMLHelper::createXMLFile(m_appCore->getConfigFile(), ModelResources::DEFAULT_CONFIG_CONTENT)) {
         Logger::printInfo("Configuration file successfully created");
         success = true;
     } else {
@@ -135,8 +136,7 @@ bool FileBasedPersistence::checkStreamIntegrity(std::istream& stream)
     }
 
     return isPresentConfig && isPresentStats && isPresentShop && isPresentScoreEasy && isPresentScoreHard
-            && nbConfigChildren == 6 && nbStatsChildren == 7 && nbShopChildren == 6 && nbScoreChildren == 20
-            && (nbLines == 52 || nbLines == 53);
+            && nbConfigChildren == 6 && nbStatsChildren == 7 && nbShopChildren == 6 && nbScoreChildren == 20;
 }
 
 
@@ -199,7 +199,7 @@ bool FileBasedPersistence::fetchConfigurationFromConfigFile()
         switch (hash(nodeKey)) {
             case hash("language"):
                 m_appCore->m_currentLanguage = XMLHelper::safeRetrieveXMLValue<string>
-                        (nodeValue, "en|fr|es", ENGLISH);
+                        (nodeValue, "en|fr|es", ModelResources::ENGLISH);
                 break;
             case hash("difficulty"):
                 m_appCore->m_currentDifficulty = XMLHelper::safeRetrieveXMLValue<int>
@@ -211,15 +211,15 @@ bool FileBasedPersistence::fetchConfigurationFromConfigFile()
                 break;
             case hash("wallet"):
                 m_appCore->m_wallet = XMLHelper::safeRetrieveXMLValue<int>
-                        (nodeValue, INTEGER_REGEX, 0);
+                        (nodeValue, ModelResources::INTEGER_REGEX, 0);
                 break;
             case hash("menu_music"):
                 m_appCore->m_isMenuMusicEnabled = XMLHelper::safeRetrieveXMLValue<bool>
-                        (nodeValue, BOOLEAN_REGEX, false);
+                        (nodeValue, ModelResources::BOOLEAN_REGEX, false);
                 break;
             case hash("game_music"):
                 m_appCore->m_isGameMusicEnabled = XMLHelper::safeRetrieveXMLValue<bool>
-                        (nodeValue, BOOLEAN_REGEX, false);
+                        (nodeValue, ModelResources::BOOLEAN_REGEX, false);
                 break;
             default:
                 break;
@@ -245,7 +245,8 @@ bool FileBasedPersistence::fetchStatisticsFromConfigFile()
     for (xml_node statItem: stats.children("statItem")) {
         string nodeKey = string(statItem.attribute("name").value());
         xml_attribute nodeValue = statItem.attribute("value");
-        m_appCore->m_statsMap[nodeKey] = XMLHelper::safeRetrieveXMLValue<unsigned int>(nodeValue, INTEGER_REGEX, 0);
+        m_appCore->m_statsMap[nodeKey] =
+                XMLHelper::safeRetrieveXMLValue<unsigned int>(nodeValue, ModelResources::INTEGER_REGEX, 0);
     }
 
     return true;
@@ -430,7 +431,7 @@ void FileBasedPersistence::insertScore(std::set<int>& array, const xml_node& sco
 {
     if (string(scoreItem.attribute("value").value()) != "0") {
         array.insert(XMLHelper::safeRetrieveXMLValue<unsigned int>
-                             (scoreItem.attribute("value"), INTEGER_REGEX, 0));
+                             (scoreItem.attribute("value"), ModelResources::INTEGER_REGEX, 0));
     }
 }
 

@@ -1,5 +1,7 @@
 #include "CommandsView.h"
 
+namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
+
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
 //------------------------------------------------
@@ -47,7 +49,7 @@ void CommandsView::loadSprites()
 {
     //=== Initialize HOME button
 
-    m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, "", HOME_IMAGE);
+    m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, "", ViewResources::HOME_IMAGE);
     m_homeButton->resize(HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
 }
 

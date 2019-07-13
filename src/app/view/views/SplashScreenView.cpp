@@ -1,5 +1,7 @@
 #include "SplashScreenView.h"
 
+namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
+
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
 //------------------------------------------------
@@ -59,18 +61,18 @@ SplashScreenView::~SplashScreenView()
 void SplashScreenView::loadSprites()
 {
     m_splashScreen = new mdsf::Sprite(0, 0, m_width, m_height);
-    m_splashScreen->loadAndApplyTextureFromImageFile(SPLASH_SCREEN_IMAGE);
+    m_splashScreen->loadAndApplyTextureFromImageFile(ViewResources::SPLASH_SCREEN_IMAGE);
     m_splashScreen->resize(m_width, m_height);
 
-    m_farBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, 0, GAME_FAR_HILL_BACKGROUND);
-    m_nearBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, 0, GAME_NEAR_HILL_BACKGROUND);
+    m_farBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, 0, ViewResources::GAME_FAR_HILL_BACKGROUND);
+    m_nearBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, 0, ViewResources::GAME_NEAR_HILL_BACKGROUND);
     m_farBackground->setLight(0);
     m_nearBackground->setLight(0);
     m_farBackground->applyColor();
     m_nearBackground->applyColor();
 
     m_appTitle = new mdsf::Sprite(getHalfXPosition() - (0.45f * TITLE_WIDTH), 0.167f * m_height,
-                                  TITLE_WIDTH, TITLE_HEIGHT, TITLE_IMAGE);
+                                  TITLE_WIDTH, TITLE_HEIGHT, ViewResources::TITLE_IMAGE);
     m_appTitle->resize(m_appTitle->getWidth() * 0.95f, m_appTitle->getHeight() * 0.95f);
     m_appTitle->setAlpha(0);
     m_appTitle->applyColor();

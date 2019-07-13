@@ -2,6 +2,7 @@
 #include <math.h>
 
 using Bokoblin::SimpleLogger::Logger;
+namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
 
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
@@ -60,12 +61,12 @@ void ShopView::loadSprites()
     //=== Initialize COIN Sprite
 
     m_coinSprite = new mdsf::Sprite(0.45f * m_width, 0.2f * m_height, COIN_SIZE);
-    m_coinSprite->loadAndApplyTextureFromImageFile(BONUS_IMAGE, sf::IntRect(0, 0, 50, 50));
+    m_coinSprite->loadAndApplyTextureFromImageFile(ViewResources::BONUS_IMAGE, sf::IntRect(0, 0, 50, 50));
     m_coinSprite->resize(COIN_SIZE, COIN_SIZE);
 
     //=== Initialize HOME buttons
 
-    m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, "", HOME_IMAGE);
+    m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, "", ViewResources::HOME_IMAGE);
     m_homeButton->resize(HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
 }
 
@@ -94,7 +95,7 @@ void ShopView::createCards()
     for (unsigned int j = 0; j < pageNumber; j++) {
         m_pageIndicators[j] = new mdsf::RadioButton(
                 getHalfXPosition() - (HALF_POSITION_OFFSET * pageNumber) + (INDICATOR_DIAMETER + INDICATOR_PADDING) * j,
-                0.92f * m_height, INDICATOR_DIAMETER, "", PAGE_INDICATOR_IMAGE);
+                0.92f * m_height, INDICATOR_DIAMETER, "", ViewResources::PAGE_INDICATOR_IMAGE);
     }
 }
 

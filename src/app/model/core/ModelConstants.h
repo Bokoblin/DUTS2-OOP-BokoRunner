@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,86 +18,61 @@ limitations under the License.
 
 #include <string>
 
+namespace Bokoblin
+{
+namespace BokoRunner
+{
+namespace Resources
+{
+
 /**
- * This file provides constants to model classes
+ * @brief Provide constants to model classes
  *
  * @author Arthur
- * @date 23/10/16 - 11/02/18
+ * @date 23/10/16 - 13/07/2019
  */
+namespace Model
+{
 
-//=== Ressources Folders
-static const std::string RESOURCES_FOLDER = "../res/";
-static const std::string STRINGS_FOLDER = RESOURCES_FOLDER + "strings/";
+/**
+ * @brief Folder constants
+ */
+namespace Folder
+{
+//=== Top-level Folders
+//TODO: Use a dotenv configuration to replace environment based config (persistence, folders, screen, title)
+//  - try this lib, it may work: https://github.com/adeharo9/cpp-dotenv
+//  - see also: std::getenv (from official cpp ref)
+extern const std::string RES;
+extern const std::string SOURCES;
+extern const std::string TESTS;
+
+//=== Second-level Folders
+extern const std::string LOCALIZATION;
+}
 
 //=== Languages
-static const std::string ENGLISH = "en";
-static const std::string FRENCH = "fr";
-static const std::string SPANISH = "es";
+extern const std::string ENGLISH;
+extern const std::string FRENCH;
+extern const std::string SPANISH;
 
 //=== Regex
-static const std::string INTEGER_REGEX = "^(0|[1-9][0-9]*)$";
-static const std::string BOOLEAN_REGEX = "true|false";
+extern const std::string INTEGER_REGEX;
+extern const std::string BOOLEAN_REGEX;
 
 //=== Language strings files
-static const std::string ENGLISH_STRINGS = STRINGS_FOLDER + "english.xml";
-static const std::string FRENCH_STRINGS = STRINGS_FOLDER + "french.xml";
-static const std::string SPANISH_STRINGS = STRINGS_FOLDER + "spanish.xml";
+extern const std::string ENGLISH_STRINGS;
+extern const std::string FRENCH_STRINGS;
+extern const std::string SPANISH_STRINGS;
 
 //=== Config
-static const std::string CONFIG_FILE = RESOURCES_FOLDER + "config.xml";
-static const std::string TEST_CONFIG_FILE = "test_config.xml";
-static const std::string DEFAULT_CONFIG_CONTENT =
-        "<?xml version=\"1.0\"?>\n"
-        "<runner>\n"
-        "\t<config>\n"
-        "\t\t<configItem type=\"string\" name=\"language\" value=\"en\"/>\n"
-        "\t\t<configItem type=\"int\" name=\"difficulty\" value=\"2\"/>\n"
-        "\t\t<configItem type=\"string\" name=\"ball_skin\" value=\"default\"/>\n"
-        "\t\t<configItem type=\"unsigned int\" name=\"wallet\" value=\"0\"/>\n"
-        "\t\t<configItem type=\"boolean\" name=\"menu_music\" value=\"false\"/>\n"
-        "\t\t<configItem type=\"boolean\" name=\"game_music\" value=\"true\"/>\n"
-        "\t</config>\n"
-        "\t<stats>\n"
-        "\t\t<statItem type=\"unsigned int\" name=\"total_distance_travelled\" value=\"0\"/>\n"
-        "\t\t<statItem type=\"unsigned int\" name=\"total_enemies_destroyed\" value=\"0\"/>\n"
-        "\t\t<statItem type=\"unsigned int\" name=\"total_coins_collected\" value=\"0\"/>\n"
-        "\t\t<statItem type=\"unsigned int\" name=\"total_games_played\" value=\"0\"/>\n"
-        "\t\t<statItem type=\"unsigned int\" name=\"per_game_distance_travelled\" value=\"0\"/>\n"
-        "\t\t<statItem type=\"unsigned int\" name=\"per_game_enemies_destroyed\" value=\"0\"/>\n"
-        "\t\t<statItem type=\"unsigned int\" name=\"per_game_coins_collected\" value=\"0\"/>\n"
-        "\t</stats>\n"
-        "\t<shop>\n"
-        "\t\t<shopItem type=\"boolean\" id=\"shop_doubler\" price=\"1000\" bought=\"false\"/>\n"
-        "\t\t<shopItem type=\"boolean\" id=\"shop_shield_plus\" price=\"100\" bought=\"false\"/>\n"
-        "\t\t<shopItem type=\"boolean\" id=\"shop_mega_plus\" price=\"200\" bought=\"false\"/>\n"
-        "\t\t<shopItem type=\"boolean\" id=\"shop_fly_plus\" price=\"180\" bought=\"false\"/>\n"
-        "\t\t<shopItem type=\"boolean\" id=\"shop_morphing\" price=\"500\" bought=\"false\"/>\n"
-        "\t\t<shopItem type=\"boolean\" id=\"shop_capsule\" price=\"60\" bought=\"false\"/>\n"
-        "\t</shop>\n"
-        "\t<scoresEasy>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t</scoresEasy>\n"
-        "\t<scoresHard>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
-        "\t</scoresHard>\n"
-        "</runner>";
+extern const std::string CONFIG_FILE;
+extern const std::string TEST_CONFIG_FILE;
+extern const std::string DEFAULT_CONFIG_CONTENT;
+
+} //namespace Resources
+} //namespace View
+} //namespace BokoRunner
+} //namespace Bokoblin
 
 #endif

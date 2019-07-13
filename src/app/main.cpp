@@ -19,6 +19,7 @@ limitations under the License.
 #include "app/view/views/GameView.h"
 
 using Bokoblin::SimpleLogger::Logger;
+namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
 
 /**
  * Initializes the application and controls its loop
@@ -30,11 +31,13 @@ int main() //TODO: App class with logic -- main must only uses it + check argume
 {
     //=== Initialize window
 
-    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP), APP_TITLE, sf::Style::Close);
-    window.setFramerateLimit(APP_FRAMERATE);
+    sf::RenderWindow window(
+            sf::VideoMode(ViewResources::SCREEN_WIDTH, ViewResources::SCREEN_HEIGHT, ViewResources::SCREEN_BPP),
+            ViewResources::APP_TITLE, sf::Style::Close);
+    window.setFramerateLimit(ViewResources::APP_FRAMERATE);
 
     sf::Image appIcon;
-    if (appIcon.loadFromFile(ICON_IMAGE)) {
+    if (appIcon.loadFromFile(ViewResources::ICON_IMAGE)) {
         window.setIcon(appIcon.getSize().x, appIcon.getSize().y, appIcon.getPixelsPtr());
     }
 
@@ -49,7 +52,7 @@ int main() //TODO: App class with logic -- main must only uses it + check argume
     LocalizationManager::initContext(appCore);
 
     mdsf::Config::printError = Logger::printError;
-    AppTextManager textManager(&appCore, SCREEN_WIDTH, SCREEN_HEIGHT);
+    AppTextManager textManager(&appCore, ViewResources::SCREEN_WIDTH, ViewResources::SCREEN_HEIGHT);
 
     //=== Initialize app state, and event object
 
@@ -80,7 +83,7 @@ int main() //TODO: App class with logic -- main must only uses it + check argume
             }
         }
         if (appCore.getAppState() == GAME) {
-            GameModel gameModel(SCREEN_WIDTH, SCREEN_HEIGHT, &appCore);
+            GameModel gameModel(ViewResources::SCREEN_WIDTH, ViewResources::SCREEN_HEIGHT, &appCore);
             GameView gameView(&window, &textManager, &gameModel);
 
             while (appCore.getAppState() == GAME && gameView.handleEvents(event)) {

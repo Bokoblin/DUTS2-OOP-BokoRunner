@@ -66,7 +66,7 @@ private:
     static constexpr float INITIAL_PIXEL_INTENSITY = 1;
 
     //Game Graphic Elements
-    ScrollingBackground* m_farScrollingBackground;
+    ScrollingBackground* m_farScrollingBackground;//TODO: parallax class
     ScrollingBackground* m_nearScrollingBackground;
     mdsf::Sprite* m_farTransitionBackground;
     mdsf::Sprite* m_bottomBarImage;

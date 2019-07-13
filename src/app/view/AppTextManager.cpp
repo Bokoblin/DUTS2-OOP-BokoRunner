@@ -2,6 +2,7 @@
 
 using std::string;
 using std::to_string;
+namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
 
 //------------------------------------------------
 //          CONSTRUCTOR / DESTRUCTOR
@@ -21,9 +22,9 @@ using std::to_string;
 AppTextManager::AppTextManager(AppCore* appCore, unsigned int width, unsigned int height) :
         m_width{width}, m_height{height}, m_appCore{appCore}
 {
-    m_regularFont.loadFromFile(ROBOTO_REGULAR_FONT);
-    m_condensedFont.loadFromFile(ROBOTO_CONDENSED_FONT);
-    m_BoldFont.loadFromFile(ROBOTO_BOLD_FONT);
+    m_regularFont.loadFromFile(ViewResources::ROBOTO_REGULAR_FONT);
+    m_condensedFont.loadFromFile(ViewResources::ROBOTO_CONDENSED_FONT);
+    m_BoldFont.loadFromFile(ViewResources::ROBOTO_BOLD_FONT);
 
     loadText();
 }
@@ -36,8 +37,9 @@ AppTextManager::AppTextManager(AppCore* appCore, unsigned int width, unsigned in
  */
 AppTextManager::~AppTextManager()
 {
-    for (mdsf::Text* text : m_textList)
+    for (mdsf::Text* text : m_textList) {
         delete text;
+    }
 }
 
 
@@ -161,10 +163,10 @@ void AppTextManager::handleAboutLinks(const sf::Event& event, const SettingsMode
         m_aboutEmailLink->setFillColor(sf::Color::White);
 
         if (EventUtils::isMouseInside(*m_aboutRepositoryLink, event)) {
-            PlatformUtils::openURLinBrowser(REPOSITORY_URL);
+            PlatformUtils::openURLinBrowser(ViewResources::REPOSITORY_URL);
         }
         if (EventUtils::isMouseInside(*m_aboutEmailLink, event)) {
-            PlatformUtils::openURLinBrowser(EMAIL_URL);
+            PlatformUtils::openURLinBrowser(ViewResources::EMAIL_URL);
         }
     }
 }
@@ -375,7 +377,7 @@ void AppTextManager::syncMenuShopText()
     m_shopTitleLabel->setPositionSelfCentered(0.5f * m_width, 0.08f * m_height);
     m_shopNoItemsLabel->setPositionSelfCentered(0.5f * m_width, 0.5f * m_height);
     m_walletText->setPosition(0.5f * m_width, 0.195f * m_height);
-    m_walletText->applyTextFont(ROBOTO_CONDENSED_FONT, DEFAULT_CHAR_SIZE, AppColor::CoinGold);
+    m_walletText->applyTextFont(ViewResources::ROBOTO_CONDENSED_FONT, DEFAULT_CHAR_SIZE, AppColor::CoinGold);
     m_walletText->setStringFromInt(m_appCore->getWallet());
 }
 
@@ -467,7 +469,7 @@ void AppTextManager::syncGameOverText(int gameSpeed)
     m_currentScoreText->setFont(m_BoldFont);
     m_currentScoreText->setStringFromInt(m_appCore->getGameMap().at("score"));
 
-    m_walletText->applyTextFont(ROBOTO_CONDENSED_FONT, DEFAULT_CHAR_SIZE, AppColor::CoinGold);
+    m_walletText->applyTextFont(ViewResources::ROBOTO_CONDENSED_FONT, DEFAULT_CHAR_SIZE, AppColor::CoinGold);
     m_walletText->setPosition(0.48f * m_width, 0.89f * m_height);
     m_walletText->setStringFromInt(m_appCore->getWallet());
 }
@@ -500,22 +502,25 @@ void AppTextManager::drawMenuSettingsText(sf::RenderWindow* window, int currentP
 {
     switch (currentPage) {
         case CONFIG:
-            for (const auto& text : m_textList)
+            for (const auto& text : m_textList) {
                 if (text->getDescription().find("config") != string::npos) {
                     text->draw(window);
                 }
+            }
             break;
         case STATS:
-            for (const auto& text : m_textList)
+            for (const auto& text : m_textList) {
                 if (text->getDescription().find("stats") != string::npos) {
                     text->draw(window);
                 }
+            }
             break;
         case ABOUT:
-            for (const auto& text : m_textList)
+            for (const auto& text : m_textList) {
                 if (text->getDescription().find("about") != string::npos) {
                     text->draw(window);
                 }
+            }
             break;
         default:
             break;

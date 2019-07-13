@@ -3,6 +3,7 @@
 using std::string;
 using std::vector;
 using Bokoblin::SimpleLogger::Logger;
+namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
 
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
@@ -29,8 +30,8 @@ GameView::GameView(sf::RenderWindow* window, AppTextManager* textManager, GameMo
     //=== change default game music if in master mode
 
     string game_music = (m_game->getGameDifficulty() == EASY)
-            ? GAME_MUSIC_THEME_EASY_MODE
-            : GAME_MUSIC_THEME_HARD_MODE;
+            ? ViewResources::GAME_MUSIC_THEME_EASY_MODE
+            : ViewResources::GAME_MUSIC_THEME_HARD_MODE;
 
     if (!m_gameThemeMusic.openFromFile(game_music)) {
         Logger::printError("Music loading failed for \"" + game_music + "\"");
@@ -44,22 +45,24 @@ GameView::GameView(sf::RenderWindow* window, AppTextManager* textManager, GameMo
 
     if (m_game->getPlayerSkin() == "morphing") {
         vector<sf::IntRect> clipRect;
-        for (int i = 0; i < NB_PLAYER_CLIPS; i++)
+        for (int i = 0; i < NB_PLAYER_CLIPS; i++) {
             clipRect.emplace_back(50 * i, 50, 50, 50);
+        }
         m_playerSprite->setClipRectArray(clipRect);
     } else if (m_game->getPlayerSkin() == "capsule") {
         vector<sf::IntRect> clipRect;
-        for (int i = 0; i < NB_PLAYER_CLIPS; i++)
+        for (int i = 0; i < NB_PLAYER_CLIPS; i++) {
             clipRect.emplace_back(50 * i, 100, 50, 50);
+        }
         m_playerSprite->setClipRectArray(clipRect);
     }
 
-    if (!m_coinMusic.openFromFile(COINS_COLLECTED_MUSIC)) {
-        Logger::printError("Music loading failed for \"" + COINS_COLLECTED_MUSIC + "\"");
+    if (!m_coinMusic.openFromFile(ViewResources::COINS_COLLECTED_MUSIC)) {
+        Logger::printError("Music loading failed for \"" + ViewResources::COINS_COLLECTED_MUSIC + "\"");
     }
 
-    if (!m_destructedEnemiesMusic.openFromFile(ENEMIES_DESTRUCTED_MUSIC)) {
-        Logger::printError("Music loading failed for \"" + ENEMIES_DESTRUCTED_MUSIC + "\"");
+    if (!m_destructedEnemiesMusic.openFromFile(ViewResources::ENEMIES_DESTRUCTED_MUSIC)) {
+        Logger::printError("Music loading failed for \"" + ViewResources::ENEMIES_DESTRUCTED_MUSIC + "\"");
     }
 }
 
@@ -81,10 +84,12 @@ GameView::~GameView()
     delete m_remainingLifeImage;
     delete m_shieldImage;
     delete m_pixelShader;
-    for (auto& it : m_typeToSpriteMap)
+    for (auto& it : m_typeToSpriteMap) {
         delete it.second;
-    for (auto& it : m_movableElementToSpriteMap)
+    }
+    for (auto& it : m_movableElementToSpriteMap) {
         delete it.second;
+    }
 
     //=== Delete Pause and End Elements
 
@@ -117,29 +122,29 @@ void GameView::loadSprites()
 {
     //=== Initialize backgrounds
 
-    m_farScrollingBackground = new ScrollingBackground(1.33f * m_width, m_height, 1, GAME_FAR_HILL_BACKGROUND);
-    m_nearScrollingBackground = new ScrollingBackground(1.33f * m_width, m_height, 2, GAME_NEAR_HILL_BACKGROUND);
+    m_farScrollingBackground = new ScrollingBackground(1.33f * m_width, m_height, 1, ViewResources::GAME_FAR_HILL_BACKGROUND);
+    m_nearScrollingBackground = new ScrollingBackground(1.33f * m_width, m_height, 2, ViewResources::GAME_NEAR_HILL_BACKGROUND);
 
-    m_farTransitionBackground = new mdsf::Sprite(m_width, m_height, m_width, m_height, GAME_FAR_T1_BACKGROUND);
-    m_bottomBarImage = new mdsf::Sprite(0, 0.87f * m_height, m_width, m_height, BOTTOM_BAR_IMAGE);
+    m_farTransitionBackground = new mdsf::Sprite(m_width, m_height, m_width, m_height, ViewResources::GAME_FAR_T1_BACKGROUND);
+    m_bottomBarImage = new mdsf::Sprite(0, 0.87f * m_height, m_width, m_height, ViewResources::BOTTOM_BAR_IMAGE);
     m_bottomBarImage->resize(m_width, m_height);
 
-    m_pauseBackground = new mdsf::Sprite(0, 0, m_width, m_height, PAUSE_HILL_BACKGROUND);
+    m_pauseBackground = new mdsf::Sprite(0, 0, m_width, m_height, ViewResources::PAUSE_HILL_BACKGROUND);
     m_pauseBackground->resize(m_width, m_height);
-    m_endBackground = new mdsf::Sprite(0, 0, m_width, m_height, END_SCREEN_BACKGROUND);
+    m_endBackground = new mdsf::Sprite(0, 0, m_width, m_height, ViewResources::END_SCREEN_BACKGROUND);
     m_endBackground->resize(m_width, m_height);
 
 
     //=== Initialize UI elements
 
     m_lifeBoxImage = new mdsf::Sprite(0.117f * m_width, 0.89f * m_height, LIFE_BOX_WIDTH, LIFE_BOX_HEIGHT);
-    m_lifeBoxImage->loadAndApplyTextureFromImageFile(LIFE_BOX_IMAGE, sf::IntRect(0, 0, 300, 50));
+    m_lifeBoxImage->loadAndApplyTextureFromImageFile(ViewResources::LIFE_BOX_IMAGE, sf::IntRect(0, 0, 300, 50));
 
     m_remainingLifeImage = new mdsf::Sprite(0.118f * m_width, 0.89f * m_height, LIFE_LEVEL_WIDTH, LIFE_LEVEL_HEIGHT);
-    m_remainingLifeImage->loadAndApplyTextureFromImageFile(LIFE_BOX_IMAGE, sf::IntRect(0, 51, 300, 50));
+    m_remainingLifeImage->loadAndApplyTextureFromImageFile(ViewResources::LIFE_BOX_IMAGE, sf::IntRect(0, 51, 300, 50));
 
     m_distanceIcon = new mdsf::Sprite(0.033f * m_width, 0.055f * m_height, ORIGINAL_DISTANCE_ICON_SIZE);
-    m_distanceIcon->loadAndApplyTextureFromImageFile(GAME_BUTTONS_IMAGE, sf::IntRect(0, 150, 50, 50));
+    m_distanceIcon->loadAndApplyTextureFromImageFile(ViewResources::GAME_BUTTONS_IMAGE, sf::IntRect(0, 150, 50, 50));
     m_distanceIcon->resize(PAUSE_ICONS_SIZE); //TODO: Move resize call to ctor/sync() after setting the target size in ctor
 
 
@@ -147,7 +152,7 @@ void GameView::loadSprites()
 
     vector<sf::IntRect> clipRect;
     for (int i = 0; i < 8; i++) clipRect.emplace_back(50 * i, 0, 50, 50);
-    m_playerSprite = new AnimatedSprite(-1, -1, 30, 30, BALL_IMAGE, clipRect);
+    m_playerSprite = new AnimatedSprite(-1, -1, 30, 30, ViewResources::BALL_IMAGE, clipRect);
     m_playerSprite->setOrigin(0, 50);
 
 
@@ -155,54 +160,54 @@ void GameView::loadSprites()
 
     vector<sf::IntRect> clipRectStdEnemy;
     for (int i = 0; i < 2; i++) clipRectStdEnemy.emplace_back(50 * i, 0, 50, 50);
-    m_stdEnemySprite = new AnimatedSprite(-1, -1, 30, 30, ENEMIES_IMAGE, clipRectStdEnemy);
+    m_stdEnemySprite = new AnimatedSprite(-1, -1, 30, 30, ViewResources::ENEMIES_IMAGE, clipRectStdEnemy);
     m_stdEnemySprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRectTotemEnemy;
     for (int i = 0; i < 2; i++) clipRectTotemEnemy.emplace_back(50 * i, 0, 50, 150);
-    m_totemEnemySprite = new AnimatedSprite(-1, -1, 30, 90, ENEMIES_IMAGE, clipRectTotemEnemy);
+    m_totemEnemySprite = new AnimatedSprite(-1, -1, 30, 90, ViewResources::ENEMIES_IMAGE, clipRectTotemEnemy);
     m_totemEnemySprite->setOrigin(0, 150);
 
     vector<sf::IntRect> clipRectBlockEnemy;
     for (int i = 0; i < 2; i++) clipRectBlockEnemy.emplace_back(50 * i, 150, 50, 50);
-    m_blockEnemySprite = new AnimatedSprite(-1, -1, 50, 50, ENEMIES_IMAGE, clipRectBlockEnemy);
+    m_blockEnemySprite = new AnimatedSprite(-1, -1, 50, 50, ViewResources::ENEMIES_IMAGE, clipRectBlockEnemy);
     m_blockEnemySprite->setOrigin(0, 50);
 
 
     //=== Initialize COINS & BONUSES sprite
 
     m_shieldImage = new mdsf::Sprite(-1, -1, SHIELD_SIZE);
-    m_shieldImage->loadAndApplyTextureFromImageFile(SHIELD_IMAGE);
+    m_shieldImage->loadAndApplyTextureFromImageFile(ViewResources::SHIELD_IMAGE);
     m_shieldImage->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_coin;
     for (int i = 0; i < 5; i++) clipRect_coin.emplace_back(50 * i, 0, 50, 50);
-    m_coinSprite = new AnimatedSprite(-1, -1, 25, 25, BONUS_IMAGE, clipRect_coin);
+    m_coinSprite = new AnimatedSprite(-1, -1, 25, 25, ViewResources::BONUS_IMAGE, clipRect_coin);
     m_coinSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_pv;
     for (int i = 0; i < 5; i++) clipRect_pv.emplace_back(50 * i, 50, 50, 50);
-    m_PVPlusBonusSprite = new AnimatedSprite(-1, -1, 25, 25, BONUS_IMAGE, clipRect_pv);
+    m_PVPlusBonusSprite = new AnimatedSprite(-1, -1, 25, 25, ViewResources::BONUS_IMAGE, clipRect_pv);
     m_PVPlusBonusSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_mega;
     for (int i = 0; i < 5; i++) clipRect_mega.emplace_back(50 * i, 100, 50, 50);
-    m_megaBonusSprite = new AnimatedSprite(-1, -1, 25, 25, BONUS_IMAGE, clipRect_mega);
+    m_megaBonusSprite = new AnimatedSprite(-1, -1, 25, 25, ViewResources::BONUS_IMAGE, clipRect_mega);
     m_megaBonusSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_fly;
     for (int i = 0; i < 5; i++) clipRect_fly.emplace_back(50 * i, 150, 50, 50);
-    m_flyBonusSprite = new AnimatedSprite(-1, -1, 25, 25, BONUS_IMAGE, clipRect_fly);
+    m_flyBonusSprite = new AnimatedSprite(-1, -1, 25, 25, ViewResources::BONUS_IMAGE, clipRect_fly);
     m_flyBonusSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_slow;
     for (int i = 0; i < 5; i++) clipRect_slow.emplace_back(50 * i, 200, 50, 50);
-    m_slowSpeedBonusSprite = new AnimatedSprite(-1, -1, 25, 25, BONUS_IMAGE, clipRect_slow);
+    m_slowSpeedBonusSprite = new AnimatedSprite(-1, -1, 25, 25, ViewResources::BONUS_IMAGE, clipRect_slow);
     m_slowSpeedBonusSprite->setOrigin(0, 50);
 
     vector<sf::IntRect> clipRect_shield;
     for (int i = 0; i < 5; i++) clipRect_shield.emplace_back(50 * i, 250, 50, 50);
-    m_shieldBonusSprite = new AnimatedSprite(-1, -1, 25, 25, BONUS_IMAGE, clipRect_shield);
+    m_shieldBonusSprite = new AnimatedSprite(-1, -1, 25, 25, ViewResources::BONUS_IMAGE, clipRect_shield);
     m_shieldBonusSprite->setOrigin(0, 50);
 
 
@@ -213,7 +218,7 @@ void GameView::loadSprites()
     clipRect_resume.emplace_back(50, 0, 50, 50);
     //TODO : Convert to raised button
     m_resumeGameButton = new mdsf::Button(PAUSE_FORM_X, 0.592f * m_height, PAUSE_ICONS_SIZE, PAUSE_ICONS_SIZE,
-                                          "pause_resume", GAME_BUTTONS_IMAGE, clipRect_resume);
+                                          "pause_resume", ViewResources::GAME_BUTTONS_IMAGE, clipRect_resume);
     m_resumeGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_resumeGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_resumeGameButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
@@ -222,7 +227,7 @@ void GameView::loadSprites()
     clipRect_restart.emplace_back(0, 50, 50, 50);
     clipRect_restart.emplace_back(50, 50, 50, 50);
     m_restartGameButton = new mdsf::Button(PAUSE_FORM_X, 0.675f * m_height, PAUSE_ICONS_SIZE, PAUSE_ICONS_SIZE,
-                                           "pause_restart", GAME_BUTTONS_IMAGE, clipRect_restart);
+                                           "pause_restart", ViewResources::GAME_BUTTONS_IMAGE, clipRect_restart);
     m_restartGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_restartGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_restartGameButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
@@ -232,7 +237,7 @@ void GameView::loadSprites()
     clipRect_home.emplace_back(0, 100, 50, 50);
     clipRect_home.emplace_back(50, 100, 50, 50);
     m_goToHomeButton = new mdsf::Button(PAUSE_FORM_X, 0.758f * m_height, PAUSE_ICONS_SIZE, PAUSE_ICONS_SIZE,
-                                        "pause_go_to_home", GAME_BUTTONS_IMAGE, clipRect_home);
+                                        "pause_go_to_home", ViewResources::GAME_BUTTONS_IMAGE, clipRect_home);
     m_goToHomeButton->resize(PAUSE_BUTTONS_SIZE);
     m_goToHomeButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_goToHomeButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
@@ -241,7 +246,7 @@ void GameView::loadSprites()
     clipRect_music.emplace_back(0, 200, 50, 50);
     clipRect_music.emplace_back(50, 200, 50, 50);
     m_controlMusicButton = new mdsf::Button(PAUSE_FORM_X, 0.89f * m_height, PAUSE_ICONS_SIZE, PAUSE_ICONS_SIZE,
-                                            "pause_music", GAME_BUTTONS_IMAGE, clipRect_music);
+                                            "pause_music", ViewResources::GAME_BUTTONS_IMAGE, clipRect_music);
     m_controlMusicButton->resize(PAUSE_BUTTONS_SIZE);
     m_controlMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_controlMusicButton->retrieveLabel(LocalizationManager::fetchLocalizedString);

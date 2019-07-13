@@ -2,11 +2,12 @@
 
 constexpr int Player::MAX_ENERGY;
 
+//------------------------------------------------
+//          CONSTRUCTOR / DESTRUCTOR
+//------------------------------------------------
+
 /**
- * Constructs a player with
- * coordinates, a size, a moving vector
- * @author Arthur, Florian
- * @date 22/02/16 - 16/09/18
+ * @brief Constructor
  *
  * @param x the x position
  * @param y the y position
@@ -17,6 +18,9 @@ constexpr int Player::MAX_ENERGY;
  * @param floor the floor y position
  * @param fieldWidth the total field width
  * @param jumpLimit the jump limit in height
+ *
+ * @author Arthur, Florian
+ * @date 22/02/2016 - 16/09/2018
  */
 Player::Player(float x, float y, float w, float h, float mvX, float mvY, int floor, int fieldWidth, int jumpLimit) :
         MovableElement(x, y, w, h, mvX, mvY), m_state{NORMAL}, m_energy{MAX_ENERGY}, m_initialWidth{w}, m_initialHeight{h},
@@ -29,23 +33,30 @@ Player::Player(float x, float y, float w, float h, float mvX, float mvY, int flo
 }
 
 /**
- * Destructor
+ * @brief Destructor
+ *
  * @author Arthur, Florian
- * @date 22/02/16
+ * @date 22/02/2016
  */
 Player::~Player() = default;
 
-
-//=== Getters
+//------------------------------------------------
+//          GETTERS
+//------------------------------------------------
 
 PlayerState Player::getState() const { return m_state; }
 int Player::getLife() const { return m_energy; }
 
 
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
+
 /**
- * Player Moving
+ * @brief Execute the move routine
+ *
  * @author Florian
- * @date  12/03/16 - 16/09/18
+ * @date  12/03/2016 - 16/09/2018
  */
 void Player::move()
 {
@@ -106,11 +117,12 @@ void Player::move()
 }
 
 /**
- * Takes damages by reducing energy
+ * @brief Take damages by reducing energy
+ *
  * @param amount the amount to remove
  *
  * @author Arthur
- * @date  13/01/19
+ * @date  13/01/2019
  */
 void Player::takeDamages(int amount)
 {
@@ -118,11 +130,12 @@ void Player::takeDamages(int amount)
 }
 
 /**
- * Restores some energy to the player
+ * @brief Restore some energy to the player
+ *
  * @param energy the energy to add
  *
  * @author Arthur
- * @date  13/01/19
+ * @date  13/01/2019
  */
 void Player::heal(int energy)
 {
@@ -130,10 +143,10 @@ void Player::heal(int energy)
 }
 
 /**
- * Allows the player to jump
+ * @brief Allows the player to jump
  *
  * @author Arthur
- * @date  13/01/19
+ * @date  13/01/2019
  */
 void Player::jump()
 {
@@ -141,10 +154,9 @@ void Player::jump()
 }
 
 /**
- * Allows the player to decelerate
+ * @brief Allows the player to decelerate
  *
- * @author Arthur
- * @date  13/01/19
+ * @date  13/01/2019
  */
 void Player::decelerate()
 {
@@ -152,12 +164,11 @@ void Player::decelerate()
 }
 
 /**
- * Changes player's state
+ * @brief Change player's state
  *
  * @param state the player's new state
  *
- * @author Arthur
- * @date  11/04/16 - 05/09/18
+ * @date  11/04/2016 - 05/09/2018
  */
 void Player::changeState(const PlayerState& state)
 {
@@ -176,8 +187,8 @@ void Player::changeState(const PlayerState& state)
     } else if (state == FLYING) {
         m_width = m_initialWidth;
         m_height = m_initialHeight;
-        m_gravitation = 5.0;
-        m_acceleration = 70.0;
+        m_gravitation = FLYING_GRAVITATION;
+        m_acceleration = FLYING_ACCELERATION;
     } else if (state == SHIELDED || state == HARD_SHIELDED) {
         m_width = m_initialWidth;
         m_height = m_initialHeight;
@@ -187,11 +198,12 @@ void Player::changeState(const PlayerState& state)
 }
 
 /**
- * Player's control Function
- * Arthur, Florian
- * @date  22/03/16 - 05/09/18
+ * @brief Player's control Function
  *
  * @param direction the new direction
+ *
+ * @author Arthur, Florian
+ * @date  22/03/2016 - 05/09/2018
  */
 void Player::controlPlayerMovements(const MovingDirection& direction)
 {

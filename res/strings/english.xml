@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+<!-- Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -66,6 +66,9 @@
     <string name="stats_per_game_enemies" value="Max flattened enemies"/>
     <string name="stats_per_game_coins" value="Max coins collected"/>
     <string name="stats_app_reset" value="CLEAR DATA"/>
+    <string name="stats_coins_value" value=""/>
+    <string name="stats_enemies_value" value=""/>
+    <string name="stats_games_number_value" value=""/>
 
     <!-- Settings about strings -->
     <string name="about_title" value="About"/>
@@ -78,10 +81,11 @@
                   &#xA; or by sending a mail at the address below :"/>
     <string name="about_repo_address" value="https://github.com/Bokoblin/DUTS2-POO-ProjetRunner"/>
     <string name="about_email" value="pro.jolivetarthur@gmail.com"/>
-    <string name="about_copyright" value="2016-2018 Jolivet Arthur &amp; Laronze Florian"/>
+    <string name="about_copyright" value="2016-2019 Jolivet Arthur &amp; Laronze Florian"/>
 
     <!-- Shop strings -->
     <string name="shop_title" value="Shop"/>
+    <string name="shop_wallet" value=""/>
     <string name="shop_no_items" value="There is no items to buy yet"/>
     <string name="shop_bought" value="BOUGHT"/>
     <string name="shop_purchasable" value="BUY"/>
@@ -118,6 +122,9 @@
     <string name="game_player_life" value="Life"/>
     <string name="game_coins" value="coins"/>
     <string name="game_flattened" value="flattened"/>
+    <string name="game_current_distance" value=""/>
+    <string name="game_bonus_timeout_value" value=""/>
+    <string name="game_current_coins_value" value=""/>
 
     <!-- Pause Screen strings -->
     <string name="pause_resume" value="Resume"/>
@@ -133,5 +140,8 @@
     <string name="end_enemies" value="Enemies destructed bonus"/>
     <string name="end_score" value="Total"/>
     <string name="end_save_button" value="SAVE"/>
+    <string name="end_speed_multiplier_value" value=""/>
+    <string name="end_enemies_value" value=""/>
+    <string name="end_score_value" value=""/>
 
 </resources>

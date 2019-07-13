@@ -1,4 +1,4 @@
-/* Copyright 2018 Jolivet Arthur
+/* Copyright 2018-2019 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ int main() //TODO: Complete CLI app (maybe a App class can work differently if E
 
     AppCore appCore;
     Logger::setLoggerFile("./boko_runner.log");
-    PersistenceManager::initContext(&appCore);
+    PersistenceManager::initContext(appCore);
     PersistenceManager::fetchConfiguration();
     PersistenceManager::fetchStatistics();
     PersistenceManager::fetchLeaderboard();

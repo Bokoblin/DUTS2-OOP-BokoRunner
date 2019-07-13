@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,11 +20,13 @@ limitations under the License.
 #include "app/model/enums/MovableElementType.h"
 
 /**
- * The MovableElement class is an abstract class
- * providing common attributes and methods
- * to inherited Movable Elements
+ * @class MovableElement
+ * @note Abstract class
+ * @details Provide common attributes and methods
+ * to inherited classes
+ *
  * @author Arthur, Florian
- * @date 23/02/16 - 18/05/16
+ * @date 23/02/2016 - 11/07/2019
  */
 class MovableElement
 {
@@ -35,8 +37,8 @@ public:
 
     //=== METHODS
     virtual void move() = 0;
-    bool contains(float posX, float posY) const;
-    bool collision(const MovableElement& other) const;
+    bool contains(float x, float y) const;
+    bool collide(const MovableElement& other);
 
     //=== GETTERS
     float getPosX() const;
@@ -45,11 +47,6 @@ public:
     float getHeight() const;
     bool isColliding() const;
     virtual MovableElementType getType() const;
-
-    //=== SETTERS
-    void setMoveX(float mvX);
-    void setMoveY(float mvY);
-    void setColliding(bool on);
 
 protected:
     //=== ATTRIBUTES

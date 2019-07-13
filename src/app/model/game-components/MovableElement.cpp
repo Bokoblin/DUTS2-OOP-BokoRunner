@@ -1,10 +1,11 @@
 #include "MovableElement.h"
 
+//------------------------------------------------
+//          CONSTRUCTOR / DESTRUCTOR
+//------------------------------------------------
+
 /**
- * Constructs from an inherited class with
- * coordinates, a size, a moving vector
- * @author Arthur, Florian
- * @date 23/02/16 - 09/04/16
+ * @brief Constructor
  *
  * @param x the x position
  * @param y the y position
@@ -12,6 +13,9 @@
  * @param h the height
  * @param mvX the x moving direction
  * @param mvY the y moving direction
+ *
+ * @author Arthur, Florian
+ * @date 23/02/2016 - 09/04/2016
  */
 MovableElement::MovableElement(float x, float y, float w, float h, float mvX, float mvY) :
         m_posX{x}, m_posY{y}, m_width{w}, m_height{h}, m_moveX{mvX}, m_moveY{mvY},
@@ -20,14 +24,16 @@ MovableElement::MovableElement(float x, float y, float w, float h, float mvX, fl
 
 
 /**
- * Destructor
+ * @brief Destructor
+ *
  * @author Arthur
- * @date 23/02/16
+ * @date 23/02/2016
  */
 MovableElement::~MovableElement() = default;
 
-
-//=== Getters
+//------------------------------------------------
+//          GETTERS
+//------------------------------------------------
 
 float MovableElement::getPosX()  const { return m_posX;  }
 float MovableElement::getPosY()  const { return m_posY;  }
@@ -36,59 +42,59 @@ float MovableElement::getHeight()const { return m_height; }
 MovableElementType MovableElement::getType() const { return m_elementType; }
 bool MovableElement::isColliding() const { return m_isColliding; }
 
-
-//=== Setters
-
-void MovableElement::setMoveX(float mvX) { m_moveX = mvX;}
-void MovableElement::setMoveY(float mvY) { m_moveY = mvY;}
-void MovableElement::setColliding(bool on) { m_isColliding = on;}
-
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
 
 /**
- * Checks if a position belongs to an element
- * @author Arthur
- * @date 08/03/16 - 09/04/16
+ * @brief Check if a position belongs to an element
  *
- * @param posX the other element x-position
- * @param posY the other element y-position
+ * @param x the other element x-position
+ * @param y the other element y-position
  * @return a boolean indicating if position is in element
+ *
+ * @author Arthur
+ * @date 08/03/2016 - 09/04/2016
  */
-bool MovableElement::contains(float posX, float posY) const
+bool MovableElement::contains(float x, float y) const
 {
     float maxX = m_posX + m_width;
     float maxY = m_posY + m_height;
 
-    return (posX >= m_posX) && (posX < maxX) && (posY >= m_posY) && (posY < maxY);
+    return (x >= m_posX) && (x < maxX) && (y >= m_posY) && (y < maxY);
 }
 
-
 /**
- * Determines if elements are colliding
- *
- * Note : element's origin corresponds to left-bottom point
- *
- * @author Arthur
- * @date 02/04/16 - 20/12/16
+ * @brief Determine if elements are colliding
+ * @note Element's origin corresponds to left-bottom point
+ * @warning This function must be called by the element which is set to be deleted
  *
  * @param other the other element
  * @return a boolean indicating if elements are colliding
+ *
+ * @author Arthur
+ * @date 02/04/2016 - 11/07/2019
  */
-bool MovableElement::collision(const MovableElement& other) const
+bool MovableElement::collide(const MovableElement& other)
 {
-    float leftA, leftB;
-    float rightA, rightB;
-    float topA, topB;
-    float bottomA, bottomB;
+    if (!m_isColliding) {
+        float left_a, left_b;
+        float right_a, right_b;
+        float top_a, top_b;
+        float bottom_a, bottom_b;
 
-    leftA = m_posX;
-    rightA = m_posX + m_width;
-    topA = m_posY - m_height;
-    bottomA = m_posY;
+        left_a = m_posX;
+        right_a = m_posX + m_width;
+        top_a = m_posY - m_height;
+        bottom_a = m_posY;
 
-    leftB = other.m_posX;
-    rightB = other.m_posX + other.m_width;
-    topB = other.m_posY - other.m_height;
-    bottomB = other.m_posY;
+        left_b = other.m_posX;
+        right_b = other.m_posX + other.m_width;
+        top_b = other.m_posY - other.m_height;
+        bottom_b = other.m_posY;
 
-    return bottomA >= topB && topA <= bottomB && rightA >= leftB && leftA <= rightB;
+        m_isColliding = bottom_a >= top_b && top_a <= bottom_b && right_a >= left_b && left_a <= right_b;
+    }
+
+    return m_isColliding;
 }

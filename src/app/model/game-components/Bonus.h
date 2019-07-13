@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@ limitations under the License.
 #include "MovableElement.h"
 
 /**
- * The Bonus class inherited from MovableElement
- * provides a moving behaviour and types of bonuses among :
- * PV+, MEGA, FLY, SLOW_SPEED and SHIELD
+ * @class Bonus
+ * @inherit MovableElement
+ * @details Provide a specific moving behaviour and bonus type
  *
  * @author Arthur
- * @date 11/04/16 - 12/04/16
+ * @date 11/04/2016 - 12/04/2016
  */
 class Bonus: public MovableElement
 {

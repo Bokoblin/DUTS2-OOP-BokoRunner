@@ -1,4 +1,4 @@
-/* Copyright 2017 Jolivet Arthur
+/* Copyright 2017-2019 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,11 +19,14 @@ limitations under the License.
 #include "../enums/MovableElementType.h"
 #include "RandomUtils.h"
 
+#define repeat(_n) for (int i = 0; i < _n;i++)
+
 /**
- * The GameUtils class provides utils functions for the GameModel class
+ * @class GameUtils
+ * @details Provide utils functions for the GameModel class
  *
  * @author Arthur
- * @date 06/09/18
+ * @date 06/09/2018
  */
 class GameUtils
 {
@@ -37,7 +40,7 @@ public:
  * @return the minimal spawn distance
  *
  * @author Arthur
- * @date 12/03/16 - 06/09/18
+ * @date 12/03/2016 - 06/09/2018
  */
     static int chooseSpawnDistance(int nextElementSpawnDistance, int elementType)
     {

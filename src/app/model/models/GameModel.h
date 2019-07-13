@@ -26,14 +26,16 @@ limitations under the License.
 #include "AbstractModel.h"
 
 /**
- * The GameModel class handles the game's logic
+ * @class GameModel
+ * @inherit AbstractModel
+ * @details Handle the game's logic
  * by handling MovableElements creation, behaviours,
  * and deletion, handling game mode changing,
  * handling events like zone changing,
  * calculating final score, etc.
  *
  * @author Arthur
- * @date 26/03/16 - 13/01/19
+ * @date 26/03/2016 - 13/01/2019
  */
 class GameModel: public AbstractModel
 {

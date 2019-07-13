@@ -1,10 +1,11 @@
 #include "Bonus.h"
 
+//------------------------------------------------
+//          CONSTRUCTOR / DESTRUCTOR
+//------------------------------------------------
+
 /**
- * Constructs a bonus with
- * coordinates, a size, a moving vector
- * @author Arthur
- * @date 11/04/16
+ * @brief Constructor
  *
  * @param x the x position
  * @param y the y position
@@ -12,6 +13,9 @@
  * @param h the height
  * @param mvX the x moving direction
  * @param mvY the y moving direction
+ *
+ * @author Arthur
+ * @date 11/04/2016
  */
 Bonus::Bonus(float x, float y, float w, float h, float mvX, float mvY) :
         MovableElement(x, y, w, h, mvX, mvY)
@@ -19,29 +23,32 @@ Bonus::Bonus(float x, float y, float w, float h, float mvX, float mvY) :
     chooseBonusType();
 }
 
-
 /**
- * Destructor
+ * @brief Destructor
+ *
  * @author Arthur
- * @date 11/04/16
+ * @date 11/04/2016
  */
 Bonus::~Bonus() = default;
 
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
 
 /**
- * Bonus Moving
+ * @brief Execute the move routine
+ *
  * @author Arthur
- * @date 11/04/16
+ * @date 11/04/2016 - 11/07/2019
  */
 void Bonus::move()
 {
-    m_posX += m_moveX;
-    m_posY += m_moveY;
+    m_posX -= 1;
 }
 
-
 /**
- * Next Bonus Choosing under the following probabilities : \n
+ * @brief Select the bonus type following probabilities
+ * @details Here are the probabilities: \n
  *  1-30 : PV+    ~30% \n
  * 31-50 : MEGA   ~20% \n
  * 51-65 : FLY    ~15% \n
@@ -49,7 +56,7 @@ void Bonus::move()
  * 76-100: SHIELD ~25%
  *
  * @author Arthur
- * @date 11/04/16 - 10/02/18
+ * @date 11/04/2016 - 10/02/2018
  */
 void Bonus::chooseBonusType()
 {

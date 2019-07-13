@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@ limitations under the License.
 #include "MovableElement.h"
 
 /**
- * The Enemy class inherited from MovableElement
- * provides a moving behaviour and types of enemies among :
- * STANDARD, TOTEM and BLOCK
+ * @class Enemy
+ * @inherit MovableElement
+ * @details Provide a specific moving behaviour and enemy type
  *
  * @author Arthur
- * @date 13/03/16 - 11/04/16
+ * @date 13/03/2016 - 13/01/2019
  */
 class Enemy: public MovableElement
 {
@@ -36,6 +36,12 @@ public:
     //=== METHODS
     void move() override;
     void chooseEnemyType();
+
+private:
+    const int STANDARD_ENEMY_SIZE = 30;
+    const int TOTEM_ENEMY_WIDTH = 30;
+    const int TOTEM_ENEMY_HEIGHT = 90;
+    const int BLOCK_ENEMY_SIZE = 50;
 };
 
 #endif

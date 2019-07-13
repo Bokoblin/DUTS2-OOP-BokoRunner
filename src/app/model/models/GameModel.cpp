@@ -11,15 +11,14 @@ using Bokoblin::SimpleLogger::Logger;
 //------------------------------------------------
 
 /**
- * Constructs the game model
- * with app's width, height and core
+ * @brief Constructor
  *
  * @param width the app's width
  * @param height the app's height
  * @param appCore the app's core singleton
  *
  * @author Arthur
- * @date 26/03/16 - 05/09/18
+ * @date 26/03/2016 - 05/09/2018
  */
 GameModel::GameModel(float width, float height, AppCore* appCore) :
         AbstractModel(appCore), m_width{width}, m_height{height}, m_gameState{RUNNING}, m_inTransition{false},
@@ -42,11 +41,11 @@ GameModel::GameModel(float width, float height, AppCore* appCore) :
     m_nextBonusSpawnDistance = RandomUtils::getUniformRandomNumber(100, 150);   //Between 100 and 150 meters
 }
 
-
 /**
- * Destructor
+ * @brief Destructor
+ *
  * @author Arthur
- * @date 26/03/16 - 24/12/17
+ * @date 26/03/2016 - 24/12/2017
  */
 GameModel::~GameModel()
 {
@@ -56,7 +55,6 @@ GameModel::~GameModel()
 
     m_movableElementsArray.clear();
 }
-
 
 //------------------------------------------------
 //          GETTERS
@@ -75,7 +73,6 @@ bool GameModel::isTransitionRunning() const { return m_inTransition; }
 bool GameModel::isTransitionPossible() const { return m_isTransitionPossible; }
 bool GameModel::isMusicEnabled() const { return m_appCore->isGameMusicEnabled(); }
 
-
 //------------------------------------------------
 //          SETTERS
 //------------------------------------------------
@@ -86,17 +83,16 @@ void GameModel::setTransitionState(bool inTransition) { m_inTransition = inTrans
 void GameModel::disableTransitionPossibility() { m_isTransitionPossible = false; }
 void GameModel::toggleGameMusic() { m_appCore->toggleGameMusic(); }
 
-
 //------------------------------------------------
 //          PUBLIC METHODS
 //------------------------------------------------
 
 /**
- * Handles game mode changing and game's evolution
+ * @brief Handle game mode changing and game's evolution
  * (elements apparition, behaviours, deletion)
  *
  * @author Arthur
- * @date 21/02/16 - 04/02/18
+ * @date 21/02/2016 - 13/07/2019
  */
 void GameModel::nextStep()
 {
@@ -124,13 +120,12 @@ void GameModel::nextStep()
         //      alternative must exist also to implement that)
         //PS: Same for other models
     } else if (m_gameState == OVER) {
-        m_appCore->calculateFinalScore(m_gameSpeed, m_scoreBonusFlattenedEnemies); //FIXME: should be done once, no ? ^^ (check log)
+        //Do nothing
     }
 }
 
-
 /**
- * Saves current game progress
+ * @brief Save current game progress
  *
  * @author Arthur
  * @date 30/10/18
@@ -140,9 +135,8 @@ void GameModel::saveCurrentGame()
     m_appCore->saveCurrentGame();
 }
 
-
 /**
- * Elements Moving (enemies, bonus, ...)
+ * @brief Allow all elements to trigger their move function
  *
  * @param currentElement the element to move
  *
@@ -154,14 +148,14 @@ void GameModel::moveMovableElement(MovableElement* currentElement)
     if (currentElement == m_player) {
         currentElement->move();
     } else if (currentElement != nullptr) {
-        currentElement->setMoveX(-1 * m_gameSpeed);
-        currentElement->move();
+        repeat(this->m_gameSpeed) {
+            currentElement->move();
+        }
     }
 }
 
-
 /**
- * NewMovableElement vector cleaning
+ * @brief Clean the list of new movable elements
  *
  * @author Arthur, Florian
  * @date 02/03/16
@@ -171,13 +165,12 @@ void GameModel::clearNewMovableElementList()
     m_newMovableElementsArray.clear();
 }
 
-
 //------------------------------------------------
 //          PRIVATE METHODS
 //------------------------------------------------
 
 /**
- * Handles speed and distance increase
+ * @brief Handle speed and distance increase
  *
  * @author Arthur
  * @date 04/02/18 - 05/09/18
@@ -191,9 +184,8 @@ void GameModel::handleSpeedAndDistance()
     m_appCore->increaseCurrentDistance(m_gameSpeed / SPEED_DISTANCE_RATIO);
 }
 
-
 /**
- * Handles Elements Creation
+ * @brief Handle elements creation
  *
  * @author Arthur
  * @date 12/04/16 - 06/09/18
@@ -226,7 +218,7 @@ void GameModel::handleMovableElementsCreation()
             addANewMovableElement(pos_x, pos_y, COIN);
 
             m_currentCoinSpawnDistance = 0;
-            m_nextCoinSpawnDistance =  GameUtils::chooseSpawnDistance(m_nextCoinSpawnDistance, COIN);
+            m_nextCoinSpawnDistance = GameUtils::chooseSpawnDistance(m_nextCoinSpawnDistance, COIN);
             return;
         } else {
             m_currentCoinSpawnDistance++;
@@ -240,7 +232,7 @@ void GameModel::handleMovableElementsCreation()
             addANewMovableElement(pos_x, pos_y, PV_PLUS_BONUS);
 
             m_currentBonusSpawnDistance = 0;
-            m_nextBonusSpawnDistance =  GameUtils::chooseSpawnDistance(m_nextBonusSpawnDistance, PV_PLUS_BONUS);
+            m_nextBonusSpawnDistance = GameUtils::chooseSpawnDistance(m_nextBonusSpawnDistance, PV_PLUS_BONUS);
             return;
         } else {
             m_currentBonusSpawnDistance++;
@@ -248,21 +240,18 @@ void GameModel::handleMovableElementsCreation()
     }
 }
 
-
 /**
- * Handles Movable Elements Collisions. \n
- * It must be executed outside of the next step delay
+ * @brief Handle Movable Elements Collisions
+ * @warning It must be executed outside of the next step delay
  * to prevent high speed collisions skipping
  *
  * @author Arthur
- * @date 12/03/16 - 27/12/17
+ * @date 12/03/16 - 13/07/2019
  */
 void GameModel::handleMovableElementsCollisions()
 {
     for (MovableElement* element : m_movableElementsArray) {
-        if (!element->isColliding() && element->getType() != PLAYER && m_player->collision(*element)) {
-            element->setColliding(true);
-
+        if (!element->isColliding() && element->getType() != PLAYER && element->collide(*m_player)) {
             //Apply different behaviours following element type
             switch (element->getType()) {
                 case STANDARD_ENEMY:
@@ -288,10 +277,9 @@ void GameModel::handleMovableElementsCollisions()
     }
 }
 
-
 /**
- * Handles Movable Elements Deletion \n
- * Note : Pointers will only be deleted in destructor
+ * @brief Handle Movable Elements Deletion
+ * @warning The element pointer will only be deleted in destructor
  *
  * @author Arthur
  * @date 12/03/16 - 13/09/18
@@ -309,14 +297,13 @@ void GameModel::handleMovableElementsDeletion()
     }
 }
 
-
 /**
- * Handles a collision between the player and an enemy
+ * @brief Handle a collision between the player and an enemy
  *
  * @param enemyType the enemy type
  *
  * @author Arthur, Florian
- * @date 25/02/16 - 13/01/19
+ * @date 25/02/16 - 13/01/2019
  */
 void GameModel::handleEnemyCollision(const MovableElementType& enemyType)
 {
@@ -345,12 +332,11 @@ void GameModel::handleEnemyCollision(const MovableElementType& enemyType)
     }
 }
 
-
 /**
- * Handles a collision between the player and a coin
+ * @brief Handle a collision between the player and a coin
  *
  * @author Arthur, Florian
- * @date 25/02/16 - 27/12/17
+ * @date 25/02/16 - 27/12/2017
  */
 void GameModel::handleCoinCollision() const
 {
@@ -358,14 +344,13 @@ void GameModel::handleCoinCollision() const
             m_appCore->findActivatedItem("doubler") ? 2 : 1);
 }
 
-
 /**
- * Handles a collision between the player and a bonus
+ * @brief Handle a collision between the player and a bonus
  *
  * @param bonusType the type of bonus having collided with player
  *
  * @author Arthur, Florian
- * @date 25/02/16 - 13/01/19
+ * @date 25/02/16 - 13/01/2019
  */
 void GameModel::handleBonusCollision(const MovableElementType& bonusType)
 {
@@ -393,13 +378,12 @@ void GameModel::handleBonusCollision(const MovableElementType& bonusType)
     }
 }
 
-
 /**
- * Handles the bonus timeout
- * in order to decrease it or to process its expiration
+ * @brief Handle the bonus effect duration
+ * @details Decrease a timeout and process its expiration
  *
  * @author Arthur
- * @date 12/04/16 - 04/02/18
+ * @date 12/04/16 - 04/02/2018
  */
 void GameModel::handleBonusTimeout()
 {
@@ -419,48 +403,46 @@ void GameModel::handleBonusTimeout()
     }
 }
 
-
 /**
- * Checks if game's current evolution allows
+ * @brief Check if game's current evolution allows
  * to authorize a zone transition as soon as possible
  *
  * @author Arthur
- * @date 30/04/16 - 13/01/19
+ * @date 30/04/16 - 13/01/2019
  */
 void GameModel::conditionallyAllowZoneTransition()
 {
     if (!m_inTransition
             && m_appCore->getGameMap().at("distance") != 0
             && m_appCore->getGameMap().at("distance") % ZONE_CHANGING_DISTANCE == 0) {
-                m_isTransitionPossible = true;
+        m_isTransitionPossible = true;
     }
 }
 
-
 /**
- * Conditionally triggers a game over if
- * player's life has ended
+ * @brief Conditionally trigger a game over
+ * if player's life has ended
  *
  * @author Arthur
- * @date ??/0?/16 - 04/02/18
+ * @date 27/03/2016 - 13/07/2019
  */
 void GameModel::conditionallyTriggerGameOver()
 {
     if (m_player->getLife() == Player::MIN_ENERGY) {
         m_gameState = OVER;
+        m_appCore->calculateFinalScore(m_gameSpeed, m_scoreBonusFlattenedEnemies);
     }
 }
 
-
 /**
- * Checks if a position is free to use
+ * @brief Check if a position is free to use
  *
  * @param x element x-position
  * @param y element y-position
  * @return a boolean indicating if parameterized position is free
  *
  * @author Arthur
- * @date 08/03/16 - 30/04/16
+ * @date 08/03/2016 - 30/04/2016
  */
 bool GameModel::checkIfPositionFree(float x, float y) const
 {
@@ -478,16 +460,15 @@ bool GameModel::checkIfPositionFree(float x, float y) const
     return positionIsFree;
 }
 
-
 /**
- * New MovableElement adding
+ * @brief Add a new movable element to the game
  *
  * @param posX the initial x-position of the new element
  * @param posY the initial y-position of the new element
  * @param type the type of the new element
  *
  * @author Arthur, Florian
- * @date 25/02/16 - 16/09/18
+ * @date 25/02/2016 - 16/09/2018
  */
 void GameModel::addANewMovableElement(float posX, float posY, int type)
 {

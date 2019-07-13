@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,11 +19,12 @@ limitations under the License.
 #include "MovableElement.h"
 
 /**
- * The Coin class inherited from MovableElement
- * provides a moving behaviour for coins
+ * @class Coin
+ * @inherit MovableElement
+ * @details Provide a specific moving behaviour
  *
  * @author Arthur
- * @date 19/03/16
+ * @date 19/03/2016
  */
 class Coin: public MovableElement
 {

@@ -24,10 +24,12 @@ limitations under the License.
 #include <utility>
 
 /**
- * The Player class inherited from MovableElements
- * contains player's logic and behaviours
+ * @class Player
+ * @inherit MovableElement
+ * @details Provide player's logic and behaviours
+ *
  * @author Arthur, Florian
- * @date 22/02/16 - 13/01/19
+ * @date 22/02/2016 - 13/01/2019
  */
 class Player: public MovableElement
 {
@@ -74,7 +76,9 @@ private:
     static constexpr int DIRECTION_PADDING = 10;
     static constexpr float PRECISION = 1.0;
     static constexpr float INITIAL_GRAVITATION = 20.0;
+    static constexpr float FLYING_GRAVITATION = 5.0;
     static constexpr float INITIAL_ACCELERATION = 18.0;
+    static constexpr float FLYING_ACCELERATION = 70.0;
 };
 
 #endif

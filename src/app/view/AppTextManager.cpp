@@ -74,7 +74,7 @@ void AppTextManager::loadText()
 
     m_textList.push_back(m_shopTitleLabel = new mdsf::Text("shop_title"));
     m_textList.push_back(m_shopNoItemsLabel = new mdsf::Text("shop_no_items"));
-    m_textList.push_back(m_walletText = new mdsf::Text("wallet"));
+    m_textList.push_back(m_walletText = new mdsf::Text("shop_wallet"));
 
     //=== Settings - configuration
 

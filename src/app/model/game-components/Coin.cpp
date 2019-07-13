@@ -1,10 +1,11 @@
 #include "Coin.h"
 
+//------------------------------------------------
+//          CONSTRUCTOR / DESTRUCTOR
+//------------------------------------------------
+
 /**
- * Constructs a coin with
- * coordinates, a size, a moving vector
- * @author Arthur  
- * @date 19/03/16
+ * @brief Constructor
  *
  * @param x the x position
  * @param y the y position
@@ -12,6 +13,9 @@
  * @param h the height
  * @param mvX the x moving direction
  * @param mvY the y moving direction
+ *
+ * @author Arthur
+ * @date 19/03/2016
  */
 Coin::Coin(float x, float y, float w, float h, float mvX, float mvY) :
         MovableElement(x, y, w, h, mvX, mvY)
@@ -19,22 +23,25 @@ Coin::Coin(float x, float y, float w, float h, float mvX, float mvY) :
     m_elementType = COIN;
 }
 
-
 /**
- * Destructor
+ * @brief Destructor
+ *
  * @author Arthur
- * @date 19/03/16
+ * @date 19/03/2016
  */
 Coin::~Coin() = default;
 
+//------------------------------------------------
+//          METHODS
+//------------------------------------------------
 
 /**
- * Coin Moving
+ * @brief Execute the move routine
+ *
  * @author Arthur
- * @date 19/03/16
+ * @date 19/03/2016 - 11/07/2019
  */
 void Coin::move()
 {
-    m_posX += m_moveX;
-    m_posY += m_moveY;
+    m_posX -= 1;
 }

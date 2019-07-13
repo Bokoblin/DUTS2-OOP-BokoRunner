@@ -60,7 +60,8 @@ public:
     bool isScoreHardArrayEmpty() const;
     std::string getLanguage() const;
     std::string getBallSkin() const;
-    virtual std::string getConfigFile() const;
+    //FIXME: LINKED TO FILE BASED, WE SHALL ABSTRACT THAT ALSO
+    virtual std::string getPersistenceContext() const;
 
     //=== SETTERS
     void setAppState(const AppState& state);

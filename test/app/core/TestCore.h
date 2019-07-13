@@ -32,7 +32,7 @@ public:
     ~TestCore() override;
 
     //=== GETTERS
-    std::string getConfigFile() const override ;
+    std::string getPersistenceContext() const override ;
 };
 
 #endif

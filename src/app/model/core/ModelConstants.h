@@ -65,11 +65,6 @@ extern const std::string ENGLISH_STRINGS;
 extern const std::string FRENCH_STRINGS;
 extern const std::string SPANISH_STRINGS;
 
-//=== Config
-extern const std::string CONFIG_FILE;
-extern const std::string TEST_CONFIG_FILE;
-extern const std::string DEFAULT_CONFIG_CONTENT;
-
 } //namespace Resources
 } //namespace View
 } //namespace BokoRunner

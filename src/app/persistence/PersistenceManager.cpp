@@ -256,3 +256,8 @@ void PersistenceManager::deletePersistence()
         Logger::printError("Persistence context delete failure");
     }
 }
+
+std::string PersistenceManager::getContextLocation()
+{
+    return Bokoblin::BokoRunner::Resources::Model::Folder::RES + "config.xml";
+}

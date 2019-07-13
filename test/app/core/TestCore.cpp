@@ -1,5 +1,7 @@
 #include "TestCore.h"
 
+namespace ModelResources = Bokoblin::BokoRunner::Resources::Model;
+
 //------------------------------------------------
 //          CONSTRUCTOR / DESTRUCTOR
 //------------------------------------------------
@@ -26,4 +28,5 @@ TestCore::~TestCore() = default;
 //          GETTERS
 //------------------------------------------------
 
-std::string TestCore::getConfigFile() const { return TEST_CONFIG_FILE; }
+//FIXME: ALL THOSE CONFIGS ARE LINKED TO FILE BASED, WE SHALL ABSTRACT THAT ALSO
+std::string TestCore::getPersistenceContext() const { return "test_config.xml"; }

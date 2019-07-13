@@ -45,9 +45,9 @@ bool FileBasedPersistence::createConfigFile()
     nullSafeGuard();
 
     bool success = false;
-    if (XMLHelper::checkXMLFileExistence(m_appCore->getConfigFile())) {
+    if (XMLHelper::checkXMLFileExistence(m_appCore->getPersistenceContext())) {
         Logger::printWarning("Configuration file already exists, aborting...");
-    } else if (XMLHelper::createXMLFile(m_appCore->getConfigFile(), ModelResources::DEFAULT_CONFIG_CONTENT)) {
+    } else if (XMLHelper::createXMLFile(m_appCore->getPersistenceContext(), generateDefaultStringConfig())) {
         Logger::printInfo("Configuration file successfully created");
         success = true;
     } else {
@@ -67,7 +67,7 @@ bool FileBasedPersistence::createConfigFile()
 bool FileBasedPersistence::loadConfigFile()
 {
     nullSafeGuard();
-    return XMLHelper::loadXMLFile(m_doc, m_appCore->getConfigFile());
+    return XMLHelper::loadXMLFile(m_doc, m_appCore->getPersistenceContext());
 }
 
 
@@ -80,7 +80,7 @@ bool FileBasedPersistence::loadConfigFile()
 bool FileBasedPersistence::removeConfigFile()
 {
     nullSafeGuard();
-    return XMLHelper::removeXMLFile(m_appCore->getConfigFile());
+    return XMLHelper::removeXMLFile(m_appCore->getPersistenceContext());
 }
 
 
@@ -153,7 +153,7 @@ bool FileBasedPersistence::checkStreamIntegrityFromConfigFile()
     nullSafeGuard();
 
     std::fstream f;
-    f.open(m_appCore->getConfigFile().c_str(), std::ios::in);
+    f.open(m_appCore->getPersistenceContext().c_str(), std::ios::in);
 
     if (!f.fail()) {
         return checkStreamIntegrity(f);
@@ -397,7 +397,7 @@ bool FileBasedPersistence::persistConfigurationToConfigFile()
     saveScores(m_appCore->m_scoresEasyArray, m_doc.child("runner").child("scoresEasy"));
     saveScores(m_appCore->m_scoresHardArray, m_doc.child("runner").child("scoresHard"));
 
-    return m_doc.save_file(m_appCore->getConfigFile().c_str());
+    return m_doc.save_file(m_appCore->getPersistenceContext().c_str());
 }
 
 //------------------------------------------------
@@ -454,4 +454,62 @@ void FileBasedPersistence::saveScores(const std::set<int>& array, const xml_node
             nodeValue.set_value("0");
         }
     }
+}
+
+//TODO: Generate generate xml_document programmatically instead of having a giant string
+//  That would allow a minimum file, especially for scores
+string FileBasedPersistence::generateDefaultStringConfig()
+{
+    return "<?xml version=\"1.0\"?>\n"
+           "<runner>\n"
+           "\t<config>\n"
+           "\t\t<configItem type=\"string\" name=\"language\" value=\"en\"/>\n"
+           "\t\t<configItem type=\"int\" name=\"difficulty\" value=\"2\"/>\n"
+           "\t\t<configItem type=\"string\" name=\"ball_skin\" value=\"default\"/>\n"
+           "\t\t<configItem type=\"unsigned int\" name=\"wallet\" value=\"0\"/>\n"
+           "\t\t<configItem type=\"boolean\" name=\"menu_music\" value=\"false\"/>\n"
+           "\t\t<configItem type=\"boolean\" name=\"game_music\" value=\"true\"/>\n"
+           "\t</config>\n"
+           "\t<stats>\n"
+           "\t\t<statItem type=\"unsigned int\" name=\"total_distance_travelled\" value=\"0\"/>\n"
+           "\t\t<statItem type=\"unsigned int\" name=\"total_enemies_destroyed\" value=\"0\"/>\n"
+           "\t\t<statItem type=\"unsigned int\" name=\"total_coins_collected\" value=\"0\"/>\n"
+           "\t\t<statItem type=\"unsigned int\" name=\"total_games_played\" value=\"0\"/>\n"
+           "\t\t<statItem type=\"unsigned int\" name=\"per_game_distance_travelled\" value=\"0\"/>\n"
+           "\t\t<statItem type=\"unsigned int\" name=\"per_game_enemies_destroyed\" value=\"0\"/>\n"
+           "\t\t<statItem type=\"unsigned int\" name=\"per_game_coins_collected\" value=\"0\"/>\n"
+           "\t</stats>\n"
+           "\t<shop>\n"
+           "\t\t<shopItem type=\"boolean\" id=\"shop_doubler\" price=\"1000\" bought=\"false\"/>\n"
+           "\t\t<shopItem type=\"boolean\" id=\"shop_shield_plus\" price=\"100\" bought=\"false\"/>\n"
+           "\t\t<shopItem type=\"boolean\" id=\"shop_mega_plus\" price=\"200\" bought=\"false\"/>\n"
+           "\t\t<shopItem type=\"boolean\" id=\"shop_fly_plus\" price=\"180\" bought=\"false\"/>\n"
+           "\t\t<shopItem type=\"boolean\" id=\"shop_morphing\" price=\"500\" bought=\"false\"/>\n"
+           "\t\t<shopItem type=\"boolean\" id=\"shop_capsule\" price=\"60\" bought=\"false\"/>\n"
+           "\t</shop>\n"
+           "\t<scoresEasy>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t</scoresEasy>\n"
+           "\t<scoresHard>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"
+           "\t</scoresHard>\n"
+           "</runner>";
 }

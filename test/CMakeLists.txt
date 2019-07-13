@@ -9,7 +9,7 @@ set(UNIT_TESTS unit_tests)
 file(GLOB TESTED_SOURCE_FILES
         "../src/app/localization/LocalizationManager.cpp"
         "../src/app/model/core/AppCore.cpp"
-        "../src/app/model/core/ModelConstants.h"
+        "../src/app/model/core/ModelConstants.cpp"
         "../src/app/model/menu-components/ShopItem.cpp"
         "../src/app/persistence/FileBasedPersistence.cpp"
         "../src/app/persistence/PersistenceManager.cpp"

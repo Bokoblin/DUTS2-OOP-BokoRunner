@@ -1,3 +1,4 @@
+#include <app/persistence/PersistenceManager.h>
 #include "AppCore.h"
 
 using std::string;
@@ -51,7 +52,7 @@ bool AppCore::isScoreEasyArrayEmpty() const { return m_scoresEasyArray.empty(); 
 bool AppCore::isScoreHardArrayEmpty() const { return m_scoresHardArray.empty(); }
 string AppCore::getLanguage() const { return m_currentLanguage; }
 string AppCore::getBallSkin() const { return m_currentBallSkin; }
-string AppCore::getConfigFile() const { return ViewResources::CONFIG_FILE; }
+string AppCore::getPersistenceContext() const { return PersistenceManager::getContextLocation(); }
 
 
 //------------------------------------------------

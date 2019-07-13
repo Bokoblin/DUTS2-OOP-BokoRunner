@@ -25,7 +25,7 @@ protected:
     void TearDown() override
     {
         PersistenceManager::closeContext();
-        XMLHelper::removeXMLFile(testCore.getConfigFile());
+        XMLHelper::removeXMLFile(testCore.getPersistenceContext());
     }
 };
 
@@ -86,11 +86,11 @@ TEST_F(PersistenceManagerTest, checkInitializedContext)
  */
 TEST_F(PersistenceManagerTest, initPersistence)
 {
-    ASSERT_FALSE(XMLHelper::checkXMLFileExistence(testCore.getConfigFile()));
+    ASSERT_FALSE(XMLHelper::checkXMLFileExistence(testCore.getPersistenceContext()));
     PersistenceManager::initContext(testCore);
-    ASSERT_TRUE(XMLHelper::checkXMLFileExistence(testCore.getConfigFile()));
+    ASSERT_TRUE(XMLHelper::checkXMLFileExistence(testCore.getPersistenceContext()));
     PersistenceManager::initPersistence();
-    ASSERT_TRUE(XMLHelper::checkXMLFileExistence(testCore.getConfigFile()));
+    ASSERT_TRUE(XMLHelper::checkXMLFileExistence(testCore.getPersistenceContext()));
 }
 
 /**
@@ -99,9 +99,9 @@ TEST_F(PersistenceManagerTest, initPersistence)
 TEST_F(PersistenceManagerTest, updateExistingPersistence)
 {
     PersistenceManager::initContext(testCore);
-    ASSERT_TRUE(XMLHelper::checkXMLFileExistence(testCore.getConfigFile()));
+    ASSERT_TRUE(XMLHelper::checkXMLFileExistence(testCore.getPersistenceContext()));
     PersistenceManager::updatePersistence();
-    ASSERT_TRUE(XMLHelper::checkXMLFileExistence(testCore.getConfigFile()));
+    ASSERT_TRUE(XMLHelper::checkXMLFileExistence(testCore.getPersistenceContext()));
 }
 
 /**
@@ -109,9 +109,9 @@ TEST_F(PersistenceManagerTest, updateExistingPersistence)
  */
 TEST_F(PersistenceManagerTest, updateNonExistingPersistence)
 {
-    ASSERT_FALSE(XMLHelper::checkXMLFileExistence(testCore.getConfigFile()));
+    ASSERT_FALSE(XMLHelper::checkXMLFileExistence(testCore.getPersistenceContext()));
     PersistenceManager::updatePersistence();
-    ASSERT_FALSE(XMLHelper::checkXMLFileExistence(testCore.getConfigFile()));
+    ASSERT_FALSE(XMLHelper::checkXMLFileExistence(testCore.getPersistenceContext()));
 }
 
 /**
@@ -119,11 +119,11 @@ TEST_F(PersistenceManagerTest, updateNonExistingPersistence)
  */
 TEST_F(PersistenceManagerTest, resetPersistence)
 {
-    ASSERT_FALSE(XMLHelper::checkXMLFileExistence(testCore.getConfigFile()));
+    ASSERT_FALSE(XMLHelper::checkXMLFileExistence(testCore.getPersistenceContext()));
     PersistenceManager::initContext(testCore);
-    ASSERT_TRUE(XMLHelper::checkXMLFileExistence(testCore.getConfigFile()));
+    ASSERT_TRUE(XMLHelper::checkXMLFileExistence(testCore.getPersistenceContext()));
     PersistenceManager::resetPersistence();
-    ASSERT_TRUE(XMLHelper::checkXMLFileExistence(testCore.getConfigFile()));
+    ASSERT_TRUE(XMLHelper::checkXMLFileExistence(testCore.getPersistenceContext()));
 }
 
 /**
@@ -131,11 +131,11 @@ TEST_F(PersistenceManagerTest, resetPersistence)
  */
 TEST_F(PersistenceManagerTest, deletePersistence)
 {
-    ASSERT_FALSE(XMLHelper::checkXMLFileExistence(testCore.getConfigFile()));
+    ASSERT_FALSE(XMLHelper::checkXMLFileExistence(testCore.getPersistenceContext()));
     PersistenceManager::initContext(testCore);
-    ASSERT_TRUE(XMLHelper::checkXMLFileExistence(testCore.getConfigFile()));
+    ASSERT_TRUE(XMLHelper::checkXMLFileExistence(testCore.getPersistenceContext()));
     PersistenceManager::deletePersistence();
-    ASSERT_FALSE(XMLHelper::checkXMLFileExistence(testCore.getConfigFile()));
+    ASSERT_FALSE(XMLHelper::checkXMLFileExistence(testCore.getPersistenceContext()));
 }
 
 } // namespace gtest

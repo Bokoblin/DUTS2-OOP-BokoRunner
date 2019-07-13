@@ -67,8 +67,6 @@ TEST_F(XMLHelperTest, checkXMLStreamIntegrity)
     ASSERT_TRUE(XMLHelper::checkXMLStreamIntegrity(stream));
     stream << "<?xml version=\"1.0\"?";
     ASSERT_FALSE(XMLHelper::checkXMLStreamIntegrity(stream));
-    stream << DEFAULT_CONFIG_CONTENT.c_str();
-    ASSERT_TRUE(XMLHelper::checkXMLStreamIntegrity(stream));
 }
 
 /**

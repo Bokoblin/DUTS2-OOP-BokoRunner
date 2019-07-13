@@ -61,6 +61,7 @@ private:
     static void nullSafeGuard();
     static void insertScore(std::set<int>& array, const pugi::xml_node& scoreItem);
     static void saveScores(const std::set<int>& array, const pugi::xml_node& scoreNode);
+    static std::string generateDefaultStringConfig();
 
     //=== ATTRIBUTES
     static AppCore* m_appCore;

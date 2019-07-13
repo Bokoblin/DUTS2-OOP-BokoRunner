@@ -48,6 +48,7 @@ public:
     static void updatePersistence(); //TODO: global + split versions
     static void resetPersistence();
     static void deletePersistence();
+    static std::string getContextLocation();  //FIXME: Temporary: We should not expose it like that
 
     //=== GETTERS
     static bool isInit();

@@ -22,11 +22,13 @@ limitations under the License.
 #include "LeaderboardView.h"
 #include "SettingsView.h"
 #include "ShopView.h"
+#include "app/view/ui-components/ParallaxBackground.h"
 
 /**
- * MenuView Class
+ * @class MenuView
+ *
  * @author Arthur, Florian
- * @date 26/03/16 - 13/01/19
+ * @date 26/03/2016 - 14/07/2019
  */
 class MenuView: public AbstractView
 {
@@ -49,8 +51,7 @@ private:
     ShopView* m_shopView;
 
     //Graphic Elements
-    ScrollingBackground* m_farBackground;
-    ScrollingBackground* m_nearBackground;
+    ParallaxBackground* m_parallaxBackground;
     mdsf::Sprite* m_titleSprite;
     mdsf::RaisedButton* m_playButton;
     mdsf::RaisedButton* m_quitButton;

@@ -7,10 +7,10 @@ namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
 //------------------------------------------------
 
 /**
- * Links a model movable element to new sprite matching its type
+ * @brief Link a model movable element to new sprite matching its type
  *
  * @author Arthur
- * @date 18/03/16 - 24/12/17
+ * @date 18/03/2016 - 24/12/2017
  */
 void GameView::linkElements()
 {
@@ -21,24 +21,23 @@ void GameView::linkElements()
     m_game->clearNewMovableElementList();
 }
 
-
 /**
- * Processes the transition between zones
+ * @brief Process the transition between zones
  *
  * @author Arthur
- * @date 25/04/16 - 26/12/17
+ * @date 25/04/2016 - 14/07/2019
  */
 void GameView::processZonesTransition()
 {
     //=== [Always] Set background speed and position
 
     m_farTransitionBackground->setPosition(m_farTransitionBackground->getX() - TRANSITION_SPEED, 0);
-    m_farScrollingBackground->setScrollingSpeed(TRANSITION_SPEED);
-    m_nearScrollingBackground->decreaseAlpha(5);
-    if (m_nearScrollingBackground->getAlpha() == 0) {
-        m_nearScrollingBackground->setScrollingSpeed(0);
+    m_parallaxBackground->getBackground(SCROLLING_BACKGROUND)->setScrollingSpeed(TRANSITION_SPEED);
+    m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->decreaseAlpha(5);
+    if (m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->getAlpha() == 0) {
+        m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->setScrollingSpeed(0);
     } else {
-        m_nearScrollingBackground->setScrollingSpeed(TRANSITION_SPEED);
+        m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->setScrollingSpeed(TRANSITION_SPEED);
     }
 
     //=== [Transition half only] Update zone background image and position
@@ -46,15 +45,19 @@ void GameView::processZonesTransition()
     if (m_farTransitionBackground->getX() <= 5
             && m_farTransitionBackground->getX() >= -5) {
         if (m_game->getCurrentZone() == HILL) {
-            m_farScrollingBackground->loadAndApplyTextureFromImageFile(ViewResources::GAME_FAR_PLAIN_BACKGROUND);
-            m_nearScrollingBackground->loadAndApplyTextureFromImageFile(ViewResources::GAME_NEAR_PLAIN_BACKGROUND);
+            m_parallaxBackground->getBackground(SCROLLING_BACKGROUND)->
+                    loadAndApplyTextureFromImageFile(ViewResources::GAME_FAR_PLAIN_BACKGROUND);
+            m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->
+                    loadAndApplyTextureFromImageFile(ViewResources::GAME_NEAR_PLAIN_BACKGROUND);
         } else {
-            m_farScrollingBackground->loadAndApplyTextureFromImageFile(ViewResources::GAME_FAR_HILL_BACKGROUND);
-            m_nearScrollingBackground->loadAndApplyTextureFromImageFile(ViewResources::GAME_NEAR_HILL_BACKGROUND);
+            m_parallaxBackground->getBackground(SCROLLING_BACKGROUND)->
+                    loadAndApplyTextureFromImageFile(ViewResources::GAME_FAR_HILL_BACKGROUND);
+            m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->
+                    loadAndApplyTextureFromImageFile(ViewResources::GAME_NEAR_HILL_BACKGROUND);
         }
 
-        m_farScrollingBackground->setPositions(-300, 0);
-        m_nearScrollingBackground->setPositions(0, 0);
+        m_parallaxBackground->getBackground(SCROLLING_BACKGROUND)->setPositions(-300, 0);
+        m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->setPositions(0, 0);
     }
 
     //=== [Transition 3/4 until end] Update pixel creation of near background
@@ -84,19 +87,19 @@ void GameView::processZonesTransition()
     }
 }
 
-
 /**
-* Setups the transition between zones
- *
+* @brief Setup the transition between zones
+*
 * @author Arthur
-* @date 25/04/16 - 26/12/17
+* @date 25/04/2016 - 13/07/2019
 */
 void GameView::setupTransition()
 {
     m_game->setTransitionState(true);
     m_xPixelIntensity = 1;
     m_yPixelIntensity = 1;
-    m_farTransitionBackground->setPosition(m_farScrollingBackground->getLeftPosition().x + 1200, 0);
+    m_farTransitionBackground->setPosition(m_parallaxBackground->getBackground(
+            SCROLLING_BACKGROUND)->getLeftPosition().x + 1200, 0);
 
     if (m_game->getCurrentZone() == HILL) {
         m_pixelShader->load(ViewResources::GAME_NEAR_T1_BACKGROUND);
@@ -107,12 +110,11 @@ void GameView::setupTransition()
     }
 }
 
-
 /**
- * Updates elements of a running game
+ * @brief Update elements of a running game
  *
  * @author Arthur
- * @date 6/03/16 - 16/09/18
+ * @date 6/03/2016 - 13/07/2019
  */
 void GameView::updateRunningGameElements()
 {
@@ -121,20 +123,19 @@ void GameView::updateRunningGameElements()
     if (m_game->isTransitionRunning()) {
         processZonesTransition();
     } else {
-        m_farScrollingBackground->setScrollingSpeed(0.5f * m_game->getGameSpeed());
-        m_nearScrollingBackground->setScrollingSpeed(m_game->getGameSpeed());
-        m_nearScrollingBackground->setAlpha(255);
+        m_parallaxBackground->getBackground(SCROLLING_BACKGROUND)->setScrollingSpeed(0.5f * m_game->getGameSpeed());
+        m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->setScrollingSpeed(m_game->getGameSpeed());
+        m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->setAlpha(255);
 
-        if (m_game->isTransitionPossible()
-                && m_farScrollingBackground->getSeparationPositionX(m_width) > m_width - 100) {
+        if (m_game->isTransitionPossible() && m_parallaxBackground->getBackground(
+                SCROLLING_BACKGROUND)->getSeparationPositionX(m_width) > m_width - 100) {
             setupTransition();
         }
     }
 
     //=== Update Game Elements
 
-    m_farScrollingBackground->sync();
-    m_nearScrollingBackground->sync();
+    m_parallaxBackground->sync();
 
     m_remainingLifeImage->resize(0.01f * LIFE_LEVEL_WIDTH * m_game->getPlayer()->getLife(), LIFE_LEVEL_HEIGHT);
 
@@ -163,14 +164,13 @@ void GameView::updateRunningGameElements()
     }
 }
 
-
 /**
- * Deletes the Sprite that collided with the player
- * We consider that the player only collide with one element per complete loop,
+ * @brief Deletes the Sprite that collided with the player
+ * @details We consider that the player only collide with one element per complete loop,
  * it allows to reduce average complexity instead doing n loops each time (worst case)
  *
  * @author Arthur
- * @date 12/03/16 - 20/03/16
+ * @date 12/03/2016 - 20/03/2016
  */
 void GameView::deleteElements()
 {
@@ -198,18 +198,17 @@ void GameView::deleteElements()
     }
 }
 
-
 /**
- * Draws elements of a running game
+ * @brief Draw elements of a running game
  *
  * @author Arthur
- * @date 24/12/17 - 11/09/18
+ * @date 24/12/2017 - 13/07/2019
  */
 void GameView::drawRunningGame() const
 {
     //=== Standalone Sprites drawing
 
-    m_farScrollingBackground->draw(m_window);
+    m_parallaxBackground->draw(m_window);
 
     if (m_game->isTransitionRunning()) {
         m_window->draw(*m_farTransitionBackground);
@@ -218,7 +217,6 @@ void GameView::drawRunningGame() const
         }
     }
 
-    m_nearScrollingBackground->draw(m_window);
     m_window->draw(*m_bottomBarImage);
     m_window->draw(*m_remainingLifeImage);
     m_window->draw(*m_lifeBoxImage);
@@ -238,15 +236,14 @@ void GameView::drawRunningGame() const
     m_textManager->drawGameRunningText(m_window);
 }
 
-
 /**
- * Handle running game events
+ * @brief Handle running game events
  *
  * @param event sfml event object
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 26/12/17 - 13/01/19
+ * @date 26/12/2017 - 13/01/2019
  */
 bool GameView::handleRunningGameEvents(const sf::Event& event)
 {

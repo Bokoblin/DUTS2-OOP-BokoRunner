@@ -7,15 +7,14 @@ namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
 //------------------------------------------------
 
 /**
- * Constructs the splash screen view
- * with the window, the text manager and its model counterpart
+ * @brief Constructor
  *
  * @param window the app window
  * @param textManager the text manager
  * @param splashModel the splash screen model counterpart
  *
  * @author Arthur
- * @date 27/03/16 - 05/01/17
+ * @date 27/03/2016 - 05/01/2017
  */
 SplashScreenView::SplashScreenView(sf::RenderWindow* window, AppTextManager* textManager, SplashScreenModel* splashModel) :
         AbstractView(window, textManager), m_splashModel{splashModel}
@@ -33,30 +32,28 @@ SplashScreenView::SplashScreenView(sf::RenderWindow* window, AppTextManager* tex
     loadSprites();
 }
 
-
 /**
- * Destructor
+ * @brief Destructor
+ *
  * @author Arthur
- * @date 27/03/16 - 24/12/17
+ * @date 27/03/2016 - 13/07/2019
  */
 SplashScreenView::~SplashScreenView()
 {
     delete m_splashScreen;
     delete m_appTitle;
-    delete m_farBackground;
-    delete m_nearBackground;
+    delete m_parallaxBackground;
 }
-
 
 //------------------------------------------------
 //          METHODS
 //------------------------------------------------
 
 /**
- * Loads all sprites used by the splash screen
+ * @brief Load all sprites used by the splash screen
  *
  * @author Arthur
- * @date 27/03/16 - 16/09/18
+ * @date 27/03/2016 - 13/07/2019
  */
 void SplashScreenView::loadSprites()
 {
@@ -64,12 +61,11 @@ void SplashScreenView::loadSprites()
     m_splashScreen->loadAndApplyTextureFromImageFile(ViewResources::SPLASH_SCREEN_IMAGE);
     m_splashScreen->resize(m_width, m_height);
 
-    m_farBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, 0, ViewResources::GAME_FAR_HILL_BACKGROUND);
-    m_nearBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, 0, ViewResources::GAME_NEAR_HILL_BACKGROUND);
-    m_farBackground->setLight(0);
-    m_nearBackground->setLight(0);
-    m_farBackground->applyColor();
-    m_nearBackground->applyColor();
+    m_parallaxBackground = new ParallaxBackground(BACKGROUND_WIDTH, m_height);
+    m_parallaxBackground->addBackground(0, 0, ViewResources::GAME_FAR_HILL_BACKGROUND);
+    m_parallaxBackground->addBackground(1, 0, ViewResources::GAME_NEAR_HILL_BACKGROUND);
+    m_parallaxBackground->setLight(0);
+    m_parallaxBackground->applyColor();
 
     m_appTitle = new mdsf::Sprite(getHalfXPosition() - (0.45f * TITLE_WIDTH), 0.167f * m_height,
                                   TITLE_WIDTH, TITLE_HEIGHT, ViewResources::TITLE_IMAGE);
@@ -78,12 +74,11 @@ void SplashScreenView::loadSprites()
     m_appTitle->applyColor();
 }
 
-
 /**
- * Synchronizes splash screen elements
+ * @brief Synchronize splash screen elements
  *
  * @author Arthur
- * @date 27/03/16 - 13/09/18
+ * @date 27/03/2016 - 13/07/2019
  */
 void SplashScreenView::synchronize()
 {
@@ -94,31 +89,27 @@ void SplashScreenView::synchronize()
             m_splashModel->setAppState(MENU);
         } else {
             m_splashScreen->decreaseAlpha(15);
-            m_farBackground->increaseLight(3);
-            m_nearBackground->increaseLight(3);
+            m_parallaxBackground->increaseLight(3);
             m_appTitle->increaseAlpha(5);
 
             m_splashScreen->sync();
-            m_farBackground->sync();
-            m_nearBackground->sync();
+            m_parallaxBackground->sync();
             m_appTitle->sync();
         }
     }
 }
 
-
 /**
- * Draws splash screen elements on the window
+ * @brief Draw splash screen elements on the window
  *
  * @author Arthur
- * @date 27/03/16 - 24/12/17
+ * @date 27/03/2016 - 13/07/2019
  */
 void SplashScreenView::draw() const
 {
     m_window->clear();
 
-    m_farBackground->draw(m_window);
-    m_nearBackground->draw(m_window);
+    m_parallaxBackground->draw(m_window);
     m_appTitle->draw(m_window);
     m_splashScreen->draw(m_window);
 
@@ -129,15 +120,14 @@ void SplashScreenView::draw() const
     m_window->display();
 }
 
-
 /**
- * Handles the user interaction events (mouse, keyboard, title bar buttons)
+ * @brief Handle the user interaction events (mouse, keyboard, title bar buttons)
  *
  * @param event sfml event object
  * @return true if app state is unchanged
  *
  * @author Arthur
- * @date 27/03/16 - 13/01/19
+ * @date 27/03/2016 - 13/01/2019
  */
 bool SplashScreenView::handleEvents(sf::Event& event)
 {

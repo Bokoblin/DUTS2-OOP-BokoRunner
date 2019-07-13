@@ -20,11 +20,13 @@ limitations under the License.
 #include "app/model/models/GameModel.h"
 #include "app/view/ui-components/PixelShader.h"
 #include "AbstractView.h"
+#include "app/view/ui-components/ParallaxBackground.h"
 
 /**
- * GameView Class
+ * @class GameView
+ *
  * @author Arthur, Florian
- * @date 21/02/16 - 22/09/18
+ * @date 21/02/16 - 13/07/2019
  */
 class GameView: public AbstractView
 {
@@ -46,6 +48,8 @@ private:
     float m_yPixelIntensity;
 
     //Constants
+    const int SCROLLING_BACKGROUND = 0;
+    const int SCROLLING_FOREGROUND = 1;
     const int TRANSITION_SPEED = 10;
     const int PAUSE_FORM_X = 30;
     const int HOME_BUTTON_SIZE = 30;
@@ -66,8 +70,7 @@ private:
     static constexpr float INITIAL_PIXEL_INTENSITY = 1;
 
     //Game Graphic Elements
-    ScrollingBackground* m_farScrollingBackground;//TODO: parallax class
-    ScrollingBackground* m_nearScrollingBackground;
+    ParallaxBackground* m_parallaxBackground;
     mdsf::Sprite* m_farTransitionBackground;
     mdsf::Sprite* m_bottomBarImage;
     mdsf::Sprite* m_lifeBoxImage;

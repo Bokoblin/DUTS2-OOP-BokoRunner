@@ -22,18 +22,17 @@ limitations under the License.
 #include "libs/MDC-SFML/src/Button.h"
 #include "app/persistence/PersistenceManager.h"
 #include "app/view/AppTextManager.h"
-#include "app/view/ui-components/ScrollingBackground.h"
 #include "app/view/ui-components/AnimatedSprite.h"
 #include "app/view/utils/AppColor.h"
 #include "app/view/utils/EventUtils.h"
 
 /**
- * The AbstractView class provides common
- * attributes and methods that will be used
- * by its inherited classes.
+ * @class AbstractView
+ * @details Provide common attributes and methods
+ * that will be used by its inherited classes.
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 13/01/19
+ * @date 21/02/2016 - 13/01/2019
  */
 class AbstractView
 {

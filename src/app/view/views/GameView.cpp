@@ -10,15 +10,14 @@ namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
 //------------------------------------------------
 
 /**
- * Constructs the game view
- * with the window, the text manager and its model counterpart
+ * @brief Constructor
  *
  * @param window the app window
  * @param textManager the text manager
  * @param gameModel the game model counterpart
  *
  * @author Arthur
- * @date 26/03/16 - 11/09/18
+ * @date 26/03/2016 - 11/09/2018
  */
 GameView::GameView(sf::RenderWindow* window, AppTextManager* textManager, GameModel* gameModel) :
         AbstractView(window, textManager), m_game{gameModel},
@@ -66,19 +65,18 @@ GameView::GameView(sf::RenderWindow* window, AppTextManager* textManager, GameMo
     }
 }
 
-
 /**
- * Destructor
+ * @brief Destructor
+ *
  * @author Arthur
- * @date 26/03/16 - 11/09/18
+ * @date 26/03/2016 - 13/07/2019
  */
 GameView::~GameView()
 {
     //=== Delete Game Element
 
-    delete m_farScrollingBackground;
+    delete m_parallaxBackground;
     delete m_farTransitionBackground;
-    delete m_nearScrollingBackground;
     delete m_bottomBarImage;
     delete m_lifeBoxImage;
     delete m_remainingLifeImage;
@@ -107,23 +105,23 @@ GameView::~GameView()
     m_game = nullptr; //Model memory mustn't be freed by the view
 }
 
-
 //------------------------------------------------
 //          METHODS
 //------------------------------------------------
 
 /**
- * Loads all sprites used by the game (backgrounds, UI, elements)
+ * @brief Load all sprites used by the game (backgrounds, UI, elements)
  *
  * @author Arthur
- * @date 26/03/16 - 25/09/18
+ * @date 26/03/2016 - 13/07/2019
  */
 void GameView::loadSprites()
 {
     //=== Initialize backgrounds
 
-    m_farScrollingBackground = new ScrollingBackground(1.33f * m_width, m_height, 1, ViewResources::GAME_FAR_HILL_BACKGROUND);
-    m_nearScrollingBackground = new ScrollingBackground(1.33f * m_width, m_height, 2, ViewResources::GAME_NEAR_HILL_BACKGROUND);
+    m_parallaxBackground = new ParallaxBackground(1.33f * m_width, m_height);
+    m_parallaxBackground->addBackground(SCROLLING_BACKGROUND, 1, ViewResources::GAME_FAR_HILL_BACKGROUND);
+    m_parallaxBackground->addBackground(SCROLLING_FOREGROUND, 2, ViewResources::GAME_NEAR_HILL_BACKGROUND);
 
     m_farTransitionBackground = new mdsf::Sprite(m_width, m_height, m_width, m_height, ViewResources::GAME_FAR_T1_BACKGROUND);
     m_bottomBarImage = new mdsf::Sprite(0, 0.87f * m_height, m_width, m_height, ViewResources::BOTTOM_BAR_IMAGE);
@@ -232,7 +230,6 @@ void GameView::loadSprites()
     m_restartGameButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_restartGameButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
-
     vector<sf::IntRect> clipRect_home;
     clipRect_home.emplace_back(0, 100, 50, 50);
     clipRect_home.emplace_back(50, 100, 50, 50);
@@ -273,12 +270,11 @@ void GameView::loadSprites()
     m_typeToSpriteMap[SHIELD_BONUS] = m_shieldBonusSprite;
 }
 
-
 /**
- * Synchronizes game elements
+ * @brief Synchronize game elements
  *
  * @author Arthur
- * @date 26/03/16 - 30/01/17
+ * @date 26/03/2016 - 30/01/2017
  */
 void GameView::synchronize()
 {
@@ -310,10 +306,10 @@ void GameView::synchronize()
 
 
 /**
- * Draws game elements on the window
+ * @brief Draw game elements on the window
  *
  * @author Arthur
- * @date 26/03/16 - 24/12/17
+ * @date 26/03/2016 - 24/12/2017
  */
 void GameView::draw() const
 {
@@ -337,12 +333,11 @@ void GameView::draw() const
     m_window->display();
 }
 
-
 /**
- * Handles music settings
+ * @brief Handle music settings
  *
  * @author Arthur
- * @date 25/01/17
+ * @date 25/01/2017
  */
 void GameView::handleMusic()
 {
@@ -368,10 +363,10 @@ void GameView::handleMusic()
 
 
 /**
- * Handle players inputs
+ * @brief Handle players inputs
  *
  * @author Arthur
- * @date 26/12/17 - 30/10/18
+ * @date 26/12/2017 - 30/10/2018
  */
 void GameView::handlePlayerInput() const
 {
@@ -391,15 +386,14 @@ void GameView::handlePlayerInput() const
     }
 }
 
-
 /**
- * Handles the user interaction events (mouse, keyboard, title bar buttons)
+ * @brief Handle the user interaction events (mouse, keyboard, title bar buttons)
  *
  * @param event sfml event object
  * @return true if app state is unchanged
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 13/01/19
+ * @date 21/02/2016 - 13/01/2019
  */
 bool GameView::handleEvents(sf::Event& event)
 {

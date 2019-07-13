@@ -9,15 +9,14 @@ namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
 //------------------------------------------------
 
 /**
- * Constructs the menu view
- * with the window, the text manager and its model counterpart
+ * @brief Constructor
  *
  * @param window the app window
  * @param textManager the text manager
  * @param menuModel the menu model counterpart
  *
  * @author Arthur, Florian
- * @date 25/02/16 - 24/01/17
+ * @date 25/02/2016 - 24/01/2017
  */
 MenuView::MenuView(sf::RenderWindow* window, AppTextManager* textManager, MenuModel* menuModel) :
         AbstractView(window, textManager), m_menu{menuModel},
@@ -28,14 +27,13 @@ MenuView::MenuView(sf::RenderWindow* window, AppTextManager* textManager, MenuMo
 }
 
 /**
- * Destructor
+ * @brief Destructor
  * @author Arthur
- * @date 26/02/16 - 21/05/16
+ * @date 26/02/2016 - 14/07/2019
  */
 MenuView::~MenuView()
 {
-    delete m_farBackground;
-    delete m_nearBackground;
+    delete m_parallaxBackground;
     delete m_titleSprite;
     delete m_playButton;
     delete m_quitButton;
@@ -45,16 +43,15 @@ MenuView::~MenuView()
     delete m_shopButton;
 }
 
-
 //------------------------------------------------
 //          METHODS
 //------------------------------------------------
 
 /**
- * Loads the menu music at startup
+ * @brief Load the menu music at startup
  *
  * @author Arthur
- * @date 29/12/17
+ * @date 29/12/2017
  */
 void MenuView::loadMusic()
 {
@@ -72,17 +69,17 @@ void MenuView::loadMusic()
     }
 }
 
-
 /**
- * Loads all sprites used by the menu screen
+ * @brief Load all sprites used by the menu screen
  *
  * @author Arthur
- * @date 26/03/16 - 20/09/18
+ * @date 26/03/2016 - 14/07/2019
  */
 void MenuView::loadSprites()
 {
-    m_farBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, FAR_SCROLL_SPEED, ViewResources::GAME_FAR_HILL_BACKGROUND);
-    m_nearBackground = new ScrollingBackground(BACKGROUND_WIDTH, m_height, NEAR_SCROLL_SPEED, ViewResources::GAME_NEAR_HILL_BACKGROUND);
+    m_parallaxBackground = new ParallaxBackground(BACKGROUND_WIDTH, m_height);
+    m_parallaxBackground->addBackground(0, FAR_SCROLL_SPEED, ViewResources::GAME_FAR_HILL_BACKGROUND);
+    m_parallaxBackground->addBackground(1, NEAR_SCROLL_SPEED, ViewResources::GAME_NEAR_HILL_BACKGROUND);
 
     m_titleSprite = new mdsf::Sprite(getHalfXPosition() - (0.45f * TITLE_WIDTH), 0.167f * m_height,
                                      TITLE_WIDTH, TITLE_HEIGHT, ViewResources::TITLE_IMAGE);
@@ -114,12 +111,11 @@ void MenuView::loadSprites()
     m_leaderboardButton->loadAndApplyTextureFromImageFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 150, 50, 50));
 }
 
-
 /**
- * Synchronizes menu elements
+ * @brief Synchronize menu elements
  *
  * @author Arthur
- * @date 26/03/16 - 30/01/17
+ * @date 26/03/2016 - 14/07/2019
  */
 void MenuView::synchronize()
 {
@@ -135,8 +131,7 @@ void MenuView::synchronize()
 
     switch (m_menu->getMenuState()) {
         case HOME:
-            m_farBackground->sync();
-            m_nearBackground->sync();
+            m_parallaxBackground->sync();
             m_playButton->sync();
             m_quitButton->sync();
             m_commandsButton->sync();
@@ -159,7 +154,6 @@ void MenuView::synchronize()
         default:
             break;
     }
-
 
     //=== Delete commandsView if not anymore current menu state
     if (m_menu->getMenuState() != COMMANDS && m_commandsView != nullptr) {
@@ -186,20 +180,18 @@ void MenuView::synchronize()
     }
 }
 
-
 /**
- * Draws menu elements on the window
+ * @brief Draw menu elements on the window
  *
  * @author Arthur
- * @date 26/03/16 - 20/09/18
+ * @date 26/03/2016 - 14/07/2019
  */
 void MenuView::draw() const
 {
     if (m_menu->getMenuState() == HOME) {
         m_window->clear();
 
-        m_farBackground->draw(m_window);
-        m_nearBackground->draw(m_window);
+        m_parallaxBackground->draw(m_window);
         m_titleSprite->draw(m_window);
         m_playButton->draw(m_window);
         m_quitButton->draw(m_window);
@@ -220,15 +212,14 @@ void MenuView::draw() const
     }
 }
 
-
 /**
- * Handles Home screen events
+ * @brief Handle Home screen events
  *
  * @param event sfml event object
  * @return true if app state is unchanged
  *
  * @author Arthur, Florian
- * @date 25/03/16 - 30/10/18
+ * @date 25/03/2016 - 30/10/2018
  */
 bool MenuView::handleHomeEvents(const sf::Event& event)
 {
@@ -275,15 +266,14 @@ bool MenuView::handleHomeEvents(const sf::Event& event)
     return true;
 }
 
-
 /**
- * Handles the user interaction events (mouse, keyboard, title bar buttons)
+ * @brief Handle the user interaction events (mouse, keyboard, title bar buttons)
  *
  * @param event sfml event object
  * @return true if app state is unchanged
  *
  * @author Arthur, Florian
- * @date 25/03/16 - 13/01/19
+ * @date 25/03/2016 - 13/01/19
  */
 bool MenuView::handleEvents(sf::Event& event)
 {

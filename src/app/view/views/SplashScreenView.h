@@ -18,12 +18,14 @@ limitations under the License.
 
 #include "app/model/models/SplashScreenModel.h"
 #include "AbstractView.h"
+#include "app/view/ui-components/ParallaxBackground.h"
 
 /**
- * The SplashScreenView class displays
- * the app's splash screen at startup
+ * @class SplashScreenView
+ * @details Display the app's splash screen at startup
+ *
  * @author Arthur
- * @date 27/03/16 - 13/01/19
+ * @date 27/03/2016 - 13/07/2019
  */
 class SplashScreenView: public AbstractView
 {
@@ -43,8 +45,7 @@ private:
     mdsf::Sprite* m_splashScreen;
 
     //For transition
-    ScrollingBackground* m_farBackground;
-    ScrollingBackground* m_nearBackground;
+    ParallaxBackground* m_parallaxBackground;
     mdsf::Sprite* m_appTitle;
 
     //Constants

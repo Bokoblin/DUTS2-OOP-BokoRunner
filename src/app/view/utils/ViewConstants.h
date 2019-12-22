@@ -53,10 +53,10 @@ extern const std::string GAME_COMPONENTS;
 
 //=== App values
 extern const std::string APP_TITLE;
-extern const int SCREEN_WIDTH;
-extern const int SCREEN_HEIGHT;
-extern const int SCREEN_BPP;
-extern const int APP_FRAMERATE;
+extern const unsigned int SCREEN_WIDTH;
+extern const unsigned int SCREEN_HEIGHT;
+extern const unsigned int SCREEN_BPP;
+extern const unsigned int APP_FRAMERATE;
 extern const std::string REPOSITORY_URL;
 extern const std::string EMAIL_URL;
 

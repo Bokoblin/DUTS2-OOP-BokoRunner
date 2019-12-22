@@ -21,3 +21,5 @@ cmake-build-release/
 misc/
 tmp_doc/
 Roadmap.md
+RUNNER.*
+compile_commands.json

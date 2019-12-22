@@ -58,8 +58,8 @@ Text::Text(Text const& other) :
 //          GETTERS
 //------------------------------------------------
 
-float Text::getWidth() const { return getGlobalBounds().width / getScale().x; };
-float Text::getHeight() const { return getGlobalBounds().height / getScale().y; };
+float Text::getWidth() const { return getGlobalBounds().width / getScale().x; }
+float Text::getHeight() const { return getGlobalBounds().height / getScale().y; }
 string Text::getDescription() const { return m_description; }
 bool Text::isVisible() const { return m_isVisible; }
 

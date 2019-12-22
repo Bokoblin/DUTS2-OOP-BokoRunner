@@ -48,8 +48,8 @@ private:
     float m_yPixelIntensity;
 
     //Constants
-    const int SCROLLING_BACKGROUND = 0;
-    const int SCROLLING_FOREGROUND = 1;
+    const unsigned int SCROLLING_BACKGROUND = 0;
+    const unsigned int SCROLLING_FOREGROUND = 1;
     const int TRANSITION_SPEED = 10;
     const int PAUSE_FORM_X = 30;
     const int HOME_BUTTON_SIZE = 30;

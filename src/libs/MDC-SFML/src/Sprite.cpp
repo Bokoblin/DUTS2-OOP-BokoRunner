@@ -147,10 +147,10 @@ Sprite::~Sprite() = default;
 //          GETTERS
 //------------------------------------------------
 
-float Sprite::getX() const { return getPosition().x; };
-float Sprite::getY() const { return getPosition().y; };
-float Sprite::getWidth() const { return m_width; };
-float Sprite::getHeight() const { return m_height; };
+float Sprite::getX() const { return getPosition().x; }
+float Sprite::getY() const { return getPosition().y; }
+float Sprite::getWidth() const { return m_width; }
+float Sprite::getHeight() const { return m_height; }
 bool Sprite::isVisible() const { return m_isVisible; }
 int Sprite::getAlpha() const { return m_alpha; }
 int Sprite::getLight() const { return m_light; }

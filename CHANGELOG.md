@@ -73,10 +73,10 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 - **xml**: safe fetching, logging
 - **cmake**: reorganization with libraries usage
 - **unit tests**: reintroduced with Google Test
-- **copyright**: Updated to 2018
+- **copyright**: Updated up to 2019
  
 #### Library changes
-- **SFML**: updated SFML version ( 2.3.2 => 2.4.2)
+- **SFML**: upgraded SFML library ( 2.3.2 => 2.4.2)
 - **splitting**: split out some components into libraries compiled separately:
     - **slogger**: a simple logger for the app
     - **xmlhelper**: an xml helper to abstract pugi usage

@@ -85,7 +85,7 @@ const Text& Dialog::getOkButtonText() const { return m_okButtonText; }
 
 void Dialog::setTitleText(const string& title) { m_title.setString(title); }
 void Dialog::setContentText(const string& content) { m_content.setString(content);}
-void Dialog::setCancelButtonText(const string& cancel) { m_cancelButtonText.setString(cancel); };
+void Dialog::setCancelButtonText(const string& cancel) { m_cancelButtonText.setString(cancel); }
 void Dialog::setOkButtonText(const string& ok) { m_okButtonText.setString(ok); }
 
 

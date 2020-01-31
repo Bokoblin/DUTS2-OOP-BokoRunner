@@ -28,5 +28,5 @@ TestCore::~TestCore() = default;
 //          GETTERS
 //------------------------------------------------
 
-//FIXME: ALL THOSE CONFIGS ARE LINKED TO FILE BASED, WE SHALL ABSTRACT THAT ALSO
+//FIXME [2.0.x] ALL THOSE CONFIGS ARE LINKED TO FILE BASED, WE SHALL ABSTRACT THAT ALSO
 std::string TestCore::getPersistenceContext() const { return "test_config.xml"; }

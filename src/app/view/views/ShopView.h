@@ -52,7 +52,7 @@ private:
     //Graphic Elements
     mdsf::Sprite* m_coinSprite;
     mdsf::RaisedButton* m_homeButton;
-    mdsf::Dialog* m_buyDialog; //TODO: to delete with drawableList
+    mdsf::Dialog* m_buyDialog; //TODO [MDC-CPP] to delete with drawableList
 
     //Containers
     std::vector<ShopItemCard*> m_shopItemCardsArray;

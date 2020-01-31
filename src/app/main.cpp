@@ -27,7 +27,7 @@ namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
  * @author Arthur, Florian
  * @date 21/02/16 - 12/10/18
  */
-int main() //TODO: App class with logic -- main must only uses it + check arguments (for CLI)
+int main() //TODO [2.2.x] App class with logic -- main must only uses it + check arguments (for CLI)
 {
     //=== Initialize window
 

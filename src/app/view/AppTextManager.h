@@ -49,8 +49,8 @@ public:
 
     //=== METHODS
     //Text utils
-    void handleAboutLinks(const sf::Event& event, const SettingsModel& settings) const; //TODO: Temporary until dedicated LinkButton class
-    void updateWholeStandaloneTextContent(); //TODO: modularize (to reduce time complexity)
+    void handleAboutLinks(const sf::Event& event, const SettingsModel& settings) const; //TODO [MDC-CPP] Replace by a dedicated LinkButton class
+    void updateWholeStandaloneTextContent(); //TODO [2.0.x] modularize (to reduce time complexity)
 
     //Text init (to use once at screen loading)
     void initMenuLeaderboardText();
@@ -160,7 +160,7 @@ private:
     const unsigned int CONTENT_CHAR_SIZE = 20;
 
     //=== METHODS
-    void loadText(); //TODO: Modularize with map instead to only load what's needed -- like in the past :)
+    void loadText(); //TODO [2.0.x] Modularize with map instead to only load what's needed -- like in the past :)
 };
 
 #endif

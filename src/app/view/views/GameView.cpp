@@ -143,7 +143,7 @@ void GameView::loadSprites()
 
     m_distanceIcon = new mdsf::Sprite(0.033f * m_width, 0.055f * m_height, ORIGINAL_DISTANCE_ICON_SIZE);
     m_distanceIcon->loadAndApplyTextureFromImageFile(ViewResources::GAME_BUTTONS_IMAGE, sf::IntRect(0, 150, 50, 50));
-    m_distanceIcon->resize(PAUSE_ICONS_SIZE); //TODO: Move resize call to ctor/sync() after setting the target size in ctor
+    m_distanceIcon->resize(PAUSE_ICONS_SIZE); //TODO [2.0.x] Move resize call to ctor/sync() after setting the target size in ctor
 
 
     //=== Initialize PLAYER sprite
@@ -214,7 +214,7 @@ void GameView::loadSprites()
     vector<sf::IntRect> clipRect_resume;
     clipRect_resume.emplace_back(0, 0, 50, 50);
     clipRect_resume.emplace_back(50, 0, 50, 50);
-    //TODO : Convert to raised button
+    //TODO [MDC-CPP] Convert to raised button
     m_resumeGameButton = new mdsf::Button(PAUSE_FORM_X, 0.592f * m_height, PAUSE_ICONS_SIZE, PAUSE_ICONS_SIZE,
                                           "pause_resume", ViewResources::GAME_BUTTONS_IMAGE, clipRect_resume);
     m_resumeGameButton->resize(PAUSE_BUTTONS_SIZE);
@@ -256,8 +256,8 @@ void GameView::loadSprites()
 
     //=== Associate element type to sprite
 
-    //FIXME: Use AnimatedSprite Ctor with no posX and PosY above as useless
-    //FIXME: Replace unneeded members above by function variables
+    //FIXME [2.0.x] Use AnimatedSprite Ctor with no posX and PosY above as useless
+    //FIXME [2.0.x] Replace unneeded members above by function variables
     m_typeToSpriteMap[PLAYER] = m_playerSprite;
     m_typeToSpriteMap[STANDARD_ENEMY] = m_stdEnemySprite;
     m_typeToSpriteMap[TOTEM_ENEMY] = m_totemEnemySprite;

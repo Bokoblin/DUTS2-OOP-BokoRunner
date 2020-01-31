@@ -166,7 +166,7 @@ void Button::sync()
 {
     Sprite::applyColor();
 
-    if (!m_clipRectArray.empty()) { //FIXME: temp until ToggleButton class
+    if (!m_clipRectArray.empty()) { //TODO [2.0.x/MDC-CPP] Remove with the future ToggleButton class
         if (m_isEnabled && m_clipRectArray.size() == 2) {
             this->setTextureRect(m_clipRectArray[static_cast<int>(m_isPressed)]);
         } else {

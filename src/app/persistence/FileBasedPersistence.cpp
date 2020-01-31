@@ -456,7 +456,7 @@ void FileBasedPersistence::saveScores(const std::set<int>& array, const xml_node
     }
 }
 
-//TODO: Generate generate xml_document programmatically instead of having a giant string
+//TODO [2.0.x] Generate xml_document programmatically instead of having a giant string
 //  That would allow a minimum file, especially for scores
 string FileBasedPersistence::generateDefaultStringConfig()
 {

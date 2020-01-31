@@ -60,7 +60,7 @@ public:
     bool isScoreHardArrayEmpty() const;
     std::string getLanguage() const;
     std::string getBallSkin() const;
-    //FIXME: LINKED TO FILE BASED, WE SHALL ABSTRACT THAT ALSO
+    //FIXME [2.0.x] LINKED TO FILE BASED, WE SHALL ABSTRACT THAT ALSO
     virtual std::string getPersistenceContext() const;
 
     //=== SETTERS
@@ -109,7 +109,7 @@ protected:
     std::map<std::string, int> m_gameMap;
 
 private:
-    friend class FileBasedPersistence; //TODO: Be friend with an abstraction of persistence instead
+    friend class FileBasedPersistence; //TODO [2.0.x] Be friend with an abstraction of persistence instead
 
     //=== METHODS
     void initWithDefaultValues();

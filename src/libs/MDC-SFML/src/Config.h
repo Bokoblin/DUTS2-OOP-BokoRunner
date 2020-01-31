@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef MDC_SFML_CONFIG_H
 #define MDC_SFML_CONFIG_H
 
-#define RES_FOLDER "../res/" //FIXME: Move MDC-SFML resources to MDC-SFML/res/
+#define RES_FOLDER "../res/" //TODO [2.0.x] Move MDC-SFML resources to MDC-SFML/res/
 
 #include <string>
 #include <iostream>

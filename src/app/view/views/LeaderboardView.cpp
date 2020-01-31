@@ -29,7 +29,7 @@ LeaderboardView::LeaderboardView(sf::RenderWindow* window, AppTextManager* textM
 
     //=== Init confirm dialog
 
-    //TODO: No dialog init at startup
+    //TODO [MDC-CPP] No dialog init at startup
     m_confirmDialog = new mdsf::Dialog(getDialogXPosition(DIALOG_WIDTH), getDialogYPosition(DIALOG_HEIGHT),
                                        DIALOG_WIDTH, DIALOG_HEIGHT, "confirm_leaderboard_delete");
     m_confirmDialog->hide();

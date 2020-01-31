@@ -35,7 +35,7 @@ const sf::Color Color::MaterialBlueGrey(96, 125, 139); //#607D8B
 
 const sf::Color Color::MaterialGreenA700(0, 200, 83); //#00c853
 
-//TODO : add more material colors
+//TODO [MDC-CPP] add more material colors
 
 } //namespace MaterialDesignComponentsForSFML
 } //namespace Bokoblin

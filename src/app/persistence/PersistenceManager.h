@@ -45,10 +45,10 @@ public:
     static void fetchLeaderboard();
     static void fetchActivatedBonus();
     static void fetchShopItems();
-    static void updatePersistence(); //TODO: global + split versions
+    static void updatePersistence(); //TODO [2.0.x] global + split versions
     static void resetPersistence();
     static void deletePersistence();
-    static std::string getContextLocation();  //FIXME: Temporary: We should not expose it like that
+    static std::string getContextLocation();  //FIXME [2.0.x] Temporary: We should not expose it like that
 
     //=== GETTERS
     static bool isInit();

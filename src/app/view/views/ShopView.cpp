@@ -265,7 +265,7 @@ void ShopView::processBuyItemConfirmAction()
         ShopItem* shopItem = dynamic_cast<ShopDialog*>(m_buyDialog)->getLinkedShopItem();
 
         delete m_buyDialog;
-        //TODO: As we initialize dialog with a new it can be added to an item group instead of declared in header file
+        //TODO [MDC-CPP] As we initialize dialog with a new it can be added to an item group instead of declared in header file
 
         const std::string operationResult = m_shop->buyItem(shopItem) ? "shop_buying_success" : "shop_buying_failure";
 

@@ -13,10 +13,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-//TODO: TO FIX DRAW WARNING: Don't use sf::Sprite as base (not advised in 2013), use it as member ("has-a" link) ?
+//TODO [2.0.x/MDC-CPP] TO FIX DRAW WARNING: Don't use sf::Sprite as base (not advised in 2013), use it as member ("has-a" link) ?
 //      Keep Drawable inheritance to implement draw function though
 
-//TODO: Retrieve and store initial width/height, renamed parameters to "newWidth/newHeight"
+//TODO [2.0.x/MDC-CPP] Retrieve and store initial width/height, renamed parameters to "newWidth/newHeight"
 
 #ifndef MDC_SFML_SPRITE_H
 #define MDC_SFML_SPRITE_H

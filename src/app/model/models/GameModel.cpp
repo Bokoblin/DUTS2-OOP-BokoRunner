@@ -112,7 +112,7 @@ void GameModel::nextStep()
             conditionallyTriggerGameOver();
 
             m_lastTime = system_clock::now();
-        } //FIXME: else sf::sleep to reduce CPU ?? (but not sfml implementation as breaking MVC, a more language close one : C++ or C)
+        } //FIXME [2.0.x] else sf::sleep to reduce CPU ?? (but not sfml implementation as breaking MVC, a more language close one : C++ or C)
         //      (in theory yes, but it may conflict with the view, so architecture must be different with a different thread for the view.
         //      Other solution would be maybe to trigger the view update at the end of inner if but the current architecture can't permit that without a controller)
         //--> It may be possible to do so using C signals (seen in SysProgramming), with that we can assign a function to a received signal,

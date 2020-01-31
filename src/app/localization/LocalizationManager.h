@@ -23,9 +23,9 @@ limitations under the License.
 
 class AppCore;
 
-//TODO: Maybe store config as static document xml instead of loading file each time
+//TODO [2.0.x] Maybe store config as static document xml instead of loading file each time
 //      Especially useful for languages files accessed a dozen times
-//TODO: Dynamic language handling (adding a language file adds it to available languages if valid) [post 2.X?]
+//TODO [2.x.x] Dynamic language handling (adding a language file adds it to available languages if valid)
 
 /**
  * The LocalizationManager class manages the app localization. \n

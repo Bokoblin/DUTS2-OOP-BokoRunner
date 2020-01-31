@@ -7,7 +7,7 @@ Current version : v2.0.0-dev
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v2.0.0-dev"></a>
-## [v2.0.0-dev](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/release...dev)
+## [v2.0.0-dev](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/release...dev)
 
 TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 
@@ -91,7 +91,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.8.2"></a>
-## [v1.8.2](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.8.1-1...v1.8.2) (2017-04-10)
+## [v1.8.2](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.8.1-1...v1.8.2) (2017-04-10)
 
 #### Fixes
 - **styling**: improved C++ code styling
@@ -106,7 +106,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.8.1-1"></a>
-## [v1.8.1-1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.8.0...v1.8.1-1) (2017-02-18)
+## [v1.8.1-1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.8.0...v1.8.1-1) (2017-02-18)
 
 #### Tools
 - **CI**: added configuration file for Travis CI
@@ -123,7 +123,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.8.0"></a>
-## [v1.8.0](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.7.6...v1.8.0) (2017-01-26)
+## [v1.8.0](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.7.6...v1.8.0) (2017-01-26)
 
 #### Front facing features
 - **Settings**
@@ -162,7 +162,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.7.6"></a>
-## [v1.7.6](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.7.5...v1.7.6) (2016-12-26)
+## [v1.7.6](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.7.5...v1.7.6) (2016-12-26)
 
 #### Game improvements and fixes
 - **game state**: replaced game states booleans by an enum
@@ -178,7 +178,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.7.5"></a>
-## [v1.7.5](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.7.4...v1.7.5) (2016-12-20)
+## [v1.7.5](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.7.4...v1.7.5) (2016-12-20)
 
 #### Misc
 - **app**: replaced appState booleans by an enumeration
@@ -193,7 +193,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.7.4"></a>
-## [v1.7.4](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.7.3...v1.7.4) (2016-12-01)
+## [v1.7.4](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.7.3...v1.7.4) (2016-12-01)
 
 #### Misc
 - **structure**: refactored project structure
@@ -206,7 +206,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.7.3"></a>
-## [v1.7.3](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.7.2...v1.7.3) (2016-10-24)
+## [v1.7.3](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.7.2...v1.7.3) (2016-10-24)
 
 #### Features
 - **cmake**: Build now assured by *Cmake* (added CMakeLists.txt file)
@@ -227,7 +227,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.7.2"></a>
-## [v1.7.2](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.7.1...v1.7.2) (2016-05-24)
+## [v1.7.2](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.7.1...v1.7.2) (2016-05-24)
 
 #### Bug fixes
 - **linux**: fixed again images on linux
@@ -244,7 +244,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.7.1"></a>
-## [v1.7.1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.7.0...v1.7.1) (2016-05-22)
+## [v1.7.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.7.0...v1.7.1) (2016-05-22)
 
 #### Bug fixes
 - **music**: fixed music relaunching on resume pressed instead of release
@@ -260,7 +260,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.7.0"></a>
-## [v1.7.0](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.6.0...v1.7.0) (2016-05-22)
+## [v1.7.0](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.6.0...v1.7.0) (2016-05-22)
 
 ##### Features
 - **shop**: added a shop screen to buy items :
@@ -294,7 +294,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.6.0"></a>
-## [v1.6.0](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.5.0...v1.6.0) (2017-05-07)
+## [v1.6.0](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.5.0...v1.6.0) (2017-05-07)
 
 #### Features 
 - **config**: added configuration saving in file thanks to a new class DataModel :
@@ -318,7 +318,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.5.0"></a>
-## [v1.5.0](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.4.0...v1.5.0) (2016-05-06)
+## [v1.5.0](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.4.0...v1.5.0) (2016-05-06)
 
 #### Features
 - **music**: added Music in menu and game
@@ -331,7 +331,7 @@ All features labeled as *additional features* are now implemented
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.4.0"></a>
-## [v1.4.0](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.3.1...v1.4.0) (2016-04-30)
+## [v1.4.0](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.3.1...v1.4.0) (2016-04-30)
 
 - **game**: added Zone changing each 500m (normal mode) / 2000m (master mode)
 	- Zone changing is made with a scrolling far background transition
@@ -346,7 +346,7 @@ All features labeled as *additional features* are now implemented
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.3.1"></a>
-## [v1.3.1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.3.0...v1.3.1) (2017-04-29)
+## [v1.3.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.3.0...v1.3.1) (2017-04-29)
 
 #### Misc
 - **first delivery** : Modified unit tests and model for first project report
@@ -356,7 +356,7 @@ All features labeled as *additional features* are now implemented
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.3.0"></a>
-## [v1.3.0](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.2.1...v1.3.0) (2016-04-20)
+## [v1.3.0](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.2.1...v1.3.0) (2016-04-20)
 
 #### Features
 - **leaderboard**: 
@@ -376,7 +376,7 @@ All features labeled as *additional features* are now implemented
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.2.1"></a>
-## [v1.2.1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.2.0...v1.2.1) (2016-04-17)
+## [v1.2.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.2.0...v1.2.1) (2016-04-17)
 
 #### Misc
 - **game**: added bonus timeout displaying
@@ -387,7 +387,7 @@ All features labeled as *additional features* are now implemented
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.2.0"></a>
-## [v1.2.0](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.1.0...v1.2.0) (2016-04-16)
+## [v1.2.0](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.1.0...v1.2.0) (2016-04-16)
 
 #### Features
 - **settings**: added Settings screen in menu with :
@@ -403,7 +403,7 @@ All features labeled as *additional features* are now implemented
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.1.0"></a>
-## [v1.1.0](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.0.1...v1.1.0) (2016-04-15)
+## [v1.1.0](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.0.1...v1.1.0) (2016-04-15)
 
 #### Features
 - **bonus** :
@@ -419,7 +419,7 @@ All features labeled as *additional features* are now implemented
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.0.1"></a>
-## [v1.0.1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v1.0.0...v1.0.1) (2016-04-15)
+## [v1.0.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.0.0...v1.0.1) (2016-04-15)
 
 #### Features
 - **unit tests**: added unit tests for some model classes
@@ -429,7 +429,7 @@ All features labeled as *additional features* are now implemented
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v1.0.0"></a>
-## [v1.0.0](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v0.6.0-beta.2...v1.0.0) (2016-04-11)
+## [v1.0.0](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.6.0-beta.2...v1.0.0) (2016-04-11)
 
 #### Announcement
 - **graduation**: first stable version : all minimal features are working properly
@@ -446,7 +446,7 @@ All features labeled as *additional features* are now implemented
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v0.6.0-beta.2"></a>
-## [v0.6.0-beta.2](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v0.6.0-beta.1...v0.6.0-beta.2) (2016-04-10)
+## [v0.6.0-beta.2](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.6.0-beta.1...v0.6.0-beta.2) (2016-04-10)
 
 #### Misc
 - **game**: updated player's jump mechanism
@@ -456,7 +456,7 @@ All features labeled as *additional features* are now implemented
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v0.6.0-beta.1"></a>
-## [v0.6.0-beta.1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v0.3.0-beta.1...v0.6.0-beta.1) (2016-03-23 to 2016-04-09)
+## [v0.6.0-beta.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.3.0-beta.1...v0.6.0-beta.1) (2016-03-23 to 2016-04-09)
 
 Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 
@@ -500,7 +500,7 @@ Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v0.3.0-beta.1"></a>
-## [v0.3.0-beta.1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v0.2.3-beta.1...v0.3.0-beta.1) (2016-03-12 to 2016-04-09)
+## [v0.3.0-beta.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.2.3-beta.1...v0.3.0-beta.1) (2016-03-12 to 2016-04-09)
 
 #### Features
 - **game**: ball movements rewritten with ability to jump.
@@ -514,7 +514,7 @@ Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v0.2.3-beta.1"></a>
-## [v0.2.3-beta.1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v0.2.2-beta.1...v0.2.3-beta.1) (2016-03-22)
+## [v0.2.3-beta.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.2.2-beta.1...v0.2.3-beta.1) (2016-03-22)
 
 
 #### Bug fixes
@@ -528,7 +528,7 @@ Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v0.2.2-beta.1"></a>
-## [v0.2.2-beta.1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v0.2.1-beta.1...v0.2.2-beta.1) (2016-03-22)
+## [v0.2.2-beta.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.2.1-beta.1...v0.2.2-beta.1) (2016-03-22)
 
 #### Features
 - **game**: Graphic evolution of player's life through an "animated" life bar
@@ -538,7 +538,7 @@ Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v0.2.1-beta.1"></a>
-## [v0.2.1-beta.1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v0.2.0-beta.1...v0.2.1-beta.1) (2016-03-20 to 2016-03-22)
+## [v0.2.1-beta.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.2.0-beta.1...v0.2.1-beta.1) (2016-03-20 to 2016-03-22)
 
 #### Features
 - **UI**: bottom bar added with score, distance and player bar
@@ -556,7 +556,7 @@ Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v0.2.0-beta.1"></a>
-## [v0.2.0-beta.1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v0.1.4-beta.1...v0.2.0-beta.1) (2016-03-19)
+## [v0.2.0-beta.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.1.4-beta.1...v0.2.0-beta.1) (2016-03-19)
 
 #### Features
 - **game**: added random animated appearing enemies and coins
@@ -574,7 +574,7 @@ Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v0.1.4-beta.1"></a>
-## [v0.1.4-beta.1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v0.1.3-beta.1...v0.1.4-beta.1) (2016-03-05)
+## [v0.1.4-beta.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.1.3-beta.1...v0.1.4-beta.1) (2016-03-05)
 
 #### Features
 - **game**: added animated ball (generation independent from model one)
@@ -587,7 +587,7 @@ Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v0.1.3-beta.1"></a>
-## [v0.1.3-beta.1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v0.1.2-beta.2...v0.1.3-beta.1) (2016-03-03)
+## [v0.1.3-beta.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.1.2-beta.2...v0.1.3-beta.1) (2016-03-03)
 
 #### Features
 - **game**: added Sliding Background
@@ -597,7 +597,7 @@ Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v0.1.2-beta.2"></a>
-## [v0.1.2-beta.2](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v0.1.2-beta.1...v0.1.2-beta.2) (2016-03-02)
+## [v0.1.2-beta.2](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.1.2-beta.1...v0.1.2-beta.2) (2016-03-02)
 
 #### Bug fixes
 - bug fixes related to the creation of new enemies
@@ -610,7 +610,7 @@ Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v0.1.2-beta.1"></a>
-## [v0.1.2-beta.1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v0.1.1-beta.1...v0.1.2-beta.1) (2016-02-25)
+## [v0.1.2-beta.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.1.1-beta.1...v0.1.2-beta.1) (2016-02-25)
 
 #### Misc
 - **Workshop 2**: GraphicElement::resize() is now working
@@ -621,7 +621,7 @@ Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v0.1.1-beta.1"></a>
-## [v0.1.1-beta.1](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v0.1.0-beta.1...v0.1.1-beta.1) (2016-02-25)
+## [v0.1.1-beta.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.1.0-beta.1...v0.1.1-beta.1) (2016-02-25)
 
 #### Misc
 - Workshop 2 and 3 are finished until fixing issues in *OOP* TD next week
@@ -631,7 +631,7 @@ Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v0.1.0-beta.1/2/3/4/5"></a>
-## [v0.1.0-beta.1/2/3/4/5](https://github.com/Bokoblin/DUTS2-POO-ProjetRunner/compare/v0.1.0-beta.5) (2016-02-22 to 2017-02-24)
+## [v0.1.0-beta.1/2/3/4/5](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.1.0-beta.5) (2016-02-22 to 2017-02-24)
 
 #### Announcement
 - **Project Creation**:

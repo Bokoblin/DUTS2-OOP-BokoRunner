@@ -36,7 +36,7 @@ and "under the hood" improvements.
 ### Documentation ###
 
 The Doxygen documentation can be found at 
-[this address](https://bokoblin.github.io/DUTS2-POO-ProjetRunner/).
+[this address](https://bokoblin.github.io/DUTS2-OOP-BokoRunner/).
 
 
 ### How to build ###

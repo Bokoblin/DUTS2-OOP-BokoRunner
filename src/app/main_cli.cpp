@@ -28,7 +28,7 @@ static const int SCENE_HEIGHT = 600;
  * @author Arthur, Florian
  * @date 21/02/16 - 12/10/18
  */
-int main() //TODO: Complete CLI app (maybe a App class can work differently if ENABLE_UI is set in order to only have one main)
+int main() //TODO [2.2.x] Complete CLI app (see shelved idea)
 {
     //=== Initialize app data and text
 

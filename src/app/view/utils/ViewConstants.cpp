@@ -29,7 +29,7 @@ extern const unsigned int SCREEN_WIDTH = 900;
 extern const unsigned int SCREEN_HEIGHT = 600;
 extern const unsigned int SCREEN_BPP = 32;
 extern const unsigned int APP_FRAMERATE = 30;
-extern const std::string REPOSITORY_URL = "https://github.com/Bokoblin/DUTS2-POO-ProjetRunner";
+extern const std::string REPOSITORY_URL = "https://github.com/Bokoblin/DUTS2-OOP-BokoRunner";
 extern const std::string EMAIL_URL = "mailto:pro.jolivetarthur@gmail.com";
 
 //=== Fonts files

@@ -1,11 +1,9 @@
 # Boko Runner v1.8.3 #
 
-### Branches ###
-| Branch name | Branch description |     CI     |   Code review    |
-| ----------- | ------------------ | ---------- | ---------------- |
-| **master**  | Stable builds merged from dev | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-OOP-ProjectRunner.svg?branch=master)](https://travis-ci.org/Bokoblin/DUTS2-OOP-ProjectRunner) | [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-projectrunner/badge/master)](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-projectrunner/overview/master)
-| **[release](https://github.com/Bokoblin/DUTS2-OOP-ProjectRunner/tree/release)** | Release builds rebased from master | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-OOP-ProjectRunner.svg?branch=release)](https://travis-ci.org/Bokoblin/DUTS2-OOP-ProjectRunner) | [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-projectrunner/badge/release)](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-projectrunner/overview/release)
-| **[dev](https://github.com/Bokoblin/DUTS2-OOP-ProjectRunner/tree/dev)** | In-development unstable builds | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-OOP-ProjectRunner.svg?branch=dev)](https://travis-ci.org/Bokoblin/DUTS2-OOP-ProjectRunner) | [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-projectrunner/badge/dev)](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-projectrunner/overview/dev) |
+| Branch | description | version |     CI     |   Code review    |
+| ------ |------------ | ------- | ---------- | ---------------- |
+| **master** | Stable builds merged from dev  | ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Bokoblin/DUTS2-OOP-BokoRunner?label=release) | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-OOP-BokoRunner.svg?branch=master)](https://travis-ci.org/Bokoblin/DUTS2-OOP-BokoRunner) | [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-bokorunner/badge/master)](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-bokorunner/overview/master)
+| **[dev](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/tree/dev)** | Under irregular development builds | ![version](https://img.shields.io/badge/beta-2.0-blue) | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-OOP-BokoRunner.svg?branch=dev)](https://travis-ci.org/Bokoblin/DUTS2-OOP-BokoRunner) | [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-bokorunner/badge/dev)](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-bokorunner/overview/dev) |
 
 ### Description ###
 
@@ -18,7 +16,7 @@ Initially made to be based on a Model-View architecture as requested, the projec
 a Three-Tier Architecture with a Database, Models and Views. 
 
 Despite being initially a scholar project ended in May 2016, it is still receiving new features 
-and "under the hood" improvements from Bokoblin.
+and "under the hood" improvements.
 
 
 ### Tools used ###
@@ -29,19 +27,18 @@ and "under the hood" improvements from Bokoblin.
   * SFML 2.3.2
   * PugiXML 1.8
 * Continuous integration : Travis CI
-* Code review : Codacy, CodeFactor
+* Code review : CodeFactor
 
 
 ### Authors ###
 
-* Arthur Jolivet  (2016/02 - current)
-* Florian Laronze (2016/02 - 2016/05)
-
+* Arthur Jolivet - Main developer
+* Florian Laronze
 
 ### Documentation ###
 
 The Doxygen documentation can be found at 
-[this address](https://bokoblin.github.io/DUTS2-OOP-ProjectRunner/). It is aligned with master branch.
+[this address](https://bokoblin.github.io/DUTS2-OOP-BokoRunner/). It is aligned with master branch.
 
 
 ### How to build ###
@@ -54,7 +51,7 @@ You have two choices for GNU/Linux systems:
 - either manually install needed packages and use provided SFML lib (but incompatibility issues can occur)
 - either manually install "libsfml-dev" and use it instead of the provided one, it should download all necessary libs.
 
-If you choose the first option, you may need to install some of the following packages, depending on your configuration: <br>
+If you choose the first option, you may need to install some of the following packages, following your configuration: <br>
 - g++-4.9
 - libopenal
 - libvorbis
@@ -79,7 +76,7 @@ If you choose the second option:
 
 ##### Windows #####
 
-You'll need to install some shared libraries (.dll) in C:\Windows\System32 or in the same folder as the executable:
+You'll need to put some shared libraries (.dll) in C:\Windows\System32 or in the same folder as the executable:
 - OpenAL32.dll
 - sfml-graphics-2.dll or sfml-graphics-d-2.dll
 - sfml-window-2.dll or sfml-window-d-2.dll
@@ -106,9 +103,8 @@ and to use the built-in `build` option.
 
 
 Notes: 
-- The SFML library files were built with g++-4.9 <br>
-  So the project may only compile with g++-4.9 or clang (see next section for tested environments).<br>
-- You can use `update-alternatives` to change default g++ priority if needed.
+- The SFML library files were built with a specific version of g++ but it shouldn't be a problem on GNU/Linux.<br>
+- However, you can use `update-alternatives` to change default g++ priority if needed.
 - On Windows, compiler and SFML version have to match 100%.
 
 

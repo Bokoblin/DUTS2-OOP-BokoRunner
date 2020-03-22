@@ -51,7 +51,6 @@ public:
     //Logger function pointer
     typedef void (* logger_function)(const std::string&);
     static logger_function printError;
-    static void defaultPrintErrorFunction(const std::string& message);
 };
 
 } //namespace MaterialDesignComponentsForSFML

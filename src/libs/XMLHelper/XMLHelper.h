@@ -28,6 +28,10 @@ namespace Bokoblin
 namespace XMLUtils
 {
 
+using XmlDocument = pugi::xml_document;
+using XmlNode = pugi::xml_node;
+using XmlAttribute = pugi::xml_attribute;
+
 /**
  * The XMLHelper class provides high-level methods
  * to work with an xml file handler object in order to read or write in the file.

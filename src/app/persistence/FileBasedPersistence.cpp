@@ -2,9 +2,9 @@
 
 using std::string;
 using std::to_string;
-using pugi::xml_document;
-using pugi::xml_node;
-using pugi::xml_attribute;
+using Bokoblin::XMLUtils::XmlDocument;
+using Bokoblin::XMLUtils::XmlNode;
+using Bokoblin::XMLUtils::XmlAttribute;
 using Bokoblin::SimpleLogger::Logger;
 using Bokoblin::XMLUtils::XMLHelper;
 namespace ModelResources = Bokoblin::BokoRunner::Resources::Model;
@@ -14,7 +14,7 @@ namespace ModelResources = Bokoblin::BokoRunner::Resources::Model;
 //------------------------------------------------
 
 AppCore* FileBasedPersistence::m_appCore = nullptr;
-xml_document FileBasedPersistence::m_doc;
+XmlDocument FileBasedPersistence::m_doc;
 
 
 //------------------------------------------------
@@ -190,11 +190,11 @@ bool FileBasedPersistence::fetchConfigurationFromConfigFile()
 {
     nullSafeGuard();
 
-    xml_node config = m_doc.child("runner").child("config");
+    XmlNode config = m_doc.child("runner").child("config");
 
-    for (xml_node configItem: config.children("configItem")) {
+    for (XmlNode configItem: config.children("configItem")) {
         string nodeKey = string(configItem.attribute("name").value());
-        xml_attribute nodeValue = configItem.attribute("value");
+        XmlAttribute nodeValue = configItem.attribute("value");
 
         switch (hash(nodeKey)) {
             case hash("language"):
@@ -240,11 +240,11 @@ bool FileBasedPersistence::fetchStatisticsFromConfigFile()
 {
     nullSafeGuard();
 
-    xml_node stats = m_doc.child("runner").child("stats");
+    XmlNode stats = m_doc.child("runner").child("stats");
 
-    for (xml_node statItem: stats.children("statItem")) {
+    for (XmlNode statItem: stats.children("statItem")) {
         string nodeKey = string(statItem.attribute("name").value());
-        xml_attribute nodeValue = statItem.attribute("value");
+        XmlAttribute nodeValue = statItem.attribute("value");
         m_appCore->m_statsMap[nodeKey] =
                 XMLHelper::safeRetrieveXMLValue<unsigned int>(nodeValue, ModelResources::INTEGER_REGEX, 0);
     }
@@ -264,16 +264,16 @@ bool FileBasedPersistence::fetchLeaderboardFromConfigFile()
 {
     nullSafeGuard();
 
-    xml_node scoresEasy = m_doc.child("runner").child("scoresEasy");
-    xml_node scoresHard = m_doc.child("runner").child("scoresHard");
+    XmlNode scoresEasy = m_doc.child("runner").child("scoresEasy");
+    XmlNode scoresHard = m_doc.child("runner").child("scoresHard");
 
     m_appCore->m_scoresEasyArray.clear();
     m_appCore->m_scoresHardArray.clear();
 
-    for (xml_node scoreItem: scoresEasy.children("scoreItem")) {
+    for (XmlNode scoreItem: scoresEasy.children("scoreItem")) {
         insertScore(m_appCore->m_scoresEasyArray, scoreItem);
     }
-    for (xml_node scoreItem: scoresHard.children("scoreItem")) {
+    for (XmlNode scoreItem: scoresHard.children("scoreItem")) {
         insertScore(m_appCore->m_scoresHardArray, scoreItem);
     }
 
@@ -292,9 +292,9 @@ bool FileBasedPersistence::fetchActivatedBonusFromConfigFile()
 {
     nullSafeGuard();
 
-    xml_node shop = m_doc.child("runner").child("shop");
+    XmlNode shop = m_doc.child("runner").child("shop");
 
-    for (xml_node shopItem: shop.children("shopItem")) {
+    for (XmlNode shopItem: shop.children("shopItem")) {
         if (string(shopItem.attribute("bought").value()) == "true") {
             const string ITEM_REGEX = "shop_[a-z]+[_]{0,1}[a-z]+";
             m_appCore->m_activatedItemsArray.insert(XMLHelper::safeRetrieveXMLValue<string>
@@ -316,9 +316,9 @@ bool FileBasedPersistence::fetchShopItemsFromConfigFile()
 {
     nullSafeGuard();
 
-    xml_node shop = m_doc.child("runner").child("shop");
+    XmlNode shop = m_doc.child("runner").child("shop");
 
-    for (pugi::xml_node shopItem: shop.children("shopItem")) {
+    for (XmlNode shopItem: shop.children("shopItem")) {
         //Updates item's attributes
         string id = shopItem.attribute("id").value();
         string name = LocalizationManager::fetchLocalizedString(id + "_name");
@@ -343,15 +343,15 @@ bool FileBasedPersistence::persistConfigurationToConfigFile()
 {
     nullSafeGuard();
 
-    xml_node config = m_doc.child("runner").child("config");
-    xml_node stats = m_doc.child("runner").child("stats");
-    xml_node shop = m_doc.child("runner").child("shop");
+    XmlNode config = m_doc.child("runner").child("config");
+    XmlNode stats = m_doc.child("runner").child("stats");
+    XmlNode shop = m_doc.child("runner").child("shop");
 
     //=== Save configuration
 
-    for (xml_node configItem: config.children("configItem")) {
+    for (XmlNode configItem: config.children("configItem")) {
         string nodeKey = string(configItem.attribute("name").value());
-        xml_attribute nodeValue = configItem.attribute("value");
+        XmlAttribute nodeValue = configItem.attribute("value");
 
         switch (hash(nodeKey)) {
             case hash("language"):
@@ -379,14 +379,14 @@ bool FileBasedPersistence::persistConfigurationToConfigFile()
 
     //=== Save stats
 
-    for (xml_node statItem: stats.children("statItem")) {
+    for (XmlNode statItem: stats.children("statItem")) {
         string nodeKey = string(statItem.attribute("name").value());
         statItem.attribute("value").set_value(to_string(m_appCore->m_statsMap[nodeKey]).c_str());
     }
 
     //=== Save shop activated items
 
-    for (xml_node shopItem: shop.children("shopItem")) {
+    for (XmlNode shopItem: shop.children("shopItem")) {
         if (m_appCore->findActivatedItem(string(shopItem.attribute("id").value()))) {
             shopItem.attribute("bought").set_value(true);
         }
@@ -427,7 +427,7 @@ void FileBasedPersistence::nullSafeGuard()
  * @author Arthur
  * @date 25/09/18
  */
-void FileBasedPersistence::insertScore(std::set<int>& array, const xml_node& scoreItem)
+void FileBasedPersistence::insertScore(std::set<int>& array, const XmlNode& scoreItem)
 {
     if (string(scoreItem.attribute("value").value()) != "0") {
         array.insert(XMLHelper::safeRetrieveXMLValue<unsigned int>
@@ -442,11 +442,11 @@ void FileBasedPersistence::insertScore(std::set<int>& array, const xml_node& sco
  * @author Arthur
  * @date 25/09/18
  */
-void FileBasedPersistence::saveScores(const std::set<int>& array, const xml_node& scoreNode)
+void FileBasedPersistence::saveScores(const std::set<int>& array, const XmlNode& scoreNode)
 {
     auto it = array.begin();
-    for (xml_node scoreItem: scoreNode.children("scoreItem")) {
-        xml_attribute nodeValue = scoreItem.attribute("value");
+    for (XmlNode scoreItem: scoreNode.children("scoreItem")) {
+        XmlAttribute nodeValue = scoreItem.attribute("value");
         if (it != array.end()) {
             nodeValue.set_value(to_string(*it).c_str());
             ++it;
@@ -456,7 +456,7 @@ void FileBasedPersistence::saveScores(const std::set<int>& array, const xml_node
     }
 }
 
-//TODO [2.0.x] Generate xml_document programmatically instead of having a giant string
+//TODO [2.0.x] Generate XmlDocument programmatically instead of having a giant string
 //  That would allow a minimum file, especially for scores
 string FileBasedPersistence::generateDefaultStringConfig()
 {

@@ -65,7 +65,7 @@ private:
 
     //=== ATTRIBUTES
     static AppCore* m_appCore;
-    static pugi::xml_document m_doc;
+    static Bokoblin::XMLUtils::XmlDocument m_doc;
 };
 
 #endif

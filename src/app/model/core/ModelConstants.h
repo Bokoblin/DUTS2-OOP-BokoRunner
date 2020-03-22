@@ -40,7 +40,7 @@ namespace Model
 namespace Folder
 {
 //=== Top-level Folders
-//TODO [2.0.x] Use a dotenv configuration to replace environment based config (persistence, folders, screen, title)
+//TODO [2.x.x] Use a dotenv configuration to replace environment based config (persistence, folders, screen, title)
 //  - try this lib, it may work: https://github.com/adeharo9/cpp-dotenv
 //  - see also: std::getenv (from official cpp ref)
 extern const std::string RES;

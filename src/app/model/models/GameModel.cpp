@@ -92,7 +92,7 @@ void GameModel::toggleGameMusic() { m_appCore->toggleGameMusic(); }
  * (elements apparition, behaviours, deletion)
  *
  * @author Arthur
- * @date 21/02/2016 - 13/07/2019
+ * @date 21/02/2016 - 22/03/2020
  */
 void GameModel::nextStep()
 {
@@ -112,15 +112,7 @@ void GameModel::nextStep()
             conditionallyTriggerGameOver();
 
             m_lastTime = system_clock::now();
-        } //FIXME [2.0.x] else sf::sleep to reduce CPU ?? (but not sfml implementation as breaking MVC, a more language close one : C++ or C)
-        //      (in theory yes, but it may conflict with the view, so architecture must be different with a different thread for the view.
-        //      Other solution would be maybe to trigger the view update at the end of inner if but the current architecture can't permit that without a controller)
-        //--> It may be possible to do so using C signals (seen in SysProgramming), with that we can assign a function to a received signal,
-        //      which would allow to send that signal with system() to order the view to refresh (but the app is multi-platform, a DOS and OSX
-        //      alternative must exist also to implement that)
-        //PS: Same for other models
-    } else if (m_gameState == OVER) {
-        //Do nothing
+        }
     }
 }
 

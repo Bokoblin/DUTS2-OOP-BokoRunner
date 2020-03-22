@@ -1,5 +1,4 @@
 #include <app/persistence/PersistenceManager.h>
-#include "AppCore.h"
 
 using std::string;
 using std::to_string;

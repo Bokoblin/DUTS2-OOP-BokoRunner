@@ -99,13 +99,11 @@ string LocalizationManager::fetchLocalizedString(const string& label)
  * @return the adequate language file
  *
  * @author Arthur
- * @date 11/02/18 - 13/01/19
+ * @date 11/02/18 - 22/03/20
  */
 const string& LocalizationManager::getLanguageFile()
 {
-    if (m_appCore->getLanguage() == ViewResources::ENGLISH) {
-        return ViewResources::ENGLISH_STRINGS;
-    } else if (m_appCore->getLanguage() == ViewResources::FRENCH) {
+    if (m_appCore->getLanguage() == ViewResources::FRENCH) {
         return ViewResources::FRENCH_STRINGS;
     } else if (m_appCore->getLanguage() == ViewResources::SPANISH) {
         return ViewResources::SPANISH_STRINGS;

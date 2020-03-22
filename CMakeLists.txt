@@ -25,7 +25,7 @@ set(PUGIXML_ROOT "${EXTERNAL_LIBS_ROOT}/pugixml-1.8/src")
 #----------------------------------------------------------------------------------
 set(INTERNAL_LIBS_ROOT "${PROJECT_SOURCE_DIR}/src/libs")
 set(SIMPLE_LOGGER_ROOT "${INTERNAL_LIBS_ROOT}/Logger")
-set(MDC_SFML_ROOT "${INTERNAL_LIBS_ROOT}/MDC-SFML/src")
+set(MDSF_SRC_ROOT "${INTERNAL_LIBS_ROOT}/MDC-SFML/src")
 set(XML_HELPER_ROOT "${INTERNAL_LIBS_ROOT}/XMLHelper")
 
 #--------------------------------------------------------

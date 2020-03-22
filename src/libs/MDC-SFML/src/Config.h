@@ -16,7 +16,10 @@ limitations under the License.
 #ifndef MDC_SFML_CONFIG_H
 #define MDC_SFML_CONFIG_H
 
-#define RES_FOLDER "../res/" //TODO [2.0.x] Move MDC-SFML resources to MDC-SFML/res/
+#ifdef MDSF_RES_ROOT
+#define FONT_FOLDER MDSF_RES_ROOT"/fonts/"
+#define IMG_FOLDER MDSF_RES_ROOT"/images/"
+#endif
 
 #include <string>
 #include <iostream>
@@ -32,21 +35,21 @@ namespace MaterialDesignComponentsForSFML
  * Moving forward it shall allow user configuration by using definitions
  *
  * @author Arthur
- * @date 29/12/17 - 12/10/18
+ * @date 29/12/17 - 22/03/20
  */
 class Config
 {
 public:
     //=== ATTRIBUTES
-    static constexpr const char* DEFAULT_REGULAR_FONT = RES_FOLDER"fonts/Roboto_Regular.ttf";
-    static constexpr const char* DEFAULT_CONDENSED_FONT = RES_FOLDER"fonts/Roboto_Condensed.ttf";
-    static constexpr const char* DEFAULT_BOLD_FONT = RES_FOLDER"fonts/Roboto_Bold.ttf";
-    static constexpr const char* RADIO_BUTTON_IMAGE = RES_FOLDER"images/ui/radio_buttons.png";
-    static constexpr const char* RAISED_BUTTON_IMAGE = RES_FOLDER"images/ui/raised_buttons.png";
-    static constexpr const char* DIALOG_IMAGE = RES_FOLDER"images/ui/dialog.png";
+    static constexpr const char* DEFAULT_REGULAR_FONT = FONT_FOLDER"Roboto_Regular.ttf";
+    static constexpr const char* DEFAULT_CONDENSED_FONT = FONT_FOLDER"Roboto_Condensed.ttf";
+    static constexpr const char* DEFAULT_BOLD_FONT = FONT_FOLDER"Roboto_Bold.ttf";
+    static constexpr const char* RADIO_BUTTON_IMAGE = IMG_FOLDER"radio_button.png";
+    static constexpr const char* RAISED_BUTTON_IMAGE = IMG_FOLDER"raised_button.png";
+    static constexpr const char* DIALOG_IMAGE = IMG_FOLDER"dialog_background.png";
 
     //Logger function pointer
-    typedef void (*logger_function)(const std::string&);
+    typedef void (* logger_function)(const std::string&);
     static logger_function printError;
     static void defaultPrintErrorFunction(const std::string& message);
 };

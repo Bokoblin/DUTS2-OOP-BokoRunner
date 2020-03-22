@@ -23,8 +23,8 @@ set(LOGGER_LIB
         )
 
 file(GLOB MDC_SFML_LIB
-        ${MDC_SFML_ROOT}/*.h
-        ${MDC_SFML_ROOT}/*.cpp
+        ${MDSF_SRC_ROOT}/*.h
+        ${MDSF_SRC_ROOT}/*.cpp
         )
 
 set(XML_HELPER_LIB
@@ -97,6 +97,7 @@ if (ENABLE_UI)
     FIND_PACKAGE(SFML 2.4 COMPONENTS audio graphics window system REQUIRED)
 
     target_include_directories(mdcsfml PUBLIC ${SFML_INCLUDE_DIR})
+    target_compile_definitions(mdcsfml PUBLIC MDSF_RES_ROOT="${INTERNAL_LIBS_ROOT}/MDC-SFML/res")
 
     target_link_libraries(xmlhelper pugi)
     target_link_libraries(mdcsfml ${SFML_LIBRARIES})

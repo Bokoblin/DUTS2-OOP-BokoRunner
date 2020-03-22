@@ -1,4 +1,7 @@
+#include <libs/MDC-SFML/src/Config.h>
 #include "ViewConstants.h"
+
+namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 
 namespace Bokoblin
 {
@@ -15,7 +18,6 @@ namespace Folder
 extern const std::string RESOURCES = "../res/";
 extern const std::string AUDIO = RESOURCES + "audio/";
 extern const std::string IMAGES = RESOURCES + "images/";
-extern const std::string FONTS = RESOURCES + "fonts/";
 
 //=== Images Sub-folders
 extern const std::string BACKGROUNDS = Folder::IMAGES + "backgrounds/";
@@ -33,9 +35,9 @@ extern const std::string REPOSITORY_URL = "https://github.com/Bokoblin/DUTS2-OOP
 extern const std::string EMAIL_URL = "mailto:jolivetarthur@gmail.com";
 
 //=== Fonts files
-extern const std::string ROBOTO_REGULAR_FONT = Folder::FONTS + "Roboto_Regular.ttf";
-extern const std::string ROBOTO_CONDENSED_FONT = Folder::FONTS + "Roboto_Condensed.ttf";
-extern const std::string ROBOTO_BOLD_FONT = Folder::FONTS + "Roboto_Bold.ttf";
+extern const std::string ROBOTO_REGULAR_FONT = mdsf::Config::DEFAULT_REGULAR_FONT;
+extern const std::string ROBOTO_CONDENSED_FONT = mdsf::Config::DEFAULT_CONDENSED_FONT;
+extern const std::string ROBOTO_BOLD_FONT = mdsf::Config::DEFAULT_BOLD_FONT;
 
 //=== Images files : Backgrounds
 extern const std::string GAME_FAR_HILL_BACKGROUND = Folder::BACKGROUNDS + "/hill_far.png";

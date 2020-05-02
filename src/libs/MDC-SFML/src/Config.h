@@ -35,7 +35,7 @@ namespace MaterialDesignComponentsForSFML
  * Moving forward it shall allow user configuration by using definitions
  *
  * @author Arthur
- * @date 29/12/17 - 22/03/20
+ * @date 29/12/17 - 28/04/20
  */
 class Config
 {
@@ -46,6 +46,7 @@ public:
     static constexpr const char* DEFAULT_BOLD_FONT = FONT_FOLDER"Roboto_Bold.ttf";
     static constexpr const char* RADIO_BUTTON_IMAGE = IMG_FOLDER"radio_button.png";
     static constexpr const char* RAISED_BUTTON_IMAGE = IMG_FOLDER"raised_button.png";
+    static constexpr const char* TOGGLE_BUTTON_IMAGE = IMG_FOLDER"toggle_button.png";
     static constexpr const char* DIALOG_IMAGE = IMG_FOLDER"dialog_background.png";
 
     //Logger function pointer

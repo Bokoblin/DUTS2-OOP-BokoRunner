@@ -16,7 +16,7 @@ namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
  * @param settingsModel the settings model counterpart
  *
  * @author Arthur
- * @date 20/05/16 - 06/09/18
+ * @date 20/05/16 - 02/05/2020
  */
 SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager, SettingsModel* settingsModel) :
         AbstractView(window, textManager), m_settings{settingsModel}, m_confirmDialog{nullptr}
@@ -59,10 +59,6 @@ SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager
             CONFIRM_DIALOG_WIDTH, CONFIRM_DIALOG_HEIGHT, "confirm_data_delete");
     m_confirmDialog->hide();
     DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog);
-
-    //=== Init music
-
-    handleMusic();
 }
 
 
@@ -103,6 +99,7 @@ void SettingsView::loadSprites()
 
     float POS_COL_1 = 0.06f * m_width; //Column 1 starting x-axis
     float POS_COL_2 = POS_COL_1 + 0.5f * m_width; //Column 2 starting x-axis
+    float POS_COL_2B = 0.55f * m_width; //Column 2 starting x-axis
 
     m_englishLangRadio = new mdsf::RadioButton(POS_COL_1, 0.342f * m_height, RADIO_DIAMETER, "config_lang_english");
     m_frenchLangRadio = new mdsf::RadioButton(POS_COL_1, 0.408f * m_height, RADIO_DIAMETER, "config_lang_french");
@@ -116,20 +113,8 @@ void SettingsView::loadSprites()
 
     //=== Initialize Music controls
 
-    std::vector<sf::IntRect> clipRect_music;
-    clipRect_music.emplace_back(0, 200, 50, 50);
-    clipRect_music.emplace_back(50, 200, 50, 50);
-
-    m_menuMusicButton = new mdsf::Button(POS_COL_2, 0.7f * m_height, MUTE_BUTTON_SIZE, MUTE_BUTTON_SIZE,
-                                         "config_music_menu", ViewResources::GAME_BUTTONS_IMAGE, clipRect_music);
-    m_menuMusicButton->resize(MUTE_BUTTON_SIZE, MUTE_BUTTON_SIZE);
-    m_menuMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-
-    m_gameMusicButton = new mdsf::Button(POS_COL_2, 0.767f * m_height, MUTE_BUTTON_SIZE, MUTE_BUTTON_SIZE,
-                                         "config_music_game", ViewResources::GAME_BUTTONS_IMAGE, clipRect_music);
-    m_gameMusicButton->resize(MUTE_BUTTON_SIZE, MUTE_BUTTON_SIZE);
-    m_gameMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
-
+    m_menuMusicButton = new mdsf::ToggleButton(POS_COL_2B, 0.72f * m_height, MUTE_BTN_WIDTH, MUTE_BTN_HEIGHT, "config_music_menu");
+    m_gameMusicButton = new mdsf::ToggleButton(POS_COL_2B, 0.72f * m_height + MUTE_BTN_HEIGHT, MUTE_BTN_WIDTH, MUTE_BTN_HEIGHT, "config_music_game");
 
     //=== Initialize HOME button
 
@@ -138,8 +123,8 @@ void SettingsView::loadSprites()
 
     //=== Initialize RESET button
 
-    m_resetDataButton = new mdsf::RaisedButton(getHalfXPosition() - (0.5f * RESET_BUTTON_WIDTH), 0.75f * m_height,
-                                               RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT, "stats_app_reset");
+    m_resetDataButton = new mdsf::RaisedButton(getHalfXPosition() - (0.5f * RESET_BTN_WIDTH), 0.75f * m_height,
+                                               RESET_BTN_WIDTH, RESET_BTN_HEIGHT, "stats_app_reset");
     m_resetDataButton->setFillColor(mdsf::Color::MaterialRed);
 
 
@@ -164,7 +149,7 @@ void SettingsView::loadSprites()
  * Synchronizes settings elements
  *
  * @author Arthur
- * @date 20/05/16 - 02/01/18
+ * @date 20/05/2016 - 02/05/2020
  */
 void SettingsView::synchronize()
 {
@@ -178,6 +163,8 @@ void SettingsView::synchronize()
     m_defaultBallSkinRadio->setSelected(m_settings->getPlayerSkin() == "default");
     m_morphBallSkinRadio->setSelected(m_settings->getPlayerSkin() == "morphing");
     m_capsuleBallSkinRadio->setSelected(m_settings->getPlayerSkin() == "capsule");
+    m_menuMusicButton->setToggled(m_settings->isMenuMusicEnabled());
+    m_gameMusicButton->setToggled(m_settings->isGameMusicEnabled());
 
     m_morphBallSkinRadio->setEnabled(m_settings->isMorphSkinAvailable());
     m_capsuleBallSkinRadio->setEnabled(m_settings->isCapsuleSkinAvailable());
@@ -251,44 +238,6 @@ void SettingsView::draw() const
     }
 
     m_window->display();
-}
-
-
-/**
- * Handles music settings
- *
- * @author Arthur
- * @date 25/01/17
- */
-void SettingsView::handleMusic()
-{
-    //=== Change menu music volume
-
-    if (m_settings->isMenuMusicEnabled()) {
-        std::vector<sf::IntRect> clipRect;
-        clipRect.emplace_back(0, 200, 50, 50);
-        clipRect.emplace_back(50, 200, 50, 50);
-        m_menuMusicButton->setClipRectArray(clipRect);
-    } else {
-        std::vector<sf::IntRect> clipRect;
-        clipRect.emplace_back(0, 250, 50, 50);
-        clipRect.emplace_back(50, 250, 50, 50);
-        m_menuMusicButton->setClipRectArray(clipRect);
-    }
-
-    //=== Change game music volume
-
-    if (m_settings->isGameMusicEnabled()) {
-        std::vector<sf::IntRect> clipRect;
-        clipRect.emplace_back(0, 200, 50, 50);
-        clipRect.emplace_back(50, 200, 50, 50);
-        m_gameMusicButton->setClipRectArray(clipRect);
-    } else {
-        std::vector<sf::IntRect> clipRect;
-        clipRect.emplace_back(0, 250, 50, 50);
-        clipRect.emplace_back(50, 250, 50, 50);
-        m_gameMusicButton->setClipRectArray(clipRect);
-    }
 }
 
 
@@ -399,10 +348,8 @@ void SettingsView::handleConfigEvents(const sf::Event& event)
             m_settings->changeBallSkin("capsule");
         } else if (EventUtils::isMouseInside(*m_menuMusicButton, event)) {
             m_settings->toggleMenuMusic();
-            handleMusic();
         } else if (EventUtils::isMouseInside(*m_gameMusicButton, event)) {
             m_settings->toggleGameMusic();
-            handleMusic();
         }
     }
 }
@@ -495,7 +442,7 @@ void SettingsView::handlePageIndicatorsEvents(const sf::Event& event)
  * Processes confirm action on clear app data
  *
  * @author Arthur
- * @date 14/10/18
+ * @date 14/10/18 - 02/05/2020
  */
 void SettingsView::processClearAppDataConfirmAction()
 {
@@ -504,7 +451,6 @@ void SettingsView::processClearAppDataConfirmAction()
     PersistenceManager::resetPersistence();
     m_textManager->syncMenuSettingsText(m_settings->getCurrentPage());
     m_settings->checkItemsAvailability();
-    handleMusic();
 }
 
 

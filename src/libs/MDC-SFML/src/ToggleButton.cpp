@@ -23,14 +23,14 @@ namespace MaterialDesignComponentsForSFML
  * @param customImage a custom image (optional)
  *
  * @author Arthur
- * @date 28/04/2020
+ * @date 28/04/2020 - 02/05/2020
  */
 ToggleButton::ToggleButton(float x, float y, float width, float height, const string& label, const string& customImage) :
         Button(x, y, width, height, label), m_isToggled{false}
 {
     setOrigin(0, height / 2);
     m_labelPosition = RIGHT;
-    setClipRectArray(ClipRectUtils::generate(0, 0, 70, 50, 4, 2));
+    setClipRectArray(ClipRectUtils::generate(0, 0, (int) width, (int) height, 4, 2));
     setTextureRect(m_clipRectArray[m_currentClipRect]);
 
     ToggleButton::loadAndApplyTextureFromImageFile(customImage);

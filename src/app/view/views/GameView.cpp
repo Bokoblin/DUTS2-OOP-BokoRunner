@@ -113,7 +113,7 @@ GameView::~GameView()
  * @brief Load all sprites used by the game (backgrounds, UI, elements)
  *
  * @author Arthur
- * @date 26/03/2016 - 13/07/2019
+ * @date 26/03/2016 - 02/05/2020
  */
 void GameView::loadSprites()
 {
@@ -239,12 +239,9 @@ void GameView::loadSprites()
     m_goToHomeButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_goToHomeButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
-    vector<sf::IntRect> clipRect_music;
-    clipRect_music.emplace_back(0, 200, 50, 50);
-    clipRect_music.emplace_back(50, 200, 50, 50);
-    m_controlMusicButton = new mdsf::Button(PAUSE_FORM_X, 0.89f * m_height, PAUSE_ICONS_SIZE, PAUSE_ICONS_SIZE,
-                                            "pause_music", ViewResources::GAME_BUTTONS_IMAGE, clipRect_music);
-    m_controlMusicButton->resize(PAUSE_BUTTONS_SIZE);
+    m_controlMusicButton = new mdsf::ToggleButton(25, 0.9f * m_height, 50, 50,
+                                            "pause_music", ViewResources::MUSIC_BUTTON_IMAGE);
+    m_controlMusicButton->resize(PAUSE_MUSIC_SIZE);
     m_controlMusicButton->setLabelPosition(mdsf::LabelPosition::RIGHT);
     m_controlMusicButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
@@ -337,24 +334,16 @@ void GameView::draw() const
  * @brief Handle music settings
  *
  * @author Arthur
- * @date 25/01/2017
+ * @date 25/01/2017 - 02/05/2020
  */
 void GameView::handleMusic()
 {
     //change music volume
     if (m_game->isMusicEnabled()) {
-        vector<sf::IntRect> clipRect;
-        clipRect.emplace_back(0, 200, 50, 50);
-        clipRect.emplace_back(50, 200, 50, 50);
-        m_controlMusicButton->setClipRectArray(clipRect);
         m_gameThemeMusic.setVolume(100);
         m_coinMusic.setVolume(100);
         m_destructedEnemiesMusic.setVolume(100);
     } else {
-        vector<sf::IntRect> clipRect;
-        clipRect.emplace_back(0, 250, 50, 50);
-        clipRect.emplace_back(50, 250, 50, 50);
-        m_controlMusicButton->setClipRectArray(clipRect);
         m_gameThemeMusic.setVolume(0);
         m_coinMusic.setVolume(0);
         m_destructedEnemiesMusic.setVolume(0);

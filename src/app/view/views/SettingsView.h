@@ -1,4 +1,4 @@
-/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2020 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ limitations under the License.
 #include "libs/MDC-SFML/src/Dialog.h"
 #include "libs/MDC-SFML/src/RadioButton.h"
 #include "libs/MDC-SFML/src/RaisedButton.h"
+#include "libs/MDC-SFML/src/ToggleButton.h"
 #include "app/model/models/SettingsModel.h"
 #include "app/view/utils/DialogBuilder.h"
 #include "AbstractView.h"
@@ -29,7 +30,7 @@ limitations under the License.
  * It handles the settings screen's rendering.
  *
  * @author Arthur
- * @date 20/05/16 - 14/01/19
+ * @date 20/05/2016 - 02/05/2020
  */
 class SettingsView: public AbstractView
 {
@@ -58,8 +59,8 @@ private:
     mdsf::RadioButton* m_morphBallSkinRadio;
     mdsf::RadioButton* m_capsuleBallSkinRadio;
     mdsf::RaisedButton* m_resetDataButton;
-    mdsf::Button* m_menuMusicButton;
-    mdsf::Button* m_gameMusicButton;
+    mdsf::ToggleButton* m_menuMusicButton;
+    mdsf::ToggleButton* m_gameMusicButton;
     mdsf::Sprite* m_logoIUT;
     mdsf::Sprite* m_logoSFML;
     mdsf::Sprite* m_iconRepoLink;
@@ -75,9 +76,10 @@ private:
     const int INDICATOR_PADDING = 2;
     const int CONFIRM_DIALOG_WIDTH = 320;
     const int CONFIRM_DIALOG_HEIGHT = 200;
-    const int RESET_BUTTON_WIDTH = 150;
-    const int RESET_BUTTON_HEIGHT = 40;
-    const int MUTE_BUTTON_SIZE = 25;
+    const int RESET_BTN_WIDTH = 150;
+    const int RESET_BTN_HEIGHT = 40;
+    const int MUTE_BTN_WIDTH = 70;
+    const int MUTE_BTN_HEIGHT = 50;
     const int ORIGINAL_IUT_LOGO_WIDTH = 245;
     const int ORIGINAL_IUT_LOGO_HEIGHT = 210;
     const int ORIGINAL_SFML_LOGO_WIDTH = 373;
@@ -93,7 +95,6 @@ private:
 
     //=== METHODS
     void loadSprites() override;
-    void handleMusic();
     void updateTextBasedComponents() const;
     float getDialogXPosition(int width) const;
     float getDialogYPosition(int height) const;

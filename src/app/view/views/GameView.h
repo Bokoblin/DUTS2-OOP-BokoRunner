@@ -1,4 +1,4 @@
-/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2020 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ limitations under the License.
 #define GAME_VIEW_H
 
 #include "libs/MDC-SFML/src/RaisedButton.h"
+#include <libs/MDC-SFML/src/ToggleButton.h>
 #include "app/model/models/GameModel.h"
 #include "app/view/ui-components/PixelShader.h"
 #include "AbstractView.h"
@@ -26,7 +27,7 @@ limitations under the License.
  * @class GameView
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 13/07/2019
+ * @date 21/02/16 - 02/05/2020
  */
 class GameView: public AbstractView
 {
@@ -54,6 +55,7 @@ private:
     const int PAUSE_FORM_X = 30;
     const int HOME_BTN_SIZE = 30;
     const int PAUSE_BUTTONS_SIZE = 25;
+    const int PAUSE_MUSIC_SIZE = 40;
     const int INGAME_COIN_SIZE = 20;
     const int RESULTS_COIN_SIZE = 25;
     const int BUTTON_WIDTH = 150;
@@ -94,7 +96,7 @@ private:
     mdsf::Button* m_resumeGameButton;
     mdsf::Button* m_restartGameButton;
     mdsf::Button* m_goToHomeButton;
-    mdsf::Button* m_controlMusicButton;
+    mdsf::ToggleButton* m_controlMusicButton;
     mdsf::RaisedButton* m_saveScoreButton;
 
     //Audio

@@ -66,7 +66,7 @@ public:
 protected:
     //=== ATTRIBUTES
     bool m_isToggled;
-    const unsigned int HORIZONTAL_LABEL_MARGIN = 15;
+    const float HORIZONTAL_LABEL_MARGIN = 20;
 };
 
 } //namespace MaterialDesignComponentsForSFML

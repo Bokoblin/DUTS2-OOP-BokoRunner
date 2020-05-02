@@ -1,4 +1,4 @@
-/* Copyright 2018-2019 Jolivet Arthur
+/* Copyright 2018-2020 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ namespace Resources
  * @brief Provide constants to view classes
  *
  * @author Arthur
- * @date 11/02/18 - 13/07/2019
+ * @date 11/02/18 - 02/05/2020
  */
 namespace View
 {
@@ -42,7 +42,6 @@ namespace Folder
 //=== Second level folders
 extern const std::string RESOURCES;
 extern const std::string AUDIO;
-extern const std::string FONTS;
 extern const std::string IMAGES;
 
 //=== Images Sub-folders
@@ -82,6 +81,7 @@ extern const std::string END_SCREEN_BACKGROUND;
 extern const std::string MENU_BUTTON_IMAGE;
 extern const std::string SHAPE_BUTTONS_IMAGE;
 extern const std::string GAME_BUTTONS_IMAGE;
+extern const std::string MUSIC_BUTTON_IMAGE;
 extern const std::string CARD_IMAGE;
 extern const std::string HOME_IMAGE;
 extern const std::string HYPERLINK_IMAGE;

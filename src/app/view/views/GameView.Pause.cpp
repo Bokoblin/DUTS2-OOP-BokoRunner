@@ -8,7 +8,7 @@
  * Updates elements of a paused game
  *
  * @author Arthur
- * @date 6/03/16 - 11/09/18
+ * @date 6/03/16 - 02/05/2020
  */
 void GameView::updatePausedGameElements()
 {
@@ -18,8 +18,8 @@ void GameView::updatePausedGameElements()
     m_restartGameButton->resize(PAUSE_BUTTONS_SIZE);
     m_goToHomeButton->sync();
     m_goToHomeButton->resize(PAUSE_BUTTONS_SIZE);
+    m_controlMusicButton->setToggled(m_game->isMusicEnabled());
     m_controlMusicButton->sync();
-    m_controlMusicButton->resize(PAUSE_BUTTONS_SIZE);
     m_coinSprite->sync();
     m_coinSprite->resize(INGAME_COIN_SIZE);
     m_coinSprite->setPosition(0.033f * m_width, 0.16f * m_height);

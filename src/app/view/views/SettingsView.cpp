@@ -21,7 +21,7 @@ namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
 SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager, SettingsModel* settingsModel) :
         AbstractView(window, textManager), m_settings{settingsModel}, m_confirmDialog{nullptr}
 {
-    loadSprites();
+    SettingsView::loadSprites();
 
     //=== Create Pages Indicator
 

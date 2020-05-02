@@ -23,7 +23,7 @@ MenuView::MenuView(sf::RenderWindow* window, AppTextManager* textManager, MenuMo
         m_commandsView{nullptr}, m_leaderboardView{nullptr}, m_settingsView{nullptr}, m_shopView{nullptr}
 {
     loadMusic();
-    loadSprites();
+    MenuView::loadSprites();
 }
 
 /**

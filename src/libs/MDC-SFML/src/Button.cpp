@@ -50,7 +50,7 @@ Button::Button(float x, float y, float width, float height, const string& descri
         Button(x, y, width, height)
 {
     m_label.setDescription(description);
-    syncLabelPosition();
+    Button::syncLabelPosition();
 }
 
 
@@ -102,7 +102,7 @@ Button::Button(float x, float y, float width, float height, const string& descri
         Button(x, y, width, height, textureImage, clipRect)
 {
     m_label.setDescription(description);
-    syncLabelPosition();
+    Button::syncLabelPosition();
 }
 
 

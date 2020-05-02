@@ -50,9 +50,9 @@ RadioButton::RadioButton(float x, float y, float diameter, const string& label, 
 {
     m_labelPosition = RIGHT;
     setRadioClipRect();
-    loadAndApplyTextureFromImageFile(customImage);
-    applyColor();
-    resize(m_width, m_height);
+    RadioButton::loadAndApplyTextureFromImageFile(customImage);
+    RadioButton::applyColor();
+    RadioButton::resize(m_width, m_height);
 }
 
 

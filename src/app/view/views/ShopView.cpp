@@ -22,7 +22,7 @@ namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
 ShopView::ShopView(sf::RenderWindow* window, AppTextManager* textManager, ShopModel* shopModel) :
         AbstractView(window, textManager), m_shop{shopModel}, m_currentIndicator{0}, m_buyDialog{nullptr}
 {
-    loadSprites();
+    ShopView::loadSprites();
     createCards();
     m_buyDialog = new ShopDialog();
 }

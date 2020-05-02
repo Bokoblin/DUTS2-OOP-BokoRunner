@@ -23,7 +23,7 @@ GameView::GameView(sf::RenderWindow* window, AppTextManager* textManager, GameMo
         AbstractView(window, textManager), m_game{gameModel},
         m_xPixelIntensity{INITIAL_PIXEL_INTENSITY}, m_yPixelIntensity{INITIAL_PIXEL_INTENSITY}
 {
-    loadSprites();
+    GameView::loadSprites();
     m_pixelShader = new PixelShader();
 
     //=== change default game music if in master mode

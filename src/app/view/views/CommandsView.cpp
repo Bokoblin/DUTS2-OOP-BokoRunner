@@ -20,7 +20,7 @@ namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
 CommandsView::CommandsView(sf::RenderWindow* window, AppTextManager* textManager, CommandsModel* commandsModel) :
         AbstractView(window, textManager), m_commands{commandsModel}
 {
-    loadSprites();
+    CommandsView::loadSprites();
 }
 
 

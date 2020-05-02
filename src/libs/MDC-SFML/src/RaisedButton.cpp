@@ -30,7 +30,7 @@ RaisedButton::RaisedButton(float x, float y, float width, float height) :
     m_label.setFillColor(sf::Color::White);
     m_label.setCharacterSize(DEFAULT_CHAR_SIZE);
     m_label.setDescription("");
-    syncLabelPosition();
+    RaisedButton::syncLabelPosition();
 }
 
 
@@ -52,9 +52,9 @@ RaisedButton::RaisedButton(float x, float y, float width, float height, const st
         RaisedButton(x, y, width, height)
 {
     m_label.setDescription(label);
-    syncLabelPosition();
-    loadAndApplyTextureFromImageFile(customImage);
-    applyColor();
+    RaisedButton::syncLabelPosition();
+    RaisedButton::loadAndApplyTextureFromImageFile(customImage);
+    RaisedButton::applyColor();
 }
 
 

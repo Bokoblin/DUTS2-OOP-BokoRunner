@@ -57,8 +57,8 @@ public:
     ~Sprite() override;
 
     //=== GETTERS
-    virtual float getX() const;
-    virtual float getY() const;
+    float getX() const;
+    float getY() const;
     virtual float getWidth() const;
     virtual float getHeight() const;
     bool isVisible() const;

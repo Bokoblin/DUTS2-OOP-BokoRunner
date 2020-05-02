@@ -41,10 +41,10 @@ Dialog::Dialog(float x, float y, float width, float height, const string& contex
         Sprite(x, y, width, height), m_context{context}, m_title{""}, m_content{""},
         m_cancelButtonText{""}, m_okButtonText{""}
 {
-    loadAndApplyTextureFromImageFile(Config::DIALOG_IMAGE);
+    Dialog::loadAndApplyTextureFromImageFile(Config::DIALOG_IMAGE);
     setPosition(x, y);
-    resize(width, height);
-    applyColor();
+    Dialog::resize(width, height);
+    Dialog::applyColor();
 
     //=== Initialize text
 

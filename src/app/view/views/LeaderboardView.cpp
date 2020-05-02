@@ -23,7 +23,7 @@ LeaderboardView::LeaderboardView(sf::RenderWindow* window, AppTextManager* textM
 {
     //=== Init images and text
 
-    loadSprites();
+    LeaderboardView::loadSprites();
 
     textManager->initMenuLeaderboardText();
 

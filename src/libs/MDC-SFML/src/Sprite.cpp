@@ -62,7 +62,7 @@ Sprite::Sprite(float x, float y, float width, float height) :
 Sprite::Sprite(float x, float y, float width, float height, const string &image) :
         Sprite(x, y, width, height)
 {
-    loadAndApplyTextureFromImageFile(image);
+    Sprite::loadAndApplyTextureFromImageFile(image);
 }
 
 
@@ -112,7 +112,7 @@ Sprite::Sprite(float x, float y, float size) :
 Sprite::Sprite(float x, float y, float size, const string &image) :
         Sprite(x, y, size, size)
 {
-    loadAndApplyTextureFromImageFile(image);
+    Sprite::loadAndApplyTextureFromImageFile(image);
 }
 
 

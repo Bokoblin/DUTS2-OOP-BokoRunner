@@ -47,7 +47,7 @@ ShopItemCard::ShopItemCard(int num, ShopItem* item, float screenWidth, float scr
 
     //=== Init background
 
-    loadAndApplyTextureFromImageFile(ViewResources::CARD_IMAGE);
+    ShopItemCard::loadAndApplyTextureFromImageFile(ViewResources::CARD_IMAGE);
 }
 
 

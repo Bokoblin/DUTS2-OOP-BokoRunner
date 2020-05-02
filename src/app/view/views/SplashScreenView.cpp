@@ -29,7 +29,7 @@ SplashScreenView::SplashScreenView(sf::RenderWindow* window, AppTextManager* tex
 
     m_window->setPosition(sf::Vector2i(appPositionX, appPositionY));
 
-    loadSprites();
+    SplashScreenView::loadSprites();
 }
 
 /**

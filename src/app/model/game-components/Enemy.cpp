@@ -62,15 +62,15 @@ void Enemy::chooseEnemyType()
 
     if (result <= 55) {
         m_elementType = STANDARD_ENEMY;
-        m_width = 30;
-        m_height = 30;
+        m_width = STANDARD_ENEMY_SIZE;
+        m_height = STANDARD_ENEMY_SIZE;
     } else if (result <= 80) {
         m_elementType = TOTEM_ENEMY;
-        m_width = 30;
-        m_height = 90;
+        m_width = TOTEM_ENEMY_WIDTH;
+        m_height = TOTEM_ENEMY_HEIGHT;
     } else {
         m_elementType = BLOCK_ENEMY;
-        m_width = 50;
-        m_height = 50;
+        m_width = BLOCK_ENEMY_SIZE;
+        m_height = BLOCK_ENEMY_SIZE;
     }
 }

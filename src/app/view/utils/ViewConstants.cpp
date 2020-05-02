@@ -32,7 +32,7 @@ extern const unsigned int SCREEN_HEIGHT = 600;
 extern const unsigned int SCREEN_BPP = 32;
 extern const unsigned int APP_FRAMERATE = 30;
 extern const std::string REPOSITORY_URL = "https://github.com/Bokoblin/DUTS2-OOP-BokoRunner";
-extern const std::string EMAIL_URL = "mailto:jolivetarthur@gmail.com";
+extern const std::string EMAIL_URL = "mailto:jolivet.arthur@gmail.com";
 
 //=== Fonts files
 extern const std::string ROBOTO_REGULAR_FONT = mdsf::Config::DEFAULT_REGULAR_FONT;
@@ -55,10 +55,13 @@ extern const std::string END_SCREEN_BACKGROUND = Folder::BACKGROUNDS + "/end_bac
 //=== Images files : UI components
 extern const std::string MENU_BUTTON_IMAGE = Folder::UI_COMPONENTS + "menu_buttons.png";
 extern const std::string SHAPE_BUTTONS_IMAGE = Folder::UI_COMPONENTS + "shape_buttons.png";
-extern const std::string GAME_BUTTONS_IMAGE = Folder::UI_COMPONENTS + "game_buttons.png";
+extern const std::string RESUME_BUTTON_IMAGE = Folder::UI_COMPONENTS + "menu_resume.png";
+extern const std::string RESTART_BUTTON_IMAGE = Folder::UI_COMPONENTS + "menu_restart.png";
+extern const std::string HOME_BUTTON_IMAGE = Folder::UI_COMPONENTS + "menu_home.png";
 extern const std::string MUSIC_BUTTON_IMAGE = Folder::UI_COMPONENTS + "toggle_music_button.png";
-extern const std::string CARD_IMAGE = Folder::UI_COMPONENTS + "card.png";
+extern const std::string CARD_IMAGE = Folder::UI_COMPONENTS + "ic_card.png";
 extern const std::string HOME_IMAGE = Folder::UI_COMPONENTS + "ic_home.png";
+extern const std::string FLAG_IMAGE = Folder::UI_COMPONENTS + "ic_flag.png";
 extern const std::string HYPERLINK_IMAGE = Folder::UI_COMPONENTS + "ic_link.png";
 extern const std::string PAGE_INDICATOR_IMAGE = Folder::UI_COMPONENTS + "indicator_buttons.png";
 

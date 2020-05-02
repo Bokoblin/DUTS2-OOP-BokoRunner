@@ -12,14 +12,11 @@
  */
 void GameView::updatePausedGameElements()
 {
-    m_resumeGameButton->sync();
-    m_resumeGameButton->resize(PAUSE_BUTTONS_SIZE);
-    m_restartGameButton->sync();
-    m_restartGameButton->resize(PAUSE_BUTTONS_SIZE);
-    m_goToHomeButton->sync();
-    m_goToHomeButton->resize(PAUSE_BUTTONS_SIZE);
-    m_controlMusicButton->setToggled(m_game->isMusicEnabled());
-    m_controlMusicButton->sync();
+    m_resumeButton->sync();
+    m_restartButton->sync();
+    m_goHomeButton->sync();
+    m_musicButton->setToggled(m_game->isMusicEnabled());
+    m_musicButton->sync();
     m_coinSprite->sync();
     m_coinSprite->resize(INGAME_COIN_SIZE);
     m_coinSprite->setPosition(0.033f * m_width, 0.16f * m_height);
@@ -44,10 +41,10 @@ void GameView::drawPausedGame() const
     m_window->draw(*m_coinSprite);
     m_window->draw(*m_stdEnemySprite);
 
-    m_resumeGameButton->draw(m_window);
-    m_restartGameButton->draw(m_window);
-    m_goToHomeButton->draw(m_window);
-    m_controlMusicButton->draw(m_window);
+    m_resumeButton->draw(m_window);
+    m_restartButton->draw(m_window);
+    m_goHomeButton->draw(m_window);
+    m_musicButton->draw(m_window);
 
     //=== Standalone Text drawing
 
@@ -67,29 +64,29 @@ void GameView::drawPausedGame() const
 bool GameView::handlePausedGameEvents(const sf::Event& event)
 {
     if (EventUtils::wasMouseLeftPressed(event)) {
-        m_resumeGameButton->setPressed(EventUtils::isMouseInside(*m_resumeGameButton, event));
-        m_restartGameButton->setPressed(EventUtils::isMouseInside(*m_restartGameButton, event));
-        m_goToHomeButton->setPressed(EventUtils::isMouseInside(*m_goToHomeButton, event));
-        m_controlMusicButton->setPressed(EventUtils::isMouseInside(*m_controlMusicButton, event));
+        m_resumeButton->setPressed(EventUtils::isMouseInside(*m_resumeButton, event));
+        m_restartButton->setPressed(EventUtils::isMouseInside(*m_restartButton, event));
+        m_goHomeButton->setPressed(EventUtils::isMouseInside(*m_goHomeButton, event));
+        m_musicButton->setPressed(EventUtils::isMouseInside(*m_musicButton, event));
     }
 
     if (EventUtils::wasMouseReleased(event)) {
-        m_resumeGameButton->setPressed(false);
-        m_restartGameButton->setPressed(false);
-        m_goToHomeButton->setPressed(false);
-        m_controlMusicButton->setPressed(false);
+        m_resumeButton->setPressed(false);
+        m_restartButton->setPressed(false);
+        m_goHomeButton->setPressed(false);
+        m_musicButton->setPressed(false);
 
-        if (EventUtils::isMouseInside(*m_resumeGameButton, event)) {
+        if (EventUtils::isMouseInside(*m_resumeButton, event)) {
             m_game->setGameState(RUNNING_SLOWLY);
             if (m_gameThemeMusic.getStatus() == sf::Music::Status::Paused) {
                 m_gameThemeMusic.play();
             }
-        } else if (EventUtils::isMouseInside(*m_restartGameButton, event)) {
+        } else if (EventUtils::isMouseInside(*m_restartButton, event)) {
             return false;
-        } else if (EventUtils::isMouseInside(*m_goToHomeButton, event)) {
+        } else if (EventUtils::isMouseInside(*m_goHomeButton, event)) {
             m_game->setAppState(MENU);
             return false;
-        } else if (EventUtils::isMouseInside(*m_controlMusicButton, event)) {
+        } else if (EventUtils::isMouseInside(*m_musicButton, event)) {
             m_game->toggleGameMusic();
             handleMusic();
         }

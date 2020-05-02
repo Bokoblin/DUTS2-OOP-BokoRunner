@@ -110,7 +110,6 @@ void SettingsView::loadSprites()
     m_morphBallSkinRadio = new mdsf::RadioButton(POS_COL_2, 0.408f * m_height, RADIO_DIAMETER, "player_skin_morphing");
     m_capsuleBallSkinRadio = new mdsf::RadioButton(POS_COL_2, 0.475f * m_height, RADIO_DIAMETER, "player_skin_capsule");
 
-
     //=== Initialize Music controls
 
     m_menuMusicButton = new mdsf::ToggleButton(POS_COL_2B, 0.72f * m_height, MUTE_BTN_WIDTH, MUTE_BTN_HEIGHT, "config_music_menu");

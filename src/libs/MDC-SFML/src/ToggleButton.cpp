@@ -21,15 +21,17 @@ namespace MaterialDesignComponentsForSFML
  * @param diameter the diameter
  * @param label the toggle label (optional)
  * @param customImage a custom image (optional)
+ * @param isToggled the default state (optional)
  *
  * @author Arthur
  * @date 28/04/2020 - 02/05/2020
  */
-ToggleButton::ToggleButton(float x, float y, float width, float height, const string& label, const string& customImage) :
-        Button(x, y, width, height, label), m_isToggled{false}
+ToggleButton::ToggleButton(float x, float y, float width, float height, const string& label,
+                           const string& customImage, LabelPosition labelPosition, bool isToggled) :
+        Button(x, y, width, height, label), m_isToggled{isToggled}
 {
     setOrigin(0, height / 2);
-    m_labelPosition = RIGHT;
+    m_labelPosition = labelPosition;
     setClipRectArray(ClipRectUtils::generate(0, 0, (int) width, (int) height, 4, 2));
     setTextureRect(m_clipRectArray[m_currentClipRect]);
 

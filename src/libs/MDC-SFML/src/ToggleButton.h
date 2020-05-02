@@ -38,7 +38,7 @@ namespace MaterialDesignComponentsForSFML
  * DISABLED_UNPRESSED           DISABLED_SELECTED
  *
  * @author Arthur
- * @date 28/04/2020
+ * @date 28/04/2020 - 02/05/2020
  *
  * @see Button
  */
@@ -48,7 +48,9 @@ public:
     //=== CTORs / DTORs
     ToggleButton(float x, float y, float width, float height,
                  const std::string& label = "",
-                 const std::string& customImage = Config::TOGGLE_BUTTON_IMAGE);
+                 const std::string& customImage = Config::TOGGLE_BUTTON_IMAGE,
+                 LabelPosition labelPosition = RIGHT,
+                 bool isToggled = true);
     ToggleButton(const ToggleButton& other);
     ~ToggleButton() override = default;
 

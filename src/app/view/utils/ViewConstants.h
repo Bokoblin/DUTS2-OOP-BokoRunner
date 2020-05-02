@@ -80,10 +80,13 @@ extern const std::string END_SCREEN_BACKGROUND;
 //=== Images files : UI components
 extern const std::string MENU_BUTTON_IMAGE;
 extern const std::string SHAPE_BUTTONS_IMAGE;
-extern const std::string GAME_BUTTONS_IMAGE;
+extern const std::string RESUME_BUTTON_IMAGE;
+extern const std::string RESTART_BUTTON_IMAGE;
+extern const std::string HOME_BUTTON_IMAGE;
 extern const std::string MUSIC_BUTTON_IMAGE;
 extern const std::string CARD_IMAGE;
 extern const std::string HOME_IMAGE;
+extern const std::string FLAG_IMAGE;
 extern const std::string HYPERLINK_IMAGE;
 extern const std::string PAGE_INDICATOR_IMAGE;
 

@@ -54,8 +54,7 @@ private:
     const int TRANSITION_SPEED = 10;
     const int PAUSE_FORM_X = 30;
     const int HOME_BTN_SIZE = 30;
-    const int PAUSE_BUTTONS_SIZE = 25;
-    const int PAUSE_MUSIC_SIZE = 40;
+    const int PAUSE_BUTTONS_SIZE = 40;
     const int INGAME_COIN_SIZE = 20;
     const int RESULTS_COIN_SIZE = 25;
     const int BUTTON_WIDTH = 150;
@@ -63,7 +62,7 @@ private:
     const int ENEMY_SIZE = 20;
     const int SHIELD_SIZE = 40;
     const int ORIGINAL_DISTANCE_ICON_SIZE = 50;
-    const int PAUSE_ICONS_SIZE = 25;
+    const int PAUSE_ICONS_SIZE = 50;
     const int NB_PLAYER_CLIPS = 8;
     const int LIFE_BOX_WIDTH = 200;
     const int LIFE_BOX_HEIGHT = 100;
@@ -93,10 +92,10 @@ private:
     mdsf::Sprite* m_pauseBackground;
     mdsf::Sprite* m_distanceIcon;
     mdsf::Sprite* m_endBackground;
-    mdsf::Button* m_resumeGameButton;
-    mdsf::Button* m_restartGameButton;
-    mdsf::Button* m_goToHomeButton;
-    mdsf::ToggleButton* m_controlMusicButton;
+    mdsf::ToggleButton* m_resumeButton;
+    mdsf::ToggleButton* m_restartButton;
+    mdsf::ToggleButton* m_goHomeButton;
+    mdsf::ToggleButton* m_musicButton;
     mdsf::RaisedButton* m_saveScoreButton;
 
     //Audio

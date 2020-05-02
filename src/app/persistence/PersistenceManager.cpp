@@ -1,5 +1,4 @@
 #include "PersistenceManager.h"
-#include "app/model/utils/StringHash.h"
 
 using std::string;
 using Bokoblin::SimpleLogger::Logger;

@@ -66,11 +66,11 @@ void LocalizationManager::checkContext()
  * @return the localized string
  *
  * @author Arthur
- * @date 04/01/17 - 14/01/19
+ * @date 04/01/2017 - 02/05/2020
  */
 string LocalizationManager::fetchLocalizedString(const string& label)
 {
-    string result = "UNDEFINED";
+    string result;
     try {
         LocalizationManager::checkContext();
 
@@ -81,7 +81,7 @@ string LocalizationManager::fetchLocalizedString(const string& label)
         result = XMLHelper::loadLabeledString(ViewResources::ENGLISH_STRINGS, label);
     }
 
-    if (result == "<" + label + ">" || result == "UNDEFINED") {
+    if (result == "<" + label + ">") {
         Logger::printWarning("No string was found for expression \"" + label + "\"");
     }
 

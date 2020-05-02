@@ -76,7 +76,7 @@ private:
     const int HALF_POSITION_OFFSET = 10;
     const int INDICATOR_PADDING = 2;
     const int INDICATOR_DIAMETER = 22;
-    const int HOME_BUTTON_SIZE = 30;
+    const int HOME_BTN_SIZE = 30;
 };
 
 #endif

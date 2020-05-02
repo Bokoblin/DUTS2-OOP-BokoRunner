@@ -46,7 +46,7 @@ private:
     mdsf::RaisedButton* m_homeButton;
 
     //Constants
-    const int HOME_BUTTON_SIZE = 30;
+    const int HOME_BTN_SIZE = 30;
 
     //=== METHODS
     void loadSprites() override;

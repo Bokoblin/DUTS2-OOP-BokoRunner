@@ -52,7 +52,7 @@ private:
     const unsigned int SCROLLING_FOREGROUND = 1;
     const int TRANSITION_SPEED = 10;
     const int PAUSE_FORM_X = 30;
-    const int HOME_BUTTON_SIZE = 30;
+    const int HOME_BTN_SIZE = 30;
     const int PAUSE_BUTTONS_SIZE = 25;
     const int INGAME_COIN_SIZE = 20;
     const int RESULTS_COIN_SIZE = 25;

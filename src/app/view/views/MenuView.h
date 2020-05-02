@@ -64,14 +64,14 @@ private:
     sf::Music m_menuMusic;
 
     //Constants
-    const int MAIN_BUTTON_WIDTH = 150;
-    const int MAIN_BUTTON_HEIGHT = 80;
+    const int MAIN_BTN_WIDTH = 150;
+    const int MAIN_BTN_HEIGHT = 80;
     const int BACKGROUND_WIDTH = 1200;
     const int FAR_SCROLL_SPEED = 1;
     const int NEAR_SCROLL_SPEED = 2;
     const int MUSIC_LOOP_START = 4851;
     const int MUSIC_LOOP_END = 28840;
-    const int HOME_BUTTON_SIZE = 50;
+    const int HOME_BTN_SIZE = 50;
     const int TITLE_WIDTH = 400;
     const int TITLE_HEIGHT = 200;
 

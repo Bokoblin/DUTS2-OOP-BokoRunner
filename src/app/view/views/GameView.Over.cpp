@@ -13,7 +13,7 @@
 void GameView::updateGameOverElements()
 {
     m_goToHomeButton->sync();
-    m_goToHomeButton->resize(HOME_BUTTON_SIZE);
+    m_goToHomeButton->resize(HOME_BTN_SIZE);
     m_goToHomeButton->setPosition(0.033f * m_width, 0.89f * m_height);
     m_goToHomeButton->syncLabelPosition();
 
@@ -22,7 +22,7 @@ void GameView::updateGameOverElements()
     m_coinSprite->setPosition(0.43f * m_width, 0.936f * m_height);
 
     m_restartGameButton->sync();
-    m_restartGameButton->resize(HOME_BUTTON_SIZE);
+    m_restartGameButton->resize(HOME_BTN_SIZE);
     m_restartGameButton->setPosition(0.933f * m_width, 0.89f * m_height);
     m_restartGameButton->setLabelPosition(mdsf::LabelPosition::LEFT);
     m_restartGameButton->syncLabelPosition();

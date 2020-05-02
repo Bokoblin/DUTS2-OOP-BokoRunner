@@ -64,8 +64,8 @@ void LeaderboardView::loadSprites()
 {
     //=== Initialize CLEAR button
 
-    m_clearLeaderboardButton = new mdsf::RaisedButton(getHalfXPosition() - (0.5f * RESET_BUTTON_WIDTH),
-                                                      0.9f * m_height, RESET_BUTTON_WIDTH, RESET_BUTTON_HEIGHT,
+    m_clearLeaderboardButton = new mdsf::RaisedButton(getHalfXPosition() - (0.5f * RESET_BTN_WIDTH),
+                                                      0.9f * m_height, RESET_BTN_WIDTH, RESET_BTN_HEIGHT,
                                                       "leaderboard_clear_button");
     m_clearLeaderboardButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
     m_clearLeaderboardButton->setFillColor(mdsf::Color::MaterialRed);
@@ -73,7 +73,7 @@ void LeaderboardView::loadSprites()
     //=== Initialize HOME button
 
     m_homeButton = new mdsf::RaisedButton(10, 10, DEFAULT_HOME_SIZE, DEFAULT_HOME_SIZE, "", ViewResources::HOME_IMAGE);
-    m_homeButton->resize(HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
+    m_homeButton->resize(HOME_BTN_SIZE, HOME_BTN_SIZE);
 }
 
 

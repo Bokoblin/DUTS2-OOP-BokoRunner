@@ -87,27 +87,27 @@ void MenuView::loadSprites()
 
     //=== Initialize PLAY and QUIT buttons
 
-    m_playButton = new mdsf::RaisedButton(getHalfXPosition() - 0.5f * MAIN_BUTTON_WIDTH, 0.667f * m_height,
-                                          MAIN_BUTTON_WIDTH, MAIN_BUTTON_HEIGHT, "menu_play_button", ViewResources::MENU_BUTTON_IMAGE);
+    m_playButton = new mdsf::RaisedButton(getHalfXPosition() - 0.5f * MAIN_BTN_WIDTH, 0.667f * m_height,
+                                          MAIN_BTN_WIDTH, MAIN_BTN_HEIGHT, "menu_play_button", ViewResources::MENU_BUTTON_IMAGE);
     m_playButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
-    m_quitButton = new mdsf::RaisedButton(getHalfXPosition() - 0.5f * MAIN_BUTTON_WIDTH, 0.833f * m_height,
-                                          MAIN_BUTTON_WIDTH, MAIN_BUTTON_HEIGHT, "menu_quit_button", ViewResources::MENU_BUTTON_IMAGE);
+    m_quitButton = new mdsf::RaisedButton(getHalfXPosition() - 0.5f * MAIN_BTN_WIDTH, 0.833f * m_height,
+                                          MAIN_BTN_WIDTH, MAIN_BTN_HEIGHT, "menu_quit_button", ViewResources::MENU_BUTTON_IMAGE);
     m_quitButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
 
     //=== Initialize COMMANDS, SETTINGS, LEADERBOARD and SHOP buttons
 
-    m_commandsButton = new mdsf::RaisedButton(0.02f * m_width, 0.02f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
+    m_commandsButton = new mdsf::RaisedButton(0.02f * m_width, 0.02f * m_height, HOME_BTN_SIZE, HOME_BTN_SIZE);
     m_commandsButton->loadAndApplyTextureFromImageFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 0, 50, 50));
 
-    m_settingsButton = new mdsf::RaisedButton(0.02f * m_width, 0.89f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
+    m_settingsButton = new mdsf::RaisedButton(0.02f * m_width, 0.89f * m_height, HOME_BTN_SIZE, HOME_BTN_SIZE);
     m_settingsButton->loadAndApplyTextureFromImageFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 50, 50, 50));
 
-    m_shopButton = new mdsf::RaisedButton(0.92f * m_width, 0.02f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
+    m_shopButton = new mdsf::RaisedButton(0.92f * m_width, 0.02f * m_height, HOME_BTN_SIZE, HOME_BTN_SIZE);
     m_shopButton->loadAndApplyTextureFromImageFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 100, 50, 50));
 
-    m_leaderboardButton = new mdsf::RaisedButton(0.92f * m_width, 0.89f * m_height, HOME_BUTTON_SIZE, HOME_BUTTON_SIZE);
+    m_leaderboardButton = new mdsf::RaisedButton(0.92f * m_width, 0.89f * m_height, HOME_BTN_SIZE, HOME_BTN_SIZE);
     m_leaderboardButton->loadAndApplyTextureFromImageFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 150, 50, 50));
 }
 

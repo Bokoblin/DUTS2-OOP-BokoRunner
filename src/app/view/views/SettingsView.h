@@ -82,7 +82,7 @@ private:
     const int ORIGINAL_IUT_LOGO_HEIGHT = 210;
     const int ORIGINAL_SFML_LOGO_WIDTH = 373;
     const int ORIGINAL_SFML_LOGO_HEIGHT = 113;
-    const int HOME_BUTTON_SIZE = 30;
+    const int HOME_BTN_SIZE = 30;
     const int IUT_LOGO_WIDTH = 150;
     const int IUT_LOGO_HEIGHT = 130;
     const int SFML_LOGO_WIDTH = 150;

@@ -52,11 +52,11 @@ private:
     mdsf::Dialog* m_confirmDialog;
 
     //Constants
-    const int HOME_BUTTON_SIZE = 30;
+    const int HOME_BTN_SIZE = 30;
     const int DIALOG_WIDTH = 280;
     const int DIALOG_HEIGHT = 150;
-    const int RESET_BUTTON_WIDTH = 150;
-    const int RESET_BUTTON_HEIGHT = 36;
+    const int RESET_BTN_WIDTH = 150;
+    const int RESET_BTN_HEIGHT = 36;
 
     //=== METHODS
     void loadSprites() override;

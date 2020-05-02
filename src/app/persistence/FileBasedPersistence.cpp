@@ -310,13 +310,17 @@ bool FileBasedPersistence::fetchActivatedBonusFromConfigFile()
  * with values from config file
  *
  * @author Arthur
- * @date 13/10/18
+ * @date 13/10/2018 - 02/05/2020
  */
 bool FileBasedPersistence::fetchShopItemsFromConfigFile()
 {
     nullSafeGuard();
 
     XmlNode shop = m_doc.child("runner").child("shop");
+
+    if (!m_appCore->m_shopItemsArray.empty()) {
+        m_appCore->cleanupShopItemsArray();
+    }
 
     for (XmlNode shopItem: shop.children("shopItem")) {
         //Updates item's attributes

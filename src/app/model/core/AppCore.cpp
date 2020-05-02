@@ -29,9 +29,7 @@ AppCore::AppCore() : m_appState{SPLASH}
  */
 AppCore::~AppCore()
 {
-    for (ShopItem* shopItem: m_shopItemsArray) {
-        delete shopItem;
-    }
+    cleanupShopItemsArray();
 }
 
 
@@ -287,6 +285,20 @@ void AppCore::initWithDefaultValues()
     m_scoresHardArray.clear();
     m_shopItemsArray.clear();
     m_activatedItemsArray.clear();
+}
+
+/**
+ * Cleanup the shop items array
+ *
+ * @author Arthur
+ * @date 02/05/2020
+ */
+void AppCore::cleanupShopItemsArray()
+{
+    for (ShopItem* shopItem: m_shopItemsArray) {
+        delete shopItem;
+    }
+    m_shopItemsArray.clear();
 }
 
 

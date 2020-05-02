@@ -113,6 +113,7 @@ private:
 
     //=== METHODS
     void initWithDefaultValues();
+    void cleanupShopItemsArray();
 };
 
 #endif

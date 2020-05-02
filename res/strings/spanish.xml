@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2016-2019 Jolivet Arthur & Laronze Florian
+<!-- Copyright 2016-2020 Jolivet Arthur & Laronze Florian
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -84,8 +84,8 @@
                   &#xA; Puede rellenar reportes de fallos a la sección ''Issues'' del depósito,
                   &#xA; o enviar un correo electrónico en la dirección siguiente :"/>
     <string name="about_repo_address" value="https://github.com/Bokoblin/DUTS2-OOP-BokoRunner"/>
-    <string name="about_email" value="jolivetarthur@gmail.com."/>
-    <string name="about_copyright" value="2016-2019 Jolivet Arthur &amp; Laronze Florian"/>
+    <string name="about_email" value="jolivet.arthur@gmail.com."/>
+    <string name="about_copyright" value="2016-2020 Jolivet Arthur &amp; Laronze Florian"/>
 
     <!-- Shop strings -->
     <string name="shop_title" value="Tienda"/>

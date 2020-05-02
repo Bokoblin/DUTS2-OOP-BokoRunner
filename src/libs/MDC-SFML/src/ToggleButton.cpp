@@ -1,4 +1,3 @@
-#include "Button.h"
 #include "ToggleButton.h"
 #include "ClipRectUtils.h"
 
@@ -21,6 +20,7 @@ namespace MaterialDesignComponentsForSFML
  * @param diameter the diameter
  * @param label the toggle label (optional)
  * @param customImage a custom image (optional)
+ * @param labelPosition the label position (optional)
  * @param isToggled the default state (optional)
  *
  * @author Arthur
@@ -40,7 +40,6 @@ ToggleButton::ToggleButton(float x, float y, float width, float height, const st
     ToggleButton::resize(m_width, m_height);
 }
 
-
 /**
  * Copy Constructor
  *
@@ -51,7 +50,6 @@ ToggleButton::ToggleButton(float x, float y, float width, float height, const st
  */
 ToggleButton::ToggleButton(ToggleButton const& other) :
         Button(other), m_isToggled{other.m_isToggled} {}
-
 
 //------------------------------------------------
 //          GETTERS

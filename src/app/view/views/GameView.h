@@ -17,7 +17,7 @@ limitations under the License.
 #define GAME_VIEW_H
 
 #include "libs/MDC-SFML/src/RaisedButton.h"
-#include <libs/MDC-SFML/src/ToggleButton.h>
+#include "libs/MDC-SFML/src/ToggleButton.h"
 #include "app/model/models/GameModel.h"
 #include "app/view/ui-components/PixelShader.h"
 #include "AbstractView.h"

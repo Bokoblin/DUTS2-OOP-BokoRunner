@@ -19,8 +19,6 @@ limitations under the License.
 #include <SFML/Graphics/Color.hpp>
 #include "libs/MDC-SFML/src/Color.h"
 
-namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
-
 /**
  * The AppColor class defines custom colors used in the app.
  *

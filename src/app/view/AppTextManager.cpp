@@ -409,11 +409,12 @@ void AppTextManager::syncGameRunningText(int bonusTimeout)
  * Syncs paused game standalone text
  *
  * @author Arthur
- * @date 02/04/16 - 13/01/19
+ * @date 02/04/2016 - 03/05/2020
  */
 void AppTextManager::syncGamePausedText()
 {
     m_currentDistanceText->setPosition(0.09f * m_width, 0.05f * m_height);
+    m_currentDistanceText->setFillColor(mdsf::Color::MaterialOrange);
 
     m_currentCoinsNbText->setPosition(0.09f * m_width, 0.115f * m_height);
     m_currentCoinsNbText->setFillColor(AppColor::CoinGold);

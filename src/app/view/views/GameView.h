@@ -53,7 +53,7 @@ private:
     const unsigned int SCROLLING_FOREGROUND = 1;
     const int TRANSITION_SPEED = 10;
     const int PAUSE_FORM_X = 30;
-    const int HOME_BTN_SIZE = 30;
+    const int HOME_BTN_SIZE = 50;
     const int PAUSE_BUTTONS_SIZE = 40;
     const int INGAME_COIN_SIZE = 20;
     const int RESULTS_COIN_SIZE = 25;
@@ -77,21 +77,13 @@ private:
     mdsf::Sprite* m_lifeBoxImage;
     mdsf::Sprite* m_remainingLifeImage;
     mdsf::Sprite* m_shieldImage;
-    AnimatedSprite* m_playerSprite;
-    AnimatedSprite* m_stdEnemySprite;
-    AnimatedSprite* m_totemEnemySprite;
-    AnimatedSprite* m_blockEnemySprite;
-    AnimatedSprite* m_coinSprite;
-    AnimatedSprite* m_PVPlusBonusSprite;
-    AnimatedSprite* m_megaBonusSprite;
-    AnimatedSprite* m_flyBonusSprite;
-    AnimatedSprite* m_slowSpeedBonusSprite;
-    AnimatedSprite* m_shieldBonusSprite;
 
     //Pause and End Graphic Elements
     mdsf::Sprite* m_pauseBackground;
     mdsf::Sprite* m_distanceIcon;
     mdsf::Sprite* m_endBackground;
+    AnimatedSprite* m_stdEnemySprite;
+    AnimatedSprite* m_coinSprite;
     mdsf::ToggleButton* m_resumeButton;
     mdsf::ToggleButton* m_restartButton;
     mdsf::ToggleButton* m_goHomeButton;

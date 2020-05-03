@@ -41,14 +41,6 @@ GameView::GameView(sf::RenderWindow* window, AppTextManager* textManager, GameMo
         m_gameThemeMusic.setLoop(true);
     }
 
-    //=== change ball skin if not default one
-
-    if (m_game->getPlayerSkin() == "morphing") {
-        m_playerSprite->setClipRectArray(mdsf::ClipRectUtils::generate(0, 50, 50, 50, 1, NB_PLAYER_CLIPS));
-    } else if (m_game->getPlayerSkin() == "capsule") {
-        m_playerSprite->setClipRectArray(mdsf::ClipRectUtils::generate(0, 100, 50, 50, 1, NB_PLAYER_CLIPS));
-    }
-
     if (!m_coinMusic.openFromFile(ViewRes::COINS_COLLECTED_MUSIC)) {
         Logger::printError("Music loading failed for \"" + ViewRes::COINS_COLLECTED_MUSIC + "\"");
     }
@@ -106,7 +98,7 @@ GameView::~GameView()
  * @brief Load all sprites used by the game (backgrounds, UI, elements)
  *
  * @author Arthur
- * @date 26/03/2016 - 02/05/2020
+ * @date 26/03/2016 - 03/05/2020
  */
 void GameView::loadSprites()
 {
@@ -136,56 +128,57 @@ void GameView::loadSprites()
     m_distanceIcon = new mdsf::Sprite(0.033f * m_width, 0.055f * m_height, ORIGINAL_DISTANCE_ICON_SIZE);
     m_distanceIcon->loadAndApplyTextureFromImageFile(ViewRes::FLAG_IMAGE);
     m_distanceIcon->resize(25); //TODO [2.0.x] Move resize call to ctor/sync() after setting the target size in ctor
+    m_distanceIcon->setFillColor(mdsf::Color::MaterialOrange);
 
     //=== Initialize PLAYER sprite
 
-    vector<sf::IntRect> playerClipRect = mdsf::ClipRectUtils::generate(0, 0, 50, 50, 1, NB_PLAYER_CLIPS);
-    m_playerSprite = new AnimatedSprite(-1, -1, 30, 30, ViewRes::BALL_IMAGE, playerClipRect);
-    m_playerSprite->setOrigin(0, 50);
+    int playerYOffset = m_game->getPlayerSkin() == "default" ? 0 : (m_game->getPlayerSkin() == "morphing" ? 50 : 100);
+    auto playerClipRect = mdsf::ClipRectUtils::generate(0, playerYOffset, 50, 50, 1, NB_PLAYER_CLIPS);
+    auto playerSprite = new AnimatedSprite(30, 30, ViewRes::BALL_IMAGE, playerClipRect);
+    playerSprite->setOrigin(0, 50);
 
     //=== Initialize ENEMIES sprite
 
-    vector<sf::IntRect> stdEnemyClipRect = mdsf::ClipRectUtils::generate(0, 0, 50, 50, 1, 2);
-    m_stdEnemySprite = new AnimatedSprite(-1, -1, 30, 30, ViewRes::ENEMIES_IMAGE, stdEnemyClipRect);
+    auto stdEnemyClipRect = mdsf::ClipRectUtils::generate(0, 0, 50, 50, 1, 2);
+    m_stdEnemySprite = new AnimatedSprite(30, 30, ViewRes::ENEMIES_IMAGE, stdEnemyClipRect);
     m_stdEnemySprite->setOrigin(0, 50);
 
-    vector<sf::IntRect> totemEnemyClipRect = mdsf::ClipRectUtils::generate(0, 0, 50, 150, 1, 2);
-    m_totemEnemySprite = new AnimatedSprite(-1, -1, 30, 90, ViewRes::ENEMIES_IMAGE, totemEnemyClipRect);
-    m_totemEnemySprite->setOrigin(0, 150);
+    auto totemEnemyClipRect = mdsf::ClipRectUtils::generate(0, 0, 50, 150, 1, 2);
+    auto totemEnemySprite = new AnimatedSprite(30, 90, ViewRes::ENEMIES_IMAGE, totemEnemyClipRect);
+    totemEnemySprite->setOrigin(0, 150);
 
-    vector<sf::IntRect> BlockEnemyClipRect = mdsf::ClipRectUtils::generate(0, 150, 50, 50, 1, 2);
-    m_blockEnemySprite = new AnimatedSprite(-1, -1, 50, 50, ViewRes::ENEMIES_IMAGE, BlockEnemyClipRect);
-    m_blockEnemySprite->setOrigin(0, 50);
+    auto blockEnemyClipRect = mdsf::ClipRectUtils::generate(0, 150, 50, 50, 1, 2);
+    auto blockEnemySprite = new AnimatedSprite(50, 50, ViewRes::ENEMIES_IMAGE, blockEnemyClipRect);
+    blockEnemySprite->setOrigin(0, 50);
 
     //=== Initialize COINS & BONUSES sprite
 
-    m_shieldImage = new mdsf::Sprite(-1, -1, SHIELD_SIZE);
-    m_shieldImage->loadAndApplyTextureFromImageFile(ViewRes::SHIELD_IMAGE);
+    m_shieldImage = new mdsf::Sprite(SHIELD_SIZE, ViewRes::SHIELD_IMAGE);
     m_shieldImage->setOrigin(0, 50);
 
-    vector<sf::IntRect> coinClipRect = mdsf::ClipRectUtils::generate(0, 0, 50, 50, 1, 5);
-    m_coinSprite = new AnimatedSprite(-1, -1, 25, 25, ViewRes::BONUS_IMAGE, coinClipRect);
+    auto coinClipRect = mdsf::ClipRectUtils::generate(0, 0, 50, 50, 1, 5);
+    m_coinSprite = new AnimatedSprite(25, 25, ViewRes::BONUS_IMAGE, coinClipRect);
     m_coinSprite->setOrigin(0, 50);
 
-    vector<sf::IntRect> pvClipRect = mdsf::ClipRectUtils::generate(0, 50, 50, 50, 1, 5);
-    m_PVPlusBonusSprite = new AnimatedSprite(-1, -1, 25, 25, ViewRes::BONUS_IMAGE, pvClipRect);
-    m_PVPlusBonusSprite->setOrigin(0, 50);
+    auto pvClipRect = mdsf::ClipRectUtils::generate(0, 50, 50, 50, 1, 5);
+    auto pvPlusBonusSprite = new AnimatedSprite(25, 25, ViewRes::BONUS_IMAGE, pvClipRect);
+    pvPlusBonusSprite->setOrigin(0, 50);
 
-    vector<sf::IntRect> megaClipRect = mdsf::ClipRectUtils::generate(0, 100, 50, 50, 1, 5);
-    m_megaBonusSprite = new AnimatedSprite(-1, -1, 25, 25, ViewRes::BONUS_IMAGE, megaClipRect);
-    m_megaBonusSprite->setOrigin(0, 50);
+    auto megaClipRect = mdsf::ClipRectUtils::generate(0, 100, 50, 50, 1, 5);
+    auto megaBonusSprite = new AnimatedSprite(25, 25, ViewRes::BONUS_IMAGE, megaClipRect);
+    megaBonusSprite->setOrigin(0, 50);
 
-    vector<sf::IntRect> flyClipRect = mdsf::ClipRectUtils::generate(0, 150, 50, 50, 1, 5);
-    m_flyBonusSprite = new AnimatedSprite(-1, -1, 25, 25, ViewRes::BONUS_IMAGE, flyClipRect);
-    m_flyBonusSprite->setOrigin(0, 50);
+    auto flyClipRect = mdsf::ClipRectUtils::generate(0, 150, 50, 50, 1, 5);
+    auto flyBonusSprite = new AnimatedSprite(25, 25, ViewRes::BONUS_IMAGE, flyClipRect);
+    flyBonusSprite->setOrigin(0, 50);
 
-    vector<sf::IntRect> slowClipRect = mdsf::ClipRectUtils::generate(0, 200, 50, 50, 1, 5);
-    m_slowSpeedBonusSprite = new AnimatedSprite(-1, -1, 25, 25, ViewRes::BONUS_IMAGE, slowClipRect);
-    m_slowSpeedBonusSprite->setOrigin(0, 50);
+    auto slowClipRect = mdsf::ClipRectUtils::generate(0, 200, 50, 50, 1, 5);
+    auto slowSpeedBonusSprite = new AnimatedSprite(25, 25, ViewRes::BONUS_IMAGE, slowClipRect);
+    slowSpeedBonusSprite->setOrigin(0, 50);
 
-    vector<sf::IntRect> shieldClipRect = mdsf::ClipRectUtils::generate(0, 250, 50, 50, 1, 5);
-    m_shieldBonusSprite = new AnimatedSprite(-1, -1, 25, 25, ViewRes::BONUS_IMAGE, shieldClipRect);
-    m_shieldBonusSprite->setOrigin(0, 50);
+    auto shieldClipRect = mdsf::ClipRectUtils::generate(0, 250, 50, 50, 1, 5);
+    auto shieldBonusSprite = new AnimatedSprite(25, 25, ViewRes::BONUS_IMAGE, shieldClipRect);
+    shieldBonusSprite->setOrigin(0, 50);
 
     //=== Initialize buttons
 
@@ -217,18 +210,16 @@ void GameView::loadSprites()
 
     //=== Associate element type to sprite
 
-    //FIXME [2.0.x] Use AnimatedSprite Ctor with no posX and PosY above as useless
-    //FIXME [2.0.x] Replace unneeded members above by function variables
-    m_typeToSpriteMap[PLAYER] = m_playerSprite;
+    m_typeToSpriteMap[PLAYER] = playerSprite;
     m_typeToSpriteMap[STANDARD_ENEMY] = m_stdEnemySprite;
-    m_typeToSpriteMap[TOTEM_ENEMY] = m_totemEnemySprite;
-    m_typeToSpriteMap[BLOCK_ENEMY] = m_blockEnemySprite;
+    m_typeToSpriteMap[TOTEM_ENEMY] = totemEnemySprite;
+    m_typeToSpriteMap[BLOCK_ENEMY] = blockEnemySprite;
     m_typeToSpriteMap[COIN] = m_coinSprite;
-    m_typeToSpriteMap[PV_PLUS_BONUS] = m_PVPlusBonusSprite;
-    m_typeToSpriteMap[MEGA_BONUS] = m_megaBonusSprite;
-    m_typeToSpriteMap[FLY_BONUS] = m_flyBonusSprite;
-    m_typeToSpriteMap[SLOW_SPEED_BONUS] = m_slowSpeedBonusSprite;
-    m_typeToSpriteMap[SHIELD_BONUS] = m_shieldBonusSprite;
+    m_typeToSpriteMap[PV_PLUS_BONUS] = pvPlusBonusSprite;
+    m_typeToSpriteMap[MEGA_BONUS] = megaBonusSprite;
+    m_typeToSpriteMap[FLY_BONUS] = flyBonusSprite;
+    m_typeToSpriteMap[SLOW_SPEED_BONUS] = slowSpeedBonusSprite;
+    m_typeToSpriteMap[SHIELD_BONUS] = shieldBonusSprite;
 }
 
 /**

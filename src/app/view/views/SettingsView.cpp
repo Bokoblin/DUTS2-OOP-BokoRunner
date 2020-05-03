@@ -16,7 +16,7 @@ namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
  * @param settingsModel the settings model counterpart
  *
  * @author Arthur
- * @date 20/05/16 - 02/05/2020
+ * @date 20/05/16 - 03/05/2020
  */
 SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager, SettingsModel* settingsModel) :
         AbstractView(window, textManager), m_settings{settingsModel}, m_confirmDialog{nullptr}
@@ -28,15 +28,15 @@ SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager
     for (int i = 0; i < SettingsModel::PAGE_NUMBER; i++) {
         m_pageIndicators[i] = new mdsf::RadioButton(
                 getHalfXPosition() - OFFSET * SettingsModel::PAGE_NUMBER + (INDICATOR_DIAMETER + INDICATOR_PADDING) * i,
-                0.92f * m_height, INDICATOR_DIAMETER, "", ViewResources::PAGE_INDICATOR_IMAGE);
+                0.92f * m_height, 50, INDICATOR_DIAMETER, "", ViewResources::PAGE_INDICATOR_IMAGE);
     }
 
     //=== Fill button list
 
     m_buttonList.push_back(m_homeButton);
-    m_buttonList.push_back(m_englishLangRadio);
-    m_buttonList.push_back(m_frenchLangRadio);
-    m_buttonList.push_back(m_spanishLangRadio);
+    m_buttonList.push_back(m_enLanguageRadio);
+    m_buttonList.push_back(m_frLanguageRadio);
+    m_buttonList.push_back(m_esLanguageRadio);
     m_buttonList.push_back(m_easyModeRadio);
     m_buttonList.push_back(m_hardModeRadio);
     m_buttonList.push_back(m_defaultBallSkinRadio);
@@ -91,29 +91,33 @@ SettingsView::~SettingsView()
  * Loads all sprites used by the settings screen
  *
  * @author Arthur
- * @date 20/05/16 - 17/09/18
+ * @date 20/05/2016 - 03/05/2020
  */
 void SettingsView::loadSprites()
 {
     //=== Initialize RADIOS buttons
 
-    float POS_COL_1 = 0.06f * m_width; //Column 1 starting x-axis
-    float POS_COL_2 = POS_COL_1 + 0.5f * m_width; //Column 2 starting x-axis
-    float POS_COL_2B = 0.55f * m_width; //Column 2 starting x-axis
+    float C1_POS_X = 0.06f * m_width;
+    float C2_POS_X = 0.58f * m_width;
+    float C3_POS_X = 0.55f * m_width;
+    float G1_POS_Y = 0.34f * m_height;
+    float G2_POS_Y = 0.68f * m_height;
+    float G3_POS_Y = 0.34f * m_height;
+    float G4_POS_Y = 0.71f * m_height;
 
-    m_englishLangRadio = new mdsf::RadioButton(POS_COL_1, 0.342f * m_height, RADIO_DIAMETER, "config_lang_english");
-    m_frenchLangRadio = new mdsf::RadioButton(POS_COL_1, 0.408f * m_height, RADIO_DIAMETER, "config_lang_french");
-    m_spanishLangRadio = new mdsf::RadioButton(POS_COL_1, 0.475f * m_height, RADIO_DIAMETER, "config_lang_spanish");
-    m_easyModeRadio = new mdsf::RadioButton(POS_COL_1, 0.7f * m_height, RADIO_DIAMETER, "config_easy_mode");
-    m_hardModeRadio = new mdsf::RadioButton(POS_COL_1, 0.767f * m_height, RADIO_DIAMETER, "config_hard_mode");
-    m_defaultBallSkinRadio = new mdsf::RadioButton(POS_COL_2, 0.342f * m_height, RADIO_DIAMETER, "player_skin_default");
-    m_morphBallSkinRadio = new mdsf::RadioButton(POS_COL_2, 0.408f * m_height, RADIO_DIAMETER, "player_skin_morphing");
-    m_capsuleBallSkinRadio = new mdsf::RadioButton(POS_COL_2, 0.475f * m_height, RADIO_DIAMETER, "player_skin_capsule");
+    m_enLanguageRadio = new mdsf::RadioButton(C1_POS_X, G1_POS_Y, 50, RADIO_DIAMETER, "config_lang_english");
+    m_frLanguageRadio = new mdsf::RadioButton(C1_POS_X, G1_POS_Y + RADIO_DIAMETER, 50, RADIO_DIAMETER, "config_lang_french");
+    m_esLanguageRadio = new mdsf::RadioButton(C1_POS_X, G1_POS_Y + 2 * RADIO_DIAMETER, 50, RADIO_DIAMETER, "config_lang_spanish");
+    m_easyModeRadio = new mdsf::RadioButton(C1_POS_X, G2_POS_Y, 50, RADIO_DIAMETER, "config_easy_mode");
+    m_hardModeRadio = new mdsf::RadioButton(C1_POS_X, G2_POS_Y + RADIO_DIAMETER, 50, RADIO_DIAMETER, "config_hard_mode");
+    m_defaultBallSkinRadio = new mdsf::RadioButton(C2_POS_X, G3_POS_Y, 50, RADIO_DIAMETER, "player_skin_default");
+    m_morphBallSkinRadio = new mdsf::RadioButton(C2_POS_X, G3_POS_Y + RADIO_DIAMETER, 50, RADIO_DIAMETER, "player_skin_morphing");
+    m_capsuleBallSkinRadio = new mdsf::RadioButton(C2_POS_X, G3_POS_Y + 2 * RADIO_DIAMETER, 50, RADIO_DIAMETER, "player_skin_capsule");
 
     //=== Initialize Music controls
 
-    m_menuMusicButton = new mdsf::ToggleButton(POS_COL_2B, 0.72f * m_height, MUTE_BTN_WIDTH, MUTE_BTN_HEIGHT, "config_music_menu");
-    m_gameMusicButton = new mdsf::ToggleButton(POS_COL_2B, 0.72f * m_height + MUTE_BTN_HEIGHT, MUTE_BTN_WIDTH, MUTE_BTN_HEIGHT, "config_music_game");
+    m_menuMusicButton = new mdsf::ToggleButton(C3_POS_X, G4_POS_Y, MUTE_BTN_WIDTH, MUTE_BTN_HEIGHT, "config_music_menu");
+    m_gameMusicButton = new mdsf::ToggleButton(C3_POS_X, G4_POS_Y + MUTE_BTN_HEIGHT, MUTE_BTN_WIDTH, MUTE_BTN_HEIGHT, "config_music_game");
 
     //=== Initialize HOME button
 
@@ -154,9 +158,9 @@ void SettingsView::synchronize()
 {
     //=== Update Status of Radio buttons
 
-    m_englishLangRadio->setSelected(m_settings->getLanguage() == ModelResources::ENGLISH);
-    m_frenchLangRadio->setSelected(m_settings->getLanguage() == ModelResources::FRENCH);
-    m_spanishLangRadio->setSelected(m_settings->getLanguage() == ModelResources::SPANISH);
+    m_enLanguageRadio->setSelected(m_settings->getLanguage() == ModelResources::ENGLISH);
+    m_frLanguageRadio->setSelected(m_settings->getLanguage() == ModelResources::FRENCH);
+    m_esLanguageRadio->setSelected(m_settings->getLanguage() == ModelResources::SPANISH);
     m_easyModeRadio->setSelected(m_settings->getGameDifficulty() == EASY);
     m_hardModeRadio->setSelected(m_settings->getGameDifficulty() == HARD);
     m_defaultBallSkinRadio->setSelected(m_settings->getPlayerSkin() == "default");
@@ -208,9 +212,9 @@ void SettingsView::draw() const
 
     switch (m_settings->getCurrentPage()) {
         case CONFIG:
-            m_englishLangRadio->draw(m_window);
-            m_frenchLangRadio->draw(m_window);
-            m_spanishLangRadio->draw(m_window);
+            m_enLanguageRadio->draw(m_window);
+            m_frLanguageRadio->draw(m_window);
+            m_esLanguageRadio->draw(m_window);
             m_easyModeRadio->draw(m_window);
             m_hardModeRadio->draw(m_window);
             m_defaultBallSkinRadio->draw(m_window);
@@ -326,13 +330,13 @@ bool SettingsView::handleEvents(sf::Event& event)
 void SettingsView::handleConfigEvents(const sf::Event& event)
 {
     if (EventUtils::wasMouseReleased(event)) {
-        if (EventUtils::isMouseInside(*m_englishLangRadio, event)) {
+        if (EventUtils::isMouseInside(*m_enLanguageRadio, event)) {
             m_settings->changeLanguage(ModelResources::ENGLISH);
             updateTextBasedComponents();
-        } else if (EventUtils::isMouseInside(*m_frenchLangRadio, event)) {
+        } else if (EventUtils::isMouseInside(*m_frLanguageRadio, event)) {
             m_settings->changeLanguage(ModelResources::FRENCH);
             updateTextBasedComponents();
-        } else if (EventUtils::isMouseInside(*m_spanishLangRadio, event)) {
+        } else if (EventUtils::isMouseInside(*m_esLanguageRadio, event)) {
             m_settings->changeLanguage(ModelResources::SPANISH);
             updateTextBasedComponents();
         } else if (EventUtils::isMouseInside(*m_easyModeRadio, event)) {

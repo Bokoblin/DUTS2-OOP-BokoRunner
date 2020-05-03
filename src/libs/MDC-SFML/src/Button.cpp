@@ -23,7 +23,7 @@ namespace MaterialDesignComponentsForSFML
  * @date 02/01/17 - 01/01/18
  */
 Button::Button(float x, float y, float width, float height) :
-        Sprite(x, y, width, height), m_currentClipRect{0},
+        Sprite(x, y, width, height),
         m_isPressed{false}, m_isEnabled{true}, m_label{""}, m_labelPosition{CENTER}
 {
     m_font.loadFromFile(Config::DEFAULT_CONDENSED_FONT);
@@ -31,7 +31,6 @@ Button::Button(float x, float y, float width, float height) :
     m_label.setFillColor(sf::Color::White);
     m_label.setCharacterSize(DEFAULT_CHAR_SIZE);
 }
-
 
 /**
  * @brief Constructs a button with coordinates,
@@ -53,7 +52,6 @@ Button::Button(float x, float y, float width, float height, const string& descri
     Button::syncLabelPosition();
 }
 
-
 /**
  * @brief Constructs a button with coordinates,
  * a size, a texture and an image rectangle clip
@@ -68,43 +66,16 @@ Button::Button(float x, float y, float width, float height, const string& descri
  * @author Arthur
  * @date 06/04/16 - 04/01/18
  */
-Button::Button(float x, float y, float width, float height,
-               const string& textureImage, const std::vector<sf::IntRect>& clipRect) :
-        Sprite(x, y, width, height, textureImage), m_clipRectArray{clipRect}, m_currentClipRect{0},
-        m_isPressed{false}, m_isEnabled{true}, m_label{""}, m_labelPosition{CENTER}
+Button::Button(float x, float y, float width, float height, const string& description, const string& textureImage) :
+        Sprite(x, y, width, height, textureImage),
+        m_isPressed{false}, m_isEnabled{true}, m_label{description}, m_labelPosition{CENTER}
 {
-    this->setTextureRect(m_clipRectArray[m_currentClipRect]);
-
     m_font.loadFromFile(Config::DEFAULT_CONDENSED_FONT);
     m_label.setFont(m_font);
     m_label.setFillColor(sf::Color::White);
     m_label.setCharacterSize(DEFAULT_CHAR_SIZE);
-}
-
-
-/**
- * @brief Constructs a button with coordinates,
- * a size, a label, a texture image and an image rectangle clip
- *
- * @param x the x-axis coordinate
- * @param y the y-axis coordinate
- * @param width the width
- * @param height the height
- * @param description the label's description
- * @param textureImage the button texture image
- * @param clipRect the image part used
- *
- * @author Arthur
- * @date 06/04/16 - 01/01/18
- */
-Button::Button(float x, float y, float width, float height, const string& description,
-               const string& textureImage, const std::vector<sf::IntRect>& clipRect) :
-        Button(x, y, width, height, textureImage, clipRect)
-{
-    m_label.setDescription(description);
     Button::syncLabelPosition();
 }
-
 
 /**
  * @brief Copy Constructor
@@ -115,21 +86,9 @@ Button::Button(float x, float y, float width, float height, const string& descri
  * @date 06/04/16 - 04/01/18
  */
 Button::Button(Button const& other) :
-        Sprite(other), m_clipRectArray{other.m_clipRectArray}, m_currentClipRect{other.m_currentClipRect},
-        m_isPressed{other.m_isPressed}, m_isEnabled{other.m_isEnabled},
+        Sprite(other), m_isPressed{other.m_isPressed}, m_isEnabled{other.m_isEnabled},
         m_font{other.m_font}, m_label{other.m_label}, m_labelPosition{other.m_labelPosition}
-{
-    this->setTextureRect(m_clipRectArray[m_currentClipRect]);
-}
-
-
-/**
- * @brief Destructor
- * @author Arthur
- * @date 06/04/16 - 25/01/17
- */
-Button::~Button() = default;
-
+{}
 
 //------------------------------------------------
 //          GETTERS
@@ -139,18 +98,15 @@ bool Button::isPressed() const { return m_isPressed; }
 bool Button::isEnabled() const { return m_isEnabled; }
 LabelPosition Button::getLabelPosition() const { return m_labelPosition; }
 
-
 //------------------------------------------------
 //          SETTERS
 //------------------------------------------------
 
 void Button::setPressed(bool pressed) { m_isPressed = pressed; }
 void Button::setEnabled(bool enabled) { m_isEnabled = enabled; }
-void Button::setClipRectArray(std::vector<sf::IntRect> array) { m_clipRectArray = std::move(array); }
 void Button::setPositionSelfCentered(float x, float y) { setPosition(x - m_width / 2, y); }
 void Button::setLabelPosition(const LabelPosition& labelPosition) { m_labelPosition = labelPosition; }
 void Button::setLabelDescription(const std::string &description) { m_label.setDescription(description); }
-
 
 //------------------------------------------------
 //          METHODS
@@ -165,16 +121,7 @@ void Button::setLabelDescription(const std::string &description) { m_label.setDe
 void Button::sync()
 {
     Sprite::applyColor();
-
-    if (!m_clipRectArray.empty()) { //TODO [2.0.x/MDC-CPP] Remove with the future ToggleButton class
-        if (m_isEnabled && m_clipRectArray.size() == 2) {
-            this->setTextureRect(m_clipRectArray[static_cast<int>(m_isPressed)]);
-        } else {
-            this->setTextureRect(m_clipRectArray[0]);
-        }
-    }
 }
-
 
 /**
  * @brief Retrieves the button's label text
@@ -195,7 +142,6 @@ void Button::retrieveLabel(const label_retrieval_func_t& func)
     syncLabelPosition();
 }
 
-
 /**
  * @brief Sync the button's label position
  *
@@ -211,7 +157,7 @@ void Button::syncLabelPosition()
                 m_label.setOrigin(0, m_label.getHeight() / 2);
                 break;
             case RIGHT:
-                m_label.setPosition(getX() + getWidth() + 30, getY() + getHeight() / 2 - 7);
+                m_label.setPosition(getX() + getWidth() + HORIZONTAL_LABEL_MARGIN, getY() + getHeight() / 2 - 7);
                 m_label.setOrigin(0, m_label.getHeight() / 2);
                 break;
             case BOTTOM:
@@ -219,7 +165,7 @@ void Button::syncLabelPosition()
                 m_label.setOrigin(0, m_label.getHeight() / 2);
                 break;
             case LEFT:
-                m_label.setPosition((getX() - 30), getY() + getHeight() / 2 - 7);
+                m_label.setPosition((getX() - HORIZONTAL_LABEL_MARGIN), getY() + getHeight() / 2 - 7);
                 m_label.setOrigin(m_label.getWidth(), m_label.getHeight() / 2);
                 break;
             case CENTER:
@@ -229,7 +175,6 @@ void Button::syncLabelPosition()
         }
     }
 }
-
 
 /**
  * @brief Draws the button and its label if visible
@@ -246,7 +191,6 @@ void Button::draw(sf::RenderWindow* window) const
         m_label.draw(window);
     }
 }
-
 
 /**
  * @brief Checks if a point of given coordinates is contained

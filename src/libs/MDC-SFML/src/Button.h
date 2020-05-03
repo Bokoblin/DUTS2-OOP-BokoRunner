@@ -1,4 +1,4 @@
-/* Copyright 2016-2019 Jolivet Arthur
+/* Copyright 2016-2020 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,14 +28,12 @@ namespace MaterialDesignComponentsForSFML
 
 /**
  * The Button class inherits Sprite.
- * It implements button components such as states, rectangle clips and a label. \n
- * The following states are available : pressed, selected, enabled. \n
- * The rectangle clips are used to adapt rendering following states. \n
+ * It implements button components such as press states and a label. \n
  * It is possible to choose the label position (following 5 positions)
  * and to update it using a string file thanks to its description (i.e. id)
  *
  * @author Arthur
- * @date 06/04/16 - 14/01/19
+ * @date 06/04/16 - 03/05/2020
  *
  * @see Sprite
  * @see LabelPosition
@@ -46,12 +44,9 @@ public:
     //=== CTORs / DTORs
     Button(float x, float y, float width, float height);
     Button(float x, float y, float width, float height, const std::string& description);
-    Button(float x, float y, float width, float height, const std::string& textureImage,
-           const std::vector<sf::IntRect>& clipRect);
-    Button(float x, float y, float width, float height, const std::string& description,
-           const std::string& textureImage, const std::vector<sf::IntRect>& clipRect);
+    Button(float x, float y, float width, float height, const std::string& description, const std::string& textureImage);
     Button(Button const& other);
-    ~Button() override;
+    ~Button() override = default;
 
     //=== FUNCTION POINTERS
     typedef std::function<std::string(const std::string& label)> label_retrieval_func_t;
@@ -64,7 +59,6 @@ public:
     //=== SETTERS
     virtual void setPressed(bool pressed);
     void setEnabled(bool enabled);
-    void setClipRectArray(std::vector<sf::IntRect> array);
     void setPositionSelfCentered(float x, float y);
     void setLabelDescription(const std::string& description);
     virtual void setLabelPosition(const LabelPosition& labelPosition);
@@ -78,8 +72,6 @@ public:
 
 protected:
     //=== ATTRIBUTES
-    std::vector<sf::IntRect> m_clipRectArray; //FIXME [2.0.x] Sprite::loadAndApplyTextureFromImageFile(const std::string &, sf::IntRect) is enough for this class -- Can be moved to RadioButton
-    unsigned int m_currentClipRect; //TODO [2.0.x/MDC-CPP] move to RadioButton and ToggleButton [the latter todo, as boolean], don't allow get/set but add, remove, clear
     bool m_isPressed;
     bool m_isEnabled;
     sf::Font m_font;
@@ -88,6 +80,7 @@ protected:
 
     //Constants
     const unsigned int DEFAULT_CHAR_SIZE = 22;
+    const float HORIZONTAL_LABEL_MARGIN = 30;
 };
 
 } //namespace MaterialDesignComponentsForSFML

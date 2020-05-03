@@ -74,7 +74,7 @@ void ShopView::loadSprites()
  * Create Cards ans Indicators
  *
  * @author Arthur
- * @date 16/05/16 - 06/09/18
+ * @date 16/05/16 - 03/05/2020
  */
 void ShopView::createCards()
 {
@@ -95,7 +95,7 @@ void ShopView::createCards()
     for (unsigned int j = 0; j < pageNumber; j++) {
         m_pageIndicators[j] = new mdsf::RadioButton(
                 getHalfXPosition() - (HALF_POSITION_OFFSET * pageNumber) + (INDICATOR_DIAMETER + INDICATOR_PADDING) * j,
-                0.92f * m_height, INDICATOR_DIAMETER, "", ViewResources::PAGE_INDICATOR_IMAGE);
+                0.92f * m_height, 50, INDICATOR_DIAMETER, "", ViewResources::PAGE_INDICATOR_IMAGE);
     }
 }
 

@@ -16,8 +16,7 @@ limitations under the License.
 #ifndef MDC_SFML_TOGGLE_BUTTON_H
 #define MDC_SFML_TOGGLE_BUTTON_H
 
-#include "Button.h"
-#include "Sprite.h"
+#include "AbstractStateButton.h"
 
 namespace Bokoblin
 {
@@ -25,11 +24,9 @@ namespace MaterialDesignComponentsForSFML
 {
 
 /**
- * The ToggleButton Class inherited from Button class
- * is a two-state button with two display clips.
- *
- * The label shall only be on the left or the right.
- * Providing top, center or bottom position can lead to unexpected behavior.
+ * The ToggleButton Class inherited from AbstractStateButton class
+ * is an 8-state button that can be toggled.
+ * It supports a feature-packed preconfigured "switch" texture and supports a label.
  *
  * Provided image files must comport 8 tiles of the following format:
  * ENABLED_TOGGLED_UNPRESSED    ENABLED_TOGGLED_PRESSED
@@ -38,11 +35,11 @@ namespace MaterialDesignComponentsForSFML
  * DISABLED_UNPRESSED           DISABLED_SELECTED
  *
  * @author Arthur
- * @date 28/04/2020 - 02/05/2020
+ * @date 28/04/2020 - 03/05/2020
  *
  * @see Button
  */
-class ToggleButton: public Button
+class ToggleButton: public AbstractStateButton
 {
 public:
     //=== CTORs / DTORs
@@ -61,14 +58,7 @@ public:
     void setToggled(bool toggled);
 
     //=== METHODS
-    void sync() override;
     void syncLabelPosition() override;
-    void setLabelPosition(const LabelPosition& labelPosition) override;
-
-protected:
-    //=== ATTRIBUTES
-    bool m_isToggled;
-    const float HORIZONTAL_LABEL_MARGIN = 20;
 };
 
 } //namespace MaterialDesignComponentsForSFML

@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur
+/* Copyright 2016-2020 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@ limitations under the License.
 #ifndef MDC_SFML_RADIO_BUTTON_H
 #define MDC_SFML_RADIO_BUTTON_H
 
-#include "Button.h"
-#include "Sprite.h"
+#include "AbstractStateButton.h"
 
 namespace Bokoblin
 {
@@ -25,25 +24,32 @@ namespace MaterialDesignComponentsForSFML
 {
 
 /**
- * The RadioButton Class inherited from Button class
- * adds different syncing behaviours
- * a pre-configured texture with its clip rectangles
- * and a different label location than other buttons.
+ * The RadioButton Class inherited from AbstractStateButton class
+ * is an 8-state button that can be selected (one at a time in a group).
+ * It supports a feature-packed preconfigured "radio" texture and supports a label.
+ *
+ * Provided image files must comport 8 tiles of the following format:
+ * ENABLED_SELECTED_UNPRESSED   ENABLED_SELECTED_PRESSED
+ * ENABLED_UNPRESSED            ENABLED_PRESSED
+ * DISABLED_SELECTED_UNPRESSED  DISABLED_SELECTED_PRESSED
+ * DISABLED_UNPRESSED           DISABLED_SELECTED
  *
  * @author Arthur
- * @date 23/12/16 - 25/09/18
+ * @date 23/12/2016 - 02/05/2020
  *
- * @see Button
+ * @see AbstractStateButton
  */
-class RadioButton : public Button
+class RadioButton: public AbstractStateButton
 {
 public:
     //=== CTORs / DTORs
-    RadioButton(float x, float y, float diameter);
-    RadioButton(float x, float y, float diameter, const std::string& label,
-                const std::string& customImage = Config::RADIO_BUTTON_IMAGE);
+    RadioButton(float x, float y, float origDiameter, float newDiameter,
+                const std::string& label = "",
+                const std::string& customImage = Config::RADIO_BUTTON_IMAGE,
+                LabelPosition labelPosition = RIGHT,
+                bool isSelected = false);
     RadioButton(const RadioButton& other);
-    ~RadioButton() override;
+    ~RadioButton() override = default;
 
     //=== GETTERS
     bool isSelected() const;
@@ -52,16 +58,7 @@ public:
     void setSelected(bool selected);
 
     //=== METHODS
-    void sync() override;
     void syncLabelPosition() override;
-    void setLabelPosition(const LabelPosition& labelPosition) override; //TOP, CENTER and BOTTOM are unexpected behaviours
-
-protected:
-    //=== ATTRIBUTES
-    bool m_isSelected;
-
-    //=== METHODS
-    void setRadioClipRect();
 };
 
 } //namespace MaterialDesignComponentsForSFML

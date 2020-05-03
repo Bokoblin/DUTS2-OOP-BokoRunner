@@ -50,9 +50,9 @@ private:
 
     //UI components
     mdsf::RaisedButton* m_homeButton;
-    mdsf::RadioButton* m_englishLangRadio;
-    mdsf::RadioButton* m_frenchLangRadio;
-    mdsf::RadioButton* m_spanishLangRadio;
+    mdsf::RadioButton* m_enLanguageRadio;
+    mdsf::RadioButton* m_frLanguageRadio;
+    mdsf::RadioButton* m_esLanguageRadio;
     mdsf::RadioButton* m_easyModeRadio;
     mdsf::RadioButton* m_hardModeRadio;
     mdsf::RadioButton* m_defaultBallSkinRadio;
@@ -90,7 +90,7 @@ private:
     const int SFML_LOGO_WIDTH = 150;
     const int SFML_LOGO_HEIGHT = 45;
     const int HYPERLINK_SIZE = 24;
-    const int RADIO_DIAMETER = 25;
+    const int RADIO_DIAMETER = 40;
     const int INDICATOR_DIAMETER = 22;
 
     //=== METHODS

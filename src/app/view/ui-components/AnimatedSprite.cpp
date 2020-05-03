@@ -5,6 +5,27 @@
 //------------------------------------------------
 
 /**
+ * Constructs a sprite with a size,
+ * an image containing different clips
+ * and an array detailing the image clips
+ *
+ * @param width the sprite's width
+ * @param height the sprite's height
+ * @param image the file to use for sprite texture
+ * @param clipRect the part of the image to use for texture
+ *
+ * @author Arthur
+ * @date 03/05/2020
+ */
+AnimatedSprite::AnimatedSprite(float width, float height, const std::string& image,
+                               const std::vector<sf::IntRect>& clipRect) :
+        mdsf::Sprite(width, height, image), m_clipRectArray{clipRect},
+        m_currentClipRect{0}, m_lastAnimationTime{std::chrono::system_clock::now()}
+{
+    this->setTextureRect(m_clipRectArray[m_currentClipRect]);
+}
+
+/**
  * Constructs a sprite with a position, a size,
  * an image containing different clips
  * and an array detailing the image clips

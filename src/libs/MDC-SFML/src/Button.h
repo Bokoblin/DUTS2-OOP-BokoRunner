@@ -42,9 +42,9 @@ class Button: public Sprite
 {
 public:
     //=== CTORs / DTORs
-    Button(float x, float y, float width, float height);
-    Button(float x, float y, float width, float height, const std::string& description);
-    Button(float x, float y, float width, float height, const std::string& description, const std::string& textureImage);
+    Button(float x, float y, float width, float height,
+           const std::string& description = "",
+           const std::string& textureImage = "");
     Button(Button const& other);
     ~Button() override = default;
 

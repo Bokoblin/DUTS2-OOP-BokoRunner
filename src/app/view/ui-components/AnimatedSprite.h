@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2020 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
  * and an animation delay.
  *
  * @author Arthur
- * @date 3/03/16 - 29/12/17
+ * @date 3/03/16 - 03/05/2020
  *
  * @see mdsf::Sprite
  */
@@ -36,6 +36,8 @@ class AnimatedSprite: public mdsf::Sprite
 {
 public:
     //=== CTORs / DTORs
+    AnimatedSprite(float width, float height, const std::string& image,
+                   const std::vector<sf::IntRect>& clipRect);
     AnimatedSprite(float x, float y, float width, float height, const std::string& image,
                    const std::vector<sf::IntRect>& clipRect);
     AnimatedSprite(const AnimatedSprite& other);

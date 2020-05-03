@@ -1,4 +1,4 @@
-/* Copyright 2018 Jolivet Arthur
+/* Copyright 2018-2020 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,19 +30,19 @@ namespace MaterialDesignComponentsForSFML
  * which shrink when pressed
  *
  * @author Arthur
- * @date 12/09/18 - 12/10/18
+ * @date 12/09/2018 - 03/05/2020
  *
  * @see Button
  */
-class RaisedButton : public Button
+class RaisedButton: public Button
 {
 public:
     //=== CTORs / DTORs
-    RaisedButton(float x, float y, float width, float height);
-    RaisedButton(float x, float y, float width, float height, const std::string& label,
+    RaisedButton(float x, float y, float width,
+                 float height, const std::string& label = "",
                  const std::string& customImage = Config::RAISED_BUTTON_IMAGE);
     RaisedButton(RaisedButton const& other);
-    ~RaisedButton() override;
+    ~RaisedButton() override = default;
 
     //=== SETTERS
     void setPressed(bool pressed) override;

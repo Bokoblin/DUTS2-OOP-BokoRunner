@@ -17,32 +17,18 @@ namespace MaterialDesignComponentsForSFML
  *
  * @param width the width
  * @param height the height
+ * @param image the image used for the texture (optional)
  *
  * @author Arthur
  * @date 21/02/16 - 13/09/18
  */
-Sprite::Sprite(float width, float height) :
+Sprite::Sprite(float width, float height, const string& image) :
         m_width{width}, m_height{height}, m_isVisible{true},
-        m_alpha{255}, m_light{100}, m_textureFilename{""}, m_initialColor{getColor()}
-{}
-
-
-/**
- * Constructs a Sprite with
- * a position and a size
- *
- * @param x the x-axis coordinate
- * @param y the y-axis coordinate
- * @param width the width
- * @param height the height
- *
- * @author Arthur
- * @date 02/01/17 - 24/12/17
- */
-Sprite::Sprite(float x, float y, float width, float height) :
-        Sprite(width, height)
+        m_alpha{255}, m_light{100}, m_textureFilename{image}, m_initialColor{getColor()}
 {
-    this->setPosition(x, y);
+    if (!image.empty()) {
+        Sprite::loadAndApplyTextureFromImageFile(image);
+    }
 }
 
 
@@ -54,44 +40,13 @@ Sprite::Sprite(float x, float y, float width, float height) :
  * @param y the y-axis coordinate
  * @param width the width
  * @param height the height
- * @param image the image used for the texture
+ * @param image the image used for the texture (optional)
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 24/12/17
+ * @date 21/02/2016 - 03/05/2020
  */
-Sprite::Sprite(float x, float y, float width, float height, const string &image) :
-        Sprite(x, y, width, height)
-{
-    Sprite::loadAndApplyTextureFromImageFile(image);
-}
-
-
-/**
- * Constructs a Sprite with * a size
- *
- * @param size the size (same width and height)
- *
- * @author Arthur
- * @date 11/09/18
- */
-Sprite::Sprite(float size) :
-        Sprite(size, size)
-{}
-
-
-/**
- * Constructs a Sprite with
- * a position and a size
- *
- * @param x the x-axis coordinate
- * @param y the y-axis coordinate
- * @param size the size (same width and height)
- *
- * @author Arthur
- * @date 11/09/18
- */
-Sprite::Sprite(float x, float y, float size) :
-        Sprite(size, size)
+Sprite::Sprite(float x, float y, float width, float height, const string& image) :
+        Sprite(width, height, image)
 {
     this->setPosition(x, y);
 }
@@ -104,16 +59,26 @@ Sprite::Sprite(float x, float y, float size) :
  * @param x the x-axis coordinate
  * @param y the y-axis coordinate
  * @param size the size (same width and height)
- * @param image the image used for the texture
+ * @param image the image used for the texture (optional)
+ *
+ * @author Arthur
+ * @date 11/09/18 - 03/05/2020
+ */
+Sprite::Sprite(float x, float y, float size, const string& image) :
+        Sprite(x, y, size, size, image) {}
+
+
+/**
+ * Constructs a Sprite with a size and image
+ *
+ * @param size the size (same width and height)
+ * @param image the image used for the texture (optional)
  *
  * @author Arthur
  * @date 11/09/18
  */
-Sprite::Sprite(float x, float y, float size, const string &image) :
-        Sprite(x, y, size, size)
-{
-    Sprite::loadAndApplyTextureFromImageFile(image);
-}
+Sprite::Sprite(float size, const std::string &image) :
+        Sprite(size, size, image) {}
 
 
 /**
@@ -148,12 +113,19 @@ Sprite::~Sprite() = default;
 //------------------------------------------------
 
 float Sprite::getX() const { return getPosition().x; }
+
 float Sprite::getY() const { return getPosition().y; }
+
 float Sprite::getWidth() const { return m_width; }
+
 float Sprite::getHeight() const { return m_height; }
+
 bool Sprite::isVisible() const { return m_isVisible; }
+
 int Sprite::getAlpha() const { return m_alpha; }
+
 int Sprite::getLight() const { return m_light; }
+
 string Sprite::getTextureFileName() const { return m_textureFilename; }
 
 
@@ -162,14 +134,23 @@ string Sprite::getTextureFileName() const { return m_textureFilename; }
 //------------------------------------------------
 
 void Sprite::setVisible(bool visible) { m_isVisible = visible; }
+
 void Sprite::show() { setVisible(true); }
+
 void Sprite::hide() { setVisible(false); }
+
 void Sprite::setAlpha(int alpha) { m_alpha = static_cast<sf::Uint8>((alpha < 0) ? 0 : (alpha > 255) ? 255 : alpha); }
+
 void Sprite::setLight(int light) { m_light = static_cast<sf::Uint8>((light < 0) ? 0 : (light > 100) ? 100 : light); }
+
 void Sprite::increaseAlpha(int alphaLevel) { setAlpha(getAlpha() + alphaLevel); }
+
 void Sprite::decreaseAlpha(int alphaLevel) { setAlpha(getAlpha() - alphaLevel); }
+
 void Sprite::increaseLight(int lightLevel) { setLight(getLight() + lightLevel); }
+
 void Sprite::decreaseLight(int lightLevel) { setLight(getLight() - lightLevel); }
+
 void Sprite::setFillColor(const sf::Color& color)
 {
     m_initialColor = color;
@@ -201,10 +182,9 @@ void Sprite::sync()
  * @author Arthur
  * @date 30/03/16
  */
-void Sprite::draw(sf::RenderWindow *window) const
+void Sprite::draw(sf::RenderWindow* window) const
 {
-    if (isVisible())
-    {
+    if (isVisible()) {
         window->draw(*this);
     }
 }
@@ -254,7 +234,8 @@ void Sprite::resize(float size)
  * @author Arthur
  * @date 24/01/16
  */
-bool Sprite::contains(float x, float y) const {
+bool Sprite::contains(float x, float y) const
+{
     return isVisible() && getGlobalBounds().contains(sf::Vector2f(x, y));
 }
 
@@ -268,9 +249,9 @@ bool Sprite::contains(float x, float y) const {
 void Sprite::applyColor()
 {
     setFillColor(sf::Color(static_cast<sf::Uint8>(m_initialColor.r * 0.01f * m_light),
-                       static_cast<sf::Uint8>(m_initialColor.g * 0.01f * m_light),
-                       static_cast<sf::Uint8>(m_initialColor.b * 0.01f * m_light),
-                       m_alpha));
+                           static_cast<sf::Uint8>(m_initialColor.g * 0.01f * m_light),
+                           static_cast<sf::Uint8>(m_initialColor.b * 0.01f * m_light),
+                           m_alpha));
 }
 
 
@@ -283,12 +264,13 @@ void Sprite::applyColor()
  * @author Arthur
  * @date 02/01/17 - 04/01/18
  */
-void Sprite::loadAndApplyTextureFromImageFile(const std::string &imageFile)
+void Sprite::loadAndApplyTextureFromImageFile(const std::string& imageFile)
 {
-    if (m_texture.loadFromFile(imageFile))
+    if (m_texture.loadFromFile(imageFile)) {
         processTextureLoading(imageFile);
-    else
+    } else {
         Config::printError("Image loading failed for \"" + imageFile + "\"");
+    }
 }
 
 
@@ -302,13 +284,15 @@ void Sprite::loadAndApplyTextureFromImageFile(const std::string &imageFile)
  * @author Arthur
  * @date 02/01/17 - 13/01/19
  */
-void Sprite::loadAndApplyTextureFromImageFile(const string& imageFile, const sf::IntRect& area) {
-    if (m_texture.loadFromFile(imageFile, area))
+void Sprite::loadAndApplyTextureFromImageFile(const string& imageFile, const sf::IntRect& area)
+{
+    if (m_texture.loadFromFile(imageFile, area)) {
         processTextureLoading(imageFile);
-    else
+    } else {
         Config::printError("Image loading failed for \"" + imageFile + "\" and the area ("
                 + to_string(area.left) + ", " + to_string(area.top) + ", "
                 + to_string(area.width) + ", " + to_string(area.height) + ")");
+    }
 }
 
 /**
@@ -320,7 +304,7 @@ void Sprite::loadAndApplyTextureFromImageFile(const string& imageFile, const sf:
  * @author Arthur
  * @date 04/01/18
  */
-void Sprite::processTextureLoading(const string &imageFile)
+void Sprite::processTextureLoading(const string& imageFile)
 {
     m_texture.setSmooth(true);
     setTexture(m_texture);

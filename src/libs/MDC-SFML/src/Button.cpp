@@ -10,47 +10,7 @@ namespace MaterialDesignComponentsForSFML
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
 //------------------------------------------------
-
-/**
- * @brief Constructs a button with coordinates and a size
- *
- * @param x the x-axis coordinate
- * @param y the y-axis coordinate
- * @param width the width
- * @param height the height
- *
- * @author Arthur
- * @date 02/01/17 - 01/01/18
- */
-Button::Button(float x, float y, float width, float height) :
-        Sprite(x, y, width, height),
-        m_isPressed{false}, m_isEnabled{true}, m_label{""}, m_labelPosition{CENTER}
-{
-    m_font.loadFromFile(Config::DEFAULT_CONDENSED_FONT);
-    m_label.setFont(m_font);
-    m_label.setFillColor(sf::Color::White);
-    m_label.setCharacterSize(DEFAULT_CHAR_SIZE);
-}
-
-/**
- * @brief Constructs a button with coordinates,
- * a size and a label description
- *
- * @param x the x-axis coordinate
- * @param y the y-axis coordinate
- * @param width the width
- * @param height the height
- * @param description the label's description
- *
- * @author Arthur
- * @date 02/01/17 - 01/01/18
- */
-Button::Button(float x, float y, float width, float height, const string& description) :
-        Button(x, y, width, height)
-{
-    m_label.setDescription(description);
-    Button::syncLabelPosition();
-}
+//TODO: add clip rect parameter for allowing non-states clips to regroup images (to introduce with image DB (filename + origin + original size))
 
 /**
  * @brief Constructs a button with coordinates,
@@ -60,11 +20,11 @@ Button::Button(float x, float y, float width, float height, const string& descri
  * @param y the y-axis coordinate
  * @param width the width
  * @param height the height
- * @param textureImage the button texture image
- * @param clipRect the image part used
+ * @param description the label's description (optional)
+ * @param textureImage the button texture image (optional)
  *
  * @author Arthur
- * @date 06/04/16 - 04/01/18
+ * @date 06/04/16 - 03/05/2020
  */
 Button::Button(float x, float y, float width, float height, const string& description, const string& textureImage) :
         Sprite(x, y, width, height, textureImage),

@@ -12,51 +12,23 @@ namespace MaterialDesignComponentsForSFML
 //------------------------------------------------
 
 /**
- * @brief Constructs a raised button with coordinates and a size
- *
- * @param x the x-axis coordinate
- * @param y the y-axis coordinate
- * @param width the width
- * @param height the height
- *
- * @author Arthur
- * @date 12/09/18 - 20/09/18
- */
-RaisedButton::RaisedButton(float x, float y, float width, float height) :
-        Button(x, y, width, height), m_initialPos{x, y}, m_initialScale{1.0f, 1.0f}
-{
-    m_font.loadFromFile(Config::DEFAULT_CONDENSED_FONT);
-    m_label.setFont(m_font);
-    m_label.setFillColor(sf::Color::White);
-    m_label.setCharacterSize(DEFAULT_CHAR_SIZE);
-    m_label.setDescription("");
-    RaisedButton::syncLabelPosition();
-}
-
-
-/**
- * @brief Constructs a button with coordinates,
+ * @brief Constructs a raised button with coordinates,
  * a size, a label and a texture image
  *
  * @param x the x-axis coordinate
  * @param y the y-axis coordinate
  * @param width the width
  * @param height the height
- * @param label the label's description
+ * @param label the label's description (optional)
  * @param customImage a custom image (optional)
  *
  * @author Arthur
- * @date 12/09/18 - 12/10/18
+ * @date 12/09/18 - 03/05/2020
  */
 RaisedButton::RaisedButton(float x, float y, float width, float height, const string& label, const string& customImage) :
-        RaisedButton(x, y, width, height)
+        Button(x, y, width, height, label, customImage), m_initialPos{x, y}, m_initialScale{1.0f, 1.0f}
 {
-    m_label.setDescription(label);
-    RaisedButton::syncLabelPosition();
-    RaisedButton::loadAndApplyTextureFromImageFile(customImage);
-    RaisedButton::applyColor();
 }
-
 
 /**
  * @brief Copy Constructor
@@ -67,18 +39,7 @@ RaisedButton::RaisedButton(float x, float y, float width, float height, const st
  * @date 12/09/18 - 20/09/18
  */
 RaisedButton::RaisedButton(RaisedButton const& other) :
-        Button(other), m_initialPos{other.m_initialPos}, m_initialScale{other.m_initialScale}
-{
-    this->setTextureRect(m_clipRectArray[m_currentClipRect]);
-}
-
-
-/**
- * @brief Destructor
- * @author Arthur
- * @date 12/09/18
- */
-RaisedButton::~RaisedButton() = default;
+        Button(other), m_initialPos{other.m_initialPos}, m_initialScale{other.m_initialScale} {}
 
 
 //------------------------------------------------

@@ -1,4 +1,4 @@
-/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2020 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@ limitations under the License.
 //TODO [2.0.x/MDC-CPP] TO FIX DRAW WARNING: Don't use sf::Sprite as base (not advised in 2013), use it as member ("has-a" link) ?
 //      Keep Drawable inheritance to implement draw function though
 
-//TODO [2.0.x/MDC-CPP] Retrieve and store initial width/height, renamed parameters to "newWidth/newHeight"
+//TODO [2.0.x] Retrieve and store initial width/height, renamed parameters to "newWidth/newHeight"
 
 #ifndef MDC_SFML_SPRITE_H
 #define MDC_SFML_SPRITE_H
@@ -39,7 +39,7 @@ namespace MaterialDesignComponentsForSFML
  * Finally, it allows resize and position containing check.
  *
  * @author Arthur, Florian
- * @date 21/02/16 - 13/01/19
+ * @date 21/02/16 - 03/05/2020
  *
  * @see sf::Sprite
  */
@@ -47,12 +47,10 @@ class Sprite : public sf::Sprite
 {
 public:
     //=== CTORs / DTORs
-    Sprite(float width, float height);
-    Sprite(float x, float y, float width, float height);
-    Sprite(float x, float y, float width, float height, const std::string &image);
-    explicit Sprite(float size);
-    Sprite(float x, float y, float size);
-    Sprite(float x, float y, float size, const std::string &image);
+    Sprite(float width, float height, const std::string &image = "");
+    Sprite(float x, float y, float width, float height, const std::string &image = "");
+    Sprite(float x, float y, float size, const std::string &image = "");
+    Sprite(float size, const std::string &image = "");
     Sprite(Sprite const& other);
     ~Sprite() override;
 

@@ -7,30 +7,26 @@ Current version : v2.0.0-dev
 <!------------------------------------------------------------------------------------------------------->
 
 <a name="v2.0.0-dev"></a>
-## [v2.0.0-dev](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/release...dev)
+## [v2.0.0-dev](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.8.3...dev)
 
 TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 
 #### Breaking changes
 - **Structure refactoring**
-  - **abstraction inheritance**: introducing `AbstractModel` and `AbstractView` classes
-  - **abstraction inheritance**: more classes inherit from abstract classes
-  - **app data handling**: `Database` split into three classes and helpers
+  - **abstraction**: Rewritten architecture around `AbstractModel` and `AbstractView` abstract classes
+  - **data management**: `Database` class split into three classes and helpers
     - `AppCore` for app data and states
     - `PersistenceManager` to handle app data persistence and abstract data retrieval/saving
     - `LocalizationManager` to handle localization and abstract strings retrieval
     - `XMLHelper` for generic XML operations
     - `FileBasedPersistence` for specialized persistence: text-based
-  - **ui components**: Generic UI components are now dissociated from app and grouped under *MDC-SFML'
+  - **ui components**: Generic UI components are now dissociated from app and grouped under *MDC-SFML*
   - **window**: life-cycle now handled only in `main.cpp`
-  - **events**: 
-    - `treatEvents()` => `handleEvents()`
-    - improvements of handleEvents() methods : useless code removed, window::close() moved to `main.cpp`
-  - **ressources**: folder organization improvements
+  - **events**: lifecycle changes (window::close() moved to `main.cpp`), cleanup, macro removal
+  - **ressources**: folder organization improvements, including lib specific ressources moved elsewhere
   - **enumerations**: each of them now has its own `.h` file
-  - **definitions**: all `#define` constants are now in `utils/definition.h` file
-  - **constants**: more constants have been moved to `constants.h`
-  - **classes renaming**: several classes and methods have been renamed
+  - **constants**: Most constants are grouped in `ModelConstants` and `ViewConstants` classes
+  - **renaming**: several classes and methods have been renamed, including:
     - `IntroModel` => `SplashScreenModel`
     - `IntroView` => `SplashScreenView`
     - `Model` => `AbstractModel`
@@ -44,6 +40,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
     - `PixelateEffect` => `PixelShader`
     - `SlidingBackground` => `ScrollingBackground`
     - `TextHandler` => `AppTextManager`
+    - `treatEvents()` => `handleEvents()`
     
 #### Features
 - **splash screen**: 
@@ -56,30 +53,32 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
     - `ShopDialog` inherits from it for shop specific dialogs
 - **settings**: added support for hyperlinks (URL is opened in default browser) [tested on Ubuntu 14.04 and Windows 10]
 - **graphics**: support for changing graphic elements's light (using same principle as alpha)
-- **logging**: logging supported in the app (currently to console)
+- **logging**: console and file logging now supported throughout the app
 
 #### Bug fixes
-- Style and spacing fixes
-- Performance fixes by removing unnecessary actions in sync loop (i.e. xml file access)
+- **perfs**: Performance fixes by removing unnecessary actions in sync loop (i.e. xml file access)
 
 #### Misc
 - **iconography**: added application icon (title bar and task bar)
+- **graphics**: Modernized a couple of images and textures
 - **randomness**: switched to C++11 random functions
 - **colors**: Material and App custom colors with dedicated classes
 - **language**: more C++11 keywords and functions usage
-- **styling**: typo and code styling improvements
+- **styling**: typo, spacing and code styling improvements
 - **changelog**: changed for `.md` and reformatted file accordingly
 - **script**: added a little bash `build.sh` script
 - **xml**: safe fetching, logging
 - **cmake**: reorganization with libraries usage
 - **unit tests**: reintroduced with Google Test
-- **copyright**: Updated up to 2019
+- **copyright**: Updated up to 2020
  
 #### Library changes
-- **SFML**: upgraded SFML library ( 2.3.2 => 2.4.2)
-- **splitting**: split out some components into libraries compiled separately:
+- **dependency inclusion**: Dependencies (external libs) aren't anymore included, CMake's FetchContent is now used
+- **SFML**: upgraded SFML library ( 2.3.2 => 2.5.1)
+- **PugiXML**: upgraded PugiXML library ( 1.8 => 1.10)
+- **offspringing**: split out some components into libraries compiled separately:
     - **slogger**: a simple logger for the app
-    - **xmlhelper**: an xml helper to abstract pugi usage
+    - **xmlhelper**: an xml helper to abstract PugiXML usage
     - **mdcsfml**: a UI lib implementing material components above SFML components
 
 #### Known issues

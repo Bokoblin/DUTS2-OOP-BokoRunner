@@ -1,6 +1,5 @@
 # Boko Runner #
 
-
 ### Description ###
 
 Boko Runner is a C++ OOP project we've done as our DUT second semester's programming project.
@@ -14,7 +13,6 @@ a Multi-Tier Architecture with a persistence manager, an app core, models, and v
 Despite being initially a scholar project ended in May 2016, it is still receiving new features 
 and "under the hood" improvements.
 
-
 ### Tools used ###
 
 * Language : C++11
@@ -26,52 +24,42 @@ and "under the hood" improvements.
     * PugiXML 1.8.1
     * GoogleTest 1.8.0
 
-
 ### Authors ###
 
 * Arthur Jolivet - main developer
 * Florian Laronze
-
 
 ### Documentation ###
 
 The Doxygen documentation can be found at 
 [this address](https://bokoblin.github.io/DUTS2-OOP-BokoRunner/).
 
-
 ### How to build ###
 
 #### Libraries requirements ####
 
+First level dependencies of this project are fetched using CMake 11+'s FetchContent.<br>
+Therefore, they don't need to be manually installed.<br>
+Nevertheless, you'll still need to manually install SFML dependencies:
+
 ##### GNU/Linux #####
 
-You have two choices for GNU/Linux systems: 
-- either manually install needed packages and use provided SFML lib (but incompatibility issues can occur)
-- either manually install "libsfml-dev" and use it instead of the provided one, it should download all necessary libs.
+Please first install a compatible compiler (GCC 4.9+/Clang-6+) and CMake 11+.<br>
+Installing CMake on Linux can be quite annoying due to famous distributions using old CMake version.<br>
+I would recommend directly getting CMake from official website and adding it to the PATH as below:
+```
+wget -qO- "https://cmake.org/files/v3.17/cmake-3.17.0-Linux-x86_64.tar.gz" | tar --strip-components=1 -xz -C ~/.local
+export PATH=~/local/bin:$PATH
+```
 
-If you choose the first option, you may need to install some of the following packages, depending of your configuration: <br>
-- g++ / clang
-- libopenal
-- libvorbis
-- libogg
-- libFLAC
-- libGL
-- libSM
-- libICE
-- libX11
-- libXext
-- libfreetype
-- libjpeg
-- libXrandr
-- libalut-dev
-- libxcb-image0
-- libudev-dev
-- libudev1
-
-If you choose the second option:
-- run `sudo apt-get install libsfml-dev` in your terminal (this should install SFML 2.4.2 and its dependencies)
-- comment the following line in CMakeLists.txt: `set(SFML_ROOT "${EXTERNAL_LIBS_ROOT}/SFML-2.4.2")`
-TODO UPDATE
+Then, you thought installing CMake was a pain, obtaining all dependencies of SFML on first try is worse.<br>
+Installing `libsfml-dev` and hoping all its dependencies would be installed along is vain.<br>
+To help you, here are the steps that worked for me in my attempt to make Travis-CI work for Trusty, Xenial and Bionic:  
+```
+sudo apt-get update -qq
+sudo apt-get install -y libxrandr-dev libx11-dev libopenal-dev libalut-dev libvorbis-dev libogg-dev libflac-dev libxcb-image0 libudev-dev libgl1-mesa-dev libegl1-mesa-dev
+sudo apt install --reinstall libudev1
+```
 
 ##### Windows #####
 
@@ -82,38 +70,42 @@ You'll need to put some shared libraries (.dll) in C:\Windows\System32 or in the
 - sfml-audio-2.dll or sfml-audio-d-2.dll
 - sfml-system-2.dll or sfml-system-d-2.dll
 
+Concerning the compiler, I would recommend `mingw-w64`, as it's the compiler I use for this project.
+
+##### MacOS #####
+
+Per tests I have done with Travis CI on MacOS 10.13 and 10.14, you just have to install XCode to have everything set up.
 
 #### Building steps ####
 
 ##### GNU/Linux #####
 
-Execute `build.sh` file or do, from Project folder :
-  - `mkdir build`
-  - `cd build`
-  - `cmake .. && make`
-  
+Execute `build.sh` file or do, from project folder :
+```
+mkdir build
+cd build
+cmake .. && make
+```
+
+Notes: 
+- To accelerate building, you should set the number of cores used by make following you hardware.
+- When configuring project with CMake, you can select different options, please refer to the main `CmakeLists.txt` file.
 
 ##### Windows #####
 
-Unless you have all needed packages for the commands below, 
-it is recommended to open the project in a cmake-based IDE like QTCreator or CLion, 
-and to use the built-in `build` option.
-  
-
-
-Notes: 
-- The SFML library files were built with a specific version of g++ but it shouldn't be a problem on GNU/Linux.<br>
-- However, you can use `update-alternatives` to change default g++ priority if needed.
-- On Windows, compiler and SFML version have to match 100%. <br>
-  So, you must use *mingw-w64-6.1.0* to compile the project.
-
+Unless you want to be enrolled in a complex process to get the project to eventually run,
+I would strongly recommend you to open the project in a CMake compatible IDE like QTCreator or CLion, 
+and build the project with it.
 
 ### How to run ###
 
 ##### GNU/Linux #####
 
 The available executables are `bokorunner` and `unit_tests`. <br>
-You just have to launch them like you would do with other unix executables with: `$ ./${EXEC_NAME}`
+You just have to launch them like you would do with other unix executables: 
+```
+$ ./$PATH_TO_EXEC/$EXEC_NAME
+```
 
 ##### Windows #####
 
@@ -124,12 +116,11 @@ You first have to correctly set the current working directory on your IDE (Run>E
 
 Then you can launch them with the built-in `run` option.
 
-
 ### Tested environments ###
 
 - **Windows 10 Home Version 1903 - April 2019 Update**
 	- **Kernel**: Windows NT 10.0
-	- **Compilers**: mingw-w64-6.1.0
+	- **Compilers**: mingw-w64 (x86_64-8.1.0-posix-seh-rt_v6-rev0)
 	- **Environment**: local (with CLion IDE)
 	- **Compilation**: OK
 	- **Execution**: OK
@@ -137,50 +128,38 @@ Then you can launch them with the built-in `run` option.
 	
 - **Ubuntu 18.04 LTS - Bionic**
 	- **Kernel**: x86_64 Linux 4.4.0-17134-Microsoft
-	- **Compilers**: g++7.3, clang 6.0
+	- **Compilers**: g++7.5, clang 6.0
 	- **Environment**: local (Windows Subsystem for Linux)
 	- **Compilation**: OK
-	- **Execution**: Splashscreen OK, MENU unstable, GAME KO (via a windows X server)
+	- **Execution**: KO (GUI unsupported on WSL)
 	- **Unit tests**: OK
 	
-- **Debian GNU/Linux 9 - Stretch**
-	- **Kernel**: x86_64 Linux 4.4.0-43-Microsoft
-	- **Compilers**: g++-4.9
-	- **Environment**: local (Windows Subsystem for Linux)
-	- **Compilation**: OK (used libsfml-dev from apt instead of provided one)
-	- **Execution**: Splashscreen OK, MENU KO (crash related to openal)
-	- **Unit tests**: NOT TESTED YET
-	
-- **Travis CI: Ubuntu 14.04 LTS - Trusty**
-	- **Kernel**: 4.4.0-101-generic
-	- **Compilers**: gcc-4.9, gcc-5, gcc-6, gcc-7, clang-3.6, clang-3.8, clang-3.9, clang 5.0, clang 6.0
-	- **Environment**: Virtual machine on GCE (Travis CI)
-	- **Compilation**: OK (all 7 working)
-	- **Execution**: Can't be tested
-	- **Unit tests**: OK
-	
-- **Travis CI: Mac OS X 10.11/12**
+- **Travis CI: Ubuntu - Trusty, Xenial, Bionic**
 	- **Kernel**: ??
-	- **Compilers**: xcode8: Apple LLVM v8.0.0, xcode8: Apple LLVM v9.0.0
+	- **Compilers**: gcc-4.9, gcc-7, gcc-9, clang-6, clang-7, clang-9
 	- **Environment**: Virtual machine on GCE (Travis CI)
-	- **Compilation**: OK (both working)
+	- **Compilation**: OK (all 6 compiling)
 	- **Execution**: Can't be tested
-	- **Unit tests**: OK
-
+	- **Unit tests**: OK (all 6 passing)
+	
+- **Travis CI: Mac OS X 10.13, 10.14**
+	- **Kernel**: ??
+	- **Compilers**: Xcode 10, Xcode 11
+	- **Environment**: Virtual machine on GCE (Travis CI)
+	- **Compilation**: OK (both compiling)
+	- **Execution**: Can't be tested
+	- **Unit tests**: OK (both passing)
 
 ### Licences ###
 
 The project is mainly licensed under Apache License Version 2.0 but some elements have other licences.<br>
 Please take a look at the following paragraphs for more details.
 
-
 ##### Code #####
 
-The code is licensed under Apache License Version 2.0.
-The project includes two external libraries contained in `/ext-libs` folder : 
-* PugiXML which is licensed by their creators under MIT Licence.
-* SFML which is licensed by their creators under zlib/png license.
-
+The included code is licensed under Apache License Version 2.0.<br>
+Each C++ header file include at least one Copyright header.<br>
+When more are provided, it's due to parts of the code in the class from other authors.  
 
 ##### Images #####
 
@@ -189,16 +168,16 @@ Most of them were created by ourselves or were given by our teachers.
 Some of them were made using provided one or were inspired by Material Design (e.g. radios).
 The file "shape_buttons.png" incorporates some AOSP icon which are also licensed under Apache License Version 2.0.
 
-
 ##### Audio #####
 
-All audio files are licensed under Apache Licence Version 2.0 apart the following ones which were created by Paul Samra, 
-a friend of Florian, under BeerWare licence :
+The three following audio files are unlisted sounds licensed by [Midranger](https://soundcloud.com/midrangermusic),
+a friend of Florian, under BeerWare license :
 - menu_sound.ogg
 - game_normal_sound.ogg
 - game_master_sound.ogg
 
+All remaining audio files are under Apache Licence Version 2.0.
 
 ##### Fonts #####
 
-The fonts in /res folder come from Google Fonts. They are licensed under Apache Licence Version 2.0.
+The fonts come from Google Fonts. They are licensed under Apache Licence Version 2.0.

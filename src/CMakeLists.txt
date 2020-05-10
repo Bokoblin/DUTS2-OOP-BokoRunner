@@ -1,20 +1,4 @@
 #----------------------------------------------------------------------------------
-#           APP CONFIGURATION
-#----------------------------------------------------------------------------------
-set(EXECUTABLE_NAME bokorunner)
-if (ENABLE_UI)
-    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
-endif ()
-
-#----------------------------------------------------------------------------------
-#           EXTERNAL LIBRARIES SOURCES
-#----------------------------------------------------------------------------------
-set(PUGIXML_LIB
-        ${PUGIXML_ROOT}/PUGIXML/pugixml.hpp
-        ${PUGIXML_ROOT}/PUGIXML/pugixml.cpp
-        )
-
-#----------------------------------------------------------------------------------
 #           INTERNAL LIBRARIES SOURCES
 #----------------------------------------------------------------------------------
 set(LOGGER_LIB
@@ -58,11 +42,10 @@ endif ()
 #----------------------------------------------------------------------------------
 #           LIBRARIES BUILDING
 #----------------------------------------------------------------------------------
-add_library(pugi SHARED ${PUGIXML_LIB})
 add_library(slogger SHARED ${LOGGER_LIB})
 add_library(xmlhelper SHARED ${XML_HELPER_LIB})
 if (ENABLE_UI)
-    add_library(mdcsfml SHARED ${MDC_SFML_LIB})
+    add_library(mdcsfml STATIC ${MDC_SFML_LIB})
 endif ()
 
 #----------------------------------------------------------------------------------
@@ -73,51 +56,33 @@ if (ENABLE_FILE_LOG)
 endif ()
 
 #----------------------------------------------------------------------------------
-#           DIRECTORIES INCLUSION
-#----------------------------------------------------------------------------------
-if (ENABLE_UI)
-    include_directories(${SFML_INCLUDE_DIR})
-endif ()
-
-include_directories(${PUGIXML_ROOT})
-include_directories(${PROJECT_SOURCE_DIR}/src)
-
-#----------------------------------------------------------------------------------
 #           LIBRARIES AND EXECUTABLE LINKAGE
 #----------------------------------------------------------------------------------
-#   Dependencies:
+#   Dependency Tree
 #
-#   - pugi: Ø
-#   - slogger: Ø
-#   - xmlhelper: pugi
-#   - mdcsfml: SFML
-#   - executable: pugi, slogger, xmlhelper, mdcsfml [UI only for the latter]
+#   bokorunner
+#   |__ mdcsfml [ENABLE_UI only]
+#   |   |__ sfml
+#   |__ xmlhelper
+#   |   |__ pugixml
+#   |__ slogger
 #----------------------------------------------------------------------------------
-if (ENABLE_UI)
-    FIND_PACKAGE(SFML 2.4 COMPONENTS audio graphics window system REQUIRED)
+FetchContent_MakeAvailable(pugixml)
+target_include_directories(xmlhelper PUBLIC ${pugixml_SOURCE_DIR}/src)
+target_link_libraries(xmlhelper pugixml)
 
-    target_include_directories(mdcsfml PUBLIC ${SFML_INCLUDE_DIR})
+add_executable(bokorunner ${SOURCE_FILES})
+target_include_directories(bokorunner PUBLIC ${PROJECT_SOURCE_DIR}/src)
+
+if (ENABLE_UI)
+    FetchContent_MakeAvailable(sfml)
+
+    target_include_directories(mdcsfml PUBLIC ${sfml_SOURCE_DIR}/include)
+    target_include_directories(mdcsfml PUBLIC ${sfml_BINARY_DIR}/lib)
     target_compile_definitions(mdcsfml PUBLIC MDSF_RES_ROOT="${INTERNAL_LIBS_ROOT}/MDC-SFML/res")
 
-    target_link_libraries(xmlhelper pugi)
-    target_link_libraries(mdcsfml ${SFML_LIBRARIES})
-
-    add_executable(
-            ${EXECUTABLE_NAME}
-            ${SOURCE_FILES}
-    )
-
-    target_link_libraries(${EXECUTABLE_NAME} xmlhelper)
-    target_link_libraries(${EXECUTABLE_NAME} mdcsfml)
-    target_link_libraries(${EXECUTABLE_NAME} slogger)
+    target_link_libraries(mdcsfml sfml-audio sfml-graphics sfml-system sfml-window)
+    target_link_libraries(bokorunner mdcsfml xmlhelper slogger)
 else ()
-    target_link_libraries(xmlhelper pugi)
-
-    add_executable(
-            ${EXECUTABLE_NAME}
-            ${SOURCE_FILES}
-    )
-
-    target_link_libraries(${EXECUTABLE_NAME} xmlhelper)
-    target_link_libraries(${EXECUTABLE_NAME} slogger)
+    target_link_libraries(bokorunner xmlhelper slogger)
 endif ()

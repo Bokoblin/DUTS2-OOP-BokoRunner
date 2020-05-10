@@ -21,7 +21,7 @@ limitations under the License.
 #include <iostream>
 #include <fstream>
 #include <regex>
-#include "PUGIXML/pugixml.hpp"
+#include <pugixml.hpp>
 
 namespace Bokoblin
 {

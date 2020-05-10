@@ -14,10 +14,7 @@
 CMakeLists.txt.user
 res/config.xml
 build/
-cmake-build-debug/
-cmake-build-debug-cli/
-cmake-build-debug-wsl/
-cmake-build-release/
+cmake-build-*/
 misc/
 tmp_doc/
 Roadmap.md

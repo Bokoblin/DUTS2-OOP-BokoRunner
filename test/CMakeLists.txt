@@ -22,12 +22,10 @@ file(GLOB TEST_SOURCE_FILES
         "app/persistence/test_PersistenceManager.cpp"
         )
 
-
 #--------------------------------------------------------
 #       TEST ENGINE BUILDING
 #--------------------------------------------------------
-add_subdirectory(../ext-libs/googletest-1.8.0 ${CMAKE_BINARY_DIR}/googletest/googletest-download)
-
+FetchContent_MakeAvailable(googletest)
 
 #--------------------------------------------------------
 #       CONFIGURE BUILDING
@@ -35,7 +33,7 @@ add_subdirectory(../ext-libs/googletest-1.8.0 ${CMAKE_BINARY_DIR}/googletest/goo
 
 add_executable(${UNIT_TESTS} ${TESTED_SOURCE_FILES} ${TEST_SOURCE_FILES})
 
-target_include_directories(${UNIT_TESTS} PUBLIC ${PUGIXML_ROOT})
+target_include_directories(${UNIT_TESTS} PUBLIC ${pugixml_SOURCE_DIR}/src)
 target_include_directories(${UNIT_TESTS} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 target_include_directories(${UNIT_TESTS} PUBLIC ${PROJECT_SOURCE_DIR}/src/app)
 target_include_directories(${UNIT_TESTS} PUBLIC ${PROJECT_SOURCE_DIR}/src/libs)

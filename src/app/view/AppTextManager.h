@@ -1,4 +1,4 @@
-/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2020 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ public:
 
     //=== METHODS
     //Text utils
-    void handleAboutLinks(const sf::Event& event, const SettingsModel& settings) const; //TODO [MDC-CPP] Replace by a dedicated LinkButton class
+    void handleAboutLinks(const sf::Event& event) const; //TODO [MDC-CPP] Replace by a dedicated LinkButton class
     void updateWholeStandaloneTextContent(); //TODO [2.0.x] modularize (to reduce time complexity)
 
     //Text init (to use once at screen loading)

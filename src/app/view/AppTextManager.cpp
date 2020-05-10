@@ -142,12 +142,11 @@ void AppTextManager::loadText()
  * Handle events related to link texts
  *
  * @param event sfml event object
- * @param settings the settings model
  *
  * @author Arthur
- * @date 02/11/17 - 13/01/19
+ * @date 02/11/2017 - 10/05/2020
  */
-void AppTextManager::handleAboutLinks(const sf::Event& event, const SettingsModel& settings) const
+void AppTextManager::handleAboutLinks(const sf::Event& event) const
 {
     if (EventUtils::wasMouseLeftPressed(event)) {
         if (EventUtils::isMouseInside(*m_aboutRepositoryLink, event)) {

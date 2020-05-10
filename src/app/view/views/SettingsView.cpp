@@ -400,7 +400,7 @@ void SettingsView::handleStatsEvents(const sf::Event& event)
 void SettingsView::handleAboutEvents(const sf::Event& event) const
 {
     if (EventUtils::wasMouseLeftPressed(event) || EventUtils::wasMouseReleased(event)) {
-        m_textManager->handleAboutLinks(event, *m_settings);
+        m_textManager->handleAboutLinks(event);
     }
 }
 

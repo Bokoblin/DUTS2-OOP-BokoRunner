@@ -1,10 +1,9 @@
 language: cpp
 
-matrix:
+jobs:
   include:
     - os: linux
       dist: trusty
-      sudo: required
       compiler: gcc-4.9
       addons:
         apt:
@@ -15,66 +14,6 @@ matrix:
       env: MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
     - os: linux
       dist: trusty
-      sudo: required
-      compiler: gcc-5
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-5
-      env: MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
-    - os: linux
-      dist: trusty
-      sudo: required
-      compiler: gcc-6
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-6
-      env: MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
-    - os: linux
-      dist: trusty
-      sudo: required
-      compiler: gcc-7
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-7
-      env: MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
-#    - os: linux
-#      dist: trusty
-#      sudo: required
-#      compiler: clang-3.9
-#      addons:
-#        apt:
-#          sources:
-#            - ubuntu-toolchain-r-test
-#            - llvm-toolchain-trusty-3.9
-#          packages:
-#            - clang-3.9
-#      env:
-#        - MATRIX_EVAL="CC=clang-3.9 && CXX=clang++-3.9"
-#    - os: linux
-#      dist: trusty
-#      sudo: required
-#      compiler: clang-5.0
-#      addons:
-#        apt:
-#          sources:
-#            - ubuntu-toolchain-r-test
-#            - llvm-toolchain-trusty-5.0
-#          packages:
-#            - clang-5.0
-#      env:
-#        - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
-    - os: linux
-      dist: trusty
-      sudo: required
       compiler: clang-6.0
       addons:
         apt:
@@ -85,22 +24,62 @@ matrix:
             - clang-6.0
       env:
         - MATRIX_EVAL="CC=clang-6.0 && CXX=clang++-6.0"
+    - os: linux
+      dist: xenial
+      compiler: gcc-7
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+      env: MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+    - os: linux
+      dist: xenial
+      compiler: clang-7
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-7
+          packages:
+            - clang-7
+      env:
+        - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
+    - os: linux
+      dist: bionic
+      compiler: gcc-9
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-9
+      env: MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
+    - os: linux
+      dist: bionic
+      compiler: clang-9
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-bionic-9
+          packages:
+            - clang-9
+      env:
+        - MATRIX_EVAL="CC=clang-9 && CXX=clang++-9"
     - os: osx
-      osx_image: xcode9
+      osx_image: xcode10
     - os: osx
-      osx_image: xcode8
+      osx_image: xcode11
 
 before_install:
   - eval "${MATRIX_EVAL}"
   - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get update -qq ; fi
-  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get install -y libopenal-dev libalut-dev ; fi
-  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get install -y libxcb-image0 ; fi
-  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get install -y libudev-dev ; fi
+  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt-get install -y libxrandr-dev libx11-dev libopenal-dev libalut-dev libvorbis-dev libogg-dev libflac-dev libxcb-image0 libudev-dev libgl1-mesa-dev libegl1-mesa-dev ; fi
   - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then sudo apt install --reinstall libudev1 ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then wget http://www.sfml-dev.org/files/SFML-2.4.0-osx-clang.tar.gz; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then tar xf SFML-2.4.0-osx-clang.tar.gz; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo cp -r SFML-2.4.0-osx-clang/lib/* /usr/local/lib/.; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo cp -r SFML-2.4.0-osx-clang/include/* /usr/local/include/.; fi
+  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then wget -qO- "https://cmake.org/files/v3.17/cmake-3.17.0-Linux-x86_64.tar.gz" | tar --strip-components=1 -xz -C ~/.local ; fi
+  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then export PATH=~/.local/bin:$PATH ; fi
 
 
 # Build steps

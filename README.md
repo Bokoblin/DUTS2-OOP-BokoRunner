@@ -17,14 +17,14 @@ and "under the hood" improvements.
 
 ### Tools used ###
 
-* IDEs : Code::Blocks, QT Creator, CLion(current)
 * Language : C++11
-* Libraries : 
-    * SFML 2.4.2
-    * PugiXML 1.8
 * Unit tests : Google Test
 * Continuous integration : Travis CI
 * Code review : CodeFactor
+* Dependencies : 
+    * SFML 2.5.1
+    * PugiXML 1.8.1
+    * GoogleTest 1.8.0
 
 
 ### Authors ###
@@ -71,7 +71,7 @@ If you choose the first option, you may need to install some of the following pa
 If you choose the second option:
 - run `sudo apt-get install libsfml-dev` in your terminal (this should install SFML 2.4.2 and its dependencies)
 - comment the following line in CMakeLists.txt: `set(SFML_ROOT "${EXTERNAL_LIBS_ROOT}/SFML-2.4.2")`
-
+TODO UPDATE
 
 ##### Windows #####
 
@@ -127,10 +127,10 @@ Then you can launch them with the built-in `run` option.
 
 ### Tested environments ###
 
-- **Windows 10 Home Version 1803 - April 2018 Update**
+- **Windows 10 Home Version 1903 - April 2019 Update**
 	- **Kernel**: Windows NT 10.0
 	- **Compilers**: mingw-w64-6.1.0
-	- **Environment**: local
+	- **Environment**: local (with CLion IDE)
 	- **Compilation**: OK
 	- **Execution**: OK
 	- **Unit tests**: OK

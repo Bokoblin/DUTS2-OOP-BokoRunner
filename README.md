@@ -3,7 +3,7 @@
 | Branch | description | version |     CI     |   Code review    |
 | ------ |------------ | ------- | ---------- | ---------------- |
 | **master** | Stable builds merged from dev  | ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Bokoblin/DUTS2-OOP-BokoRunner?label=release) | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-OOP-BokoRunner.svg?branch=master)](https://travis-ci.org/Bokoblin/DUTS2-OOP-BokoRunner) | [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-bokorunner/badge/master)](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-bokorunner/overview/master)
-| **[dev](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/tree/dev)** | Under irregular development builds | ![version](https://img.shields.io/badge/beta-2.0-blue) | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-OOP-BokoRunner.svg?branch=dev)](https://travis-ci.org/Bokoblin/DUTS2-OOP-BokoRunner) | [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-bokorunner/badge/dev)](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-bokorunner/overview/dev) |
+| **[dev](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/tree/dev)** | Under irregular development builds | ![version](https://img.shields.io/badge/beta-v2.0--SNAPSHOT-blue) | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-OOP-BokoRunner.svg?branch=dev)](https://travis-ci.org/Bokoblin/DUTS2-OOP-BokoRunner) | [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-bokorunner/badge/dev)](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-bokorunner/overview/dev) |
 
 ### Description ###
 
@@ -16,7 +16,7 @@ Initially made to be based on a Model-View architecture as requested, the projec
 a Three-Tier Architecture with a Database, Models and Views. 
 
 Despite being initially a scholar project ended in May 2016, it is still receiving new features 
-and "under the hood" improvements.
+and "under the hood" improvements as of 2020.
 
 
 ### Tools used ###
@@ -42,6 +42,8 @@ The Doxygen documentation can be found at
 
 
 ### How to build ###
+
+> :warning: **Stable branch building has many restrictions.**<br> If you encounter any issue, try *dev* branch, it is more versatile and way ahead!
 
 #### Libraries requirements ####
 

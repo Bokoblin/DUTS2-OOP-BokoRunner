@@ -47,15 +47,15 @@
     <string name="config_difficulty_title" value="Dificultad"/>
     <string name="config_easy_mode" value="Fácil"/>
     <string name="config_hard_mode" value="Difícil"/>
-    <string name="config_custom_title" value="Personalization de la bala"/>
+    <string name="config_custom_title" value="Apariencia del jugador"/>
     <string name="config_music_title" value="Música"/>
     <string name="config_music_menu" value="Menu"/>
     <string name="config_music_game" value="Juego"/>
 
     <!-- Settings player skins strings -->
-    <string name="player_skin_default" value="Apariencia predeterminada"/>
-    <string name="player_skin_morphing" value="Apariencia morphing"/>
-    <string name="player_skin_capsule" value="Apariencia capsule"/>
+    <string name="player_skin_moblin" value="Moblin"/>
+    <string name="player_skin_morphing" value="Morfosfera"/>
+    <string name="player_skin_pokeball" value="Poké Ball"/>
 
     <!-- Settings stats strings -->
     <string name="stats_title" value="Estadísticas"/>
@@ -119,10 +119,10 @@
     <string name="shop_mega_plus_desc" value="Aumenta la duración de &#xA;bonificación de 5 segundos"/>
     <string name="shop_fly_plus_name" value="Vuelo+"/>
     <string name="shop_fly_plus_desc" value="Aumenta la duración de &#xA;bonificación de 5 segundos"/>
-    <string name="shop_morphing_name" value="Bala morphing"/>
-    <string name="shop_morphing_desc" value="Libera la apariencia &#xA;morphing de la bala"/>
-    <string name="shop_capsule_name" value="Bala capsule"/>
-    <string name="shop_capsule_desc" value="Libera la apariencia &#xA;capsule de la bala"/>
+    <string name="shop_morphball_skin_name" value="Morfosfera"/>
+    <string name="shop_morphball_skin_desc" value="Libera la apariencia &#xA;Morfosfera del jugador"/>
+    <string name="shop_pokeball_skin_name" value="Poké Ball"/>
+    <string name="shop_pokeball_skin_desc" value="Libera la apariencia &#xA;Poké Ball del jugador"/>
 
     <!-- Game strings -->
     <string name="game_player_life" value="Vida"/>

@@ -66,7 +66,7 @@ extern const std::string HYPERLINK_IMAGE = Folder::UI_COMPONENTS + "ic_link.png"
 extern const std::string PAGE_INDICATOR_IMAGE = Folder::UI_COMPONENTS + "indicator_buttons.png";
 
 //=== Images files : Game components
-extern const std::string BALL_IMAGE = Folder::GAME_COMPONENTS + "ball.png";
+extern const std::string PLAYER_IMAGE = Folder::GAME_COMPONENTS + "player.png";
 extern const std::string BONUS_IMAGE = Folder::GAME_COMPONENTS + "bonus.png";
 extern const std::string ENEMIES_IMAGE = Folder::GAME_COMPONENTS + "enemies.png";
 extern const std::string SHIELD_IMAGE = Folder::GAME_COMPONENTS + "shield.png";

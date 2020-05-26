@@ -44,15 +44,15 @@
     <string name="config_difficulty_title" value="Difficulty"/>
     <string name="config_easy_mode" value="Easy"/>
     <string name="config_hard_mode" value="Hard"/>
-    <string name="config_custom_title" value="Ball customization"/>
+    <string name="config_custom_title" value="Player skin"/>
     <string name="config_music_title" value="Music"/>
     <string name="config_music_menu" value="Menu"/>
     <string name="config_music_game" value="Game"/>
 
     <!-- Settings player skins strings -->
-    <string name="player_skin_default" value="Default skin"/>
-    <string name="player_skin_morphing" value="Morph skin"/>
-    <string name="player_skin_capsule" value="Capsule skin"/>
+    <string name="player_skin_moblin" value="Moblin"/>
+    <string name="player_skin_morphing" value="Morph Ball"/>
+    <string name="player_skin_pokeball" value="Poké Ball"/>
 
     <!-- Settings stats strings -->
     <string name="stats_title" value="Stats"/>
@@ -113,10 +113,10 @@
     <string name="shop_mega_plus_desc" value="Increase bonus duration &#xA;by 5 more seconds"/>
     <string name="shop_fly_plus_name" value="Fly+"/>
     <string name="shop_fly_plus_desc" value="Increase bonus duration &#xA;by 5 more seconds"/>
-    <string name="shop_morphing_name" value="Ball - Morph skin"/>
-    <string name="shop_morphing_desc" value="Unlock ball's morph skin"/>
-    <string name="shop_capsule_name" value="Ball - Capsule skin"/>
-    <string name="shop_capsule_desc" value="Unlock ball's capsule skin"/>
+    <string name="shop_morphball_skin_name" value="Morph Ball skin"/>
+    <string name="shop_morphball_skin_desc" value="Unlock player's &#xA; Morph Ball skin"/>
+    <string name="shop_pokeball_skin_name" value="Poké ball skin"/>
+    <string name="shop_pokeball_skin_desc" value="Unlock player's &#xA; Poké ball skin"/>
 
     <!-- Game strings -->
     <string name="game_player_life" value="Life"/>

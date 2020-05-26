@@ -36,11 +36,11 @@ SettingsModel::~SettingsModel() = default;
 int SettingsModel::getCurrentPage() const { return m_currentPage; }
 const string SettingsModel::getLanguage() const { return m_appCore->getLanguage(); }
 int SettingsModel::getGameDifficulty() const { return m_appCore->getDifficulty(); }
-const string SettingsModel::getPlayerSkin() const { return m_appCore->getBallSkin(); }
+const string SettingsModel::getPlayerSkin() const { return m_appCore->getPlayerSkin(); }
 bool SettingsModel::isMenuMusicEnabled() const { return m_appCore->isMenuMusicEnabled(); }
 bool SettingsModel::isGameMusicEnabled() const { return m_appCore->isGameMusicEnabled(); }
-bool SettingsModel::isMorphSkinAvailable() const { return m_morphSkinIsAvailable; }
-bool SettingsModel::isCapsuleSkinAvailable() const { return m_capsuleSkinIsAvailable; }
+bool SettingsModel::isMorphBallSkinAvailable() const { return m_morphBallSkinIsAvailable; }
+bool SettingsModel::isPokeballSkinAvailable() const { return m_pokeballSkinIsAvailable; }
 
 
 //------------------------------------------------
@@ -70,15 +70,15 @@ void SettingsModel::changeLanguage(const string& language)
 }
 
 /**
- * Changes ball skin
+ * Changes player skin
  * @author Arthur
  * @date 20/05/16
  *
  * @param skin the new skin
  */
-void SettingsModel::changeBallSkin(const string& skin)
+void SettingsModel::changePlayerSkin(const string& skin)
 {
-    m_appCore->setBallSkin(skin);
+    m_appCore->setPlayerSkin(skin);
 }
 
 
@@ -89,8 +89,8 @@ void SettingsModel::changeBallSkin(const string& skin)
  */
 void SettingsModel::checkItemsAvailability()
 {
-    m_morphSkinIsAvailable = m_appCore->findActivatedItem("shop_morphing");
-    m_capsuleSkinIsAvailable = m_appCore->findActivatedItem("shop_capsule");
+    m_morphBallSkinIsAvailable = m_appCore->findActivatedItem("shop_morphball_skin");
+    m_pokeballSkinIsAvailable = m_appCore->findActivatedItem("shop_pokeball_skin");
 }
 
 

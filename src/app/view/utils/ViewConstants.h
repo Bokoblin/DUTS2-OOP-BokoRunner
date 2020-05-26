@@ -91,7 +91,7 @@ extern const std::string HYPERLINK_IMAGE;
 extern const std::string PAGE_INDICATOR_IMAGE;
 
 //=== Images files : Game components
-extern const std::string BALL_IMAGE;
+extern const std::string PLAYER_IMAGE;
 extern const std::string BONUS_IMAGE;
 extern const std::string ENEMIES_IMAGE;
 extern const std::string SHIELD_IMAGE;

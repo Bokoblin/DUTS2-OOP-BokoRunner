@@ -132,9 +132,9 @@ void GameView::loadSprites()
 
     //=== Initialize PLAYER sprite
 
-    int playerYOffset = m_game->getPlayerSkin() == "default" ? 0 : (m_game->getPlayerSkin() == "morphing" ? 50 : 100);
+    int playerYOffset = m_game->getPlayerSkin() == "moblin" ? 0 : (m_game->getPlayerSkin() == "morphing" ? 50 : 100);
     auto playerClipRect = mdsf::ClipRectUtils::generate(0, playerYOffset, 50, 50, 1, NB_PLAYER_CLIPS);
-    auto playerSprite = new AnimatedSprite(30, 30, ViewRes::BALL_IMAGE, playerClipRect);
+    auto playerSprite = new AnimatedSprite(30, 30, ViewRes::PLAYER_IMAGE, playerClipRect);
     playerSprite->setOrigin(0, 50);
 
     //=== Initialize ENEMIES sprite

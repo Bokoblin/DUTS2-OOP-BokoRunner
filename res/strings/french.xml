@@ -47,15 +47,15 @@
     <string name="config_difficulty_title" value="Difficulté"/>
     <string name="config_easy_mode" value="Facile"/>
     <string name="config_hard_mode" value="Difficile"/>
-    <string name="config_custom_title" value="Customisation de la balle"/>
+    <string name="config_custom_title" value="Apparence du joueur"/>
     <string name="config_music_title" value="Musique"/>
     <string name="config_music_menu" value="Menu"/>
     <string name="config_music_game" value="Jeu"/>
 
     <!-- Settings player skins strings -->
-    <string name="player_skin_default" value="Apparence par défaut"/>
-    <string name="player_skin_morphing" value="Apparence morphing"/>
-    <string name="player_skin_capsule" value="Apparence capsule"/>
+    <string name="player_skin_moblin" value="Moblin"/>
+    <string name="player_skin_morphing" value="Boule Morphing"/>
+    <string name="player_skin_pokeball" value="Poké Ball"/>
 
     <!-- Settings stats strings -->
     <string name="stats_title" value="Statistiques"/>
@@ -113,15 +113,15 @@
     <string name="shop_doubler_name" value="Doubleur de pièce"/>
     <string name="shop_doubler_desc" value="Double le nombre &#xA;de pièces collectées"/>
     <string name="shop_shield_plus_name" value="Bouclier+"/>
-    <string name="shop_shield_plus_desc" value="Protege le joueur d'une &#xA;collision supplémentaire"/>
+    <string name="shop_shield_plus_desc" value="Protège le joueur d'une &#xA;collision supplémentaire"/>
     <string name="shop_mega_plus_name" value="Mega+"/>
     <string name="shop_mega_plus_desc" value="Augmente la durée du &#xA;bonus de 5 secondes"/>
-    <string name="shop_fly_plus_name" value="Vol+"/>
+    <string name="shop_fly_plus_name" value="Envol+"/>
     <string name="shop_fly_plus_desc" value="Augmente la durée du &#xA;bonus de 5 secondes"/>
-    <string name="shop_morphing_name" value="Balle morphing"/>
-    <string name="shop_morphing_desc" value="Débloque l'apparence &#xA;morphing de la balle"/>
-    <string name="shop_capsule_name" value="Balle capsule"/>
-    <string name="shop_capsule_desc" value="Débloque l'apparence &#xA;capsule de la balle"/>
+    <string name="shop_morphball_skin_name" value="Boule morphing"/>
+    <string name="shop_morphball_skin_desc" value="Débloque l'apparence &#xA;Boule Morphing"/>
+    <string name="shop_pokeball_skin_name" value="Poké Ball"/>
+    <string name="shop_pokeball_skin_desc" value="Débloque l'apparence &#xA;Poké Ball"/>
 
     <!-- Game strings -->
     <string name="game_player_life" value="Vie"/>

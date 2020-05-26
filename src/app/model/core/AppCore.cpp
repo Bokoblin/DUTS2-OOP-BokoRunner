@@ -48,7 +48,7 @@ std::map<string, int> AppCore::getGameMap() const { return m_gameMap; }
 bool AppCore::isScoreEasyArrayEmpty() const { return m_scoresEasyArray.empty(); }
 bool AppCore::isScoreHardArrayEmpty() const { return m_scoresHardArray.empty(); }
 string AppCore::getLanguage() const { return m_currentLanguage; }
-string AppCore::getBallSkin() const { return m_currentBallSkin; }
+string AppCore::getPlayerSkin() const { return m_currentPlayerSkin; }
 string AppCore::getPersistenceContext() const { return PersistenceManager::getContextLocation(); }
 
 
@@ -58,7 +58,7 @@ string AppCore::getPersistenceContext() const { return PersistenceManager::getCo
 
 void AppCore::setAppState(const AppState& state) { m_appState = state; }
 void AppCore::setLanguage(const string& language) { m_currentLanguage = language; }
-void AppCore::setBallSkin(const string& skin) { m_currentBallSkin = skin; }
+void AppCore::setPlayerSkin(const string& skin) { m_currentPlayerSkin = skin; }
 void AppCore::setDifficulty(const Difficulty& difficulty) { m_currentDifficulty = difficulty; }
 
 
@@ -267,7 +267,7 @@ string AppCore::stringifyLeaderboard(const Difficulty& difficulty) const
 void AppCore::initWithDefaultValues()
 {
     m_currentLanguage = "en";
-    m_currentBallSkin = "default";
+    m_currentPlayerSkin = "moblin";
     m_currentDifficulty = HARD;
     m_isMenuMusicEnabled = false;
     m_isGameMusicEnabled = true;

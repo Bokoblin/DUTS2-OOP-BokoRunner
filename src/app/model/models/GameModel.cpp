@@ -62,7 +62,7 @@ GameModel::~GameModel()
 
 GameState GameModel::getGameState() const { return m_gameState; }
 int GameModel::getGameDifficulty() const { return m_appCore->getDifficulty(); }
-const string GameModel::getPlayerSkin() const { return m_appCore->getBallSkin(); }
+const string GameModel::getPlayerSkin() const { return m_appCore->getPlayerSkin(); }
 float GameModel::getGameSpeed() const { return m_gameSpeed; }
 int GameModel::getBonusTimeout() const { return static_cast<int>(m_bonusTimeout.count() / 1000); } // return seconds
 Zone GameModel::getCurrentZone() const { return m_currentZone; }

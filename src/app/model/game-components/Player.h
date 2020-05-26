@@ -68,7 +68,7 @@ private:
     bool m_isJumping;
     bool m_isFlying;
     bool m_isDecelerating;
-    std::pair<float, float> m_vectorBall;
+    std::pair<float, float> m_playerVector;
 
     //Constants
     static constexpr int MAX_ENERGY = 100;

@@ -28,8 +28,8 @@ Player::Player(float x, float y, float w, float h, float mvX, float mvY, int flo
         m_acceleration{INITIAL_ACCELERATION}, m_isJumping{false}, m_isFlying{false}, m_isDecelerating{false}
 {
     m_elementType = PLAYER;
-    m_vectorBall.first = 0;
-    m_vectorBall.second = 0;
+    m_playerVector.first = 0;
+    m_playerVector.second = 0;
 }
 
 /**
@@ -67,21 +67,21 @@ void Player::move()
     }
 
     if (m_isDecelerating) {
-        if (fabs(m_vectorBall.first) < PRECISION) {
-            m_vectorBall.first = 0;
+        if (fabs(m_playerVector.first) < PRECISION) {
+            m_playerVector.first = 0;
             m_isDecelerating = false;
         }
-        m_vectorBall.first /= 1 + m_moveX / PLAYER_RATE;
+        m_playerVector.first /= 1 + m_moveX / PLAYER_RATE;
     }
 
     if (m_isJumping && m_posY >= m_floorPosition) {
-        m_vectorBall.second = -m_acceleration * m_gravitation / PLAYER_RATE;
-        m_posY += m_vectorBall.second / PLAYER_RATE;
+        m_playerVector.second = -m_acceleration * m_gravitation / PLAYER_RATE;
+        m_posY += m_playerVector.second / PLAYER_RATE;
     }
 
     if (m_isFlying) {
-        m_vectorBall.second += m_gravitation / PLAYER_RATE;
-        m_posY += m_vectorBall.second / PLAYER_RATE;
+        m_playerVector.second += m_gravitation / PLAYER_RATE;
+        m_posY += m_playerVector.second / PLAYER_RATE;
     }
 
     if (m_posY == m_floorPosition && m_isFlying) {
@@ -90,28 +90,28 @@ void Player::move()
         m_posY = m_floorPosition;
     }
     if (m_posY > m_floorPosition) {
-        m_vectorBall.second = 0;
+        m_playerVector.second = 0;
         m_posY = m_floorPosition;
     }
 
     //=== Update player position
 
-    if (m_posX + m_vectorBall.first >= 0 && (m_posX + m_width + m_vectorBall.first) <= m_fieldWidth) {
-        m_posX += m_vectorBall.first;
-    } else if (m_posX + m_vectorBall.first < 0) {
+    if (m_posX + m_playerVector.first >= 0 && (m_posX + m_width + m_playerVector.first) <= m_fieldWidth) {
+        m_posX += m_playerVector.first;
+    } else if (m_posX + m_playerVector.first < 0) {
         m_posX = 0;
     } else {
         m_posX = m_fieldWidth - m_width;
     }
 
     if (m_posY - m_height <= 0) {
-        m_vectorBall.second = 0;
+        m_playerVector.second = 0;
     }
 
-    m_posY += m_vectorBall.second;
+    m_posY += m_playerVector.second;
 
     if (m_posY >= m_floorPosition + PRECISION) {
-        m_vectorBall.second = 0;
+        m_playerVector.second = 0;
         m_posY = m_floorPosition;
     }
 }
@@ -209,9 +209,9 @@ void Player::controlPlayerMovements(const MovingDirection& direction)
 {
     m_isDecelerating = false;
 
-    if (direction == MOVE_LEFT && m_vectorBall.first > -1 * DIRECTION_PADDING) {
-        m_vectorBall.first -= m_moveX * m_acceleration / PLAYER_RATE;
-    } else if (direction == MOVE_RIGHT && m_vectorBall.first < DIRECTION_PADDING) {
-        m_vectorBall.first += m_moveX * m_acceleration / PLAYER_RATE;
+    if (direction == MOVE_LEFT && m_playerVector.first > -1 * DIRECTION_PADDING) {
+        m_playerVector.first -= m_moveX * m_acceleration / PLAYER_RATE;
+    } else if (direction == MOVE_RIGHT && m_playerVector.first < DIRECTION_PADDING) {
+        m_playerVector.first += m_moveX * m_acceleration / PLAYER_RATE;
     }
 }

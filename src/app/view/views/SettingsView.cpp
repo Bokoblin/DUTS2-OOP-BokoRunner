@@ -39,9 +39,9 @@ SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager
     m_buttonList.push_back(m_esLanguageRadio);
     m_buttonList.push_back(m_easyModeRadio);
     m_buttonList.push_back(m_hardModeRadio);
-    m_buttonList.push_back(m_defaultBallSkinRadio);
-    m_buttonList.push_back(m_morphBallSkinRadio);
-    m_buttonList.push_back(m_capsuleBallSkinRadio);
+    m_buttonList.push_back(m_playerMoblinSkinRadio);
+    m_buttonList.push_back(m_playerMorphingSkinRadio);
+    m_buttonList.push_back(m_PlayerPokeballSkinRadio);
     m_buttonList.push_back(m_resetDataButton);
     m_buttonList.push_back(m_menuMusicButton);
     m_buttonList.push_back(m_gameMusicButton);
@@ -110,9 +110,9 @@ void SettingsView::loadSprites()
     m_esLanguageRadio = new mdsf::RadioButton(C1_POS_X, G1_POS_Y + 2 * RADIO_DIAMETER, 50, RADIO_DIAMETER, "config_lang_spanish");
     m_easyModeRadio = new mdsf::RadioButton(C1_POS_X, G2_POS_Y, 50, RADIO_DIAMETER, "config_easy_mode");
     m_hardModeRadio = new mdsf::RadioButton(C1_POS_X, G2_POS_Y + RADIO_DIAMETER, 50, RADIO_DIAMETER, "config_hard_mode");
-    m_defaultBallSkinRadio = new mdsf::RadioButton(C2_POS_X, G3_POS_Y, 50, RADIO_DIAMETER, "player_skin_default");
-    m_morphBallSkinRadio = new mdsf::RadioButton(C2_POS_X, G3_POS_Y + RADIO_DIAMETER, 50, RADIO_DIAMETER, "player_skin_morphing");
-    m_capsuleBallSkinRadio = new mdsf::RadioButton(C2_POS_X, G3_POS_Y + 2 * RADIO_DIAMETER, 50, RADIO_DIAMETER, "player_skin_capsule");
+    m_playerMoblinSkinRadio = new mdsf::RadioButton(C2_POS_X, G3_POS_Y, 50, RADIO_DIAMETER, "player_skin_moblin");
+    m_playerMorphingSkinRadio = new mdsf::RadioButton(C2_POS_X, G3_POS_Y + RADIO_DIAMETER, 50, RADIO_DIAMETER, "player_skin_morphing");
+    m_PlayerPokeballSkinRadio = new mdsf::RadioButton(C2_POS_X, G3_POS_Y + 2 * RADIO_DIAMETER, 50, RADIO_DIAMETER, "player_skin_pokeball");
 
     //=== Initialize Music controls
 
@@ -163,15 +163,15 @@ void SettingsView::synchronize()
     m_esLanguageRadio->setSelected(m_settings->getLanguage() == ModelResources::SPANISH);
     m_easyModeRadio->setSelected(m_settings->getGameDifficulty() == EASY);
     m_hardModeRadio->setSelected(m_settings->getGameDifficulty() == HARD);
-    m_defaultBallSkinRadio->setSelected(m_settings->getPlayerSkin() == "default");
-    m_morphBallSkinRadio->setSelected(m_settings->getPlayerSkin() == "morphing");
-    m_capsuleBallSkinRadio->setSelected(m_settings->getPlayerSkin() == "capsule");
+    m_playerMoblinSkinRadio->setSelected(m_settings->getPlayerSkin() == "moblin");
+    m_playerMorphingSkinRadio->setSelected(m_settings->getPlayerSkin() == "morphing");
+    m_PlayerPokeballSkinRadio->setSelected(m_settings->getPlayerSkin() == "pokeball");
     m_menuMusicButton->setToggled(m_settings->isMenuMusicEnabled());
     m_gameMusicButton->setToggled(m_settings->isGameMusicEnabled());
 
-    m_morphBallSkinRadio->setEnabled(m_settings->isMorphSkinAvailable());
-    m_capsuleBallSkinRadio->setEnabled(m_settings->isCapsuleSkinAvailable());
-    m_defaultBallSkinRadio->setEnabled(m_settings->isMorphSkinAvailable() || m_settings->isCapsuleSkinAvailable());
+    m_playerMorphingSkinRadio->setEnabled(m_settings->isMorphBallSkinAvailable());
+    m_PlayerPokeballSkinRadio->setEnabled(m_settings->isPokeballSkinAvailable());
+    m_playerMoblinSkinRadio->setEnabled(m_settings->isMorphBallSkinAvailable() || m_settings->isPokeballSkinAvailable());
 
     //=== Sync buttons
 
@@ -217,9 +217,9 @@ void SettingsView::draw() const
             m_esLanguageRadio->draw(m_window);
             m_easyModeRadio->draw(m_window);
             m_hardModeRadio->draw(m_window);
-            m_defaultBallSkinRadio->draw(m_window);
-            m_morphBallSkinRadio->draw(m_window);
-            m_capsuleBallSkinRadio->draw(m_window);
+            m_playerMoblinSkinRadio->draw(m_window);
+            m_playerMorphingSkinRadio->draw(m_window);
+            m_PlayerPokeballSkinRadio->draw(m_window);
             m_menuMusicButton->draw(m_window);
             m_gameMusicButton->draw(m_window);
             m_textManager->drawMenuSettingsText(m_window, CONFIG);
@@ -343,12 +343,12 @@ void SettingsView::handleConfigEvents(const sf::Event& event)
             m_settings->setGameDifficulty(EASY);
         } else if (EventUtils::isMouseInside(*m_hardModeRadio, event)) {
             m_settings->setGameDifficulty(HARD);
-        } else if (EventUtils::isMouseInside(*m_defaultBallSkinRadio, event)) {
-            m_settings->changeBallSkin("default");
-        } else if (EventUtils::isMouseInside(*m_morphBallSkinRadio, event)) {
-            m_settings->changeBallSkin("morphing");
-        } else if (EventUtils::isMouseInside(*m_capsuleBallSkinRadio, event)) {
-            m_settings->changeBallSkin("capsule");
+        } else if (EventUtils::isMouseInside(*m_playerMoblinSkinRadio, event)) {
+            m_settings->changePlayerSkin("moblin");
+        } else if (EventUtils::isMouseInside(*m_playerMorphingSkinRadio, event)) {
+            m_settings->changePlayerSkin("morphing");
+        } else if (EventUtils::isMouseInside(*m_PlayerPokeballSkinRadio, event)) {
+            m_settings->changePlayerSkin("pokeball");
         } else if (EventUtils::isMouseInside(*m_menuMusicButton, event)) {
             m_settings->toggleMenuMusic();
         } else if (EventUtils::isMouseInside(*m_gameMusicButton, event)) {

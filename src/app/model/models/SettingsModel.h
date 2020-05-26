@@ -42,8 +42,8 @@ public:
     const std::string getPlayerSkin() const;
     bool isMenuMusicEnabled() const;
     bool isGameMusicEnabled() const;
-    bool isMorphSkinAvailable() const;
-    bool isCapsuleSkinAvailable() const;
+    bool isMorphBallSkinAvailable() const;
+    bool isPokeballSkinAvailable() const;
 
     //=== SETTERS
     void setCurrentPage(int page);
@@ -53,7 +53,7 @@ public:
 
     //=== METHODS
     void changeLanguage(const std::string& language);
-    void changeBallSkin(const std::string& skin);
+    void changePlayerSkin(const std::string& skin);
     void checkItemsAvailability();
     void nextStep() override;
     void quit();
@@ -65,8 +65,8 @@ public:
 private:
     //=== ATTRIBUTES
     int m_currentPage;
-    bool m_morphSkinIsAvailable;
-    bool m_capsuleSkinIsAvailable;
+    bool m_morphBallSkinIsAvailable;
+    bool m_pokeballSkinIsAvailable;
 };
 
 #endif

@@ -59,7 +59,7 @@ public:
     bool isScoreEasyArrayEmpty() const;
     bool isScoreHardArrayEmpty() const;
     std::string getLanguage() const;
-    std::string getBallSkin() const;
+    std::string getPlayerSkin() const;
     //FIXME [2.0.x] LINKED TO FILE BASED, WE SHALL ABSTRACT THAT ALSO
     virtual std::string getPersistenceContext() const;
 
@@ -67,7 +67,7 @@ public:
     void setAppState(const AppState& state);
     void setDifficulty(const Difficulty& difficulty);
     void setLanguage(const std::string& language);
-    void setBallSkin(const std::string& skin);
+    void setPlayerSkin(const std::string& skin);
 
     //=== METHODS
     void addNewScore(int score);
@@ -96,7 +96,7 @@ protected:
     bool m_isMenuMusicEnabled;
     bool m_isGameMusicEnabled;
     std::string m_currentLanguage;
-    std::string m_currentBallSkin;
+    std::string m_currentPlayerSkin;
     const int COIN_MULTIPLIER = 20;
     const unsigned int MAX_SCORES = 10;
 

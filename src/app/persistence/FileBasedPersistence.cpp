@@ -205,9 +205,9 @@ bool FileBasedPersistence::fetchConfigurationFromConfigFile()
                 m_appCore->m_currentDifficulty = XMLHelper::safeRetrieveXMLValue<int>
                         (nodeValue, "1|2", Difficulty::HARD);
                 break;
-            case hash("ball_skin"):
-                m_appCore->m_currentBallSkin = XMLHelper::safeRetrieveXMLValue<string>
-                        (nodeValue, "default|morphing|capsule", "default");
+            case hash("player_skin"):
+                m_appCore->m_currentPlayerSkin = XMLHelper::safeRetrieveXMLValue<string>
+                        (nodeValue, "moblin|morphing|pokeball", "moblin");
                 break;
             case hash("wallet"):
                 m_appCore->m_wallet = XMLHelper::safeRetrieveXMLValue<int>
@@ -364,8 +364,8 @@ bool FileBasedPersistence::persistConfigurationToConfigFile()
             case hash("difficulty"):
                 nodeValue.set_value(to_string(m_appCore->m_currentDifficulty).c_str());
                 break;
-            case hash("ball_skin"):
-                nodeValue.set_value(m_appCore->m_currentBallSkin.c_str());
+            case hash("player_skin"):
+                nodeValue.set_value(m_appCore->m_currentPlayerSkin.c_str());
                 break;
             case hash("wallet"):
                 nodeValue.set_value(to_string(m_appCore->m_wallet).c_str());
@@ -469,7 +469,7 @@ string FileBasedPersistence::generateDefaultStringConfig()
            "\t<config>\n"
            "\t\t<configItem type=\"string\" name=\"language\" value=\"en\"/>\n"
            "\t\t<configItem type=\"int\" name=\"difficulty\" value=\"2\"/>\n"
-           "\t\t<configItem type=\"string\" name=\"ball_skin\" value=\"default\"/>\n"
+           "\t\t<configItem type=\"string\" name=\"player_skin\" value=\"default\"/>\n"
            "\t\t<configItem type=\"unsigned int\" name=\"wallet\" value=\"0\"/>\n"
            "\t\t<configItem type=\"boolean\" name=\"menu_music\" value=\"false\"/>\n"
            "\t\t<configItem type=\"boolean\" name=\"game_music\" value=\"true\"/>\n"
@@ -488,8 +488,8 @@ string FileBasedPersistence::generateDefaultStringConfig()
            "\t\t<shopItem type=\"boolean\" id=\"shop_shield_plus\" price=\"100\" bought=\"false\"/>\n"
            "\t\t<shopItem type=\"boolean\" id=\"shop_mega_plus\" price=\"200\" bought=\"false\"/>\n"
            "\t\t<shopItem type=\"boolean\" id=\"shop_fly_plus\" price=\"180\" bought=\"false\"/>\n"
-           "\t\t<shopItem type=\"boolean\" id=\"shop_morphing\" price=\"500\" bought=\"false\"/>\n"
-           "\t\t<shopItem type=\"boolean\" id=\"shop_capsule\" price=\"60\" bought=\"false\"/>\n"
+           "\t\t<shopItem type=\"boolean\" id=\"shop_morphball_skin\" price=\"500\" bought=\"false\"/>\n"
+           "\t\t<shopItem type=\"boolean\" id=\"shop_pokeball_skin\" price=\"60\" bought=\"false\"/>\n"
            "\t</shop>\n"
            "\t<scoresEasy>\n"
            "\t\t<scoreItem type=\"unsigned int\" value=\"0\"/>\n"

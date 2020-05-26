@@ -55,9 +55,9 @@ private:
     mdsf::RadioButton* m_esLanguageRadio;
     mdsf::RadioButton* m_easyModeRadio;
     mdsf::RadioButton* m_hardModeRadio;
-    mdsf::RadioButton* m_defaultBallSkinRadio;
-    mdsf::RadioButton* m_morphBallSkinRadio;
-    mdsf::RadioButton* m_capsuleBallSkinRadio;
+    mdsf::RadioButton* m_playerMoblinSkinRadio;
+    mdsf::RadioButton* m_playerMorphingSkinRadio;
+    mdsf::RadioButton* m_PlayerPokeballSkinRadio;
     mdsf::RaisedButton* m_resetDataButton;
     mdsf::ToggleButton* m_menuMusicButton;
     mdsf::ToggleButton* m_gameMusicButton;

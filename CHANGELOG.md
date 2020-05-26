@@ -1,15 +1,15 @@
 # Changelog #
 
-Current version : v2.0.0-dev
+Current version : v2.0-SNAPSHOT
 
 ---
 
 <!------------------------------------------------------------------------------------------------------->
 
-<a name="v2.0.0-dev"></a>
-## [v2.0.0-dev](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.8.3...dev)
+<a name="v2.0-SNAPSHOT"></a>
+## [v2.0-SNAPSHOT](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.8.3...dev)
 
-TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
+FIXME: SOME MISSING CHANGES BETWEEN FEBRUARY 2018 AND FEBRUARY 2020
 
 #### Breaking changes
 - **Structure refactoring**
@@ -23,7 +23,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
   - **ui components**: Generic UI components are now dissociated from app and grouped under *MDC-SFML*
   - **window**: life-cycle now handled only in `main.cpp`
   - **events**: lifecycle changes (window::close() moved to `main.cpp`), cleanup, macro removal
-  - **ressources**: folder organization improvements, including lib specific ressources moved elsewhere
+  - **resources**: folder organization improvements, including lib specific ressources moved elsewhere
   - **enumerations**: each of them now has its own `.h` file
   - **constants**: Most constants are grouped in `ModelConstants` and `ViewConstants` classes
   - **renaming**: several classes and methods have been renamed, including:
@@ -41,6 +41,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
     - `SlidingBackground` => `ScrollingBackground`
     - `TextHandler` => `AppTextManager`
     - `treatEvents()` => `handleEvents()`
+- **Compiling upgrade**: External dependencies are now downloaded during CMake process, and compiled alongside project
     
 #### Features
 - **splash screen**: 
@@ -68,7 +69,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
 - **changelog**: changed for `.md` and reformatted file accordingly
 - **script**: added a little bash `build.sh` script
 - **xml**: safe fetching, logging
-- **cmake**: reorganization with libraries usage
+- **cmake**: reorganization with libraries usage and ext dependencies fetching
 - **unit tests**: reintroduced with Google Test
 - **copyright**: Updated up to 2020
  
@@ -82,8 +83,24 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
     - **mdcsfml**: a UI lib implementing material components above SFML components
 
 #### Known issues
+- **Game**: Buggy transition management at high speeds
 - **Game**: Endless jump in fullscreen mode (unavailable currently)
 - **Game**: Endless transition in fullscreen mode (unavailable currently)
+
+<br>
+
+<!------------------------------------------------------------------------------------------------------->
+
+<a name="v1.8.3"></a>
+## [v1.8.3](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v1.8.2...v1.8.3) (2017-11-04)
+
+#### Fixes
+- **styling**: improved C++11 code compliance
+- **performance**: performance fixes related to paused game
+
+#### Misc
+- **CodeFactor** : added CodeFactor badge to README
+- **doc** : documentation update
 
 <br>
 
@@ -271,7 +288,7 @@ TODO: COMPLETE CHANGELOG NOT REALLY DONE SINCE FEBRUARY 2018
     - once bought, items are immediately effective on the game
 - **settings and leaderboard**: rewritten Settings and Leaderboard following Shop structure
 	- remade Settings UI in two pages :
-		- *Configuration*, to personalize game (with 3 new ones for ball configuration)
+		- *Configuration*, to personalize game (with 3 new ones for player configuration)
 		- *Stats* and *Credits*
 - **bonus**: added a shield bonus
 
@@ -502,7 +519,7 @@ Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 ## [v0.3.0-beta.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.2.3-beta.1...v0.3.0-beta.1) (2016-03-12 to 2016-04-09)
 
 #### Features
-- **game**: ball movements rewritten with ability to jump.
+- **game**: player movements rewritten with ability to jump.
 	The jump is made using gravity, acceleration and vectors. It describes a parable.
 
 #### Misc
@@ -576,7 +593,7 @@ Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 ## [v0.1.4-beta.1](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/compare/v0.1.3-beta.1...v0.1.4-beta.1) (2016-03-05)
 
 #### Features
-- **game**: added animated ball (generation independent from model one)
+- **game**: added animated player (generation independent from model one)
 
 #### Bug fixes
 - various fixes
@@ -613,7 +630,7 @@ Contains versions v0.4.0-alpha.1 to v0.6.0-alpha.2 :
 
 #### Misc
 - **Workshop 2**: GraphicElement::resize() is now working
-- **Workshop 4**: added font for ball position
+- **Workshop 4**: added font for player position
 
 <br>
 

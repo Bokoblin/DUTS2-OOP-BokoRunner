@@ -6,9 +6,11 @@ set(LOGGER_LIB
         ${SIMPLE_LOGGER_ROOT}/Logger.cpp
         )
 
-file(GLOB MDC_SFML_LIB
+file(GLOB_RECURSE MDC_SFML_LIB
         ${MDSF_SRC_ROOT}/*.h
         ${MDSF_SRC_ROOT}/*.cpp
+        ${MDSF_SRC_ROOT}/utils/*.h
+        ${MDSF_SRC_ROOT}/utils/*.cpp
         )
 
 set(XML_HELPER_LIB

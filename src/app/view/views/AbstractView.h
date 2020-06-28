@@ -18,7 +18,7 @@ limitations under the License.
 
 #include <SFML/Audio/Music.hpp>
 #include <SFML/System/Sleep.hpp>
-#include "libs/MDC-SFML/src/Color.h"
+#include "libs/MDC-SFML/src/utils/Color.h"
 #include "libs/MDC-SFML/src/Button.h"
 #include "app/persistence/PersistenceManager.h"
 #include "app/view/AppTextManager.h"

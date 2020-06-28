@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef MDC_SFML_DIALOG_H
 #define MDC_SFML_DIALOG_H
 
-#include "Color.h"
+#include "utils/Color.h"
 #include "Sprite.h"
 #include "Text.h"
 

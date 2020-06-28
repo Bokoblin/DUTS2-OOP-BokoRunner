@@ -17,7 +17,7 @@ limitations under the License.
 #define SHOP_ITEM_CARD_H
 
 #include <libs/MDC-SFML/src/RaisedButton.h>
-#include "libs/MDC-SFML/src/Color.h"
+#include "libs/MDC-SFML/src/utils/Color.h"
 #include "app/model/menu-components/ShopItem.h"
 #include "app/view/AppTextManager.h"
 

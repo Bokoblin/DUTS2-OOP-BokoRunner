@@ -17,7 +17,7 @@ limitations under the License.
 #define APP_COLOR_H
 
 #include <SFML/Graphics/Color.hpp>
-#include "libs/MDC-SFML/src/Color.h"
+#include "libs/MDC-SFML/src/utils/Color.h"
 
 /**
  * The AppColor class defines custom colors used in the app.

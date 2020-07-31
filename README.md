@@ -1,4 +1,9 @@
-# Boko Runner #
+# Boko Runner v2.0-SNAPSHOT #
+
+| Branch | description | version |     CI     |   Code review    |
+| ------ |------------ | ------- | ---------- | ---------------- |
+| **[master](https://github.com/Bokoblin/DUTS2-OOP-BokoRunner/tree/master)** | Most stable branch  | ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Bokoblin/DUTS2-OOP-BokoRunner?label=release) | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-OOP-BokoRunner.svg?branch=master)](https://travis-ci.org/Bokoblin/DUTS2-OOP-BokoRunner) | [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-bokorunner/badge/master)](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-bokorunner/overview/master)
+| **dev** | Bleeding edge branch | ![version](https://img.shields.io/badge/beta-v2.0--SNAPSHOT-blue) | [![Build Status](https://travis-ci.org/Bokoblin/DUTS2-OOP-BokoRunner.svg?branch=dev)](https://travis-ci.org/Bokoblin/DUTS2-OOP-BokoRunner) | [![CodeFactor](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-bokorunner/badge/dev)](https://www.codefactor.io/repository/github/bokoblin/duts2-oop-bokorunner/overview/dev) |
 
 ### Description ###
 
@@ -12,6 +17,8 @@ a Multi-Tier Architecture with a persistence manager, an app core, models, and v
 
 Despite being initially a scholar project ended in May 2016, it is still receiving new features 
 and "under the hood" improvements.
+
+![Start menu](https://bokoblin.github.io/projects/images/runner/runner_menu_screen.jpg)
 
 ### Tools used ###
 
@@ -31,9 +38,10 @@ and "under the hood" improvements.
 
 ### Documentation ###
 
-The Doxygen documentation can be found at 
+The stable release's Doxygen documentation can be found at 
 [this address](https://bokoblin.github.io/DUTS2-OOP-BokoRunner/).
 
+---
 ### How to build ###
 
 #### Libraries requirements ####
@@ -88,7 +96,7 @@ cmake .. && make
 ```
 
 Notes: 
-- To accelerate building, you should set the number of cores used by make following you hardware.
+- To accelerate building, you should set the number of cores used by make following your hardware.
 - When configuring project with CMake, you can select different options, please refer to the main `CmakeLists.txt` file.
 
 ##### Windows #####
@@ -116,26 +124,41 @@ You first have to correctly set the current working directory on your IDE (Run>E
 
 Then you can launch them with the built-in `run` option.
 
+---
 ### Tested environments ###
 
+#### Local environment ####
+
 - **Windows 10 Home Version 1903 - April 2019 Update**
+    	- **Hardware**: ASUS UX580GD (2018)
 	- **Kernel**: Windows NT 10.0
 	- **Compilers**: mingw-w64 (x86_64-8.1.0-posix-seh-rt_v6-rev0)
-	- **Environment**: local (with CLion IDE)
+	- **Environment**: Native
 	- **Compilation**: OK
 	- **Execution**: OK
 	- **Unit tests**: OK
 	
 - **Ubuntu 18.04 LTS - Bionic**
-	- **Kernel**: x86_64 Linux 4.4.0-17134-Microsoft
+    	- **Hardware**: ASUS UX580GD
+	- **Kernel**: x86_64 Linux 4.4.0-18362-Microsoft
 	- **Compilers**: g++7.5, clang 6.0
-	- **Environment**: local (Windows Subsystem for Linux)
+	- **Environment**: Windows Subsystem for Linux
 	- **Compilation**: OK
 	- **Execution**: KO (GUI unsupported on WSL)
 	- **Unit tests**: OK
+
+- **MacOS Catalina 10.15.5**
+    	- **Hardware**: Macbook Pro 2018
+	- **Kernel**: Darwin 19.5.0
+	- **Compilers**: AppleClang 11.0.3
+	- **Environment**: Native
+	- **Compilation**: OK
+	- **Execution**: OK
+	- **Unit tests**: OK
+	
+#### CI environment ####
 	
 - **Travis CI: Ubuntu - Trusty, Xenial, Bionic**
-	- **Kernel**: ??
 	- **Compilers**: gcc-4.9, gcc-7, gcc-9, clang-6, clang-7, clang-9
 	- **Environment**: Virtual machine on GCE (Travis CI)
 	- **Compilation**: OK (all 6 compiling)
@@ -143,13 +166,13 @@ Then you can launch them with the built-in `run` option.
 	- **Unit tests**: OK (all 6 passing)
 	
 - **Travis CI: Mac OS X 10.13, 10.14**
-	- **Kernel**: ??
 	- **Compilers**: Xcode 10, Xcode 11
 	- **Environment**: Virtual machine on GCE (Travis CI)
 	- **Compilation**: OK (both compiling)
 	- **Execution**: Can't be tested
 	- **Unit tests**: OK (both passing)
 
+---
 ### Licences ###
 
 The project is mainly licensed under Apache License Version 2.0 but some elements have other licences.<br>

@@ -1,0 +1,55 @@
+name: CMake on Ubuntu
+on: push
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: true
+
+      matrix:
+        os: [ubuntu-latest, ubuntu-22.04, ubuntu-20.04]
+        cpp_compiler: [g++, clang++]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set reusable strings
+        # Turn repeated input strings (such as the build output directory) into step outputs.
+        # These step outputs can be used throughout the workflow file.
+        id: strings
+        shell: bash
+        run: |
+          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+
+      - name: Ubuntu 20.04 fix for missing directory
+        shell: bash
+        if: matrix.os == 'ubuntu-20.04'
+        run: |
+          mkdir -p /home/runner/.local
+
+      - name: Retrieve CMake & SFML dependencies on Ubuntu
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y libxrandr-dev libx11-dev libopenal-dev libalut-dev libvorbis-dev libogg-dev libflac-dev libxcb-image0 libudev-dev libgl1-mesa-dev libegl1-mesa-dev
+          sudo apt install --reinstall libudev1
+          wget -qO- "https://cmake.org/files/v3.17/cmake-3.17.0-Linux-x86_64.tar.gz" | tar --strip-components=1 -xz -C ~/.local
+          export PATH=~/.local/bin:$PATH
+
+      - name: Configure CMake
+        # Configure CMake in a 'build' subdirectory.
+        run: >
+          cmake -B ${{ steps.strings.outputs.build-output-dir }}
+          -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
+          -DENABLE_TESTS=ON
+          -S ${{ github.workspace }}
+
+      - name: Build
+        # Build your program with the given configuration.
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }}
+
+      - name: Test
+        working-directory: ${{ steps.strings.outputs.build-output-dir }}
+        # Execute tests defined by the CMake configuration.
+        run: ctest

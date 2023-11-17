@@ -1,3 +1,4 @@
+# As of 2023, this file is kept for reference but the CI system has been replaced by GitHub Actions
 language: cpp
 
 jobs:

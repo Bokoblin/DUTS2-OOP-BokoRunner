@@ -32,7 +32,7 @@ Nowadays, the project is mostly dead. But commits can still come from time to ti
 * Dependencies : 
     * SFML 2.5.1
     * PugiXML 1.8.1
-    * GoogleTest 1.8.1
+    * GoogleTest 1.11.0 (latest for C++11)
 
 ### Authors ###
 

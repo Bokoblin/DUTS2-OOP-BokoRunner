@@ -17,15 +17,17 @@
  * @date 3/03/16 - 29/12/17
  */
 ScrollingBackground::ScrollingBackground(float width, float height, float scrollingSpeed, const std::string& image) :
-        Sprite(width, height), m_scrollingSpeed{scrollingSpeed}
+        AbstractMaterial(width, height), m_scrollingSpeed{scrollingSpeed}
 {
-    m_left = new mdsf::Sprite(0, 0, width, height);
-    m_left->loadAndApplyTextureFromImageFile(image);
-    m_right = new mdsf::Sprite(width, 0, width, height);
-    m_right->loadAndApplyTextureFromImageFile(image);
+    m_left = new mdsf::Image(0, 0, width, height); //FIXME: not an abstract material it wants
+    m_left->loadAndApplyTextureFromFile(image);
+    m_right = new mdsf::Image(width, 0, width, height);
+    m_right->loadAndApplyTextureFromFile(image);
 
-    m_left->resize(width, height);
-    m_right->resize(width, height);
+    //m_left->resize(width, height);
+    //m_right->resize(width, height);
+    m_size = sf::Vector2f(m_left->getWidth() + m_right->getWidth(),
+                          m_left->getHeight() + m_right->getHeight());
 }
 
 
@@ -40,42 +42,23 @@ ScrollingBackground::~ScrollingBackground()
     delete m_right;
 }
 
-
 //------------------------------------------------
 //          GETTERS
 //------------------------------------------------
 
-float ScrollingBackground::getWidth() const
-{return m_left->getWidth() + m_right->getWidth();}
-
-float ScrollingBackground::getHeight() const
-{return m_left->getHeight() + m_right->getHeight();}
-
-sf::Vector2f ScrollingBackground::getLeftPosition() const
-{return m_left->getPosition();}
-
-float ScrollingBackground::getSeparationPositionX(unsigned int screenWidth) const
-{
-    /*
-     * Depending on the current displaying (left-right or right-left),
-     * it returns the visible separation position
-     */
-    if (m_left->getX() >= -(4.0f * screenWidth / 3) && m_left->getX() <= screenWidth) {
-        return m_left->getX() + m_left->getLocalBounds().width;
-    } else {
-        return m_right->getX() + m_right->getLocalBounds().width;
-    }
-}
-
+//const sf::Vector2f& ScrollingBackground::getSize()
+//{
+//    m_size = sf::Vector2f(m_left->getWidth() + m_right->getWidth(),
+//                                  m_left->getHeight() + m_right->getHeight());
+//    return m_computedSize;
+//}
 
 //------------------------------------------------
 //          SETTERS
 //------------------------------------------------
+void ScrollingBackground::setScrollingSpeed(float speed) { m_scrollingSpeed = speed; }
 
-void ScrollingBackground::setScrollingSpeed(float speed)
-{m_scrollingSpeed = speed;}
-
-void ScrollingBackground::setPositions(float x, float y)
+void ScrollingBackground::setPosition(float x, float y)
 {
     m_left->setPosition(x, y);
     m_right->setPosition(x + m_left->getWidth(), y);
@@ -93,7 +76,8 @@ void ScrollingBackground::setPositions(float x, float y)
  */
 void ScrollingBackground::sync()
 {
-    Sprite::sync();
+    m_left->setFillColor(m_fillColor);
+    m_left->setOutlineColor(m_outlineColor);
 
     m_left->setPosition(m_left->getX() - m_scrollingSpeed, m_left->getY());
     m_right->setPosition(m_right->getX() - m_scrollingSpeed, m_right->getY());
@@ -103,9 +87,8 @@ void ScrollingBackground::sync()
         m_right->setPosition(m_left->getWidth(), 0);
     }
 
-    applyColor();
+    //applyColor();
 }
-
 
 /**
  * Draws the scrolling background on the window
@@ -113,76 +96,93 @@ void ScrollingBackground::sync()
  * @param window the window
  *
  * @author Arthur
- * @date 3/03/16 - 03/04/16
+ * @date 3/03/2016 - 05/07/2020
  */
-void ScrollingBackground::draw(sf::RenderWindow* window) const
+void ScrollingBackground::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    window->draw(*m_left);
-    window->draw(*m_right);
+    target.draw(*m_left, states);
+    target.draw(*m_right, states);
+}
+
+/**
+* Resizes the background image using scaling.
+*
+* @param size a scalar defining the size to apply
+*
+* @author Arthur
+* @date 30/04/2016 - 05/07/2020
+*/
+void ScrollingBackground::resize(const sf::Vector2f &size)
+{
+    m_left->resize(size);
+    m_right->resize(size);
 }
 
 
-/**
- * Resizing function
- *
- * @param width the new width
- * @param height the new height
- *
- * @author Arthur
- * @date 30/04/16
- */
-void ScrollingBackground::resize(float width, float height)
-{
-    m_left->resize(width, height);
-    m_right->resize(width, height);
-}
-
-
-/**
- * Checks if a point of given coordinates is contained
- * inside this element
- *
- * @param x the x-axis of position to check
- * @param y the y-axis of position to check
- *
- * @author Arthur
- * @date 30/04/16
- */
-bool ScrollingBackground::contains(float x, float y) const
-{
-    return m_left->contains(x, y) || m_right->contains(x, y);
-}
-
+///**
+// * Checks if a point of given coordinates is contained
+// * inside this element
+// *
+// * @param x the x-axis of position to check
+// * @param y the y-axis of position to check
+// *
+// * @author Arthur
+// * @date 30/04/16
+// */
+//bool ScrollingBackground::contains(float x, float y) const
+//{
+//    return m_left->contains(x, y) || m_right->contains(x, y);
+//}
 
 /**
- * Applies light and alpha values to color
+ * Calculate the central position of the scrolling background
+ * @note Depending on the current displaying (left-right or right-left),
+ * it returns the visible central position
  *
  * @author Arthur
- * @date 24/12/17 - 13/09/18
+ * @date 16/04/2017 - 05/07/2020
  */
-void ScrollingBackground::applyColor()
+sf::Vector2f ScrollingBackground::calculateCenter(float screenWidth) const
 {
-    m_left->setFillColor(sf::Color(static_cast<sf::Uint8>(getColor().r * 0.01f * m_light),
-                               static_cast<sf::Uint8>(getColor().g * 0.01f * m_light),
-                               static_cast<sf::Uint8>(getColor().b * 0.01f * m_light),
-                               m_alpha));
-    m_right->setFillColor(sf::Color(static_cast<sf::Uint8>(getColor().r * 0.01f * m_light),
-                                static_cast<sf::Uint8>(getColor().g * 0.01f * m_light),
-                                static_cast<sf::Uint8>(getColor().b * 0.01f * m_light),
-                                m_alpha));
+    if (m_left->getX() >= -(4.0f * screenWidth / 3) && m_left->getX() <= screenWidth) {
+        return {m_left->getX() + m_left->getWidth(), m_left->getHeight() / 2};
+    } else {
+        return {m_right->getX() + m_right->getWidth(), m_left->getHeight() / 2};
+    }
 }
 
 /**
  * Loads a texture from an image file
  * and applies it to the SlidingBackground's left and right sprites on loading success
  *
- * @param imageFile the source file
+ * @param file the source file
  *
  * @author Arthur
- * @date 02/01/17
+ * @date 02/01/2017 - 05/07/2020
  */
-void ScrollingBackground::loadAndApplyTextureFromImageFile(const std::string& imageFile)
+void ScrollingBackground::loadAndApplyTextureFromFile(const std::string& file, const sf::IntRect& area)
 {
-    m_left->loadAndApplyTextureFromImageFile(imageFile);
-    m_right->loadAndApplyTextureFromImageFile(imageFile);
+    m_left->loadAndApplyTextureFromFile(file, area);
+    m_right->loadAndApplyTextureFromFile(file, area);
 }
+
+float ScrollingBackground::getX() const
+{
+    return m_left->getX();
+}
+
+float ScrollingBackground::getY() const
+{
+    return m_right->getY();
+}
+
+bool ScrollingBackground::contains(const sf::Vector2f& position) const
+{
+    return false; //FIXME: won't use I think
+}
+
+void ScrollingBackground::setOrigin(float x, float y) {
+    m_left->setOrigin(x, y);
+}
+
+

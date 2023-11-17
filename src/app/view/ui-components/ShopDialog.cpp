@@ -3,12 +3,8 @@
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
 //------------------------------------------------
-
-ShopDialog::ShopDialog() : Dialog(), m_shopItem{nullptr}
-{
-    hide();
-}
-
+//TODO
+ShopDialog::ShopDialog() : Dialog(), m_shopItem{nullptr} {}
 
 /**
  * Constructs a dialog with coordinates, a size
@@ -26,8 +22,7 @@ ShopDialog::ShopDialog() : Dialog(), m_shopItem{nullptr}
  */
 ShopDialog::ShopDialog(float x, float y, float width, float height,
                        const std::string& context, ShopItem* item) :
-        Dialog(x, y, width, height, context), m_shopItem{item}
-{}
+        Dialog(x, y, width, height, context), m_shopItem{item} {}
 
 
 /**
@@ -42,5 +37,5 @@ ShopDialog::~ShopDialog() = default;
 //          GETTERS
 //------------------------------------------------
 
-ShopItem *ShopDialog::getLinkedShopItem() const {return m_shopItem; }
+ShopItem* ShopDialog::getLinkedShopItem() const { return m_shopItem; }
 

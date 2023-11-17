@@ -35,7 +35,7 @@ void GameView::updateGameOverElements()
  * Draws elements of a game over
  *
  * @author Arthur
- * @date 24/12/17
+ * @date 24/12/2017 - 02/07/2020
  */
 void GameView::drawGameOver() const
 {
@@ -44,9 +44,9 @@ void GameView::drawGameOver() const
     m_window->draw(*m_endBackground);
     m_window->draw(*m_coinSprite);
 
-    m_restartButton->draw(m_window);
-    m_goHomeButton->draw(m_window);
-    m_saveScoreButton->draw(m_window);
+    m_window->draw(*m_restartButton);
+    m_window->draw(*m_goHomeButton);
+    m_window->draw(*m_saveScoreButton);
 
     //=== Standalone Text drawing
 
@@ -82,7 +82,7 @@ bool GameView::handleGameOverEvents(const sf::Event& event)
             m_game->setAppState(MENU);
             return false;
         } else if (EventUtils::isMouseInside(*m_saveScoreButton, event)) {
-            m_saveScoreButton->hide();
+            m_saveScoreButton->setVisible(false);
             m_game->saveCurrentGame();
             PersistenceManager::updatePersistence();
         }

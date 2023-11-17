@@ -1,4 +1,4 @@
-/* Copyright 2016-2018 Jolivet Arthur
+/* Copyright 2016-2020 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,9 +16,10 @@ limitations under the License.
 #ifndef MDC_SFML_DIALOG_H
 #define MDC_SFML_DIALOG_H
 
-#include "utils/Color.h"
-#include "Sprite.h"
-#include "Text.h"
+#include "../components/AbstractShapeMaterial.h"
+#include "../components/Text.h"
+#include "../interfaces/ISynchronizable.h"
+#include "../utils/Color.h"
 
 namespace Bokoblin
 {
@@ -31,12 +32,12 @@ namespace MaterialDesignComponentsForSFML
  * containing a title, a content and up to two buttons.
  *
  * @author Arthur
- * @date 16/05/16 - 26/09/18
+ * @date 16/05/2016 - 28/06/2020
  *
  * @see Sprite
  * @see Text
  */
-class Dialog : public Sprite
+class Dialog : public AbstractShapeMaterial
 {
 public:
     //=== CTORs / DTORs
@@ -46,6 +47,8 @@ public:
     ~Dialog() override;
 
     //=== GETTERS
+    float getX() const override;
+    float getY() const override;
     const std::string &getContext() const;
     const Text &getCancelButtonText() const;
     const Text &getOkButtonText() const;
@@ -57,9 +60,12 @@ public:
     void setOkButtonText(const std::string &ok);
 
     //=== METHODS
-    void draw(sf::RenderWindow *window) const override;
+    void sync() override;
 
 protected:
+    //=== METHODS
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
     //=== ATTRIBUTES
     std::string m_context;
     Text m_title;

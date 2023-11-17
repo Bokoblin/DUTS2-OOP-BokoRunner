@@ -1,4 +1,4 @@
-/* Copyright 2016-2019 Jolivet Arthur & Laronze Florian
+/* Copyright 2016-2020 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,10 +22,11 @@ limitations under the License.
 
 /**
  * @class SplashScreenView
+ * @inherit AbstractView
  * @details Display the app's splash screen at startup
  *
  * @author Arthur
- * @date 27/03/2016 - 13/07/2019
+ * @date 27/03/2016 - 05/07/2020
  */
 class SplashScreenView: public AbstractView
 {
@@ -42,11 +43,11 @@ public:
 private:
     //=== ATTRIBUTES
     SplashScreenModel* m_splashModel;
-    mdsf::Sprite* m_splashScreen;
+    mdsf::Image* m_splashScreen;
 
     //For transition
     ParallaxBackground* m_parallaxBackground;
-    mdsf::Sprite* m_appTitle;
+    mdsf::Image* m_appTitle;
 
     //Constants
     static constexpr int BACKGROUND_WIDTH = 1200;

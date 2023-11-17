@@ -1,4 +1,4 @@
-/* Copyright 2017-2018 Jolivet Arthur
+/* Copyright 2020 Jolivet Arthur
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#ifndef MDC_SFML_LABEL_POSITION_H
-#define MDC_SFML_LABEL_POSITION_H
+#ifndef MDC_SFML_SYNCHRONIZABLE_H
+#define MDC_SFML_SYNCHRONIZABLE_H
 
 namespace Bokoblin
 {
@@ -22,18 +22,20 @@ namespace MaterialDesignComponentsForSFML
 {
 
 /**
- * The LabelPosition enum defines the different
- * position that are settable for button's label.
+ * @interface ISynchronizable
+ * @details Defines a synchronization method
  *
  * @author Arthur
- * @date 30/01/17
+ * @date 28/06/2020
  */
-enum LabelPosition {
-    TOP,
-    RIGHT,
-    BOTTOM,
-    LEFT,
-    CENTER
+class ISynchronizable
+{
+public:
+    //=== DTOR
+    virtual ~ISynchronizable() = default;
+
+    //=== METHODS
+    virtual void sync() = 0;
 };
 
 } //namespace MaterialDesignComponentsForSFML

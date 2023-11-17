@@ -25,8 +25,9 @@ namespace MaterialDesignComponentsForSFML
 {
 
 /**
- * The AbstractStateButton class inherits Button.
- * It represents a button that can hold a state
+ * @class AbstractStateButton
+ * @inherit Button
+ * @details It represents a button that can hold a state
  * (other than being pressed) through rectangle clips.
  * The following states are available : pressed, checked, enabled. \n
  * The rectangle clips are used to adapt rendering following states. \n
@@ -61,8 +62,10 @@ protected:
     //=== ATTRIBUTES
     std::vector<sf::IntRect> m_clipRectArray;
     unsigned int m_currentClipRect;
-    bool m_isChecked;
     const float HORIZONTAL_LABEL_MARGIN = 20;
+
+    //=== STATES
+    const unsigned int CHECKED = 2798434082;
 };
 
 } //namespace MaterialDesignComponentsForSFML

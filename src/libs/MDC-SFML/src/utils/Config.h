@@ -35,7 +35,7 @@ namespace MaterialDesignComponentsForSFML
  * Moving forward it shall allow user configuration by using definitions
  *
  * @author Arthur
- * @date 29/12/17 - 28/04/20
+ * @date 29/12/2017 - 28/04/20
  */
 class Config
 {

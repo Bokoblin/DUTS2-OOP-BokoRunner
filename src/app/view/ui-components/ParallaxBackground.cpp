@@ -3,7 +3,6 @@
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
 //------------------------------------------------
-
 /**
  * @brief Constructor
  *
@@ -11,10 +10,10 @@
  * @param height a height
  *
  * @author Arthur
- * @date 13/07/2019
+ * @date 13/07/2019 - 05/07/2020
  */
 ParallaxBackground::ParallaxBackground(float width, float height) :
-        m_width{width}, m_height{height} {}
+        mdsf::AbstractMaterial(width, height) {}
 
 /**
  * @brief Destructor
@@ -77,12 +76,12 @@ void ParallaxBackground::sync()
  * @param window the window
  *
  * @author Arthur
- * @date 13/07/2019
+ * @date 13/07/2019 - 05/07/2020
  */
-void ParallaxBackground::draw(sf::RenderWindow* window) const
+void ParallaxBackground::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     for (auto background: m_backgrounds) {
-        background.second->draw(window);
+        target.draw(*background.second, states);
     }
 }
 
@@ -90,37 +89,11 @@ void ParallaxBackground::draw(sf::RenderWindow* window) const
  * @brief Apply the light setting to every elements
  *
  * @author Arthur
- * @date 13/07/2019
+ * @date 13/07/2019 - 05/07/2020
  */
-void ParallaxBackground::setLight(int light)
+void ParallaxBackground::setLight(int value, mdsf::Color::Modifier modifier)
 {
     for (auto background: m_backgrounds) {
-        background.second->setLight(light);
-    }
-}
-
-/**
- * @brief Increase the light setting for every elements
- *
- * @author Arthur
- * @date 13/07/2019
- */
-void ParallaxBackground::increaseLight(int light)
-{
-    for (auto background: m_backgrounds) {
-        background.second->increaseLight(light);
-    }
-}
-
-/**
- * @brief Apply light and alpha values to color of every elements
- *
- * @author Arthur
- * @date 13/07/2019
- */
-void ParallaxBackground::applyColor()
-{
-    for (auto background: m_backgrounds) {
-        background.second->applyColor();
+        background.second->setLight(value, modifier);
     }
 }

@@ -80,7 +80,7 @@ void CommandsView::draw() const
 
     //=== Graphic Elements drawing
 
-    m_homeButton->draw(m_window);
+    m_window->draw(*m_homeButton);
 
     //=== Text Drawing
 

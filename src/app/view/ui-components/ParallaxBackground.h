@@ -1,4 +1,4 @@
-/* Copyright 2019 Jolivet Arthur & Laronze Florian
+/* Copyright 2019-2020 Jolivet Arthur & Laronze Florian
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,14 +22,12 @@ limitations under the License.
 /**
  * @class ParallaxBackground
  * @details Provide an implementation of parallax background, 
- * that is having multiple scrolling backgrounds superposed.
+ * that is, having multiple scrolling backgrounds superposed.
  *
  * @author Arthur
- * @date 13/07/2019
- * 
- * @see ScrollingBackground
+ * @date 13/07/2019 - 05/07/2020
  */
-class ParallaxBackground
+class ParallaxBackground: public mdsf::AbstractMaterial, public mdsf::ISynchronizable
 {
 public:
     //=== CTORs / DTORs
@@ -41,15 +39,14 @@ public:
     ScrollingBackground* getBackground(unsigned int depth);
 
     //=== METHODS
+    void sync() override;
+    void setLight(int value, mdsf::Color::Modifier modifier = mdsf::Color::REPL) override;
     void addBackground(int depth, float speed, const std::string& image);
-    void sync();
-    void draw(sf::RenderWindow* window) const;
-
-    void setLight(int light);
-    void increaseLight(int light);
-    void applyColor();
 
 private:
+    //=== METHODS
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
     //=== ATTRIBUTES
     float m_width;
     float m_height;

@@ -16,8 +16,8 @@ limitations under the License.
 #ifndef LEADERBOARD_VIEW_H
 #define LEADERBOARD_VIEW_H
 
-#include <libs/MDC-SFML/src/RaisedButton.h>
-#include "libs/MDC-SFML/src/Dialog.h"
+#include <libs/MDC-SFML/src/components/buttons/RaisedButton.h>
+#include "libs/MDC-SFML/src/components/Dialog.h"
 #include "app/model/models/LeaderboardModel.h"
 #include "app/view/utils/DialogBuilder.h"
 #include "AbstractView.h"

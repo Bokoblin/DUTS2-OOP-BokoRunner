@@ -1,3 +1,4 @@
+#include <libs/MDC-SFML/src/components/buttons/Button.h>
 #include "EventUtils.h"
 
 //------------------------------------------------
@@ -96,26 +97,75 @@ bool EventUtils::wasMouseReleased(const sf::Event& event)
 
 
 /**
+ * @deprecated
+ *
  * Tests if the mouse is inside a sprite area
- * @return true, if action was triggered 
+ * @return true, if action was triggered
  *
  * @author Arthur
- * @date 30/10/18 - 13/01/19
+ * @date 30/10/2018 - 05/07/2020
  */
-bool EventUtils::isMouseInside(const mdsf::Sprite& sprite, const sf::Event& event)
+bool EventUtils::isMouseInside(const mdsf::Button& sprite, const sf::Event& event)
 {
-    return sprite.contains(event.mouseButton.x, event.mouseButton.y);
+    return sprite.contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
 }
-
 
 /**
  * Tests if the mouse is inside a text area
- * @return true, if action was triggered 
+ * @return true, if action was triggered
  *
  * @author Arthur
- * @date 30/10/18 - 13/01/19
+ * @date 30/10/2018 - 05/07/2020
  */
 bool EventUtils::isMouseInside(const mdsf::Text& text, const sf::Event& event)
 {
-    return text.contains(event.mouseButton.x, event.mouseButton.y);
+    return text.contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
 }
+
+bool EventUtils::isMouseInside(const mdsf::Dialog& dialog, const sf::Event& event)
+{
+    return dialog.contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
+}
+
+void EventUtils::verifyHover(const sf::Event& event, const std::vector<mdsf::Button*>& elements)
+{
+    verifyEvent(event, elements, &mdsf::Button::setHovered);
+}
+
+void EventUtils::verifyClick(const sf::Event& event, const std::vector<mdsf::Button*>& elements)
+{
+    verifyEvent(event, elements, &mdsf::Button::setClicked);
+}
+
+void EventUtils::verifyEvent(const sf::Event& event, const std::vector<mdsf::Button*>& elements, const actionable_func_t& func)
+{
+    int depth = -1;
+    mdsf::Button* elem = nullptr;
+
+    for (auto* e : elements) {
+        func(e, false);
+
+        if (e->contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.x))
+                && e->getDepth() > depth) {
+            depth = e->getDepth();
+            elem = e;
+        }
+    }
+
+    if (elem != nullptr) {
+        func(elem, true);
+    }
+}
+
+//TEMPORARY TEST NOW DEPRECATED
+///**
+// * Tests if the mouse is inside a text area
+// * @return true, if action was triggered
+// *
+// * @author Arthur
+// * @date 30/10/18 - 13/01/19
+// */
+//bool EventUtils::wasElementClicked(const mdsf::IDrawable& sprite, const sf::Event& event)
+//{
+//    return sprite.isPressed() && isMouseInside(sprite, event); //TODO: Use Clickable class instead of Drawable (as drawable exists its dull)
+//}

@@ -1,4 +1,4 @@
-#include <libs/MDC-SFML/src/Config.h>
+#include <libs/MDC-SFML/src/utils/Config.h>
 #include "ViewConstants.h"
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;

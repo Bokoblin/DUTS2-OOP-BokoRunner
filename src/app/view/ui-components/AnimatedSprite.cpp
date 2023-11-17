@@ -15,14 +15,14 @@
  * @param clipRect the part of the image to use for texture
  *
  * @author Arthur
- * @date 03/05/2020
+ * @date 03/05/2020 - 02/07/2020
  */
 AnimatedSprite::AnimatedSprite(float width, float height, const std::string& image,
                                const std::vector<sf::IntRect>& clipRect) :
-        mdsf::Sprite(width, height, image), m_clipRectArray{clipRect},
+        mdsf::Image(width, height, image), m_clipRectArray{clipRect},
         m_currentClipRect{0}, m_lastAnimationTime{std::chrono::system_clock::now()}
 {
-    this->setTextureRect(m_clipRectArray[m_currentClipRect]);
+    m_sprite.setTextureRect(m_clipRectArray[m_currentClipRect]);
 }
 
 /**
@@ -38,14 +38,14 @@ AnimatedSprite::AnimatedSprite(float width, float height, const std::string& ima
  * @param clipRect the part of the image to use for texture
  *
  * @author Arthur
- * @date 03/03/16 - 29/12/17
+ * @date 03/03/2016 - 02/07/2020
  */
 AnimatedSprite::AnimatedSprite(float x, float y, float width, float height, const std::string& image,
                                const std::vector<sf::IntRect>& clipRect) :
-        mdsf::Sprite(x, y, width, height, image), m_clipRectArray{clipRect},
+        mdsf::Image(x, y, width, height, image), m_clipRectArray{clipRect},
         m_currentClipRect{0}, m_lastAnimationTime{std::chrono::system_clock::now()}
 {
-    this->setTextureRect(m_clipRectArray[m_currentClipRect]);
+    m_sprite.setTextureRect(m_clipRectArray[m_currentClipRect]);
 }
 
 
@@ -55,13 +55,13 @@ AnimatedSprite::AnimatedSprite(float x, float y, float width, float height, cons
  * @param other another sprite object to copy
  *
  * @author Arthur
- * @date 19/03/16 - 29/12/17
+ * @date 19/03/2016 - 02/07/2020
  */
 AnimatedSprite::AnimatedSprite(const AnimatedSprite& other) :
-        mdsf::Sprite(other), m_clipRectArray{other.m_clipRectArray},
+        mdsf::Image(other), m_clipRectArray{other.m_clipRectArray},
         m_currentClipRect{0}, m_lastAnimationTime{std::chrono::system_clock::now()}
 {
-    this->setTextureRect(m_clipRectArray[m_currentClipRect]);
+    m_sprite.setTextureRect(m_clipRectArray[m_currentClipRect]);
 }
 
 
@@ -95,7 +95,7 @@ void AnimatedSprite::setClipRectArray(std::vector<sf::IntRect> clipRectsArray)
  */
 void AnimatedSprite::sync()
 {
-    mdsf::Sprite::sync();
+    m_sprite.setColor(m_fillColor);
 
     std::chrono::system_clock::duration duration = std::chrono::system_clock::now() - m_lastAnimationTime;
 
@@ -106,7 +106,7 @@ void AnimatedSprite::sync()
             m_currentClipRect++;
         }
 
-        this->setTextureRect(m_clipRectArray[m_currentClipRect]);
+        m_sprite.setTextureRect(m_clipRectArray[m_currentClipRect]);
         m_lastAnimationTime = std::chrono::system_clock::now();
     }
 }

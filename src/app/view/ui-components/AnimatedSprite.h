@@ -16,8 +16,8 @@ limitations under the License.
 #ifndef ANIMATED_GRAPHIC_ELEMENT_H
 #define ANIMATED_GRAPHIC_ELEMENT_H
 
-#include "libs/MDC-SFML/src/Sprite.h"
 #include <chrono>
+#include <libs/MDC-SFML/src/components/Image.h>
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 
@@ -28,11 +28,9 @@ namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
  * and an animation delay.
  *
  * @author Arthur
- * @date 3/03/16 - 03/05/2020
- *
- * @see mdsf::Sprite
+ * @date 3/03/2016 - 07/05/2020
  */
-class AnimatedSprite: public mdsf::Sprite
+class AnimatedSprite: public mdsf::Image
 {
 public:
     //=== CTORs / DTORs
@@ -48,6 +46,8 @@ public:
 
     //=== METHODS
     void sync() override;
+    ///**@deprecated*/ void resize(float width, float height) const; //TODO: compat
+    ///**@deprecated*/ void resize(float size) const; //TODO: compat
 
 private:
     //=== ATTRIBUTES

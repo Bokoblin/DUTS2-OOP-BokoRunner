@@ -17,7 +17,7 @@ limitations under the License.
 #define COMMANDS_VIEW_H
 
 #include "AbstractView.h"
-#include "libs/MDC-SFML/src/RaisedButton.h"
+#include "libs/MDC-SFML/src/components/buttons/RaisedButton.h"
 #include "app/model/models/CommandsModel.h"
 
 /**

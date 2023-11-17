@@ -25,6 +25,13 @@ namespace BokoRunner
 namespace Resources
 {
 
+//TODO 05/07/2020 - Create a resource loading class (to perform on game init)
+//0. Store an xml list of resources (key, value) in a file
+//1. For each item, load an sf::Image from the filename (value) into a texture map (key)
+//2. Provide methods to create a new texture w/ with id as param (or if not possible due to C++, just the image
+
+//With this, we don't need to store size
+
 /**
  * @brief Provide constants to view classes
  *

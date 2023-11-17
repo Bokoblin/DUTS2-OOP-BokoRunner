@@ -81,7 +81,7 @@ void MenuView::loadSprites()
     m_parallaxBackground->addBackground(0, FAR_SCROLL_SPEED, ViewResources::GAME_FAR_HILL_BACKGROUND);
     m_parallaxBackground->addBackground(1, NEAR_SCROLL_SPEED, ViewResources::GAME_NEAR_HILL_BACKGROUND);
 
-    m_titleSprite = new mdsf::Sprite(getHalfXPosition() - (0.45f * TITLE_WIDTH), 0.167f * m_height,
+    m_titleSprite = new mdsf::Image(getHalfXPosition() - (0.45f * TITLE_WIDTH), 0.167f * m_height,
                                      TITLE_WIDTH, TITLE_HEIGHT, ViewResources::TITLE_IMAGE);
     m_titleSprite->resize(m_titleSprite->getWidth() * 0.95f, m_titleSprite->getHeight() * 0.95f);
 
@@ -99,16 +99,16 @@ void MenuView::loadSprites()
     //=== Initialize COMMANDS, SETTINGS, LEADERBOARD and SHOP buttons
 
     m_commandsButton = new mdsf::RaisedButton(0.02f * m_width, 0.02f * m_height, HOME_BTN_SIZE, HOME_BTN_SIZE, "", "");
-    m_commandsButton->loadAndApplyTextureFromImageFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 0, 50, 50));
+    m_commandsButton->loadAndApplyTextureFromFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 0, 50, 50));
 
     m_settingsButton = new mdsf::RaisedButton(0.02f * m_width, 0.89f * m_height, HOME_BTN_SIZE, HOME_BTN_SIZE, "", "");
-    m_settingsButton->loadAndApplyTextureFromImageFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 50, 50, 50));
+    m_settingsButton->loadAndApplyTextureFromFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 50, 50, 50));
 
     m_shopButton = new mdsf::RaisedButton(0.92f * m_width, 0.02f * m_height, HOME_BTN_SIZE, HOME_BTN_SIZE, "", "");
-    m_shopButton->loadAndApplyTextureFromImageFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 100, 50, 50));
+    m_shopButton->loadAndApplyTextureFromFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 100, 50, 50));
 
     m_leaderboardButton = new mdsf::RaisedButton(0.92f * m_width, 0.89f * m_height, HOME_BTN_SIZE, HOME_BTN_SIZE, "", "");
-    m_leaderboardButton->loadAndApplyTextureFromImageFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 150, 50, 50));
+    m_leaderboardButton->loadAndApplyTextureFromFile(ViewResources::SHAPE_BUTTONS_IMAGE, sf::Rect<int>(0, 150, 50, 50));
 }
 
 /**
@@ -184,21 +184,21 @@ void MenuView::synchronize()
  * @brief Draw menu elements on the window
  *
  * @author Arthur
- * @date 26/03/2016 - 14/07/2019
+ * @date 26/03/2016 - 05/07/2020
  */
 void MenuView::draw() const
 {
     if (m_menu->getMenuState() == HOME) {
         m_window->clear();
 
-        m_parallaxBackground->draw(m_window);
-        m_titleSprite->draw(m_window);
-        m_playButton->draw(m_window);
-        m_quitButton->draw(m_window);
-        m_commandsButton->draw(m_window);
-        m_settingsButton->draw(m_window);
-        m_leaderboardButton->draw(m_window);
-        m_shopButton->draw(m_window);
+        m_window->draw(*m_parallaxBackground);
+        m_window->draw(*m_titleSprite);
+        m_window->draw(*m_playButton);
+        m_window->draw(*m_quitButton);
+        m_window->draw(*m_commandsButton);
+        m_window->draw(*m_settingsButton);
+        m_window->draw(*m_leaderboardButton);
+        m_window->draw(*m_shopButton);
 
         m_window->display();
     } else if (m_menu->getMenuState() == COMMANDS) {

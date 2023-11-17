@@ -16,10 +16,13 @@ limitations under the License.
 #ifndef MDC_SFML_BUTTON_H
 #define MDC_SFML_BUTTON_H
 
-#include "LabelPosition.h"
-#include "Sprite.h"
-#include "Text.h"
 #include <functional>
+#include <SFML/Graphics/Sprite.hpp>
+#include "../../components/AbstractTexturedMaterial.h"
+#include "../../components/Text.h"
+#include "../../interfaces/IPositionable.h"
+#include "../../interfaces/ISynchronizable.h"
+#include "../../utils/LabelPosition.h"
 
 namespace Bokoblin
 {
@@ -33,18 +36,20 @@ namespace MaterialDesignComponentsForSFML
  * and to update it using a string file thanks to its description (i.e. id)
  *
  * @author Arthur
- * @date 06/04/16 - 03/05/2020
+ * @date 06/04/2016 - 01/07/2020
  *
- * @see Sprite
+ * @see AbstractTexturedMaterial
+ * @see IActionable, IPositionable, ISynchronizable
  * @see LabelPosition
  */
-class Button: public Sprite
+class Button: public AbstractTexturedMaterial, public IActionable, IPositionable, ISynchronizable
 {
 public:
     //=== CTORs / DTORs
     Button(float x, float y, float width, float height,
+           const LabelPosition& labelPosition = CENTER,
            const std::string& description = "",
-           const std::string& textureImage = "");
+           const std::string& textureFile = "");
     Button(Button const& other);
     ~Button() override = default;
 
@@ -52,28 +57,40 @@ public:
     typedef std::function<std::string(const std::string& label)> label_retrieval_func_t;
 
     //=== GETTERS
-    bool isPressed() const;
-    bool isEnabled() const;
-    LabelPosition getLabelPosition() const;
+    bool isClicked() const override;
+    bool isEnabled() const override;
+    bool isHovered() const override;
+    bool isPressed() const override;
+    float getX() const override;
+    float getY() const override;
 
     //=== SETTERS
-    virtual void setPressed(bool pressed);
-    void setEnabled(bool enabled);
-    void setPositionSelfCentered(float x, float y);
+    void setClicked(bool value = true) override;
+    void setEnabled(bool value = true) override;
+    void setHovered(bool value = true) override;
+    void setPressed(bool value = true) override;
+    void setOrigin(float x, float y) override;
+    void setPosition(float x, float y) override;
     void setLabelDescription(const std::string& description);
     virtual void setLabelPosition(const LabelPosition& labelPosition);
 
     //=== METHODS
+    bool contains(const sf::Vector2f& position) const override;
+    void resize(const sf::Vector2f& size) override;
+    void resize(float width, float height) override;
+    void resize(float size) ; //FIXMe: compat
     void sync() override;
+
     virtual void retrieveLabel(const label_retrieval_func_t& func);
     virtual void syncLabelPosition();
-    void draw(sf::RenderWindow* window) const override;
-    bool contains(float x, float y) const override;
 
 protected:
+    //=== METHODS
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void processTextureLoading(const std::string& file) override;
+
     //=== ATTRIBUTES
-    bool m_isPressed;
-    bool m_isEnabled;
+    sf::Sprite m_buttonSprite;
     sf::Font m_font;
     Text m_label;
     LabelPosition m_labelPosition;
@@ -81,6 +98,9 @@ protected:
     //Constants
     const unsigned int DEFAULT_CHAR_SIZE = 22;
     const float HORIZONTAL_LABEL_MARGIN = 30;
+
+    //=== STATES
+    const unsigned int NEED_LABEL_SYNC = 2179507182;
 };
 
 } //namespace MaterialDesignComponentsForSFML

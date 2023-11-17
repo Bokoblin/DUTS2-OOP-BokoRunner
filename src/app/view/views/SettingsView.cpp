@@ -57,7 +57,7 @@ SettingsView::SettingsView(sf::RenderWindow* window, AppTextManager* textManager
     m_confirmDialog = new mdsf::Dialog(
             getDialogXPosition(CONFIRM_DIALOG_WIDTH), getDialogYPosition(CONFIRM_DIALOG_HEIGHT),
             CONFIRM_DIALOG_WIDTH, CONFIRM_DIALOG_HEIGHT, "confirm_data_delete");
-    m_confirmDialog->hide();
+    m_confirmDialog->setVisible(false);
     DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog);
 }
 
@@ -133,18 +133,18 @@ void SettingsView::loadSprites()
 
     //=== Initialize Logo sprites
 
-    m_logoIUT = new mdsf::Sprite(0.77f * m_width, 0.267f * m_height,
+    m_logoIUT = new mdsf::Image(0.77f * m_width, 0.267f * m_height,
                                  ORIGINAL_IUT_LOGO_WIDTH, ORIGINAL_IUT_LOGO_HEIGHT, ViewResources::IUT_LOGO_IMAGE);
     m_logoIUT->resize(IUT_LOGO_WIDTH, IUT_LOGO_HEIGHT);
 
-    m_logoSFML = new mdsf::Sprite(0.77f * m_width, 0.58f * m_height,
+    m_logoSFML = new mdsf::Image(0.77f * m_width, 0.58f * m_height,
                                   ORIGINAL_SFML_LOGO_WIDTH, ORIGINAL_SFML_LOGO_HEIGHT, ViewResources::SFML_LOGO_IMAGE);
     m_logoSFML->resize(SFML_LOGO_WIDTH, SFML_LOGO_HEIGHT);
 
     //=== Initialize link icon
 
-    m_iconRepoLink = new mdsf::Sprite(0.083f * m_width, 0.46f * m_height, HYPERLINK_SIZE, ViewResources::HYPERLINK_IMAGE);
-    m_iconEmailLink = new mdsf::Sprite(0.083f * m_width, 0.613f * m_height, HYPERLINK_SIZE, ViewResources::HYPERLINK_IMAGE);
+    m_iconRepoLink = new mdsf::Image(0.083f * m_width, 0.46f * m_height, HYPERLINK_SIZE, HYPERLINK_SIZE, ViewResources::HYPERLINK_IMAGE);
+    m_iconEmailLink = new mdsf::Image(0.083f * m_width, 0.613f * m_height, HYPERLINK_SIZE, HYPERLINK_SIZE, ViewResources::HYPERLINK_IMAGE);
 }
 
 
@@ -204,36 +204,36 @@ void SettingsView::draw() const
 
     //=== Graphic Elements drawing
 
-    m_homeButton->draw(m_window);
+    m_window->draw(*m_homeButton);
 
     for (const auto& it : m_pageIndicators) {
-        it.second->draw(m_window);
+        m_window->draw(*it.second);
     }
 
     switch (m_settings->getCurrentPage()) {
         case CONFIG:
-            m_enLanguageRadio->draw(m_window);
-            m_frLanguageRadio->draw(m_window);
-            m_esLanguageRadio->draw(m_window);
-            m_easyModeRadio->draw(m_window);
-            m_hardModeRadio->draw(m_window);
-            m_playerMoblinSkinRadio->draw(m_window);
-            m_playerMorphingSkinRadio->draw(m_window);
-            m_PlayerPokeballSkinRadio->draw(m_window);
-            m_menuMusicButton->draw(m_window);
-            m_gameMusicButton->draw(m_window);
+            m_window->draw(*m_enLanguageRadio);
+            m_window->draw(*m_frLanguageRadio);
+            m_window->draw(*m_esLanguageRadio);
+            m_window->draw(*m_easyModeRadio);
+            m_window->draw(*m_hardModeRadio);
+            m_window->draw(*m_playerMoblinSkinRadio);
+            m_window->draw(*m_playerMorphingSkinRadio);
+            m_window->draw(*m_PlayerPokeballSkinRadio);
+            m_window->draw(*m_menuMusicButton);
+            m_window->draw(*m_gameMusicButton);
             m_textManager->drawMenuSettingsText(m_window, CONFIG);
             break;
         case STATS:
-            m_resetDataButton->draw(m_window);
+            m_window->draw(*m_resetDataButton);
             m_textManager->drawMenuSettingsText(m_window, STATS);
-            m_confirmDialog->draw(m_window); //Must be above everything
+            m_window->draw(*m_confirmDialog); //Must be above everything
             break;
         case ABOUT:
-            m_logoIUT->draw(m_window);
-            m_logoSFML->draw(m_window);
-            m_iconRepoLink->draw(m_window);
-            m_iconEmailLink->draw(m_window);
+            m_window->draw(*m_logoIUT);
+            m_window->draw(*m_logoSFML);
+            m_window->draw(*m_iconRepoLink);
+            m_window->draw(*m_iconEmailLink);
             m_textManager->drawMenuSettingsText(m_window, ABOUT);
             break;
         default:
@@ -374,17 +374,17 @@ void SettingsView::handleStatsEvents(const sf::Event& event)
                 processClearAppDataConfirmAction();
             } else if (EventUtils::isMouseInside(m_confirmDialog->getCancelButtonText(), event)
                     || !EventUtils::isMouseInside(*m_confirmDialog, event)) {
-                m_confirmDialog->hide();
+                m_confirmDialog->setVisible(false);
             }
         } else {
             if (EventUtils::isMouseInside(*m_resetDataButton, event)) {
-                m_confirmDialog->show();
+                m_confirmDialog->setVisible();
             }
         }
     }
 
     if (EventUtils::wasKeyboardEscapePressed(event)) {
-        m_confirmDialog->hide();
+        m_confirmDialog->setVisible(false);
     }
 }
 
@@ -449,7 +449,7 @@ void SettingsView::handlePageIndicatorsEvents(const sf::Event& event)
  */
 void SettingsView::processClearAppDataConfirmAction()
 {
-    m_confirmDialog->hide();
+    m_confirmDialog->setVisible(false);
     m_settings->clearAppData();
     PersistenceManager::resetPersistence();
     m_textManager->syncMenuSettingsText(m_settings->getCurrentPage());

@@ -19,35 +19,35 @@ namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
  * @author Arthur
  * @date 16/05/16 - 17/09/18
  */
-ShopItemCard::ShopItemCard(int num, ShopItem* item, float screenWidth, float screenHeight, int cardsPerPage) :
-        mdsf::Sprite(0, 0.17f * screenHeight, WIDTH, HEIGHT),
+ShopItemCard::ShopItemCard(int num, ShopItem* item, float screenWidth/*FIXME: NOT SRP: use cardgroup*/, float screenHeight/*FIXME: NOT SRP*/, int cardsPerPage/*FIXME: NOT SRP*/) :
+        mdsf::Card(0, 0.17f * screenHeight, WIDTH, HEIGHT),
         m_id{num}, m_item{item}, m_title{""}, m_content{""}
 {
     //=== Set position following card id
 
     const float INITIAL_POS_Y = 0.3f * screenHeight;
     const float EDGE_MARGIN = 0.05f * screenWidth;
-    const float PAGE_MARGIN = (screenWidth - (cardsPerPage * m_width) - ((cardsPerPage - 1)) * EDGE_MARGIN) / 2;
-    setPosition(PAGE_MARGIN + (num % cardsPerPage) * (m_width + EDGE_MARGIN), INITIAL_POS_Y);
+    const float PAGE_MARGIN = (screenWidth - (cardsPerPage * m_size.x) - ((cardsPerPage - 1)) * EDGE_MARGIN) / 2;/*FIXME: NOT SRP*/
+    setPosition(PAGE_MARGIN + (num % cardsPerPage) * (m_size.x + EDGE_MARGIN), INITIAL_POS_Y);/*FIXME: NOT SRP*/
 
     //=== Init title and content
 
     m_title.applyTextFont(ViewResources::ROBOTO_CONDENSED_FONT, 20, sf::Color::White);
     m_title.setUtf8String(item->getName());
-    m_title.setPositionSelfCentered(getX() + m_width / 2, getY() + 0.067f * m_height);
+    m_title.setPositionSelfCentered(getX() + m_size.x / 2, getY() + 0.067f * m_size.y);
 
     m_content.applyTextFont(ViewResources::ROBOTO_CONDENSED_FONT, 16, sf::Color::White);
     m_content.setUtf8String(item->getDescription());
-    m_content.setPosition(getX() + 0.15f * WIDTH, getY() + 0.633f * m_height);
+    m_content.setPosition(getX() + 0.15f * WIDTH, getY() + 0.633f * m_size.y);
 
     //=== Init buy button
 
-    m_buyButton = new mdsf::RaisedButton(getX() + 0.125f * m_width, getY() + 0.83f * m_height,
-                                         0.75f * m_width, 0.133f * m_height, "shop_purchasable");
+    m_buyButton = new mdsf::RaisedButton(getX() + 0.125f * m_size.x, getY() + 0.83f * m_size.y,
+                                         0.75f * m_size.x, 0.133f * m_size.y, "shop_purchasable");
 
     //=== Init background
 
-    ShopItemCard::loadAndApplyTextureFromImageFile(ViewResources::CARD_IMAGE);
+    //ShopItemCard::loadAndApplyTextureFromFile(ViewResources::CARD_IMAGE); //Deprecated: use shape
 }
 
 
@@ -83,7 +83,8 @@ ShopItem* ShopItemCard::getItem() const { return m_item; }
  */
 void ShopItemCard::sync()
 {
-    mdsf::Sprite::sync();
+    m_shape.setFillColor(m_fillColor);
+    m_shape.setOutlineColor(m_fillColor);
 
     if (m_item->isBought()) {
         m_buyButton->setEnabled(false);
@@ -119,15 +120,14 @@ void ShopItemCard::syncWithButtonLabelRetrieval(const mdsf::Button::label_retrie
  * @param window the app's window
  *
  * @author Arthur
- * @date 16/05/16 - 04/01/18
+ * @date 16/05/2016 - 05/07/2020
  */
-void ShopItemCard::draw(sf::RenderWindow* window) const
+void ShopItemCard::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     if (isVisible()) {
-        window->draw(*this);
-        window->draw(m_title);
-        window->draw(m_content);
-        m_buyButton->draw(window);
+        target.draw(m_title, states);
+        target.draw(m_content, states);
+        target.draw(*m_buyButton, states);
     }
 }
 

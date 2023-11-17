@@ -16,8 +16,8 @@ limitations under the License.
 #ifndef GAME_VIEW_H
 #define GAME_VIEW_H
 
-#include "libs/MDC-SFML/src/RaisedButton.h"
-#include "libs/MDC-SFML/src/ToggleButton.h"
+#include "libs/MDC-SFML/src/components/buttons/RaisedButton.h"
+#include "libs/MDC-SFML/src/components/buttons/ToggleButton.h"
 #include "app/model/models/GameModel.h"
 #include "app/view/ui-components/PixelShader.h"
 #include "AbstractView.h"
@@ -72,16 +72,16 @@ private:
 
     //Game Graphic Elements
     ParallaxBackground* m_parallaxBackground;
-    mdsf::Sprite* m_farTransitionBackground;
-    mdsf::Sprite* m_bottomBarImage;
-    mdsf::Sprite* m_lifeBoxImage;
-    mdsf::Sprite* m_remainingLifeImage;
-    mdsf::Sprite* m_shieldImage;
+    mdsf::Image* m_farTransitionBackground;
+    mdsf::Image* m_bottomBarImage;
+    mdsf::Image* m_lifeBoxImage;
+    mdsf::Image* m_remainingLifeImage;
+    mdsf::Image* m_shieldImage;
 
     //Pause and End Graphic Elements
-    mdsf::Sprite* m_pauseBackground;
-    mdsf::Sprite* m_distanceIcon;
-    mdsf::Sprite* m_endBackground;
+    mdsf::Image* m_pauseBackground;
+    mdsf::Image* m_distanceIcon;
+    mdsf::Image* m_endBackground;
     AnimatedSprite* m_stdEnemySprite;
     AnimatedSprite* m_coinSprite;
     mdsf::ToggleButton* m_resumeButton;

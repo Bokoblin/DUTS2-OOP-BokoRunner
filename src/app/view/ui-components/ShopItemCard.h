@@ -16,7 +16,8 @@ limitations under the License.
 #ifndef SHOP_ITEM_CARD_H
 #define SHOP_ITEM_CARD_H
 
-#include <libs/MDC-SFML/src/RaisedButton.h>
+#include <libs/MDC-SFML/src/components/buttons/RaisedButton.h>
+#include <libs/MDC-SFML/src/components/Card.h>
 #include "libs/MDC-SFML/src/utils/Color.h"
 #include "app/model/menu-components/ShopItem.h"
 #include "app/view/AppTextManager.h"
@@ -30,7 +31,7 @@ limitations under the License.
  * @author Arthur
  * @date 16/05/16 - 14/01/19
  */
-class ShopItemCard: public mdsf::Sprite
+class ShopItemCard: public mdsf::Card
 {
 public:
     //=== CTORs / DTORs
@@ -44,9 +45,11 @@ public:
 
     void sync() override;
     void syncWithButtonLabelRetrieval(const mdsf::Button::label_retrieval_func_t& func);
-    void draw(sf::RenderWindow* window) const override;
 
 private:
+    //=== METHODS
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
     //=== ATTRIBUTES
     int m_id;
     ShopItem* m_item;

@@ -485,7 +485,7 @@ void AppTextManager::syncGameOverText(int gameSpeed)
  */
 void AppTextManager::drawSplashScreenText(sf::RenderWindow* window) const
 {
-    m_splashScreenContinueLabel->draw(window);
+    window->draw(*m_splashScreenContinueLabel);
 }
 
 
@@ -504,21 +504,21 @@ void AppTextManager::drawMenuSettingsText(sf::RenderWindow* window, int currentP
         case CONFIG:
             for (const auto& text : m_textList) {
                 if (text->getDescription().find("config") != string::npos) {
-                    text->draw(window);
+                    window->draw(*text);
                 }
             }
             break;
         case STATS:
             for (const auto& text : m_textList) {
                 if (text->getDescription().find("stats") != string::npos) {
-                    text->draw(window);
+                    window->draw(*text);
                 }
             }
             break;
         case ABOUT:
             for (const auto& text : m_textList) {
                 if (text->getDescription().find("about") != string::npos) {
-                    text->draw(window);
+                    window->draw(*text);
                 }
             }
             break;
@@ -538,9 +538,9 @@ void AppTextManager::drawMenuSettingsText(sf::RenderWindow* window, int currentP
  */
 void AppTextManager::drawMenuLeaderboardText(sf::RenderWindow* window) const
 {
-    m_leaderboardTitleLabel->draw(window);
-    m_leaderboardContentEasyText->draw(window);
-    m_leaderboardContentHardText->draw(window);
+    window->draw(*m_leaderboardTitleLabel);
+    window->draw(*m_leaderboardContentEasyText);
+    window->draw(*m_leaderboardContentHardText);
 }
 
 
@@ -554,11 +554,11 @@ void AppTextManager::drawMenuLeaderboardText(sf::RenderWindow* window) const
  */
 void AppTextManager::drawMenuCommandsText(sf::RenderWindow* window) const
 {
-    m_commandsTitleLabel->draw(window);
-    m_commandsPauseLabel->draw(window);
-    m_commandsJumpLabel->draw(window);
-    m_commandsLeftLabel->draw(window);
-    m_commandsRightLabel->draw(window);
+    window->draw(*m_commandsTitleLabel);
+    window->draw(*m_commandsPauseLabel);
+    window->draw(*m_commandsJumpLabel);
+    window->draw(*m_commandsLeftLabel);
+    window->draw(*m_commandsRightLabel);
 }
 
 
@@ -573,11 +573,11 @@ void AppTextManager::drawMenuCommandsText(sf::RenderWindow* window) const
  */
 void AppTextManager::drawMenuShopText(sf::RenderWindow* window, unsigned int nbItems) const
 {
-    m_shopTitleLabel->draw(window);
-    m_walletText->draw(window);
+    window->draw(*m_shopTitleLabel);
+    window->draw(*m_walletText);
 
     if (nbItems == 0) {
-        m_shopNoItemsLabel->draw(window);
+        window->draw(*m_shopNoItemsLabel);
     }
 }
 
@@ -592,10 +592,10 @@ void AppTextManager::drawMenuShopText(sf::RenderWindow* window, unsigned int nbI
  */
 void AppTextManager::drawGameRunningText(sf::RenderWindow* window) const
 {
-    m_playerLifeLabel->draw(window);
-    m_currentDistanceLabel->draw(window);
-    m_currentDistanceText->draw(window);
-    m_bonusTimeoutText->draw(window);
+    window->draw(*m_playerLifeLabel);
+    window->draw(*m_currentDistanceLabel);
+    window->draw(*m_currentDistanceText);
+    window->draw(*m_bonusTimeoutText);
 }
 
 
@@ -609,9 +609,9 @@ void AppTextManager::drawGameRunningText(sf::RenderWindow* window) const
  */
 void AppTextManager::drawGamePausedText(sf::RenderWindow* window) const
 {
-    m_currentDistanceText->draw(window);
-    m_currentCoinsNbText->draw(window);
-    m_flattenedEnemiesText->draw(window);
+    window->draw(*m_currentDistanceText);
+    window->draw(*m_currentCoinsNbText);
+    window->draw(*m_flattenedEnemiesText);
 }
 
 
@@ -626,16 +626,16 @@ void AppTextManager::drawGamePausedText(sf::RenderWindow* window) const
 void AppTextManager::drawGameOverText(sf::RenderWindow* window) const
 {
     //verbose but better than foreach loop in m_textList (O(n) -> O(1))
-    m_endTitleLabel->draw(window);
-    m_speedMultiplierLabel->draw(window);
-    m_speedMultiplierText->draw(window);
-    m_currentDistanceLabel->draw(window);
-    m_currentCoinsLabel->draw(window);
-    m_flattenedEnemiesLabel->draw(window);
-    m_flattenedEnemiesText->draw(window);
-    m_currentScoreLabel->draw(window);
-    m_currentScoreText->draw(window);
-    m_currentDistanceText->draw(window);
-    m_currentCoinsNbText->draw(window);
-    m_walletText->draw(window);
+    window->draw(*m_endTitleLabel);
+    window->draw(*m_speedMultiplierLabel);
+    window->draw(*m_speedMultiplierText);
+    window->draw(*m_currentDistanceLabel);
+    window->draw(*m_currentCoinsLabel);
+    window->draw(*m_flattenedEnemiesLabel);
+    window->draw(*m_flattenedEnemiesText);
+    window->draw(*m_currentScoreLabel);
+    window->draw(*m_currentScoreText);
+    window->draw(*m_currentDistanceText);
+    window->draw(*m_currentCoinsNbText);
+    window->draw(*m_walletText);
 }

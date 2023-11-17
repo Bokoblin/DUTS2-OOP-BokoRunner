@@ -33,7 +33,7 @@ void GameView::processZonesTransition()
 
     m_farTransitionBackground->setPosition(m_farTransitionBackground->getX() - TRANSITION_SPEED, 0);
     m_parallaxBackground->getBackground(SCROLLING_BACKGROUND)->setScrollingSpeed(TRANSITION_SPEED);
-    m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->decreaseAlpha(5);
+    m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->setAlpha(5, mdsf::Color::DECR);
     if (m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->getAlpha() == 0) {
         m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->setScrollingSpeed(0);
     } else {
@@ -46,18 +46,18 @@ void GameView::processZonesTransition()
             && m_farTransitionBackground->getX() >= -5) {
         if (m_game->getCurrentZone() == HILL) {
             m_parallaxBackground->getBackground(SCROLLING_BACKGROUND)->
-                    loadAndApplyTextureFromImageFile(ViewResources::GAME_FAR_PLAIN_BACKGROUND);
+                    loadAndApplyTextureFromFile(ViewResources::GAME_FAR_PLAIN_BACKGROUND);
             m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->
-                    loadAndApplyTextureFromImageFile(ViewResources::GAME_NEAR_PLAIN_BACKGROUND);
+                    loadAndApplyTextureFromFile(ViewResources::GAME_NEAR_PLAIN_BACKGROUND);
         } else {
             m_parallaxBackground->getBackground(SCROLLING_BACKGROUND)->
-                    loadAndApplyTextureFromImageFile(ViewResources::GAME_FAR_HILL_BACKGROUND);
+                    loadAndApplyTextureFromFile(ViewResources::GAME_FAR_HILL_BACKGROUND);
             m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->
-                    loadAndApplyTextureFromImageFile(ViewResources::GAME_NEAR_HILL_BACKGROUND);
+                    loadAndApplyTextureFromFile(ViewResources::GAME_NEAR_HILL_BACKGROUND);
         }
 
-        m_parallaxBackground->getBackground(SCROLLING_BACKGROUND)->setPositions(-300, 0);
-        m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->setPositions(0, 0);
+        m_parallaxBackground->getBackground(SCROLLING_BACKGROUND)->setPosition(-300, 0);
+        m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->setPosition(0, 0);
     }
 
     //=== [Transition 3/4 until end] Update pixel creation of near background
@@ -70,8 +70,7 @@ void GameView::processZonesTransition()
 
     //=== [Transition end]
 
-    if (m_farTransitionBackground->getX()
-            + m_farTransitionBackground->getLocalBounds().width <= 0) {
+    if (m_farTransitionBackground->getX() + m_farTransitionBackground->getWidth() <= 0) {
         //Update Transition status
         m_game->setTransitionState(false);
         m_game->disableTransitionPossibility();
@@ -79,10 +78,10 @@ void GameView::processZonesTransition()
         //Set current zone and change pause background
         if (m_game->getCurrentZone() == HILL) {
             m_game->setCurrentZone(PLAIN);
-            m_pauseBackground->loadAndApplyTextureFromImageFile(ViewResources::PAUSE_PLAIN_BACKGROUND);
+            m_pauseBackground->loadAndApplyTextureFromFile(ViewResources::PAUSE_PLAIN_BACKGROUND);
         } else {
             m_game->setCurrentZone(HILL);
-            m_pauseBackground->loadAndApplyTextureFromImageFile(ViewResources::PAUSE_HILL_BACKGROUND);
+            m_pauseBackground->loadAndApplyTextureFromFile(ViewResources::PAUSE_HILL_BACKGROUND);
         }
     }
 }
@@ -99,14 +98,14 @@ void GameView::setupTransition()
     m_xPixelIntensity = 1;
     m_yPixelIntensity = 1;
     m_farTransitionBackground->setPosition(m_parallaxBackground->getBackground(
-            SCROLLING_BACKGROUND)->getLeftPosition().x + 1200, 0);
+            SCROLLING_BACKGROUND)->getX() + 1200, 0);
 
     if (m_game->getCurrentZone() == HILL) {
         m_pixelShader->load(ViewResources::GAME_NEAR_T1_BACKGROUND);
-        m_farTransitionBackground->loadAndApplyTextureFromImageFile(ViewResources::GAME_FAR_T1_BACKGROUND);
+        m_farTransitionBackground->loadAndApplyTextureFromFile(ViewResources::GAME_FAR_T1_BACKGROUND);
     } else {
         m_pixelShader->load(ViewResources::GAME_NEAR_T2_BACKGROUND);
-        m_farTransitionBackground->loadAndApplyTextureFromImageFile(ViewResources::GAME_FAR_T2_BACKGROUND);
+        m_farTransitionBackground->loadAndApplyTextureFromFile(ViewResources::GAME_FAR_T2_BACKGROUND);
     }
 }
 
@@ -128,7 +127,7 @@ void GameView::updateRunningGameElements()
         m_parallaxBackground->getBackground(SCROLLING_FOREGROUND)->setAlpha(255);
 
         if (m_game->isTransitionPossible() && m_parallaxBackground->getBackground(
-                SCROLLING_BACKGROUND)->getSeparationPositionX(m_width) > m_width - 100) {
+                SCROLLING_BACKGROUND)->calculateCenter(m_width).x > m_width - 100) {
             setupTransition();
         }
     }
@@ -208,7 +207,7 @@ void GameView::drawRunningGame() const
 {
     //=== Standalone Sprites drawing
 
-    m_parallaxBackground->draw(m_window);
+    m_window->draw(*m_parallaxBackground);
 
     if (m_game->isTransitionRunning()) {
         m_window->draw(*m_farTransitionBackground);
@@ -224,7 +223,7 @@ void GameView::drawRunningGame() const
     //=== Array's Sprites drawing
 
     for (const auto& it : m_movableElementToSpriteMap) {
-        it.second->draw(m_window);
+        m_window->draw(*it.second);
     }
 
     if (m_game->getPlayer()->getState() == SHIELDED || m_game->getPlayer()->getState() == HARD_SHIELDED) {

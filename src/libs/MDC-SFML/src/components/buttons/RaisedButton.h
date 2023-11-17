@@ -48,15 +48,16 @@ public:
     void setPressed(bool pressed) override;
 
     //=== METHODS
+    void resize(const sf::Vector2f &size) override;
     void resize(float width, float height) override;
-    void resize(float size) override;
+    /**@deprecated*/ void resize(float size);
     void sync() override;
     void syncLabelPosition() override;
 
 protected:
     //=== ATTRIBUTES
     sf::Vector2f m_initialPos;
-    sf::Vector2f m_initialScale;
+    sf::Vector2f m_resetScale;
 };
 
 } //namespace MaterialDesignComponentsForSFML

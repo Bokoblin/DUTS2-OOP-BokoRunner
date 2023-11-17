@@ -1,4 +1,4 @@
-#include "ToggleButton.h"
+#include "RadioButton.h"
 
 using std::string;
 
@@ -6,7 +6,6 @@ namespace Bokoblin
 {
 namespace MaterialDesignComponentsForSFML
 {
-
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
 //------------------------------------------------
@@ -16,21 +15,20 @@ namespace MaterialDesignComponentsForSFML
  *
  * @param x the x-axis coordinate
  * @param y the y-axis coordinate
- * @param diameter the diameter
- * @param label the toggle label (optional)
+ * @param origDiameter the original image diameter
+ * @param newDiameter the new diameter
+ * @param label the radio label
  * @param customImage a custom image (optional)
  * @param labelPosition the label position (optional)
- * @param isToggled the default state (optional)
+ * @param isSelected the default state (optional)
  *
  * @author Arthur
- * @date 28/04/2020 - 03/05/2020
+ * @date 23/12/2016 - 03/05/2020
  */
-ToggleButton::ToggleButton(float x, float y, float width, float height, const string& label,
-                           const string& customImage, LabelPosition labelPosition, bool isToggled) :
-        AbstractStateButton(x, y, width, height, width, height, label, customImage, labelPosition, isToggled)
-{
-    setOrigin(0, height / 2);
-}
+RadioButton::RadioButton(float x, float y, float origDiameter, float newDiameter, const string& label,
+                         const string& customImage, LabelPosition labelPosition, bool isSelected) :
+        AbstractStateButton(x, y, origDiameter, origDiameter, newDiameter, newDiameter,
+                            label, customImage, labelPosition, isSelected) {}
 
 /**
  * Copy Constructor
@@ -38,43 +36,41 @@ ToggleButton::ToggleButton(float x, float y, float width, float height, const st
  * @param other another button object to copy
  *
  * @author Arthur
- * @date 28/04/2020
+ * @date 02/01/2017 - 03/05/2020
  */
-ToggleButton::ToggleButton(ToggleButton const& other) :
+RadioButton::RadioButton(RadioButton const& other) :
         AbstractStateButton(other) {}
 
 //------------------------------------------------
 //          GETTERS
 //------------------------------------------------
-
-bool ToggleButton::isToggled() const { return m_isChecked; }
+bool RadioButton::isSelected() const { return m_states.at(CHECKED); }
 
 //------------------------------------------------
 //          SETTERS
 //------------------------------------------------
-
-void ToggleButton::setToggled(bool toggled) { m_isChecked = toggled; }
+void RadioButton::setSelected(bool selected) { m_states[CHECKED] = selected; }
 
 //------------------------------------------------
 //          METHODS
 //------------------------------------------------
-
 /**
  * Synchronizes button label position (always left or right)
+ *
  * @author Arthur
- * @date 28/04/2020 - 02/05/2020
+ * @date 23/12/2016 - 03/05/2020
  */
-void ToggleButton::syncLabelPosition()
+void RadioButton::syncLabelPosition()
 {
     if (!m_label.getDescription().empty()) {
         switch (m_labelPosition) {
             case LEFT:
-                m_label.setPosition(getX() - (HORIZONTAL_LABEL_MARGIN + m_label.getWidth()), getY());
-                m_label.setOrigin(0, m_label.getHeight());
+                m_label.setPosition(getX() - (HORIZONTAL_LABEL_MARGIN + m_label.getWidth()), getY() + getSize().y / 2 - 3);
+                m_label.setOrigin(0, m_label.getHeight() / 2);
                 break;
             case RIGHT:
-                m_label.setPosition(getX() + m_width + HORIZONTAL_LABEL_MARGIN, getY());
-                m_label.setOrigin(0, m_label.getHeight());
+                m_label.setPosition(getX() + getSize().x + HORIZONTAL_LABEL_MARGIN, getY() + getSize().y / 2 - 3);
+                m_label.setOrigin(0, m_label.getHeight() / 2);
                 break;
             default:
                 Config::printError("Not allowed label position");

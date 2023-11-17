@@ -5,7 +5,6 @@ namespace ViewResources = Bokoblin::BokoRunner::Resources::View;
 //------------------------------------------------
 //          CONSTRUCTORS / DESTRUCTOR
 //------------------------------------------------
-
 /**
  * @brief Constructor
  *
@@ -53,32 +52,32 @@ SplashScreenView::~SplashScreenView()
  * @brief Load all sprites used by the splash screen
  *
  * @author Arthur
- * @date 27/03/2016 - 13/07/2019
+ * @date 27/03/2016 - 07/07/2020
  */
 void SplashScreenView::loadSprites()
 {
-    m_splashScreen = new mdsf::Sprite(0, 0, m_width, m_height);
-    m_splashScreen->loadAndApplyTextureFromImageFile(ViewResources::SPLASH_SCREEN_IMAGE);
-    m_splashScreen->resize(m_width, m_height);
+    //FIXME: merging causes black drawing, is there a weird difference ?? Virtual effect ?
+    m_splashScreen = new mdsf::Image(0, 0, m_width, m_height);
+    m_splashScreen->loadAndApplyTextureFromFile(ViewResources::SPLASH_SCREEN_IMAGE);
 
     m_parallaxBackground = new ParallaxBackground(BACKGROUND_WIDTH, m_height);
     m_parallaxBackground->addBackground(0, 0, ViewResources::GAME_FAR_HILL_BACKGROUND);
     m_parallaxBackground->addBackground(1, 0, ViewResources::GAME_NEAR_HILL_BACKGROUND);
     m_parallaxBackground->setLight(0);
-    m_parallaxBackground->applyColor();
+    //m_parallaxBackground->applyColor();
 
-    m_appTitle = new mdsf::Sprite(getHalfXPosition() - (0.45f * TITLE_WIDTH), 0.167f * m_height,
+    m_appTitle = new mdsf::Image(getHalfXPosition() - (0.45f * TITLE_WIDTH), 0.167f * m_height,
                                   TITLE_WIDTH, TITLE_HEIGHT, ViewResources::TITLE_IMAGE);
     m_appTitle->resize(m_appTitle->getWidth() * 0.95f, m_appTitle->getHeight() * 0.95f);
     m_appTitle->setAlpha(0);
-    m_appTitle->applyColor();
+    //m_appTitle->sync();
 }
 
 /**
  * @brief Synchronize splash screen elements
  *
  * @author Arthur
- * @date 27/03/2016 - 13/07/2019
+ * @date 27/03/2016 - 05/07/2020
  */
 void SplashScreenView::synchronize()
 {
@@ -88,30 +87,31 @@ void SplashScreenView::synchronize()
         if (m_appTitle->getAlpha() >= 245) {
             m_splashModel->setAppState(MENU);
         } else {
-            m_splashScreen->decreaseAlpha(15);
-            m_parallaxBackground->increaseLight(3);
-            m_appTitle->increaseAlpha(5);
-
-            m_splashScreen->sync();
-            m_parallaxBackground->sync();
-            m_appTitle->sync();
+            m_splashScreen->setAlpha(15, mdsf::Color::DECR);
+            m_parallaxBackground->setLight(3, mdsf::Color::INCR);
+            m_appTitle->setAlpha(5, mdsf::Color::INCR);
         }
     }
+
+    //FIXME: sync causes black background
+    //m_splashScreen->sync();
+    //m_parallaxBackground->sync();
+    //m_appTitle->sync();
 }
 
 /**
  * @brief Draw splash screen elements on the window
  *
  * @author Arthur
- * @date 27/03/2016 - 13/07/2019
+ * @date 27/03/2016 - 05/07/2019
  */
 void SplashScreenView::draw() const
 {
     m_window->clear();
 
-    m_parallaxBackground->draw(m_window);
-    m_appTitle->draw(m_window);
-    m_splashScreen->draw(m_window);
+    //m_window->draw(*m_parallaxBackground);
+    m_window->draw(*m_appTitle);
+    m_window->draw(*m_splashScreen);
 
     if (!m_splashModel->isInEndingPhase()) {
         m_textManager->drawSplashScreenText(m_window);

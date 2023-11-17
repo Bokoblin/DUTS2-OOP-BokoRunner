@@ -18,8 +18,9 @@ limitations under the License.
 
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
-#include <libs/MDC-SFML/src/Sprite.h>
-#include <libs/MDC-SFML/src/Text.h>
+#include <libs/MDC-SFML/src/components/buttons/Button.h>
+#include <libs/MDC-SFML/src/components/Text.h>
+#include <libs/MDC-SFML/src/components/Dialog.h>
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 
@@ -32,16 +33,27 @@ namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 class EventUtils
 {
 public:
-    //=== METHODS
+    //=== KEYBOARD CHECK METHODS
     static bool wasKeyboardLeftPressed();
     static bool wasKeyboardRightPressed();
     static bool wasKeyboardJumpPressed();
     static bool wasKeyboardContinuePressed();
     static bool wasKeyboardEscapePressed(const sf::Event& event);
+
+    //=== EVENT BULK CHECK
+    static void verifyHover(const sf::Event& event, const std::vector<mdsf::Button*>& elements);
+    static void verifyClick(const sf::Event& event, const std::vector<mdsf::Button*>& elements);
     static bool wasMouseLeftPressed(const sf::Event& event);
     static bool wasMouseReleased(const sf::Event& event);
-    static bool isMouseInside(const mdsf::Sprite& sprite, const sf::Event& event);
-    static bool isMouseInside(const mdsf::Text& text, const sf::Event& event);
+    /**@deprecated*/ static bool isMouseInside(const mdsf::Button& sprite, const sf::Event& event); //TODO: Remove once button list
+    /**@deprecated*/ static bool isMouseInside(const mdsf::Text& sprite, const sf::Event& event); //TODO: Remove once button list
+    /**@deprecated*/ static bool isMouseInside(const mdsf::Dialog& dialog, const sf::Event& event); //TODO: Remove once button list
+private:
+    //=== FUNCTION POINTERS
+    typedef std::function<void(mdsf::Button*, bool value)> actionable_func_t;
+
+    //=== METHODS
+    static void verifyEvent(const sf::Event& event, const std::vector<mdsf::Button*>& elements, const actionable_func_t& func);
 };
 
 #endif

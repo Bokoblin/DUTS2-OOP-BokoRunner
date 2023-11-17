@@ -41,10 +41,10 @@ void GameView::drawPausedGame() const
     m_window->draw(*m_coinSprite);
     m_window->draw(*m_stdEnemySprite);
 
-    m_resumeButton->draw(m_window);
-    m_restartButton->draw(m_window);
-    m_goHomeButton->draw(m_window);
-    m_musicButton->draw(m_window);
+    m_window->draw(*m_resumeButton);
+    m_window->draw(*m_restartButton);
+    m_window->draw(*m_goHomeButton);
+    m_window->draw(*m_musicButton);
 
     //=== Standalone Text drawing
 

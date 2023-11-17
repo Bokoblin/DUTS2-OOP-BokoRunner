@@ -52,7 +52,7 @@ private:
 
     //Graphic Elements
     ParallaxBackground* m_parallaxBackground;
-    mdsf::Sprite* m_titleSprite;
+    mdsf::Image* m_titleSprite;
     mdsf::RaisedButton* m_playButton;
     mdsf::RaisedButton* m_quitButton;
     mdsf::RaisedButton* m_commandsButton;

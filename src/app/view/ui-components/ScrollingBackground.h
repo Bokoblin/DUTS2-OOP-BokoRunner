@@ -16,18 +16,21 @@ limitations under the License.
 #ifndef SLIDING_BACKGROUND_H
 #define SLIDING_BACKGROUND_H
 
-#include "libs/MDC-SFML/src/Sprite.h"
+#include "libs/MDC-SFML/src/components/Image.h"
+#include "libs/MDC-SFML/src/interfaces/ISynchronizable.h"
 
 namespace mdsf = Bokoblin::MaterialDesignComponentsForSFML;
 
 /**
- * The SlidingBackground class inherits mdsf::GraphicElement.
- * It defines two Sprite side by side to make an infinite sliding effect.
+ * @class SlidingBackground
+ * @inherit mdsf::AbstractMaterial
+ * @implements mdsf::IPositionable, mdsf::ISynchronizable
+ * @details Defines two images scrolling side-by-side to create an infinite effect
  *
  * @author Arthur, Florian
- * @date 3/03/16 - 10/02/18
+ * @date 3/03/2016 - 05/07/2020
  */
-class ScrollingBackground: public mdsf::Sprite
+class ScrollingBackground: public mdsf::AbstractMaterial, public mdsf::IPositionable, public mdsf::ISynchronizable
 {
 public:
     //=== CTORs / DTORs
@@ -36,29 +39,38 @@ public:
     ~ScrollingBackground() override;
 
     //=== GETTERS
-    float getWidth() const override;
-    float getHeight() const override;
-    sf::Vector2f getLeftPosition() const;
-    float getSeparationPositionX(unsigned int screenWidth) const;
+    //const sf::Vector2f& getSize() override;
+    //float getSize() const override; //TODO: will certainly be useful instead of getSize, let's see cases
+    //float getHeight() const override;
+    float getX() const override;
+    float getY() const override;
+    bool contains(const sf::Vector2f &position) const override; //FIXME: temp
 
     //=== SETTERS
     void setScrollingSpeed(float speed);
-    void setPositions(float x, float y);
+    void setOrigin(float x, float y) override; //FIXME: Temp for compatibility, delete if possible
+    void setPosition(float x, float y) override;
 
     //=== METHODS
     void sync() override;
-    void draw(sf::RenderWindow* window) const override;
 
-    void resize(float width, float height) override;
-    bool contains(float x, float y) const override;
-    void applyColor() override;
+    //void resize() override;
+    void resize(const sf::Vector2f& size) override;
+    //void resize(float size) override;
+    //void resize(float width, float height) override;
+    //bool contains(float x, float y) const override;
 
-    void loadAndApplyTextureFromImageFile(const std::string& imageFile) override;
+    sf::Vector2f calculateCenter(float screenWidth) const; //Note: Don't return const ref here
+    void loadAndApplyTextureFromFile(const std::string& file, const sf::IntRect& area = sf::IntRect());
 
 private:
+    //=== METHODS
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
     //=== ATTRIBUTES
-    mdsf::Sprite* m_left, * m_right;
+    mdsf::Image* m_left, * m_right; //TODO: Replace by no pointers objects
     float m_scrollingSpeed;
+    sf::Vector2f m_computedSize;
 };
 
 #endif

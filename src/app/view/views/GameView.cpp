@@ -1,5 +1,5 @@
 #include "GameView.h"
-#include "libs/MDC-SFML/src/ClipRectUtils.h"
+#include "libs/MDC-SFML/src/utils/ClipRectUtils.h"
 
 using std::string;
 using std::vector;
@@ -108,25 +108,25 @@ void GameView::loadSprites()
     m_parallaxBackground->addBackground(SCROLLING_BACKGROUND, 1, ViewRes::GAME_FAR_HILL_BACKGROUND);
     m_parallaxBackground->addBackground(SCROLLING_FOREGROUND, 2, ViewRes::GAME_NEAR_HILL_BACKGROUND);
 
-    m_farTransitionBackground = new mdsf::Sprite(m_width, m_height, m_width, m_height, ViewRes::GAME_FAR_T1_BACKGROUND);
-    m_bottomBarImage = new mdsf::Sprite(0, 0.87f * m_height, m_width, m_height, ViewRes::BOTTOM_BAR_IMAGE);
+    m_farTransitionBackground = new mdsf::Image(m_width, m_height, m_width, m_height, ViewRes::GAME_FAR_T1_BACKGROUND);
+    m_bottomBarImage = new mdsf::Image(0, 0.87f * m_height, m_width, m_height, ViewRes::BOTTOM_BAR_IMAGE);
     m_bottomBarImage->resize(m_width, m_height);
 
-    m_pauseBackground = new mdsf::Sprite(0, 0, m_width, m_height, ViewRes::PAUSE_HILL_BACKGROUND);
+    m_pauseBackground = new mdsf::Image(0, 0, m_width, m_height, ViewRes::PAUSE_HILL_BACKGROUND);
     m_pauseBackground->resize(m_width, m_height);
-    m_endBackground = new mdsf::Sprite(0, 0, m_width, m_height, ViewRes::END_SCREEN_BACKGROUND);
+    m_endBackground = new mdsf::Image(0, 0, m_width, m_height, ViewRes::END_SCREEN_BACKGROUND);
     m_endBackground->resize(m_width, m_height);
 
     //=== Initialize UI elements
 
-    m_lifeBoxImage = new mdsf::Sprite(0.117f * m_width, 0.89f * m_height, LIFE_BOX_WIDTH, LIFE_BOX_HEIGHT);
-    m_lifeBoxImage->loadAndApplyTextureFromImageFile(ViewRes::LIFE_BOX_IMAGE, sf::IntRect(0, 0, 300, 50));
+    m_lifeBoxImage = new mdsf::Image(0.117f * m_width, 0.89f * m_height, LIFE_BOX_WIDTH, LIFE_BOX_HEIGHT);
+    m_lifeBoxImage->loadAndApplyTextureFromFile(ViewRes::LIFE_BOX_IMAGE, sf::IntRect(0, 0, 300, 50));
 
-    m_remainingLifeImage = new mdsf::Sprite(0.118f * m_width, 0.89f * m_height, LIFE_LEVEL_WIDTH, LIFE_LEVEL_HEIGHT);
-    m_remainingLifeImage->loadAndApplyTextureFromImageFile(ViewRes::LIFE_BOX_IMAGE, sf::IntRect(0, 51, 300, 50));
+    m_remainingLifeImage = new mdsf::Image(0.118f * m_width, 0.89f * m_height, LIFE_LEVEL_WIDTH, LIFE_LEVEL_HEIGHT);
+    m_remainingLifeImage->loadAndApplyTextureFromFile(ViewRes::LIFE_BOX_IMAGE, sf::IntRect(0, 51, 300, 50));
 
-    m_distanceIcon = new mdsf::Sprite(0.033f * m_width, 0.055f * m_height, ORIGINAL_DISTANCE_ICON_SIZE);
-    m_distanceIcon->loadAndApplyTextureFromImageFile(ViewRes::FLAG_IMAGE);
+    m_distanceIcon = new mdsf::Image(0.033f * m_width, 0.055f * m_height, ORIGINAL_DISTANCE_ICON_SIZE, ORIGINAL_DISTANCE_ICON_SIZE);
+    m_distanceIcon->loadAndApplyTextureFromFile(ViewRes::FLAG_IMAGE);
     m_distanceIcon->resize(25); //TODO [2.0.x] Move resize call to ctor/sync() after setting the target size in ctor
     m_distanceIcon->setFillColor(mdsf::Color::MaterialOrange);
 
@@ -153,7 +153,7 @@ void GameView::loadSprites()
 
     //=== Initialize COINS & BONUSES sprite
 
-    m_shieldImage = new mdsf::Sprite(SHIELD_SIZE, ViewRes::SHIELD_IMAGE);
+    m_shieldImage = new mdsf::Image(SHIELD_SIZE, SHIELD_SIZE, ViewRes::SHIELD_IMAGE);
     m_shieldImage->setOrigin(0, 50);
 
     auto coinClipRect = mdsf::ClipRectUtils::generate(0, 0, 50, 50, 1, 5);
@@ -189,7 +189,7 @@ void GameView::loadSprites()
 
     m_restartButton = new mdsf::ToggleButton(PAUSE_FORM_X, 0.675f * m_height, PAUSE_ICONS_SIZE, PAUSE_ICONS_SIZE,
                                              "pause_restart", ViewRes::RESTART_BUTTON_IMAGE);
-    m_restartButton->resize(PAUSE_BUTTONS_SIZE);
+    m_restartButton->resize(PAUSE_BUTTONS_SIZE); //FIXME: very tricky
     m_restartButton->retrieveLabel(LocalizationManager::fetchLocalizedString);
 
     m_goHomeButton = new mdsf::ToggleButton(PAUSE_FORM_X, 0.758f * m_height, PAUSE_ICONS_SIZE, PAUSE_ICONS_SIZE,

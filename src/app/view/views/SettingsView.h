@@ -16,10 +16,10 @@ limitations under the License.
 #ifndef SETTINGS_VIEW_H
 #define SETTINGS_VIEW_H
 
-#include "libs/MDC-SFML/src/Dialog.h"
-#include "libs/MDC-SFML/src/RadioButton.h"
-#include "libs/MDC-SFML/src/RaisedButton.h"
-#include "libs/MDC-SFML/src/ToggleButton.h"
+#include "libs/MDC-SFML/src/components/Dialog.h"
+#include "libs/MDC-SFML/src/components/buttons/RadioButton.h"
+#include "libs/MDC-SFML/src/components/buttons/RaisedButton.h"
+#include "libs/MDC-SFML/src/components/buttons/ToggleButton.h"
 #include "app/model/models/SettingsModel.h"
 #include "app/view/utils/DialogBuilder.h"
 #include "AbstractView.h"
@@ -61,10 +61,10 @@ private:
     mdsf::RaisedButton* m_resetDataButton;
     mdsf::ToggleButton* m_menuMusicButton;
     mdsf::ToggleButton* m_gameMusicButton;
-    mdsf::Sprite* m_logoIUT;
-    mdsf::Sprite* m_logoSFML;
-    mdsf::Sprite* m_iconRepoLink;
-    mdsf::Sprite* m_iconEmailLink;
+    mdsf::Image* m_logoIUT;
+    mdsf::Image* m_logoSFML;
+    mdsf::Image* m_iconRepoLink;
+    mdsf::Image* m_iconEmailLink;
     mdsf::Dialog* m_confirmDialog;
 
     //Containers

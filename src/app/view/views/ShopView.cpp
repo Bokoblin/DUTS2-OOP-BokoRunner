@@ -60,8 +60,8 @@ void ShopView::loadSprites()
 {
     //=== Initialize COIN Sprite
 
-    m_coinSprite = new mdsf::Sprite(0.45f * m_width, 0.2f * m_height, COIN_SIZE);
-    m_coinSprite->loadAndApplyTextureFromImageFile(ViewResources::BONUS_IMAGE, sf::IntRect(0, 0, 50, 50));
+    m_coinSprite = new mdsf::Image(0.45f * m_width, 0.2f * m_height, COIN_SIZE, COIN_SIZE);
+    m_coinSprite->loadAndApplyTextureFromFile(ViewResources::BONUS_IMAGE, sf::IntRect(0, 0, 50, 50));
     m_coinSprite->resize(COIN_SIZE, COIN_SIZE);
 
     //=== Initialize HOME buttons
@@ -83,7 +83,7 @@ void ShopView::createCards()
     for (ShopItem* item : m_shop->getShopItemsArray()) {
         ShopItemCard* card = new ShopItemCard(i, item, m_width, m_height, CARDS_PER_PAGE);
         card->syncWithButtonLabelRetrieval(LocalizationManager::fetchLocalizedString);
-        card->hide(); //to display by pages
+        card->setVisible(false); //to display by pages
         m_shopItemCardsArray.push_back(card);
         i++;
     }
@@ -105,18 +105,14 @@ void ShopView::createCards()
  * depending on the current page
  *
  * @author Arthur
- * @date 16/05/16 - 06/09/18
+ * @date 16/05/2016 - 02/07/2020
  */
 void ShopView::syncCards()
 {
     //display only cards linked to the current page indicator
     for (ShopItemCard* card : m_shopItemCardsArray) {
         card->sync();
-        if (card->getId() / CARDS_PER_PAGE == m_currentIndicator) {
-            card->show();
-        } else {
-            card->hide();
-        }
+        card->setVisible(card->getId() / CARDS_PER_PAGE == m_currentIndicator);
     }
 }
 
@@ -144,7 +140,7 @@ void ShopView::synchronize()
  * Draws shop elements on the window
  *
  * @author Arthur
- * @date 16/05/16 - 24/01/17
+ * @date 16/05/2016 - 05/07/2020
  */
 void ShopView::draw() const
 {
@@ -153,14 +149,14 @@ void ShopView::draw() const
     //=== Graphic Elements drawing
 
     for (ShopItemCard* card : m_shopItemCardsArray)
-        card->draw(m_window);
+        m_window->draw(*card);
 
     for (const auto& it : m_pageIndicators)
         m_window->draw(*it.second);
 
-    m_homeButton->draw(m_window);
+    m_window->draw(*m_homeButton);
     m_window->draw(*m_coinSprite);
-    m_buyDialog->draw(m_window);
+    m_window->draw(*m_buyDialog);
 
     //=== Standalone Text Drawing
 
@@ -233,7 +229,7 @@ bool ShopView::handleEvents(sf::Event& event)
                             getDialogXPosition(ITEM_DIALOG_WIDTH), getDialogYPosition(ITEM_DIALOG_HEIGHT),
                             ITEM_DIALOG_WIDTH, ITEM_DIALOG_HEIGHT, "shop_item_details", card->getItem());
                     DialogBuilder::retrieveCorrespondingStrings(m_buyDialog);
-                    m_buyDialog->show();
+                    m_buyDialog->setVisible();
                 }
             }
         } else {
@@ -241,13 +237,13 @@ bool ShopView::handleEvents(sf::Event& event)
                 processBuyItemConfirmAction();
             } else if (EventUtils::isMouseInside(m_buyDialog->getCancelButtonText(), event)
                     || !EventUtils::isMouseInside(*m_buyDialog, event)) {
-                m_buyDialog->hide();
+                m_buyDialog->setVisible(false);
             }
         }
     }
 
     if (EventUtils::wasKeyboardEscapePressed(event)) {
-        m_buyDialog->hide();
+        m_buyDialog->setVisible(false);
     }
 
     return true;
@@ -282,7 +278,7 @@ void ShopView::processBuyItemConfirmAction()
             }
         }
     } else {
-        m_buyDialog->hide();
+        m_buyDialog->setVisible(false);
     }
 }
 

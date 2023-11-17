@@ -32,7 +32,7 @@ LeaderboardView::LeaderboardView(sf::RenderWindow* window, AppTextManager* textM
     //TODO [MDC-CPP] No dialog init at startup
     m_confirmDialog = new mdsf::Dialog(getDialogXPosition(DIALOG_WIDTH), getDialogYPosition(DIALOG_HEIGHT),
                                        DIALOG_WIDTH, DIALOG_HEIGHT, "confirm_leaderboard_delete");
-    m_confirmDialog->hide();
+    m_confirmDialog->setVisible(false);
     DialogBuilder::retrieveCorrespondingStrings(m_confirmDialog);
 }
 
@@ -104,9 +104,9 @@ void LeaderboardView::draw() const
 
     //=== Graphic Elements drawing
 
-    m_homeButton->draw(m_window);
-    m_clearLeaderboardButton->draw(m_window);
-    m_confirmDialog->draw(m_window);
+    m_window->draw(*m_homeButton);
+    m_window->draw(*m_clearLeaderboardButton);
+    m_window->draw(*m_confirmDialog);
 
     //=== Text Drawing
 
@@ -150,23 +150,23 @@ bool LeaderboardView::handleEvents(sf::Event& event)
             }
 
             if (EventUtils::isMouseInside(*m_clearLeaderboardButton, event)) {
-                m_confirmDialog->show();
+                m_confirmDialog->setVisible();
             }
         } else {
             if (EventUtils::isMouseInside(m_confirmDialog->getOkButtonText(), event)) {
-                m_confirmDialog->hide();
+                m_confirmDialog->setVisible(false);
                 m_leaderboard->clearLeaderboardData();
                 m_textManager->updateWholeStandaloneTextContent();
                 m_textManager->syncMenuLeaderboardText();
             } else if (EventUtils::isMouseInside(m_confirmDialog->getCancelButtonText(), event)
                     || !EventUtils::isMouseInside(*m_confirmDialog, event)) {
-                m_confirmDialog->hide();
+                m_confirmDialog->setVisible(false);
             }
         }
     }
 
     if (EventUtils::wasKeyboardEscapePressed(event)) {
-        m_confirmDialog->hide();
+        m_confirmDialog->setVisible(false);
     }
 
     return true;

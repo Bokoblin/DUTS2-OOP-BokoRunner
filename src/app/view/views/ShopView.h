@@ -16,8 +16,8 @@ limitations under the License.
 #ifndef SHOP_VIEW_H
 #define SHOP_VIEW_H
 
-#include "libs/MDC-SFML/src/RadioButton.h"
-#include "libs/MDC-SFML/src/RaisedButton.h"
+#include "libs/MDC-SFML/src/components/buttons/RadioButton.h"
+#include "libs/MDC-SFML/src/components/buttons/RaisedButton.h"
 #include "app/model/models/ShopModel.h"
 #include "app/view/ui-components/ShopDialog.h"
 #include "app/view/ui-components/ShopItemCard.h"
@@ -50,7 +50,7 @@ private:
     int m_currentIndicator;
 
     //Graphic Elements
-    mdsf::Sprite* m_coinSprite;
+    mdsf::Image* m_coinSprite;
     mdsf::RaisedButton* m_homeButton;
     mdsf::Dialog* m_buyDialog; //TODO [MDC-CPP] to delete with drawableList
 

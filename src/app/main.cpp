@@ -71,6 +71,7 @@ int main() //TODO [2.2.x] App class with logic -- main must only uses it + check
                 splashView.synchronize();
                 splashView.draw();
             }
+            //exit(0); //TODO: testing following crash
         }
         if (appCore.getAppState() == MENU) {
             MenuModel menuModel(&appCore);

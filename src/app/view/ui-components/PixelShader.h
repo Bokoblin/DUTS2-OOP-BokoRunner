@@ -57,8 +57,10 @@ External libraries used by SFML
 #ifndef PIXEL_SHADER_H
 #define PIXEL_SHADER_H
 
+#include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Shader.hpp>
-#include "libs/MDC-SFML/src/Sprite.h"
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 
 /**
@@ -83,10 +85,12 @@ public:
     //=== METHODS
     void load(const std::string& image);
     void update(float x, float y);
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     bool onLoad(const std::string& image);
 
 private:
+    //=== METHODS
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
     //=== ATTRIBUTES
     bool m_isLoaded;
     sf::Texture m_texture;
